@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/northeastern-web/electric-racing/issues"
   },
-  "homepage": "https://github.com/northeastern-web/electric-racing#readme"
+  "homepage": "https://github.com/northeastern-web/electric-racing#readme",
+  "dependencies": {
+    "create-react-app": "^4.0.1"
+  }
 }

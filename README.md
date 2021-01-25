@@ -27,3 +27,17 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 ### First Time Install
 
 ---
+
+## Contributor Guide
+
+### Creating Issues & Suggesting Features
+
+### Creating a Branch
+
+### Creating a Commit
+
+### Testing Your Code
+
+### Running the App Locally
+
+### Creating a Pull Request

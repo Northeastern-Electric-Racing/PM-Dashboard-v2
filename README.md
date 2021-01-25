@@ -11,3 +11,13 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 - Deployment
 
 ---
+
+## About the Project
+
+### Purpose
+
+### History
+
+### Tech Stack
+
+---

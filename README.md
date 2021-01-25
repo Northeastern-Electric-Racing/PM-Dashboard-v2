@@ -21,3 +21,9 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 ### Tech Stack
 
 ---
+
+## Onboarding
+
+### First Time Install
+
+---

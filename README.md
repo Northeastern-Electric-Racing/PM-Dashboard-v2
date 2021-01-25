@@ -9,6 +9,7 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 - Onboarding
 - Contributor Guide
 - Deployment
+- Transition Checklist
 
 ---
 
@@ -49,3 +50,7 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 ### Repositories
 
 ### Netlify
+
+---
+
+## Transition Checklist

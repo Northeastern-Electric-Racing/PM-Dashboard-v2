@@ -41,3 +41,11 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 ### Running the App Locally
 
 ### Creating a Pull Request
+
+---
+
+## Deployment
+
+### Repositories
+
+### Netlify

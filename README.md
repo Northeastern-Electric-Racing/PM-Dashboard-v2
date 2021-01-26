@@ -83,6 +83,10 @@ Use `git status` to check which branch you are on.
 Ensure you stash, reset, or commit your changes before changing branches, unless you want to bring your changes to the other branch.
 Use `git checkout main` to switch back to the main branch.
 
+### Testing Your Code
+
+### Running the App Locally
+
 ### Creating a Commit
 
 Commit early and often (within reason) to properly save your work and to make your changes more easily separable.
@@ -92,10 +96,6 @@ Use the following syntax for commit messages: `#[issue number] - [description of
 Examples: `#12 - Expanded the creating commmits section` or `#79 - Increased list padding`.
 
 See [common git commands](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#onboarding) for alternative methods for staging and committing changes.
-
-### Testing Your Code
-
-### Running the App Locally
 
 ### Creating a Pull Request
 

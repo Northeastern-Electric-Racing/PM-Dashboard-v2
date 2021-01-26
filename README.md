@@ -2,6 +2,8 @@
 
 Northeastern Electric Racing Project Management Dashboard - version 2
 
+All questions can be directed to the project admins: `@kevinyu328` and `@jamescd18`.
+
 ---
 
 ## Table of Contents

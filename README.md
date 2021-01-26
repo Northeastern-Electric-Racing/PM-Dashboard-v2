@@ -34,6 +34,12 @@ The current tech stack list is provided below:
 
 ### First Time Install
 
+First, ensure that you have [Node.js](https://nodejs.org/en/) installed.
+
+[Clone the repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository), potentially using `git clone` in your preferred CLI to pull the project down to your computer.
+
+Familiarize yourself with [common git commands](https://education.github.com/git-cheat-sheet-education.pdf) and [CLI commands](https://www.w3schools.com/whatis/whatis_cli.asp) if you aren't already.
+
 ---
 
 ## Contributor Guide

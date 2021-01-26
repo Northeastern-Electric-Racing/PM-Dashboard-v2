@@ -50,11 +50,17 @@ In your CLI, navigate to the folder for the project and run `npm install` to ins
 
 Navigate to the [GitHub repository issues page](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues) and click the "New Issue" button.
 
+#### Issue Title
+
 Give your issue an informative, but concise title that follows the naming syntax: `[Page] - [Description]`.
 The page field should name one specific page within the application that the issue pertains to.
 Alternatively, use `General` or `Docs` to indicate issues spanning the whole site or issues with the project's documentation.
 The description field should briefly describe what the issue is.
 Examples: `General - Increase Padding for Tables` or `Projects - Add Filter by Project Lead`.
+
+#### Issue Description
+
+
 
 ### Creating a Branch
 

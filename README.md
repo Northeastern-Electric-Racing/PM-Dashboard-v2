@@ -73,6 +73,14 @@ Reviewers will determine whether the issue is valid, whether it will be accepted
 
 ### Creating a Branch
 
+Use `git checkout -b [branch name]` to create a new branch.
+Give the branch a short name that follows the naming syntax: `#[issue number]-[contributor name]`.
+Example: `#12-JamesCD` or `#275-KevinYu`.
+
+Use `git status` to check which branch you are on.
+Ensure you stash, reset, or commit your changes before changing branches, unless you want to bring your changes to the other branch.
+Use `git checkout main` to switch back to the main branch.
+
 ### Creating a Commit
 
 ### Testing Your Code

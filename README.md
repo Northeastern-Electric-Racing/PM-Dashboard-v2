@@ -40,6 +40,8 @@ First, ensure that you have [Node.js](https://nodejs.org/en/) installed.
 
 Familiarize yourself with [common git commands](https://education.github.com/git-cheat-sheet-education.pdf) and [CLI commands](https://www.w3schools.com/whatis/whatis_cli.asp) if you aren't already.
 
+In your CLI, navigate to the folder for the project and run `npm install` to instruct [npm](https://www.npmjs.com/about) to install all neccessary packages.
+
 ---
 
 ## Contributor Guide

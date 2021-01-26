@@ -62,6 +62,10 @@ Examples: `General - Increase Padding for Tables` or `Projects - Add Filter by P
 
 
 
+#### Issue Sidebar
+
+
+
 ### Creating a Branch
 
 ### Creating a Commit

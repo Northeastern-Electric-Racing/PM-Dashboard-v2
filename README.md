@@ -68,9 +68,8 @@ New Features -> Current Features, Desired Additional Features, and Screenshots (
 
 Other -> Desired Changes, Screenshots (as needed)
 
-#### Issue Sidebar
-
-
+Add labels as is appropriate for the issue, and assign it to `@kevinyu328` or `@jamescd18` for review.
+Reviewers will determine whether the issue is valid, whether it will be accepted and worked on, and which milestone it will be a part of.
 
 ### Creating a Branch
 

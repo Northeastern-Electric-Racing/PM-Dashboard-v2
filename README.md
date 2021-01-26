@@ -60,7 +60,13 @@ Examples: `General - Increase Padding for Tables` or `Projects - Add Filter by P
 
 #### Issue Description
 
+Include the required information in the issue description based on the kind of issue you are submitting.
 
+Bugs -> Observed Behavior, Expected Behavior, Steps to Reproduce, and Screenshots
+
+New Features -> Current Features, Desired Additional Features, and Screenshots (as needed)
+
+Other -> Desired Changes, Screenshots (as needed)
 
 #### Issue Sidebar
 

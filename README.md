@@ -83,6 +83,14 @@ Use `git status` to check which branch you are on.
 Ensure you stash, reset, or commit your changes before changing branches, unless you want to bring your changes to the other branch.
 Use `git checkout main` to switch back to the main branch.
 
+### Writing Code
+
+Comment your code with JSDoc and inline comments to help others understand your code.
+
+Test your code to the best of your ability and avoid writing overly complex code.
+
+Follow good coding practices taught in Fundies 1 and Fundies 2.
+
 ### Creating a Commit
 
 Commit early and often (within reason) to properly save your work and to make your changes more easily separable.

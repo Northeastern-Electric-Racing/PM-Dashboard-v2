@@ -63,7 +63,7 @@ The below table will help track various components of setting up this project an
 | Deployment | Netlify | Y | - | Y | Y |
 | Linting | ESLint | Y |  |  |  |
 | Formatting | Prettier | Y |  |  |  |
-| Testing | ? | Y |  |  |  |
+| Testing | Jest | Y |  |  |  |
 | e2e Testing | ? | Y |  |  |  |
 | Component Testing | ? |  |  |  |  |
 | Database | ? | Y |  |  |  |

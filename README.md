@@ -74,6 +74,6 @@ The below table will help track various components of setting up this project an
 | Styling | Bootstrap | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/19) |  |  |  |
 | URL Routing | React Router | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/21) |  |  |  |
 | Continuous Integration | GitHub Actions | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/22) |  |  |  |
-| Database Hosting | ? |  |  |  |  |
+| Database Hosting | ? | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/23) |  |  |  |
 | Backend Structure | ? | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/14) |  |  |  |
 | _ | _ | _ | _ | _ | _ |

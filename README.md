@@ -64,7 +64,7 @@ The below table will help track various components of setting up this project an
 | Linting | ESLint | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
 | Formatting | Prettier | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
 | Testing | Jest | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/7) |  |  |  |
-| e2e Testing | Cypress | Y |  |  |  |
+| e2e Testing | Cypress | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/5) |  |  |  |
 | Component Testing | Enzyme | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) |  |  |  |
 | Database | PostgreSQL | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4) |  |  |  |
 | ORM | Prisma | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/2) |  |  |  |

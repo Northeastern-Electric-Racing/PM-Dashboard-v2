@@ -69,4 +69,5 @@ The below table will help track various components of setting up this project an
 | ORM | ? | Y |  |  |  |
 | User Authentication | ? |  |  |  |  |
 | State Management | ? |  |  |  |  |
+| Charts | ? |  |  |  |  |
 | _ | _ | _ | _ | _ | _ |

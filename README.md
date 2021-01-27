@@ -57,6 +57,6 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 
 The below table will help track various components of setting up this project and transitioning from [v1](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v1) to v2.
 
-| Area | Tech / Package | Research | Decided | Implemented |
-| :--- | :--- | :---: | :---: | :---: |
-| _ | _ | _ | _ | _ |
+| Area | Tech / Package | Issue | Researched | Decided | Implemented |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| _ | _ | _ | _ | _ | _ |

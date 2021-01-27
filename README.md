@@ -66,7 +66,7 @@ The below table will help track various components of setting up this project an
 | Testing | Jest | Y |  |  |  |
 | e2e Testing | Cypress | Y |  |  |  |
 | Component Testing | Enzyme |  |  |  |  |
-| Database | ? | Y |  |  |  |
+| Database | PostgreSQL | Y |  |  |  |
 | ORM | ? | Y |  |  |  |
 | User Authentication | ? |  |  |  |  |
 | State Management | ? |  |  |  |  |

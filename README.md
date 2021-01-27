@@ -110,6 +110,10 @@ Test coverage reports only go by lines of code, so make sure to also consider if
 
 ### Running the App Locally
 
+Use `npm run start` in order to boot up the React app and the back-end serverless functions on your local computer.
+Navigate to `localhost:3000` if your browser does not automatically.
+The API endpoint can be found at `localhost:3000/.netlify/functions/`.
+
 ### Creating a Pull Request
 
 ---

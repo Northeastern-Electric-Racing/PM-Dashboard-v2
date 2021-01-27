@@ -60,7 +60,7 @@ The below table will help track various components of setting up this project an
 | Area | Tech / Package | Issue | Researched | Decided | Implemented |
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | Basic React App | create-react-app | - | - | Y | Y |
-| Deployment | Netlify | Y | - | Y | Y |
+| Deployment | Netlify | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/1) | - | Y | Y |
 | Linting | ESLint | Y |  |  |  |
 | Formatting | Prettier | Y |  |  |  |
 | Testing | Jest | Y |  |  |  |

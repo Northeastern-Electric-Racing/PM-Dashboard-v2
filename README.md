@@ -64,7 +64,7 @@ The below table will help track various components of setting up this project an
 | Linting | ESLint | Y |  |  |  |
 | Formatting | Prettier | Y |  |  |  |
 | Testing | Jest | Y |  |  |  |
-| e2e Testing | ? | Y |  |  |  |
+| e2e Testing | Cypress | Y |  |  |  |
 | Component Testing | ? |  |  |  |  |
 | Database | ? | Y |  |  |  |
 | ORM | ? | Y |  |  |  |

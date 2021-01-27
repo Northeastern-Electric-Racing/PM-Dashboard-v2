@@ -74,5 +74,5 @@ The below table will help track various components of setting up this project an
 | URL Routing | React Router |  |  |  |  |
 | Continuous Integration | GitHub Actions |  |  |  |  |
 | Database Hosting | ? |  |  |  |  |
-| Backend Structure | ? | Y |  |  |  |
+| Backend Structure | ? | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/14) |  |  |  |
 | _ | _ | _ | _ | _ | _ |

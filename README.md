@@ -63,4 +63,5 @@ The below table will help track various components of setting up this project an
 | Deployment | Netlify | Y | - | Y | Y |
 | ORM | ? | Y |  |  |  |
 | Database | ? | Y |  |  |  |
+| e2e Testing | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

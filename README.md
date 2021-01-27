@@ -65,6 +65,7 @@ The below table will help track various components of setting up this project an
 | Formatting | ? | Y |  |  |  |
 | Testing | ? | Y |  |  |  |
 | e2e Testing | ? | Y |  |  |  |
+| Component Testing | ? |  |  |  |  |
 | Database | ? | Y |  |  |  |
 | ORM | ? | Y |  |  |  |
 | User Authentication | ? |  |  |  |  |

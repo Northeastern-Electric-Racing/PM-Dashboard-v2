@@ -72,7 +72,7 @@ The below table will help track various components of setting up this project an
 | State Management | Redux |  |  |  |  |
 | Charts | react-google-charts |  |  |  |  |
 | URL Routing | React Router |  |  |  |  |
-| Continuous Integration | ? |  |  |  |  |
+| Continuous Integration | GitHub Actions |  |  |  |  |
 | Database Hosting | ? |  |  |  |  |
 | Backend Structure | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

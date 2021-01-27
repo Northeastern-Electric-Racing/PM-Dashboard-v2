@@ -71,4 +71,5 @@ The below table will help track various components of setting up this project an
 | State Management | ? |  |  |  |  |
 | Charts | ? |  |  |  |  |
 | URL Routing | ? |  |  |  |  |
+| Continuous Integration | ? |  |  |  |  |
 | _ | _ | _ | _ | _ | _ |

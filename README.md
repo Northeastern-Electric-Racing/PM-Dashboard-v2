@@ -65,7 +65,7 @@ The below table will help track various components of setting up this project an
 | Formatting | Prettier | Y |  |  |  |
 | Testing | Jest | Y |  |  |  |
 | e2e Testing | Cypress | Y |  |  |  |
-| Component Testing | ? |  |  |  |  |
+| Component Testing | Enzyme |  |  |  |  |
 | Database | ? | Y |  |  |  |
 | ORM | ? | Y |  |  |  |
 | User Authentication | ? |  |  |  |  |

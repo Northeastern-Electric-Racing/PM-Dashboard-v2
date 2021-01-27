@@ -61,7 +61,7 @@ The below table will help track various components of setting up this project an
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | Basic React App | create-react-app | - | - | Y | Y |
 | Deployment | Netlify | Y | - | Y | Y |
-| Linting | ? | Y |  |  |  |
+| Linting | ESLint | Y |  |  |  |
 | Formatting | ? | Y |  |  |  |
 | Testing | ? | Y |  |  |  |
 | e2e Testing | ? | Y |  |  |  |

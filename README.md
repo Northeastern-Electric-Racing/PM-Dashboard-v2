@@ -70,7 +70,7 @@ The below table will help track various components of setting up this project an
 | ORM | Prisma | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/2) |  |  |  |
 | User Authentication | ? | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/17) |  |  |  |
 | State Management | Redux | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/18) |  |  |  |
-| Charts | react-google-charts |  |  |  |  |
+| Charts | react-google-charts | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/20) |  |  |  |
 | Styling | Bootstrap | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/19) |  |  |  |
 | URL Routing | React Router |  |  |  |  |
 | Continuous Integration | GitHub Actions |  |  |  |  |

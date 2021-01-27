@@ -9,7 +9,7 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 - Onboarding
 - Contributor Guide
 - Deployment
-- Transition Checklist
+- [Project Setup Checklist](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#project-setup-checklist)
 
 ---
 
@@ -53,7 +53,7 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 
 ---
 
-## Transition Checklist
+## Project Setup Checklist
 
 The below table will help track various components of setting up this project and transitioning from [v1](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v1) to v2.
 

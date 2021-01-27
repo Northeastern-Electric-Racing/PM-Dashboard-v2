@@ -81,7 +81,7 @@ Example: `#12-JamesCD` or `#275-KevinYu`.
 
 Use `git status` to check which branch you are on.
 Ensure you stash, reset, or commit your changes before changing branches, unless you want to bring your changes to the other branch.
-Use `git checkout main` to switch back to the main branch.
+Use `git checkout main` to switch back to the `main` branch.
 
 ### Writing Code
 
@@ -115,6 +115,24 @@ Navigate to `localhost:3000` if your browser does not automatically.
 The API endpoint can be found at `localhost:3000/.netlify/functions/`.
 
 ### Creating a Pull Request
+
+Pull requests (aka PRs) allow for others to review your code before it gets merged together with the `main` branch.
+Don't be afraid to open a PR before you are finished if you want feedback on your code, just make sure to note this in your PR.
+Pushing more commits to the GitHub repo will add them to the PR.
+
+Ensure that you have pushed your branch to GitHub using `git push`.
+You may need to run `git push --set-upstream origin [branch name]` as instructed by the git CLI if the branch does not already exist in the GitHub repo and only exists on your local computer.
+
+Navigate to the [PRs page on GitHub](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pulls) and click "New pull request".
+You may have to select the branch which you would like to merge into the `main` branch.
+
+Give your PR an informative and concise title.
+PR titles often match the title of the issue they are linked to, but they do not have to match.
+
+Use [closing keywords](https://docs.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue) in the description of the PR to link the PR with any associated issue(s).
+Example: `closes #27`, `fixed #82`, or `resolve #23, closed #56`.
+
+In the sidebar, request review from any interested team members, which must include `@kevinyu328` or `@jamescd18`.
 
 ---
 

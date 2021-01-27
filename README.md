@@ -69,7 +69,7 @@ The below table will help track various components of setting up this project an
 | Database | PostgreSQL | Y |  |  |  |
 | ORM | Prisma | Y |  |  |  |
 | User Authentication | Sign-In with Google |  |  |  |  |
-| State Management | ? |  |  |  |  |
+| State Management | Redux |  |  |  |  |
 | Charts | ? |  |  |  |  |
 | URL Routing | ? |  |  |  |  |
 | Continuous Integration | ? |  |  |  |  |

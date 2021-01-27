@@ -67,4 +67,5 @@ The below table will help track various components of setting up this project an
 | e2e Testing | ? | Y |  |  |  |
 | Database | ? | Y |  |  |  |
 | ORM | ? | Y |  |  |  |
+| User Authentication | ? |  |  |  |  |
 | _ | _ | _ | _ | _ | _ |

@@ -70,4 +70,5 @@ The below table will help track various components of setting up this project an
 | User Authentication | ? |  |  |  |  |
 | State Management | ? |  |  |  |  |
 | Charts | ? |  |  |  |  |
+| URL Routing | ? |  |  |  |  |
 | _ | _ | _ | _ | _ | _ |

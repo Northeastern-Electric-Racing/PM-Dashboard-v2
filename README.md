@@ -61,10 +61,10 @@ The below table will help track various components of setting up this project an
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | Basic React App | create-react-app | - | - | Y | Y |
 | Deployment | Netlify | Y | - | Y | Y |
-| ORM | ? | Y |  |  |  |
-| Database | ? | Y |  |  |  |
-| e2e Testing | ? | Y |  |  |  |
 | Linting | ? | Y |  |  |  |
 | Formatting | ? | Y |  |  |  |
 | Testing | ? | Y |  |  |  |
+| e2e Testing | ? | Y |  |  |  |
+| Database | ? | Y |  |  |  |
+| ORM | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

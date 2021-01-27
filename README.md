@@ -61,4 +61,5 @@ The below table will help track various components of setting up this project an
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | Basic React App | create-react-app | - | - | Y | Y |
 | Deployment | Netlify | Y | - | Y | Y |
+| ORM | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

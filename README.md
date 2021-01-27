@@ -68,7 +68,7 @@ The below table will help track various components of setting up this project an
 | Component Testing | Enzyme |  |  |  |  |
 | Database | PostgreSQL | Y |  |  |  |
 | ORM | Prisma | Y |  |  |  |
-| User Authentication | ? |  |  |  |  |
+| User Authentication | Sign-In with Google |  |  |  |  |
 | State Management | ? |  |  |  |  |
 | Charts | ? |  |  |  |  |
 | URL Routing | ? |  |  |  |  |

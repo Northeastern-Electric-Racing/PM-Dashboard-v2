@@ -73,4 +73,5 @@ The below table will help track various components of setting up this project an
 | Charts | ? |  |  |  |  |
 | URL Routing | ? |  |  |  |  |
 | Continuous Integration | ? |  |  |  |  |
+| Database Hosting | ? |  |  |  |  |
 | _ | _ | _ | _ | _ | _ |

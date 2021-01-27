@@ -64,4 +64,5 @@ The below table will help track various components of setting up this project an
 | ORM | ? | Y |  |  |  |
 | Database | ? | Y |  |  |  |
 | e2e Testing | ? | Y |  |  |  |
+| Linting | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

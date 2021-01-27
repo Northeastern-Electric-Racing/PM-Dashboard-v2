@@ -59,4 +59,5 @@ The below table will help track various components of setting up this project an
 
 | Area | Tech / Package | Issue | Researched | Decided | Implemented |
 | :--- | :--- | :---: | :---: | :---: | :---: |
+| Basic React App | create-react-app | - | - | Y | Y |
 | _ | _ | _ | _ | _ | _ |

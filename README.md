@@ -54,3 +54,7 @@ Northeastern Electric Racing Project Management Dashboard - version 2
 ---
 
 ## Transition Checklist
+
+The below table will help track various components of setting up this project and transitioning from v1 to v2.
+
+

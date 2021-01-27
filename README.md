@@ -67,7 +67,7 @@ The below table will help track various components of setting up this project an
 | e2e Testing | Cypress | Y |  |  |  |
 | Component Testing | Enzyme |  |  |  |  |
 | Database | PostgreSQL | Y |  |  |  |
-| ORM | ? | Y |  |  |  |
+| ORM | Prisma | Y |  |  |  |
 | User Authentication | ? |  |  |  |  |
 | State Management | ? |  |  |  |  |
 | Charts | ? |  |  |  |  |

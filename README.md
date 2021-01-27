@@ -61,8 +61,8 @@ The below table will help track various components of setting up this project an
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | Basic React App | create-react-app | - | - | Y | Y |
 | Deployment | Netlify | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/1) | - | Y | Y |
-| Linting | ESLint | Y |  |  |  |
-| Formatting | Prettier | Y |  |  |  |
+| Linting | ESLint | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
+| Formatting | Prettier | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
 | Testing | Jest | Y |  |  |  |
 | e2e Testing | Cypress | Y |  |  |  |
 | Component Testing | Enzyme | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) |  |  |  |

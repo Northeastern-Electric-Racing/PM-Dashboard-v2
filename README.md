@@ -63,7 +63,7 @@ The below table will help track various components of setting up this project an
 | Deployment | Netlify | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/1) | - | Y | Y |
 | Linting | ESLint | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
 | Formatting | Prettier | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
-| Testing | Jest | Y |  |  |  |
+| Testing | Jest | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/7) |  |  |  |
 | e2e Testing | Cypress | Y |  |  |  |
 | Component Testing | Enzyme | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) |  |  |  |
 | Database | PostgreSQL | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4) |  |  |  |

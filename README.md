@@ -71,6 +71,7 @@ The below table will help track various components of setting up this project an
 | User Authentication | ? | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/17) |  |  |  |
 | State Management | Redux | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/18) |  |  |  |
 | Charts | react-google-charts |  |  |  |  |
+| Styling | Bootstrap | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/19) |  |  |  |
 | URL Routing | React Router |  |  |  |  |
 | Continuous Integration | GitHub Actions |  |  |  |  |
 | Database Hosting | ? |  |  |  |  |

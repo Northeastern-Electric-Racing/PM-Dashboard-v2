@@ -70,7 +70,7 @@ The below table will help track various components of setting up this project an
 | ORM | Prisma | Y |  |  |  |
 | User Authentication | Sign-In with Google |  |  |  |  |
 | State Management | Redux |  |  |  |  |
-| Charts | ? |  |  |  |  |
+| Charts | react-google-charts |  |  |  |  |
 | URL Routing | ? |  |  |  |  |
 | Continuous Integration | ? |  |  |  |  |
 | Database Hosting | ? |  |  |  |  |

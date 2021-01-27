@@ -66,7 +66,7 @@ The below table will help track various components of setting up this project an
 | Testing | Jest | Y |  |  |  |
 | e2e Testing | Cypress | Y |  |  |  |
 | Component Testing | Enzyme | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) |  |  |  |
-| Database | PostgreSQL | Y |  |  |  |
+| Database | PostgreSQL | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4) |  |  |  |
 | ORM | Prisma | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/2) |  |  |  |
 | User Authentication | Sign-In with Google |  |  |  |  |
 | State Management | Redux |  |  |  |  |

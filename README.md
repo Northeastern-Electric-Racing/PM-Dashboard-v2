@@ -66,4 +66,5 @@ The below table will help track various components of setting up this project an
 | e2e Testing | ? | Y |  |  |  |
 | Linting | ? | Y |  |  |  |
 | Formatting | ? | Y |  |  |  |
+| Testing | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

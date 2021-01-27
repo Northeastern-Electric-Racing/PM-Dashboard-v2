@@ -74,4 +74,5 @@ The below table will help track various components of setting up this project an
 | URL Routing | ? |  |  |  |  |
 | Continuous Integration | ? |  |  |  |  |
 | Database Hosting | ? |  |  |  |  |
+| Backend Structure | ? | Y |  |  |  |
 | _ | _ | _ | _ | _ | _ |

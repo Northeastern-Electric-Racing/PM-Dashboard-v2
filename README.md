@@ -59,7 +59,7 @@ The below table will help track various components of setting up this project an
 
 | Area | Tech / Package | Issue | Researched | Decided | Implemented |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| Basic React App | create-react-app | - | - | Y | Y |
+| Basic React App | create-react-app | - | - | Y | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/tree/6762c180ade9801712fac20f0bc1cc32d7176326) |
 | Deployment | Netlify | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/1) | - | Y | Y |
 | Linting | ESLint | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
 | Formatting | Prettier | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |

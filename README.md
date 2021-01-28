@@ -164,7 +164,7 @@ The below table will help track various components of setting up this project an
 | Formatting | Prettier | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6) |  |  |  |
 | Testing | Jest | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/7) |  |  |  |
 | e2e Testing | Cypress | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/5) |  |  |  |
-| Component Testing | React Testing Library | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) |  |  |  |
+| Component Testing | React Testing Library | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) | Y | Y |  |
 | Database | PostgreSQL | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4) |  |  |  |
 | ORM | Prisma | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/2) |  |  |  |
 | User Authentication | ? | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/17) |  |  |  |

@@ -6,7 +6,7 @@ All questions can be directed to the project admins: `@kevinyu328` and `@jamescd
 
 ---
 
-## Table of Contents
+## Quick Links
 - [About the Project](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#about-the-project)
 - [Onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#onboarding)
 - [Contributor Guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#contributor-guide)

@@ -1,10 +1,10 @@
-## Contributor Guide
+# Contributor Guide
 
-### Creating Issues & Suggesting Features
+## Creating Issues & Suggesting Features
 
 Navigate to the [GitHub repository issues page](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues) and click the "New Issue" button.
 
-#### Issue Title
+### Issue Title
 
 Give your issue an informative, but concise title that follows the naming syntax: `[Page] - [Description]`.
 The page field should name one specific page within the application that the issue pertains to.
@@ -12,7 +12,7 @@ Alternatively, use `General` or `Docs` to indicate issues spanning the whole sit
 The description field should briefly describe what the issue is.
 Examples: `General - Increase Padding for Tables` or `Projects - Add Filter by Project Lead`.
 
-#### Issue Description
+### Issue Description
 
 Include the required information in the issue description based on the kind of issue you are submitting.
 
@@ -25,7 +25,7 @@ Other -> Desired Changes, Screenshots (as needed)
 Add labels as is appropriate for the issue, and assign it to `@kevinyu328` or `@jamescd18` for review.
 Reviewers will determine whether the issue is valid, whether it will be accepted and worked on, and which milestone it will be a part of.
 
-### Creating a Branch
+## Creating a Branch
 
 Use `git checkout -b [branch name]` to create a new branch.
 Give the branch a short name that follows the naming syntax: `#[issue number]-[contributor name]`.
@@ -35,7 +35,7 @@ Use `git status` to check which branch you are on.
 Ensure you stash, reset, or commit your changes before changing branches, unless you want to bring your changes to the other branch.
 Use `git checkout main` to switch back to the `main` branch.
 
-### Writing Code
+## Writing Code
 
 Comment your code with JSDoc and inline comments to help others understand your code.
 
@@ -43,7 +43,7 @@ Test your code to the best of your ability and avoid writing overly complex code
 
 Follow good coding practices taught in Fundies 1 and Fundies 2.
 
-### Creating a Commit
+## Creating a Commit
 
 Commit early and often (within reason) to properly save your work and to make your changes more easily separable.
 
@@ -53,20 +53,20 @@ Examples: `#12 - Expanded the creating commmits section` or `#79 - Increased lis
 
 See [common git commands](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#onboarding) for alternative methods for staging and committing changes.
 
-### Testing Your Code
+## Testing Your Code
 
 Run the unit tests and try to ensure they all pass.
 
 You can run a test coverage report too, to see where there may be gaps in test cases.
 Test coverage reports only go by lines of code, so make sure to also consider if edge cases have been tested.
 
-### Running the App Locally
+## Running the App Locally
 
 Use `npm run start` in order to boot up the React app and the back-end serverless functions on your local computer.
 Navigate to `localhost:3000` if your browser does not automatically.
 The API endpoint can be found at `localhost:3000/.netlify/functions/`.
 
-### Creating a Pull Request
+## Creating a Pull Request
 
 Pull requests (aka PRs) allow for others to review your code before it gets merged together with the `main` branch.
 Don't be afraid to open a PR before you are finished if you want feedback on your code, just make sure to note this in your PR.

@@ -1,6 +1,6 @@
-## Onboarding
+# Onboarding
 
-### First Time Install
+## First Time Install
 
 First, ensure that you have [Node.js](https://nodejs.org/en/) installed.
 

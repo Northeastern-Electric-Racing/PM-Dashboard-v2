@@ -2,6 +2,9 @@
 
 Northeastern Electric Racing Project Management Dashboard - version 2
 
+A project management web application built in React.
+Read more [here](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
+
 All questions can be directed to the project admins: `@kevinyu328` and `@jamescd18`.
 
 ## Quick Links
@@ -12,12 +15,6 @@ All questions can be directed to the project admins: `@kevinyu328` and `@jamescd
 - [Project Setup Checklist](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#project-setup-checklist)
 
 ---
-
-## About the Project
-
-The NER PM Dashboard v2 is a project management web application built in React.
-The app is primarily for the benefit of Northeastern Electric Racing's Project Management Office, club leadership, and club members as a whole.
-For details, see [the full about page](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md#about-the-project).
 
 ## Project Setup Checklist
 

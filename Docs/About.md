@@ -1,5 +1,7 @@
 ## About the Project
 
+The app is primarily for the benefit of Northeastern Electric Racing's Project Management Office, club leadership, and club members as a whole.
+
 ### Purpose
 
 ### History

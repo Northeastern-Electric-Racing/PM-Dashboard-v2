@@ -7,14 +7,15 @@ Read more [here](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2
 
 All questions can be directed to the project admins: `@kevinyu328` and `@jamescd18`.
 
-## Quick Links
-- [About the Project](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md)
-- [Onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md)
-- [Contributor Guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md)
-- [Deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md)
-- [Project Setup Checklist](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2#project-setup-checklist)
-
 ---
+
+## Getting Started
+
+Start by understanding what the project is [all about](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
+Then go through the [onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md) steps.
+And finally read through the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md).
+
+If you're curious, check out the [deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md) details too.
 
 ## Project Setup Checklist
 

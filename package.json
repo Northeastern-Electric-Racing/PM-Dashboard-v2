@@ -22,6 +22,7 @@
     "build:lambda": "netlify-lambda build src/lambda",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
+    "migrate": "npx prisma migrate dev --preview-feature --name",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

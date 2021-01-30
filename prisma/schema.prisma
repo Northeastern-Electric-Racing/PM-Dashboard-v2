@@ -32,6 +32,7 @@ model User {
   id      Int      @default(autoincrement()) @id
   email   String   @unique
   name    String?
+  age     Int?
   posts   Post[]
   profile Profile?
 }

@@ -12,7 +12,15 @@ In your CLI, navigate to the folder for the project and run `npm install` to ins
 
 ## Database
 
+The easiest way to install [PostgreSQL](https://www.postgresql.org) on a Mac is with [Postgres.app](https://postgresapp.com).
+Alternative OS installs can be found [here](https://www.postgresql.org/download/).
 
+Add a `.env` file to the project root directory via `touch .env` in the CLI or creating a file in your IDE.
+Paste the following line into the `.env` file and replace `<USERNAME>` with your computer username.
+`DATABASE_URL="postgresql://<USERNAME>:@localhost:5432/nerpm?schema=public"`
+
+To test that things are working, run `npm run start` in the CLI and go to an example API route.
+If the starter code still exists, use `localhost:3000/.netlify/functions/seed`.
 
 ## IDE
 

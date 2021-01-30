@@ -2,9 +2,9 @@
 
 The app is primarily for the benefit of Northeastern Electric Racing's Project Management Office, club leadership, and club members as a whole.
 
-## Purpose
+## Product Management
 
-## History
+See the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md) document for a comprehensive understanding of the project's purpose.
 
 ## Tech Stack
 

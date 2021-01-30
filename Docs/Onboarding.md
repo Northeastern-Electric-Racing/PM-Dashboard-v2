@@ -1,6 +1,6 @@
 # Onboarding
 
-## First Time Install
+## Project Setup
 
 First, ensure that you have [Node.js](https://nodejs.org/en/) installed.
 
@@ -10,7 +10,11 @@ Familiarize yourself with [common git commands](https://education.github.com/git
 
 In your CLI, navigate to the folder for the project and run `npm install` to instruct [npm](https://www.npmjs.com/about) to install all neccessary packages.
 
-## Recommended VSCode Extensions
+## Database
+
+
+
+## IDE
 
 These are extensions for VSCode that might make your developer experience more enjoyable.
 They are completely optional.

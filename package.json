@@ -22,6 +22,7 @@
     "build:lambda": "netlify-lambda build src/lambda",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
+    "migrate": "npx prisma migrate dev --preview-feature --name",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +45,7 @@
   },
   "dependencies": {
     "@octokit/core": "^3.2.4",
+    "@prisma/client": "^2.15.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
@@ -62,6 +64,7 @@
   "devDependencies": {
     "@babel/plugin-transform-object-assign": "^7.12.1",
     "@babel/preset-typescript": "^7.12.7",
+    "@prisma/cli": "^2.15.0",
     "@types/aws-lambda": "^8.10.71",
     "http-proxy-middleware": "^1.0.6",
     "netlify-lambda": "^2.0.3",

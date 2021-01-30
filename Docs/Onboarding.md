@@ -1,6 +1,6 @@
 # Onboarding
 
-## First Time Install
+## Project Setup
 
 First, ensure that you have [Node.js](https://nodejs.org/en/) installed.
 
@@ -9,3 +9,22 @@ First, ensure that you have [Node.js](https://nodejs.org/en/) installed.
 Familiarize yourself with [common git commands](https://education.github.com/git-cheat-sheet-education.pdf), [CLI commands](https://www.w3schools.com/whatis/whatis_cli.asp), and [what Git is](https://www.atlassian.com/git/tutorials/what-is-git) if you aren't already.
 
 In your CLI, navigate to the folder for the project and run `npm install` to instruct [npm](https://www.npmjs.com/about) to install all neccessary packages.
+
+## Database
+
+The easiest way to install [PostgreSQL](https://www.postgresql.org) on a Mac is with [Postgres.app](https://postgresapp.com).
+Alternative OS installs can be found [here](https://www.postgresql.org/download/).
+
+Add a `.env` file to the project root directory via `touch .env` in the CLI or creating a file in your IDE.
+Paste the following line into the `.env` file and replace `<USERNAME>` with your computer username.
+`DATABASE_URL="postgresql://<USERNAME>:@localhost:5432/nerpm?schema=public"`
+
+To test that things are working, run `npm run start` in the CLI and go to an example API route.
+If the starter code still exists, use `localhost:3000/.netlify/functions/seed`.
+
+## IDE
+
+These are extensions for VSCode that might make your developer experience more enjoyable.
+They are completely optional.
+
+- [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma) (`prisma.prisma`)

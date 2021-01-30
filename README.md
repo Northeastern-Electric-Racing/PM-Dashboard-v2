@@ -30,7 +30,7 @@ The below table will help track various components of setting up this project an
 | Testing | Jest | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/7) | Y | Y |  |
 | e2e Testing | Cypress | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/5) | Y | Y |  |
 | Component Testing | React Testing Library | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) | Y | Y |  |
-| Database | PostgreSQL | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4) |  |  |  |
+| Database | PostgreSQL | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4) | Y | Y |  |
 | ORM | Prisma | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/2) |  |  |  |
 | User Authentication | react-google-login | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/17) | Y | Y |  |
 | State Management | Redux | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/18) |  |  |  |

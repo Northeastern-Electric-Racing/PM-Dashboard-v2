@@ -2,6 +2,18 @@
 
 Product Management documentation for the NER PM Dashboard v2.
 
+## Table of Contents
+
+- [Document Purpose](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#document-purpose)
+- [Product Purpose](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#product-purpose)
+- [Product History](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#product-history)
+- [Users](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#users)
+- [Features](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#features)
+- [Metrics](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#metrics)
+- [Business Value](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#business-value)
+- [Key Resources](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#key-resources)
+- [Risks](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md#risks)
+
 ## Document Purpose
 
 The purpose of this document is to thoroughly record the purpose, metrics, and roadmap for the Northeastern Electric Racing Project Management Dashboard website (“NER PM Dashboard”). 

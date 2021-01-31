@@ -28,8 +28,10 @@ Turn on `format on save` for Prettier.
 Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac).
 Search for `format on save` and make sure `Editor: Format On Save` is checked / yes.
 
-These are extensions for VSCode that might make your developer experience more enjoyable.
+Below are extensions for VSCode that might make your developer experience more enjoyable.
 They are completely optional.
 
 - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma) (`prisma.prisma`)
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) (`esbenp.prettier-vscode`)
+- [Babel](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel) (`mgmcdermott.vscode-language-babel`)
+- [Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme) (`pkief.material-icon-theme`)

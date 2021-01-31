@@ -20,8 +20,12 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "exclude": ["src/setupProxy.js", "src/lambda"],
+  "exclude": [
+    "src/setupProxy.js",
+    "src/functions"
+  ],
   "include": [
-    "src"
+    "src",
+    "backend"
   ]
 }

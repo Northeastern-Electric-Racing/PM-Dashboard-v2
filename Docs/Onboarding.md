@@ -24,6 +24,10 @@ If the starter code still exists, use `localhost:3000/.netlify/functions/seed`.
 
 ## IDE
 
+Turn on `format on save` for Prettier.
+Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac).
+Search for `format on save` and make sure `Editor: Format On Save` is checked / yes.
+
 These are extensions for VSCode that might make your developer experience more enjoyable.
 They are completely optional.
 

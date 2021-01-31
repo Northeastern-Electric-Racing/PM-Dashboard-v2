@@ -27,7 +27,7 @@ export async function handler(event: any, context: Context) {
   }
 }
 
-const seedUser = {
+export const seedUser = {
   email: 'jane@prisma.io',
   name: 'Jane',
   profile: {

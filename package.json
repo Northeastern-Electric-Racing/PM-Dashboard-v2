@@ -16,10 +16,10 @@
   "scripts": {
     "start": "run-p start:**",
     "start:app": "react-scripts start",
-    "start:lambda": "netlify-lambda serve src/lambda",
+    "start:lambda": "netlify-lambda serve src/backend/functions",
     "build": "run-p build:**",
     "build:app": "react-scripts build",
-    "build:lambda": "netlify-lambda build src/lambda",
+    "build:lambda": "netlify-lambda build src/backend/functions",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
     "migrate": "npx prisma migrate dev --preview-feature --name",
@@ -29,6 +29,17 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!build",
+      "!coverage",
+      "!lambda",
+      "!docs"
     ]
   },
   "browserslist": {

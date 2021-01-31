@@ -28,3 +28,4 @@ These are extensions for VSCode that might make your developer experience more e
 They are completely optional.
 
 - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma) (`prisma.prisma`)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) (`esbenp.prettier-vscode`)

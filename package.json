@@ -22,7 +22,7 @@
     "build:lambda": "netlify-lambda build src/backend/functions",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
-    "migrate": "npx prisma migrate dev --preview-feature --name",
+    "migrate": "npx prisma migrate dev --preview-feature --schema=./src/backend/prisma/schema.prisma",
     "postinstall": "npx prisma generate --schema=./src/backend/prisma/schema.prisma",
     "eject": "react-scripts eject"
   },

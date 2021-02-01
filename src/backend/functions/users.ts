@@ -5,11 +5,12 @@ const prisma = new PrismaClient();
 
 export async function handler(event: any, context: Context) {
   try {
-      const users = await prisma.user.findMany();
-      return { 
-          statusCode: 200,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(users) };
+    const users = await prisma.user.findMany();
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(users)
+    };
   } catch (err) {
     console.log(err); // output to netlify function log
     return {

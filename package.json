@@ -47,6 +47,7 @@
       "!coverage",
       "!lambda",
       "!docs"
+    ]
   },
   "browserslist": {
     "production": [

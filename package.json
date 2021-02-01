@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
     "migrate": "npx prisma migrate dev --preview-feature --name",
-    "postinstall": "npx prisma generate",
+    "postinstall": "npx prisma generate --schema=./src/backend/prisma/schema.prisma",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

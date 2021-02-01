@@ -22,11 +22,24 @@ Paste the following line into the `.env` file and replace `<USERNAME>` with your
 To test that things are working, run `npm run start` in the CLI and go to an example API route.
 If the starter code still exists, use `localhost:3000/.netlify/functions/seed`.
 
-## IDE
+## IDE: VSCode
 
 Turn on `format on save` for Prettier.
-Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac).
+Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac) (or `File > Preferences > Settings` for Windows).
 Search for `format on save` and make sure `Editor: Format On Save` is checked / yes.
+
+Open settings and search for `open settings json`.
+Click `Edit in settings.json` under the `[JSON] Configure settings to be overridden for [json] language` section.
+Paste this into `settings.json`:
+
+```json
+"[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+},
+"[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
+```
 
 Below are extensions for VSCode that might make your developer experience more enjoyable.
 They are completely optional.

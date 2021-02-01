@@ -2,7 +2,7 @@ import { Context } from 'aws-lambda';
 
 export async function handler(event: any, context: Context) {
   try {
-    return { statusCode: 200, body: "example!" };
+    return { statusCode: 200, body: 'example!' };
   } catch (err) {
     console.log(err); // output to netlify function log
     return {

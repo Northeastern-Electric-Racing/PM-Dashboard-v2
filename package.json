@@ -22,7 +22,8 @@
     "build:lambda": "netlify-lambda build src/backend/functions",
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage",
-    "migrate": "npx prisma migrate dev --preview-feature --name",
+    "migrate": "npx prisma migrate dev --preview-feature --schema=./src/backend/prisma/schema.prisma",
+    "postinstall": "npx prisma generate --schema=./src/backend/prisma/schema.prisma",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -30,6 +31,13 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "singleQuote": true,
+    "printWidth": 100
   },
   "jest": {
     "collectCoverageFrom": [
@@ -77,8 +85,11 @@
     "@babel/preset-typescript": "^7.12.7",
     "@prisma/cli": "^2.15.0",
     "@types/aws-lambda": "^8.10.71",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "http-proxy-middleware": "^1.0.6",
     "netlify-lambda": "^2.0.3",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1"
   }
 }

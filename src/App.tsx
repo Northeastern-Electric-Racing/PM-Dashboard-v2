@@ -20,6 +20,7 @@ function App() {
         >
           Learn React
         </a>
+        <p>SCROLL DOWN</p>
       </header>
       <div>
         <Projects />

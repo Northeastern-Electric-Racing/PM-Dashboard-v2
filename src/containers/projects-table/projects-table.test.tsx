@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ProjectsTable from './ProjectsTable';
+import ProjectsTable from './projects-table';
 
 test('Renders title', () => {
   render(<ProjectsTable />);

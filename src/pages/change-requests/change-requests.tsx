@@ -1,5 +1,5 @@
 import './ChangeRequests.module.css';
-import ChangeRequestsTable from '../../containers/ChangeRequestsTable/ChangeRequestsTable';
+import ChangeRequestsTable from '../../containers/change-requests-table/change-requests-table';
 
 const ChangeRequests: React.FC = () => {
   return (

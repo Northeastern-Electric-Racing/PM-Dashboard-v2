@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ChangeRequestsTable from './ChangeRequestsTable';
+import ChangeRequestsTable from './change-requests-table';
 
 test('Renders title', () => {
   render(<ChangeRequestsTable />);

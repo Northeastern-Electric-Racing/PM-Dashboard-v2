@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ProjectDetails from '../../components/ProjectDetails/ProjectDetails';
+import ProjectDetails from '../../components/project-details/project-details';
 import { Project } from '../../types/project-types';
 import './ProjectsTable.module.css';
 

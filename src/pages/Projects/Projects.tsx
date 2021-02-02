@@ -1,4 +1,4 @@
-import ProjectsTable from '../../containers/ProjectsTable/ProjectsTable';
+import ProjectsTable from '../../containers/projects-table/projects-table';
 import './Projects.module.css';
 
 const Projects: React.FC = () => {

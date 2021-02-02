@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ChangeRequests from './ChangeRequests';
+import ChangeRequests from './change-requests';
 
 test('Renders title', () => {
   render(<ChangeRequests />);

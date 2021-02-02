@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Project } from '../../types/project-types';
-import ProjectDetails from './ProjectDetails';
+import ProjectDetails from './project-details';
 
 test('Renders title', () => {
   const exProject: Project = { name: 'Dummy', duration: 4 };

@@ -10,7 +10,7 @@ const prj2: Project = { name: 'Weld it all on', duration: 236 };
 const ProjectsTable: React.FC = () => {
   const [exProject, setExProject] = useState(prj0);
 
-  useEffect(() => setExProject(prj1));
+  useEffect(() => setExProject(prj1), []);
 
   const swapPrj = () => {
     setExProject(prj2);

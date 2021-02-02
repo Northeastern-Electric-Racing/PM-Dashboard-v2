@@ -1,3 +1,5 @@
+import './WorkPackages.module.css';
+
 function WorkPackages() {
   return (
     <div>

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ChangeRequests from './pages/change-requests/change-requests';
-import Projects from './pages/projects/projects';
+import Projects from './pages/projects-page/projects-page';
 
 function App() {
   return (

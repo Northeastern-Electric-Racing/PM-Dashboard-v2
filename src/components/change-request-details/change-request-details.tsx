@@ -1,5 +1,5 @@
 import { ChangeRequest } from '../../types/change-request-types';
-import './ChangeRequestDetails.module.css';
+import './change-request-details.module.css';
 
 interface ChangeRequestDetailsProps {
   changeRequest: ChangeRequest;

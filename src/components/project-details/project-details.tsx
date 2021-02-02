@@ -1,5 +1,5 @@
 import { Project } from '../../types/project-types';
-import './ProjectDetails.module.css';
+import './project-details.module.css';
 
 interface ProjectDetailsProps {
   project: Project;

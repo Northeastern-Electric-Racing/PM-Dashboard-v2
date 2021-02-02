@@ -1,4 +1,4 @@
-import './ChangeRequests.module.css';
+import './change-requests.module.css';
 import ChangeRequestsTable from '../../containers/change-requests-table/change-requests-table';
 
 const ChangeRequests: React.FC = () => {

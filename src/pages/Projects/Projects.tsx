@@ -1,5 +1,5 @@
 import ProjectsTable from '../../containers/projects-table/projects-table';
-import './Projects.module.css';
+import './projects.module.css';
 
 const Projects: React.FC = () => {
   return (

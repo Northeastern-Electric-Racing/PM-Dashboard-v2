@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './ChangeRequestsTable.module.css';
+import './change-requests-table.module.css';
 
 const ChangeRequestsTable: React.FC = () => {
   const crOptions: Array<String> = ['Delay', 'Budget', 'Scope'];

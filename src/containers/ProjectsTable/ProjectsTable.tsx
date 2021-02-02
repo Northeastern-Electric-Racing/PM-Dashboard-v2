@@ -1,11 +1,11 @@
 import './ProjectsTable.module.css';
 
-function ProjectsTable() {
+const ProjectsTable: React.FC = () => {
   return (
     <div>
       <p>This is the Projects Table container</p>
     </div>
   );
-}
+};
 
 export default ProjectsTable;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './ChangeRequestsTable.module.css';
 
-function ChangeRequestsTable() {
+const ChangeRequestsTable: React.FC = () => {
   const crOptions: Array<String> = ['Delay', 'Budget', 'Scope'];
   const [changeRequest, setChangeRequest] = useState(0);
 
@@ -16,6 +16,6 @@ function ChangeRequestsTable() {
       <a onClick={switchCR}>Click me!</a>
     </div>
   );
-}
+};
 
 export default ChangeRequestsTable;

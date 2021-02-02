@@ -1,11 +1,11 @@
 import './Projects.module.css';
 
-function Projects() {
+const Projects: React.FC = () => {
   return (
     <div>
       <h1>This is the Projects Page</h1>
     </div>
   );
-}
+};
 
 export default Projects;

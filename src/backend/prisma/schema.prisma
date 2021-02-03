@@ -29,6 +29,14 @@ model Fab_Weld_Request {
   date_completed    DateTime
 }
 
+enum CR_Type {
+  DESIGN_ISSUE
+  NEW_FUNCTION
+  OTHER
+  STAGE_GATING
+  WP_INITIATION
+}
+
 model Change_Request {
   cr_id           Int      @id @default(autoincrement())
   date_submitted  DateTime   

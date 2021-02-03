@@ -72,18 +72,22 @@ model Change {
 }
 
 model WBS_Element {
-  wbs_el_idInt   @id @default(autoincrement())
-  date_created   DateTime
-  wbs_num        String
-  wbs_el_name    String
-  wbs_el_status  WBS_El_Status
+  wbs_el_idInt     Int         @id @default(autoincrement())
+  date_created     DateTime
+  wbs_num          String
+  wbs_el_name      String
+  wbs_el_status    WBS_El_Status
+  project_lead     User        @relation(fields: [project_lead_id], references: [user_id])
+  project_lead_id  Int
 }
 
 model Project {
-  g_drive_folder   String 
-  slide_deck_link  String
-  bom_link         String
-  task_list_link   String
+  g_drive_folder      String 
+  slide_deck_link     String
+  bom_link            String
+  task_list_link      String
+  project_manager     User      @relation(fields: [project_manager_id], references: [user_id])
+  project_manager_id  Int
 }
 
 model Work_Package {

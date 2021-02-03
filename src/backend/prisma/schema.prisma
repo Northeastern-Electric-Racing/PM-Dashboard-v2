@@ -29,17 +29,20 @@ enum Role {
 }
 
 model User {
-  user_id          Int                @id @default(autoincrement())
-  first_name       String
-  last_name        String
-  email_id         String             @unique
-  last_login       DateTime
-  role             Role
-  Fab_Weld_Request Fab_Weld_Request[]
-  Change_Request   Change_Request[]
-  Change           Change[]
-  WBS_Element      WBS_Element[]
-  Project          Project[]
+  user_id           Int                @id @default(autoincrement())
+  first_name        String
+  last_name         String
+  email_id          String             @unique
+  last_login        DateTime
+  role              Role
+  Fab_Weld_Requests Fab_Weld_Request[]
+  Change_Requests   Change_Request[]
+  Stage_CR_Reviews  Stage_Gating[]
+  WP_Init_Positions WP_Initiation[]
+  Change            Change[]
+  WBS_Element       WBS_Element[]
+  Project           Project[]
+  WP_Initiation     WP_Initiation[]    @relation("project_lead")
 }
 
 model Fab_Weld_Request {
@@ -80,15 +83,21 @@ model Scope_Based_CR {
 }
 
 model Stage_Gating {
-  stage_gating_id Int     @id
-  done            Boolean
-  leftover_budget Int
+  stage_gating_id    Int     @id
+  done               Boolean
+  leftover_budget    Int
+  design_reviewer    User    @relation(fields: [design_reviewer_id], references: [user_id])
+  design_reviewer_id Int
 }
 
 model WP_Initiation {
-  wp_init_id   Int      @id
-  start_date   DateTime
-  details_good Boolean
+  wp_init_id         Int      @id
+  start_date         DateTime
+  details_good       Boolean
+  project_lead       User     @relation(name: "project_lead", fields: [project_lead_id], references: [user_id])
+  project_manager    User     @relation(fields: [project_manager_id], references: [user_id])
+  project_lead_id    Int
+  project_manager_id Int
 }
 
 model Change {

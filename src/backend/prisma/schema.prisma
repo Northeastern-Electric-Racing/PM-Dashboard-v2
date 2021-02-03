@@ -68,7 +68,9 @@ model Change {
   new               Boolean
   date_implemented  DateTime
   implementor       User     @relation(fields: [implementor_id], references: [user_id])
-  implementor_id    Int 
+  implementor_id    Int
+  change_request    Change_Request  @relation(fields: [cr_id], references: [cr_id])
+  cr_id             Int
 }
 
 model WBS_Element {

@@ -52,12 +52,11 @@ model Change_Request {
 }
 
 model Change {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  age     Int?
-  posts   Post[]
-  profile Profile?
+  change_id         Int      @id @default(autoincrement())
+  attribute         String
+  original          String
+  new               Boolean
+  date_implemented  DateTime
 }
 
 model WBS_Element {

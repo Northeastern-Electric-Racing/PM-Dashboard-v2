@@ -25,36 +25,36 @@ enum WBS_El_Status {
 }
 
 model User {
-  user_id            Int      @id @default(autoincrement())
-  first_name         String   
-  last_name          String
-  email_id           String   @unique
-  last_login         DateTime 
-  role               Int
-  fab_weld_requests  Fab_Weld_Request[]
-  change_requests    Change_Request[]
-  changes            Change[]
-  projects_led       WBS_Element[]
-  projects_managed   Project[]
+  user_id           Int                @id @default(autoincrement())
+  first_name        String
+  last_name         String
+  email_id          String             @unique
+  last_login        DateTime
+  role              Int
+  fab_weld_requests Fab_Weld_Request[]
+  change_requests   Change_Request[]
+  changes           Change[]
+  projects_led      WBS_Element[]
+  projects_managed  Project[]
 }
 
 model Fab_Weld_Request {
-  fw_id             Int     @id @default(autoincrement())
-  date_submitted    DateTime
-  part_name         String    
-  quantity          Int     
-  resources_needed  String
-  links             String
-  date_completed    DateTime
-  requestor         User     @relation(fields: [requestor_id], references: [user_id])
-  requestor_id      Int 
-  wbs_el            WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id         Int
+  fw_id            Int         @id @default(autoincrement())
+  date_submitted   DateTime
+  part_name        String
+  quantity         Int
+  resources_needed String
+  links            String
+  date_completed   DateTime
+  requestor        User        @relation(fields: [requestor_id], references: [user_id])
+  requestor_id     Int
+  wbs_el           WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el_id        Int
 }
 
 model Change_Request {
-  cr_id           Int      @id @default(autoincrement())
-  date_submitted  DateTime   
+  cr_id           Int         @id @default(autoincrement())
+  date_submitted  DateTime
   type            CR_Type
   what            String
   why             String
@@ -65,67 +65,67 @@ model Change_Request {
   date_reviewed   DateTime
   accepted        Boolean
   changes         Change[]
-  requestor       User     @relation(fields: [requestor_id], references: [user_id])
+  requestor       User        @relation(fields: [requestor_id], references: [user_id])
   requestor_id    Int
   wbs_el          WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id       Int 
+  wbs_el_id       Int
 }
 
 model Change {
-  change_id         Int      @id @default(autoincrement())
-  attribute         String
-  original          String
-  new               Boolean
-  date_implemented  DateTime
-  implementor       User     @relation(fields: [implementor_id], references: [user_id])
-  implementor_id    Int
-  change_request    Change_Request  @relation(fields: [cr_id], references: [cr_id])
-  cr_id             Int
+  change_id        Int            @id @default(autoincrement())
+  attribute        String
+  original         String
+  new              Boolean
+  date_implemented DateTime
+  implementor      User           @relation(fields: [implementor_id], references: [user_id])
+  implementor_id   Int
+  change_request   Change_Request @relation(fields: [cr_id], references: [cr_id])
+  cr_id            Int
 }
 
 model WBS_Element {
-  wbs_el_id          Int         @id @default(autoincrement())
-  date_created       DateTime
-  wbs_num            String
-  wbs_el_name        String
-  wbs_el_status      WBS_El_Status
-  fab_weld_requests  Fab_Weld_Request[]
-  change_requests    Change_Request[]
-  project_lead       User        @relation(fields: [project_lead_id], references: [user_id])
-  project_lead_id    Int
+  wbs_el_id         Int                @id @default(autoincrement())
+  date_created      DateTime
+  wbs_num           String
+  wbs_el_name       String
+  wbs_el_status     WBS_El_Status
+  fab_weld_requests Fab_Weld_Request[]
+  change_requests   Change_Request[]
+  project_lead      User               @relation(fields: [project_lead_id], references: [user_id])
+  project_lead_id   Int
 }
 
 model Project {
-  project_id          Int         @id // primary key of supertype relation also becomes primary key of subtype relation
-  g_drive_folder      String 
-  slide_deck_link     String
-  bom_link            String
-  task_list_link      String
-  work_packages       Work_Package[]
-  project_manager     User      @relation(fields: [project_manager_id], references: [user_id])
-  project_manager_id  Int
+  project_id         Int            @id // primary key of supertype relation also becomes primary key of subtype relation
+  g_drive_folder     String
+  slide_deck_link    String
+  bom_link           String
+  task_list_link     String
+  work_packages      Work_Package[]
+  project_manager    User           @relation(fields: [project_manager_id], references: [user_id])
+  project_manager_id Int
 }
 
 model Work_Package {
-  wp_id          Int         @id // primary key of supertype relation also becomes primary key of subtype relation
-  wp_progress    Float   
-  start_date     DateTime
-  duration       Int
-  budget         Int
-  dependencies   String 
-  deliverables   String
-  rules          String
-  descr_bullets  Description_Bullet[]
-  project        Project      @relation(fields: [project_id], references: [project_id])
-  project_id     Int
+  wp_id         Int                  @id // primary key of supertype relation also becomes primary key of subtype relation
+  wp_progress   Float
+  start_date    DateTime
+  duration      Int
+  budget        Int
+  dependencies  String
+  deliverables  String
+  rules         String
+  descr_bullets Description_Bullet[]
+  project       Project              @relation(fields: [project_id], references: [project_id])
+  project_id    Int
 }
 
 model Description_Bullet {
-  desc_id       Int      @id @default(autoincrement())
-  detail        String  
-  date_added    DateTime
-  date_deleted  DateTime
-  date_done     DateTime
-  work_package  Work_Package      @relation(fields: [wp_id], references: [wp_id])
-  wp_id         Int
+  desc_id      Int          @id @default(autoincrement())
+  detail       String
+  date_added   DateTime
+  date_deleted DateTime
+  date_done    DateTime
+  work_package Work_Package @relation(fields: [wp_id], references: [wp_id])
+  wp_id        Int
 }

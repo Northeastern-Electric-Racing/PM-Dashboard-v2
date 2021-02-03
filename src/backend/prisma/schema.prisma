@@ -88,7 +88,7 @@ model WBS_Element {
 }
 
 model Project {
-  project_id          Int         @id
+  project_id          Int         @id // primary key of supertype relation also becomes primary key of subtype relation
   g_drive_folder      String 
   slide_deck_link     String
   bom_link            String
@@ -98,7 +98,7 @@ model Project {
 }
 
 model Work_Package {
-  wp_id         Int         @id
+  wp_id         Int         @id // primary key of supertype relation also becomes primary key of subtype relation
   wp_progress   Float   
   start_date    DateTime
   duration      Int
@@ -114,4 +114,6 @@ model Description_Bullet {
   date_added    DateTime
   date_deleted  DateTime
   date_done     DateTime
+  work_package  Work_Package      @relation(fields: [wp_id], references: [wp_id])
+  wp_id         Int
 }

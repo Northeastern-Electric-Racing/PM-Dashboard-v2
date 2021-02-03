@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ChangeRequests from './pages/change-requests/change-requests';
+import Projects from './pages/projects/projects';
 
 function App() {
   return (
@@ -18,7 +20,12 @@ function App() {
         >
           Learn React
         </a>
+        <p>SCROLL DOWN</p>
       </header>
+      <div>
+        <Projects />
+        <ChangeRequests />
+      </div>
     </div>
   );
 }

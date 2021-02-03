@@ -59,12 +59,18 @@ model Change {
   date_implemented  DateTime
 }
 
+enum WBS_El_Status {
+  I
+  A
+  C
+}
+
 model WBS_Element {
   wbs_el_idInt   @id @default(autoincrement())
   date_created   DateTime
   wbs_num        String
   wbs_el_name    String
-  wbs_el_status  String
+  wbs_el_status  WBS_El_Status
 }
 
 model Project {

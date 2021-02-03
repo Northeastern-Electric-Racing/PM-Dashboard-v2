@@ -101,6 +101,7 @@ model Project {
   slide_deck_link     String
   bom_link            String
   task_list_link      String
+  work_packages       Work_Package[]
   project_manager     User      @relation(fields: [project_manager_id], references: [user_id])
   project_manager_id  Int
 }

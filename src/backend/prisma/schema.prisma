@@ -60,12 +60,11 @@ model Change {
 }
 
 model WBS_Element {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  age     Int?
-  posts   Post[]
-  profile Profile?
+  wbs_el_idInt   @id @default(autoincrement())
+  date_created   DateTime
+  wbs_num        String
+  wbs_el_name    String
+  wbs_el_status  String
 }
 
 model Project {

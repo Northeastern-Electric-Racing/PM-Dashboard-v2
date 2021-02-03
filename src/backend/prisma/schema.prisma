@@ -60,7 +60,7 @@ model Change_Request {
   scope_impact    String
   docs            String
   date_reviewed   DateTime
-  accepted        Boolean
+  accepted        Boolean?
   changes         Change[]
   requestor       User        @relation(fields: [requestor_id], references: [user_id])
   requestor_id    Int

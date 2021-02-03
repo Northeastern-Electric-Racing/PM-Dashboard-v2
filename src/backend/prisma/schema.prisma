@@ -16,9 +16,9 @@ enum CR_Type {
 }
 
 enum WBS_El_Status {
-  I
-  A
-  C
+  INACTIVE
+  ACTIVE
+  COMPLETE
 }
 
 model User {

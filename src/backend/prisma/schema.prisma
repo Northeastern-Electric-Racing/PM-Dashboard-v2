@@ -30,12 +30,17 @@ model Fab_Weld_Request {
 }
 
 model Change_Request {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  age     Int?
-  posts   Post[]
-  profile Profile?
+  cr_id           Int      @id @default(autoincrement())
+  date_submitted  DateTime   
+  type            CR_Type
+  what            String
+  why             String
+  timeline_impact DateTime
+  budget_impact   Int
+  scope_impact    String
+  docs            String
+  date_reviewed   DateTime
+  accepted        Boolean
 }
 
 model Change {

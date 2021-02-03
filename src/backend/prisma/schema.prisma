@@ -21,13 +21,20 @@ enum WBS_El_Status {
   COMPLETE
 }
 
+enum Role {
+  ADMIN
+  PROJECT_MANAGER
+  PROJECT_LEAD
+  GUEST
+}
+
 model User {
   user_id           Int                @id @default(autoincrement())
   first_name        String
   last_name         String
   email_id          String             @unique
   last_login        DateTime
-  role              Int
+  role              Role
   fab_weld_requests Fab_Weld_Request[]
   change_requests   Change_Request[]
   changes           Change[]

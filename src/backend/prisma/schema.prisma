@@ -67,6 +67,8 @@ model Change {
   original          String
   new               Boolean
   date_implemented  DateTime
+  implementor       User     @relation(fields: [implementor_id], references: [user_id])
+  implementor_id    Int 
 }
 
 model WBS_Element {

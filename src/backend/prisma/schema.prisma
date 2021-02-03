@@ -34,7 +34,7 @@ model User {
   fab_weld_requests Fab_Weld_Request[]
   change_requests   Change_Request[]
   changes           Change[]
-  projects_led      WBS_Element[]
+  wbs_el_led        WBS_Element[]
   projects_managed  Project[]
 }
 
@@ -91,12 +91,12 @@ model WBS_Element {
   wbs_el_status     WBS_El_Status
   fab_weld_requests Fab_Weld_Request[]
   change_requests   Change_Request[]
-  project_lead      User               @relation(fields: [project_lead_id], references: [user_id])
-  project_lead_id   Int
+  wbs_el_lead       User               @relation(fields: [wbs_el_lead_id], references: [user_id])
+  wbs_el_lead_id    Int
 }
 
 model Project {
-  project_id         Int            @id // primary key of supertype relation also becomes primary key of subtype relation
+  project_id         Int            @id
   g_drive_folder     String
   slide_deck_link    String
   bom_link           String
@@ -107,17 +107,17 @@ model Project {
 }
 
 model Work_Package {
-  wp_id         Int                  @id // primary key of supertype relation also becomes primary key of subtype relation
-  wp_progress   Float
-  start_date    DateTime
-  duration      Int
-  budget        Int
-  dependencies  String
-  deliverables  String
-  rules         String
-  descr_bullets Description_Bullet[]
-  project       Project              @relation(fields: [project_id], references: [project_id])
-  project_id    Int
+  wp_id        Int                  @id
+  wp_progress  Float
+  start_date   DateTime
+  duration     Int
+  budget       Int
+  dependencies String
+  deliverables String
+  rules        String
+  desc_bullets Description_Bullet[]
+  project      Project              @relation(fields: [project_id], references: [project_id])
+  project_id   Int
 }
 
 model Description_Bullet {

@@ -10,7 +10,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
+model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -21,14 +21,14 @@ model Post {
   authorId  Int
 }
 
-model Profile {
+model Fab_Weld_Request {
   id     Int     @id @default(autoincrement())
   bio    String?
   user   User    @relation(fields: [userId], references: [id])
   userId Int     @unique
 }
 
-model User {
+model Change_Request {
   id      Int      @id @default(autoincrement())
   email   String   @unique
   name    String?
@@ -36,3 +36,49 @@ model User {
   posts   Post[]
   profile Profile?
 }
+
+model Change {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  age     Int?
+  posts   Post[]
+  profile Profile?
+}
+
+model WBS_Element {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  age     Int?
+  posts   Post[]
+  profile Profile?
+}
+
+model Project {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  age     Int?
+  posts   Post[]
+  profile Profile?
+}
+
+model Work_Package {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  age     Int?
+  posts   Post[]
+  profile Profile?
+}
+
+model Description_Bullet {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  age     Int?
+  posts   Post[]
+  profile Profile?
+}
+

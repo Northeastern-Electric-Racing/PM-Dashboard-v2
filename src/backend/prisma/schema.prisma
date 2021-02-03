@@ -10,6 +10,20 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum CR_Type {
+  DESIGN_ISSUE
+  NEW_FUNCTION
+  OTHER
+  STAGE_GATING
+  WP_INITIATION
+}
+
+enum WBS_El_Status {
+  I
+  A
+  C
+}
+
 model User {
   user_id     Int      @id @default(autoincrement())
   first_name  String   
@@ -27,14 +41,6 @@ model Fab_Weld_Request {
   resources_needed  String
   links             String
   date_completed    DateTime
-}
-
-enum CR_Type {
-  DESIGN_ISSUE
-  NEW_FUNCTION
-  OTHER
-  STAGE_GATING
-  WP_INITIATION
 }
 
 model Change_Request {
@@ -57,12 +63,6 @@ model Change {
   original          String
   new               Boolean
   date_implemented  DateTime
-}
-
-enum WBS_El_Status {
-  I
-  A
-  C
 }
 
 model WBS_Element {

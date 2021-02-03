@@ -61,8 +61,8 @@ model Change_Request {
   accepted        Boolean
   requestor       User     @relation(fields: [requestor_id], references: [user_id])
   requestor_id    Int
-  wbs_el            WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id         Int 
+  wbs_el          WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el_id       Int 
 }
 
 model Change {
@@ -78,7 +78,7 @@ model Change {
 }
 
 model WBS_Element {
-  wbs_el_idInt     Int         @id @default(autoincrement())
+  wbs_el_id        Int         @id @default(autoincrement())
   date_created     DateTime
   wbs_num          String
   wbs_el_name      String
@@ -88,6 +88,7 @@ model WBS_Element {
 }
 
 model Project {
+  project_id          Int         @id
   g_drive_folder      String 
   slide_deck_link     String
   bom_link            String
@@ -97,6 +98,7 @@ model Project {
 }
 
 model Work_Package {
+  wp_id         Int         @id
   wp_progress   Float   
   start_date    DateTime
   duration      Int

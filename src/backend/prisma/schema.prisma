@@ -41,7 +41,7 @@ model Fab_Weld_Request {
   part_name        String
   quantity         Int
   resources_needed String
-  links            String
+  link             String
   date_completed   DateTime
   requestor        User        @relation(fields: [requestor_id], references: [user_id])
   requestor_id     Int

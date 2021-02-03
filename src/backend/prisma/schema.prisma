@@ -114,6 +114,7 @@ model Work_Package {
   dependencies  String 
   deliverables  String
   rules         String
+  descr_bullets Description_Bullet[]
   project       Project      @relation(fields: [project_id], references: [project_id])
   project_id    Int
 }

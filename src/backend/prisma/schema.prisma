@@ -75,12 +75,13 @@ model Project {
 }
 
 model Work_Package {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  age     Int?
-  posts   Post[]
-  profile Profile?
+  wp_progress   Float   
+  start_date    DateTime
+  duration      Int
+  budget        Int
+  dependencies  String 
+  deliverables  String
+  rules         String
 }
 
 model Description_Bullet {

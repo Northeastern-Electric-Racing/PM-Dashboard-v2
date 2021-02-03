@@ -11,14 +11,12 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  user_id     Int      @id @default(autoincrement())
+  first_name  String   
+  last_name   String
+  email_id    String   @unique
+  last_login  DateTime 
+  role        Int
 }
 
 model Fab_Weld_Request {

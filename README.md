@@ -3,7 +3,7 @@
 Northeastern Electric Racing Project Management Dashboard - version 2
 
 A project management web application built in React.
-Read more [here](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/About.md).
+Read more [here](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
 
 All questions can be directed to the project admins: `@kevinyu328` and `@jamescd18`.
 
@@ -11,11 +11,11 @@ All questions can be directed to the project admins: `@kevinyu328` and `@jamescd
 
 ## Getting Started
 
-Start by understanding what the project is [all about](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/About.md).
-Then go through the [onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/Onboarding.md) steps.
-And finally read through the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ContributorGuide.md).
+Start by understanding what the project is [all about](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
+Then go through the [onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md) steps.
+And finally read through the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md).
 
-If you're curious, check out the [deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/Deployment.md) and the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/ProductManagement.md) details too.
+If you're curious, check out the [deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md) and the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ProductManagement.md) details too.
 
 ## Project Setup Checklist
 

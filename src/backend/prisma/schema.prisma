@@ -47,7 +47,7 @@ model User {
 
 model Fab_Weld_Request {
   fw_id            Int         @id @default(autoincrement())
-  date_submitted   DateTime
+  date_submitted   DateTime    @default(now())
   part_name        String
   quantity         Int
   resources_needed String
@@ -61,7 +61,7 @@ model Fab_Weld_Request {
 
 model Change_Request {
   cr_id          Int         @id @default(autoincrement())
-  date_submitted DateTime
+  date_submitted DateTime    @default(now())
   type           CR_Type
   date_reviewed  DateTime
   accepted       Boolean?

@@ -64,6 +64,7 @@ model Change_Request {
   docs            String
   date_reviewed   DateTime
   accepted        Boolean
+  changes         Change[]
   requestor       User     @relation(fields: [requestor_id], references: [user_id])
   requestor_id    Int
   wbs_el          WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])

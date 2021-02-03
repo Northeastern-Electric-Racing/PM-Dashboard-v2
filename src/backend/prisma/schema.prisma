@@ -41,6 +41,8 @@ model Fab_Weld_Request {
   resources_needed  String
   links             String
   date_completed    DateTime
+  requestor         User     @relation(fields: [requestor_id], references: [user_id])
+  requestor_id      Int 
 }
 
 model Change_Request {
@@ -55,6 +57,8 @@ model Change_Request {
   docs            String
   date_reviewed   DateTime
   accepted        Boolean
+  requestor       User     @relation(fields: [requestor_id], references: [user_id])
+  requestor_id    Int 
 }
 
 model Change {
@@ -97,4 +101,3 @@ model Description_Bullet {
   date_deleted  DateTime
   date_done     DateTime
 }
-

@@ -29,17 +29,17 @@ enum Role {
 }
 
 model User {
-  user_id           Int                @id @default(autoincrement())
-  first_name        String
-  last_name         String
-  email_id          String             @unique
-  last_login        DateTime
-  role              Role
-  fab_weld_requests Fab_Weld_Request[]
-  change_requests   Change_Request[]
-  changes           Change[]
-  wbs_el_led        WBS_Element[]
-  projects_managed  Project[]
+  user_id          Int                @id @default(autoincrement())
+  first_name       String
+  last_name        String
+  email_id         String             @unique
+  last_login       DateTime
+  role             Role
+  Fab_Weld_Request Fab_Weld_Request[]
+  Change_Request   Change_Request[]
+  Change           Change[]
+  WBS_Element      WBS_Element[]
+  Project          Project[]
 }
 
 model Fab_Weld_Request {
@@ -57,22 +57,38 @@ model Fab_Weld_Request {
 }
 
 model Change_Request {
-  cr_id           Int         @id @default(autoincrement())
-  date_submitted  DateTime
-  type            CR_Type
+  cr_id          Int         @id @default(autoincrement())
+  date_submitted DateTime
+  type           CR_Type
+  date_reviewed  DateTime
+  accepted       Boolean?
+  changes        Change[]
+  requestor      User        @relation(fields: [requestor_id], references: [user_id])
+  requestor_id   Int
+  wbs_el         WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el_id      Int
+}
+
+model Scope_Based_CR {
+  scope_cr_id     Int      @id
   what            String
   why             String
   timeline_impact DateTime
   budget_impact   Int
   scope_impact    String
   docs            String
-  date_reviewed   DateTime
-  accepted        Boolean?
-  changes         Change[]
-  requestor       User        @relation(fields: [requestor_id], references: [user_id])
-  requestor_id    Int
-  wbs_el          WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id       Int
+}
+
+model Stage_Gating {
+  stage_gating_id Int     @id
+  done            Boolean
+  leftover_budget Int
+}
+
+model WP_Initiation {
+  wp_init_id   Int      @id
+  start_date   DateTime
+  details_good Boolean
 }
 
 model Change {

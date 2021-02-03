@@ -31,6 +31,11 @@ model User {
   email_id    String   @unique
   last_login  DateTime 
   role        Int
+  fab_weld_requests Fab_Weld_Request[]
+  change_requests Change_Request[]
+  changes Change[]
+  projects_led WBS_Element[]
+  projects_managed Project[]
 }
 
 model Fab_Weld_Request {
@@ -106,6 +111,8 @@ model Work_Package {
   dependencies  String 
   deliverables  String
   rules         String
+  project       Project      @relation(fields: [project_id], references: [project_id])
+  project_id    Int
 }
 
 model Description_Bullet {

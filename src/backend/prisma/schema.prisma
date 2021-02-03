@@ -68,12 +68,10 @@ model WBS_Element {
 }
 
 model Project {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  age     Int?
-  posts   Post[]
-  profile Profile?
+  g_drive_folder   String 
+  slide_deck_link  String
+  bom_link         String
+  task_list_link   String
 }
 
 model Work_Package {

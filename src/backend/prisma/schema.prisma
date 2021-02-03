@@ -20,10 +20,13 @@ model User {
 }
 
 model Fab_Weld_Request {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  fw_id             Int     @id @default(autoincrement())
+  date_submitted    DateTime
+  part_name         String    
+  quantity          Int     
+  resources_needed  String
+  links             String
+  date_completed    DateTime
 }
 
 model Change_Request {

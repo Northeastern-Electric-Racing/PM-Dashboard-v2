@@ -76,7 +76,7 @@ model Scope_Based_CR {
   scope_cr_id     Int      @id
   what            String
   why             String
-  timeline_impact DateTime
+  timeline_impact Int
   budget_impact   Int
   scope_impact    String
   docs            String

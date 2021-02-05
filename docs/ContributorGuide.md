@@ -1,7 +1,7 @@
 # Contributor Guide
 
 ## Table of Contents
-- [Creating Issues And Suggesting Features](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/%2361-eshwari/docs/ContributorGuide.md#creating-issues-&-suggesting-features)
+- [Creating Issues And Suggesting Features](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/%2361-eshwari/docs/ContributorGuide.md#creating-issues-and-suggesting-features)
 - [Creating a Branch](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md#creating-a-branch)
 - [Writing Code](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md#writing-code)
 - [Creating a Commit](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md#creating-a-commit)

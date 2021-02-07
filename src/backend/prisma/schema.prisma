@@ -85,7 +85,7 @@ model Scope_Based_CR {
   timeline_impact Int
   budget_impact   Int
   scope_impact    String
-  docs            String
+  doc             String
   change_request  Change_Request @relation(fields: [cr_id], references: [cr_id])
   cr_id           Int
 }

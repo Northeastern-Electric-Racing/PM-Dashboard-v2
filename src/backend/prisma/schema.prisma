@@ -170,7 +170,7 @@ model Work_Package {
 model Description_Bullet {
   desc_id      Int          @id @default(autoincrement())
   detail       String?
-  date_added   DateTime?
+  date_added   DateTime
   date_deleted DateTime?
   date_done    DateTime?
   work_package Work_Package @relation(fields: [wp_id], references: [wp_id])

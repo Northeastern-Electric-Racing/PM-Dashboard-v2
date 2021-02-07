@@ -12,7 +12,7 @@ enum CR_Type {
   NEW_FUNCTION
   OTHER
   STAGE_GATING
-  WP_INITIATION
+  WP_ACTIVATION
 }
 
 enum WBS_El_Status {

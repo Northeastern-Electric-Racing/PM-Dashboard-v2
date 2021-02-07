@@ -65,6 +65,7 @@ model Change_Request {
   type           CR_Type
   date_reviewed  DateTime
   accepted       Boolean?
+  review_notes   String
   changes        Change[]
   requestor      User        @relation(fields: [requestor_id], references: [user_id])
   requestor_id   Int
@@ -73,7 +74,7 @@ model Change_Request {
 }
 
 model Scope_Based_CR {
-  scope_cr_id     Int      @id
+  scope_cr_id     Int    @id
   what            String
   why             String
   timeline_impact Int

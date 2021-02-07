@@ -60,45 +60,54 @@ model Fab_Weld_Request {
 }
 
 model Change_Request {
-  cr_id          Int         @id @default(autoincrement())
-  date_submitted DateTime    @default(now())
+  cr_id          Int              @id @default(autoincrement())
+  date_submitted DateTime         @default(now())
   type           CR_Type
   date_reviewed  DateTime
   accepted       Boolean?
-  review_notes   String
+  review_notes   String?
   changes        Change[]
-  requestor      User        @relation(fields: [requestor_id], references: [user_id])
+  requestor      User             @relation(fields: [requestor_id], references: [user_id])
   requestor_id   Int
-  wbs_el         WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el         WBS_Element      @relation(fields: [wbs_el_id], references: [wbs_el_id])
   wbs_el_id      Int
+  scope_based_cr Scope_Based_CR[]
+  stage_gating   Stage_Gating[]
+  wp_init        WP_Initiation[]
 }
 
 model Scope_Based_CR {
-  scope_cr_id     Int    @id
+  scope_cr_id     Int            @id
   what            String
   why             String
   timeline_impact Int
   budget_impact   Int
   scope_impact    String
   docs            String
+  change_request  Change_Request @relation(fields: [cr_id], references: [cr_id])
+  cr_id           Int
 }
 
 model Stage_Gating {
-  stage_gating_id    Int     @id
+  stage_gating_id    Int            @id
   done               Boolean
   leftover_budget    Int
-  design_reviewer    User    @relation(fields: [design_reviewer_id], references: [user_id])
+  design_reviewer    User           @relation(fields: [design_reviewer_id], references: [user_id])
   design_reviewer_id Int
+  change_request     Change_Request @relation(fields: [cr_id], references: [cr_id])
+  cr_id              Int
 }
 
 model WP_Initiation {
-  wp_init_id         Int      @id
+  wp_init_id         Int            @id
   start_date         DateTime
   details_good       Boolean
-  project_lead       User     @relation(name: "project_lead", fields: [project_lead_id], references: [user_id])
-  project_manager    User     @relation(fields: [project_manager_id], references: [user_id])
+  project_lead       User           @relation(name: "project_lead", fields: [project_lead_id], references: [user_id])
+  project_manager    User           @relation(fields: [project_manager_id], references: [user_id])
   project_lead_id    Int
   project_manager_id Int
+  change_request     Change_Request @relation(fields: [cr_id], references: [cr_id])
+  cr_id              Int
 }
 
 model Change {
@@ -123,6 +132,8 @@ model WBS_Element {
   change_requests   Change_Request[]
   wbs_el_lead       User               @relation(fields: [wbs_el_lead_id], references: [user_id])
   wbs_el_lead_id    Int
+  projects          Project[]
+  work_packages     Work_Package[]
 }
 
 model Project {
@@ -134,6 +145,8 @@ model Project {
   work_packages      Work_Package[]
   project_manager    User           @relation(fields: [project_manager_id], references: [user_id])
   project_manager_id Int
+  wbs_el             WBS_Element    @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el_id          Int
 }
 
 model Work_Package {
@@ -148,6 +161,8 @@ model Work_Package {
   desc_bullets Description_Bullet[]
   project      Project              @relation(fields: [project_id], references: [project_id])
   project_id   Int
+  wbs_el       WBS_Element          @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el_id    Int
 }
 
 model Description_Bullet {

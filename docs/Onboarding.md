@@ -45,6 +45,7 @@ Below are extensions for VSCode that might make your developer experience more e
 They are completely optional.
 
 - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma) (`prisma.prisma`)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) (`dbaeumer.vscode-eslint`)
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) (`esbenp.prettier-vscode`)
 - [Babel](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel) (`mgmcdermott.vscode-language-babel`)
 - [Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme) (`pkief.material-icon-theme`)

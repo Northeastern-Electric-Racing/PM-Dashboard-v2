@@ -62,18 +62,18 @@ model Fab_Weld_Request {
 }
 
 model Change_Request {
-  cr_id          Int              @id @default(autoincrement())
-  date_submitted DateTime         @default(now())
+  cr_id          Int             @id @default(autoincrement())
+  date_submitted DateTime        @default(now())
   type           CR_Type
   date_reviewed  DateTime
   accepted       Boolean?
   review_notes   String?
   changes        Change[]
-  requestor      User             @relation(fields: [requestor_id], references: [user_id])
+  requestor      User            @relation(fields: [requestor_id], references: [user_id])
   requestor_id   Int
-  wbs_el         WBS_Element      @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el         WBS_Element     @relation(fields: [wbs_el_id], references: [wbs_el_id])
   wbs_el_id      Int
-  scope_based_cr Scope_Based_CR[]
+  Scope_CR       Scope_CR[]
   stage_gating   Stage_Gating[]
   wp_init        WP_Initiation[]
 }

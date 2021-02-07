@@ -1,3 +1,8 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
 import { useState, useEffect } from 'react';
 import ProjectDetails from '../../components/project-details/project-details';
 import { Project } from '../../types/project-types';
@@ -20,7 +25,9 @@ const ProjectsTable: React.FC = () => {
     <div>
       <p>This is the Projects Table container</p>
       <ProjectDetails project={exProject} />
-      <a onClick={swapPrj}>Swap it!</a>
+      <a onClick={swapPrj} href={'none'}>
+        Swap it!
+      </a>
     </div>
   );
 };

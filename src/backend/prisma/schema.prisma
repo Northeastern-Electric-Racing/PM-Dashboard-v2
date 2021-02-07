@@ -78,7 +78,7 @@ model Change_Request {
   wp_init        WP_Initiation[]
 }
 
-model Scope_Based_CR {
+model Scope_CR {
   scope_cr_id     Int            @id
   what            String
   why             String

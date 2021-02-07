@@ -23,6 +23,7 @@ enum WBS_El_Status {
 
 enum Role {
   ADMIN
+  LEADERSHIP
   PROJECT_MANAGER
   PROJECT_LEAD
   MEMBER

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
 import { apiFetch } from '../../shared/axios';
 import { Project } from '../../types/project-types';
 import './projects-table.module.css';

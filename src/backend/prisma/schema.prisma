@@ -40,6 +40,11 @@ enum Change_Attr {
   DELETE_WP
 }
 
+enum Project_Area {
+  MECH_E
+  EE
+}
+
 model User {
   user_id                    Int                          @id @default(autoincrement())
   first_name                 String
@@ -158,6 +163,7 @@ model WBS_Element {
 
 model Project {
   project_id         Int            @id
+  area               Project_Area
   g_drive_folder     String
   slide_deck_link    String
   bom_link           String

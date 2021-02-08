@@ -116,7 +116,7 @@ model Change {
   change_id        Int            @id @default(autoincrement())
   attribute        String
   original         String
-  new              Boolean
+  new              String
   date_implemented DateTime
   implementor      User           @relation(fields: [implementor_id], references: [user_id])
   implementor_id   Int

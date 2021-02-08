@@ -176,19 +176,20 @@ model Project {
 }
 
 model Work_Package {
-  wp_id        Int                  @id
-  wp_progress  Float
-  start_date   DateTime
-  duration     Int
-  budget       Int
-  dependencies String
-  deliverables String
-  rules        String
-  desc_bullets Description_Bullet[]
-  project      Project              @relation(fields: [project_id], references: [project_id])
-  project_id   Int
-  wbs_el       WBS_Element          @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id    Int
+  wp_id            Int                  @id
+  order_in_project Int
+  wp_progress      Float
+  start_date       DateTime
+  duration         Int
+  budget           Int
+  dependencies     String
+  deliverables     String
+  rules            String
+  desc_bullets     Description_Bullet[]
+  project          Project              @relation(fields: [project_id], references: [project_id])
+  project_id       Int
+  wbs_el           WBS_Element          @relation(fields: [wbs_el_id], references: [wbs_el_id])
+  wbs_el_id        Int
 }
 
 model Description_Bullet {

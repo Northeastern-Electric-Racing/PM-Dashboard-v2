@@ -1,3 +1,8 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
 import { useState, useEffect } from 'react';
 import BootstrapTable, { ColumnDescription, SortOrder } from 'react-bootstrap-table-next';
 import { apiFetch } from '../../shared/axios';

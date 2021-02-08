@@ -31,20 +31,20 @@ enum Role {
 }
 
 model User {
-  user_id           Int                @id @default(autoincrement())
-  first_name        String
-  last_name         String
-  email_id          String             @unique
-  last_login        DateTime
-  role              Role
-  Fab_Weld_Requests Fab_Weld_Request[]
-  Change_Requests   Change_Request[]
-  Stage_CR_Reviews  Stage_Gate[]
-  WP_Init_Positions WP_Activation[]
-  Change            Change[]
-  WBS_Element       WBS_Element[]
-  Project           Project[]
-  WP_Activation     WP_Activation[]    @relation("project_lead")
+  user_id                    Int                          @id @default(autoincrement())
+  first_name                 String
+  last_name                  String
+  email_id                   String                       @unique
+  last_login                 DateTime
+  role                       Role
+  Fab_Weld_Requests          Fab_Weld_Request[]
+  Change_Requests            Change_Request[]
+  WP_Init_Positions          WP_Activation[]
+  Change                     Change[]
+  WBS_Element                WBS_Element[]
+  Project                    Project[]
+  WP_Activation              WP_Activation[]              @relation("project_lead")
+  Stage_Gate_Design_Reviewer Stage_Gate_Design_Reviewer[]
 }
 
 model Fab_Weld_Request {
@@ -91,13 +91,21 @@ model Scope_CR {
 }
 
 model Stage_Gate {
-  stage_gate_id      Int            @id
-  done               Boolean
-  leftover_budget    Int
-  design_reviewer    User           @relation(fields: [design_reviewer_id], references: [user_id])
+  stage_gate_id              Int                          @id
+  done                       Boolean
+  leftover_budget            Int
+  change_request             Change_Request               @relation(fields: [cr_id], references: [cr_id])
+  cr_id                      Int
+  Stage_Gate_Design_Reviewer Stage_Gate_Design_Reviewer[]
+}
+
+model Stage_Gate_Design_Reviewer {
+  stage_gate         Stage_Gate @relation(fields: [stage_gate_id], references: [stage_gate_id])
+  stage_gate_id      Int
+  design_reviewer    User       @relation(fields: [design_reviewer_id], references: [user_id])
   design_reviewer_id Int
-  change_request     Change_Request @relation(fields: [cr_id], references: [cr_id])
-  cr_id              Int
+
+  @@id([stage_gate_id, design_reviewer_id])
 }
 
 model WP_Activation {

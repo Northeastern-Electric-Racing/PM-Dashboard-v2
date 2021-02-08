@@ -40,11 +40,11 @@ model User {
   Fab_Weld_Requests Fab_Weld_Request[]
   Change_Requests   Change_Request[]
   Stage_CR_Reviews  Stage_Gating[]
-  WP_Init_Positions WP_Initiation[]
+  WP_Init_Positions WP_Activation[]
   Change            Change[]
   WBS_Element       WBS_Element[]
   Project           Project[]
-  WP_Initiation     WP_Initiation[]    @relation("project_lead")
+  WP_Activation     WP_Activation[]    @relation("project_lead")
 }
 
 model Fab_Weld_Request {
@@ -75,7 +75,7 @@ model Change_Request {
   wbs_el_id      Int
   Scope_CR       Scope_CR[]
   stage_gating   Stage_Gating[]
-  wp_init        WP_Initiation[]
+  wp_init        WP_Activation[]
 }
 
 model Scope_CR {
@@ -100,7 +100,7 @@ model Stage_Gating {
   cr_id              Int
 }
 
-model WP_Initiation {
+model WP_Activation {
   wp_init_id         Int            @id
   start_date         DateTime
   details_good       Boolean

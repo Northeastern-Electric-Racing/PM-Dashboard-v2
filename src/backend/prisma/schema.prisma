@@ -30,6 +30,16 @@ enum Role {
   GUEST
 }
 
+enum Change_Attr {
+  ADD_PROJECT
+  ADD_WP
+  EDIT_PROJECT
+  EDIT_WP
+  EDIT_WP_DESC
+  DELETE_PROJECT
+  DELETE_WP
+}
+
 model User {
   user_id                    Int                          @id @default(autoincrement())
   first_name                 String
@@ -122,7 +132,7 @@ model WP_Activation {
 
 model Change {
   change_id        Int            @id @default(autoincrement())
-  attribute        String
+  attribute        Change_Attr
   original         String
   new              String
   date_implemented DateTime

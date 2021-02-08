@@ -39,7 +39,7 @@ model User {
   role              Role
   Fab_Weld_Requests Fab_Weld_Request[]
   Change_Requests   Change_Request[]
-  Stage_CR_Reviews  Stage_Gating[]
+  Stage_CR_Reviews  Stage_Gate[]
   WP_Init_Positions WP_Activation[]
   Change            Change[]
   WBS_Element       WBS_Element[]
@@ -74,7 +74,7 @@ model Change_Request {
   wbs_el         WBS_Element     @relation(fields: [wbs_el_id], references: [wbs_el_id])
   wbs_el_id      Int
   Scope_CR       Scope_CR[]
-  stage_gating   Stage_Gating[]
+  stage_gate     Stage_Gate[]
   wp_init        WP_Activation[]
 }
 
@@ -90,8 +90,8 @@ model Scope_CR {
   cr_id           Int
 }
 
-model Stage_Gating {
-  stage_gating_id    Int            @id
+model Stage_Gate {
+  stage_gate_id      Int            @id
   done               Boolean
   leftover_budget    Int
   design_reviewer    User           @relation(fields: [design_reviewer_id], references: [user_id])

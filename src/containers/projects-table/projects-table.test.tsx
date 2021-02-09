@@ -11,3 +11,17 @@ test('Renders title', () => {
   const titleElement = screen.getByText(/Projects Table/i);
   expect(titleElement).toBeInTheDocument();
 });
+
+// mock the api, consider using msw as suggested in the testing library docs
+
+// test for api returning error
+
+// test for api returning nothing
+
+// test for api returning stuff
+
+// test for clicking on a column for sort
+
+// test for a basic normal case
+
+// https://testing-library.com/docs/react-testing-library/example-intro

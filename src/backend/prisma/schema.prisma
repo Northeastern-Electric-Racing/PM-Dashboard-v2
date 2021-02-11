@@ -178,7 +178,7 @@ model Project {
 model Work_Package {
   wp_id            Int                  @id
   order_in_project Int
-  wp_progress      Float
+  wp_progress      Int
   start_date       DateTime
   duration         Int
   budget           Int

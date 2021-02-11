@@ -3,34 +3,48 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { AxiosResponse } from 'axios';
 import { useState, useEffect } from 'react';
 import BootstrapTable, { ColumnDescription, SortOrder } from 'react-bootstrap-table-next';
 import { apiFetch } from '../../shared/axios';
 import { Project } from '../../types/project-types';
 import styles from './projects-table.module.css';
 
+/**
+ * Interactive table for fetching and displaying all projects data.
+ */
 const ProjectsTable: React.FC = () => {
   const initial: Project[] = [];
-  const [allProjects, setAllProjects] = useState(initial);
+  const [allProjects, setAllProjects] = useState(initial); // store projects data
+
+  // Transforms given project data and sets local state
+  const updateData: Function = (response: AxiosResponse) => {
+    setAllProjects(
+      response.data.map((prj: Project) => {
+        return { ...prj, duration: prj.duration + ' weeks' };
+      })
+    );
+  };
 
   // Fetch list of projects from API on component loading
   useEffect(() => {
-    const fetchProjects: Function = async function () {
+    let mounted = true; // indicates component is mounted
+
+    const fetchProjects: Function = async () => {
       apiFetch
         .get('/projects')
-        .then((response) =>
-          setAllProjects(
-            response.data.map((prj: Project) => {
-              return { ...prj, duration: prj.duration + ' weeks' };
-            })
-          )
-        )
-        .catch((error) => console.log('fetch projects error: ' + error.message));
+        .then((response: AxiosResponse) => (mounted ? updateData(response) : ''))
+        .catch((error) => (mounted ? console.log('fetch projects error: ' + error.message) : ''));
     };
-    //setTimeout(fetchProjects, 2000); // simulated slow internet connection w/ 2 second delay
     fetchProjects();
+
+    // cleanup function indicates component has been unmounted
+    return () => {
+      mounted = false;
+    };
   }, []);
 
+  // Configures display options for all data columns
   const columns: ColumnDescription[] = [
     { dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
     { dataField: 'name', text: 'Name', align: 'left', sort: true },

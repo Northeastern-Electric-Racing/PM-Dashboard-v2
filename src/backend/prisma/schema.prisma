@@ -139,7 +139,7 @@ model WP_Activation {
 
 model Change {
   change_id        Int            @id @default(autoincrement())
-  attribute        Change_Attr
+  attribute        Change_Type
   original         String
   new              String
   date_implemented DateTime

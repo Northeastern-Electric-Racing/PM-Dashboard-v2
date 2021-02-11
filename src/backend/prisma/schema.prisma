@@ -30,7 +30,7 @@ enum Role {
   GUEST
 }
 
-enum Change_Attr {
+enum Change_Type {
   ADD_PROJECT
   ADD_WP
   EDIT_PROJECT

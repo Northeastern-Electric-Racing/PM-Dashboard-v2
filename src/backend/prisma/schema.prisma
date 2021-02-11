@@ -41,8 +41,9 @@ enum Change_Attr {
 }
 
 enum Project_Area {
-  MECH_E
-  EE
+  MECHANICAL
+  ELECTRICAL
+  BUSINESS
 }
 
 model User {

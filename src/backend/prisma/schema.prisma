@@ -55,7 +55,7 @@ model User {
   role                       Role
   Fab_Weld_Requests          Fab_Weld_Request[]
   Change_Requests            Change_Request[]
-  WP_Init_Positions          WP_Activation[]
+  WP_Activation_Positions    WP_Activation[]
   Change                     Change[]
   WBS_Element                WBS_Element[]
   Project                    Project[]
@@ -92,7 +92,7 @@ model Change_Request {
   wbs_el_id      Int
   Scope_CR       Scope_CR[]
   stage_gate     Stage_Gate[]
-  wp_init        WP_Activation[]
+  wp_activation  WP_Activation[]
 }
 
 model Scope_CR {

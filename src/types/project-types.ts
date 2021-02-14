@@ -4,9 +4,9 @@
  */
 
 export interface Project {
-  wbsNum: String;
-  name: String;
-  projectLead: String;
-  projectManager: String;
-  duration: Number;
+  wbsNum: string;
+  name: string;
+  projectLead: string;
+  projectManager: string;
+  duration: number;
 }

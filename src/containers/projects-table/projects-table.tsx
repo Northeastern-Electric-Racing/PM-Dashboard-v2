@@ -5,7 +5,11 @@
 
 import { AxiosResponse } from 'axios';
 import { useState, useEffect } from 'react';
-import BootstrapTable, { ColumnDescription, SortOrder } from 'react-bootstrap-table-next';
+import BootstrapTable, {
+  ColumnDescription,
+  RowEventHandlerProps,
+  SortOrder
+} from 'react-bootstrap-table-next';
 import { apiFetch } from '../../shared/axios';
 import { Project } from '../../types/project-types';
 import styles from './projects-table.module.css';
@@ -62,16 +66,27 @@ const ProjectsTable: React.FC = () => {
     }
   ];
 
+  // define what happens during various row events
+  const rowEvents: RowEventHandlerProps = {
+    onClick: (e, row, rowIndex) => {
+      alert(`You clicked on row ${row.wbsNum}!`);
+    }
+  };
+
   return (
     <>
       <h3>This is the Projects Table container</h3>
       <BootstrapTable
+        striped
+        hover
+        condensed
         wrapperClasses={styles.table}
         bootstrap4={true}
         keyField="wbsNum"
         data={allProjects}
         columns={columns}
         defaultSorted={defaultSort}
+        rowEvents={rowEvents}
         noDataIndication="No Projects to Display"
       />
     </>

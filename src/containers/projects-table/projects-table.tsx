@@ -49,6 +49,8 @@ const ProjectsTable: React.FC = () => {
   }, []);
 
   // Configures display options for all data columns
+  // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
+  // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
     { dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
     { dataField: 'name', text: 'Name', align: 'left', sort: true },
@@ -57,8 +59,6 @@ const ProjectsTable: React.FC = () => {
     { dataField: 'duration', text: 'Duration', align: 'center', sort: true }
   ];
 
-  // issue: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
-  // TODO will likely need to sort by separate ID
   const defaultSort: [{ dataField: any; order: SortOrder }] = [
     {
       dataField: 'wbsNum',

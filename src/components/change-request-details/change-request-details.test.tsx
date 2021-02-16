@@ -4,7 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { ChangeRequest } from '../../types/change-request-types';
+import { ChangeRequest } from '../../utils/types/change-request-types';
 import ChangeRequestDetails from './change-request-details';
 
 test('Renders title', () => {

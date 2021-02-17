@@ -1,59 +1,58 @@
 {
-    "name": "utils",
-    "version": "0.1.0",
-    "private": true,
-    "description": "",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/northeastern-web/electric-racing.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "AGPL-v3.0",
-    "bugs": {
-      "url": "https://github.com/northeastern-web/electric-racing/issues"
-    },
-    "scripts": {
-      "start": "run-p start:**"
-    },
-    "eslintConfig": {
-      "extends": [
-        "react-app",
-        "react-app/jest"
-      ],
-      "ignorePatterns": [
-        "**/.github/**",
-        "build",
-        "coverage",
-        "docs",
-        "lambda",
-        "node_modules",
-        "public"
-      ]
-    },
-    "prettier": {
-      "semi": true,
-      "trailingComma": "none",
-      "tabWidth": 2,
-      "singleQuote": true,
-      "printWidth": 100
-    },
-    "jest": {
-      "collectCoverageFrom": [
-        "**/*.{ts,tsx,js,jsx}",
-        "!**/node_modules/**",
-        "!**/vendor/**",
-        "!build",
-        "!coverage",
-        "!lambda",
-        "!docs"
-      ]
-    },
-    "dependencies": {
-      "typescript": "^4.1.3"
-    },
-    "devDependencies": {
-      "prettier": "^2.2.1"
-    }
+  "name": "utils",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/northeastern-web/electric-racing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPL-v3.0",
+  "bugs": {
+    "url": "https://github.com/northeastern-web/electric-racing/issues"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "ignorePatterns": [
+      "**/.github/**",
+      "build",
+      "coverage",
+      "docs",
+      "lambda",
+      "node_modules",
+      "public"
+    ]
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "singleQuote": true,
+    "printWidth": 100
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx,js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!build",
+      "!coverage",
+      "!lambda",
+      "!docs"
+    ]
+  },
+  "dependencies": {
+    "typescript": "^4.1.3"
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
-  
+}

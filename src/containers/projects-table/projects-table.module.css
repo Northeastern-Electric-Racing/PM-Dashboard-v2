@@ -3,6 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-p {
+h3 {
   color: green;
+}
+
+.table {
+  padding: 0em 2em 0em 2em;
 }

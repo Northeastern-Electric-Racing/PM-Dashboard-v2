@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from '../../utils/types/project-types';
+import { Project } from 'utils';
 import './project-details.module.css';
 
 interface ProjectDetailsProps {

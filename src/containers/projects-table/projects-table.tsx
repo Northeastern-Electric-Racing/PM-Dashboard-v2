@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import ProjectDetails from '../../components/project-details/project-details';
-import { Project } from '../../utils/types/project-types';
+import { Project } from 'utils';
 import './projects-table.module.css';
 
 const prj0: Project = { name: '', duration: 0 };

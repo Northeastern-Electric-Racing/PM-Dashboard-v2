@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ChangeRequest } from '../../utils/types/change-request-types';
+import { ChangeRequest } from 'utils';
 import './change-request-details.module.css';
 
 interface ChangeRequestDetailsProps {

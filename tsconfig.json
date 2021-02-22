@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2019",
     "lib": [
       "dom",
       "dom.iterable",
@@ -20,8 +20,12 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "exclude": ["src/setupProxy.js", "src/lambda"],
+  "exclude": [
+    "src/setupProxy.js",
+    "src/functions"
+  ],
   "include": [
-    "src"
+    "src",
+    "src/backend"
   ]
 }

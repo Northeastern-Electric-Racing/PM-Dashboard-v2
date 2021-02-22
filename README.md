@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# NER PM Dashboard v2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Northeastern Electric Racing Project Management Dashboard - version 2
 
-## Available Scripts
+A project management web application built in React.
+Read more [here](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
 
-In the project directory, you can run:
+All questions can be directed to the project admins: `@kevinyu328` and `@jamescd18`.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Start by understanding what the project is [all about](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
+Then go through the [onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md) steps.
+And finally read through the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md).
 
-### `npm test`
+If you're curious, check out the [deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md) and the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ProductManagement.md) details too.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Setup Checklist
 
-### `npm run build`
+The below table will help track various components of setting up this project and transitioning from [v1](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v1) to v2.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Area                   | Tech / Package             |                                    Research                                    | Decided |                                                    Implemented                                                     |
+| :--------------------- | :------------------------- | :----------------------------------------------------------------------------: | :-----: | :----------------------------------------------------------------------------------------------------------------: |
+| Basic React App        | create-react-app           |                                       -                                        |    Y    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/tree/6762c180ade9801712fac20f0bc1cc32d7176326) |
+| Deployment             | Netlify                    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/1)  |    Y    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/tree/8066a8e7ea9e8fe23b73753a4078f50490544b7f) |
+| Linting                | ESLint                     | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6)  |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/45)                    |
+| Formatting             | Prettier                   | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/6)  |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/45)                    |
+| Testing                | Jest                       | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/7)  |    Y    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/tree/6762c180ade9801712fac20f0bc1cc32d7176326) |
+| e2e Testing            | Cypress                    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/5)  |    Y    |                                                                                                                    |
+| Component Testing      | React Testing Library      | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/16) |    Y    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/tree/6762c180ade9801712fac20f0bc1cc32d7176326) |
+| Database               | PostgreSQL                 | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/4)  |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/41)                    |
+| ORM                    | Prisma                     | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/2)  |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/41)                    |
+| User Authentication    | react-google-login         | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/17) |    Y    |                                                                                                                    |
+| State Management       | Redux                      | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/18) |         |                                                                                                                    |
+| Charts                 | react-google-charts        | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/20) |    Y    |                                                                                                                    |
+| Styling                | Bootstrap, react-bootstrap | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/19) |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/74)                    |
+| Tables                 | react-bootstrap-table-next | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/19) |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/74)                    |
+| URL Routing            | React Router               | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/21) |         |                                                                                                                    |
+| Continuous Integration | GitHub Actions             | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/22) |    Y    |                                                                                                                    |
+| Database Hosting       | AWS RDS                    | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/23) |    Y    |                                                                                                                    |
+| Database Design        | -                          | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/37) |    Y    |                                                                                                                    |
+| Backend Structure      | ?                          | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/14) |         |                                                                                                                    |
+| Front-End Structure    | -                          | [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/47) |    Y    |                    [Y](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/pull/52)                    |
+| \_                     | \_                         |                                       \_                                       |   \_    |                                                         \_                                                         |

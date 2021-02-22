@@ -5,6 +5,7 @@
 
 import { Context } from 'aws-lambda';
 // import { PrismaClient } from '@prisma/client';
+import { example } from 'utils';
 
 // const prisma = new PrismaClient();
 
@@ -24,7 +25,7 @@ export async function handler(event: any, context: Context) {
     return {
       statusCode: 201,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([seedUser, seedUser2])
+      body: JSON.stringify([example(3, 10), seedUser, seedUser2])
     };
   } catch (error) {
     console.error(error);

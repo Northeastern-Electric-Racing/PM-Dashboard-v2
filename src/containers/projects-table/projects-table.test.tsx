@@ -7,7 +7,7 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ProjectsTable from './projects-table';
-import { Project } from '../../types/project-types';
+import { Project } from 'utils';
 
 // Build example test data
 const exampleProject1: Project = {

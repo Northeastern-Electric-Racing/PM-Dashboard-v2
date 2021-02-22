@@ -4,10 +4,12 @@
  */
 
 import { Context } from 'aws-lambda';
+import { example } from 'utils';
 
 export async function handler(event: any, context: Context) {
+  const num: number = example(5, 6);
   try {
-    return { statusCode: 200, body: 'example!' };
+    return { statusCode: 200, body: 'example! ' + num };
     // eslint-disable-next-line no-unreachable
   } catch (err) {
     console.log(err); // output to netlify function log

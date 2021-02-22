@@ -4,27 +4,28 @@
  */
 
 import { Context } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
+import { example } from 'utils';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function handler(event: any, context: Context) {
   try {
-    await Promise.all([prisma.profile.deleteMany(), prisma.post.deleteMany()]);
-    await prisma.user.deleteMany();
+    // await Promise.all([prisma.profile.deleteMany(), prisma.post.deleteMany()]);
+    // await prisma.user.deleteMany();
 
-    const createdUser = await prisma.user.create({
-      data: seedUser
-    });
+    // const createdUser = await prisma.user.create({
+    //   data: seedUser
+    // });
 
-    const createdUser2 = await prisma.user.create({
-      data: seedUser2
-    });
+    // const createdUser2 = await prisma.user.create({
+    //   data: seedUser2
+    // });
 
     return {
       statusCode: 201,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify([createdUser, createdUser2])
+      body: JSON.stringify([example(3, 10), seedUser, seedUser2])
     };
   } catch (error) {
     console.error(error);

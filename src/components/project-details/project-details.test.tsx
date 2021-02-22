@@ -4,7 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { Project } from '../../types/project-types';
+import { Project } from 'utils';
 import ProjectDetails from './project-details';
 
 it('Renders title', () => {

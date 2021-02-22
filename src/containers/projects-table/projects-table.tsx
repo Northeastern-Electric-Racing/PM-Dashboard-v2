@@ -10,8 +10,8 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
+import { Project } from 'utils';
 import { apiFetch } from '../../shared/axios';
-import { Project } from '../../types/project-types';
 import styles from './projects-table.module.css';
 
 /**

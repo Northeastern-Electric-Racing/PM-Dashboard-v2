@@ -2,3 +2,9 @@
     command = "npm run build"
     functions = "lambda"
     publish = "build"
+
+[[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
+    force = true

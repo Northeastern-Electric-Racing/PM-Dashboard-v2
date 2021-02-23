@@ -4,11 +4,21 @@
  */
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders projects table title', () => {
+it('renders nav links', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Projects Table container/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText('Home')).toBeInTheDocument();
+  expect(screen.getByText('Projects')).toBeInTheDocument();
+  expect(screen.getByText('Change Requests')).toBeInTheDocument();
+});
+
+it('can navigate to projects page', () => {
+  render(<App />);
+  const homeEle: HTMLElement = screen.getByText('Home!');
+  expect(homeEle).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Projects'));
+  expect(homeEle).not.toBeInTheDocument();
+  expect(screen.getByText(/Projects Page/i)).toBeInTheDocument();
 });

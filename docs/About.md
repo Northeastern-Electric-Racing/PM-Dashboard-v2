@@ -12,5 +12,19 @@ This project is a full-stack web application built with React as the core front-
 As the project evolves, technologies may be added or removed.
 The current tech stack list is provided below:
 
-- React
-- TypeScript
+- Universal
+  - TypeScript
+  - Node.js
+  - Prettier
+  - ESLint
+  - Jest
+- Front-End
+  - React
+  - Bootstrap
+- Back-End
+  - Netlify Functions (AWS Lambdas)
+  - Prisma
+  - PostgreSQL
+- DevOps
+  - Netlify
+  - GitHub Actions

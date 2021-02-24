@@ -1,6 +1,7 @@
 # Contributor Guide
 
 ## Table of Contents
+
 - [Creating Issues And Suggesting Features](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md#creating-issues-and-suggesting-features)
 - [Creating a Branch](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md#creating-a-branch)
 - [Writing Code](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md#writing-code)
@@ -33,6 +34,7 @@ Other -> Desired Changes, Screenshots (as needed)
 
 Add labels as is appropriate for the issue, and assign it to `@kevinyu328` or `@jamescd18` for review.
 Reviewers will determine whether the issue is valid, whether it will be accepted and worked on, and which milestone it will be a part of.
+If the issue is determined to be ready to be worked on by the development team, the reviewers will add the "approved" label.
 
 ## Creating a Branch
 
@@ -51,6 +53,8 @@ Comment your code with JSDoc and inline comments to help others understand your 
 Test your code to the best of your ability and avoid writing overly complex code.
 
 Follow good coding practices taught in Fundies 1 and Fundies 2.
+
+If you edit code in any local package (e.g. utils), you must run `npm install` before the latest changes to the local package will be availible in the rest of the application.
 
 ## Creating a Commit
 

@@ -7,11 +7,13 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import ChangeRequests from './pages/change-requests/change-requests';
 import Projects from './pages/projects/projects';
+import Sidebar from './components/sidebar/sidebar'
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
+    <Sidebar />
       <nav>
         <Link className="nav-link" to="/">
           Home

@@ -4,23 +4,28 @@
  */
 
 import { useState } from 'react';
-import './change-requests-table.module.css';
+import { exampleStandardChangeRequest as cr } from 'utils';
+import ChangeRequestDetails from '../../components/change-request-details/change-request-details';
+import styles from './change-requests-table.module.css';
 
 const ChangeRequestsTable: React.FC = () => {
-  const crOptions: Array<String> = ['Delay', 'Budget', 'Scope'];
-  const [changeRequest, setChangeRequest] = useState(0);
+  const crOptions: Array<string> = ['Duration', 'Budget', 'Scope'];
+  const [changeRequestOption, setChangeRequestOption] = useState(0);
 
   const switchCR = () => {
-    changeRequest === 2 ? setChangeRequest(0) : setChangeRequest(changeRequest + 1);
+    changeRequestOption === 2
+      ? setChangeRequestOption(0)
+      : setChangeRequestOption(changeRequestOption + 1);
   };
 
   return (
     <div>
       <h1>This is the Change Requests Table container</h1>
-      <p>{crOptions[changeRequest]}</p>
-      <a onClick={switchCR} href={'none'}>
-        Click me!
-      </a>
+      <p className={styles.label}>{crOptions[changeRequestOption]}</p>
+      <button onClick={switchCR}>Click me!</button>
+      <br />
+      <hr />
+      <ChangeRequestDetails changeRequest={cr} />
     </div>
   );
 };

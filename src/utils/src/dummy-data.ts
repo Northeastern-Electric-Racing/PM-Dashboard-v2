@@ -340,7 +340,7 @@ export const exampleAllProjects: Project[] = [
 
 /********************** Change Requests **********************/
 
-export const dummyStandardChangeRequest: StandardChangeRequest = {
+export const exampleStandardChangeRequest: StandardChangeRequest = {
   id: 37,
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
@@ -383,7 +383,7 @@ export const dummyStandardChangeRequest: StandardChangeRequest = {
   docLink: 'https://youtu.be/dQw4w9WgXcQ'
 };
 
-export const dummyActivationChangeRequest: ActivationChangeRequest = {
+export const exampleActivationChangeRequest: ActivationChangeRequest = {
   id: 69,
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
@@ -395,7 +395,7 @@ export const dummyActivationChangeRequest: ActivationChangeRequest = {
   confirmDetails: true
 };
 
-export const dummyStageGateChangeRequest: StageGateChangeRequest = {
+export const exampleStageGateChangeRequest: StageGateChangeRequest = {
   id: 93,
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
@@ -411,8 +411,8 @@ export const dummyStageGateChangeRequest: StageGateChangeRequest = {
   confirmCompleted: true
 };
 
-export const dummyAllChangeRequests: ChangeRequest[] = [
-  dummyStandardChangeRequest,
-  dummyActivationChangeRequest,
-  dummyStageGateChangeRequest
+export const exampleAllChangeRequests: ChangeRequest[] = [
+  exampleStandardChangeRequest,
+  exampleActivationChangeRequest,
+  exampleStageGateChangeRequest
 ];

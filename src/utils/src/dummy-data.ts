@@ -388,7 +388,7 @@ export const exampleActivationChangeRequest: ActivationChangeRequest = {
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
-  type: ChangeRequestType.DesignIssue,
+  type: ChangeRequestType.Activation,
   projectLead: exampleProjectLeadUser,
   projectManager: exampleProjectManagerUser,
   startDate: new Date('03/01/21'),
@@ -400,7 +400,7 @@ export const exampleStageGateChangeRequest: StageGateChangeRequest = {
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
-  type: ChangeRequestType.DesignIssue,
+  type: ChangeRequestType.StageGate,
   designReviewAttendees: [
     exampleAdminUser,
     exampleLeadershipUser,

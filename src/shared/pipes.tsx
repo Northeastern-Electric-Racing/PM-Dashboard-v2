@@ -32,3 +32,7 @@ export const wbsPipe: Function = (wbsNum: WbsNumber): string => {
 export const fullNamePipe: Function = (user: User): string => {
   return `${user.firstName} ${user.lastName}`;
 };
+
+export const booleanPipe: Function = (bool: boolean): string => {
+  return bool ? 'YES' : 'NO';
+};

@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { exampleStandardChangeRequest as cr } from 'utils';
+import { ChangeRequest, exampleAllChangeRequests } from 'utils';
 import ChangeRequestDetails from '../../components/change-request-details/change-request-details';
 import styles from './change-requests-table.module.css';
 
@@ -23,9 +23,13 @@ const ChangeRequestsTable: React.FC = () => {
       <h1>This is the Change Requests Table container</h1>
       <p className={styles.label}>{crOptions[changeRequestOption]}</p>
       <button onClick={switchCR}>Click me!</button>
-      <br />
-      <hr />
-      <ChangeRequestDetails changeRequest={cr} />
+      {exampleAllChangeRequests.map((cr: ChangeRequest) => (
+        <>
+          <br />
+          <hr />
+          <ChangeRequestDetails changeRequest={cr} />
+        </>
+      ))}
     </div>
   );
 };

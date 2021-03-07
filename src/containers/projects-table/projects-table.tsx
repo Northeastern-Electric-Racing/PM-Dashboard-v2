@@ -10,22 +10,39 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
-import { Project } from 'utils';
+import { Project, WorkPackage } from 'utils';
 import { apiFetch } from '../../shared/axios';
+import { fullNamePipe, wbsPipe, weeksPipe } from '../../shared/pipes';
 import styles from './projects-table.module.css';
+
+interface DisplayProject {
+  wbsNum: string;
+  name: string;
+  projectLead: string;
+  projectManager: string;
+  duration: string;
+}
 
 /**
  * Interactive table for fetching and displaying all projects data.
  */
 const ProjectsTable: React.FC = () => {
-  const initial: Project[] = [];
+  const initial: DisplayProject[] = [];
   const [allProjects, setAllProjects] = useState(initial); // store projects data
 
   // Transforms given project data and sets local state
   const updateData: Function = (response: AxiosResponse) => {
     setAllProjects(
       response.data.map((prj: Project) => {
-        return { ...prj, duration: prj.duration + ' weeks' };
+        return {
+          wbsNum: wbsPipe(prj.wbsNum),
+          name: prj.name,
+          projectLead: fullNamePipe(prj.projectLead),
+          projectManager: fullNamePipe(prj.projectManager),
+          duration: weeksPipe(
+            prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
+          )
+        };
       })
     );
   };

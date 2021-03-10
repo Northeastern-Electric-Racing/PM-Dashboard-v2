@@ -30,7 +30,8 @@
       "docs",
       "lambda",
       "node_modules",
-      "public"
+      "public",
+      "lib"
     ]
   },
   "prettier": {

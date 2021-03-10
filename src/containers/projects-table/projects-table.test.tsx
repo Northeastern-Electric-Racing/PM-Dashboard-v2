@@ -6,8 +6,9 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import ProjectsTable from './projects-table';
+import { wbsRegex } from '../../shared/test-utils';
 import { Project } from 'utils';
+import ProjectsTable from './projects-table';
 
 // Build example test data
 const exampleProject1: Project = {
@@ -59,7 +60,6 @@ const exampleAllProjects: Project[] = [
 ];
 
 const endpointURL: string = '/.netlify/functions/projects';
-const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(

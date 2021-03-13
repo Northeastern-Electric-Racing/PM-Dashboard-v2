@@ -18,6 +18,7 @@ import {
   Project
 } from 'utils';
 import { wbsPipe, fullNamePipe } from '../../shared/pipes';
+import { wbsRegex } from '../../shared/test-utils';
 
 const endpointURL: string = '/.netlify/functions/projects';
 

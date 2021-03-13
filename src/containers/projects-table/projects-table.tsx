@@ -28,6 +28,7 @@ interface DisplayProject {
  * Interactive table for fetching and displaying all projects data.
  */
 const ProjectsTable: React.FC = () => {
+  const history = useHistory();
   const initial: DisplayProject[] = [];
   const [allProjects, setAllProjects] = useState(initial); // store projects data
 

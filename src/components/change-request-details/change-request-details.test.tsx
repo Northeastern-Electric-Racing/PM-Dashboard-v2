@@ -10,7 +10,6 @@ import {
   exampleStageGateChangeRequest,
   exampleAllChangeRequests,
   ChangeRequest,
-  ChangeRequestType,
   StandardChangeRequest,
   ActivationChangeRequest,
   StageGateChangeRequest

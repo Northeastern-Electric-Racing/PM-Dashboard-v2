@@ -9,7 +9,9 @@ import {
   StandardChangeRequest,
   ActivationChangeRequest,
   StageGateChangeRequest,
-  ChangeRequestType
+  ChangeRequestType,
+  ChangeRequestExplanation,
+  User
 } from 'utils';
 import { weeksPipe, dollarsPipe, linkPipe, fullNamePipe, booleanPipe } from '../../shared/pipes';
 import styles from './change-request-details.module.css';
@@ -35,13 +37,12 @@ const buildChangeRequestDetails: Function = (cr: StandardChangeRequest): ReactEl
       <div className="w-100"></div>
       <dt className="col-2">Why</dt>
       <dd className="col">
-        <dl className="row">
-          {cr.why.map((ele) => (
-            <>
+        <dl>
+          {cr.why.map((ele: ChangeRequestExplanation, idx: number) => (
+            <div key={idx} className="row w-100">
               <dt className="col-3">{ele.reason}</dt>
-              <dd className="col-auto">{ele.explain}</dd>
-              <div className="w-100"></div>
-            </>
+              <dd className="col">{ele.explain}</dd>
+            </div>
           ))}
         </dl>
       </dd>
@@ -89,20 +90,21 @@ const buildActivationChangeRequestDetails: Function = (
 const buildStageGateChangeRequestDetails: Function = (cr: StageGateChangeRequest): ReactElement => {
   return (
     <dl className="row">
-      <dt className="col">Confirm WP Completed</dt>
+      <dt className="col-4">Confirm WP Completed</dt>
       <dd className="col">{booleanPipe(cr.confirmCompleted)}</dd>
       <div className="w-100"></div>
-      <dt className="col">Leftover Budget</dt>
-      <dd className="col">{cr.leftoverBudget}</dd>
+      <dt className="col-4">Leftover Budget</dt>
+      <dd className="col">{dollarsPipe(cr.leftoverBudget)}</dd>
       <div className="w-100"></div>
-      <dt className="col">Required Attendees</dt>
+      <dt className="col-4">Required Attendees</dt>
       <dd className="col">
-        {cr.designReviewAttendees.map((user) => (
-          <>
-            {fullNamePipe(user)}
-            <br />
-          </>
-        ))}
+        <dl>
+          {cr.designReviewAttendees.map((user: User, idx: number) => (
+            <div key={idx} className="row w-100">
+              <dd className="col">{fullNamePipe(user)}</dd>
+            </div>
+          ))}
+        </dl>
       </dd>
     </dl>
   );

@@ -62,7 +62,7 @@ const buildChangeRequestDetails: Function = (cr: StandardChangeRequest): ReactEl
       </dd>
       <div className="w-100"></div>
       <dt className="col-2">Doc</dt>
-      <dd className="col-auto">{linkPipe('dsfjlskdj', cr.docLink)}</dd>
+      <dd className="col-auto">{linkPipe('Documentation', cr.docLink)}</dd>
     </dl>
   );
 };

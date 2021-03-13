@@ -30,7 +30,7 @@
     "build:app": "react-scripts build && echo '/*  /index.html  200' | cat >build/_redirects",
     "build:lambda": "netlify-lambda build src/backend/functions",
     "test": "react-scripts test",
-    "coverage": "npm run test -- --coverage",
+    "coverage": "npm run test -- --coverage --watchAll",
     "lint": "npx eslint .",
     "migrate": "npx prisma migrate dev --preview-feature --schema=./src/backend/prisma/schema.prisma",
     "postinstall": "npx prisma generate --schema=./src/backend/prisma/schema.prisma",
@@ -61,14 +61,24 @@
     "printWidth": 100
   },
   "jest": {
+    "coverageReporters": [
+      "text",
+      "html"
+    ],
     "collectCoverageFrom": [
-      "**/*.{ts,tsx,js,jsx}",
-      "!**/node_modules/**",
-      "!**/vendor/**",
-      "!build",
-      "!coverage",
-      "!lambda",
-      "!docs"
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/.github/",
+      "!<rootDir>/build/",
+      "!<rootDir>/coverage/",
+      "!<rootDir>/docs/",
+      "!<rootDir>/lambda/",
+      "!<rootDir>/public/",
+      "!<rootDir>/src/backend/prisma/",
+      "!<rootDir>/src/utils/lib",
+      "!<rootDir>/src/utils/node_modules/",
+      "!**/lib/**",
+      "!src/**/*.d.ts"
     ]
   },
   "browserslist": {

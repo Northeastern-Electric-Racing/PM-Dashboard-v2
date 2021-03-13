@@ -23,12 +23,12 @@ const ChangeRequestsTable: React.FC = () => {
       <h1>This is the Change Requests Table container</h1>
       <p className={styles.label}>{crOptions[changeRequestOption]}</p>
       <button onClick={switchCR}>Click me!</button>
-      {exampleAllChangeRequests.map((cr: ChangeRequest) => (
-        <>
+      {exampleAllChangeRequests.map((cr: ChangeRequest, idx: number) => (
+        <div key={idx}>
           <br />
           <hr />
           <ChangeRequestDetails changeRequest={cr} />
-        </>
+        </div>
       ))}
     </div>
   );

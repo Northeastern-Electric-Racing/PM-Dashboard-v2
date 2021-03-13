@@ -401,12 +401,7 @@ export const exampleStageGateChangeRequest: StageGateChangeRequest = {
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
   type: ChangeRequestType.StageGate,
-  designReviewAttendees: [
-    exampleAdminUser,
-    exampleLeadershipUser,
-    exampleProjectLeadUser,
-    exampleProjectManagerUser
-  ],
+  designReviewAttendees: [exampleLeadershipUser, exampleProjectLeadUser, exampleProjectManagerUser],
   leftoverBudget: 26,
   confirmCompleted: true
 };

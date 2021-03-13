@@ -20,7 +20,6 @@ import {
 import { wbsPipe, fullNamePipe } from '../../shared/pipes';
 
 const endpointURL: string = '/.netlify/functions/projects';
-const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(

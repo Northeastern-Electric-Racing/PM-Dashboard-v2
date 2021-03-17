@@ -12,14 +12,21 @@ body {
 }
 
 .layout {
-  display: flex;
-  height: 100%;
+  float: left;
+  clear: both;
+
+  /* display: flex; */
+  height: 50%;
 }
 
 .layout .content {
   background-color: #bec4de;
   padding: 20px;
   flex-grow: 1;
+}
+
+.gantt {
+  transform: rotate(90deg);
 }
 
 a.btn {

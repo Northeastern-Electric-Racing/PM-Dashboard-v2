@@ -12,9 +12,9 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
     <Sidebar />
-      <nav>
+      /* <nav>
         <Link className="nav-link" to="/">
           Home
         </Link>
@@ -36,7 +36,7 @@ function App() {
           <h3>Home!</h3>
         </Route>
       </Switch>
-    </BrowserRouter>
+    </BrowserRouter> */
   );
 }
 

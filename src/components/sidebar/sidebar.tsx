@@ -2,7 +2,10 @@ import { useState } from 'react';
 import 'react-pro-sidebar/dist/css/styles.css'
 import './sidebar.module.css';
 import { MenuItem, ProSidebar, Menu, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartBar, faChartLine, faExchangeAlt, faFolder, faHome, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
+import { pushRotate } from 'react-burger-menu';
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -11,9 +14,12 @@ const Sidebar = () => {
       <aside>
         <ProSidebar collapsed={collapsed}>
           <Menu iconShape="square">
-            <MenuItem>Component 1</MenuItem>
-            <MenuItem>Component 2</MenuItem>
-            <MenuItem>Component 3</MenuItem>
+            <MenuItem icon={<FontAwesomeIcon icon={faHome} />} >Home</MenuItem>
+            <MenuItem icon={<FontAwesomeIcon icon={faChartBar} rotation={90}/>} >Gantt</MenuItem>
+            <MenuItem icon={<FontAwesomeIcon icon={faFolder} />} >Projects</MenuItem>
+            <MenuItem icon={<FontAwesomeIcon icon={faExchangeAlt} />} >Change Requests</MenuItem>
+            <MenuItem icon={<FontAwesomeIcon icon={faChartLine} />} >Reports</MenuItem>
+            <MenuItem icon={<FontAwesomeIcon icon={faQuestionCircle} />} >Help</MenuItem>
           </Menu>
         </ProSidebar>
       </aside>
@@ -25,39 +31,6 @@ const Sidebar = () => {
         </div>
       </main>
     </div>
-
-        /* <div className="layout">
-            <ProSidebar
-            toggled={true}
-        >
-            <SidebarHeader>
-                <div className="Bar-Header">
-                    NER
-                </div>
-            </SidebarHeader>
-            <SidebarContent>
-                <MenuItem>
-                    Home
-                </MenuItem>
-                <MenuItem>
-                    Gantt
-                </MenuItem>
-                <MenuItem>
-                    Projects
-                </MenuItem>
-                <MenuItem>
-                    Change Requests
-                </MenuItem>
-                <MenuItem>
-                    Reports
-                </MenuItem>
-                <MenuItem>
-                    Help
-                </MenuItem>
-            </SidebarContent>
-            
-        </ProSidebar> 
-        </div> */
     )
 }
 

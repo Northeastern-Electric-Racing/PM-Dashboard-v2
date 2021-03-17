@@ -1,17 +1,26 @@
 {
-  "name": "pm-site-netlify",
-  "version": "0.1.0",
+  "name": "ner-pm-dashboard-v2",
+  "description": "Northeastern Electric Racing's Project Management Dashboard web application",
+  "bugs": {
+    "url": "https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues"
+  },
   "private": true,
-  "description": "",
+  "license": "AGPL-3.0-only",
+  "contributors": [
+    {
+      "name": "James Chang-Davidson",
+      "url": "https://linkedin.com/in/jcd"
+    },
+    {
+      "name": "Kevin Yu"
+    },
+    {
+      "name": "Eshwari Bhide"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/northeastern-web/electric-racing.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/northeastern-web/electric-racing/issues"
+    "url": "git+https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2.git"
   },
   "scripts": {
     "start": "run-p start:**",
@@ -40,7 +49,8 @@
       "docs",
       "lambda",
       "node_modules",
-      "public"
+      "public",
+      "lib"
     ]
   },
   "prettier": {

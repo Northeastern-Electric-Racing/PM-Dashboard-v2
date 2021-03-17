@@ -3,13 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { AxiosResponse } from 'axios';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import BootstrapTable, {
   ColumnDescription,
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
+import { AxiosResponse } from 'axios';
 import { Project } from 'utils';
 import { apiFetch } from '../../shared/axios';
 import styles from './projects-table.module.css';
@@ -18,6 +19,7 @@ import styles from './projects-table.module.css';
  * Interactive table for fetching and displaying all projects data.
  */
 const ProjectsTable: React.FC = () => {
+  const history = useHistory();
   const initial: Project[] = [];
   const [allProjects, setAllProjects] = useState(initial); // store projects data
 
@@ -69,7 +71,7 @@ const ProjectsTable: React.FC = () => {
   // define what happens during various row events
   const rowEvents: RowEventHandlerProps = {
     onClick: (e, row, rowIndex) => {
-      alert(`You clicked on row ${row.wbsNum}!`);
+      history.push(`/projects/${row.wbsNum}`);
     }
   };
 

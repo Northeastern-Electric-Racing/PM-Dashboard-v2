@@ -3,4 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-/// <reference types="react-scripts" />
+.describe {
+  font-size: 12;
+  color: black;
+}

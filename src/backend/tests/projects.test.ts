@@ -1,4 +1,9 @@
-import { Project } from '../../types/project-types';
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+import { Project } from 'utils';
 import { exampleAllProjects } from '../functions/projects';
 
 describe('all example projects', () => {
@@ -18,7 +23,7 @@ describe('all example projects', () => {
   it('has proper project wbsNums', () => {
     exampleAllProjects.forEach((prj) => {
       const project: Project = prj;
-      const wbs: Array<String> = project.wbsNum.split('.');
+      const wbs: Array<string> = project.wbsNum.split('.');
       expect(project.wbsNum).toBeTruthy();
       expect(wbs[wbs.length - 1]).toEqual('0');
     });

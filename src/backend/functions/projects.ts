@@ -1,4 +1,10 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
 import { Context } from 'aws-lambda';
+import { Project } from 'utils';
 
 export async function handler(event: any, context: Context) {
   try {
@@ -11,15 +17,6 @@ export async function handler(event: any, context: Context) {
     console.error(error);
     return { statusCode: 500 };
   }
-}
-
-// Duplicated from /src/types/projct-types.ts due to serverless quirks
-interface Project {
-  wbsNum: String;
-  name: String;
-  projectLead: String;
-  projectManager: String;
-  duration: Number;
 }
 
 const exampleProject1: Project = {

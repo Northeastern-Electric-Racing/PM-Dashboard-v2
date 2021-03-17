@@ -3,14 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Route, Switch } from 'react-router-dom';
 import ProjectsTable from '../../containers/projects-table/projects-table';
+import WBSDetails from '../wbs-details/wbs-details';
 import './projects.module.css';
 
 const Projects: React.FC = () => {
   return (
     <div>
       <h1>This is the Projects Page</h1>
-      <ProjectsTable />
+      <Switch>
+        <Route path="/projects/:wbsNum" component={WBSDetails} />
+        <Route path="/projects" component={ProjectsTable} />
+      </Switch>
     </div>
   );
 };

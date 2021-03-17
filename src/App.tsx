@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import ChangeRequests from './pages/change-requests/change-requests';
 import Projects from './pages/projects/projects';
@@ -26,12 +25,8 @@ function App() {
         </Link>
       </nav>
       <Switch>
-        <Route path="/projects">
-          <Projects />
-        </Route>
-        <Route path="/change-requests">
-          <ChangeRequests />
-        </Route>
+        <Route path="/projects" component={Projects} />
+        <Route path="/change-requests" component={ChangeRequests} />
         <Route path="/">
           <h3>Home!</h3>
         </Route>

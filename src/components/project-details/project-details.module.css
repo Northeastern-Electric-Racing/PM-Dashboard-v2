@@ -3,16 +3,21 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
- #project_details {
+#project_details {
+  background-color: #ebf5fa;
+  box-shadow: 5px 5px 1px #afb3e0;
+}
+
+.item_box {
   border-radius: 10px;
   padding-top: 10px;
   padding-left: 20px;
   padding-bottom: 10px;
   margin-left: 20%;
   margin-right: 20%;
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   box-shadow: 5px 5px 1px #999999;
- }
+}
 
 span {
   margin-right: 30px;
@@ -40,4 +45,3 @@ menu {
 li {
   margin-right: 30px;
 }
-

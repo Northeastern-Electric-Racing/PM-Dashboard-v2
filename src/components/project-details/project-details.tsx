@@ -12,7 +12,7 @@ interface ProjectDetailsProps {
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
   return (
-    <div id={styles.project_details}>
+    <div id={styles.project_details} className={styles.item_box}>
       <header>Project Details</header>
       <p>
         Project Name: <span className={styles.important}>{project.name}</span>

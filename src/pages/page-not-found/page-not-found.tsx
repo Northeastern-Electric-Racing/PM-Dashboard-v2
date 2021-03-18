@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './page-not-found.module.css';
 
 export const PageNotFound: React.FC = () => {

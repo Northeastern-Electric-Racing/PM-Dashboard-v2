@@ -14,6 +14,7 @@ import { AxiosResponse } from 'axios';
 import { Project } from 'utils';
 import { apiFetch } from '../../shared/axios';
 import styles from './projects-table.module.css';
+import { response } from 'msw/lib/types';
 
 /**
  * Interactive table for fetching and displaying all projects data.
@@ -71,7 +72,10 @@ const ProjectsTable: React.FC = () => {
   // define what happens during various row events
   const rowEvents: RowEventHandlerProps = {
     onClick: (e, row, rowIndex) => {
-      history.push(`/projects/${row.wbsNum}`);
+      history.push({
+        pathname: `/projects/${row.wbsNum}`,
+        state: allProjects[rowIndex]
+      });
     }
   };
 

@@ -3,14 +3,16 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useParams } from 'react-router-dom';
-import { validateWBS, wbsIsProject } from 'utils';
+import { useLocation, useParams } from 'react-router-dom';
+import { Project, validateWBS, wbsIsProject } from 'utils';
+import ProjectDetails from '../../components/project-details/project-details';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
   }
+  const project = useLocation<Project>().state;
   const { wbsNum } = useParams<ParamTypes>();
 
   validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
@@ -22,6 +24,7 @@ const WBSDetails: React.FC = () => {
       <p className={styles.describe}>
         {type} {wbsNum}
       </p>
+      <ProjectDetails project={project} />
     </div>
   );
 };

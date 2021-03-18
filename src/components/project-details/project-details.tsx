@@ -4,7 +4,7 @@
  */
 
 import { Project } from 'utils';
-import './project-details.module.css';
+import styles from './project-details.module.css';
 
 interface ProjectDetailsProps {
   project: Project;
@@ -12,10 +12,30 @@ interface ProjectDetailsProps {
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
   return (
-    <div>
+    <div id={styles.project_details}>
+      <header>Project Details</header>
       <p>
-        Project Details Component: {project.name} with {project.duration} weeks
+        Project Name: <span className={styles.important}>{project.name}</span>
+        WBS# <span className={styles.important}>{project.wbsNum}</span>
       </p>
+      <p>
+        Project Lead: <span className={styles.important}>{project.projectLead}</span>
+        Project Manager: <span className={styles.important}>{project.projectManager}</span>
+      </p>
+      <p>
+        Duration: <span className={styles.important}>{project.duration}</span>
+      </p>
+      <menu>
+        <li>
+          <a href="">Slide Deck</a>
+        </li>
+        <li>
+          <a href="">Task List</a>
+        </li>
+        <li>
+          <a href="">Google Drive</a>
+        </li>
+      </menu>
     </div>
   );
 };

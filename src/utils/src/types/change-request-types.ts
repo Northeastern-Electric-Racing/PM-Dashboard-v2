@@ -4,6 +4,8 @@
  */
 
 export interface ChangeRequest {
-  submitter: String;
-  type: String;
+  id: number;
+  wbsNum: string;
+  submitter: string;
+  type: Type;
 }

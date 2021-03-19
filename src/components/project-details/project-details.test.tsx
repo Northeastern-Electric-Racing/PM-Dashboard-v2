@@ -17,19 +17,19 @@ const exampleProject1: Project = {
 };
 
 describe('project details component', () => {
-  test('Renders title', () => {
+  it('Renders title', () => {
     render(<ProjectDetails project={exampleProject1} />);
     const titleElement = screen.getByText('Project Details');
     expect(titleElement).toBeInTheDocument();
   });
 
-  test('Renders WBS#', () => {
+  it('Renders WBS#', () => {
     render(<ProjectDetails project={exampleProject1} />);
     const projectElement = screen.getByText(`${exampleProject1.wbsNum}`);
     expect(projectElement).toBeInTheDocument();
   });
 
-  test('Renders project lead', () => {
+  it('Renders project lead', () => {
     render(<ProjectDetails project={exampleProject1} />);
     const projectNameElement = screen.getByText(`${exampleProject1.projectLead}`);
     expect(projectNameElement).toBeInTheDocument();

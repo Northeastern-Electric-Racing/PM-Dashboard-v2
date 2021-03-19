@@ -3,41 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
- #project_details {
-  border-radius: 10px;
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-bottom: 10px;
-  margin-left: 20%;
-  margin-right: 20%;
-  background-color: #F7F7F7;
-  box-shadow: 5px 5px 1px #999999;
- }
-
-span {
-  margin-right: 30px;
-}
-
-header {
-  font-weight: bold;
-  font-size: larger;
-}
-
-.important {
-  color: black;
-}
-
 p {
-  color: gray;
+  color: pink;
 }
-
-menu {
-  padding-left: 0;
-  display: flex;
-  list-style: none;
-}
-
-li {
-  margin-right: 30px;
-}
-

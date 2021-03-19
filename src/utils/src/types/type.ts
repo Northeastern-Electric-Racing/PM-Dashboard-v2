@@ -1,4 +1,0 @@
-enum Type {
-  Project,
-  WorkPackage
-}

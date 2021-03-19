@@ -7,5 +7,5 @@ export interface ChangeRequest {
   id: number;
   wbsNum: string;
   submitter: string;
-  type: Type;
+  type: string;
 }

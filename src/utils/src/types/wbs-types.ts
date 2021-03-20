@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.label {
-  color: brown;
+export interface WbsNumber {
+  area: number;
+  project: number;
+  workPackage: number;
 }

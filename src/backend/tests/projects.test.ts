@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from 'utils';
-import { exampleAllProjects } from '../functions/projects';
+import { Project, exampleAllProjects } from 'utils';
 
 describe('all example projects', () => {
   it('contains 5 projects', () => {
@@ -23,9 +22,8 @@ describe('all example projects', () => {
   it('has proper project wbsNums', () => {
     exampleAllProjects.forEach((prj) => {
       const project: Project = prj;
-      const wbs: Array<string> = project.wbsNum.split('.');
       expect(project.wbsNum).toBeTruthy();
-      expect(wbs[wbs.length - 1]).toEqual('0');
+      expect(project.wbsNum.workPackage).toEqual(0);
     });
   });
 });

@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import ChangeRequests from './pages/change-requests/change-requests';
 import Projects from './pages/projects/projects';
 import './App.css';
+import { PageNotFound } from './pages/page-not-found/page-not-found';
 
 function App() {
   return (
@@ -25,9 +26,10 @@ function App() {
       <Switch>
         <Route path="/projects" component={Projects} />
         <Route path="/change-requests" component={ChangeRequests} />
-        <Route path="/">
+        <Route exact path="/">
           <h3>Home!</h3>
         </Route>
+        <Route path="*" component={PageNotFound} />
       </Switch>
     </BrowserRouter>
   );

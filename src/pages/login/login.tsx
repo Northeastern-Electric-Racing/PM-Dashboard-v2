@@ -3,12 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Link } from 'react-router-dom';
 import styles from './login.module.css';
 
+/**
+ * Page for unauthenticated users to do login.
+ */
 const Login: React.FC = () => {
   return (
-    <div>
-      <h1 className={styles.title}>This is the Login Page</h1>
+    <div className={`card ${styles.card}`}>
+      <div className="card-body">
+        <h5 className="card-title">NER PM Dashboard</h5>
+        <p className="card-text">Login Required</p>
+        <div className={styles.button}>
+          <Link to="/">
+            <button className="btn btn-primary">Login</button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

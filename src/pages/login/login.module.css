@@ -3,6 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.title {
-  color: black;
+.card {
+  width: 15em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button {
+  text-align: center;
 }

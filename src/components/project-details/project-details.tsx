@@ -3,11 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from 'utils';
-import styles from './project-details.module.css';
+import { Project } from '../../utils/src';
+import { linkPipe } from '../../shared/pipes';
+import styles from '*.module.css';
 
 interface ProjectDetailsProps {
-  project: Project;
+  project: Project
 }
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
@@ -17,13 +18,15 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
       <p>
         Project Name: <span className={styles.important}>{project.name}</span>
         WBS# <span className={styles.important}>{project.wbsNum}</span>
+        Project Details Component: {project.wbsNum} - {project.name} in{' '}
+        {linkPipe(project.gDriveLink)}
       </p>
       <p>
         Project Lead: <span className={styles.important}>{project.projectLead}</span>
         Project Manager: <span className={styles.important}>{project.projectManager}</span>
       </p>
       <p>
-        Duration: <span className={styles.important}>{project.duration}</span>
+        Date Created: <span className={styles.important}>{project.dateCreated}</span>
       </p>
       <menu>
         <li>
@@ -33,7 +36,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
           <a href="">Task List</a>
         </li>
         <li>
-          <a href="">Google Drive</a>
+          <a href={project.gDriveLink}>Google Drive</a>
         </li>
       </menu>
     </div>

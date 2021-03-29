@@ -16,12 +16,13 @@ import { apiFetch } from '../../shared/axios';
 import { fullNamePipe, wbsPipe, weeksPipe } from '../../shared/pipes';
 import styles from './projects-table.module.css';
 
-interface DisplayProject {
+export interface DisplayProject {
   wbsNum: string;
   name: string;
   projectLead: string;
   projectManager: string;
   duration: string;
+  project: Project;
 }
 
 /**
@@ -43,7 +44,8 @@ const ProjectsTable: React.FC = () => {
           projectManager: fullNamePipe(prj.projectManager),
           duration: weeksPipe(
             prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
-          )
+          ),
+          project: prj
         };
       })
     );

@@ -3,40 +3,38 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from '../../utils/src';
+import { DisplayProject } from '../../containers/projects-table/projects-table';
 import { linkPipe } from '../../shared/pipes';
-import styles from '*.module.css';
+import styles from './project-details.module.css';
 
 interface ProjectDetailsProps {
-  project: Project
+  displayProject: DisplayProject
 }
 
-const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
+const ProjectDetails: React.FC<ProjectDetailsProps> = ({ displayProject }: ProjectDetailsProps) => {
   return (
     <div id={styles['project-details']} className="item-box">
       <header>Project Details</header>
       <p>
-        Project Name: <span className={styles.important}>{project.name}</span>
-        WBS# <span className={styles.important}>{project.wbsNum}</span>
-        Project Details Component: {project.wbsNum} - {project.name} in{' '}
-        {linkPipe(project.gDriveLink)}
+        Project Name: <span className={styles.important}>{displayProject.name}</span>
+        WBS# <span className={styles.important}>{displayProject.wbsNum}</span>
       </p>
       <p>
-        Project Lead: <span className={styles.important}>{project.projectLead}</span>
-        Project Manager: <span className={styles.important}>{project.projectManager}</span>
+        Project Lead: <span className={styles.important}>{displayProject.projectLead}</span>
+        Project Manager: <span className={styles.important}>{displayProject.projectManager}</span>
       </p>
       <p>
-        Date Created: <span className={styles.important}>{project.dateCreated}</span>
+        Duration: <span className={styles.important}>{displayProject.duration}</span>
       </p>
       <menu>
         <li>
-          <a href="">Slide Deck</a>
+          {linkPipe('Slide Deck', displayProject.project.slideDeckLink)}
         </li>
         <li>
-          <a href="">Task List</a>
+          {linkPipe('Task List', displayProject.project.taskListLink)}
         </li>
         <li>
-          <a href={project.gDriveLink}>Google Drive</a>
+          {linkPipe('Google Drive', displayProject.project.gDriveLink)}
         </li>
       </menu>
     </div>

@@ -4,15 +4,16 @@
  */
 
 import { useLocation, useParams } from 'react-router-dom';
-import { Project, validateWBS, wbsIsProject } from 'utils';
+import { validateWBS, wbsIsProject } from 'utils';
 import ProjectDetails from '../../components/project-details/project-details';
+import { DisplayProject } from '../../containers/projects-table/projects-table';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
   }
-  const project = useLocation<Project>().state;
+  const displayProject = useLocation<DisplayProject>().state;
   const { wbsNum } = useParams<ParamTypes>();
 
   validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
@@ -24,7 +25,7 @@ const WBSDetails: React.FC = () => {
       <p className={styles.describe}>
         {type} {wbsNum}
       </p>
-      <ProjectDetails project={project} />
+      <ProjectDetails displayProject={displayProject} />
     </div>
   );
 };

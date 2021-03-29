@@ -8,6 +8,7 @@ import ChangeRequests from './pages/change-requests/change-requests';
 import Projects from './pages/projects/projects';
 import './App.css';
 import { PageNotFound } from './pages/page-not-found/page-not-found';
+import Login from './pages/login/login';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </Link>
       </nav>
       <Switch>
+        <Route path="/login" component={Login} />
         <Route path="/projects" component={Projects} />
         <Route path="/change-requests" component={ChangeRequests} />
         <Route exact path="/">

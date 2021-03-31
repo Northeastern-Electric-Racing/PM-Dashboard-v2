@@ -7,6 +7,9 @@ import { useParams } from 'react-router-dom';
 import { validateWBS, wbsIsProject } from 'utils';
 import styles from './wbs-details.module.css';
 
+// Remove later
+import WorkPackagesTable from '../../containers/work-packages-table/work-packages-table';
+
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
@@ -22,6 +25,7 @@ const WBSDetails: React.FC = () => {
       <p className={styles.describe}>
         {type} {wbsNum}
       </p>
+      <WorkPackagesTable /> {/* To be removed later */}
     </div>
   );
 };

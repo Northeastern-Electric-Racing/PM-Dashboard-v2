@@ -18,12 +18,19 @@
   
   .projectInfo {
     float: left;
+    /*margin-bottom: 0;*/
   }
 
   .deadline {
     float: right;
+    margin-bottom: 0;
   }
 
   .tempContainer {
     margin: 50px;
+  }
+
+  .wbsNum {
+    float: left;
+    min-width: 80px;
   }

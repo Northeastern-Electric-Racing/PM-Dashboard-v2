@@ -3,6 +3,8 @@
 - Does work-package-summary need to be its own separate component or can it be an element of sorts
 - Established way to display WBS?
 - Mobile?
+- Does the site have general css? How much should I style?
+- Don't see end date
 
 - Remove code from change-requests.tsx
 

@@ -25,7 +25,8 @@ const WorkPackagesTable: React.FC = () => {
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey={wp.name} className={styles.packageHeader}>
             <div>
-              <h4 className={styles.projectInfo}>{wp.wbsNum.area}.{wp.wbsNum.project}.{wp.wbsNum.workPackage} {wp.name}</h4>
+              <h4 className={styles.wbsNum}>{wp.wbsNum.area}.{wp.wbsNum.project}.{wp.wbsNum.workPackage}</h4>
+              <h4 className={styles.projectInfo}>{wp.name}</h4>
               <h4 className={styles.deadline}>1 week</h4>
             </div>
           </Accordion.Toggle>

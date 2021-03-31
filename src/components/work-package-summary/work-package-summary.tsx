@@ -17,7 +17,9 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
   workPackage
 }: WorkPackageSummaryProps) => {
   return (
-    <h4 className={styles.title}>{workPackage.name}</h4>
+    <div>
+      <h4>{workPackage.name}</h4>
+    </div>
   );
 };
 

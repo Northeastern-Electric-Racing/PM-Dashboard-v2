@@ -2,9 +2,10 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
- 
- .title {
-    padding-left: 15px;
-    padding-bottom: 20px;
+
+  .largeBlue {
+    width: 100%;
+    height: 100%;
+    background-color: blue;
   }
   

@@ -2,9 +2,28 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
- 
- .title {
-    padding-left: 15px;
-    padding-bottom: 20px;
+
+  .packageHeader {
+    cursor: pointer;
+  }
+
+  .boldify {
+    font-weight: bold;
+  }
+
+  .onePackage {
+    margin-bottom: 30px;
+    border-radius: 50px;
   }
   
+  .projectInfo {
+    float: left;
+  }
+
+  .deadline {
+    float: right;
+  }
+
+  .tempContainer {
+    margin: 50px;
+  }

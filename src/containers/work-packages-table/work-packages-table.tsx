@@ -3,11 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-//import styles from './work-packages-table.module.css';
+import styles from './work-packages-table.module.css';
 import { WorkPackage, 
   exampleWorkPackage1, 
   exampleWorkPackage2, 
   exampleWorkPackage3} from 'utils';
+import { Accordion, Card } from "react-bootstrap";
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 
 const WorkPackagesTable: React.FC = () => {
@@ -19,14 +20,24 @@ const WorkPackagesTable: React.FC = () => {
   ];
 
   return (
-    <div>
+    <Accordion className={styles.tempContainer}>
       {workPackages.map((wp: WorkPackage, idx: number) => (
-        <div key={idx}>
-          <hr />
-          <WorkPackageSummary workPackage={wp} />
-        </div>
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey={wp.name} className={styles.packageHeader}>
+            <div>
+              <h4 className={styles.projectInfo}>{wp.wbsNum.area}.{wp.wbsNum.project}.{wp.wbsNum.workPackage} {wp.name}</h4>
+              <h4 className={styles.deadline}>1 week</h4>
+            </div>
+          </Accordion.Toggle>
+
+          <Accordion.Collapse eventKey={wp.name}>
+              <Card.Body>
+                <WorkPackageSummary workPackage={wp} />
+              </Card.Body>
+          </Accordion.Collapse>
+        </Card>
       ))}
-    </div>
+    </Accordion>
   );
 };
 

@@ -1,6 +1,8 @@
 - Where are the bootstrap classes imported?
 - Why do I need the props interface?
-- What's the key for?
+- Does work-package-summary need to be its own separate component or can it be an element of sorts
+- Established way to display WBS?
+- Mobile?
 
 - Remove code from change-requests.tsx
 

@@ -17,15 +17,43 @@ interface WorkPackageSummaryProps {
 }
 
 const getDeadline: Function = (dur: number): string => {
-  if(dur == 1) {
+  if(dur === 1) {
     return dur + " week";
   } else {
     return dur + " weeks";
   }
 };
 
-const getWbsNum: Function = (wbs: WbsNumber): string => {
+const formatWbsNum: Function = (wbs: WbsNumber): string => {
   return wbs.area + "." + wbs.project + "." + wbs.workPackage;
+};
+
+const formatDependencies: Function = (dep: WbsNumber[]): string => {
+  var i = 0;
+  var str = "";
+  if (dep.length === 0) {
+    return str;
+  }
+  for (i = 0; i < dep.length - 1; i++) {
+    str = str  + formatWbsNum(dep[i]) + ", ";
+  }
+  return str + formatWbsNum(dep[i]);
+};
+
+const formatRules: Function = (rules: string[]): string => {
+  var i = 0;
+  var str = "";
+  if (rules.length === 0) {
+    return str;
+  }
+  for (i = 0; i < rules.length - 1; i++) {
+    str = str  + rules[i] + ", ";
+  }
+  return str + rules[i];
+};
+
+const formatEndDate: Function = (startDate: Date, dur: number): string => {
+  return startDate.toLocaleDateString();
 };
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
@@ -35,11 +63,9 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
 
   return (
     <Card className={styles.wpCard}>
-      <Card.Header className={styles.packageHeader}
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}>
+      <Card.Header className={styles.packageHeader} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
-          <h4 className={styles.wbsNum}>{getWbsNum(workPackage.wbs)}</h4>
+          <h4 className={styles.wbsNum}>{formatWbsNum(workPackage.wbsNum)}</h4>
           <h4 className={styles.projectInfo}>{workPackage.name}</h4>
           <h4 className={styles.deadline}>{getDeadline(workPackage.duration)}</h4>
         </div>
@@ -49,13 +75,11 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
         <Card.Body>
             <div>
               <p>{workPackage.deliverable}</p>
-
-              <p>Dependencies: {workPackage.dependencies.map((dep: WbsNumber) => (<>{dep.area}.{dep.project}.{dep.workPackage} </>))}</p>
-
-              <p>Rules: {workPackage.rules.map((rule: string) => (<>{rule} </>))}</p>
+              <p>Dependencies: {formatDependencies(workPackage.dependencies)}</p>
+              <p>Rules: {formatRules(workPackage.rules)}</p>
               <p>Budget: ${workPackage.budget}</p>
               <p>Start date: {workPackage.startDate.toLocaleDateString()}</p>
-              <p>End Date: {workPackage.startDate.toLocaleDateString()}</p>
+              <p>End Date: {formatEndDate(workPackage.startDate, workPackage.duration)}</p>
             </div>
         </Card.Body>
       </Collapse>

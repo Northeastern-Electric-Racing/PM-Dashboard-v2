@@ -3,9 +3,25 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-  .largeBlue {
-    width: 100%;
-    height: 100%;
-    background-color: blue;
+.packageHeader {
+    cursor: pointer;
   }
   
+  .projectInfo {
+    float: left;
+    /*margin-bottom: 0;*/
+  }
+
+  .deadline {
+    float: right;
+    margin-bottom: 0;
+  }
+
+  .wbsNum {
+    float: left;
+    min-width: 80px;
+  }
+
+  .wpCard {
+    margin-bottom: 20px;
+  }

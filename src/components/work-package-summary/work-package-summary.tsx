@@ -4,7 +4,9 @@
  */
 
 import { ReactElement } from 'react';
+import { useState } from 'react';
 import styles from './work-package-summary.module.css';
+import { Card,Collapse } from "react-bootstrap";
 import {
   WbsNumber,
   WorkPackage
@@ -14,29 +16,50 @@ interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
 }
 
-const buildDependecies: Function = (wp: WorkPackage): ReactElement => {
-  return (
-    <>
-      {wp.dependencies.map((dep: WbsNumber) => (<>{dep.area}.{dep.project}.{dep.workPackage} </>))}
-    </>
-  );
+const getDeadline: Function = (dur: number): string => {
+  if(dur == 1) {
+    return dur + " week";
+  } else {
+    return dur + " weeks";
+  }
+};
+
+const getWbsNum: Function = (wbs: WbsNumber): string => {
+  return wbs.area + "." + wbs.project + "." + wbs.workPackage;
 };
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
   workPackage
 }: WorkPackageSummaryProps) => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div>
-      <p>{workPackage.deliverable}</p>
+    <Card className={styles.wpCard}>
+      <Card.Header className={styles.packageHeader}
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}>
+        <div>
+          <h4 className={styles.wbsNum}>{getWbsNum(workPackage.wbs)}</h4>
+          <h4 className={styles.projectInfo}>{workPackage.name}</h4>
+          <h4 className={styles.deadline}>{getDeadline(workPackage.duration)}</h4>
+        </div>
+      </Card.Header>
 
-      <p>Dependencies: {buildDependecies(workPackage)}</p>
+      <Collapse in={open}>
+        <Card.Body>
+            <div>
+              <p>{workPackage.deliverable}</p>
 
-      <p>Rules: {workPackage.rules.map((rule: string) => (<>{rule} </>))}</p>
-      <p>Budget: ${workPackage.budget}</p>
-      <p>Start date: {workPackage.startDate.toLocaleDateString()}</p>
-      <p>End Date: {workPackage.startDate.toLocaleDateString()}</p>
-    </div>
+              <p>Dependencies: {workPackage.dependencies.map((dep: WbsNumber) => (<>{dep.area}.{dep.project}.{dep.workPackage} </>))}</p>
+
+              <p>Rules: {workPackage.rules.map((rule: string) => (<>{rule} </>))}</p>
+              <p>Budget: ${workPackage.budget}</p>
+              <p>Start date: {workPackage.startDate.toLocaleDateString()}</p>
+              <p>End Date: {workPackage.startDate.toLocaleDateString()}</p>
+            </div>
+        </Card.Body>
+      </Collapse>
+    </Card>
   );
 };
 

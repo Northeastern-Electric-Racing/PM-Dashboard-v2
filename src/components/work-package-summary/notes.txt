@@ -6,5 +6,3 @@
 - Does the site have general css? How much should I style?
 - Don't see end date
 
-- Remove code from change-requests.tsx
-

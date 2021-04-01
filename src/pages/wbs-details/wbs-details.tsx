@@ -4,17 +4,27 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { validateWBS, wbsIsProject } from 'utils';
+import { validateWBS, wbsIsProject, 
+  WorkPackage, 
+  exampleWorkPackage1, 
+  exampleWorkPackage2, 
+  exampleWorkPackage3 } from 'utils';
 import styles from './wbs-details.module.css';
 
 // Remove later
-import WorkPackagesTable from '../../containers/work-packages-table/work-packages-table';
+import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
   }
   const { wbsNum } = useParams<ParamTypes>();
+
+  const workPackages: Array<WorkPackage> = [
+    exampleWorkPackage1,
+    exampleWorkPackage2,
+    exampleWorkPackage3
+  ];
 
   validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
 
@@ -25,7 +35,9 @@ const WBSDetails: React.FC = () => {
       <p className={styles.describe}>
         {type} {wbsNum}
       </p>
-      <WorkPackagesTable /> {/* To be removed later */}
+      {workPackages.map((wp: WorkPackage, idx: number) => (
+        <WorkPackageSummary workPackage={wp}/>
+      ))}
     </div>
   );
 };

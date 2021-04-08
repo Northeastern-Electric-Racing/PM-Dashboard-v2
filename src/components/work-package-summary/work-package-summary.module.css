@@ -4,24 +4,35 @@
  */
 
 .packageHeader {
-    cursor: pointer;
-  }
-  
-  .projectInfo {
-    float: left;
-    /*margin-bottom: 0;*/
-  }
+  cursor: pointer;
+}
 
-  .deadline {
-    float: right;
-    margin-bottom: 0;
-  }
+.projectInfo {
+  float: left;
+  /*margin-bottom: 0;*/
+}
 
-  .wbsNum {
-    float: left;
-    min-width: 80px;
-  }
+.deadline {
+  float: right;
+  margin-bottom: 0;
+}
 
-  .wpCard {
-    margin-bottom: 30px;
-  }
+.wbsNum {
+  float: left;
+  min-width: 60px;
+}
+
+.wpCard {
+  margin-bottom: 20px;
+}
+
+.halfDiv {
+  width: 50%;
+  float: left;
+  padding-right: 20px;
+  min-width: 300px;
+}
+
+b {
+  font-weight: bold;
+}

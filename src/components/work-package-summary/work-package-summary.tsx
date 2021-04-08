@@ -99,7 +99,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
       <Card.Header className={styles.packageHeader} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
           <h5 className={styles.wbsNum}>{formatWbsNum(workPackage.wbsNum)}</h5>
-          <h5 className={styles.projectInfo}>{workPackage.name}</h5>
+          <a href={"/projects"}><h5 className={styles.projectInfo}>{workPackage.name}</h5></a>
           <h5 className={styles.deadline}>{getDeadline(workPackage.startDate, workPackage.duration)}</h5>
         </div>
       </Card.Header>
@@ -109,11 +109,15 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
           <div>
             <Card.Body>
               <p>{workPackage.deliverable}</p>
-              <p>Dependencies: {formatDependencies(workPackage.dependencies)}</p>
-              <p>Rules: {formatRules(workPackage.rules)}</p>
-              <p>Budget: ${workPackage.budget}</p>
-              <p>Start date: {workPackage.startDate.toLocaleDateString()}</p>
-              <p>End Date: {formatEndDate(workPackage.startDate, workPackage.duration)}</p>
+              <div className={styles.halfDiv}>
+                <p><b>Dependencies:</b> {formatDependencies(workPackage.dependencies)}</p>
+                <p><b>Rules:</b> {formatRules(workPackage.rules)}</p>
+                <p><b>Budget:</b> ${workPackage.budget}</p>
+              </div>
+              <div className={styles.halfDiv}>
+                <p><b>Start date:</b> {workPackage.startDate.toLocaleDateString()}</p>
+                <p><b>End Date:</b> {formatEndDate(workPackage.startDate, workPackage.duration)}</p>
+              </div>
             </Card.Body>
           </div>
       </Collapse>

@@ -253,12 +253,6 @@ export const exampleWorkPackage3: WorkPackage = {
   ]
 };
 
-export const exampleAllWorkPackages: WorkPackage[] = [
-  exampleWorkPackage1,
-  exampleWorkPackage2,
-  exampleWorkPackage3
-];
-
 /********************** Projects **********************/
 
 export const exampleProject1: Project = {

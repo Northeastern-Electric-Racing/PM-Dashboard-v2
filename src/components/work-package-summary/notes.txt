@@ -1,8 +1,0 @@
-- Where are the bootstrap classes imported?
-- Why do I need the props interface?
-- Does work-package-summary need to be its own separate component or can it be an element of sorts
-- Established way to display WBS?
-- Mobile?
-- Does the site have general css? How much should I style?
-- Don't see end date
-

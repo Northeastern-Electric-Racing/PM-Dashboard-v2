@@ -10,3 +10,7 @@ import {
     exampleWorkPackage2,
     exampleWorkPackage3
 } from 'utils';
+
+test('Renders title', () => {
+    render(<WorkPackageSummary workPackage={exampleWorkPackage1} />);
+  });

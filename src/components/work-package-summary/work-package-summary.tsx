@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactElement } from 'react';
 import { useState } from 'react';
 import styles from './work-package-summary.module.css';
 import { Card,Collapse } from "react-bootstrap";
@@ -16,18 +15,44 @@ interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
 }
 
-const getDeadline: Function = (dur: number): string => {
-  if(dur === 1) {
-    return dur + " week";
+// Formats the time to the deadline as a string
+const getDeadline: Function = (startDate: Date, dur: number): string => {
+  var today = new Date("1/15/21");
+  var diff = findEndDate(startDate, dur).getTime() - today.getTime();
+    
+  // To calculate the no. of days between two dates
+  var diffDays = Math.floor(diff / (1000 * 3600 * 24));
+
+  if (diffDays < 1) {
+    return 0 + " days";
+
+  } else if (diffDays > 7) {
+
+    var diffWeeks = diffDays / 7;
+
+    if (diffWeeks === 1) {
+      return diffWeeks + " week";
+    } else {
+      return diffWeeks + " weeks";
+    }
+
   } else {
-    return dur + " weeks";
+
+    if (diffDays === 1) {
+      return diffDays + " day";
+    } else {
+      return diffDays + " days";
+    }
+    
   }
 };
 
+// Formats the WBS numbers
 const formatWbsNum: Function = (wbs: WbsNumber): string => {
   return wbs.area + "." + wbs.project + "." + wbs.workPackage;
 };
 
+// Formats the dependencies to be displayed as a list
 const formatDependencies: Function = (dep: WbsNumber[]): string => {
   var i = 0;
   var str = "";
@@ -40,6 +65,7 @@ const formatDependencies: Function = (dep: WbsNumber[]): string => {
   return str + formatWbsNum(dep[i]);
 };
 
+// Formats the rules to be displayed as a list
 const formatRules: Function = (rules: string[]): string => {
   var i = 0;
   var str = "";
@@ -52,8 +78,15 @@ const formatRules: Function = (rules: string[]): string => {
   return str + rules[i];
 };
 
+// Formats the end date as a string
 const formatEndDate: Function = (startDate: Date, dur: number): string => {
-  return startDate.toLocaleDateString();
+  return findEndDate(startDate, dur).toLocaleDateString();
+};
+
+const findEndDate: Function = (startDate: Date, dur: number): Date => {
+  var endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + dur*7)
+  return endDate;
 };
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
@@ -65,23 +98,24 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
     <Card className={styles.wpCard}>
       <Card.Header className={styles.packageHeader} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
-          <h4 className={styles.wbsNum}>{formatWbsNum(workPackage.wbsNum)}</h4>
-          <h4 className={styles.projectInfo}>{workPackage.name}</h4>
-          <h4 className={styles.deadline}>{getDeadline(workPackage.duration)}</h4>
+          <h5 className={styles.wbsNum}>{formatWbsNum(workPackage.wbsNum)}</h5>
+          <h5 className={styles.projectInfo}>{workPackage.name}</h5>
+          <h5 className={styles.deadline}>{getDeadline(workPackage.startDate, workPackage.duration)}</h5>
         </div>
       </Card.Header>
 
+      
       <Collapse in={open}>
-        <Card.Body>
-            <div>
+          <div>
+            <Card.Body>
               <p>{workPackage.deliverable}</p>
               <p>Dependencies: {formatDependencies(workPackage.dependencies)}</p>
               <p>Rules: {formatRules(workPackage.rules)}</p>
               <p>Budget: ${workPackage.budget}</p>
               <p>Start date: {workPackage.startDate.toLocaleDateString()}</p>
               <p>End Date: {formatEndDate(workPackage.startDate, workPackage.duration)}</p>
-            </div>
-        </Card.Body>
+            </Card.Body>
+          </div>
       </Collapse>
     </Card>
   );

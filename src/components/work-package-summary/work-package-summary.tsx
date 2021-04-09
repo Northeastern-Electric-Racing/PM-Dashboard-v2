@@ -10,47 +10,11 @@ import {
   WbsNumber,
   WorkPackage
 } from 'utils';
+import { weeksPipe, dollarsPipe, linkPipe, wbsPipe } from '../../shared/pipes';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
 }
-
-// Formats the time to the deadline as a string
-const getDeadline: Function = (startDate: Date, dur: number): string => {
-  var today = new Date("1/15/21");
-  var diff = findEndDate(startDate, dur).getTime() - today.getTime();
-    
-  // To calculate the no. of days between two dates
-  var diffDays = Math.floor(diff / (1000 * 3600 * 24));
-
-  if (diffDays < 1) {
-    return 0 + " days";
-
-  } else if (diffDays > 7) {
-
-    var diffWeeks = diffDays / 7;
-
-    if (diffWeeks === 1) {
-      return diffWeeks + " week";
-    } else {
-      return diffWeeks + " weeks";
-    }
-
-  } else {
-
-    if (diffDays === 1) {
-      return diffDays + " day";
-    } else {
-      return diffDays + " days";
-    }
-    
-  }
-};
-
-// Formats the WBS numbers
-const formatWbsNum: Function = (wbs: WbsNumber): string => {
-  return wbs.area + "." + wbs.project + "." + wbs.workPackage;
-};
 
 // Formats the dependencies to be displayed as a list
 const formatDependencies: Function = (dep: WbsNumber[]): string => {
@@ -60,9 +24,9 @@ const formatDependencies: Function = (dep: WbsNumber[]): string => {
     return str;
   }
   for (i = 0; i < dep.length - 1; i++) {
-    str = str  + formatWbsNum(dep[i]) + ", ";
+    str = str  + wbsPipe(dep[i]) + ", ";
   }
-  return str + formatWbsNum(dep[i]);
+  return str + wbsPipe(dep[i]);
 };
 
 // Formats the rules to be displayed as a list
@@ -98,9 +62,9 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
     <Card className={styles.wpCard}>
       <Card.Header className={styles.packageHeader} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
-          <h5 className={styles.wbsNum}>{formatWbsNum(workPackage.wbsNum)}</h5>
-          <a href={"/projects"}><h5 className={styles.projectInfo}>{workPackage.name}</h5></a>
-          <h5 className={styles.deadline}>{getDeadline(workPackage.startDate, workPackage.duration)}</h5>
+          <h5 className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</h5>
+          <h5 className={styles.projectInfo}>{linkPipe(workPackage.name, '/projects')}</h5>
+          <h5 className={styles.deadline}>{weeksPipe(workPackage.duration)}</h5>
         </div>
       </Card.Header>
 
@@ -112,7 +76,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
               <div className={styles.halfDiv}>
                 <p><b>Dependencies:</b> {formatDependencies(workPackage.dependencies)}</p>
                 <p><b>Rules:</b> {formatRules(workPackage.rules)}</p>
-                <p><b>Budget:</b> ${workPackage.budget}</p>
+                <p><b>Budget:</b> {dollarsPipe(workPackage.budget)}</p>
               </div>
               <div className={styles.halfDiv}>
                 <p><b>Start date:</b> {workPackage.startDate.toLocaleDateString()}</p>

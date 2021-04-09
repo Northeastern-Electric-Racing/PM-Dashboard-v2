@@ -44,8 +44,7 @@ const ProjectsTable: React.FC = () => {
           projectManager: fullNamePipe(prj.projectManager),
           duration: weeksPipe(
             prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
-          ),
-          project: prj
+          )
         };
       })
     );
@@ -91,8 +90,7 @@ const ProjectsTable: React.FC = () => {
   const rowEvents: RowEventHandlerProps = {
     onClick: (e, row, rowIndex) => {
       history.push({
-        pathname: `/projects/${row.wbsNum}`,
-        state: allProjects[rowIndex]
+        pathname: `/projects/${row.wbsNum}`
       });
     }
   };

@@ -9,17 +9,12 @@
 
 .projectInfo {
   float: left;
-  /*margin-bottom: 0;*/
 }
 
 .deadline {
   float: right;
   margin-bottom: 0;
 }
-
-/*h5 {
-  font-size: 15px;
-}*/
 
 .wbsNum {
   float: left;

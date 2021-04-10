@@ -11,9 +11,10 @@ import {
 import {
     exampleWorkPackage1,
     exampleWorkPackage2,
-    exampleWorkPackage3
+    exampleWorkPackage3,
+    WorkPackage
 } from 'utils';
-import { wbsPipe } from '../../shared/pipes';
+import { dollarsPipe, wbsPipe } from '../../shared/pipes';
 
 describe('Formatting lists tests', () => {
     test('Formatting Wbs Numbers', () => {
@@ -50,7 +51,48 @@ describe('Formatting end date tests', () => {
 });
 
 describe('Rendering Work Packagae Summary Test', () => {
-    test('Renders title', () => {
-        render(<WorkPackageSummary workPackage={exampleWorkPackage1} />);
+    test('Rendering example 1', () => {
+        const wp: WorkPackage = exampleWorkPackage1;
+        render(<WorkPackageSummary workPackage={wp} />);
+        expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
+
+        expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
+        expect(screen.getByText(`Dependencies:${formatList(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatList(wp.rules, (str: string): string => { return str; })}`)).toBeInTheDocument();
+        expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatEndDate(wp.startDate, wp.duration)}`)).toBeInTheDocument();
+    });
+
+    test('Rendering example 2', () => {
+        const wp: WorkPackage = exampleWorkPackage2;
+        render(<WorkPackageSummary workPackage={wp} />);
+        expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
+
+        expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatList(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatList(wp.rules, (str: string): string => { return str; })}`)).toBeInTheDocument();
+        expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatEndDate(wp.startDate, wp.duration)}`)).toBeInTheDocument();
+    });
+
+    test('Rendering example 3', () => {
+        const wp: WorkPackage = exampleWorkPackage3;
+        render(<WorkPackageSummary workPackage={wp} />);
+        expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
+
+        expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatList(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatList(wp.rules, (str: string): string => { return str; })}`)).toBeInTheDocument();
+        expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
+        expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
+        expect(screen.getByText(`${formatEndDate(wp.startDate, wp.duration)}`)).toBeInTheDocument();
     });
 });

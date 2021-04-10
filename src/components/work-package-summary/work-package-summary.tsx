@@ -7,13 +7,13 @@ import { useState } from 'react';
 import styles from './work-package-summary.module.css';
 import { Card,Collapse } from "react-bootstrap";
 import {
-  WbsNumber,
   WorkPackage
 } from 'utils';
 import { weeksPipe, dollarsPipe, linkPipe, wbsPipe } from '../../shared/pipes';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
+  className?: string;
 }
 
 // Formats an array of objects into a string that is a list
@@ -37,12 +37,13 @@ export const formatEndDate: Function = (startDate: Date, dur: number): string =>
 };
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
-  workPackage
+  workPackage,
+  className
 }: WorkPackageSummaryProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Card className={styles.wpCard}>
+    <Card className={className}>
       <Card.Header className={styles.packageHeader} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
           <h5 className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</h5>

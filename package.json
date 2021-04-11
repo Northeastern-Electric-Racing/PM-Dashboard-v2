@@ -108,7 +108,6 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "netlify-cli": "^3.5.0",
-    "path-to-regexp": "^6.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-table-next": "^4.0.3",

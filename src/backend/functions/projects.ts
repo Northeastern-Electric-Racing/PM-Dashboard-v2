@@ -9,7 +9,7 @@ import { exampleAllProjects } from 'utils';
 export async function handler(event: any, context: Context) {
   try {
     return {
-      statusCode: 201,
+      statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(exampleAllProjects)
     };

@@ -36,3 +36,16 @@ export const fullNamePipe: Function = (user: User): string => {
 export const booleanPipe: Function = (bool: boolean): string => {
   return bool ? 'YES' : 'NO';
 };
+
+// Formats an array of objects into a string that is a list
+export const listPipe: Function = <T,>(array: T[], transform: (ele: T) => string): string => {
+  var strArray = array.map(transform);
+  return strArray.join(', ');
+};
+
+// Formats the end date as a string
+export const endDatePipe: Function = (startDate: Date, dur: number): string => {
+  var endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + dur * 7);
+  return endDate.toLocaleDateString();
+};

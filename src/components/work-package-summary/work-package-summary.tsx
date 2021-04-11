@@ -7,32 +7,19 @@ import { useState } from 'react';
 import styles from './work-package-summary.module.css';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import { weeksPipe, dollarsPipe, linkPipe, wbsPipe } from '../../shared/pipes';
+import {
+  weeksPipe,
+  dollarsPipe,
+  linkPipe,
+  wbsPipe,
+  endDatePipe,
+  listPipe
+} from '../../shared/pipes';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
   className?: string;
 }
-
-// Formats an array of objects into a string that is a list
-export const formatList: Function = <T,>(rules: T[], app: (el: T) => string): string => {
-  var i = 0;
-  var str = '';
-  if (rules.length === 0) {
-    return str;
-  }
-  for (i = 0; i < rules.length - 1; i++) {
-    str = str + app(rules[i]) + ', ';
-  }
-  return str + app(rules[i]);
-};
-
-// Formats the end date as a string
-export const formatEndDate: Function = (startDate: Date, dur: number): string => {
-  var endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + dur * 7);
-  return endDate.toLocaleDateString();
-};
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
   workPackage,
@@ -60,11 +47,11 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
             <p>{workPackage.deliverable}</p>
             <div className={styles.halfDiv}>
               <p>
-                <b>Dependencies:</b> {formatList(workPackage.dependencies, wbsPipe)}
+                <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
               </p>
               <p>
                 <b>Rules:</b>{' '}
-                {formatList(workPackage.rules, (str: string): string => {
+                {listPipe(workPackage.rules, (str: string): string => {
                   return str;
                 })}
               </p>
@@ -77,7 +64,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
                 <b>Start date:</b> {workPackage.startDate.toLocaleDateString()}
               </p>
               <p>
-                <b>End Date:</b> {formatEndDate(workPackage.startDate, workPackage.duration)}
+                <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
               </p>
             </div>
           </Card.Body>

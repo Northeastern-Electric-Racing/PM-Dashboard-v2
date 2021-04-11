@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Context } from 'aws-lambda';
 import { Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
@@ -421,3 +422,18 @@ export const exampleApiRoutes: ApiRoute[] = [
   { path: '/projects/two', httpMethod: 'GET', func: () => 7 },
   { path: '/projects/three', httpMethod: 'GET', func: () => 8 }
 ];
+
+export const mockContext: Context = {
+  functionName: '',
+  functionVersion: '',
+  invokedFunctionArn: '',
+  memoryLimitInMB: '',
+  awsRequestId: '',
+  logGroupName: '',
+  logStreamName: '',
+  callbackWaitsForEmptyEventLoop: false,
+  getRemainingTimeInMillis: () => 0,
+  done: () => 0,
+  fail: () => 0,
+  succeed: () => 0
+};

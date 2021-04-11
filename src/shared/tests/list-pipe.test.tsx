@@ -14,18 +14,14 @@ describe('Formatting lists tests', () => {
   });
 
   test('Formatting Rules', () => {
-    expect(listPipe(exampleWorkPackage1.rules, (str: string): string => str)).toBe('EV3.5.2');
-    expect(listPipe(exampleWorkPackage2.rules, (str: string): string => str)).toBe(
-      'T12.3.2, T8.2.6'
-    );
-    expect(listPipe(exampleWorkPackage3.rules, (str: string): string => str)).toBe(
-      'EV1.4.7, EV6.3.10'
-    );
+    expect(listPipe(exampleWorkPackage1.rules, (str: string) => str)).toBe('EV3.5.2');
+    expect(listPipe(exampleWorkPackage2.rules, (str: string) => str)).toBe('T12.3.2, T8.2.6');
+    expect(listPipe(exampleWorkPackage3.rules, (str: string) => str)).toBe('EV1.4.7, EV6.3.10');
   });
 
   test('for other case', () => {
-    expect(listPipe([1, 2, 3, 4], (num: number): string => `${num}`)).toBe('1, 2, 3, 4');
-    expect(listPipe([], (num: number): string => `${num}`)).toBe('');
-    expect(listPipe([1], (num: number): string => `${num}`)).toBe('1');
+    expect(listPipe([1, 2, 3, 4], (num: number) => `${num}`)).toBe('1, 2, 3, 4');
+    expect(listPipe([], (num: number) => `${num}`)).toBe('');
+    expect(listPipe([1], (num: number) => `${num}`)).toBe('1');
   });
 });

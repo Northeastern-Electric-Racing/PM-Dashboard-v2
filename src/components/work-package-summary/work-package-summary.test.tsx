@@ -20,13 +20,7 @@ describe('Rendering Work Packagae Summary Test', () => {
     expect(
       screen.getByText(`Dependencies:${listPipe(wp.dependencies, wbsPipe)}`)
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        `${listPipe(wp.rules, (str: string): string => {
-          return str;
-        })}`
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByText(`${listPipe(wp.rules, (str: string) => str)}`)).toBeInTheDocument();
     expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
     expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
@@ -41,13 +35,7 @@ describe('Rendering Work Packagae Summary Test', () => {
 
     expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
     expect(screen.getByText(`${listPipe(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        `${listPipe(wp.rules, (str: string): string => {
-          return str;
-        })}`
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByText(`${listPipe(wp.rules, (str: string) => str)}`)).toBeInTheDocument();
     expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
     expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
@@ -62,13 +50,7 @@ describe('Rendering Work Packagae Summary Test', () => {
 
     expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
     expect(screen.getByText(`${listPipe(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        `${listPipe(wp.rules, (str: string): string => {
-          return str;
-        })}`
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByText(`${listPipe(wp.rules, (str: string) => str)}`)).toBeInTheDocument();
     expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
     expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();

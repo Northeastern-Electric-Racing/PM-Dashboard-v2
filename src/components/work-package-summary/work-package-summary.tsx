@@ -48,7 +48,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
                 <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
               </p>
               <p>
-                <b>Rules:</b> {listPipe(workPackage.rules, (str: string): string => str)}
+                <b>Rules:</b> {listPipe(workPackage.rules, (str: string) => str)}
               </p>
               <p>
                 <b>Budget:</b> {dollarsPipe(workPackage.budget)}

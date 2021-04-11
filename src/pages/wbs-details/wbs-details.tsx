@@ -4,7 +4,7 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { validateWBS, wbsIsProject, } from 'utils';
+import { validateWBS, wbsIsProject } from 'utils';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {

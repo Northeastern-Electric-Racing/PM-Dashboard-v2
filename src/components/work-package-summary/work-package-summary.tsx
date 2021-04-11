@@ -29,15 +29,11 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
 
   return (
     <Card className={className}>
-      <Card.Header
-        className={styles.packageHeader}
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-      >
+      <Card.Header className={styles.header} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
           <h5 className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</h5>
           <h5 className={styles.projectInfo}>{linkPipe(workPackage.name, '/projects')}</h5>
-          <h5 className={styles.deadline}>{weeksPipe(workPackage.duration)}</h5>
+          <h5 className={styles.duration}>{weeksPipe(workPackage.duration)}</h5>
         </div>
       </Card.Header>
 
@@ -50,10 +46,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
                 <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
               </p>
               <p>
-                <b>Rules:</b>{' '}
-                {listPipe(workPackage.rules, (str: string): string => {
-                  return str;
-                })}
+                <b>Rules:</b> {listPipe(workPackage.rules, (str: string): string => str)}
               </p>
               <p>
                 <b>Budget:</b> {dollarsPipe(workPackage.budget)}

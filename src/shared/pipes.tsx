@@ -44,8 +44,8 @@ export const listPipe: Function = <T,>(array: T[], transform: (ele: T) => string
 };
 
 // Formats the end date as a string
-export const endDatePipe: Function = (startDate: Date, dur: number): string => {
+export const endDatePipe: Function = (startDate: Date, durWeeks: number): string => {
   var endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + dur * 7);
+  endDate.setDate(endDate.getDate() + durWeeks * 7);
   return endDate.toLocaleDateString();
 };

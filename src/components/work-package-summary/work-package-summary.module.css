@@ -3,15 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.packageHeader {
+.header {
   cursor: pointer;
 }
 
-.projectInfo {
+.deliverable {
   float: left;
 }
 
-.deadline {
+.duration {
   float: right;
   margin-bottom: 0;
 }

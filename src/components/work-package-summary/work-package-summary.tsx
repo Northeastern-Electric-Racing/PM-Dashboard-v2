@@ -32,7 +32,9 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
       <Card.Header className={styles.header} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
           <h5 className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</h5>
-          <h5 className={styles.projectInfo}>{linkPipe(workPackage.name, '/projects')}</h5>
+          <h5 className={styles.name}>
+            {linkPipe(workPackage.name, `/projects/${wbsPipe(workPackage.wbsNum)}`)}
+          </h5>
           <h5 className={styles.duration}>{weeksPipe(workPackage.duration)}</h5>
         </div>
       </Card.Header>

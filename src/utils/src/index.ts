@@ -5,6 +5,7 @@
 
 export * from './example-shared';
 export * from './dummy-data';
+export * from './api-routes';
 
 export * from './types/change-request-types';
 export * from './types/implemented-change-types';

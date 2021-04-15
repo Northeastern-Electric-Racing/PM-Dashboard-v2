@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
@@ -11,7 +10,7 @@ it('renders nav links', () => {
   render(<App />);
   expect(screen.getByText('Home')).toBeInTheDocument();
   expect(screen.getByText('Projects')).toBeInTheDocument();
-  expect(screen.getByText('Change Requests')).toBeInTheDocument();
+  expect(screen.getByText('Changes')).toBeInTheDocument();
 });
 
 it('can navigate to projects page', () => {

@@ -76,5 +76,14 @@ describe('projects api endpoint handler', () => {
       expect(projectResponse.wbsNum).toBeTruthy();
       expect(projectResponse.wbsNum.workPackage).toEqual(0);
     });
+
+    it('handles 404 when project not found', async () => {
+      const event = { path: '/projects/1.0.0', httpMethod: 'GET' };
+      responseObject = await handler(event, mockContext);
+      const message: string = responseObject.body;
+
+      expect(responseObject.statusCode).toBe(404);
+      expect(message).toEqual('Could not find the requested project.');
+    });
   });
 });

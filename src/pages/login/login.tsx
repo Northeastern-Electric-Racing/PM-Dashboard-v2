@@ -11,7 +11,7 @@ import styles from './login.module.css';
  */
 const Login: React.FC = () => {
   return (
-    <div className={`card ${styles.card}`}>
+    <div className={`card mx-auto mt-sm-5 ${styles.card}`}>
       <div className="card-body">
         <h5 className="card-title">NER PM Dashboard</h5>
         <p className="card-text">Login Required</p>

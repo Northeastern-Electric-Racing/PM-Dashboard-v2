@@ -3,6 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.page-content {
-  margin-top: 5em;
+.mainBackground {
+  background-color: #ef4345;
+}
+
+.logo {
+  height: 35px;
+}
+
+.title {
+  margin: auto 0 auto 10px;
+  color: black;
 }

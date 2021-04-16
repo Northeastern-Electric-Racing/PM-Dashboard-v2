@@ -14,3 +14,4 @@ export * from './dummy-data';
 export * from './example-shared';
 export * from './validate-wbs';
 export * from './api-utils';
+export * from './api-routes';

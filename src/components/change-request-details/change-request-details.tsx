@@ -128,7 +128,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   changeRequest
 }: ChangeRequestDetailsProps) => {
   return (
-    <div className={styles.boundingBox}>
+    <div className={`mx-auto ${styles.boundingBox}`}>
       <h4 className={styles.title}>Change Request #{changeRequest.id}</h4>
       <div className="container">
         <dl className="row">

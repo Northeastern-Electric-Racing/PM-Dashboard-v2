@@ -1,11 +1,11 @@
 .page_not_found {
-    text-align: center;
+  text-align: center;
 }
 
-h1 {
-    color: black;
+.title {
+  color: black;
 }
 
-h3 {
-    color: gray;
+.subtitle {
+  color: gray;
 }

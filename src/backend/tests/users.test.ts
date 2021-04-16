@@ -3,25 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
+import { mockContext } from 'utils';
 import { handler } from '../functions/users';
 
 describe('users api endpoint handler', () => {
-  const mockContext: Context = {
-    functionName: '',
-    functionVersion: '',
-    invokedFunctionArn: '',
-    memoryLimitInMB: '',
-    awsRequestId: '',
-    logGroupName: '',
-    logStreamName: '',
-    callbackWaitsForEmptyEventLoop: false,
-    getRemainingTimeInMillis: () => 0,
-    done: () => 0,
-    fail: () => 0,
-    succeed: () => 0
-  };
-
   it('returns an array of users', async () => {
     const usersResponse = await handler({}, mockContext);
     expect(usersResponse.statusCode).toBe(200);

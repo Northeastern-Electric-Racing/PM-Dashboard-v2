@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Context } from 'aws-lambda';
 import { Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
@@ -14,6 +15,7 @@ import {
 } from './types/change-request-types';
 import { User, Role } from './types/user-types';
 import { WbsNumber } from './types/wbs-types';
+import { ApiRoute } from './types/api-utils-types';
 
 /**
  * A variety of dummy data for use in performing various different tests, mocking components, or serving from the API.
@@ -411,3 +413,27 @@ export const exampleAllChangeRequests: ChangeRequest[] = [
   exampleActivationChangeRequest,
   exampleStageGateChangeRequest
 ];
+
+/********************** API Util Dummy Data **********************/
+
+export const exampleApiRoutes: ApiRoute[] = [
+  { path: '/projects/one', httpMethod: 'GET', func: () => 5 },
+  { path: '/projects/one', httpMethod: 'POST', func: () => 6 },
+  { path: '/projects/two', httpMethod: 'GET', func: () => 7 },
+  { path: '/projects/three', httpMethod: 'GET', func: () => 8 }
+];
+
+export const mockContext: Context = {
+  functionName: '',
+  functionVersion: '',
+  invokedFunctionArn: '',
+  memoryLimitInMB: '',
+  awsRequestId: '',
+  logGroupName: '',
+  logStreamName: '',
+  callbackWaitsForEmptyEventLoop: false,
+  getRemainingTimeInMillis: () => 0,
+  done: () => 0,
+  fail: () => 0,
+  succeed: () => 0
+};

@@ -3,7 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Login from './pages/login/login';
 import ChangeRequests from './pages/change-requests/change-requests';
 import Projects from './pages/projects/projects';
 import { PageNotFound } from './pages/page-not-found/page-not-found';
@@ -12,19 +13,24 @@ import './App.css';
 
 function App() {
   return (
-    <>
-      <NavTopBar />
-      <div className="page-content">
-        <Switch>
-          <Route path="/projects" component={Projects} />
-          <Route path="/change-requests" component={ChangeRequests} />
-          <Route exact path="/">
-            <h3>Home!</h3>
-          </Route>
-          <Route path="*" component={PageNotFound} />
-        </Switch>
-      </div>
-    </>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="*">
+          <NavTopBar />
+          <div className="page-content">
+            <Switch>
+              <Route path="/projects" component={Projects} />
+              <Route path="/change-requests" component={ChangeRequests} />
+              <Route exact path="/">
+                <h3>Home!</h3>
+              </Route>
+              <Route path="*" component={PageNotFound} />
+            </Switch>
+          </div>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../../pages/login/login';
 import './app-public.module.css';
 
@@ -11,7 +11,7 @@ const AppPublic: React.FC = () => {
   return (
     <Switch>
       <Route path="/login" component={Login} />
-      <Route path="*" component={Login} />
+      <Redirect from="*" to="/login" push />
     </Switch>
   );
 };

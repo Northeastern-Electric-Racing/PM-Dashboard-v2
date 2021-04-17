@@ -10,7 +10,8 @@ import {
   Project,
   WbsNumber,
   ApiRouteFunction,
-  exampleAllProjects
+  exampleAllProjects,
+  API_URL
 } from 'utils';
 
 // Fetch all projects
@@ -49,12 +50,12 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
 
 const routes: ApiRoute[] = [
   {
-    path: '/projects',
+    path: `${API_URL}/projects`,
     httpMethod: 'GET',
     func: getAllProjects
   },
   {
-    path: '/projects/:wbs',
+    path: `${API_URL}/projects/:wbs`,
     httpMethod: 'GET',
     func: getSingleProject
   }

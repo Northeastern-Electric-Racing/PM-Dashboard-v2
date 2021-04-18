@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, mockContext } from 'utils';
+import { Project, mockContext, API_URL } from 'utils';
 import { handler } from '../functions/projects';
 
 describe('projects api endpoint handler', () => {
@@ -12,7 +12,7 @@ describe('projects api endpoint handler', () => {
     let projectsResponse: Project[];
 
     beforeEach(async () => {
-      const event = { path: '/projects', httpMethod: 'GET' };
+      const event = { path: `${API_URL}/projects`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
       projectsResponse = JSON.parse(responseObject.body);
     });
@@ -52,7 +52,7 @@ describe('projects api endpoint handler', () => {
     let projectResponse: Project;
 
     beforeEach(async () => {
-      const event = { path: '/projects/1.2.0', httpMethod: 'GET' };
+      const event = { path: `${API_URL}/projects/1.2.0`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
       projectResponse = JSON.parse(responseObject.body);
     });
@@ -78,7 +78,7 @@ describe('projects api endpoint handler', () => {
     });
 
     it('handles 404 when project not found', async () => {
-      const event = { path: '/projects/1.0.0', httpMethod: 'GET' };
+      const event = { path: `${API_URL}/projects/1.0.0`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
       const message: string = responseObject.body;
 

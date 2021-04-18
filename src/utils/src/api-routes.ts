@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+export const API_URL: string = `/.netlify/functions`;
+
 /**************** Users Endpoint ****************/
 const USERS: string = `/users`;
 const USERS_LOGIN: string = `${USERS}/login`;

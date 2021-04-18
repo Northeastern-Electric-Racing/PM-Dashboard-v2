@@ -3,13 +3,18 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { UserContext, UserLogOutContext } from '../../app/app-main/app-main';
 import './nav-user-menu.module.css';
 
 const NavUserMenu: React.FC = () => {
+  const user = useContext(UserContext);
+  const logoutFunc = useContext(UserLogOutContext);
+
   return (
     <NavDropdown
       className="m-auto"
@@ -17,15 +22,17 @@ const NavUserMenu: React.FC = () => {
       id="user-dropdown"
       alignRight
     >
+      <NavDropdown.ItemText>Logged in as: {user}</NavDropdown.ItemText>
+      <NavDropdown.Divider />
       <NavDropdown.Item as="div">
         <Link className="nav-link p-0" role="button" to="/settings">
           Settings
         </Link>
       </NavDropdown.Item>
       <NavDropdown.Item as="div">
-        <Link className="nav-link p-0" role="button" to="/log-out">
+        <p className="nav-link p-0 m-0" role="button" onClick={(e) => logoutFunc()}>
           Log Out
-        </Link>
+        </p>
       </NavDropdown.Item>
     </NavDropdown>
   );

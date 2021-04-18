@@ -4,17 +4,17 @@
  */
 
 import { Switch, Route } from 'react-router-dom';
-import ChangeRequests from './pages/change-requests/change-requests';
-import Projects from './pages/projects/projects';
-import { PageNotFound } from './pages/page-not-found/page-not-found';
-import NavTopBar from './components/nav-top-bar/nav-top-bar';
-import './App.css';
+import ChangeRequests from '../../pages/change-requests/change-requests';
+import Projects from '../../pages/projects/projects';
+import { PageNotFound } from '../../pages/page-not-found/page-not-found';
+import NavTopBar from '../../components/nav-top-bar/nav-top-bar';
+import styles from './app-authenticated.module.css';
 
-function App() {
+const AppAuthenticated: React.FC = () => {
   return (
     <>
       <NavTopBar />
-      <div className="page-content">
+      <div className={styles.content}>
         <Switch>
           <Route path="/projects" component={Projects} />
           <Route path="/change-requests" component={ChangeRequests} />
@@ -26,6 +26,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
-export default App;
+export default AppAuthenticated;

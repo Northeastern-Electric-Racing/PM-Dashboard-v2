@@ -5,9 +5,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login from './pages/login/login';
-import App from './App';
+import AppMain from './app/app-main/app-main';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -15,12 +13,7 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="*" component={App} />
-      </Switch>
-    </BrowserRouter>
+    <AppMain />
   </React.StrictMode>,
   document.getElementById('root')
 );

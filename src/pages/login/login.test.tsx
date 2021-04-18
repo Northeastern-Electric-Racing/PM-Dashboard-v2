@@ -27,14 +27,14 @@ describe('login component', () => {
 
   it('renders login button', () => {
     renderComponent();
-    const btn = screen.getByText('Login');
+    const btn = screen.getByText('Log In');
     expect(btn).toBeInTheDocument();
     expect(btn).toHaveAttribute('class', 'btn btn-primary');
   });
 
   it('has clickable login button', async () => {
     renderComponent();
-    const btn = screen.getByText('Login');
+    const btn = screen.getByText('Log In');
     fireEvent.click(btn);
     expect(btn).not.toBeInTheDocument();
   });

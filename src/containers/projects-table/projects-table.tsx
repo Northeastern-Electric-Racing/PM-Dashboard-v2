@@ -16,13 +16,12 @@ import { apiFetch } from '../../shared/axios';
 import { fullNamePipe, wbsPipe, weeksPipe } from '../../shared/pipes';
 import styles from './projects-table.module.css';
 
-export interface DisplayProject {
+interface DisplayProject {
   wbsNum: string;
   name: string;
   projectLead: string;
   projectManager: string;
   duration: string;
-  project: Project;
 }
 
 /**
@@ -89,9 +88,7 @@ const ProjectsTable: React.FC = () => {
   // define what happens during various row events
   const rowEvents: RowEventHandlerProps = {
     onClick: (e, row, rowIndex) => {
-      history.push({
-        pathname: `/projects/${row.wbsNum}`
-      });
+      history.push(`/projects/${row.wbsNum}`);
     }
   };
 

@@ -3,6 +3,21 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-p {
-  color: orange;
+.boundingBox {
+  background-color: #f8f8f8;
+  border-color: #f8f8f8;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 1em;
+  width: fit-content;
+  padding: 25px;
+}
+
+.divider {
+  width: 100%;
+}
+
+.title {
+  padding-left: 15px;
+  padding-bottom: 20px;
 }

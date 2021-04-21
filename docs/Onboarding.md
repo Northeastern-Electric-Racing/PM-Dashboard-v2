@@ -12,8 +12,19 @@ In your CLI, navigate to the folder for the project and run `npm install` to ins
 
 ## Database
 
+### Installation
+
 The easiest way to install [PostgreSQL](https://www.postgresql.org) on a Mac is with [Postgres.app](https://postgresapp.com).
 Alternative OS installs can be found [here](https://www.postgresql.org/download/).
+
+### Database Initialization
+
+After downloading and installing PostgreSQL properly, you'll need to run PostgreSQL and create a database named `nerpm`.
+By default, PostgreSQL typically has a `postgres` database.
+You can use `psql` in the CLI to create a database by running this SQL statement: `CREATE DATABASE nerpm;`.
+Naming the new database `nerpm` will ensure it matches with the database URL specified in the project preparation section below.
+
+### Project Preparation
 
 Add a `.env` file to the project root directory via `touch .env` in the CLI or creating a file in your IDE.
 Paste the following line into the `.env` file and replace `<USERNAME>` with your computer username.

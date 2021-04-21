@@ -4,65 +4,68 @@
  */
 
 import { Context } from 'aws-lambda';
-import { Project } from 'utils';
+import {
+  routeMatcher,
+  ApiRoute,
+  Project,
+  WbsNumber,
+  ApiRouteFunction,
+  exampleAllProjects,
+  API_URL
+} from 'utils';
+
+// Fetch all projects
+const getAllProjects: ApiRouteFunction = () => {
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(exampleAllProjects)
+  };
+};
+
+// Fetch the project for the specified WBS number
+const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
+  const parseWbs: number[] = params.wbs.split('.').map((str) => parseInt(str));
+  const parsedWbs: WbsNumber = {
+    area: parseWbs[0],
+    project: parseWbs[1],
+    workPackage: parseWbs[2]
+  };
+  const requestedProject: Project | undefined = exampleAllProjects.find((prj: Project) => {
+    return (
+      prj.wbsNum.area === parsedWbs.area &&
+      prj.wbsNum.project === parsedWbs.project &&
+      prj.wbsNum.workPackage === parsedWbs.workPackage
+    );
+  });
+  if (requestedProject === undefined) {
+    return { statusCode: 404, body: 'Could not find the requested project.' };
+  }
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestedProject)
+  };
+};
+
+const routes: ApiRoute[] = [
+  {
+    path: `${API_URL}/projects`,
+    httpMethod: 'GET',
+    func: getAllProjects
+  },
+  {
+    path: `${API_URL}/projects/:wbs`,
+    httpMethod: 'GET',
+    func: getSingleProject
+  }
+];
 
 export async function handler(event: any, context: Context) {
   try {
-    return {
-      statusCode: 201,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(exampleAllProjects)
-    };
+    return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
     return { statusCode: 500 };
   }
 }
-
-const exampleProject1: Project = {
-  wbsNum: '1.1.0',
-  name: 'Impact Attenuator',
-  projectLead: 'Person Allen',
-  projectManager: 'Person Gilbert',
-  duration: 2
-};
-
-const exampleProject2: Project = {
-  wbsNum: '1.2.0',
-  name: 'Bodywork',
-  projectLead: 'Person Richard',
-  projectManager: 'Person David',
-  duration: 4
-};
-
-const exampleProject3: Project = {
-  wbsNum: '1.12.0',
-  name: 'Battery Box',
-  projectLead: 'Person Karen',
-  projectManager: 'Person Solomon',
-  duration: 5
-};
-
-const exampleProject4: Project = {
-  wbsNum: '2.6.0',
-  name: 'Motor Controller Integration',
-  projectLead: 'Person Emily',
-  projectManager: 'Person Zoe',
-  duration: 9
-};
-
-const exampleProject5: Project = {
-  wbsNum: '2.8.0',
-  name: 'Driver IO',
-  projectLead: 'Person George',
-  projectManager: 'Person William',
-  duration: 12
-};
-
-export const exampleAllProjects: Project[] = [
-  exampleProject1,
-  exampleProject2,
-  exampleProject3,
-  exampleProject4,
-  exampleProject5
-];

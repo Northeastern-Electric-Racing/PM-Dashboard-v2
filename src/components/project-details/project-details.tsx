@@ -4,6 +4,7 @@
  */
 
 import { Project } from 'utils';
+import { linkPipe } from '../../shared/pipes';
 import './project-details.module.css';
 
 interface ProjectDetailsProps {
@@ -14,7 +15,8 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   return (
     <div>
       <p>
-        Project Details Component: {project.name} with {project.duration} weeks
+        Project Details Component: {project.wbsNum} - {project.name} in{' '}
+        {linkPipe(project.gDriveLink)}
       </p>
     </div>
   );

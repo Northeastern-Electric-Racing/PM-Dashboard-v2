@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from 'utils/src/types/project-types';
+import { Project } from 'utils';
 import { linkPipe } from '../../shared/pipes';
 import styles from './project-details.module.css';
 

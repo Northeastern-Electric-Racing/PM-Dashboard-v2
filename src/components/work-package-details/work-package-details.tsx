@@ -5,15 +5,7 @@
 
 import styles from './work-package-details.module.css';
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  dollarsPipe,
-  linkPipe,
-  wbsPipe,
-  endDatePipe,
-  listPipe,
-  fullNamePipe
-} from '../../shared/pipes';
+import { weeksPipe, dollarsPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../shared/pipes';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
@@ -38,7 +30,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({
             <b>Work Package Name:</b> {workPackage.name}
           </p>
           <p>
-            <b>Project Name:</b> ???
+            <b>Project Name:</b>
           </p>
           <p>
             <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
@@ -64,7 +56,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({
             <b>Budget:</b> {dollarsPipe(workPackage.budget)}
           </p>
           <p>
-            <b>Progress:</b> {workPackage.progress}% ----
+            <b>Progress:</b> {workPackage.progress}%
           </p>
         </div>
       </div>

@@ -52,7 +52,6 @@ const AppMain: React.FC = () => {
       <UserLogInContext.Provider value={logUserIn}>
         <UserLogOutContext.Provider value={logUserOut}>
           <BrowserRouter>
-            <WorkPackageSummary workPackage={exampleWorkPackage1} />
             <WorkPackageDetails workPackage={exampleWorkPackage1} />
           </BrowserRouter>
         </UserLogOutContext.Provider>

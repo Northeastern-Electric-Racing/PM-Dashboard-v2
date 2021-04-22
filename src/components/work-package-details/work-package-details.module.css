@@ -2,3 +2,38 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
+
+.WPDetailsBox {
+  background-color: #f7f7f7;
+  box-shadow: 2px 2px 5px #dddddd;
+  padding: 30px;
+  border: 0.5px solid;
+  margin: 30px;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.title {
+  float: left;
+}
+
+.header {
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 30px;
+}
+
+.wbsNum {
+  float: right;
+}
+
+.halfDiv {
+  width: 50%;
+  float: left;
+  padding-right: 60px;
+  min-width: 200px;
+}
+
+b {
+  font-weight: bold;
+}

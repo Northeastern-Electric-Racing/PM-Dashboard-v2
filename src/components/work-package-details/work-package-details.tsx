@@ -11,7 +11,8 @@ import {
   linkPipe,
   wbsPipe,
   endDatePipe,
-  listPipe
+  listPipe,
+  fullNamePipe
 } from '../../shared/pipes';
 
 interface WorkPackageDetailsProps {
@@ -23,7 +24,52 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({
   workPackage,
   className
 }: WorkPackageDetailsProps) => {
-  return <p>Hello</p>;
+  return (
+    <div className={className}>
+      <div className={styles.WPDetailsBox}>
+        <div className={styles.header}>
+          <h5 className={styles.title}>
+            <b>Work Package Details</b>
+          </h5>
+          <h5 className={styles.wbsNum}>WBS #{wbsPipe(workPackage.wbsNum)}</h5>
+        </div>
+        <div className={styles.halfDiv}>
+          <p>
+            <b>Work Package Name:</b> {workPackage.name}
+          </p>
+          <p>
+            <b>Project Name:</b> ???
+          </p>
+          <p>
+            <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
+          </p>
+          <p>
+            <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
+          </p>
+          <p>
+            <b>Deliverables:</b> {workPackage.deliverable}
+          </p>
+        </div>
+        <div className={styles.halfDiv}>
+          <p>
+            <b>Duration:</b> {weeksPipe(workPackage.duration)}
+          </p>
+          <p>
+            <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()}
+          </p>
+          <p>
+            <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
+          </p>
+          <p>
+            <b>Budget:</b> {dollarsPipe(workPackage.budget)}
+          </p>
+          <p>
+            <b>Progress:</b> {workPackage.progress}% ----
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default WorkPackageDetails;

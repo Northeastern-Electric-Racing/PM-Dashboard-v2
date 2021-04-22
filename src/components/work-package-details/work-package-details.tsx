@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import styles from './work-package-details.module.css';
 import { WorkPackage } from 'utils';
 import { weeksPipe, dollarsPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../shared/pipes';
+import styles from './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
@@ -18,25 +18,30 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({
 }: WorkPackageDetailsProps) => {
   return (
     <div className={className}>
-      <div className={styles.WPDetailsBox}>
+      <div className={styles.wpDetailsBox}>
         <div className={styles.header}>
           <h5 className={styles.title}>
             <b>Work Package Details</b>
           </h5>
-          <h5 className={styles.wbsNum}>WBS #{wbsPipe(workPackage.wbsNum)}</h5>
+          <h5 className={styles.wbsNum}>
+            <b>{workPackage.status}</b>
+          </h5>
         </div>
         <div className={styles.halfDiv}>
           <p>
             <b>Work Package Name:</b> {workPackage.name}
           </p>
           <p>
-            <b>Project Name:</b>
+            <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)}
           </p>
           <p>
             <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
           </p>
           <p>
             <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
+          </p>
+          <p>
+            <b>Budget:</b> {dollarsPipe(workPackage.budget)}
           </p>
           <p>
             <b>Deliverables:</b> {workPackage.deliverable}
@@ -53,10 +58,13 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({
             <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
           </p>
           <p>
-            <b>Budget:</b> {dollarsPipe(workPackage.budget)}
+            <b>Progress:</b> {workPackage.progress}%
           </p>
           <p>
-            <b>Progress:</b> {workPackage.progress}%
+            <b>Expected Progress:</b>
+          </p>
+          <p>
+            <b>Timeline Status:</b>
           </p>
         </div>
       </div>

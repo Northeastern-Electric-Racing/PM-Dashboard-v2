@@ -3,12 +3,11 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.WPDetailsBox {
+.wpDetailsBox {
   background-color: #f7f7f7;
   box-shadow: 2px 2px 5px #dddddd;
   padding: 30px;
   border: 0.5px solid;
-  margin: 30px;
   border-radius: 5px;
   overflow: auto;
 }

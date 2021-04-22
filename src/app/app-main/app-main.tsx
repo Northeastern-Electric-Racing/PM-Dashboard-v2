@@ -9,9 +9,6 @@ import { Button } from 'react-bootstrap';
 import AppAuthenticated from '../app-authenticated/app-authenticated';
 import AppPublic from '../app-public/app-public';
 import './app-main.module.css';
-import WorkPackageDetails from '../../components/work-package-details/work-package-details';
-import { exampleWorkPackage1 } from 'utils';
-import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 
 export const UserContext = createContext<string>('');
 export const UserLogInContext = createContext<(user: string) => void>((u) => '');
@@ -51,9 +48,7 @@ const AppMain: React.FC = () => {
     <UserContext.Provider value={user}>
       <UserLogInContext.Provider value={logUserIn}>
         <UserLogOutContext.Provider value={logUserOut}>
-          <BrowserRouter>
-            <WorkPackageDetails workPackage={exampleWorkPackage1} />
-          </BrowserRouter>
+          <BrowserRouter>{app}</BrowserRouter>
         </UserLogOutContext.Provider>
       </UserLogInContext.Provider>
     </UserContext.Provider>

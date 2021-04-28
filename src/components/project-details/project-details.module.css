@@ -3,34 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+div {
+  color: gray;
+}
+
 #project-details {
   background-color: #ebf5fa;
   box-shadow: 5px 5px 1px #afb3e0;
 }
 
-span {
-  margin-right: 30px;
+#status {
+  float: right;
 }
 
-header {
-  font-weight: bold;
-  font-size: larger;
+.horizontal > * {
+  display: inline-block;
+  margin-right: 30px;
 }
 
 .important {
   color: black;
-}
-
-p {
-  color: gray;
-}
-
-menu {
-  padding-left: 0;
-  display: flex;
-  list-style: none;
-}
-
-li {
-  margin-right: 30px;
 }

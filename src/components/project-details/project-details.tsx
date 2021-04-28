@@ -4,7 +4,7 @@
  */
 
 import { Project } from 'utils';
-import { linkPipe } from '../../shared/pipes';
+import { linkPipe, weeksPipe } from '../../shared/pipes';
 import styles from './project-details.module.css';
 
 interface ProjectDetailsProps {
@@ -12,29 +12,36 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
+  const wbsNum = `${project.wbsNum.area}.${project.wbsNum.project}.${project.wbsNum.workPackage}`;
+  const projectLead = `${project.projectLead.firstName} ${project.projectLead.lastName}`;
+  const projectManager = `${project.projectManager.firstName} ${project.projectManager.lastName}`;
+  const duration = weeksPipe(
+    ((new Date().getTime() - project.dateCreated.getTime()) / 604800000).toFixed()
+  );
+
   return (
     <div id={styles['project-details']} className="item-box">
-      <header>Project Details</header>
-      <p>
-        Project Name: <span className={styles.important}>{project.name}</span>
-        WBS#{' '}
-        <span className={styles.important}>
-          {project.wbsNum.area}.{project.wbsNum.project}.{project.wbsNum.workPackage}
-        </span>
-      </p>
-      <p>
-        Project Lead: <span className={styles.important}>{project.projectLead.firstName}</span>
-        Project Manager:{' '}
-        <span className={styles.important}>{project.projectManager.firstName}</span>
-      </p>
-      <p>
-        Duration: <span className={styles.important}></span>
-      </p>
-      <menu>
+      <div className={styles.horizontal}>
+        <h4 className={styles.important}>Project Details</h4>
+        <p id={styles.status}>{project.status}</p>
+      </div>
+      <div className={styles.horizontal}>
+        Project Name: <p className={styles.important}>{project.name}</p>
+        WBS# <p className={styles.important}>{wbsNum}</p>
+      </div>
+      <div className={styles.horizontal}>
+        Project Lead: <p className={styles.important}>{projectLead}</p>
+        Project Manager: <p className={styles.important}>{projectManager}</p>
+      </div>
+      <div className={styles.horizontal}>
+        Duration: <p className={styles.important}>{duration}</p>
+      </div>
+      <div className={styles.horizontal}>
         <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
         <li>{linkPipe('Task List', project.taskListLink)}</li>
+        <li>{linkPipe('BOM', project.bomLink)}</li>
         <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
-      </menu>
+      </div>
     </div>
   );
 };

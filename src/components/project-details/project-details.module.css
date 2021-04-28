@@ -2,11 +2,6 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-
-div {
-  color: gray;
-}
-
 #project-details {
   background-color: #ebf5fa;
   box-shadow: 5px 5px 1px #afb3e0;
@@ -19,6 +14,7 @@ div {
 .horizontal > * {
   display: inline-block;
   margin-right: 30px;
+  color: grey;
 }
 
 .important {

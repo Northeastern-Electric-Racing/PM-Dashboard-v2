@@ -1,37 +1,56 @@
 import { Context } from 'aws-lambda';
-import { ChangeRequest } from 'utils/src/types/change-request-types';
+import {
+  ApiRoute,
+  ApiRouteFunction,
+  API_URL,
+  apiRoutes,
+  ChangeRequest,
+  exampleAllChangeRequests,
+  routeMatcher
+} from 'utils';
 
-interface ChangeRequestResponse {
-  statusCode: number;
-  headers?: any;
-  body?: string;
-}
+const getAllChangeRequests: ApiRouteFunction = () => {
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(exampleAllChangeRequests)
+  };
+};
 
-export async function handler(event: any, context: Context): Promise<ChangeRequestResponse> {
+const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
+  const requestedCR: ChangeRequest | undefined = exampleAllChangeRequests.find(
+    (cr: ChangeRequest) => {
+      return cr.id == params.id;
+    }
+  );
+  if (requestedCR === undefined) {
+    return { statusCode: 404, body: 'Could not find the requested change request.' };
+  }
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestedCR)
+  };
+};
+
+const routes: ApiRoute[] = [
+  {
+    path: apiRoutes.CHANGE_REQUESTS,
+    httpMethod: 'GET',
+    func: getAllChangeRequests
+  },
+  {
+    path: apiRoutes.CHANGE_REQUESTS_BY_ID,
+    httpMethod: 'GET',
+    func: getChangeRequestByID
+  }
+];
+
+export async function handler(event: any, context: Context) {
   try {
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(exampleCRs)
-    };
+    return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
     return { statusCode: 500 };
   }
 }
-
-const changeRequest1: ChangeRequest = {
-  id: 2,
-  wbsNum: '1.1.2',
-  submitter: 'John',
-  type: 'Work Package'
-};
-
-const changeRequest2: ChangeRequest = {
-  id: 5,
-  wbsNum: '1.2.7',
-  submitter: 'James',
-  type: 'Work Package'
-};
-
-export const exampleCRs: ChangeRequest[] = [changeRequest1, changeRequest2];

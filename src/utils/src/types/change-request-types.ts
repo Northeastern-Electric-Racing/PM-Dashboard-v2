@@ -58,7 +58,7 @@ export interface ChangeRequestExplanation {
 export enum ChangeRequestReason {
   Estimation = 'Estimation Error',
   School = 'School Work',
-  Manufacturing = 'Manufacutring Issues',
+  Manufacturing = 'Manufacturing Issues',
   Rules = 'Rules Compliance',
   OtherProject = 'Other Project',
   Other = 'Other'

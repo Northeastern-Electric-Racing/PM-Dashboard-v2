@@ -4,17 +4,14 @@
  */
 
 import { Context } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { exampleAllUsers } from 'utils';
 
 export async function handler(event: any, context: Context) {
   try {
-    const users = await prisma.user.findMany();
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(users)
+      body: JSON.stringify(exampleAllUsers)
     };
   } catch (err) {
     console.log(err); // output to netlify function log

@@ -24,7 +24,9 @@ describe('project details component', () => {
 
   it('Renders project lead', () => {
     render(<ProjectDetails project={exampleProject3} />);
-    const projectNameElement = screen.getByText(`${exampleProject3.projectLead.firstName}`);
+    const projectNameElement = screen.getByText(
+      `${exampleProject3.projectLead.firstName} ${exampleProject3.projectLead.lastName}`
+    );
     expect(projectNameElement).toBeInTheDocument();
   });
 });

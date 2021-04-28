@@ -8,7 +8,7 @@ import { linkPipe } from '../../shared/pipes';
 import styles from './project-details.module.css';
 
 interface ProjectDetailsProps {
-  project: Project
+  project: Project;
 }
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
@@ -17,25 +17,23 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
       <header>Project Details</header>
       <p>
         Project Name: <span className={styles.important}>{project.name}</span>
-        WBS# <span className={styles.important}>{project.wbsNum}</span>
+        WBS#{' '}
+        <span className={styles.important}>
+          {project.wbsNum.area}.{project.wbsNum.project}.{project.wbsNum.workPackage}
+        </span>
       </p>
       <p>
-        Project Lead: <span className={styles.important}>{project.projectLead}</span>
-        Project Manager: <span className={styles.important}>{project.projectManager}</span>
+        Project Lead: <span className={styles.important}>{project.projectLead.firstName}</span>
+        Project Manager:{' '}
+        <span className={styles.important}>{project.projectManager.firstName}</span>
       </p>
       <p>
         Duration: <span className={styles.important}></span>
       </p>
       <menu>
-        <li>
-          {linkPipe('Slide Deck', project.slideDeckLink)}
-        </li>
-        <li>
-          {linkPipe('Task List', project.taskListLink)}
-        </li>
-        <li>
-          {linkPipe('Google Drive', project.gDriveLink)}
-        </li>
+        <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
+        <li>{linkPipe('Task List', project.taskListLink)}</li>
+        <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
       </menu>
     </div>
   );

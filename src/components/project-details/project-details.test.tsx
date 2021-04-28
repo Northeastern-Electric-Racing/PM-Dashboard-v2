@@ -4,17 +4,8 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { Project } from 'utils';
+import { exampleProject1, exampleProject2, exampleProject3 } from 'utils';
 import ProjectDetails from './project-details';
-
-// Build example test data
-const exampleProject1: Project = {
-  wbsNum: '1.1.0',
-  name: 'Impact Attenuator',
-  projectLead: 'Person Allen',
-  projectManager: 'Person Gilbert',
-  duration: 2
-};
 
 describe('project details component', () => {
   it('Renders title', () => {
@@ -24,14 +15,16 @@ describe('project details component', () => {
   });
 
   it('Renders WBS#', () => {
-    render(<ProjectDetails project={exampleProject1} />);
-    const projectElement = screen.getByText(`${exampleProject1.wbsNum}`);
+    render(<ProjectDetails project={exampleProject2} />);
+    const projectElement = screen.getByText(
+      `${exampleProject2.wbsNum.area}.${exampleProject2.wbsNum.project}.${exampleProject2.wbsNum.workPackage}`
+    );
     expect(projectElement).toBeInTheDocument();
   });
 
   it('Renders project lead', () => {
-    render(<ProjectDetails project={exampleProject1} />);
-    const projectNameElement = screen.getByText(`${exampleProject1.projectLead}`);
+    render(<ProjectDetails project={exampleProject3} />);
+    const projectNameElement = screen.getByText(`${exampleProject3.projectLead.firstName}`);
     expect(projectNameElement).toBeInTheDocument();
   });
 });

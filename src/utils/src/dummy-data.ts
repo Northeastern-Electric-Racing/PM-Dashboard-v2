@@ -16,6 +16,7 @@ import {
 import { User, Role } from './types/user-types';
 import { WbsNumber } from './types/wbs-types';
 import { ApiRoute } from './types/api-utils-types';
+import { API_URL } from './api-routes';
 
 /**
  * A variety of dummy data for use in performing various different tests, mocking components, or serving from the API.
@@ -423,10 +424,10 @@ export const exampleAllChangeRequests: ChangeRequest[] = [
 /********************** API Util Dummy Data **********************/
 
 export const exampleApiRoutes: ApiRoute[] = [
-  { path: '/projects/one', httpMethod: 'GET', func: () => 5 },
-  { path: '/projects/one', httpMethod: 'POST', func: () => 6 },
-  { path: '/projects/two', httpMethod: 'GET', func: () => 7 },
-  { path: '/projects/three', httpMethod: 'GET', func: () => 8 }
+  { path: `${API_URL}/projects/one`, httpMethod: 'GET', func: () => 5 },
+  { path: `${API_URL}/projects/one`, httpMethod: 'POST', func: () => 6 },
+  { path: `${API_URL}/projects/two`, httpMethod: 'GET', func: () => 7 },
+  { path: `${API_URL}/projects/three`, httpMethod: 'GET', func: () => 8 }
 ];
 
 export const mockContext: Context = {

@@ -48,3 +48,10 @@ export const endDatePipe: Function = (startDate: Date, durWeeks: number): string
   endDate.setDate(endDate.getDate() + durWeeks * 7);
   return endDate.toLocaleDateString();
 };
+
+// pipes to add;
+// Empty string pipe
+
+// EM dash pipe
+
+// date pipe

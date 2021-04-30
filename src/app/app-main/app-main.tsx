@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap';
 import AppAuthenticated from '../app-authenticated/app-authenticated';
 import AppPublic from '../app-public/app-public';
 import './app-main.module.css';
+import ProjectContainer from '../../containers/project-container/project-container';
 
 export const UserContext = createContext<string>('');
 export const UserLogInContext = createContext<(user: string) => void>((u) => '');
@@ -51,6 +52,7 @@ const AppMain: React.FC = () => {
           <BrowserRouter>{app}</BrowserRouter>
         </UserLogOutContext.Provider>
       </UserLogInContext.Provider>
+      <ProjectContainer />
     </UserContext.Provider>
   );
 };

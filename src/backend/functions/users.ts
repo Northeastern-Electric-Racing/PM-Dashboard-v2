@@ -45,7 +45,7 @@ const routes: ApiRoute[] = [
     func: getAllUsers
   },
   {
-    path: `${API_URL}${apiRoutes.USERS_BY_ID}`,
+    path: `${API_URL}${apiRoutes.USERS}`,
     httpMethod: 'GET',
     func: getSingleUser
   }

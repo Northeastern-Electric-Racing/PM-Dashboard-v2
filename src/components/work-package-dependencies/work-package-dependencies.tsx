@@ -25,7 +25,7 @@ const WorkPackageDependencies: React.FC<WorkPackageDependenciesProps> = ({
           </h5>
         </div>
         <div>
-          {workPackage.dependencies.map((ele: WbsNumber, idx: number) => (
+          {workPackage.dependencies.map((ele: WbsNumber) => (
             <p key={wbsPipe(ele)} className={styles.wbsNum}>
               {linkPipe(wbsPipe(ele), `/projects/${wbsPipe(workPackage.wbsNum)}`)}
             </p>

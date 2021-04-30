@@ -4,7 +4,7 @@
  */
 
 import { Project } from 'utils';
-import { linkPipe, weeksPipe } from '../../shared/pipes';
+import { fullNamePipe, linkPipe, wbsPipe, weeksPipe } from '../../shared/pipes';
 import styles from './project-details.module.css';
 
 interface ProjectDetailsProps {
@@ -12,18 +12,19 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
-  const wbsNum = `${project.wbsNum.area}.${project.wbsNum.project}.${project.wbsNum.workPackage}`;
-  const projectLead = `${project.projectLead.firstName} ${project.projectLead.lastName}`;
-  const projectManager = `${project.projectManager.firstName} ${project.projectManager.lastName}`;
+  const wbsNum = wbsPipe(project.wbsNum);
+  const projectLead = fullNamePipe(project.projectLead);
+  const projectManager = fullNamePipe(project.projectManager);
+  // duration of the project in weeks
   const duration = weeksPipe(
     ((new Date().getTime() - project.dateCreated.getTime()) / 604800000).toFixed()
   );
 
   return (
-    <div id={styles['project-details']} className="item-box">
+    <div className="item-box">
       <div className={styles.horizontal}>
         <h4 className={styles.important}>Project Details</h4>
-        <p id={styles.status}>{project.status}</p>
+        <p className={styles.status}>{project.status}</p>
       </div>
       <div className={styles.horizontal}>
         Project Name: <p className={styles.important}>{project.name}</p>
@@ -36,7 +37,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
       <div className={styles.horizontal}>
         Duration: <p className={styles.important}>{duration}</p>
       </div>
-      <div className={styles.horizontal}>
+      <div className={styles.links}>
         <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
         <li>{linkPipe('Task List', project.taskListLink)}</li>
         <li>{linkPipe('BOM', project.bomLink)}</li>

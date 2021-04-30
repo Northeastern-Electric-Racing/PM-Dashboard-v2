@@ -3,22 +3,18 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-div {
-  color: gray;
-}
-
-#project-details {
-  background-color: #ebf5fa;
-  box-shadow: 5px 5px 1px #afb3e0;
-}
-
-#status {
+.status {
   float: right;
 }
 
 .horizontal > * {
+  color: gray;
   display: inline-block;
   margin-right: 30px;
+}
+
+.horizontal .links > * {
+  color: blue;
 }
 
 .important {

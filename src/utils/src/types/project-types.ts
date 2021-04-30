@@ -4,7 +4,12 @@
  */
 
 import { User } from './user-types';
-import { WbsNumber } from './wbs-types';
+
+export interface WbsNumber {
+  car: number;
+  project: number;
+  workPackage: number;
+}
 
 export interface WbsElement {
   id: number;
@@ -47,5 +52,4 @@ export interface DescriptionBullet {
   detail: string;
   dateAdded: Date;
   dateDeleted?: Date;
-  dateDone?: Date;
 }

@@ -4,10 +4,8 @@
  */
 
 export * from './types/change-request-types';
-export * from './types/implemented-change-types';
 export * from './types/project-types';
 export * from './types/user-types';
-export * from './types/wbs-types';
 export * from './types/api-utils-types';
 
 export * from './dummy-data';

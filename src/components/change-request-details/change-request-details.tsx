@@ -60,9 +60,6 @@ const buildChangeRequestDetails: Function = (cr: StandardChangeRequest): ReactEl
           <dd className="col-auto">{dollarsPipe(cr.budgetImpact)}</dd>
         </dl>
       </dd>
-      <div className="w-100"></div>
-      <dt className="col-2">Doc</dt>
-      <dd className="col-auto">{linkPipe('Documentation', cr.docLink)}</dd>
     </dl>
   );
 };
@@ -95,17 +92,6 @@ const buildStageGateChangeRequestDetails: Function = (cr: StageGateChangeRequest
       <div className="w-100"></div>
       <dt className="col-4">Leftover Budget</dt>
       <dd className="col">{dollarsPipe(cr.leftoverBudget)}</dd>
-      <div className="w-100"></div>
-      <dt className="col-4">Required Attendees</dt>
-      <dd className="col">
-        <dl>
-          {cr.designReviewAttendees.map((user: User, idx: number) => (
-            <div key={idx} className="row w-100">
-              <dd className="col">{fullNamePipe(user)}</dd>
-            </div>
-          ))}
-        </dl>
-      </dd>
     </dl>
   );
 };

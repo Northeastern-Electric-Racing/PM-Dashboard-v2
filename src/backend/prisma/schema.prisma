@@ -25,6 +25,7 @@ enum WBS_Element_Status {
 }
 
 enum Role {
+  APP_ADMIN
   ADMIN
   LEADERSHIP
   PROJECT_MANAGER
@@ -47,6 +48,7 @@ model User {
   firstName              String
   lastName               String
   emailId                String           @unique
+  firstLogin             DateTime         @default(now())
   lastLogin              DateTime         @default(now())
   role                   Role             @default(GUEST)
   changeRequests         Change_Request[]
@@ -59,16 +61,15 @@ model User {
 
 model Change_Request {
   crId                    Int            @id @default(autoincrement())
+  submitterId             Int
+  submitter               User           @relation(fields: [submitterId], references: [userId])
   dateSubmitted           DateTime       @default(now())
-  requestorId             Int
-  requestor               User           @relation(fields: [requestorId], references: [userId])
   wbsElementId            Int
   wbsElement              WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
   type                    CR_Type
   dateReviewed            DateTime?
   accepted                Boolean?
   reviewNotes             String?
-  implemented             Boolean?
   changes                 Change[]
   scopeChangeRequest      Scope_CR?
   stageGateChangeRequest  Stage_Gate_CR?
@@ -116,9 +117,9 @@ model Activation_CR {
 
 model Change {
   changeId        Int            @id @default(autoincrement())
-  dateImplemented DateTime       @default(now())
   changeRequestId Int
   changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
+  dateImplemented DateTime       @default(now())
   implementorId   Int
   implementor     User           @relation(fields: [implementorId], references: [userId])
   wbsElementId    Int
@@ -127,21 +128,22 @@ model Change {
 }
 
 model WBS_Element {
-  wbsElementId      Int                @id @default(autoincrement())
-  dateCreated       DateTime           @default(now())
-  carNumber         Int
-  projectNumber     Int
-  workPackageNumber Int
-  name              String
-  status            WBS_Element_Status
-  projectLeadId     Int
-  projectLead       User               @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
-  projectManagerId  Int
-  projectManager    User               @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
-  changeRequests    Change_Request[]
-  changes           Change[]
-  project           Project?
-  workPackage       Work_Package?
+  wbsElementId          Int                @id @default(autoincrement())
+  dateCreated           DateTime           @default(now())
+  carNumber             Int
+  projectNumber         Int
+  workPackageNumber     Int
+  name                  String
+  status                WBS_Element_Status
+  projectLeadId         Int
+  projectLead           User               @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
+  projectManagerId      Int
+  projectManager        User               @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
+  changeRequests        Change_Request[]
+  changes               Change[]
+  project               Project?
+  workPackage           Work_Package?
+  dependentWorkPackages Work_Package[]     @relation("dependencies")
 
   @@unique([carNumber, projectNumber, workPackageNumber], name: "wbsNumber")
 }
@@ -168,9 +170,9 @@ model Work_Package {
   progress            Int
   duration            Int
   budget              Int
-  dependencies        String
+  dependencies        WBS_Element[]        @relation(name: "dependencies")
   deliverables        String
-  rules               String
+  rules               String[]
   description_bullets Description_Bullet[]
 }
 

@@ -23,21 +23,21 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   return (
     <div className="item-box">
       <div className={styles.horizontal}>
-        <h4 className={styles.important}>Project Details</h4>
+        <h4>Project Details</h4>
         <p className={styles.status}>{project.status}</p>
       </div>
       <div className={styles.horizontal}>
-        Project Name: <p className={styles.important}>{project.name}</p>
-        WBS# <p className={styles.important}>{wbsNum}</p>
+        Project Name: <p>{project.name}</p>
+        WBS# <p>{wbsNum}</p>
       </div>
       <div className={styles.horizontal}>
-        Project Lead: <p className={styles.important}>{projectLead}</p>
-        Project Manager: <p className={styles.important}>{projectManager}</p>
+        Project Lead: <p>{projectLead}</p>
+        Project Manager: <p>{projectManager}</p>
       </div>
       <div className={styles.horizontal}>
-        Duration: <p className={styles.important}>{duration}</p>
+        Duration: <p>{duration}</p>
       </div>
-      <div className={styles.links}>
+      <div className={styles.horizontal}>
         <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
         <li>{linkPipe('Task List', project.taskListLink)}</li>
         <li>{linkPipe('BOM', project.bomLink)}</li>

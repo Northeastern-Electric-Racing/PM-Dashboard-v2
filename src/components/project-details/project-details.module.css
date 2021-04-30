@@ -7,16 +7,12 @@
   float: right;
 }
 
+.horizontal {
+  color: grey;
+}
+
 .horizontal > * {
-  color: gray;
+  color: black;
   display: inline-block;
   margin-right: 30px;
-}
-
-.horizontal .links > * {
-  color: blue;
-}
-
-.important {
-  color: black;
 }

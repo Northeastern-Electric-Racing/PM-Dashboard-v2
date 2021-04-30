@@ -6,14 +6,8 @@
 import { useParams } from 'react-router-dom';
 import { validateWBS, wbsIsProject } from 'utils';
 import { exampleProject1 } from 'utils';
-import { Project } from 'utils';
 import ProjectDetails from '../../components/project-details/project-details';
 import styles from './wbs-details.module.css';
-
-interface ProjectRequestData {
-  message?: string;
-  data?: Project;
-}
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {

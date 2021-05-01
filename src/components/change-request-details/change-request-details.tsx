@@ -10,10 +10,9 @@ import {
   ActivationChangeRequest,
   StageGateChangeRequest,
   ChangeRequestType,
-  ChangeRequestExplanation,
-  User
+  ChangeRequestExplanation
 } from 'utils';
-import { weeksPipe, dollarsPipe, linkPipe, fullNamePipe, booleanPipe } from '../../shared/pipes';
+import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../shared/pipes';
 import styles from './change-request-details.module.css';
 
 const convertStatus: Function = (cr: ChangeRequest): string => {

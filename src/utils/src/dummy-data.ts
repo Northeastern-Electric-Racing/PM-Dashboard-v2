@@ -4,7 +4,7 @@
  */
 
 import { Context } from 'aws-lambda';
-import { Project, WbsElementStatus, WorkPackage } from './types/project-types';
+import { WbsNumber, Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
   StandardChangeRequest,
@@ -14,7 +14,6 @@ import {
   ChangeRequestType
 } from './types/change-request-types';
 import { User, Role } from './types/user-types';
-import { WbsNumber } from './types/wbs-types';
 import { ApiRoute } from './types/api-utils-types';
 import { API_URL } from './api-routes';
 
@@ -107,25 +106,25 @@ export const exampleAllUsers: User[] = [
 /*************** Work Breakdown Structure Numbers ***************/
 
 export const exampleWbsWorkPackage1: WbsNumber = {
-  area: 1,
+  car: 1,
   project: 1,
   workPackage: 1
 };
 
 export const exampleWbsWorkPackage2: WbsNumber = {
-  area: 2,
+  car: 2,
   project: 7,
   workPackage: 3
 };
 
 export const exampleWbsProject1: WbsNumber = {
-  area: 1,
+  car: 1,
   project: 12,
   workPackage: 0
 };
 
 export const exampleWbsProject2: WbsNumber = {
-  area: 2,
+  car: 2,
   project: 5,
   workPackage: 0
 };
@@ -174,7 +173,7 @@ export const exampleWorkPackage1: WorkPackage = {
 export const exampleWorkPackage2: WorkPackage = {
   id: 2,
   wbsNum: {
-    area: 1,
+    car: 1,
     project: 1,
     workPackage: 2
   },
@@ -232,8 +231,7 @@ export const exampleWorkPackage3: WorkPackage = {
     {
       id: 6,
       detail: 'Manufacutre section A of the wiring harness',
-      dateAdded: new Date('09/27/20'),
-      dateDone: new Date('01/05/21')
+      dateAdded: new Date('09/27/20')
     },
     {
       id: 7,
@@ -244,14 +242,12 @@ export const exampleWorkPackage3: WorkPackage = {
     {
       id: 8,
       detail: 'Solder wiring segments together and heat shrink properly',
-      dateAdded: new Date('09/30/20'),
-      dateDone: new Date('01/07/21')
+      dateAdded: new Date('09/30/20')
     },
     {
       id: 9,
       detail: 'Cut all wires to length',
-      dateAdded: new Date('11/6/20'),
-      dateDone: new Date('01/03/21')
+      dateAdded: new Date('11/6/20')
     }
   ]
 };
@@ -266,7 +262,7 @@ export const exampleAllWorkPackages: WorkPackage[] = [
 
 export const exampleProject1: Project = {
   id: 4,
-  wbsNum: { area: 1, project: 1, workPackage: 0 },
+  wbsNum: { car: 1, project: 1, workPackage: 0 },
   dateCreated: new Date('08/01/20'),
   name: 'Impact Attenuator',
   status: WbsElementStatus.Active,
@@ -281,7 +277,7 @@ export const exampleProject1: Project = {
 
 export const exampleProject2: Project = {
   id: 5,
-  wbsNum: { area: 1, project: 2, workPackage: 0 },
+  wbsNum: { car: 1, project: 2, workPackage: 0 },
   dateCreated: new Date('08/02/20'),
   name: 'Bodywork',
   status: WbsElementStatus.Inactive,
@@ -326,7 +322,7 @@ export const exampleProject4: Project = {
 
 export const exampleProject5: Project = {
   id: 8,
-  wbsNum: { area: 2, project: 7, workPackage: 0 },
+  wbsNum: { car: 2, project: 7, workPackage: 0 },
   dateCreated: new Date('08/03/20'),
   name: 'Wiring Harness',
   status: WbsElementStatus.Complete,
@@ -388,8 +384,7 @@ export const exampleStandardChangeRequest: StandardChangeRequest = {
   ],
   scopeImpact: 'Design and machine titanium spacers',
   budgetImpact: 75,
-  timelineImpact: 2,
-  docLink: 'https://youtu.be/dQw4w9WgXcQ'
+  timelineImpact: 2
 };
 
 export const exampleActivationChangeRequest: ActivationChangeRequest = {
@@ -410,7 +405,6 @@ export const exampleStageGateChangeRequest: StageGateChangeRequest = {
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
   type: ChangeRequestType.StageGate,
-  designReviewAttendees: [exampleLeadershipUser, exampleProjectLeadUser, exampleProjectManagerUser],
   leftoverBudget: 26,
   confirmCompleted: true
 };

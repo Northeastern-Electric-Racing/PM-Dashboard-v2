@@ -20,7 +20,7 @@ const getAllChangeRequests: ApiRouteFunction = () => {
 const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
   const requestedCR: ChangeRequest | undefined = exampleAllChangeRequests.find(
     (cr: ChangeRequest) => {
-      return cr.id == params.id;
+      return cr.id === params.id;
     }
   );
   if (requestedCR === undefined) {
@@ -35,12 +35,12 @@ const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
 
 const routes: ApiRoute[] = [
   {
-    path: apiRoutes.CHANGE_REQUESTS,
+    path: API_URL + apiRoutes.CHANGE_REQUESTS,
     httpMethod: 'GET',
     func: getAllChangeRequests
   },
   {
-    path: apiRoutes.CHANGE_REQUESTS_BY_ID,
+    path: API_URL + apiRoutes.CHANGE_REQUESTS_BY_ID,
     httpMethod: 'GET',
     func: getChangeRequestByID
   }

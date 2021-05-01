@@ -20,6 +20,11 @@ interface ProjectContainerProps {
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const [project, setProject] = useState<Project>(exampleProject4); // store projects data
 
+  // Transforms given project data and sets local state
+  const updateData: Function = (response: AxiosResponse) => {
+    setProject({});
+  };
+
   useEffect(() => {
     let mounted = true; // indicates component is mounted
 
@@ -39,11 +44,14 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     };
   }, []);
 
+  if (false) {
+    // Check if project is undefined
+  }
   return (
     <div>
-      <ProjectDetails project={project} />
+      <ProjectDetails project={project!} />
 
-      {project.workPackages.map((ele: WorkPackage) => (
+      {project!.workPackages.map((ele: WorkPackage) => (
         <WorkPackageSummary key={wbsPipe(ele.wbsNum)} workPackage={ele} />
       ))}
     </div>

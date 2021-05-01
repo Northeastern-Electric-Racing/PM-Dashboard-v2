@@ -52,7 +52,6 @@ const AppMain: React.FC = () => {
           <BrowserRouter>{app}</BrowserRouter>
         </UserLogOutContext.Provider>
       </UserLogInContext.Provider>
-      <ProjectContainer />
     </UserContext.Provider>
   );
 };

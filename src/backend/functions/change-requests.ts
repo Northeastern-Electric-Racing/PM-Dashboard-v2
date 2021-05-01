@@ -17,14 +17,16 @@ const getAllChangeRequests: ApiRouteFunction = () => {
   };
 };
 
-const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
+const getChangeRequestByID: ApiRouteFunction = (params: { id: string }) => {
+  const crId: number = parseInt(params.id);
   const requestedCR: ChangeRequest | undefined = exampleAllChangeRequests.find(
-    (cr: ChangeRequest) => {
-      return cr.id == params.id;
-    }
+    (cr: ChangeRequest) => cr.id === crId
   );
   if (requestedCR === undefined) {
-    return { statusCode: 404, body: 'Could not find the requested change request.' };
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ message: 'Could not find the requested change request.' })
+    };
   }
   return {
     statusCode: 200,
@@ -35,12 +37,12 @@ const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
 
 const routes: ApiRoute[] = [
   {
-    path: apiRoutes.CHANGE_REQUESTS,
+    path: API_URL + apiRoutes.CHANGE_REQUESTS,
     httpMethod: 'GET',
     func: getAllChangeRequests
   },
   {
-    path: apiRoutes.CHANGE_REQUESTS_BY_ID,
+    path: API_URL + apiRoutes.CHANGE_REQUESTS_BY_ID,
     httpMethod: 'GET',
     func: getChangeRequestByID
   }

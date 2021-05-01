@@ -73,10 +73,10 @@ describe('users api endpoint handler', () => {
     it('handles 404 when user not found', async () => {
       const event = { path: `${API_URL}${apiRoutes.USERS}/420`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
-      const message: string = responseObject.body;
+      const errorObject = JSON.parse(responseObject.body);
 
       expect(responseObject.statusCode).toBe(404);
-      expect(message).toEqual('Could not find the requested user.');
+      expect(errorObject.message).toEqual('Could not find the requested user.');
     });
   });
 });

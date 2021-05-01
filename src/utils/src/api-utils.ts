@@ -20,6 +20,8 @@ export const routeMatcher: Function = (routes: ApiRoute[], event: any, context: 
   }
   return {
     statusCode: 404,
-    body: `Could not find a route matching the requested path [${event.path}].`
+    body: JSON.stringify({
+      message: `Could not find a route matching the requested path [${event.path}].`
+    })
   };
 };

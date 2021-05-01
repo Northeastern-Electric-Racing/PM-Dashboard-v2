@@ -28,7 +28,10 @@ const getSingleUser: ApiRouteFunction = (params: { id: string }) => {
   const userId: number = parseInt(params.id);
   const requestedUser: User | undefined = exampleAllUsers.find((usr: User) => usr.id === userId);
   if (requestedUser === undefined) {
-    return { statusCode: 404, body: { message: 'Could not find the requested user.' } };
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ message: 'Could not find the requested user.' })
+    };
   }
   return {
     statusCode: 200,

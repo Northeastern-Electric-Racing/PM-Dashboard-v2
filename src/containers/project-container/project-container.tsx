@@ -6,10 +6,10 @@
 import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { apiFetch } from '../../shared/axios';
-import { exampleProject4, Project, WorkPackage, apiRoutes } from 'utils';
+import { exampleProject1, Project, WorkPackage, apiRoutes } from 'utils';
 import ProjectDetails from '../../components/project-details/project-details';
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
-import './project-container.module.css';
+import styles from './project-container.module.css';
 import { wbsPipe } from '../../shared/pipes';
 import { WbsNumber } from 'utils/src';
 
@@ -18,21 +18,22 @@ interface ProjectContainerProps {
 }
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
-  const [project, setProject] = useState<Project>(exampleProject4); // store projects data
-
-  // Transforms given project data and sets local state
-  const updateData: Function = (response: AxiosResponse) => {
-    setProject({});
-  };
+  const [project, setProject] = useState<Project>(exampleProject1); // store projects data
 
   useEffect(() => {
     let mounted = true; // indicates component is mounted
+
+    // Transforms given project data and sets local state
+    const updateData: Function = (response: AxiosResponse) => {
+      console.log(response.data);
+      //setProject(response.data);
+    };
 
     const fetchProjects: Function = async () => {
       apiFetch
         .get(apiRoutes.PROJECTS + `/` + wbsPipe(wbsNum))
         .then((response: AxiosResponse) =>
-          mounted ? /* Should update project here*/ console.log(response.data) : ''
+          mounted ? /* Should update project here*/ updateData(response) : ''
         )
         .catch((error) => (mounted ? console.log('fetch project error: ' + error.message) : ''));
     };
@@ -44,16 +45,26 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     };
   }, []);
 
-  if (false) {
-    // Check if project is undefined
+  if (project === undefined) {
+    throw new Error('Project not found');
   }
   return (
-    <div>
+    <div className={styles.projectContainer}>
+      <h2>
+        {wbsPipe(project!.wbsNum)} - {project!.name}
+      </h2>
       <ProjectDetails project={project!} />
-
-      {project!.workPackages.map((ele: WorkPackage) => (
-        <WorkPackageSummary key={wbsPipe(ele.wbsNum)} workPackage={ele} />
-      ))}
+      <div className={`${styles.projectContainerBox} ${styles.workPackageList}`}>
+        <h4>Work Packages</h4>
+        <hr />
+        {project!.workPackages.map((ele: WorkPackage) => (
+          <WorkPackageSummary
+            className={styles.workPackageSummary}
+            key={wbsPipe(ele.wbsNum)}
+            workPackage={ele}
+          />
+        ))}
+      </div>
     </div>
   );
 };

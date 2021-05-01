@@ -25,7 +25,6 @@ const WBSDetails: React.FC = () => {
   );
   return (
     <div>
-      <h2>This is the WBS Page</h2>
       <p className={styles.describe}>{type}</p>
     </div>
   );

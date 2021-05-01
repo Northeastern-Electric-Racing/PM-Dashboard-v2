@@ -24,7 +24,7 @@ const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
     }
   );
   if (requestedCR === undefined) {
-    return { statusCode: 404, body: 'Could not find the requested change request.' };
+    return { statusCode: 404, body: { message: 'Could not find the requested change request.' } };
   }
   return {
     statusCode: 200,

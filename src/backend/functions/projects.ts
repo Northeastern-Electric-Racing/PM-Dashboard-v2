@@ -39,7 +39,7 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
     );
   });
   if (requestedProject === undefined) {
-    return { statusCode: 404, body: 'Could not find the requested project.' };
+    return { statusCode: 404, body: { message: 'Could not find the requested project.' } };
   }
   return {
     statusCode: 200,

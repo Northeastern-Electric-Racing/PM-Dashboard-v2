@@ -80,10 +80,10 @@ describe('projects api endpoint handler', () => {
     it('handles 404 when project not found', async () => {
       const event = { path: `${API_URL}/projects/1.0.0`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
-      const message: string = responseObject.body;
+      const errorObject = JSON.parse(responseObject.body);
 
       expect(responseObject.statusCode).toBe(404);
-      expect(message).toEqual('Could not find the requested project.');
+      expect(errorObject.message).toEqual('Could not find the requested project.');
     });
   });
 });

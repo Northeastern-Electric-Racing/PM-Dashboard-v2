@@ -1,4 +1,4 @@
-import { apiRoutes, ChangeRequest, mockContext } from 'utils';
+import { apiRoutes, API_URL, ChangeRequest, mockContext } from 'utils';
 import { handler } from '../functions/change-requests';
 
 describe('change requests api endpoint handler', () => {
@@ -7,7 +7,7 @@ describe('change requests api endpoint handler', () => {
     let crResponse: ChangeRequest[];
 
     beforeEach(async () => {
-      const event = { path: apiRoutes.CHANGE_REQUESTS, httpMethod: 'GET' };
+      const event = { path: API_URL + apiRoutes.CHANGE_REQUESTS, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
       crResponse = JSON.parse(responseObject.body);
     });
@@ -34,12 +34,13 @@ describe('change requests api endpoint handler', () => {
       });
     });
   });
+
   describe('single change request route', () => {
     let responseObject: any;
     let crResponse: ChangeRequest;
 
     beforeEach(async () => {
-      const event = { path: `${apiRoutes.CHANGE_REQUESTS}/37`, httpMethod: 'GET' };
+      const event = { path: `${API_URL + apiRoutes.CHANGE_REQUESTS}/37`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
       crResponse = JSON.parse(responseObject.body);
     });
@@ -61,12 +62,12 @@ describe('change requests api endpoint handler', () => {
     });
 
     it('handles 404 when project not found', async () => {
-      const event = { path: `${apiRoutes.CHANGE_REQUESTS}/38`, httpMethod: 'GET' };
+      const event = { path: `${API_URL + apiRoutes.CHANGE_REQUESTS}/105`, httpMethod: 'GET' };
       responseObject = await handler(event, mockContext);
-      const message: string = responseObject.body;
+      const errorObject = JSON.parse(responseObject.body);
 
       expect(responseObject.statusCode).toBe(404);
-      expect(message).toEqual('Could not find the requested change request.');
+      expect(errorObject.message).toEqual('Could not find the requested change request.');
     });
   });
 });

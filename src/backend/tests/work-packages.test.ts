@@ -11,7 +11,7 @@ describe('all example work packages', () => {
   });
 
   it('has all required fields', () => {
-    exampleAllWorkPackages.forEach((wps) => {
+    exampleAllWorkPackages.forEach((wps: WorkPackage) => {
       expect(wps.hasOwnProperty('wbsNum')).toBeTruthy();
       expect(wps.hasOwnProperty('name')).toBeTruthy();
       expect(wps.hasOwnProperty('projectLead')).toBeTruthy();
@@ -21,7 +21,7 @@ describe('all example work packages', () => {
   });
 
   it('has proper work package wbsNums', () => {
-    exampleAllWorkPackages.forEach((wps) => {
+    exampleAllWorkPackages.forEach((wps: WorkPackage) => {
       const workpackages: WorkPackage = wps;
       expect(workpackages.wbsNum).toBeTruthy();
     });

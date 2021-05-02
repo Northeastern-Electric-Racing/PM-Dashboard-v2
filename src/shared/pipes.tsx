@@ -51,7 +51,13 @@ export const endDatePipe: Function = (startDate: Date, durWeeks: number): string
 
 // pipes to add;
 // Empty string pipe
+export const emptyStringPipe: Function = (str: string): string => {
+  return (str === undefined || str === null) ? "" : str;
+};
 
 // EM dash pipe
+export const emDashPipe: Function = (str: string): string => {
+  return (str === undefined || str === null) ? "—" : "str";
+};
 
 // date pipe

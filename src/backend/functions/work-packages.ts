@@ -4,18 +4,40 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { exampleAllWorkPackages } from 'utils';
+import {
+  ApiRoute,
+  ApiRouteFunction,
+  apiRoutes,
+  API_URL,
+  exampleAllWorkPackages,
+  routeMatcher
+} from 'utils';
 
+// Fetch all users
+const getAllWorkPackages: ApiRouteFunction = () => {
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(exampleAllWorkPackages)
+  };
+};
+
+// Define all valid routes for the endpoint
+const routes: ApiRoute[] = [
+  {
+    path: `${API_URL}${apiRoutes.WORK_PACKAGES}`,
+    httpMethod: 'GET',
+    func: getAllWorkPackages
+  }
+];
+
+// Handler for incoming requests
 const handler: Handler = async (event, context) => {
   try {
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(exampleAllWorkPackages)
-    };
+    return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500 };
+    return { statusCode: 500, body: JSON.stringify({ msg: error.message }) };
   }
 };
 

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
+import { HandlerContext } from '@netlify/functions';
 import { WbsNumber, Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
@@ -418,13 +418,37 @@ export const exampleAllChangeRequests: ChangeRequest[] = [
 /********************** API Util Dummy Data **********************/
 
 export const exampleApiRoutes: ApiRoute[] = [
-  { path: `${API_URL}/projects/one`, httpMethod: 'GET', func: () => 5 },
-  { path: `${API_URL}/projects/one`, httpMethod: 'POST', func: () => 6 },
-  { path: `${API_URL}/projects/two`, httpMethod: 'GET', func: () => 7 },
-  { path: `${API_URL}/projects/three`, httpMethod: 'GET', func: () => 8 }
+  {
+    path: `${API_URL}/projects/one`,
+    httpMethod: 'GET',
+    func: () => {
+      return { statusCode: 200, body: '5' };
+    }
+  },
+  {
+    path: `${API_URL}/projects/one`,
+    httpMethod: 'POST',
+    func: () => {
+      return { statusCode: 200, body: '6' };
+    }
+  },
+  {
+    path: `${API_URL}/projects/two`,
+    httpMethod: 'GET',
+    func: () => {
+      return { statusCode: 200, body: '7' };
+    }
+  },
+  {
+    path: `${API_URL}/projects/three`,
+    httpMethod: 'GET',
+    func: () => {
+      return { statusCode: 200, body: '8' };
+    }
+  }
 ];
 
-export const mockContext: Context = {
+export const mockContext: HandlerContext = {
   functionName: '',
   functionVersion: '',
   invokedFunctionArn: '',

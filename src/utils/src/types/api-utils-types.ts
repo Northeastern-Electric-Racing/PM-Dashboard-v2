@@ -3,9 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
+import { HandlerEvent, HandlerContext, HandlerResponse } from '@netlify/functions';
 
-export type ApiRouteFunction = (params: any, event: any, context: Context) => {};
+export type ApiRouteFunction = (
+  params: any,
+  event: HandlerEvent,
+  context: HandlerContext
+) => HandlerResponse;
 
 export interface ApiRoute {
   path: string;

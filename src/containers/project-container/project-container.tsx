@@ -26,7 +26,9 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     // Transforms given project data and sets local state
     const updateData: Function = (response: AxiosResponse) => {
       console.log(response.data);
-      //setProject(response.data);
+
+      const proj: Project = response.data;
+      setProject(proj);
     };
 
     const fetchProjects: Function = async () => {
@@ -53,6 +55,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       <h2>
         {wbsPipe(project!.wbsNum)} - {project!.name}
       </h2>
+      <hr />
       <ProjectDetails project={project!} />
       <div className={`${styles.projectContainerBox} ${styles.workPackageList}`}>
         <h4>Work Packages</h4>

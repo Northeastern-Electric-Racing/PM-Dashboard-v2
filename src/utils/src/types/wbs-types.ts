@@ -4,7 +4,7 @@
  */
 
 export interface WbsNumber {
-  area: number;
+  car: number;
   project: number;
   workPackage: number;
 }

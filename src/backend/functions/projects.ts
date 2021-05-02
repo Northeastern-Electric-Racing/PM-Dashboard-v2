@@ -27,13 +27,13 @@ const getAllProjects: ApiRouteFunction = () => {
 const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
   const parseWbs: number[] = params.wbs.split('.').map((str) => parseInt(str));
   const parsedWbs: WbsNumber = {
-    area: parseWbs[0],
+    car: parseWbs[0],
     project: parseWbs[1],
     workPackage: parseWbs[2]
   };
   const requestedProject: Project | undefined = exampleAllProjects.find((prj: Project) => {
     return (
-      prj.wbsNum.area === parsedWbs.area &&
+      prj.wbsNum.car === parsedWbs.car &&
       prj.wbsNum.project === parsedWbs.project &&
       prj.wbsNum.workPackage === parsedWbs.workPackage
     );

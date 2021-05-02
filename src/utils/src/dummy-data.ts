@@ -107,25 +107,25 @@ export const exampleAllUsers: User[] = [
 /*************** Work Breakdown Structure Numbers ***************/
 
 export const exampleWbsWorkPackage1: WbsNumber = {
-  area: 1,
+  car: 1,
   project: 1,
   workPackage: 1
 };
 
 export const exampleWbsWorkPackage2: WbsNumber = {
-  area: 2,
+  car: 2,
   project: 7,
   workPackage: 3
 };
 
 export const exampleWbsProject1: WbsNumber = {
-  area: 1,
+  car: 1,
   project: 12,
   workPackage: 0
 };
 
 export const exampleWbsProject2: WbsNumber = {
-  area: 2,
+  car: 2,
   project: 5,
   workPackage: 0
 };
@@ -174,7 +174,7 @@ export const exampleWorkPackage1: WorkPackage = {
 export const exampleWorkPackage2: WorkPackage = {
   id: 2,
   wbsNum: {
-    area: 1,
+    car: 1,
     project: 1,
     workPackage: 2
   },
@@ -266,7 +266,7 @@ export const exampleAllWorkPackages: WorkPackage[] = [
 
 export const exampleProject1: Project = {
   id: 4,
-  wbsNum: { area: 1, project: 1, workPackage: 0 },
+  wbsNum: { car: 1, project: 1, workPackage: 0 },
   dateCreated: new Date('08/01/20'),
   name: 'Impact Attenuator',
   status: WbsElementStatus.Active,
@@ -281,7 +281,7 @@ export const exampleProject1: Project = {
 
 export const exampleProject2: Project = {
   id: 5,
-  wbsNum: { area: 1, project: 2, workPackage: 0 },
+  wbsNum: { car: 1, project: 2, workPackage: 0 },
   dateCreated: new Date('08/02/20'),
   name: 'Bodywork',
   status: WbsElementStatus.Inactive,
@@ -326,7 +326,7 @@ export const exampleProject4: Project = {
 
 export const exampleProject5: Project = {
   id: 8,
-  wbsNum: { area: 2, project: 7, workPackage: 0 },
+  wbsNum: { car: 2, project: 7, workPackage: 0 },
   dateCreated: new Date('08/03/20'),
   name: 'Wiring Harness',
   status: WbsElementStatus.Complete,

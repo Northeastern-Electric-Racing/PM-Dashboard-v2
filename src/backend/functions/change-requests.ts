@@ -53,12 +53,13 @@ const routes: ApiRoute[] = [
   }
 ];
 
+// Handler for incoming requests
 const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500 };
+    return { statusCode: 500, body: JSON.stringify({ msg: error.message }) };
   }
 };
 

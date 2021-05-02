@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
+import { Handler } from '@netlify/functions';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -55,11 +55,13 @@ const routes: ApiRoute[] = [
 ];
 
 // Handler for incoming requests
-export async function handler(event: any, context: Context) {
+const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
     return { statusCode: 500, body: JSON.stringify({ msg: error.message }) };
   }
-}
+};
+
+export { handler };

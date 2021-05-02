@@ -3,10 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
+import { Handler } from '@netlify/functions';
 import { exampleAllWorkPackages } from 'utils';
 
-export async function handler(event: any, context: Context) {
+const handler: Handler = async (event, context) => {
   try {
     return {
       statusCode: 200,
@@ -17,4 +17,6 @@ export async function handler(event: any, context: Context) {
     console.error(error);
     return { statusCode: 500 };
   }
-}
+};
+
+export { handler };

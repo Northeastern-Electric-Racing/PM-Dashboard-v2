@@ -3,9 +3,50 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { HandlerResponse } from '@netlify/functions';
 import { API_URL } from '../src/api-routes';
-import { routeMatcher } from '../src/api-utils';
+import { buildResponseObject, routeMatcher } from '../src/api-utils';
 import { exampleApiRoutes, mockContext } from '../src/dummy-data';
+
+describe('Response object factory', () => {
+  it('works with all inputs', () => {
+    const response: HandlerResponse = buildResponseObject(200, { message: 'hi' }, { test: 'bye' });
+
+    expect(response.statusCode).toBeDefined();
+    expect(response.statusCode).toBe(200);
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+
+    expect(response.headers).toBeDefined();
+    expect(response.headers).toHaveProperty('test');
+
+    expect(response.isBase64Encoded).toBeUndefined();
+    expect(response.multiValueHeaders).toBeUndefined();
+  });
+
+  it('works with no headers inputs', () => {
+    const response: HandlerResponse = buildResponseObject(200, { message: 'hi' });
+
+    expect(response.statusCode).toBeDefined();
+    expect(response.statusCode).toBe(200);
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+
+    expect(response.headers).toBeUndefined();
+    expect(response.isBase64Encoded).toBeUndefined();
+    expect(response.multiValueHeaders).toBeUndefined();
+  });
+
+  it('properly stringifies the body', () => {
+    const response: HandlerResponse = buildResponseObject(200, { message: 'hi' });
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+    expect(JSON.parse(response.body)).toHaveProperty('message', 'hi');
+  });
+});
 
 describe('Route matcher behavior', () => {
   it('matches with no prefix', () => {

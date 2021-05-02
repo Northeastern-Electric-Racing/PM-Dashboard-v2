@@ -8,7 +8,22 @@ import { match } from 'path-to-regexp';
 import { API_URL } from './api-routes';
 import { ApiRoute } from './types/api-utils-types';
 
-// Finds the matching route and executes the route's function
+/** Builds a standard API response object */
+export const buildResponseObject: (
+  statusCode: number,
+  body: Object,
+  headers?: {
+    [header: string]: boolean | number | string;
+  }
+) => HandlerResponse = (statusCode, body, headers) => {
+  return {
+    statusCode,
+    headers,
+    body: JSON.stringify(body)
+  };
+};
+
+/** Finds the matching route and executes the route's function */
 export const routeMatcher: (
   routes: ApiRoute[],
   event: HandlerEvent,

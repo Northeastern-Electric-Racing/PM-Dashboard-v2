@@ -9,6 +9,8 @@ import Projects from '../../pages/projects/projects';
 import { PageNotFound } from '../../pages/page-not-found/page-not-found';
 import NavTopBar from '../../components/nav-top-bar/nav-top-bar';
 import styles from './app-authenticated.module.css';
+import WorkPackageRules from '../../components/work-package-rules/work-package-rules';
+import { exampleWorkPackage2 } from 'utils/lib/dummy-data';
 
 const AppAuthenticated: React.FC = () => {
   return (

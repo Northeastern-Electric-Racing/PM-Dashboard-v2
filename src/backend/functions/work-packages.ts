@@ -9,17 +9,15 @@ import {
   ApiRouteFunction,
   apiRoutes,
   API_URL,
+  buildFailureResponse,
+  buildSuccessResponse,
   exampleAllWorkPackages,
   routeMatcher
 } from 'utils';
 
 // Fetch all users
 const getAllWorkPackages: ApiRouteFunction = () => {
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(exampleAllWorkPackages)
-  };
+  return buildSuccessResponse(exampleAllWorkPackages);
 };
 
 // Define all valid routes for the endpoint
@@ -37,7 +35,7 @@ const handler: Handler = async (event, context) => {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500, body: JSON.stringify({ msg: error.message }) };
+    return buildFailureResponse(error.message);
   }
 };
 

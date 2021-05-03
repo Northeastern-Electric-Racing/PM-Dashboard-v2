@@ -11,16 +11,15 @@ import {
   WbsNumber,
   ApiRouteFunction,
   exampleAllProjects,
-  API_URL
+  API_URL,
+  buildSuccessResponse,
+  buildNotFoundResponse,
+  buildFailureResponse
 } from 'utils';
 
 // Fetch all projects
 const getAllProjects: ApiRouteFunction = () => {
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(exampleAllProjects)
-  };
+  return buildSuccessResponse(exampleAllProjects);
 };
 
 // Fetch the project for the specified WBS number
@@ -39,16 +38,9 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
     );
   });
   if (requestedProject === undefined) {
-    return {
-      statusCode: 404,
-      body: JSON.stringify({ message: 'Could not find the requested project.' })
-    };
+    return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
   }
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(requestedProject)
-  };
+  return buildSuccessResponse(requestedProject);
 };
 
 const routes: ApiRoute[] = [
@@ -70,7 +62,7 @@ const handler: Handler = async (event, context) => {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500, body: JSON.stringify({ msg: error.message }) };
+    return buildFailureResponse(error.message);
   }
 };
 

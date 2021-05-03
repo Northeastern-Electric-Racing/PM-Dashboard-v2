@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { HandlerContext } from '@netlify/functions';
+import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
 import { WbsNumber, Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
@@ -461,4 +461,21 @@ export const mockContext: HandlerContext = {
   done: () => 0,
   fail: () => 0,
   succeed: () => 0
+};
+
+export const mockCallback: HandlerCallback = (error, response) => {};
+
+export const mockEvent: (path: string, httpMethod: string) => HandlerEvent = (path, httpMethod) => {
+  return {
+    rawUrl: '',
+    rawQuery: '',
+    path,
+    httpMethod,
+    headers: {},
+    multiValueHeaders: {},
+    queryStringParameters: {},
+    multiValueQueryStringParameters: {},
+    body: '',
+    isBase64Encoded: false
+  };
 };

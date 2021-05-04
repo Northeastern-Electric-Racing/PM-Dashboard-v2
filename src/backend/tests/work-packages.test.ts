@@ -3,27 +3,81 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage, exampleAllWorkPackages } from 'utils';
+import { HandlerEvent } from '@netlify/functions';
+import { WorkPackage, mockContext, mockCallback, API_URL, apiRoutes, mockEvent } from 'utils';
+import { handler } from '../functions/work-packages';
 
-describe('all example work packages', () => {
-  it('contains 3 work packages', () => {
-    expect(exampleAllWorkPackages.length).toBe(3);
-  });
+describe('work packages api endpoint handler', () => {
+  describe('all work packages route', () => {
+    let responseObject: any;
+    let workPackagesResponse: WorkPackage[];
 
-  it('has all required fields', () => {
-    exampleAllWorkPackages.forEach((wps: WorkPackage) => {
-      expect(wps.hasOwnProperty('wbsNum')).toBeTruthy();
-      expect(wps.hasOwnProperty('name')).toBeTruthy();
-      expect(wps.hasOwnProperty('projectLead')).toBeTruthy();
-      expect(wps.hasOwnProperty('projectManager')).toBeTruthy();
-      expect(0).toBe(0);
+    beforeEach(async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.WORK_PACKAGES}`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
+      workPackagesResponse = JSON.parse(responseObject.body);
+    });
+
+    it('has 200 status code', () => {
+      expect(responseObject.statusCode).toBe(200);
+    });
+
+    it('contains correct number of work packages', () => {
+      expect(workPackagesResponse.length).toBe(3);
+    });
+
+    it('has all required fields', () => {
+      workPackagesResponse.forEach((prj: WorkPackage) => {
+        expect(prj).toHaveProperty('wbsNum');
+        expect(prj).toHaveProperty('name');
+        expect(prj).toHaveProperty('projectLead');
+        expect(prj).toHaveProperty('projectManager');
+      });
+    });
+
+    it('has proper work package wbsNums', () => {
+      workPackagesResponse.forEach((prj: WorkPackage) => {
+        const project: WorkPackage = prj;
+        expect(project.wbsNum).toBeTruthy();
+        expect(typeof project.wbsNum).toBe('object');
+      });
     });
   });
 
-  it('has proper work package wbsNums', () => {
-    exampleAllWorkPackages.forEach((wps: WorkPackage) => {
-      const workpackages: WorkPackage = wps;
-      expect(workpackages.wbsNum).toBeTruthy();
+  describe('single project route', () => {
+    let responseObject: any;
+    let workPackageResponse: WorkPackage;
+
+    beforeEach(async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.WORK_PACKAGES}/1.1.1`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
+      workPackageResponse = JSON.parse(responseObject.body);
+    });
+
+    it('has 200 status code', () => {
+      expect(responseObject.statusCode).toBe(200);
+    });
+    it('has all required fields', () => {
+      expect(workPackageResponse).toHaveProperty('wbsNum');
+      expect(workPackageResponse).toHaveProperty('name');
+      expect(workPackageResponse).toHaveProperty('projectLead');
+      expect(workPackageResponse).toHaveProperty('projectManager');
+    });
+
+    it('has proper work package wbsNums', () => {
+      expect(workPackageResponse.wbsNum).toBeTruthy();
+      expect(typeof workPackageResponse.wbsNum).toBe('object');
+    });
+
+    it('handles 404 when work package not found', async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.WORK_PACKAGES}/1.0.0`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(404);
+      expect(errorObject.message).toEqual(
+        'Could not find the requested work package [WBS # 1.0.0].'
+      );
     });
   });
 });

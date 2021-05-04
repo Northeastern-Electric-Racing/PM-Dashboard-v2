@@ -5,7 +5,7 @@ CREATE TYPE "CR_Type" AS ENUM ('DESIGN_ISSUE', 'NEW_FUNCTION', 'OTHER', 'STAGE_G
 CREATE TYPE "WBS_Element_Status" AS ENUM ('INACTIVE', 'ACTIVE', 'COMPLETE');
 
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'LEADERSHIP', 'PROJECT_MANAGER', 'PROJECT_LEAD', 'MEMBER', 'GUEST');
+CREATE TYPE "Role" AS ENUM ('APP_ADMIN', 'ADMIN', 'LEADERSHIP', 'PROJECT_MANAGER', 'PROJECT_LEAD', 'MEMBER', 'GUEST');
 
 -- CreateEnum
 CREATE TYPE "Scope_CR_Why_Type" AS ENUM ('ESTIMATION', 'SCHOOL', 'MANUFACTURING', 'RULES', 'OTHER_PROJECT', 'OTHER');
@@ -16,6 +16,7 @@ CREATE TABLE "User" (
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "emailId" TEXT NOT NULL,
+    "firstLogin" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "lastLogin" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "role" "Role" NOT NULL DEFAULT E'GUEST',
 
@@ -25,14 +26,13 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Change_Request" (
     "crId" SERIAL NOT NULL,
+    "submitterId" INTEGER NOT NULL,
     "dateSubmitted" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "requestorId" INTEGER NOT NULL,
     "wbsElementId" INTEGER NOT NULL,
     "type" "CR_Type" NOT NULL,
     "dateReviewed" TIMESTAMP(3),
     "accepted" BOOLEAN,
     "reviewNotes" TEXT,
-    "implemented" BOOLEAN,
 
     PRIMARY KEY ("crId")
 );
@@ -84,8 +84,8 @@ CREATE TABLE "Activation_CR" (
 -- CreateTable
 CREATE TABLE "Change" (
     "changeId" SERIAL NOT NULL,
-    "dateImplemented" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "changeRequestId" INTEGER NOT NULL,
+    "dateImplemented" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "implementorId" INTEGER NOT NULL,
     "wbsElementId" INTEGER NOT NULL,
     "detail" TEXT NOT NULL,
@@ -130,9 +130,8 @@ CREATE TABLE "Work_Package" (
     "progress" INTEGER NOT NULL,
     "duration" INTEGER NOT NULL,
     "budget" INTEGER NOT NULL,
-    "dependencies" TEXT NOT NULL,
     "deliverables" TEXT NOT NULL,
-    "rules" TEXT NOT NULL,
+    "rules" TEXT[],
 
     PRIMARY KEY ("workPackageId")
 );
@@ -146,6 +145,12 @@ CREATE TABLE "Description_Bullet" (
     "detail" TEXT NOT NULL,
 
     PRIMARY KEY ("descriptionId")
+);
+
+-- CreateTable
+CREATE TABLE "_dependencies" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
@@ -169,8 +174,14 @@ CREATE UNIQUE INDEX "Project_wbsElementId_unique" ON "Project"("wbsElementId");
 -- CreateIndex
 CREATE UNIQUE INDEX "Work_Package_wbsElementId_unique" ON "Work_Package"("wbsElementId");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "_dependencies_AB_unique" ON "_dependencies"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_dependencies_B_index" ON "_dependencies"("B");
+
 -- AddForeignKey
-ALTER TABLE "Change_Request" ADD FOREIGN KEY ("requestorId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Change_Request" ADD FOREIGN KEY ("submitterId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Change_Request" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -219,3 +230,9 @@ ALTER TABLE "Work_Package" ADD FOREIGN KEY ("projectId") REFERENCES "Project"("p
 
 -- AddForeignKey
 ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("workPackageId") REFERENCES "Work_Package"("workPackageId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_dependencies" ADD FOREIGN KEY ("A") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_dependencies" ADD FOREIGN KEY ("B") REFERENCES "Work_Package"("workPackageId") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -3,18 +3,40 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
-import { exampleAllWorkPackages } from 'utils';
+import { Handler } from '@netlify/functions';
+import {
+  ApiRoute,
+  ApiRouteFunction,
+  apiRoutes,
+  API_URL,
+  buildFailureResponse,
+  buildSuccessResponse,
+  exampleAllWorkPackages,
+  routeMatcher
+} from 'utils';
 
-export async function handler(event: any, context: Context) {
+// Fetch all users
+const getAllWorkPackages: ApiRouteFunction = () => {
+  return buildSuccessResponse(exampleAllWorkPackages);
+};
+
+// Define all valid routes for the endpoint
+const routes: ApiRoute[] = [
+  {
+    path: `${API_URL}${apiRoutes.WORK_PACKAGES}`,
+    httpMethod: 'GET',
+    func: getAllWorkPackages
+  }
+];
+
+// Handler for incoming requests
+const handler: Handler = async (event, context) => {
   try {
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(exampleAllWorkPackages)
-    };
+    return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500 };
+    return buildFailureResponse(error.message);
   }
-}
+};
+
+export { handler };

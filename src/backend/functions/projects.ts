@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
+import { Handler } from '@netlify/functions';
 import {
   routeMatcher,
   ApiRoute,
@@ -11,16 +11,15 @@ import {
   WbsNumber,
   ApiRouteFunction,
   exampleAllProjects,
-  API_URL
+  API_URL,
+  buildSuccessResponse,
+  buildNotFoundResponse,
+  buildFailureResponse
 } from 'utils';
 
 // Fetch all projects
 const getAllProjects: ApiRouteFunction = () => {
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(exampleAllProjects)
-  };
+  return buildSuccessResponse(exampleAllProjects);
 };
 
 // Fetch the project for the specified WBS number
@@ -39,16 +38,9 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
     );
   });
   if (requestedProject === undefined) {
-    return {
-      statusCode: 404,
-      body: JSON.stringify({ message: 'Could not find the requested project.' })
-    };
+    return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
   }
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(requestedProject)
-  };
+  return buildSuccessResponse(requestedProject);
 };
 
 const routes: ApiRoute[] = [
@@ -64,11 +56,14 @@ const routes: ApiRoute[] = [
   }
 ];
 
-export async function handler(event: any, context: Context) {
+// Handler for incoming requests
+const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500 };
+    return buildFailureResponse(error.message);
   }
-}
+};
+
+export { handler };

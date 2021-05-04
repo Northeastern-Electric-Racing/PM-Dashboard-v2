@@ -160,20 +160,20 @@ model Project {
 }
 
 model Work_Package {
-  workPackageId       Int                  @id @default(autoincrement())
-  wbsElementId        Int
-  wbsElement          WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
-  projectId           Int
-  project             Project              @relation(fields: [projectId], references: [projectId])
-  orderInProject      Int
-  startDate           DateTime
-  progress            Int
-  duration            Int
-  budget              Int
-  dependencies        WBS_Element[]        @relation(name: "dependencies")
-  deliverables        String
-  rules               String[]
-  description_bullets Description_Bullet[]
+  workPackageId      Int                  @id @default(autoincrement())
+  wbsElementId       Int
+  wbsElement         WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
+  projectId          Int
+  project            Project              @relation(fields: [projectId], references: [projectId])
+  orderInProject     Int
+  startDate          DateTime
+  progress           Int
+  duration           Int
+  budget             Int
+  dependencies       WBS_Element[]        @relation(name: "dependencies")
+  deliverables       String
+  rules              String[]
+  descriptionBullets Description_Bullet[]
 }
 
 model Description_Bullet {

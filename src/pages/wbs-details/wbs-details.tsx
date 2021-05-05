@@ -5,6 +5,7 @@
 
 import { useParams } from 'react-router-dom';
 import { validateWBS, wbsIsProject } from 'utils';
+import WorkPackageContainer from '../../containers/work-package-container/work-package-container';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
@@ -18,10 +19,7 @@ const WBSDetails: React.FC = () => {
   const type: string = wbsIsProject(wbsNum) ? 'Project' : 'Work Package';
   return (
     <div>
-      <h2>This is the WBS Page</h2>
-      <p className={styles.describe}>
-        {type} {wbsNum}
-      </p>
+      <WorkPackageContainer wbsNum={{ car: 1, project: 1, workPackage: 1 }} />
     </div>
   );
 };

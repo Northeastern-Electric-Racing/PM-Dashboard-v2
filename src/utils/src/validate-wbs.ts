@@ -29,7 +29,7 @@ export const validateWBS: Function = (wbsNum: string): WbsNumber => {
     throw new Error(errorMsg + 'incorrect number of periods');
   }
   return {
-    car: parseWbs[0],
+    area: parseWbs[0],
     project: parseWbs[1],
     workPackage: parseWbs[2]
   };

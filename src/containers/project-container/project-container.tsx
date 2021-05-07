@@ -27,7 +27,16 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     const updateData: Function = (response: AxiosResponse) => {
       console.log(response.data);
 
-      const proj: Project = response.data;
+      const proj: Project = {
+        ...response.data,
+        dateCreated: new Date(response.data.dateCreated),
+        workPackages: response.data.workPackages.map((ele: WorkPackage) => {
+          return {
+            ...ele,
+            startDate: new Date(ele.startDate)
+          };
+        })
+      };
       setProject(proj);
     };
 
@@ -48,7 +57,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   }, []);
 
   if (project === undefined) {
-    throw new Error('Project not found');
+    return <p>Loading...</p>;
   }
   return (
     <div className={styles.projectContainer}>

@@ -3,8 +3,11 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
-import { validateWBS, wbsIsProject } from 'utils';
+import { validateWBS, wbsIsProject, WbsNumber } from 'utils';
+import ProjectContainer from '../../containers/project-container/project-container';
+import { wbsPipe } from '../../shared/pipes';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
@@ -13,15 +16,16 @@ const WBSDetails: React.FC = () => {
   }
   const { wbsNum } = useParams<ParamTypes>();
 
-  validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
+  const wbsAsObj: WbsNumber = validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
 
-  const type: string = wbsIsProject(wbsNum) ? 'Project' : 'Work Package';
+  const type: ReactElement = wbsIsProject(wbsNum) ? (
+    <ProjectContainer wbsNum={wbsAsObj} />
+  ) : (
+    <p>Work Package: {wbsPipe(wbsAsObj)}</p>
+  );
   return (
     <div>
-      <h2>This is the WBS Page</h2>
-      <p className={styles.describe}>
-        {type} {wbsNum}
-      </p>
+      <p className={styles.describe}>{type}</p>
     </div>
   );
 };

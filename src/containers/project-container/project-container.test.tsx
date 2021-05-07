@@ -5,7 +5,7 @@
 
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { exampleProject1 } from 'utils';
 import ProjectContainer from './project-container';
 

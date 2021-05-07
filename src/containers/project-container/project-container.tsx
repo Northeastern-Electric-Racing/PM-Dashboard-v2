@@ -6,7 +6,7 @@
 import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { apiFetch } from '../../shared/axios';
-import { exampleProject1, Project, WorkPackage, apiRoutes } from 'utils';
+import { Project, WorkPackage, apiRoutes } from 'utils';
 import ProjectDetails from '../../components/project-details/project-details';
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 import styles from './project-container.module.css';
@@ -18,7 +18,7 @@ interface ProjectContainerProps {
 }
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
-  const [project, setProject] = useState<Project>(exampleProject1); // store projects data
+  const [project, setProject] = useState<Project>(); // store projects data
 
   useEffect(() => {
     let mounted = true; // indicates component is mounted
@@ -54,7 +54,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     return () => {
       mounted = false;
     };
-  }, []);
+  });
 
   if (project === undefined) {
     return <p>Loading...</p>;

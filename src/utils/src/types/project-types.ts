@@ -4,6 +4,7 @@
  */
 
 import { User } from './user-types';
+import { ImplementedChange } from './change-request-types';
 
 export interface WbsNumber {
   car: number;
@@ -45,6 +46,7 @@ export interface WorkPackage extends WbsElement {
   deliverable: string;
   rules: string[];
   descriptionBullets: DescriptionBullet[];
+  changes: ImplementedChange[];
 }
 
 export interface DescriptionBullet {

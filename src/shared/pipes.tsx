@@ -18,7 +18,7 @@ export const linkPipe: Function = (description: string, link: string): ReactElem
 };
 
 export const weeksPipe: Function = (weeks: number): string => {
-  return `${weeks} weeks`;
+  return `${weeks} week${weeks === 1 ? '' : 's'}`;
 };
 
 export const dollarsPipe: Function = (dollars: number): string => {

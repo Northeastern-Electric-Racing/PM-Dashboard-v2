@@ -4,11 +4,26 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { exampleProject1 } from 'utils';
+import { exampleProject1, exampleProject2, exampleProject3 } from 'utils';
+import { fullNamePipe, wbsPipe } from '../../shared/pipes';
 import ProjectDetails from './project-details';
 
-it('Renders title', () => {
-  render(<ProjectDetails project={exampleProject1} />);
-  const titleElement = screen.getByText(/Project Details/i);
-  expect(titleElement).toBeInTheDocument();
+describe('project details component', () => {
+  it('Renders title', () => {
+    render(<ProjectDetails project={exampleProject1} />);
+    const titleElement = screen.getByText('Project Details');
+    expect(titleElement).toBeInTheDocument();
+  });
+
+  it('Renders WBS#', () => {
+    render(<ProjectDetails project={exampleProject2} />);
+    const projectElement = screen.getByText(wbsPipe(exampleProject2.wbsNum));
+    expect(projectElement).toBeInTheDocument();
+  });
+
+  it('Renders project lead', () => {
+    render(<ProjectDetails project={exampleProject3} />);
+    const projectNameElement = screen.getByText(fullNamePipe(exampleProject3.projectLead));
+    expect(projectNameElement).toBeInTheDocument();
+  });
 });

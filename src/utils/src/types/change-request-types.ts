@@ -3,9 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ImplementedChange } from './implemented-change-types';
 import { User } from './user-types';
-import { WbsNumber } from './wbs-types';
+import { WbsNumber } from './project-types';
 
 export interface ChangeRequest {
   id: number;
@@ -34,7 +33,6 @@ export interface StandardChangeRequest extends ChangeRequest {
   scopeImpact: string;
   budgetImpact: number;
   timelineImpact: number;
-  docLink: string;
 }
 
 export interface ActivationChangeRequest extends ChangeRequest {
@@ -45,7 +43,6 @@ export interface ActivationChangeRequest extends ChangeRequest {
 }
 
 export interface StageGateChangeRequest extends ChangeRequest {
-  designReviewAttendees: User[];
   leftoverBudget: number;
   confirmCompleted: boolean;
 }
@@ -62,4 +59,12 @@ export enum ChangeRequestReason {
   Rules = 'Rules Compliance',
   OtherProject = 'Other Project',
   Other = 'Other'
+}
+
+export interface ImplementedChange {
+  id: number;
+  crId: number;
+  wbsNum: WbsNumber;
+  implementer: User;
+  detail: string;
 }

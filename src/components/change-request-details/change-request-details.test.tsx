@@ -103,14 +103,6 @@ describe('Change request details standard cr display element tests', () => {
     expect(screen.getByText(`Budget Impact`)).toBeInTheDocument();
     expect(screen.getByText(`$${cr.budgetImpact}`)).toBeInTheDocument();
   });
-
-  it('Renders doc section', () => {
-    const cr: StandardChangeRequest = exampleStandardChangeRequest;
-    render(<ChangeRequestDetails changeRequest={cr} />);
-    expect(screen.getByText(`Doc`)).toBeInTheDocument();
-    expect(screen.getByText(`Documentation`)).toBeInTheDocument();
-    expect(screen.getByText('Documentation').closest('a')).toHaveAttribute('href', cr.docLink);
-  });
 });
 
 describe('Change request details activation cr display element tests', () => {
@@ -160,14 +152,5 @@ describe('Change request details stage gate cr display element tests', () => {
     render(<ChangeRequestDetails changeRequest={cr} />);
     expect(screen.getByText(`Leftover Budget`)).toBeInTheDocument();
     expect(screen.getByText(`$${cr.leftoverBudget}`)).toBeInTheDocument();
-  });
-
-  it('Renders required attendees', () => {
-    const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
-    render(<ChangeRequestDetails changeRequest={cr} />);
-    expect(screen.getByText(`Required Attendees`)).toBeInTheDocument();
-    cr.designReviewAttendees.forEach((attendee) => {
-      expect(screen.getByText(`${attendee.firstName} ${attendee.lastName}`)).toBeInTheDocument();
-    });
   });
 });

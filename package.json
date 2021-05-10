@@ -104,6 +104,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@netlify/functions": "^0.7.0",
     "@octokit/core": "^3.2.5",
     "@prisma/client": "~2.19.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -131,7 +132,6 @@
   "devDependencies": {
     "@babel/plugin-transform-object-assign": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
-    "@types/aws-lambda": "^8.10.71",
     "@types/node": "^12.19.16",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",

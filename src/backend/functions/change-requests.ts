@@ -1,4 +1,9 @@
-import { Context } from 'aws-lambda';
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+import { Handler } from '@netlify/functions';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -6,51 +11,48 @@ import {
   apiRoutes,
   ChangeRequest,
   exampleAllChangeRequests,
-  routeMatcher
+  routeMatcher,
+  buildSuccessResponse,
+  buildNotFoundResponse,
+  buildFailureResponse
 } from 'utils';
 
 const getAllChangeRequests: ApiRouteFunction = () => {
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(exampleAllChangeRequests)
-  };
+  return buildSuccessResponse(exampleAllChangeRequests);
 };
 
-const getChangeRequestByID: ApiRouteFunction = (params: { id: number }) => {
+const getChangeRequestByID: ApiRouteFunction = (params: { id: string }) => {
+  const crId: number = parseInt(params.id);
   const requestedCR: ChangeRequest | undefined = exampleAllChangeRequests.find(
-    (cr: ChangeRequest) => {
-      return cr.id == params.id;
-    }
+    (cr: ChangeRequest) => cr.id === crId
   );
   if (requestedCR === undefined) {
-    return { statusCode: 404, body: 'Could not find the requested change request.' };
+    return buildNotFoundResponse('change request', `#${crId}`);
   }
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(requestedCR)
-  };
+  return buildSuccessResponse(requestedCR);
 };
 
 const routes: ApiRoute[] = [
   {
-    path: apiRoutes.CHANGE_REQUESTS,
+    path: API_URL + apiRoutes.CHANGE_REQUESTS,
     httpMethod: 'GET',
     func: getAllChangeRequests
   },
   {
-    path: apiRoutes.CHANGE_REQUESTS_BY_ID,
+    path: API_URL + apiRoutes.CHANGE_REQUESTS_BY_ID,
     httpMethod: 'GET',
     func: getChangeRequestByID
   }
 ];
 
-export async function handler(event: any, context: Context) {
+// Handler for incoming requests
+const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return { statusCode: 500 };
+    return buildFailureResponse(error.message);
   }
-}
+};
+
+export { handler };

@@ -3,7 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User, mockContext, API_URL, apiRoutes } from 'utils';
+import { HandlerEvent } from '@netlify/functions';
+import { User, mockContext, mockCallback, API_URL, apiRoutes, mockEvent } from 'utils';
 import { handler } from '../functions/users';
 
 describe('users api endpoint handler', () => {
@@ -12,17 +13,13 @@ describe('users api endpoint handler', () => {
     let usersResponse: User[];
 
     beforeEach(async () => {
-      const event = { path: `${API_URL}${apiRoutes.USERS}`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
       usersResponse = JSON.parse(responseObject.body);
     });
 
     it('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
-    });
-
-    it('has json headers', () => {
-      expect(responseObject.headers).toStrictEqual({ 'Content-Type': 'application/json' });
     });
 
     it('contains 5 projects', () => {
@@ -47,17 +44,13 @@ describe('users api endpoint handler', () => {
     let userResponse: User;
 
     beforeEach(async () => {
-      const event = { path: `${API_URL}${apiRoutes.USERS}/1`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}/1`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
       userResponse = JSON.parse(responseObject.body);
     });
 
     it('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
-    });
-
-    it('has json headers', () => {
-      expect(responseObject.headers).toStrictEqual({ 'Content-Type': 'application/json' });
     });
 
     it('has all required fields', () => {
@@ -71,12 +64,12 @@ describe('users api endpoint handler', () => {
     });
 
     it('handles 404 when user not found', async () => {
-      const event = { path: `${API_URL}${apiRoutes.USERS}/420`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
-      const message: string = responseObject.body;
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}/420`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
 
       expect(responseObject.statusCode).toBe(404);
-      expect(message).toEqual('Could not find the requested user.');
+      expect(errorObject.message).toEqual('Could not find the requested user [#420].');
     });
   });
 });

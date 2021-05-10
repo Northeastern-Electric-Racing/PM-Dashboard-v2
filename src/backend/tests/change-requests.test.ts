@@ -1,4 +1,10 @@
-import { apiRoutes, ChangeRequest, mockContext } from 'utils';
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+import { HandlerEvent } from '@netlify/functions';
+import { apiRoutes, API_URL, ChangeRequest, mockContext, mockCallback, mockEvent } from 'utils';
 import { handler } from '../functions/change-requests';
 
 describe('change requests api endpoint handler', () => {
@@ -7,17 +13,13 @@ describe('change requests api endpoint handler', () => {
     let crResponse: ChangeRequest[];
 
     beforeEach(async () => {
-      const event = { path: apiRoutes.CHANGE_REQUESTS, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
+      const event: HandlerEvent = mockEvent(API_URL + apiRoutes.CHANGE_REQUESTS, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
       crResponse = JSON.parse(responseObject.body);
     });
 
     it('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
-    });
-
-    it('has json headers', () => {
-      expect(responseObject.headers).toStrictEqual({ 'Content-Type': 'application/json' });
     });
 
     it('contains 3 change requests', () => {
@@ -34,22 +36,19 @@ describe('change requests api endpoint handler', () => {
       });
     });
   });
+
   describe('single change request route', () => {
     let responseObject: any;
     let crResponse: ChangeRequest;
 
     beforeEach(async () => {
-      const event = { path: `${apiRoutes.CHANGE_REQUESTS}/37`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
+      const event: HandlerEvent = mockEvent(`${API_URL + apiRoutes.CHANGE_REQUESTS}/37`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
       crResponse = JSON.parse(responseObject.body);
     });
 
     it('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
-    });
-
-    it('has json headers', () => {
-      expect(responseObject.headers).toStrictEqual({ 'Content-Type': 'application/json' });
     });
 
     it('has all required fields', () => {
@@ -61,12 +60,12 @@ describe('change requests api endpoint handler', () => {
     });
 
     it('handles 404 when project not found', async () => {
-      const event = { path: `${apiRoutes.CHANGE_REQUESTS}/38`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
-      const message: string = responseObject.body;
+      const event: HandlerEvent = mockEvent(`${API_URL + apiRoutes.CHANGE_REQUESTS}/105`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
 
       expect(responseObject.statusCode).toBe(404);
-      expect(message).toEqual('Could not find the requested change request.');
+      expect(errorObject.message).toEqual('Could not find the requested change request [#105].');
     });
   });
 });

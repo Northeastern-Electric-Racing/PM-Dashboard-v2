@@ -18,13 +18,14 @@ enum CR_Type {
   WP_ACTIVATION
 }
 
-enum WBS_El_Status {
+enum WBS_Element_Status {
   INACTIVE
   ACTIVE
   COMPLETE
 }
 
 enum Role {
+  APP_ADMIN
   ADMIN
   LEADERSHIP
   PROJECT_MANAGER
@@ -33,176 +34,153 @@ enum Role {
   GUEST
 }
 
-enum Change_Type {
-  ADD_PROJECT
-  ADD_WP
-  EDIT_PROJECT
-  EDIT_WP
-  EDIT_WP_DESC
-  DELETE_PROJECT
-  DELETE_WP
-}
-
-enum Project_Area {
-  MECHANICAL
-  ELECTRICAL
-  BUSINESS
+enum Scope_CR_Why_Type {
+  ESTIMATION
+  SCHOOL
+  MANUFACTURING
+  RULES
+  OTHER_PROJECT
+  OTHER
 }
 
 model User {
-  user_id                    Int                          @id @default(autoincrement())
-  first_name                 String
-  last_name                  String
-  email_id                   String                       @unique
-  last_login                 DateTime
-  role                       Role
-  Fab_Weld_Requests          Fab_Weld_Request[]
-  Change_Requests            Change_Request[]
-  WP_Activation_Positions    WP_Activation[]
-  Change                     Change[]
-  WBS_Element                WBS_Element[]
-  Project                    Project[]
-  WP_Activation              WP_Activation[]              @relation("project_lead")
-  Stage_Gate_Design_Reviewer Stage_Gate_Design_Reviewer[]
-}
-
-model Fab_Weld_Request {
-  fw_id            Int         @id @default(autoincrement())
-  date_submitted   DateTime    @default(now())
-  part_name        String
-  quantity         Int
-  resources_needed String
-  link             String
-  date_completed   DateTime
-  requestor        User        @relation(fields: [requestor_id], references: [user_id])
-  requestor_id     Int
-  wbs_el           WBS_Element @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id        Int
+  userId                 Int              @id @default(autoincrement())
+  firstName              String
+  lastName               String
+  emailId                String           @unique
+  firstLogin             DateTime         @default(now())
+  lastLogin              DateTime         @default(now())
+  role                   Role             @default(GUEST)
+  changeRequests         Change_Request[]
+  markedAsProjectLead    Activation_CR[]  @relation(name: "markAsProjectLead")
+  markedAsProjectManager Activation_CR[]  @relation(name: "markAsProjectManager")
+  changes                Change[]
+  projectLead            WBS_Element[]    @relation(name: "projectLead")
+  projectManager         WBS_Element[]    @relation(name: "projectManager")
 }
 
 model Change_Request {
-  cr_id          Int             @id @default(autoincrement())
-  date_submitted DateTime        @default(now())
-  type           CR_Type
-  date_reviewed  DateTime
-  accepted       Boolean?
-  review_notes   String?
-  changes        Change[]
-  implemented    Boolean?
-  requestor      User            @relation(fields: [requestor_id], references: [user_id])
-  requestor_id   Int
-  wbs_el         WBS_Element     @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id      Int
-  Scope_CR       Scope_CR[]
-  stage_gate     Stage_Gate[]
-  wp_activation  WP_Activation[]
+  crId                    Int            @id @default(autoincrement())
+  submitterId             Int
+  submitter               User           @relation(fields: [submitterId], references: [userId])
+  dateSubmitted           DateTime       @default(now())
+  wbsElementId            Int
+  wbsElement              WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
+  type                    CR_Type
+  dateReviewed            DateTime?
+  accepted                Boolean?
+  reviewNotes             String?
+  changes                 Change[]
+  scopeChangeRequest      Scope_CR?
+  stageGateChangeRequest  Stage_Gate_CR?
+  activationChangeRequest Activation_CR?
 }
 
 model Scope_CR {
-  scope_cr_id     Int            @id
+  scopeCrId       Int            @id @default(autoincrement())
+  changeRequestId Int
+  changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
   what            String
-  why             String
-  timeline_impact Int
-  budget_impact   Int
-  scope_impact    String
-  doc             String
-  change_request  Change_Request @relation(fields: [cr_id], references: [cr_id])
-  cr_id           Int
+  why             Scope_CR_Why[]
+  scopeImpact     String
+  timelineImpact  Int
+  budgetImpact    Int
 }
 
-model Stage_Gate {
-  stage_gate_id              Int                          @id
-  done                       Boolean
-  leftover_budget            Int
-  change_request             Change_Request               @relation(fields: [cr_id], references: [cr_id])
-  cr_id                      Int
-  Stage_Gate_Design_Reviewer Stage_Gate_Design_Reviewer[]
+model Scope_CR_Why {
+  scopeCrWhyId Int               @id @default(autoincrement())
+  scopeCrId    Int
+  scopeCr      Scope_CR          @relation(fields: [scopeCrId], references: [scopeCrId])
+  type         Scope_CR_Why_Type
+  explain      String
 }
 
-model Stage_Gate_Design_Reviewer {
-  stage_gate         Stage_Gate @relation(fields: [stage_gate_id], references: [stage_gate_id])
-  stage_gate_id      Int
-  design_reviewer    User       @relation(fields: [design_reviewer_id], references: [user_id])
-  design_reviewer_id Int
-
-  @@id([stage_gate_id, design_reviewer_id])
+model Stage_Gate_CR {
+  stageGateCrId   Int            @id @default(autoincrement())
+  changeRequestId Int
+  changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
+  leftoverBudget  Int
+  confirmDone     Boolean
 }
 
-model WP_Activation {
-  wp_init_id         Int            @id
-  start_date         DateTime
-  details_good       Boolean
-  project_lead       User           @relation(name: "project_lead", fields: [project_lead_id], references: [user_id])
-  project_manager    User           @relation(fields: [project_manager_id], references: [user_id])
-  project_lead_id    Int
-  project_manager_id Int
-  change_request     Change_Request @relation(fields: [cr_id], references: [cr_id])
-  cr_id              Int
+model Activation_CR {
+  activationCrId   Int            @id @default(autoincrement())
+  changeRequestId  Int
+  changeRequest    Change_Request @relation(fields: [changeRequestId], references: [crId])
+  projectLeadId    Int
+  projectLead      User           @relation(name: "markAsProjectLead", fields: [projectLeadId], references: [userId])
+  projectManagerId Int
+  projectManager   User           @relation(name: "markAsProjectManager", fields: [projectManagerId], references: [userId])
+  startDate        DateTime
+  confirmDetails   Boolean
 }
 
 model Change {
-  change_id        Int            @id @default(autoincrement())
-  attribute        Change_Type
-  original         String
-  new              String
-  date_implemented DateTime
-  implementor      User           @relation(fields: [implementor_id], references: [user_id])
-  implementor_id   Int
-  change_request   Change_Request @relation(fields: [cr_id], references: [cr_id])
-  cr_id            Int
+  changeId        Int            @id @default(autoincrement())
+  changeRequestId Int
+  changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
+  dateImplemented DateTime       @default(now())
+  implementorId   Int
+  implementor     User           @relation(fields: [implementorId], references: [userId])
+  wbsElementId    Int
+  wbsElement      WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
+  detail          String
 }
 
 model WBS_Element {
-  wbs_el_id         Int                @id @default(autoincrement())
-  date_created      DateTime
-  wbs_num           String
-  wbs_el_name       String
-  wbs_el_status     WBS_El_Status
-  fab_weld_requests Fab_Weld_Request[]
-  change_requests   Change_Request[]
-  wbs_el_lead       User               @relation(fields: [wbs_el_lead_id], references: [user_id])
-  wbs_el_lead_id    Int
-  projects          Project[]
-  work_packages     Work_Package[]
+  wbsElementId          Int                @id @default(autoincrement())
+  dateCreated           DateTime           @default(now())
+  carNumber             Int
+  projectNumber         Int
+  workPackageNumber     Int
+  name                  String
+  status                WBS_Element_Status
+  projectLeadId         Int
+  projectLead           User               @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
+  projectManagerId      Int
+  projectManager        User               @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
+  changeRequests        Change_Request[]
+  changes               Change[]
+  project               Project?
+  workPackage           Work_Package?
+  dependentWorkPackages Work_Package[]     @relation("dependencies")
+
+  @@unique([carNumber, projectNumber, workPackageNumber], name: "wbsNumber")
 }
 
 model Project {
-  project_id         Int            @id
-  area               Project_Area
-  g_drive_folder     String
-  slide_deck_link    String
-  bom_link           String
-  task_list_link     String
-  work_packages      Work_Package[]
-  project_manager    User           @relation(fields: [project_manager_id], references: [user_id])
-  project_manager_id Int
-  wbs_el             WBS_Element    @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id          Int
+  projectId             Int            @id @default(autoincrement())
+  wbsElementId          Int
+  wbsElement            WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
+  googleDriveFolderLink String
+  slideDeckLink         String
+  bomLink               String
+  taskListLink          String
+  workPackages          Work_Package[]
 }
 
 model Work_Package {
-  wp_id            Int                  @id
-  order_in_project Int
-  wp_progress      Int
-  start_date       DateTime
-  duration         Int
-  budget           Int
-  dependencies     String
-  deliverables     String
-  rules            String
-  desc_bullets     Description_Bullet[]
-  project          Project              @relation(fields: [project_id], references: [project_id])
-  project_id       Int
-  wbs_el           WBS_Element          @relation(fields: [wbs_el_id], references: [wbs_el_id])
-  wbs_el_id        Int
+  workPackageId      Int                  @id @default(autoincrement())
+  wbsElementId       Int
+  wbsElement         WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
+  projectId          Int
+  project            Project              @relation(fields: [projectId], references: [projectId])
+  orderInProject     Int
+  startDate          DateTime
+  progress           Int
+  duration           Int
+  budget             Int
+  dependencies       WBS_Element[]        @relation(name: "dependencies")
+  deliverables       String
+  rules              String[]
+  descriptionBullets Description_Bullet[]
 }
 
 model Description_Bullet {
-  desc_id      Int          @id @default(autoincrement())
-  detail       String
-  date_added   DateTime
-  date_deleted DateTime?
-  date_done    DateTime?
-  work_package Work_Package @relation(fields: [wp_id], references: [wp_id])
-  wp_id        Int
+  descriptionId Int          @id @default(autoincrement())
+  workPackageId Int
+  workPackage   Work_Package @relation(fields: [workPackageId], references: [workPackageId])
+  dateAdded     DateTime     @default(now())
+  dateDeleted   DateTime?
+  detail        String
 }

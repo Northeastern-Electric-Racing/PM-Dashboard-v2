@@ -26,7 +26,7 @@ export const dollarsPipe: Function = (dollars: number): string => {
 };
 
 export const wbsPipe: Function = (wbsNum: WbsNumber): string => {
-  return `${wbsNum.area}.${wbsNum.project}.${wbsNum.workPackage}`;
+  return `${wbsNum.car}.${wbsNum.project}.${wbsNum.workPackage}`;
 };
 
 export const fullNamePipe: Function = (user: User): string => {

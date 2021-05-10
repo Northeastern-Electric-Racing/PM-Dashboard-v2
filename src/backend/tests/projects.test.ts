@@ -3,7 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, mockContext, API_URL } from 'utils';
+import { HandlerEvent } from '@netlify/functions';
+import { Project, mockContext, mockCallback, API_URL, apiRoutes, mockEvent } from 'utils';
 import { handler } from '../functions/projects';
 
 describe('projects api endpoint handler', () => {
@@ -12,17 +13,13 @@ describe('projects api endpoint handler', () => {
     let projectsResponse: Project[];
 
     beforeEach(async () => {
-      const event = { path: `${API_URL}/projects`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.PROJECTS}`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
       projectsResponse = JSON.parse(responseObject.body);
     });
 
     it('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
-    });
-
-    it('has json headers', () => {
-      expect(responseObject.headers).toStrictEqual({ 'Content-Type': 'application/json' });
     });
 
     it('contains 5 projects', () => {
@@ -52,19 +49,14 @@ describe('projects api endpoint handler', () => {
     let projectResponse: Project;
 
     beforeEach(async () => {
-      const event = { path: `${API_URL}/projects/1.2.0`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.PROJECTS}/1.2.0`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
       projectResponse = JSON.parse(responseObject.body);
     });
 
     it('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
-
-    it('has json headers', () => {
-      expect(responseObject.headers).toStrictEqual({ 'Content-Type': 'application/json' });
-    });
-
     it('has all required fields', () => {
       expect(projectResponse.hasOwnProperty('wbsNum')).toBeTruthy();
       expect(projectResponse.hasOwnProperty('name')).toBeTruthy();
@@ -78,12 +70,12 @@ describe('projects api endpoint handler', () => {
     });
 
     it('handles 404 when project not found', async () => {
-      const event = { path: `${API_URL}/projects/1.0.0`, httpMethod: 'GET' };
-      responseObject = await handler(event, mockContext);
-      const message: string = responseObject.body;
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.PROJECTS}/1.0.0`, 'GET');
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
 
       expect(responseObject.statusCode).toBe(404);
-      expect(message).toEqual('Could not find the requested project.');
+      expect(errorObject.message).toEqual('Could not find the requested project [WBS # 1.0.0].');
     });
   });
 });

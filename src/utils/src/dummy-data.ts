@@ -3,8 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Context } from 'aws-lambda';
-import { Project, WbsElementStatus, WorkPackage } from './types/project-types';
+import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
+import { WbsNumber, Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
   StandardChangeRequest,
@@ -14,7 +14,6 @@ import {
   ChangeRequestType
 } from './types/change-request-types';
 import { User, Role } from './types/user-types';
-import { WbsNumber } from './types/wbs-types';
 import { ApiRoute } from './types/api-utils-types';
 import { API_URL } from './api-routes';
 
@@ -107,25 +106,25 @@ export const exampleAllUsers: User[] = [
 /*************** Work Breakdown Structure Numbers ***************/
 
 export const exampleWbsWorkPackage1: WbsNumber = {
-  area: 1,
+  car: 1,
   project: 1,
   workPackage: 1
 };
 
 export const exampleWbsWorkPackage2: WbsNumber = {
-  area: 2,
+  car: 2,
   project: 7,
   workPackage: 3
 };
 
 export const exampleWbsProject1: WbsNumber = {
-  area: 1,
+  car: 1,
   project: 12,
   workPackage: 0
 };
 
 export const exampleWbsProject2: WbsNumber = {
-  area: 2,
+  car: 2,
   project: 5,
   workPackage: 0
 };
@@ -168,13 +167,23 @@ export const exampleWorkPackage1: WorkPackage = {
         'Compare various material, design, segmentation, and mounting choices available and propose the best combination',
       dateAdded: new Date('11/15/20')
     }
+  ],
+
+  changes: [
+    {
+      id: 1,
+      crId: 33,
+      wbsNum: exampleWbsWorkPackage2,
+      implementer: exampleGuestUser,
+      detail: 'Increased funding by $500.'
+    }
   ]
 };
 
 export const exampleWorkPackage2: WorkPackage = {
   id: 2,
   wbsNum: {
-    area: 1,
+    car: 1,
     project: 1,
     workPackage: 2
   },
@@ -209,6 +218,24 @@ export const exampleWorkPackage2: WorkPackage = {
       detail: 'Write a report to summarize findings',
       dateAdded: new Date('10/05/20')
     }
+  ],
+
+  changes: [
+    {
+      id: 2,
+      crId: 1,
+      wbsNum: exampleWbsWorkPackage2,
+      implementer: exampleAppAdminUser,
+      detail: 'Decreased duration from 10 weeks to 7 weeks.'
+    },
+
+    {
+      id: 13,
+      crId: 54,
+      wbsNum: exampleWbsWorkPackage1,
+      implementer: exampleProjectLeadUser,
+      detail: 'Added "jet fuel burns hot" bullet.'
+    }
   ]
 };
 
@@ -232,8 +259,7 @@ export const exampleWorkPackage3: WorkPackage = {
     {
       id: 6,
       detail: 'Manufacutre section A of the wiring harness',
-      dateAdded: new Date('09/27/20'),
-      dateDone: new Date('01/05/21')
+      dateAdded: new Date('09/27/20')
     },
     {
       id: 7,
@@ -244,14 +270,21 @@ export const exampleWorkPackage3: WorkPackage = {
     {
       id: 8,
       detail: 'Solder wiring segments together and heat shrink properly',
-      dateAdded: new Date('09/30/20'),
-      dateDone: new Date('01/07/21')
+      dateAdded: new Date('09/30/20')
     },
     {
       id: 9,
       detail: 'Cut all wires to length',
-      dateAdded: new Date('11/6/20'),
-      dateDone: new Date('01/03/21')
+      dateAdded: new Date('11/6/20')
+    }
+  ],
+  changes: [
+    {
+      id: 7,
+      crId: 14,
+      wbsNum: exampleWbsWorkPackage1,
+      implementer: exampleAdminUser,
+      detail: 'Increased budget from $10 to $200.'
     }
   ]
 };
@@ -266,7 +299,7 @@ export const exampleAllWorkPackages: WorkPackage[] = [
 
 export const exampleProject1: Project = {
   id: 4,
-  wbsNum: { area: 1, project: 1, workPackage: 0 },
+  wbsNum: { car: 1, project: 1, workPackage: 0 },
   dateCreated: new Date('08/01/20'),
   name: 'Impact Attenuator',
   status: WbsElementStatus.Active,
@@ -281,7 +314,7 @@ export const exampleProject1: Project = {
 
 export const exampleProject2: Project = {
   id: 5,
-  wbsNum: { area: 1, project: 2, workPackage: 0 },
+  wbsNum: { car: 1, project: 2, workPackage: 0 },
   dateCreated: new Date('08/02/20'),
   name: 'Bodywork',
   status: WbsElementStatus.Inactive,
@@ -326,7 +359,7 @@ export const exampleProject4: Project = {
 
 export const exampleProject5: Project = {
   id: 8,
-  wbsNum: { area: 2, project: 7, workPackage: 0 },
+  wbsNum: { car: 2, project: 7, workPackage: 0 },
   dateCreated: new Date('08/03/20'),
   name: 'Wiring Harness',
   status: WbsElementStatus.Complete,
@@ -388,8 +421,7 @@ export const exampleStandardChangeRequest: StandardChangeRequest = {
   ],
   scopeImpact: 'Design and machine titanium spacers',
   budgetImpact: 75,
-  timelineImpact: 2,
-  docLink: 'https://youtu.be/dQw4w9WgXcQ'
+  timelineImpact: 2
 };
 
 export const exampleActivationChangeRequest: ActivationChangeRequest = {
@@ -410,7 +442,6 @@ export const exampleStageGateChangeRequest: StageGateChangeRequest = {
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
   type: ChangeRequestType.StageGate,
-  designReviewAttendees: [exampleLeadershipUser, exampleProjectLeadUser, exampleProjectManagerUser],
   leftoverBudget: 26,
   confirmCompleted: true
 };
@@ -424,13 +455,37 @@ export const exampleAllChangeRequests: ChangeRequest[] = [
 /********************** API Util Dummy Data **********************/
 
 export const exampleApiRoutes: ApiRoute[] = [
-  { path: `${API_URL}/projects/one`, httpMethod: 'GET', func: () => 5 },
-  { path: `${API_URL}/projects/one`, httpMethod: 'POST', func: () => 6 },
-  { path: `${API_URL}/projects/two`, httpMethod: 'GET', func: () => 7 },
-  { path: `${API_URL}/projects/three`, httpMethod: 'GET', func: () => 8 }
+  {
+    path: `${API_URL}/projects/one`,
+    httpMethod: 'GET',
+    func: () => {
+      return { statusCode: 200, body: '5' };
+    }
+  },
+  {
+    path: `${API_URL}/projects/one`,
+    httpMethod: 'POST',
+    func: () => {
+      return { statusCode: 200, body: '6' };
+    }
+  },
+  {
+    path: `${API_URL}/projects/two`,
+    httpMethod: 'GET',
+    func: () => {
+      return { statusCode: 200, body: '7' };
+    }
+  },
+  {
+    path: `${API_URL}/projects/three`,
+    httpMethod: 'GET',
+    func: () => {
+      return { statusCode: 200, body: '8' };
+    }
+  }
 ];
 
-export const mockContext: Context = {
+export const mockContext: HandlerContext = {
   functionName: '',
   functionVersion: '',
   invokedFunctionArn: '',
@@ -443,4 +498,21 @@ export const mockContext: Context = {
   done: () => 0,
   fail: () => 0,
   succeed: () => 0
+};
+
+export const mockCallback: HandlerCallback = (error, response) => {};
+
+export const mockEvent: (path: string, httpMethod: string) => HandlerEvent = (path, httpMethod) => {
+  return {
+    rawUrl: '',
+    rawQuery: '',
+    path,
+    httpMethod,
+    headers: {},
+    multiValueHeaders: {},
+    queryStringParameters: {},
+    multiValueQueryStringParameters: {},
+    body: '',
+    isBase64Encoded: false
+  };
 };

@@ -4,11 +4,12 @@
  */
 
 import { screen } from '@testing-library/react';
-import { apiRoutes, ChangeRequest, exampleStandardChangeRequest } from 'utils';
+import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
+import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../shared/test-utils';
-import ChangeRequestDetails from './change-request-details';
-import { useSingleChangeRequest } from '../../services/change-requests';
 import { ApiHookReturn } from '../../services/api-request';
+import { useSingleChangeRequest } from '../../services/change-requests';
+import ChangeRequestDetails from './change-request-details';
 
 jest.mock('../../services/change-requests');
 
@@ -25,8 +26,8 @@ const mockHook = (isLoading: boolean, errorMessage: string, responseData?: Chang
  */
 const renderComponent = () => {
   renderWithRouter(ChangeRequestDetails, {
-    path: apiRoutes.CHANGE_REQUESTS_BY_ID,
-    route: `${apiRoutes.CHANGE_REQUESTS}/1`
+    path: routes.CHANGE_REQUESTS_BY_ID,
+    route: `${routes.CHANGE_REQUESTS}/1`
   });
 };
 

@@ -15,6 +15,11 @@
     {
       "src": "NERfavicon512.png",
       "type": "image/png",
+      "sizes": "712x712"
+    },
+    {
+      "src":"NER-Logo-App-Icon.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],

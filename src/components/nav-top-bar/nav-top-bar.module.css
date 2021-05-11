@@ -14,4 +14,9 @@
 .title {
   margin: auto 0 auto 10px;
   color: black;
+  padding-left: 10px;
+}
+
+img {
+  transform: scale(1.5);
 }

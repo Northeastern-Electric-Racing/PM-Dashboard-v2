@@ -132,6 +132,7 @@
   "devDependencies": {
     "@babel/plugin-transform-object-assign": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
+    "@testing-library/react-hooks": "^5.1.2",
     "@types/node": "^12.19.16",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",

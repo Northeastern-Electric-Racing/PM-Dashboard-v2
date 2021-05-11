@@ -3,11 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
-import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
-import { apiFetch } from '../../shared/axios';
+import { useSingleChangeRequest } from '../../services/change-requests';
 import ChangeRequestDetailsView from '../../components/change-request-details/change-request-details';
 import './change-request-details.module.css';
 
@@ -16,39 +13,21 @@ const ChangeRequestDetails: React.FC = () => {
     id: string;
   }
   const { id } = useParams<ParamTypes>();
-  const [changeRequest, setChangeRequest] = useState<ChangeRequest>(exampleStandardChangeRequest); // store projects data
+  const { isLoading, errorMessage, responseData } = useSingleChangeRequest(parseInt(id));
 
-  // Transforms given project data and sets local state
-  const updateData: (response: AxiosResponse) => void = (res) => {
-    setChangeRequest({
-      ...res.data,
-      dateSubmitted: new Date(res.data.dateSubmitted),
-      dateReviewed: new Date(res.data.dateReviewed),
-      dateImplemented: new Date(res.data.dateImplemented)
-    });
-  };
-
-  // Fetch change request from API on component loading
-  useEffect(() => {
-    let mounted = true; // indicates component is mounted
-
-    const fetchChangeRequest: Function = async () => {
-      apiFetch
-        .get(`/change-requests/${id}`)
-        .then((response: AxiosResponse) => (mounted ? updateData(response) : ''))
-        .catch((error) =>
-          mounted ? console.log('fetch change request error: ' + error.message) : ''
-        );
-    };
-    fetchChangeRequest();
-
-    // cleanup function indicates component has been unmounted
-    return () => {
-      mounted = false;
-    };
-  }, [id]);
-
-  return <ChangeRequestDetailsView changeRequest={changeRequest} />;
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (errorMessage !== '' || responseData === undefined) {
+    return (
+      <>
+        <h3>Oops, sorry!</h3>
+        <h5>There was an error loading the page.</h5>
+        <p>{errorMessage ? errorMessage : 'The data did not load properly.'}</p>
+      </>
+    );
+  }
+  return <ChangeRequestDetailsView changeRequest={responseData!} />;
 };
 
 export default ChangeRequestDetails;

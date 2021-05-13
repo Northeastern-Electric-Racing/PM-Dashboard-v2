@@ -4,9 +4,10 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import WorkPackageDependencies from './work-package-dependencies';
-import { exampleWorkPackage2, WorkPackage } from 'utils';
+import { WorkPackage } from 'utils';
 import { wbsPipe } from '../../shared/pipes';
+import { exampleWorkPackage2 } from '../../test-support/test-data/work-packages.stub';
+import WorkPackageDependencies from './work-package-dependencies';
 
 describe('Rendering Work Packagae Dependencies Component', () => {
   test('Rendering example 2', () => {

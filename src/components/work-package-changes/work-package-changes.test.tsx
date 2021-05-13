@@ -5,7 +5,7 @@
 
 import { render, screen } from '@testing-library/react';
 import WorkPackageChanges from './work-package-changes';
-import { exampleWorkPackage2 } from 'utils';
+import { exampleWorkPackage2 } from '../../test-support/test-data/work-packages.stub';
 
 describe('Rendering Work Package Changes Component', () => {
   it('renders the component title', () => {

@@ -15,7 +15,7 @@ import {
 import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../shared/pipes';
 import styles from './change-request-details.module.css';
 
-const convertStatus: Function = (cr: ChangeRequest): string => {
+const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
     return 'Implemented';
   }
@@ -28,7 +28,7 @@ const convertStatus: Function = (cr: ChangeRequest): string => {
   return 'Open';
 };
 
-const buildChangeRequestDetails: Function = (cr: StandardChangeRequest): ReactElement => {
+const buildChangeRequestDetails = (cr: StandardChangeRequest): ReactElement => {
   return (
     <dl className="row">
       <dt className="col-2">What</dt>
@@ -63,9 +63,7 @@ const buildChangeRequestDetails: Function = (cr: StandardChangeRequest): ReactEl
   );
 };
 
-const buildActivationChangeRequestDetails: Function = (
-  cr: ActivationChangeRequest
-): ReactElement => {
+const buildActivationChangeRequestDetails = (cr: ActivationChangeRequest): ReactElement => {
   return (
     <dl className="row">
       <dt className="col-2">Project Lead</dt>
@@ -83,7 +81,7 @@ const buildActivationChangeRequestDetails: Function = (
   );
 };
 
-const buildStageGateChangeRequestDetails: Function = (cr: StageGateChangeRequest): ReactElement => {
+const buildStageGateChangeRequestDetails = (cr: StageGateChangeRequest): ReactElement => {
   return (
     <dl className="row">
       <dt className="col-4">Confirm WP Completed</dt>
@@ -95,7 +93,7 @@ const buildStageGateChangeRequestDetails: Function = (cr: StageGateChangeRequest
   );
 };
 
-const buildDetails: Function = (cr: ChangeRequest): ReactElement => {
+const buildDetails = (cr: ChangeRequest): ReactElement => {
   if (cr.type === ChangeRequestType.Activation) {
     return buildActivationChangeRequestDetails(cr);
   }

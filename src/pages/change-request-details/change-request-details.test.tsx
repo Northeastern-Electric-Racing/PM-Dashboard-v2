@@ -15,7 +15,7 @@ import ChangeRequestDetails from './change-request-details';
  *
  * @param options WBS number to render the component at
  */
-const renderComponent: Function = (id: string) => {
+const renderComponent = (id: string) => {
   const idNum: string = id || '1';
   renderWithRouter(ChangeRequestDetails, {
     path: '/change-requests/:wbsNum',

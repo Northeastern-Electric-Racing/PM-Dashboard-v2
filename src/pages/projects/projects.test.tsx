@@ -13,7 +13,7 @@ import Projects from './projects';
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent: Function = (routeOverride: string) => {
+const renderComponent = (routeOverride?: string) => {
   const renderRoute: string = routeOverride || '/projects';
   renderWithRouter(Projects, { route: renderRoute });
 };

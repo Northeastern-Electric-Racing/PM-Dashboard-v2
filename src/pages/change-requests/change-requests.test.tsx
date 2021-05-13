@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
 import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../shared/test-utils';

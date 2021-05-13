@@ -4,7 +4,6 @@
  */
 
 import { WorkPackage } from 'utils';
-import { listPipe } from '../../shared/pipes';
 import styles from './work-package-rules.module.css';
 
 interface WorkPackageRulesProps {

@@ -8,13 +8,18 @@ import WorkPackageChanges from './work-package-changes';
 import { exampleWorkPackage2 } from '../../test-support/test-data/work-packages.stub';
 
 describe('Rendering Work Package Changes Component', () => {
-  test('Rendering example 2', () => {
+  it('renders the component title', () => {
     render(<WorkPackageChanges workPackage={exampleWorkPackage2} />);
 
     expect(screen.getByText(`Changes`)).toBeInTheDocument();
+  });
+
+  it('renders all the changes', () => {
+    render(<WorkPackageChanges workPackage={exampleWorkPackage2} />);
+
     expect(
-      screen.getByText('1. [#1] Decreased duration from 10 weeks to 7 weeks.')
+      screen.getByText('[#1] Decreased duration from 10 weeks to 7 weeks.')
     ).toBeInTheDocument();
-    expect(screen.getByText('2. [#54] Added "jet fuel burns hot" bullet.')).toBeInTheDocument();
+    expect(screen.getByText('[#54] Added "jet fuel burns hot" bullet.')).toBeInTheDocument();
   });
 });

@@ -6,14 +6,14 @@
 import { screen } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { exampleAllProjects } from 'utils';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
+import { exampleAllProjects } from '../../test-support/test-data/projects.stub';
 import Projects from './projects';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent: Function = (routeOverride: string) => {
+const renderComponent = (routeOverride?: string) => {
   const renderRoute: string = routeOverride || '/projects';
   renderWithRouter(Projects, { route: renderRoute });
 };

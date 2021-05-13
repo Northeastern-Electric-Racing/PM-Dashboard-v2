@@ -14,10 +14,10 @@ const NavTopBar: React.FC = () => {
   return (
     <Navbar className={styles.mainBackground} variant="light" expand="md" fixed="top">
       <Navbar.Brand as="div">
-        <Link className="d-flex" to="/">
+        <Link className="d-flex" to="/" style={{ textDecoration: 'none' }}>
           <img
             className={`d-inline-block align-top ${styles.logo}`}
-            src={process.env.PUBLIC_URL + '/favicon.ico'}
+            src={'NER-Logo-App-Icon.png'}
             alt="Northeastern Electric Racing Logo"
           />{' '}
           <h3 className={styles.title}>NER PM Dashboard</h3>

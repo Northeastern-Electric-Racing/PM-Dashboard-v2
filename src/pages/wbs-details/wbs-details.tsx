@@ -5,12 +5,15 @@
 
 import { useParams } from 'react-router-dom';
 import { validateWBS, wbsIsProject } from 'utils';
+import { exampleProject1 } from 'utils';
+import ProjectDetails from '../../components/project-details/project-details';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
   }
+
   const { wbsNum } = useParams<ParamTypes>();
 
   validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
@@ -22,6 +25,7 @@ const WBSDetails: React.FC = () => {
       <p className={styles.describe}>
         {type} {wbsNum}
       </p>
+      {<ProjectDetails project={exampleProject1} />}
     </div>
   );
 };

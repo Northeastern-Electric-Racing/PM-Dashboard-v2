@@ -7,18 +7,17 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import ProjectsTable from './projects-table';
+import { WorkPackage, Project } from 'utils';
+import { wbsPipe, fullNamePipe } from '../../shared/pipes';
+import { wbsRegex } from '../../test-support/test-utils';
 import {
   exampleProject1,
   exampleProject2,
   exampleProject3,
   exampleProject4,
   exampleProject5,
-  exampleAllProjects,
-  WorkPackage,
-  Project
-} from 'utils';
-import { wbsPipe, fullNamePipe } from '../../shared/pipes';
-import { wbsRegex } from '../../shared/test-utils';
+  exampleAllProjects
+} from '../../test-support/test-data/projects.stub';
 
 const endpointURL: string = '/.netlify/functions/projects';
 

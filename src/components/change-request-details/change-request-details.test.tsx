@@ -5,15 +5,17 @@
 
 import { render, screen } from '@testing-library/react';
 import {
-  exampleStandardChangeRequest,
-  exampleActivationChangeRequest,
-  exampleStageGateChangeRequest,
-  exampleAllChangeRequests,
   ChangeRequest,
   StandardChangeRequest,
   ActivationChangeRequest,
   StageGateChangeRequest
 } from 'utils';
+import {
+  exampleStandardChangeRequest,
+  exampleActivationChangeRequest,
+  exampleStageGateChangeRequest,
+  exampleAllChangeRequests
+} from '../../test-support/test-data/change-requests.stub';
 import ChangeRequestDetails from './change-request-details';
 
 describe('Change request details common display element tests', () => {

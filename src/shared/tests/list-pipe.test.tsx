@@ -4,7 +4,11 @@
  */
 
 import { listPipe, wbsPipe } from '../pipes';
-import { exampleWorkPackage1, exampleWorkPackage2, exampleWorkPackage3 } from 'utils';
+import {
+  exampleWorkPackage1,
+  exampleWorkPackage2,
+  exampleWorkPackage3
+} from '../../test-support/test-data/work-packages.stub';
 
 describe('Formatting lists tests', () => {
   test('Formatting Wbs Numbers', () => {

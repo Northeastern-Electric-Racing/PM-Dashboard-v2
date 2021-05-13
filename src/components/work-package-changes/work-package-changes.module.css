@@ -1,0 +1,13 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+.wpChangesBox {
+  background-color: #f7f7f7;
+  box-shadow: 2px 2px 5px #dddddd;
+  padding: 30px;
+  border: 0.5px solid;
+  border-radius: 5px;
+  overflow: auto;
+}

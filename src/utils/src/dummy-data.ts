@@ -167,6 +167,16 @@ export const exampleWorkPackage1: WorkPackage = {
         'Compare various material, design, segmentation, and mounting choices available and propose the best combination',
       dateAdded: new Date('11/15/20')
     }
+  ],
+
+  changes: [
+    {
+      id: 1,
+      crId: 33,
+      wbsNum: exampleWbsWorkPackage2,
+      implementer: exampleGuestUser,
+      detail: 'Increased funding by $500.'
+    }
   ]
 };
 
@@ -208,6 +218,24 @@ export const exampleWorkPackage2: WorkPackage = {
       detail: 'Write a report to summarize findings',
       dateAdded: new Date('10/05/20')
     }
+  ],
+
+  changes: [
+    {
+      id: 2,
+      crId: 1,
+      wbsNum: exampleWbsWorkPackage2,
+      implementer: exampleAppAdminUser,
+      detail: 'Decreased duration from 10 weeks to 7 weeks.'
+    },
+
+    {
+      id: 13,
+      crId: 54,
+      wbsNum: exampleWbsWorkPackage1,
+      implementer: exampleProjectLeadUser,
+      detail: 'Added "jet fuel burns hot" bullet.'
+    }
   ]
 };
 
@@ -248,6 +276,15 @@ export const exampleWorkPackage3: WorkPackage = {
       id: 9,
       detail: 'Cut all wires to length',
       dateAdded: new Date('11/6/20')
+    }
+  ],
+  changes: [
+    {
+      id: 7,
+      crId: 14,
+      wbsNum: exampleWbsWorkPackage1,
+      implementer: exampleAdminUser,
+      detail: 'Increased budget from $10 to $200.'
     }
   ]
 };

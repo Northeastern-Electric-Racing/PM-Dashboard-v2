@@ -6,7 +6,7 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { render, screen } from '@testing-library/react';
-import { exampleAllChangeRequests } from 'utils';
+import { exampleAllChangeRequests } from '../../test-support/test-data/change-requests.stub';
 import ChangeRequestsTable from './change-requests-table';
 
 const endpointURL: string = '/.netlify/functions/change-requests';

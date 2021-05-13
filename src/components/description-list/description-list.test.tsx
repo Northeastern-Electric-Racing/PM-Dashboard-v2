@@ -4,14 +4,19 @@
  */
 
 import { render, screen } from '@testing-library/react';
+import { exampleWorkPackage2 } from '../../test-support/test-data/work-packages.stub';
 import DescriptionList from './description-list';
-import { exampleWorkPackage2, WorkPackage } from 'utils';
 
 describe('Rendering Description List Component', () => {
-  test('Rendering example 2', () => {
-    const wp: WorkPackage = exampleWorkPackage2;
-    render(<DescriptionList workPackage={wp} />);
+  it('renders the component title', () => {
+    render(<DescriptionList workPackage={exampleWorkPackage2} />);
+
     expect(screen.getByText(`Description`)).toBeInTheDocument();
+  });
+
+  it('renders all bullets', () => {
+    render(<DescriptionList workPackage={exampleWorkPackage2} />);
+
     expect(
       screen.getByText(
         'Build a test procedure for destructively measuring the shear strength of various adhesives interacting with foam and steel plates'

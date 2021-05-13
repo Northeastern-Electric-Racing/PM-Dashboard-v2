@@ -8,7 +8,7 @@
  *
  * @param wbsNum WBS number to validate
  */
-export const validateWBS: Function = (wbsNum: string): void => {
+export const validateWBS = (wbsNum: string): void => {
   const errorMsg: string = 'WBS Invalid: ';
   if (wbsNum == null || wbsNum === undefined) {
     throw new Error(errorMsg + 'given WBS # is null');
@@ -30,7 +30,7 @@ export const validateWBS: Function = (wbsNum: string): void => {
  *
  * @param wbsNum WBS number to check
  */
-export const wbsIsProject: Function = (wbsNum: string): boolean => {
+export const wbsIsProject = (wbsNum: string): boolean => {
   validateWBS(wbsNum);
   const splitWBS: string[] = wbsNum.split('.');
   return splitWBS[2] === '0';

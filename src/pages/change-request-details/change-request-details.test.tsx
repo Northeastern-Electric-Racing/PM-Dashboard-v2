@@ -8,15 +8,15 @@ import { setupServer } from 'msw/node';
 import { screen } from '@testing-library/react';
 import { ChangeRequest } from 'utils';
 import { renderWithRouter } from '../../test-support/test-utils';
-import { exampleAllChangeRequests } from '../../test-support/test-data/change-requests.stub';
 import ChangeRequestDetails from './change-request-details';
+import { exampleAllChangeRequests } from '../../test-support/test-data/change-requests.stub';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  *
  * @param options WBS number to render the component at
  */
-const renderComponent: Function = (id: string) => {
+const renderComponent = (id?: string) => {
   const idNum: string = id || '1';
   renderWithRouter(ChangeRequestDetails, {
     path: '/change-requests/:wbsNum',

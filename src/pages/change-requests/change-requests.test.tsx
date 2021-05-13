@@ -24,7 +24,7 @@ const server = setupServer(
  *
  * @param options ID number to render the component at
  */
-const renderComponent: Function = (idOverride: string) => {
+const renderComponent = (idOverride?: string) => {
   const idNum: string = idOverride || '1';
   renderWithRouter(ChangeRequests, {
     path: '/change-requests/:id',

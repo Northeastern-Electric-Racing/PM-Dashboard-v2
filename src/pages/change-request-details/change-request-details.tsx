@@ -32,7 +32,7 @@ const ChangeRequestDetails: React.FC = () => {
   useEffect(() => {
     let mounted = true; // indicates component is mounted
 
-    const fetchChangeRequest: Function = async () => {
+    const fetchChangeRequest = async () => {
       apiFetch
         .get(`/change-requests/${id}`)
         .then((response: AxiosResponse) => (mounted ? updateData(response) : ''))

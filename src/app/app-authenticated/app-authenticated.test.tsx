@@ -8,7 +8,7 @@ import { renderWithRouter } from '../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent: Function = (path?: string, route?: string) => {
+const renderComponent = (path?: string, route?: string) => {
   renderWithRouter(AppAuthenticated, { path, route });
 };
 

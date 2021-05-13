@@ -3,55 +3,62 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { screen } from '@testing-library/react';
-import { ChangeRequest } from 'utils';
+import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
+import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
+import { ApiHookReturn } from '../../services/api-request';
+import { useSingleChangeRequest } from '../../services/change-requests';
 import ChangeRequestDetails from './change-request-details';
-import { exampleAllChangeRequests } from '../../test-support/test-data/change-requests.stub';
+
+jest.mock('../../services/change-requests');
+
+const mockedUseSingleChangeRequest = useSingleChangeRequest as jest.Mock<
+  ApiHookReturn<ChangeRequest>
+>;
+
+const mockHook = (isLoading: boolean, errorMessage: string, responseData?: ChangeRequest) => {
+  mockedUseSingleChangeRequest.mockReturnValue({ isLoading, errorMessage, responseData });
+};
 
 /**
  * Sets up the component under test with the desired values and renders it.
- *
- * @param options WBS number to render the component at
  */
-const renderComponent = (id?: string) => {
-  const idNum: string = id || '1';
+const renderComponent = () => {
   renderWithRouter(ChangeRequestDetails, {
-    path: '/change-requests/:wbsNum',
-    route: `/change-requests/${idNum}`
+    path: routes.CHANGE_REQUESTS_BY_ID,
+    route: `${routes.CHANGE_REQUESTS}/1`
   });
 };
 
-const endpointURL: string = '/.netlify/functions/change-requests/:id';
-
-// Mock the server endpoint(s) that the component will hit
-const server = setupServer(
-  rest.get(endpointURL, (req, res, ctx) => {
-    const result: ChangeRequest | undefined = exampleAllChangeRequests.find(
-      (val) => req.params.id === val.id
-    );
-    if (result === undefined) {
-      res(ctx.status(404, 'Cannot find the requested change request'));
-    }
-    return res(ctx.json(result));
-  })
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-describe('wbs element details component', () => {
-  test('renders the page title', () => {
+describe('change request details container', () => {
+  it('renders the loading indicator', () => {
+    mockHook(true, '');
     renderComponent();
-    expect(screen.getByText(/Change Request/i)).toBeInTheDocument();
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
-  test('renders the change request id number', () => {
-    const id: string = '37';
-    renderComponent(id);
-    expect(screen.getByText(`#${id}`, { exact: false })).toBeInTheDocument();
+  it('renders the loaded change request', () => {
+    mockHook(false, '', exampleStandardChangeRequest);
+    renderComponent();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText(exampleStandardChangeRequest.id, { exact: false })).toBeInTheDocument();
+    expect(screen.getByText(exampleStandardChangeRequest.scopeImpact)).toBeInTheDocument();
+  });
+
+  it('handles the error with message', () => {
+    mockHook(false, '404 could not find the requested change request');
+    renderComponent();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
+    expect(screen.getByText('404 could not find the requested change request')).toBeInTheDocument();
+  });
+
+  it('handles the error with no message', () => {
+    mockHook(false, '');
+    renderComponent();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Change Request')).not.toBeInTheDocument();
+    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
   });
 });

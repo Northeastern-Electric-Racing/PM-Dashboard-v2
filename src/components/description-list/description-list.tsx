@@ -8,24 +8,18 @@ import styles from './description-list.module.css';
 
 interface DescriptionListProps {
   workPackage: WorkPackage;
-  className?: string;
 }
 
-const DescriptionList: React.FC<DescriptionListProps> = ({
-  workPackage,
-  className
-}: DescriptionListProps) => {
+const DescriptionList: React.FC<DescriptionListProps> = ({ workPackage }: DescriptionListProps) => {
   return (
-    <div className={className}>
-      <div className={styles.descriptionListBox}>
-        <h5>
-          <b>Description</b>
-        </h5>
+    <div className={styles.descriptionListBox}>
+      <h5>
+        <b>Description</b>
+      </h5>
 
-        {workPackage.descriptionBullets.map((db) => (
-          <li>{db.detail}</li>
-        ))}
-      </div>
+      {workPackage.descriptionBullets.map((bullet, idx) => (
+        <li key={idx}>{bullet.detail}</li>
+      ))}
     </div>
   );
 };

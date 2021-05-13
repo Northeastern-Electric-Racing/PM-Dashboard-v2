@@ -6,8 +6,8 @@
 import { screen } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { exampleAllProjects } from 'utils';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
+import { exampleAllProjects } from '../../test-support/test-data/projects.stub';
 import Projects from './projects';
 
 /**

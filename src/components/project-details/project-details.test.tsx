@@ -4,8 +4,12 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { exampleProject1, exampleProject2, exampleProject3 } from 'utils';
 import { fullNamePipe, wbsPipe } from '../../shared/pipes';
+import {
+  exampleProject1,
+  exampleProject2,
+  exampleProject3
+} from '../../test-support/test-data/projects.stub';
 import ProjectDetails from './project-details';
 
 describe('project details component', () => {

@@ -4,7 +4,7 @@
  */
 
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import NavNotificationsMenu from './nav-notifications-menu';
 
 /**

@@ -4,7 +4,7 @@
  */
 
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import Login from './login';
 
 /**

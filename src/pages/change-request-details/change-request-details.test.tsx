@@ -6,9 +6,10 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { screen } from '@testing-library/react';
-import { ChangeRequest, exampleAllChangeRequests } from 'utils';
+import { ChangeRequest } from 'utils';
 import { renderWithRouter } from '../../test-support/test-utils';
 import ChangeRequestDetails from './change-request-details';
+import { exampleAllChangeRequests } from '../../test-support/test-data/change-requests.stub';
 
 /**
  * Sets up the component under test with the desired values and renders it.

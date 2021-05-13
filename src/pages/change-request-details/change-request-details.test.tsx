@@ -6,7 +6,7 @@
 import { screen } from '@testing-library/react';
 import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
 import { routes } from '../../shared/routes';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import { ApiHookReturn } from '../../services/api-request';
 import { useSingleChangeRequest } from '../../services/change-requests';
 import ChangeRequestDetails from './change-request-details';

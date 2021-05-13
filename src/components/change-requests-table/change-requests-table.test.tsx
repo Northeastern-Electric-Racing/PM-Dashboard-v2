@@ -4,8 +4,9 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { ChangeRequest, exampleAllChangeRequests } from 'utils';
+import { ChangeRequest } from 'utils';
 import { booleanPipe, fullNamePipe, wbsPipe } from '../../shared/pipes';
+import { exampleAllChangeRequests } from '../../test-support/test-data/change-requests.stub';
 import ChangeRequestsTable, { DisplayChangeRequest } from './change-requests-table';
 
 // Sets up the component under test with the desired values and renders it.

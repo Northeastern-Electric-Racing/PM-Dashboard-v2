@@ -4,7 +4,11 @@
  */
 
 import { endDatePipe } from '../pipes';
-import { exampleWorkPackage1, exampleWorkPackage2, exampleWorkPackage3 } from 'utils';
+import {
+  exampleWorkPackage1,
+  exampleWorkPackage2,
+  exampleWorkPackage3
+} from '../../test-support/test-data/work-packages.stub';
 
 describe('Formatting end date tests', () => {
   test('with dummy data', () => {

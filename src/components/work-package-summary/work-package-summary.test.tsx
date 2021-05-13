@@ -4,12 +4,17 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import WorkPackageSummary from './work-package-summary';
-import { exampleWorkPackage1, exampleWorkPackage2, exampleWorkPackage3, WorkPackage } from 'utils';
+import { WorkPackage } from 'utils';
 import { dollarsPipe, wbsPipe, listPipe, endDatePipe } from '../../shared/pipes';
+import {
+  exampleWorkPackage1,
+  exampleWorkPackage2,
+  exampleWorkPackage3
+} from '../../test-support/test-data/work-packages.stub';
+import WorkPackageSummary from './work-package-summary';
 
 describe('Rendering Work Packagae Summary Test', () => {
-  test('Rendering example 1', () => {
+  it('renders all the fields, example 1', () => {
     const wp: WorkPackage = exampleWorkPackage1;
     render(<WorkPackageSummary workPackage={wp} />);
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
@@ -26,7 +31,7 @@ describe('Rendering Work Packagae Summary Test', () => {
     expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
   });
 
-  test('Rendering example 2', () => {
+  it('renders all the fields, example 2', () => {
     const wp: WorkPackage = exampleWorkPackage2;
     render(<WorkPackageSummary workPackage={wp} />);
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
@@ -41,7 +46,7 @@ describe('Rendering Work Packagae Summary Test', () => {
     expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
   });
 
-  test('Rendering example 3', () => {
+  it('renders all the fields, example 3', () => {
     const wp: WorkPackage = exampleWorkPackage3;
     render(<WorkPackageSummary workPackage={wp} />);
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();

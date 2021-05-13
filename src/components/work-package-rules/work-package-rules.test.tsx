@@ -4,14 +4,19 @@
  */
 
 import { render, screen } from '@testing-library/react';
+import { exampleWorkPackage2 } from '../../test-support/test-data/work-packages.stub';
 import WorkPackageRules from './work-package-rules';
-import { exampleWorkPackage2, WorkPackage } from 'utils';
 
 describe('Rendering Work Package Rules Component', () => {
-  test('Rendering example 2', () => {
-    const wp: WorkPackage = exampleWorkPackage2;
-    render(<WorkPackageRules workPackage={wp} />);
+  it('renders the component title', () => {
+    render(<WorkPackageRules workPackage={exampleWorkPackage2} />);
+
     expect(screen.getByText(`Rules`)).toBeInTheDocument();
+  });
+
+  it('renders all the listed rules', () => {
+    render(<WorkPackageRules workPackage={exampleWorkPackage2} />);
+
     expect(screen.getByText('T12.3.2')).toBeInTheDocument();
     expect(screen.getByText('T8.2.6')).toBeInTheDocument();
   });

@@ -4,13 +4,13 @@
  */
 
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import Login from './login';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent: Function = () => {
+const renderComponent = () => {
   renderWithRouter(Login, { path: '/login', route: `/login` });
 };
 

@@ -4,11 +4,11 @@
  */
 
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import AppMain from './app-main';
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent: Function = (path?: string, route?: string) => {
+const renderComponent = (path?: string, route?: string) => {
   renderWithRouter(AppMain, { path, route });
 };
 

@@ -95,12 +95,12 @@ const buildStageGateChangeRequestDetails = (cr: StageGateChangeRequest): ReactEl
 
 const buildDetails = (cr: ChangeRequest): ReactElement => {
   if (cr.type === ChangeRequestType.Activation) {
-    return buildActivationChangeRequestDetails(cr);
+    return buildActivationChangeRequestDetails(cr as ActivationChangeRequest);
   }
   if (cr.type === ChangeRequestType.StageGate) {
-    return buildStageGateChangeRequestDetails(cr);
+    return buildStageGateChangeRequestDetails(cr as StageGateChangeRequest);
   }
-  return buildChangeRequestDetails(cr);
+  return buildChangeRequestDetails(cr as StandardChangeRequest);
 };
 
 interface ChangeRequestDetailsProps {

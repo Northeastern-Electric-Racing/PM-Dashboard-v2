@@ -27,6 +27,6 @@ describe('app main', () => {
     fireEvent.change(input, { target: { value: 'person' } });
     fireEvent.click(screen.getByText('Log In'));
     expect(input).not.toBeInTheDocument();
-    expect(screen.getByText(/Home!/i)).toBeInTheDocument();
+    expect(screen.getByText('This is the Home Page')).toBeInTheDocument();
   });
 });

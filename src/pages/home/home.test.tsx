@@ -22,6 +22,6 @@ describe('home component', () => {
 
   it('renders welcome', () => {
     renderComponent();
-    expect(screen.getByText('Welcome')).toBeInTheDocument();
+    expect(screen.getByText(/Welcome/i)).toBeInTheDocument();
   });
 });

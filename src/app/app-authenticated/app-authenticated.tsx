@@ -7,6 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import ChangeRequests from '../../pages/change-requests/change-requests';
 import Projects from '../../pages/projects/projects';
 import { PageNotFound } from '../../pages/page-not-found/page-not-found';
+import Home from '../../pages/home/home';
 import NavTopBar from '../../components/nav-top-bar/nav-top-bar';
 import styles from './app-authenticated.module.css';
 
@@ -18,9 +19,7 @@ const AppAuthenticated: React.FC = () => {
         <Switch>
           <Route path="/projects" component={Projects} />
           <Route path="/change-requests" component={ChangeRequests} />
-          <Route exact path="/">
-            <h3>Home!</h3>
-          </Route>
+          <Route exact path="/" component={Home} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>

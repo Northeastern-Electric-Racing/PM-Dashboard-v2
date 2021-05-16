@@ -23,11 +23,7 @@ const WBSDetails: React.FC = () => {
   ) : (
     <p>Work Package: {wbsPipe(wbsAsObj)}</p>
   );
-  return (
-    <div>
-      <p className={styles.describe}>{type}</p>
-    </div>
-  );
+  return <p className={styles.describe}>{type}</p>;
 };
 
 export default WBSDetails;

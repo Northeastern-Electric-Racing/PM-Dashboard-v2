@@ -6,12 +6,11 @@
 import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { apiFetch } from '../../shared/axios';
-import { Project, WorkPackage, apiRoutes } from 'utils';
+import { Project, WorkPackage, apiRoutes, WbsNumber } from 'utils';
 import ProjectDetails from '../../components/project-details/project-details';
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 import styles from './project-container.module.css';
 import { wbsPipe } from '../../shared/pipes';
-import { WbsNumber } from 'utils/src';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -25,8 +24,6 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
 
     // Transforms given project data and sets local state
     const updateData: Function = (response: AxiosResponse) => {
-      console.log(response.data);
-
       const proj: Project = {
         ...response.data,
         dateCreated: new Date(response.data.dateCreated),

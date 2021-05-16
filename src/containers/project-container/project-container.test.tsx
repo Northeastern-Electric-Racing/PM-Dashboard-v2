@@ -30,6 +30,7 @@ afterAll(() => server.close());
 describe('Rendering Project Container', () => {
   it('renders the correct data', async () => {
     renderComponent();
+    await waitFor(() => screen.getByText('1.1.0 - Impact Attenuator'));
     expect(screen.getByText('1.1.0 - Impact Attenuator')).toBeInTheDocument();
     expect(screen.getByText('Work Packages')).toBeInTheDocument();
     expect(screen.getByText('Bodywork Concept of Design')).toBeInTheDocument();

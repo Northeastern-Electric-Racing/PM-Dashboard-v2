@@ -5,12 +5,12 @@
 
 import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { apiFetch } from '../../shared/axios';
 import { Project, WorkPackage, apiRoutes, WbsNumber } from 'utils';
+import { apiFetch } from '../../shared/axios';
+import { wbsPipe } from '../../shared/pipes';
 import ProjectDetails from '../../components/project-details/project-details';
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 import styles from './project-container.module.css';
-import { wbsPipe } from '../../shared/pipes';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;

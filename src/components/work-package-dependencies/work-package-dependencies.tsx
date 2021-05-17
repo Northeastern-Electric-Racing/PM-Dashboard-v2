@@ -3,8 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Link } from 'react-router-dom';
 import { WbsNumber, WorkPackage } from 'utils';
-import { wbsPipe, linkPipe } from '../../shared/pipes';
+import { wbsPipe } from '../../shared/pipes';
 import styles from './work-package-dependencies.module.css';
 
 interface WorkPackageDependenciesProps {
@@ -16,6 +17,7 @@ const WorkPackageDependencies: React.FC<WorkPackageDependenciesProps> = ({
   workPackage,
   className
 }: WorkPackageDependenciesProps) => {
+  const linkString: string = `/projects/${wbsPipe(workPackage.wbsNum)}`;
   return (
     <div className={className}>
       <div className={styles.wpDepBox}>
@@ -27,7 +29,7 @@ const WorkPackageDependencies: React.FC<WorkPackageDependenciesProps> = ({
         <div>
           {workPackage.dependencies.map((ele: WbsNumber) => (
             <p key={wbsPipe(ele)} className={styles.wbsNum}>
-              {linkPipe(wbsPipe(ele), `/projects/${wbsPipe(workPackage.wbsNum)}`)}
+              <Link to={linkString}>{wbsPipe(ele)}</Link>
             </p>
           ))}
         </div>

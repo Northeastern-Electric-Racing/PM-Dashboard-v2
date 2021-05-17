@@ -4,11 +4,11 @@
  */
 
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent: Function = (path?: string, route?: string) => {
+const renderComponent = (path?: string, route?: string) => {
   renderWithRouter(AppAuthenticated, { path, route });
 };
 
@@ -22,7 +22,7 @@ describe('app authenticated section', () => {
 
   it('can navigate to projects page', () => {
     renderComponent();
-    const homeEle: HTMLElement = screen.getByText('Home!');
+    const homeEle: HTMLElement = screen.getByText('This is the Home Page');
     expect(homeEle).toBeInTheDocument();
     fireEvent.click(screen.getByText('Projects'));
     expect(homeEle).not.toBeInTheDocument();

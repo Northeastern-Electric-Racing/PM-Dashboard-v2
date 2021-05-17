@@ -4,12 +4,17 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import WorkPackageDetails from './work-package-details';
-import { exampleWorkPackage1, exampleWorkPackage2, exampleWorkPackage3, WorkPackage } from 'utils';
+import { WorkPackage } from 'utils';
 import { dollarsPipe, endDatePipe, fullNamePipe, weeksPipe } from '../../shared/pipes';
+import {
+  exampleWorkPackage1,
+  exampleWorkPackage2,
+  exampleWorkPackage3
+} from '../../test-support/test-data/work-packages.stub';
+import WorkPackageDetails from './work-package-details';
 
 describe('Rendering Work Packagae Details Component', () => {
-  test('Rendering example 1', () => {
+  it('renders all the fields, example 1', () => {
     const wp: WorkPackage = exampleWorkPackage1;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
@@ -26,7 +31,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.progress}%`)).toBeInTheDocument();
   });
 
-  test('Rendering example 2', () => {
+  it('renders all the fields, example 2', () => {
     const wp: WorkPackage = exampleWorkPackage2;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
@@ -43,7 +48,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.progress}%`)).toBeInTheDocument();
   });
 
-  test('Rendering example 3', () => {
+  it('renders all the fields, example 3', () => {
     const wp: WorkPackage = exampleWorkPackage3;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();

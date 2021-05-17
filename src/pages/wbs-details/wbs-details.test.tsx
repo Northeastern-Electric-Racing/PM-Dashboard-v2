@@ -4,7 +4,7 @@
  */
 
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../shared/test-utils';
+import { renderWithRouter } from '../../test-support/test-utils';
 import WBSDetails from './wbs-details';
 
 /**
@@ -12,7 +12,7 @@ import WBSDetails from './wbs-details';
  *
  * @param options WBS number to render the component at
  */
-const renderComponent: Function = (wbsOverride: string) => {
+const renderComponent = (wbsOverride?: string) => {
   const wbsNumber: string = wbsOverride || '1.1.1';
   renderWithRouter(WBSDetails, { path: '/projects/:wbsNum', route: `/projects/${wbsNumber}` });
 };

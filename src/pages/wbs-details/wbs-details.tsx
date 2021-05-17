@@ -6,14 +6,15 @@
 import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import { validateWBS, wbsIsProject, WbsNumber } from 'utils';
-import ProjectContainer from '../../containers/project-container/project-container';
 import { wbsPipe } from '../../shared/pipes';
+import ProjectContainer from '../../containers/project-container/project-container';
 import styles from './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
   }
+
   const { wbsNum } = useParams<ParamTypes>();
 
   const wbsAsObj: WbsNumber = validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted

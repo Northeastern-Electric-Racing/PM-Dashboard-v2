@@ -3,34 +3,30 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage, ImplementedChange } from 'utils';
+import { WorkPackage } from 'utils';
 import styles from './work-package-changes.module.css';
 
 interface WorkPackageChangesProps {
   workPackage: WorkPackage;
-  className?: string;
 }
 
 const WorkPackageChanges: React.FC<WorkPackageChangesProps> = ({
-  workPackage,
-  className
+  workPackage
 }: WorkPackageChangesProps) => {
-  const implementedChangeToP = (ic: ImplementedChange, idx: number) => {
-    return (
-      <p>
-        {idx + 1}. [#{ic.crId}] {ic.detail}
-      </p>
-    );
-  };
-
   return (
-    <div className={className}>
-      <div className={styles.wpChangesBox}>
-        <h5>
-          <b>Changes</b>
-        </h5>
-        {workPackage.changes.map(implementedChangeToP)}
-      </div>
+    <div className={styles.wpChangesBox}>
+      <h5>
+        <b>Changes</b>
+      </h5>
+      <ol>
+        {workPackage.changes.map((ic, idx) => {
+          return (
+            <li key={idx}>
+              [#{ic.crId}] {ic.detail}
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 };

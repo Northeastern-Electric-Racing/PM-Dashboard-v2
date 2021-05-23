@@ -14,7 +14,7 @@ import WBSDetails from './wbs-details';
  */
 const renderComponent = (wbsOverride?: string) => {
   const wbsNumber: string = wbsOverride || '1.1.1';
-  renderWithRouter(WBSDetails, { path: '/projects/:wbsNum', route: `/projects/${wbsNumber}` });
+  renderWithRouter(<WBSDetails />, { path: '/projects/:wbsNum', route: `/projects/${wbsNumber}` });
 };
 
 describe('wbs element details component', () => {

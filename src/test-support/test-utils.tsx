@@ -16,10 +16,10 @@ export const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
  * @param ui React component under test
  * @param options Path to place component and route to navigate to (both optional)
  */
-export const renderWithRouter = (ui: React.FC, { path = '/', route = '/' }) => {
+export const renderWithRouter = (ui: ReactElement, { path = '/', route = '/' }) => {
   const toRender: ReactElement = (
     <MemoryRouter initialEntries={[route]}>
-      <Route path={path} component={ui} />
+      <Route path={path}>{ui}</Route>
     </MemoryRouter>
   );
   render(toRender);

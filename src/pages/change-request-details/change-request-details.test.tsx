@@ -25,7 +25,7 @@ const mockHook = (isLoading: boolean, errorMessage: string, responseData?: Chang
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(ChangeRequestDetails, {
+  renderWithRouter(<ChangeRequestDetails />, {
     path: routes.CHANGE_REQUESTS_BY_ID,
     route: `${routes.CHANGE_REQUESTS}/1`
   });

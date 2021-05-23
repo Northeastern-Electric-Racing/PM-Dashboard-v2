@@ -9,7 +9,7 @@ import AppAuthenticated from './app-authenticated';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
-  renderWithRouter(AppAuthenticated, { path, route });
+  renderWithRouter(<AppAuthenticated />, { path, route });
 };
 
 describe('app authenticated section', () => {

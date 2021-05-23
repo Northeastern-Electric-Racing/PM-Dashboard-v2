@@ -9,7 +9,7 @@ import AppMain from './app-main';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
-  renderWithRouter(AppMain, { path, route });
+  renderWithRouter(<AppMain />, { path, route });
 };
 
 describe('app main', () => {

@@ -3,18 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './work-package-summary.module.css';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  dollarsPipe,
-  linkPipe,
-  wbsPipe,
-  endDatePipe,
-  listPipe
-} from '../../shared/pipes';
+import { weeksPipe, dollarsPipe, wbsPipe, endDatePipe, listPipe } from '../../shared/pipes';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
@@ -26,6 +20,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
   className
 }: WorkPackageSummaryProps) => {
   const [open, setOpen] = useState(false);
+  const linkString: string = `/projects/${wbsPipe(workPackage.wbsNum)}`;
 
   return (
     <Card className={className}>
@@ -33,7 +28,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
         <div>
           <h5 className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</h5>
           <h5 className={styles.name}>
-            {linkPipe(workPackage.name, `/projects/${wbsPipe(workPackage.wbsNum)}`)}
+            <Link to={linkString}>{workPackage.name}</Link>
           </h5>
           <h5 className={styles.duration}>{weeksPipe(workPackage.duration)}</h5>
         </div>

@@ -11,12 +11,18 @@ import {
   exampleWorkPackage2,
   exampleWorkPackage3
 } from '../../test-support/test-data/work-packages.stub';
+import { renderWithRouter } from '../../test-support/test-utils';
 import WorkPackageSummary from './work-package-summary';
+
+// Sets up the component under test with the desired values and renders it
+const renderComponent = (wps: WorkPackage, path?: string, route?: string) => {
+  renderWithRouter(<WorkPackageSummary workPackage={wps} />, { path, route });
+};
 
 describe('Rendering Work Packagae Summary Test', () => {
   it('renders all the fields, example 1', () => {
     const wp: WorkPackage = exampleWorkPackage1;
-    render(<WorkPackageSummary workPackage={wp} />);
+    renderComponent(wp);
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
     expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
@@ -33,7 +39,7 @@ describe('Rendering Work Packagae Summary Test', () => {
 
   it('renders all the fields, example 2', () => {
     const wp: WorkPackage = exampleWorkPackage2;
-    render(<WorkPackageSummary workPackage={wp} />);
+    renderComponent(wp);
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
     expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
@@ -48,7 +54,7 @@ describe('Rendering Work Packagae Summary Test', () => {
 
   it('renders all the fields, example 3', () => {
     const wp: WorkPackage = exampleWorkPackage3;
-    render(<WorkPackageSummary workPackage={wp} />);
+    renderComponent(wp);
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
     expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();

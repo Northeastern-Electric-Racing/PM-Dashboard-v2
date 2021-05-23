@@ -11,7 +11,7 @@ import Home from './home';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(Home, { path: '/home', route: `/home` });
+  renderWithRouter(<Home />, { path: '/home', route: `/home` });
 };
 
 describe('home component', () => {

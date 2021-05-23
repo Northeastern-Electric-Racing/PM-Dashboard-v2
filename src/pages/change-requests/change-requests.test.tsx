@@ -15,7 +15,7 @@ jest.mock('../../services/change-requests');
 
 describe('change request page', () => {
   it('renders the page title', () => {
-    renderWithRouter(ChangeRequests, {
+    renderWithRouter(<ChangeRequests />, {
       path: routes.CHANGE_REQUESTS,
       route: routes.CHANGE_REQUESTS
     });
@@ -24,7 +24,7 @@ describe('change request page', () => {
   });
 
   it('renders the change requests list page', () => {
-    renderWithRouter(ChangeRequests, {
+    renderWithRouter(<ChangeRequests />, {
       path: routes.CHANGE_REQUESTS,
       route: routes.CHANGE_REQUESTS
     });
@@ -42,7 +42,7 @@ describe('change request page', () => {
       responseData: exampleStandardChangeRequest
     });
 
-    renderWithRouter(ChangeRequests, {
+    renderWithRouter(<ChangeRequests />, {
       path: routes.CHANGE_REQUESTS_BY_ID,
       route: `${routes.CHANGE_REQUESTS}/37`
     });

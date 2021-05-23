@@ -11,7 +11,7 @@ import Login from './login';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(Login, { path: '/login', route: `/login` });
+  renderWithRouter(<Login />, { path: '/login', route: `/login` });
 };
 
 describe('login component', () => {

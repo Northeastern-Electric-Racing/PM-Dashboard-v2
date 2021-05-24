@@ -15,7 +15,7 @@ let pushed: string[] = [];
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent: Function = () => {
+const renderComponent = () => {
   const TestComponent = () => {
     const history = useHistory();
     history.listen((loc) => {
@@ -23,7 +23,7 @@ const renderComponent: Function = () => {
     });
     return <Login />;
   };
-  renderWithRouter(TestComponent, { path: '/login', route: `/login` });
+  renderWithRouter(TestComponent, { path: routes.LOGIN, route: routes.LOGIN });
 };
 
 describe('login component', () => {

@@ -33,7 +33,7 @@ const ProjectsTable: React.FC = () => {
   const [allProjects, setAllProjects] = useState(initial); // store projects data
 
   // Transforms given project data and sets local state
-  const updateData: Function = (response: AxiosResponse) => {
+  const updateData = (response: AxiosResponse) => {
     setAllProjects(
       response.data.map((prj: Project) => {
         return {
@@ -53,7 +53,7 @@ const ProjectsTable: React.FC = () => {
   useEffect(() => {
     let mounted = true; // indicates component is mounted
 
-    const fetchProjects: Function = async () => {
+    const fetchProjects = async () => {
       apiFetch
         .get('/projects')
         .then((response: AxiosResponse) => (mounted ? updateData(response) : ''))

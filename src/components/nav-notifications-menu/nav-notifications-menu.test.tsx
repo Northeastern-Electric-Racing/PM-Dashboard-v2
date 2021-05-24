@@ -10,7 +10,7 @@ import NavNotificationsMenu from './nav-notifications-menu';
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent: Function = () => {
+const renderComponent = () => {
   renderWithRouter(NavNotificationsMenu, {});
 };
 

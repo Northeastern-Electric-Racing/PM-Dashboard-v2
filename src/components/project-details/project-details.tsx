@@ -16,9 +16,8 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   const projectLead = fullNamePipe(project.projectLead);
   const projectManager = fullNamePipe(project.projectManager);
   // duration of the project in weeks
-  const duration = weeksPipe(
-    ((new Date().getTime() - project.dateCreated.getTime()) / 604800000).toFixed()
-  );
+  // TODO: fix the function below
+  const duration = weeksPipe(7);
 
   return (
     <div className="item-box">

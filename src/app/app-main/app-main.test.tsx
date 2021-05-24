@@ -27,8 +27,8 @@ jest.mock('../app-context/app-context', () => {
 });
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent: Function = (path?: string, route?: string) => {
-  renderWithRouter(AppMain, { path, route });
+const renderComponent = (path?: string, route?: string) => {
+  renderWithRouter(<AppMain />, { path, route });
 };
 
 describe('app main, entry component', () => {

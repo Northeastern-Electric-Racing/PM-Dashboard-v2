@@ -13,38 +13,54 @@ import { User, WbsNumber } from 'utils';
  * Pipe is a term / tool from Angular.
  */
 
-export const linkPipe: Function = (description: string, link: string): ReactElement => {
+export const linkPipe = (description: string, link: string): ReactElement => {
   return <a href={link}>{description}</a>;
 };
 
-export const weeksPipe: Function = (weeks: number): string => {
+export const weeksPipe = (weeks: number): string => {
   return `${weeks} week${weeks === 1 ? '' : 's'}`;
 };
 
-export const dollarsPipe: Function = (dollars: number): string => {
+export const dollarsPipe = (dollars: number): string => {
   return `$${dollars}`;
 };
 
-export const wbsPipe: Function = (wbsNum: WbsNumber): string => {
+export const wbsPipe = (wbsNum: WbsNumber): string => {
   return `${wbsNum.car}.${wbsNum.project}.${wbsNum.workPackage}`;
 };
 
-export const fullNamePipe: Function = (user: User): string => {
+export const fullNamePipe = (user: User): string => {
   return `${user.firstName} ${user.lastName}`;
 };
 
-export const booleanPipe: Function = (bool: boolean): string => {
+export const booleanPipe = (bool: boolean): string => {
   return bool ? 'YES' : 'NO';
 };
 
 // Formats an array of objects into a string that is a list
-export const listPipe: Function = <T,>(array: T[], transform: (ele: T) => string): string => {
+export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string => {
   return array.map(transform).join(', ');
 };
 
 // Formats the end date as a string
-export const endDatePipe: Function = (startDate: Date, durWeeks: number): string => {
+export const endDatePipe = (startDate: Date, durWeeks: number): string => {
   var endDate = new Date(startDate);
   endDate.setDate(endDate.getDate() + durWeeks * 7);
   return endDate.toLocaleDateString();
+};
+
+// Returns an empty string if a passed in string is empty, otherwise return the given string
+export const emptyStringPipe = (str: string): string => {
+  return (str === undefined || str === null) ? "" : str;
+};
+
+// Replace an empty string with an EM dash
+export const emDashPipe = (str: string): string => {
+  return (str === undefined || str === null) ? "—" : str;
+};
+
+// return a given data as a string in the local en-US format
+export const datePipe = (date: Date): string => {
+  var theDate = new Date(date);
+  return theDate.toLocaleString('en-US');
 };

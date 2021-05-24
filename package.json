@@ -86,6 +86,9 @@
       "!<rootDir>/src/utils/node_modules/",
       "!**/lib/**",
       "!src/**/*.d.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.ts"
     ]
   },
   "browserslist": {

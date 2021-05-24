@@ -3,30 +3,42 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { renderWithRouter } from '../../test-support/test-utils';
 import AppMain from './app-main';
+
+jest.mock('../app-core/app-core', () => {
+  return {
+    __esModule: true,
+    default: () => <div>core</div>
+  };
+});
+
+jest.mock('../app-context/app-context', () => {
+  return {
+    __esModule: true,
+    default: (props: any) => (
+      <div>
+        context
+        <div>{props.children}</div>
+      </div>
+    )
+  };
+});
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent: Function = (path?: string, route?: string) => {
   renderWithRouter(AppMain, { path, route });
 };
 
-describe('app main', () => {
-  it('renders login page', () => {
+describe('app main, entry component', () => {
+  it('renders the app context component', () => {
     renderComponent();
-    expect(screen.getByText('NER PM Dashboard')).toBeInTheDocument();
-    expect(screen.getByText('Login Required')).toBeInTheDocument();
-    expect(screen.getByText('Log In')).toBeInTheDocument();
+    expect(screen.getByText('context')).toBeInTheDocument();
   });
 
-  it('can login to the application', () => {
+  it('renders the app core component', () => {
     renderComponent();
-    const input: HTMLElement = screen.getByLabelText('name');
-    expect(input).toBeInTheDocument();
-    fireEvent.change(input, { target: { value: 'person' } });
-    fireEvent.click(screen.getByText('Log In'));
-    expect(input).not.toBeInTheDocument();
-    expect(screen.getByText(/Home!/i)).toBeInTheDocument();
+    expect(screen.getByText('core')).toBeInTheDocument();
   });
 });

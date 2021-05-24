@@ -4,7 +4,7 @@
  */
 
 import { useContext } from 'react';
-import { UserContext } from '../../app/app-main/app-main';
+import { UserContext } from '../../app/app-context/app-context';
 import styles from './home.module.css';
 
 const Home: React.FC = () => {

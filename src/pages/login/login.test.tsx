@@ -23,7 +23,7 @@ const renderComponent = () => {
     });
     return <Login />;
   };
-  renderWithRouter(TestComponent, { path: routes.LOGIN, route: routes.LOGIN });
+  renderWithRouter(<TestComponent />, { path: routes.LOGIN, route: routes.LOGIN });
 };
 
 describe('login component', () => {

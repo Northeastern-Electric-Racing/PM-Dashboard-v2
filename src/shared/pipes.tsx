@@ -49,15 +49,19 @@ export const endDatePipe: Function = (startDate: Date, durWeeks: number): string
   return endDate.toLocaleDateString();
 };
 
-// pipes to add;
-// Empty string pipe
+// Returns an empty string if a passed in string is empty, otherwise return the given string
 export const emptyStringPipe: Function = (str: string): string => {
   return (str === undefined || str === null) ? "" : str;
 };
 
-// EM dash pipe
+// Similar to the above string; replace an empty string with an EM dash
 export const emDashPipe: Function = (str: string): string => {
-  return (str === undefined || str === null) ? "—" : "str";
+  return (str === undefined || str === null) ? "—" : str;
 };
 
-// date pipe
+// return a given data as a string in the local en-US format
+export const datePipe: Function = (date: Date): string => {
+  //
+  var theDate = new Date(date);
+  return theDate.toLocaleString('en-US');
+};

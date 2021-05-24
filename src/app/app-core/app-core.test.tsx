@@ -59,13 +59,17 @@ describe('app core', () => {
   });
 
   it('already logged in via memory', () => {
-    renderComponent();
-    act(() => setupUser('test-user'));
+    renderComponent(); // component must render with no mocked setup
+    jest.resetAllMocks(); // reset mocks to get clean slate for testing
+    pushed = []; // reset pushed for clean slate for testing
+    act(() => setupUser('test-user')); // set the user, also triggers re-render
 
-    expect(localStorage.getItem).toBeCalledTimes(4);
+    expect(localStorage.getItem).toBeCalledTimes(2);
     expect(localStorage.getItem).toBeCalledWith('userId');
+    expect(localStorage.setItem).toBeCalledTimes(1);
+    expect(localStorage.setItem).toBeCalledWith('userId', 'test-user');
 
-    expect(pushed).toEqual([routes.LOGIN]);
+    expect(pushed).toEqual([]);
 
     expect(screen.getByText('app public')).toBeInTheDocument();
     expect(screen.getByText('user: test-user')).toBeInTheDocument();
@@ -78,8 +82,10 @@ describe('app core', () => {
 
     expect(localStorage.getItem).toBeCalledTimes(4);
     expect(localStorage.getItem).toBeCalledWith('userId');
+    expect(localStorage.setItem).toBeCalledTimes(1);
+    expect(localStorage.setItem).toBeCalledWith('userId', 'test-user');
 
-    expect(pushed).toEqual([routes.HOME]);
+    expect(pushed).toEqual([]);
 
     expect(screen.getByText('app public')).toBeInTheDocument();
     expect(screen.getByText('user: test-user')).toBeInTheDocument();
@@ -91,6 +97,8 @@ describe('app core', () => {
 
     expect(localStorage.getItem).toBeCalledTimes(2);
     expect(localStorage.getItem).toBeCalledWith('userId');
+    expect(localStorage.setItem).toBeCalledTimes(1);
+    expect(localStorage.setItem).toBeCalledWith('redirectUrl', routes.LOGIN);
 
     expect(pushed).toEqual([routes.LOGIN]);
 

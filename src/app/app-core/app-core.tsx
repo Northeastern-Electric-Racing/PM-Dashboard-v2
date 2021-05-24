@@ -19,11 +19,13 @@ const AppCore: React.FC = () => {
   const storedUserId = localStorage.getItem('userId');
 
   useEffect(() => {
-    if (user === '' && !storedUserId) {
-      history.push(routes.LOGIN);
-    } else if (user === '' && storedUserId) {
+    if (user !== '') {
+      return;
+    } else if (storedUserId) {
       userLogIn(storedUserId);
-      history.push(routes.HOME);
+    } else {
+      localStorage.setItem('redirectUrl', history.location.pathname);
+      history.push(routes.LOGIN);
     }
   }, [user, history, storedUserId, userLogIn]);
 

@@ -48,3 +48,19 @@ export const endDatePipe = (startDate: Date, durWeeks: number): string => {
   endDate.setDate(endDate.getDate() + durWeeks * 7);
   return endDate.toLocaleDateString();
 };
+
+// Returns an empty string if a passed in string is empty, otherwise return the given string
+export const emptyStringPipe = (str: string): string => {
+  return (str === undefined || str === null) ? "" : str;
+};
+
+// Replace an empty string with an EM dash
+export const emDashPipe = (str: string): string => {
+  return (str === undefined || str === null) ? "—" : str;
+};
+
+// return a given data as a string in the local en-US format
+export const datePipe = (date: Date): string => {
+  var theDate = new Date(date);
+  return theDate.toLocaleString('en-US');
+};

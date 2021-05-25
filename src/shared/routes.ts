@@ -5,6 +5,7 @@
 
 /**************** General Section ****************/
 const HOME: string = `/`;
+const LOGIN: string = `/login`;
 
 /**************** Projects Section ****************/
 const PROJECTS: string = `/projects`;
@@ -17,6 +18,7 @@ const CHANGE_REQUESTS_NEW: string = `${CHANGE_REQUESTS}/new`;
 
 export const routes = {
   HOME,
+  LOGIN,
 
   PROJECTS,
   PROJECTS_BY_WBS,

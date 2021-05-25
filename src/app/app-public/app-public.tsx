@@ -3,15 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { routes } from '../../shared/routes';
 import Login from '../../pages/login/login';
+import AppAuthenticated from '../app-authenticated/app-authenticated';
 import './app-public.module.css';
 
 const AppPublic: React.FC = () => {
   return (
     <Switch>
-      <Route path="/login" component={Login} />
-      <Redirect from="*" to="/login" push />
+      <Route path={routes.LOGIN} component={Login} />
+      <Route path="*" component={AppAuthenticated} />
     </Switch>
   );
 };

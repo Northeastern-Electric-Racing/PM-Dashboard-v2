@@ -4,6 +4,7 @@
  */
 
 import { screen } from '@testing-library/react';
+import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
 import Home from './home';
 
@@ -11,7 +12,7 @@ import Home from './home';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(<Home />, { path: '/home', route: `/home` });
+  renderWithRouter(<Home />, { path: routes.HOME, route: routes.HOME });
 };
 
 describe('home component', () => {

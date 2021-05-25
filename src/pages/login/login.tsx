@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router';
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
-import { UserLogInContext } from '../../app/app-main/app-main';
+import { UserLogInContext } from '../../app/app-context/app-context';
+import { routes } from '../../shared/routes';
 import styles from './login.module.css';
 
 /**
@@ -17,13 +18,15 @@ const Login: React.FC = () => {
   const history = useHistory();
   const loginFunc = useContext(UserLogInContext);
   const [userName, setUserName] = useState<string>('');
+  const storedUrl = localStorage.getItem('redirectUrl');
 
   const updateName = (event: any) => setUserName(event.target.value);
 
   const formSubmit = (event: any) => {
     event.preventDefault();
     loginFunc(userName);
-    history.push('/');
+    history.push(storedUrl || routes.HOME);
+    localStorage.removeItem('redirectUrl');
   };
 
   return (

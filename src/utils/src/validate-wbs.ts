@@ -10,7 +10,7 @@ import { WbsNumber } from './types/project-types';
  *
  * @param wbsNum WBS number to validate
  */
-export const validateWBS = (wbsNum: string): void => {
+export const validateWBS = (wbsNum: string): WbsNumber => {
   const errorMsg: string = 'WBS Invalid: ';
   if (wbsNum == null || wbsNum === undefined) {
     throw new Error(errorMsg + 'given WBS # is null');

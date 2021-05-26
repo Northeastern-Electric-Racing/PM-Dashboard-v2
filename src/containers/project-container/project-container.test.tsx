@@ -6,10 +6,10 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { render, screen, waitFor } from '@testing-library/react';
-import { exampleProject1 } from 'utils';
+import { apiRoutes, API_URL, exampleProject1 } from 'utils';
 import ProjectContainer from './project-container';
 
-const endpointURL: string = '/.netlify/functions/change-requests';
+const endpointURL: string = API_URL + apiRoutes.PROJECTS + '/1.1.0';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(

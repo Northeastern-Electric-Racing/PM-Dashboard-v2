@@ -3,7 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { validateWBS, wbsIsProject } from '../src/validate-wbs';
+import { validateWBS, isProject } from '../src/validate-wbs';
+import {
+  exampleWbsProject1,
+  exampleWbsProject2,
+  exampleWbsWorkPackage1,
+  exampleWbsWorkPackage2
+} from '../../test-support/test-data/wbs-numbers.stub';
 
 describe('validate wbs numbers', () => {
   it('does not throw on valid WBS nums', () => {
@@ -48,8 +54,13 @@ describe('validate wbs numbers', () => {
 });
 
 describe('check wbs numbers are projects', () => {
-  it('does not throw on valid WBS nums', () => {
-    const validWbsNums: string[] = ['1.1.1', '1.10.10', '1.6.15', '2.54.1', '2.2.36'];
-    validWbsNums.forEach((wbs) => expect(() => wbsIsProject(wbs)).not.toThrow());
+  it('detects project wbsNumbers', () => {
+    expect(isProject(exampleWbsProject1)).toBeTruthy();
+    expect(isProject(exampleWbsProject2)).toBeTruthy();
+  });
+
+  it('detects work package wbsNumbers', () => {
+    expect(isProject(exampleWbsWorkPackage1)).toBeFalsy();
+    expect(isProject(exampleWbsWorkPackage2)).toBeFalsy();
   });
 });

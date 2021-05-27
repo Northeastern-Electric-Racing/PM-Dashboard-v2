@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useMemo } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import { apiRoutes, ChangeRequest, ChangeRequestType } from 'utils';
 import { useApiRequest } from './api-request';
 
@@ -36,10 +38,12 @@ export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
  * @returns All change requests, via useApiRequest Hook pattern.
  */
 export const useAllChangeRequests = () => {
-  return useApiRequest<ChangeRequest[]>(
-    { method: 'GET', url: apiRoutes.CHANGE_REQUESTS },
-    (response: ChangeRequest[]) => response.map(changeRequestTransformer)
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: apiRoutes.CHANGE_REQUESTS }),
+    []
   );
+  const transformer = (response: ChangeRequest[]) => response.map(changeRequestTransformer);
+  return useApiRequest<ChangeRequest[]>(config, transformer);
 };
 
 /**
@@ -49,8 +53,9 @@ export const useAllChangeRequests = () => {
  * @returns The requested change request, via useApiRequest Hook pattern.
  */
 export const useSingleChangeRequest = (id: number) => {
-  return useApiRequest<ChangeRequest>(
-    { method: 'GET', url: `${apiRoutes.CHANGE_REQUESTS}/${id}` },
-    changeRequestTransformer
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: `${apiRoutes.CHANGE_REQUESTS}/${id}` }),
+    [id]
   );
+  return useApiRequest<ChangeRequest>(config, changeRequestTransformer);
 };

@@ -9,7 +9,7 @@ const LOGIN: string = `/login`;
 
 /**************** Projects Section ****************/
 const PROJECTS: string = `/projects`;
-const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbs`;
+const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbsNum`;
 
 /**************** Change Requests Section ****************/
 const CHANGE_REQUESTS: string = `/change-requests`;

@@ -35,7 +35,9 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         {wbsPipe(responseData!.wbsNum)} - {responseData!.name}
       </h2>
       <hr />
-      <ProjectDetails project={responseData!} />
+      <div className={styles.projectContainerBox}>
+        <ProjectDetails project={responseData!} />
+      </div>
       <div className={`${styles.projectContainerBox} ${styles.workPackageList}`}>
         <h4>Work Packages</h4>
         <hr />

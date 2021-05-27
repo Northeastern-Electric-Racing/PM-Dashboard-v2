@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { WorkPackage } from 'utils';
 import { dollarsPipe, wbsPipe, listPipe, endDatePipe } from '../../shared/pipes';
 import {

@@ -116,25 +116,4 @@ describe('projects table component', () => {
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
     expect(wbsNumsAsc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
   });
-
-  it('handles 1000 projects', async () => {
-    const lotsOfProjects: Project[] = [];
-    for (let index = 0; index < 1000; index++) {
-      lotsOfProjects[index] = exampleProject2;
-    }
-
-    renderComponent(lotsOfProjects);
-
-    const expectedWbsOrder: string[] = [];
-    for (let index = 0; index < 1000; index++) {
-      expectedWbsOrder[index] = wbsPipe(exampleProject2.wbsNum);
-    }
-
-    const wbsNumsDesc: HTMLElement[] = await screen.findAllByText(wbsRegex);
-    expect(wbsNumsDesc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder);
-  });
-
-  // test for a basic normal case
-
-  // https://testing-library.com/docs/react-testing-library/example-intro
 });

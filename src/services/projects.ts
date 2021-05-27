@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { apiRoutes, Project, WbsNumber } from 'utils';
+import { apiRoutes, Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { useApiRequest } from './api-request';
 
@@ -16,7 +16,13 @@ import { useApiRequest } from './api-request';
 const projectTransformer = (project: Project) => {
   return {
     ...project,
-    dateCreated: new Date(project.dateCreated)
+    dateCreated: new Date(project.dateCreated),
+    workPackages: project.workPackages.map((ele: WorkPackage) => {
+      return {
+        ...ele,
+        startDate: new Date(ele.startDate)
+      };
+    })
   };
 };
 

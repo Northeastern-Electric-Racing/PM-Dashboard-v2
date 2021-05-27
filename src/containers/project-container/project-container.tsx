@@ -3,70 +3,43 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
-import { Project, WorkPackage, apiRoutes, WbsNumber } from 'utils';
-import { apiFetch } from '../../shared/axios';
+import { WorkPackage, WbsNumber } from 'utils';
 import { wbsPipe } from '../../shared/pipes';
 import ProjectDetails from '../../components/project-details/project-details';
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 import styles from './project-container.module.css';
+import { useSingleProject } from '../../services/projects';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
 }
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
-  const [project, setProject] = useState<Project>(); // store projects data
+  const { isLoading, errorMessage, responseData } = useSingleProject(wbsNum);
 
-  useEffect(() => {
-    let mounted = true; // indicates component is mounted
-
-    // Transforms given project data and sets local state
-    const updateData: Function = (response: AxiosResponse) => {
-      const proj: Project = {
-        ...response.data,
-        dateCreated: new Date(response.data.dateCreated),
-        workPackages: response.data.workPackages.map((ele: WorkPackage) => {
-          return {
-            ...ele,
-            startDate: new Date(ele.startDate)
-          };
-        })
-      };
-      setProject(proj);
-    };
-
-    const fetchProjects: Function = async () => {
-      apiFetch
-        .get(apiRoutes.PROJECTS + `/` + wbsPipe(wbsNum))
-        .then((response: AxiosResponse) =>
-          mounted ? /* Should update project here*/ updateData(response) : ''
-        )
-        .catch((error) => (mounted ? console.log('fetch project error: ' + error.message) : ''));
-    };
-    fetchProjects();
-
-    // cleanup function indicates component has been unmounted
-    return () => {
-      mounted = false;
-    };
-  });
-
-  if (project === undefined) {
+  if (isLoading) {
     return <p>Loading...</p>;
+  }
+  if (errorMessage !== '' || responseData === undefined) {
+    return (
+      <>
+        <h3>Oops, sorry!</h3>
+        <h5>There was an error loading the page.</h5>
+        <p>{errorMessage ? errorMessage : 'The data did not load properly.'}</p>
+      </>
+    );
   }
   return (
     <div className={styles.projectContainer}>
       <h2>
-        {wbsPipe(project!.wbsNum)} - {project!.name}
+        {wbsPipe(responseData!.wbsNum)} - {responseData!.name}
       </h2>
       <hr />
-      <ProjectDetails project={project!} />
+      <ProjectDetails project={responseData!} />
       <div className={`${styles.projectContainerBox} ${styles.workPackageList}`}>
         <h4>Work Packages</h4>
         <hr />
-        {project!.workPackages.map((ele: WorkPackage) => (
+        {responseData!.workPackages.map((ele: WorkPackage) => (
           <WorkPackageSummary
             className={styles.workPackageSummary}
             key={wbsPipe(ele.wbsNum)}

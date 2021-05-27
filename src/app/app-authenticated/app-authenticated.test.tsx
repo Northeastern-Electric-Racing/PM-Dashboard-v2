@@ -26,6 +26,6 @@ describe('app authenticated section', () => {
     expect(homeEle).toBeInTheDocument();
     fireEvent.click(screen.getByText('Projects'));
     expect(homeEle).not.toBeInTheDocument();
-    expect(screen.getByText(/Projects Page/i)).toBeInTheDocument();
+    expect(screen.getByText(/Projects Table/i)).toBeInTheDocument();
   });
 });

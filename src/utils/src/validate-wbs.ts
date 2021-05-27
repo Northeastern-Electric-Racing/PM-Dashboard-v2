@@ -18,16 +18,20 @@ export const validateWBS = (wbsNum: string): WbsNumber => {
   if (wbsNum.match(/\./g) == null) {
     throw new Error(errorMsg + 'WBS #s include periods, none found');
   }
-  const parseWbs: number[] = wbsNum.split('.').map((str) => {
+  const parseSections: string[] = wbsNum.split('.');
+  if (parseSections.length !== 3) {
+    throw new Error(errorMsg + 'incorrect number of periods');
+  }
+  const parseWbs: number[] = parseSections.map((str) => {
     const num: number = parseInt(str);
     if (isNaN(num)) {
       throw new Error(errorMsg + 'Found characters where numbers were expected in WBS #');
     }
+    if (num < 0) {
+      throw new Error(errorMsg + 'WBS #s must be greater than or equal to 0');
+    }
     return num;
   });
-  if (parseWbs.length !== 3) {
-    throw new Error(errorMsg + 'incorrect number of periods');
-  }
   return {
     car: parseWbs[0],
     project: parseWbs[1],

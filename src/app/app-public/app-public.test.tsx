@@ -10,7 +10,7 @@ import AppPublic from './app-public';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
-  renderWithRouter(AppPublic, { path, route });
+  renderWithRouter(<AppPublic />, { path, route });
 };
 
 describe('app public section', () => {

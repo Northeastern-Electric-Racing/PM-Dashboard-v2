@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useMemo } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import { apiRoutes, User } from 'utils';
 import { useApiRequest } from './api-request';
 
@@ -26,9 +28,9 @@ export const userTransformer = (user: User) => {
  * @returns All users, via useApiRequest Hook pattern.
  */
 export const useAllUsers = () => {
-  return useApiRequest<User[]>({ method: 'GET', url: apiRoutes.USERS }, (response: User[]) =>
-    response.map(userTransformer)
-  );
+  const config: AxiosRequestConfig = useMemo(() => ({ method: 'GET', url: apiRoutes.USERS }), []);
+  const transformer = (response: User[]) => response.map(userTransformer);
+  return useApiRequest<User[]>(config, transformer);
 };
 
 /**
@@ -38,5 +40,9 @@ export const useAllUsers = () => {
  * @returns The requested user, via useApiRequest Hook pattern.
  */
 export const useSingleUser = (id: number) => {
-  return useApiRequest<User>({ method: 'GET', url: `${apiRoutes.USERS}/${id}` }, userTransformer);
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: `${apiRoutes.USERS}/${id}` }),
+    [id]
+  );
+  return useApiRequest<User>(config, userTransformer);
 };

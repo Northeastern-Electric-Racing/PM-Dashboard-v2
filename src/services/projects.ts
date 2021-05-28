@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useMemo } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import { apiRoutes, Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { useApiRequest } from './api-request';
@@ -32,10 +34,12 @@ const projectTransformer = (project: Project) => {
  * @returns All projects, via useApiRequest Hook pattern.
  */
 export const useAllProjects = () => {
-  return useApiRequest<Project[]>(
-    { method: 'GET', url: apiRoutes.PROJECTS },
-    (response: Project[]) => response.map(projectTransformer)
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: apiRoutes.PROJECTS }),
+    []
   );
+  const transformer = (response: Project[]) => response.map(projectTransformer);
+  return useApiRequest<Project[]>(config, transformer);
 };
 
 /**
@@ -45,8 +49,9 @@ export const useAllProjects = () => {
  * @returns The requested project, via useApiRequest Hook pattern.
  */
 export const useSingleProject = (wbsNum: WbsNumber) => {
-  return useApiRequest<Project>(
-    { method: 'GET', url: `${apiRoutes.PROJECTS}/${wbsPipe(wbsNum)}` },
-    projectTransformer
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: `${apiRoutes.PROJECTS}/${wbsPipe(wbsNum)}` }),
+    [wbsNum]
   );
+  return useApiRequest<Project>(config, projectTransformer);
 };

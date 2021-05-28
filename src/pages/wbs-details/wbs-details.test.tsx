@@ -4,40 +4,55 @@
  */
 
 import { screen } from '@testing-library/react';
+import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
 import WBSDetails from './wbs-details';
+
+jest.mock('../../containers/project-container/project-container', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>project container</div>;
+    }
+  };
+});
+
+jest.mock('../../containers/work-package-container/work-package-container', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>work package container</div>;
+    }
+  };
+});
 
 /**
  * Sets up the component under test with the desired values and renders it.
  *
  * @param options WBS number to render the component at
  */
-const renderComponent = (wbsOverride?: string) => {
-  const wbsNumber: string = wbsOverride || '1.1.1';
-  renderWithRouter(<WBSDetails />, { path: '/projects/:wbsNum', route: `/projects/${wbsNumber}` });
+const renderComponent = (wbsNumber: string) => {
+  renderWithRouter(<WBSDetails />, {
+    path: routes.PROJECTS_BY_WBS,
+    route: `${routes.PROJECTS}/${wbsNumber}`
+  });
 };
 
 describe('wbs element details component', () => {
-  test('renders the page title', () => {
-    renderComponent();
-    expect(screen.getByText(/WBS Page/i)).toBeInTheDocument();
+  it('renders the project page title', () => {
+    renderComponent('1.1.0');
+    expect(screen.getByText('project container')).toBeInTheDocument();
   });
 
-  test('renders the wbs element number title', () => {
-    const wbsNumToRender: string = '1.8.1';
-    renderComponent(wbsNumToRender);
-    expect(screen.getByText(wbsNumToRender, { exact: false })).toBeInTheDocument();
+  it('renders the work package page title', () => {
+    renderComponent('1.1.1');
+    expect(screen.getByText('work package container')).toBeInTheDocument();
   });
 
-  test('renders 1.1.0 as a project', () => {
-    const wbsNumToRender: string = '1.1.0';
-    renderComponent(wbsNumToRender);
-    expect(screen.getByText(`Project ${wbsNumToRender}`)).toBeInTheDocument();
-  });
-
-  test('renders 2.18.7 as a work package', () => {
-    const wbsNumToRender: string = '2.18.7';
-    renderComponent(wbsNumToRender);
-    expect(screen.getByText(`Work Package ${wbsNumToRender}`)).toBeInTheDocument();
+  it('throws when wbsNum is invalid', () => {
+    renderComponent('1...1');
+    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
+    expect(screen.getByText('There was an error loading the page.')).toBeInTheDocument();
+    expect(screen.getByText('WBS Invalid: incorrect number of periods')).toBeInTheDocument();
   });
 });

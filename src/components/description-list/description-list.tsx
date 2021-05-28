@@ -16,10 +16,11 @@ const DescriptionList: React.FC<DescriptionListProps> = ({ workPackage }: Descri
       <h5>
         <b>Description</b>
       </h5>
-
-      {workPackage.descriptionBullets.map((bullet, idx) => (
-        <li key={idx}>{bullet.detail}</li>
-      ))}
+      <ul>
+        {workPackage.descriptionBullets.map((bullet, idx) => (
+          <li key={idx}>{bullet.detail}</li>
+        ))}
+      </ul>
     </div>
   );
 };

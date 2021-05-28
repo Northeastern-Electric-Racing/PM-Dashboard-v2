@@ -11,7 +11,7 @@ import NavPageLinks from './nav-page-links';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(NavPageLinks, {});
+  renderWithRouter(<NavPageLinks />, {});
 };
 
 describe('navigation page links tests', () => {

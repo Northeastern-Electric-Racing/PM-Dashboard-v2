@@ -3,28 +3,34 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
-import { validateWBS, wbsIsProject, WbsNumber } from 'utils';
-import { wbsPipe } from '../../shared/pipes';
+import { validateWBS, isProject } from 'utils';
 import ProjectContainer from '../../containers/project-container/project-container';
-import styles from './wbs-details.module.css';
+import WorkPackageContainer from '../../containers/work-package-container/work-package-container';
+import './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {
     wbsNum: string;
   }
-
   const { wbsNum } = useParams<ParamTypes>();
+  let wbsNumber;
+  try {
+    wbsNumber = validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
+  } catch (error) {
+    return (
+      <>
+        <h3>Oops, sorry!</h3>
+        <h5>There was an error loading the page.</h5>
+        <p>{error.message ? error.message : 'The wbsNumber did not parse properly.'}</p>
+      </>
+    );
+  }
 
-  const wbsAsObj: WbsNumber = validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
-
-  const type: ReactElement = wbsIsProject(wbsNum) ? (
-    <ProjectContainer wbsNum={wbsAsObj} />
-  ) : (
-    <p>Work Package: {wbsPipe(wbsAsObj)}</p>
-  );
-  return <p className={styles.describe}>{type}</p>;
+  if (isProject(wbsNumber)) {
+    return <ProjectContainer wbsNum={wbsNumber} />;
+  }
+  return <WorkPackageContainer wbsNum={wbsNumber} />;
 };
 
 export default WBSDetails;

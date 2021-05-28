@@ -11,7 +11,7 @@ import NavNotificationsMenu from './nav-notifications-menu';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(NavNotificationsMenu, {});
+  renderWithRouter(<NavNotificationsMenu />, {});
 };
 
 describe('navigation notifications menu tests', () => {

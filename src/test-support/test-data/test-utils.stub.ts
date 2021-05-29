@@ -52,9 +52,9 @@ export const mockContext: HandlerContext = {
   succeed: () => 0
 };
 
-export const mockCallback: HandlerCallback = (error, response) => {};
+export const mockCallback: HandlerCallback = (_error, _response) => {};
 
-export const mockEvent: (path: string, httpMethod: string) => HandlerEvent = (path, httpMethod) => {
+export const mockEvent = (path: string, httpMethod: string, body?: any): HandlerEvent => {
   return {
     rawUrl: '',
     rawQuery: '',
@@ -64,7 +64,7 @@ export const mockEvent: (path: string, httpMethod: string) => HandlerEvent = (pa
     multiValueHeaders: {},
     queryStringParameters: {},
     multiValueQueryStringParameters: {},
-    body: '',
+    body: body ? JSON.stringify(body) : null,
     isBase64Encoded: false
   };
 };

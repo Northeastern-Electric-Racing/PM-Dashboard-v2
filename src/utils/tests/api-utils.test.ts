@@ -12,7 +12,7 @@ import {
   buildSuccessResponse,
   routeMatcher
 } from '../src/api-utils';
-import { exampleApiRoutes, mockContext } from '../src/dummy-data';
+import { exampleApiRoutes, mockContext } from '../../test-support/test-data/test-utils.stub';
 
 describe('Response object factory', () => {
   it('works with all inputs', () => {

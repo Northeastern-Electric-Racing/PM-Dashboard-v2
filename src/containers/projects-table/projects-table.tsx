@@ -14,8 +14,8 @@ const ProjectsTable: React.FC = () => {
 
   /**
    * Transform given list of projects into a list of display projects.
-   * @param
-   * @returns
+   * @param projects list of projects to transform
+   * @returns list of display projects
    */
   const updateData = (projects: Project[]) => {
     return projects.map((prj: Project) => {

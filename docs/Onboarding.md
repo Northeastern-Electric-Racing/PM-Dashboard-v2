@@ -31,7 +31,7 @@ Paste the following line into the `.env` file and replace `<USERNAME>` with your
 `DATABASE_URL="postgresql://<USERNAME>:@localhost:5432/nerpm?schema=public"`
 
 To test that things are working, run `npm run start` in the CLI and go to an example API route.
-If the starter code still exists, use `localhost:3000/.netlify/functions/seed`.
+Example: `localhost:3000/.netlify/functions/users`.
 
 ## IDE: VSCode
 

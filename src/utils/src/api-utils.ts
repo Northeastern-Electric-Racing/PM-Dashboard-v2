@@ -43,19 +43,23 @@ export const buildFailureResponse = (status: number, message: string) => {
  * Builds a client error failure API response object
  * @param message Error message
  */
-export const buildClientFailureResponse = (message: string) => buildFailureResponse(400, message);
+export const buildClientFailureResponse = (message: string) => {
+  return buildFailureResponse(400, `Client error: ${message}`);
+};
 
 /**
  * Builds a server error failure API response object
  * @param message Error message
  */
-export const buildServerFailureResponse = (message: string) => buildFailureResponse(500, message);
+export const buildServerFailureResponse = (message: string) => {
+  return buildFailureResponse(500, `Server error: ${message}`);
+};
 
 /**
  * Builds an error failure API response object for when the request lacks authentication
  */
 export const buildNoAuthResponse = () => {
-  return buildFailureResponse(401, 'Authentication required, none found.');
+  return buildFailureResponse(401, 'Authentication is required to perform the request.');
 };
 
 /**

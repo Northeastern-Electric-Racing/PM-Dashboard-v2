@@ -3,54 +3,48 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
 import { Project, WorkPackage } from 'utils';
-import { apiFetch } from '../../shared/axios';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../shared/pipes';
 import PrjsTable from '../../components/projects-table/projects-table'; // Directly rename the default import
-import { DisplayProject } from '../../components/projects-table/projects-table';
 import './projects-table.module.css';
+import { useAllProjects } from '../../services/projects';
 
 const ProjectsTable: React.FC = () => {
-  const [allProjects, setAllProjects] = useState<DisplayProject[]>([]); // store projects data
+  const { isLoading, errorMessage, responseData } = useAllProjects();
 
-  // Transforms given project data and sets local state
-  const updateData = (response: AxiosResponse) => {
-    setAllProjects(
-      response.data.map((prj: Project) => {
-        return {
-          wbsNum: wbsPipe(prj.wbsNum),
-          name: prj.name,
-          projectLead: fullNamePipe(prj.projectLead),
-          projectManager: fullNamePipe(prj.projectManager),
-          duration: weeksPipe(
-            prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
-          )
-        };
-      })
-    );
+  /**
+   * Transform given list of projects into a list of display projects.
+   * @param projects list of projects to transform
+   * @returns list of display projects
+   */
+  const transformToDisplayProjects = (projects: Project[]) => {
+    return projects.map((prj: Project) => {
+      return {
+        wbsNum: wbsPipe(prj.wbsNum),
+        name: prj.name,
+        projectLead: fullNamePipe(prj.projectLead),
+        projectManager: fullNamePipe(prj.projectManager),
+        duration: weeksPipe(
+          prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
+        )
+      };
+    });
   };
 
-  // Fetch list of projects from API on component loading
-  useEffect(() => {
-    let mounted = true; // indicates component is mounted
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (errorMessage !== '' || responseData === undefined) {
+    return (
+      <>
+        <h3>Oops, sorry!</h3>
+        <h5>There was an error loading the page.</h5>
+        <p>{errorMessage ? errorMessage : 'The data did not load properly.'}</p>
+      </>
+    );
+  }
 
-    const fetchProjects = async () => {
-      apiFetch
-        .get('/projects')
-        .then((response: AxiosResponse) => (mounted ? updateData(response) : ''))
-        .catch((error) => (mounted ? console.log('fetch projects error: ' + error.message) : ''));
-    };
-    fetchProjects();
-
-    // cleanup function indicates component has been unmounted
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  return <PrjsTable allProjects={allProjects} />;
+  return <PrjsTable allProjects={transformToDisplayProjects(responseData)!} />;
 };
 
 export default ProjectsTable;

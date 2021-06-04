@@ -9,7 +9,7 @@ import {
   ApiRouteFunction,
   apiRoutes,
   API_URL,
-  buildFailureResponse,
+  buildServerFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   exampleAllUsers,
@@ -52,7 +52,7 @@ const handler: Handler = async (event, context) => {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return buildFailureResponse(error.message);
+    return buildServerFailureResponse(error.message);
   }
 };
 

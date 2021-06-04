@@ -4,15 +4,19 @@
  */
 
 import { HandlerResponse } from '@netlify/functions';
+import { exampleApiRoutes, mockContext } from '../../test-support/test-data/test-utils.stub';
 import { API_URL } from '../src/api-routes';
 import {
   buildResponse,
   buildFailureResponse,
+  buildClientFailureResponse,
+  buildServerFailureResponse,
+  buildNoAuthResponse,
+  buildNotPermittedResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   routeMatcher
 } from '../src/api-utils';
-import { exampleApiRoutes, mockContext } from '../src/dummy-data';
 
 describe('Response object factory', () => {
   it('works with all inputs', () => {
@@ -56,7 +60,26 @@ describe('Response object factory', () => {
 
 describe('Response object factory implementations', () => {
   it('works for failure response', () => {
-    const response: HandlerResponse = buildFailureResponse('it did not work');
+    const response: HandlerResponse = buildFailureResponse(505, 'it did not work');
+
+    expect(response.statusCode).toBeDefined();
+    expect(response.statusCode).toBe(505);
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+
+    const body = JSON.parse(response.body);
+    expect(body.message).toBeDefined();
+    expect(typeof body.message).toBe('string');
+    expect(body.message).toBe('it did not work');
+
+    expect(response.headers).toBeUndefined();
+    expect(response.isBase64Encoded).toBeUndefined();
+    expect(response.multiValueHeaders).toBeUndefined();
+  });
+
+  it('works for server failure response', () => {
+    const response: HandlerResponse = buildServerFailureResponse('it did not work');
 
     expect(response.statusCode).toBeDefined();
     expect(response.statusCode).toBe(500);
@@ -67,7 +90,64 @@ describe('Response object factory implementations', () => {
     const body = JSON.parse(response.body);
     expect(body.message).toBeDefined();
     expect(typeof body.message).toBe('string');
-    expect(body.message).toBe('it did not work');
+    expect(body.message).toBe('Server error: it did not work');
+
+    expect(response.headers).toBeUndefined();
+    expect(response.isBase64Encoded).toBeUndefined();
+    expect(response.multiValueHeaders).toBeUndefined();
+  });
+
+  it('works for client failure response', () => {
+    const response: HandlerResponse = buildClientFailureResponse('it did not work');
+
+    expect(response.statusCode).toBeDefined();
+    expect(response.statusCode).toBe(400);
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+
+    const body = JSON.parse(response.body);
+    expect(body.message).toBeDefined();
+    expect(typeof body.message).toBe('string');
+    expect(body.message).toBe('Client error: it did not work');
+
+    expect(response.headers).toBeUndefined();
+    expect(response.isBase64Encoded).toBeUndefined();
+    expect(response.multiValueHeaders).toBeUndefined();
+  });
+
+  it('works for no authentication found failure response', () => {
+    const response: HandlerResponse = buildNoAuthResponse();
+
+    expect(response.statusCode).toBeDefined();
+    expect(response.statusCode).toBe(401);
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+
+    const body = JSON.parse(response.body);
+    expect(body.message).toBeDefined();
+    expect(typeof body.message).toBe('string');
+    expect(body.message).toBe('Authentication is required to perform the request.');
+
+    expect(response.headers).toBeUndefined();
+    expect(response.isBase64Encoded).toBeUndefined();
+    expect(response.multiValueHeaders).toBeUndefined();
+  });
+
+  it('works for not enough permission failure response', () => {
+    const response: HandlerResponse = buildNotPermittedResponse();
+
+    expect(response.statusCode).toBeDefined();
+    expect(response.statusCode).toBe(403);
+
+    expect(response.body).toBeDefined();
+    expect(typeof response.body).toBe('string');
+
+    const body = JSON.parse(response.body);
+    expect(body.message).toBeDefined();
+    expect(typeof body.message).toBe('string');
+    expect(body.message).toBe('User has insufficient permissions to perform the request.');
 
     expect(response.headers).toBeUndefined();
     expect(response.isBase64Encoded).toBeUndefined();

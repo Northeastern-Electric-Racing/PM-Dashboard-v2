@@ -4,15 +4,15 @@
  */
 
 import { HandlerResponse } from '@netlify/functions';
+import { exampleApiRoutes, mockContext } from '../../test-support/test-data/test-utils.stub';
 import { API_URL } from '../src/api-routes';
 import {
   buildResponse,
-  buildFailureResponse,
+  buildServerFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   routeMatcher
 } from '../src/api-utils';
-import { exampleApiRoutes, mockContext } from '../src/dummy-data';
 
 describe('Response object factory', () => {
   it('works with all inputs', () => {
@@ -56,7 +56,7 @@ describe('Response object factory', () => {
 
 describe('Response object factory implementations', () => {
   it('works for failure response', () => {
-    const response: HandlerResponse = buildFailureResponse('it did not work');
+    const response: HandlerResponse = buildServerFailureResponse('it did not work');
 
     expect(response.statusCode).toBeDefined();
     expect(response.statusCode).toBe(500);

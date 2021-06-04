@@ -29,7 +29,7 @@ export const buildResponse: (
  * Builds a server error failure API response object
  * @param message Error message
  */
-export const buildFailureResponse: (message: string) => HandlerResponse = (message) => {
+export const buildServerFailureResponse: (message: string) => HandlerResponse = (message) => {
   return buildResponse(500, { message });
 };
 

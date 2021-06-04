@@ -52,6 +52,21 @@ export const buildClientFailureResponse = (message: string) => buildFailureRespo
 export const buildServerFailureResponse = (message: string) => buildFailureResponse(500, message);
 
 /**
+ * Builds an error failure API response object for when the request lacks authentication
+ */
+export const buildNoAuthResponse = () => {
+  return buildFailureResponse(401, 'Authentication required, none found.');
+};
+
+/**
+ * Builds an error failure API response object for when the requesting user
+ * lacks sufficient permission to perform the request.
+ */
+export const buildNotPermittedResponse = () => {
+  return buildFailureResponse(403, 'User has insufficient permissions to perform the request.');
+};
+
+/**
  * Builds a not found error API response object
  * @param type The type of item requested
  * @param item The requested item which could not be found

@@ -6,7 +6,18 @@
 import { HandlerEvent } from '@netlify/functions';
 import { User, API_URL, apiRoutes } from 'utils';
 import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
+import { exampleAdminUser } from '../../test-support/test-data/users.stub';
 import { handler } from '../functions/users';
+
+const expectUserFields = (user: User) => {
+  expect(user).toHaveProperty('id');
+  expect(user).toHaveProperty('firstName');
+  expect(user).toHaveProperty('lastName');
+  expect(user).toHaveProperty('emailId');
+  expect(user).toHaveProperty('firstLogin');
+  expect(user).toHaveProperty('lastLogin');
+  expect(user).toHaveProperty('role');
+};
 
 describe('users api endpoint handler', () => {
   describe('all users route', () => {
@@ -29,13 +40,7 @@ describe('users api endpoint handler', () => {
 
     it('has all required fields', () => {
       usersResponse.forEach((usr: User) => {
-        expect(usr).toHaveProperty('id');
-        expect(usr).toHaveProperty('firstName');
-        expect(usr).toHaveProperty('lastName');
-        expect(usr).toHaveProperty('emailId');
-        expect(usr).toHaveProperty('firstLogin');
-        expect(usr).toHaveProperty('lastLogin');
-        expect(usr).toHaveProperty('role');
+        expectUserFields(usr);
       });
     });
   });
@@ -55,13 +60,7 @@ describe('users api endpoint handler', () => {
     });
 
     it('has all required fields', () => {
-      expect(userResponse).toHaveProperty('id');
-      expect(userResponse).toHaveProperty('firstName');
-      expect(userResponse).toHaveProperty('lastName');
-      expect(userResponse).toHaveProperty('emailId');
-      expect(userResponse).toHaveProperty('firstLogin');
-      expect(userResponse).toHaveProperty('lastLogin');
-      expect(userResponse).toHaveProperty('role');
+      expectUserFields(userResponse);
     });
 
     it('handles 404 when user not found', async () => {
@@ -72,5 +71,59 @@ describe('users api endpoint handler', () => {
       expect(responseObject.statusCode).toBe(404);
       expect(errorObject.message).toEqual('Could not find the requested user [#420].');
     });
+  });
+
+  describe('login route', () => {
+    let responseObject: any;
+    let userResponse: User;
+
+    beforeEach(async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST', {
+        emailId: exampleAdminUser.emailId
+      });
+      responseObject = await handler(event, mockContext, mockCallback);
+      userResponse = JSON.parse(responseObject.body);
+    });
+
+    it('has 200 status code', () => {
+      expect(responseObject.statusCode).toBe(200);
+    });
+
+    it('has all required fields', () => {
+      expectUserFields(userResponse);
+    });
+
+    it('handles 404 when user not found', async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST', {
+        emailId: 'not.a'
+      });
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(404);
+      expect(errorObject.message).toEqual('Could not find the requested user [not.a].');
+    });
+
+    it('throws when no emailId is provided in the body', async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST', {});
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(500);
+      expect(errorObject.message).toEqual('No emailId found for login.');
+    });
+
+    it('throws when no body', async () => {
+      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST');
+      responseObject = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(500);
+      expect(errorObject.message).toEqual('No user info found for login.');
+    });
+
+    it.todo('last login is within the last minute');
+
+    it.todo('logs the login');
   });
 });

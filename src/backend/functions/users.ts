@@ -32,6 +32,25 @@ const getSingleUser: ApiRouteFunction = (params: { id: string }) => {
   return buildSuccessResponse(requestedUser);
 };
 
+// Log the user in via their emailId
+const logUserIn: ApiRouteFunction = (_params, event) => {
+  if (!event.body) {
+    return buildFailureResponse('No user info found for login.');
+  }
+  const body = JSON.parse(event.body!);
+  if (!body.emailId) {
+    return buildFailureResponse('No emailId found for login.');
+  }
+  const userToLogIn: User | undefined = exampleAllUsers.find(
+    (usr: User) => usr.emailId === body.emailId
+  );
+  if (userToLogIn === undefined) {
+    return buildNotFoundResponse('user', `${body.emailId}`);
+  }
+  console.log('Logged in ' + userToLogIn.emailId);
+  return buildSuccessResponse(userToLogIn);
+};
+
 // Define all valid routes for the endpoint
 const routes: ApiRoute[] = [
   {
@@ -43,6 +62,11 @@ const routes: ApiRoute[] = [
     path: `${API_URL}${apiRoutes.USERS_BY_ID}`,
     httpMethod: 'GET',
     func: getSingleUser
+  },
+  {
+    path: `${API_URL}${apiRoutes.USERS_LOGIN}`,
+    httpMethod: 'POST',
+    func: logUserIn
   }
 ];
 

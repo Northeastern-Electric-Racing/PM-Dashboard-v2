@@ -26,6 +26,14 @@ export const buildResponse = (
 };
 
 /**
+ * Builds a client error failure API response object
+ * @param message Error message
+ */
+export const buildClientFailureResponse = (message: string): HandlerResponse => {
+  return buildResponse(400, { message });
+};
+
+/**
  * Builds a server error failure API response object
  * @param message Error message
  */

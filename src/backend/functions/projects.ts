@@ -14,7 +14,7 @@ import {
   API_URL,
   buildSuccessResponse,
   buildNotFoundResponse,
-  buildFailureResponse
+  buildServerFailureResponse
 } from 'utils';
 
 // Fetch all projects
@@ -62,7 +62,7 @@ const handler: Handler = async (event, context) => {
     return routeMatcher(routes, event, context);
   } catch (error) {
     console.error(error);
-    return buildFailureResponse(error.message);
+    return buildServerFailureResponse(error.message);
   }
 };
 

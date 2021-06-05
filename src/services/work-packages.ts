@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useMemo } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import { apiRoutes, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { useApiRequest } from './api-request';
@@ -34,10 +36,12 @@ const workPackageTransformer = (workPackage: WorkPackage) => {
  * @returns All work packages, via useApiRequest Hook pattern.
  */
 export const useAllWorkPackages = () => {
-  return useApiRequest<WorkPackage[]>(
-    { method: 'GET', url: apiRoutes.WORK_PACKAGES },
-    (response: WorkPackage[]) => response.map(workPackageTransformer)
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: apiRoutes.WORK_PACKAGES }),
+    []
   );
+  const transformer = (response: WorkPackage[]) => response.map(workPackageTransformer);
+  return useApiRequest<WorkPackage[]>(config, transformer);
 };
 
 /**
@@ -47,8 +51,9 @@ export const useAllWorkPackages = () => {
  * @returns The requested work package, via useApiRequest Hook pattern.
  */
 export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
-  return useApiRequest<WorkPackage>(
-    { method: 'GET', url: `${apiRoutes.WORK_PACKAGES}/${wbsPipe(wbsNum)}` },
-    workPackageTransformer
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'GET', url: `${apiRoutes.WORK_PACKAGES}/${wbsPipe(wbsNum)}` }),
+    [wbsNum]
   );
+  return useApiRequest<WorkPackage>(config, workPackageTransformer);
 };

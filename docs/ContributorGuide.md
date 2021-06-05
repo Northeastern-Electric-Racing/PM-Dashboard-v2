@@ -39,8 +39,8 @@ If the issue is determined to be ready to be worked on by the development team, 
 ## Creating a Branch
 
 Use `git checkout -b [branch name]` to create a new branch.
-Give the branch a short name that follows the naming syntax: `#[issue number]-[contributor name]`.
-Example: `#12-JamesCD` or `#275-KevinYu`.
+Give the branch a short name that follows the naming syntax: `#[issue number]-[short but meaningful description]` and replace spaces with dashes.
+Example: `#12-add-login-endpoint` or `#275-refactor-projects-table`.
 
 Use `git status` to check which branch you are on.
 Ensure you stash, reset, or commit your changes before changing branches, unless you want to bring your changes to the other branch.

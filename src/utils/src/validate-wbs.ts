@@ -40,12 +40,10 @@ export const validateWBS = (wbsNum: string): WbsNumber => {
 };
 
 /**
- * Is the provided wbsNum a project?
+ * Is the provided WbsNumber for a project?
  *
  * @param wbsNum WBS number to check
  */
-export const wbsIsProject = (wbsNum: string): boolean => {
-  validateWBS(wbsNum);
-  const splitWBS: string[] = wbsNum.split('.');
-  return splitWBS[2] === '0';
+export const isProject = (wbsNum: WbsNumber) => {
+  return wbsNum.workPackage === 0;
 };

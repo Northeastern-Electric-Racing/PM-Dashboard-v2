@@ -11,7 +11,7 @@ import NavTopBar from './nav-top-bar';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(NavTopBar, {});
+  renderWithRouter(<NavTopBar />, {});
 };
 
 describe('navigation top bar tests', () => {

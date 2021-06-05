@@ -109,8 +109,8 @@ describe('users api endpoint handler', () => {
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 
-      expect(responseObject.statusCode).toBe(500);
-      expect(errorObject.message).toEqual('No emailId found for login.');
+      expect(responseObject.statusCode).toBe(400);
+      expect(errorObject.message).toEqual('Client error: No emailId found for login.');
     });
 
     it('throws when no body', async () => {
@@ -118,8 +118,8 @@ describe('users api endpoint handler', () => {
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 
-      expect(responseObject.statusCode).toBe(500);
-      expect(errorObject.message).toEqual('No user info found for login.');
+      expect(responseObject.statusCode).toBe(400);
+      expect(errorObject.message).toEqual('Client error: No user info found for login.');
     });
 
     it.todo('last login is within the last minute');

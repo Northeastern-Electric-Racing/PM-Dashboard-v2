@@ -9,6 +9,7 @@ import {
   ApiRouteFunction,
   apiRoutes,
   API_URL,
+  buildClientFailureResponse,
   buildServerFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
@@ -35,11 +36,11 @@ const getSingleUser: ApiRouteFunction = (params: { id: string }) => {
 // Log the user in via their emailId
 const logUserIn: ApiRouteFunction = (_params, event) => {
   if (!event.body) {
-    return buildFailureResponse('No user info found for login.');
+    return buildClientFailureResponse('No user info found for login.');
   }
   const body = JSON.parse(event.body!);
   if (!body.emailId) {
-    return buildFailureResponse('No emailId found for login.');
+    return buildClientFailureResponse('No emailId found for login.');
   }
   const userToLogIn: User | undefined = exampleAllUsers.find(
     (usr: User) => usr.emailId === body.emailId
@@ -47,7 +48,6 @@ const logUserIn: ApiRouteFunction = (_params, event) => {
   if (userToLogIn === undefined) {
     return buildNotFoundResponse('user', `${body.emailId}`);
   }
-  console.log('Logged in ' + userToLogIn.emailId);
   return buildSuccessResponse(userToLogIn);
 };
 

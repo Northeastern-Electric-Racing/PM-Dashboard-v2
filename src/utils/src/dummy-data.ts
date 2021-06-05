@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
 import { WbsNumber, Project, WbsElementStatus, WorkPackage } from './types/project-types';
 import {
   ChangeRequest,
@@ -14,8 +13,6 @@ import {
   ChangeRequestType
 } from './types/change-request-types';
 import { User, Role } from './types/user-types';
-import { ApiRoute } from './types/api-utils-types';
-import { API_URL } from './api-routes';
 
 /**
  * A variety of dummy data for use in performing various different tests, mocking components, or serving from the API.

@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { AxiosRequestConfig } from 'axios';
 import { apiRoutes, ChangeRequest, ChangeRequestType } from 'utils';
 import { useApiRequest } from './api-request';
+import { fullNamePipe, wbsPipe } from '../shared/pipes';
 
 /**
  * Transforms a change request to ensure deep field transformation of date objects.
@@ -17,13 +18,15 @@ import { useApiRequest } from './api-request';
 export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
   const data: any = {
     ...changeRequest,
-    dateSubmitted: new Date(changeRequest.dateSubmitted),
+    dateSubmitted: new Date(changeRequest.dateSubmitted).toLocaleDateString(),
     dateReviewed: changeRequest.dateReviewed
-      ? new Date(changeRequest.dateReviewed)
+      ? new Date(changeRequest.dateReviewed).toLocaleDateString()
       : changeRequest.dateReviewed,
     dateImplemented: changeRequest.dateImplemented
-      ? new Date(changeRequest.dateImplemented)
-      : changeRequest.dateImplemented
+      ? new Date(changeRequest.dateImplemented).toLocaleDateString()
+      : changeRequest.dateImplemented,
+      submitterName: fullNamePipe(changeRequest.submitter),
+      wbsNum: wbsPipe(changeRequest.wbsNum)
   };
   if (changeRequest.type === ChangeRequestType.Activation) {
     data.startDate = new Date(data.startDate);
@@ -31,6 +34,10 @@ export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
   const output: ChangeRequest = data;
   return output;
 };
+
+export const allChangeRequestTransformer = (changeRequests: ChangeRequest[]) => {
+  return changeRequests.map(changeRequestTransformer);
+}
 
 /**
  * Custom React Hook to supply the API response containing all change requests.
@@ -42,8 +49,7 @@ export const useAllChangeRequests = () => {
     () => ({ method: 'GET', url: apiRoutes.CHANGE_REQUESTS }),
     []
   );
-  const transformer = (response: ChangeRequest[]) => response.map(changeRequestTransformer);
-  return useApiRequest<ChangeRequest[]>(config, transformer);
+  return useApiRequest<ChangeRequest[]>(config, allChangeRequestTransformer);
 };
 
 /**

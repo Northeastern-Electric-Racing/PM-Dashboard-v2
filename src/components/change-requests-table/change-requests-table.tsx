@@ -10,19 +10,9 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import styles from './change-requests-table.module.css';
-
-export interface DisplayChangeRequest {
-  id: number;
-  submitterName: string;
-  wbsNum: string;
-  type: string;
-  dateReviewed: string;
-  accepted: string;
-  dateImplemented: string;
-}
-
+import { ChangeRequest } from 'utils/src';
 interface ChangeRequestsTableProps {
-  changeRequests: DisplayChangeRequest[];
+  changeRequests: ChangeRequest[];
 }
 
 /**

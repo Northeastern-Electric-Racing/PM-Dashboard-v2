@@ -59,9 +59,25 @@ The key features and feature categories for the NER PM Dashboard application are
 
 ## Metrics
 
-// TODO: Fill in section
+Metrics that are important and relevant to the NER PM Dashboard are as follows:
 
-The metrics that the NER PM Dashboard will be measured by, metrics it should impact…
+- Change request turnaround time
+  - Measured as the average duration between a change request being submitted and fully implemented
+  - One of the primary metrics that the NER PM Dashboard should help improve
+  - Lower turnaround time helps keep the PM System accurate and up-to-date
+- Weekly active users
+  - Measured as the total number of users who have logged in within the last 7 days
+  - A secondary metric that the NER PM Dashboard should help improve
+  - Higher weekly active users represents more club members interacting with the PM System, thereby increasing awareness and understanding of project activities and expectations
+- Change requests citing estimation issues
+  - Measured as the total number of change requests which include "Estimation Issues" as a reason / cause in the last 90 days
+  - A minor extended metric that the NER PM Dashboard will hopefully help improve
+  - Fewer change requests being submitted due to estimation errors represents more accurate planning of projects and work packages, making it easier to manage and monitor the portfolio of projects
+  - Estimation errors are highly dependent on the human element of project planning; the NER PM Dashboard is intended to provide increased information specificity, clarity, and transparency
+- Work package delays
+  - Measured as the average percent increase in work package duration as a result of a change request containing a timeline impact element over the last 12 months
+  - Fewer work package delays represents both more accurate duration estimations and fewer timeline-impacting issues cropping up
+  - A metric that the NER PM Dashboard will primarily serve to help measure
 
 ## Business Value
 

@@ -16,14 +16,15 @@ Product Management documentation for the NER PM Dashboard v2.
 
 ## Document Purpose
 
-The purpose of this document is to thoroughly record the purpose, metrics, and roadmap for the Northeastern Electric Racing Project Management Dashboard website (“NER PM Dashboard”). 
+The purpose of this document is to thoroughly record the purpose, metrics, and roadmap for the Northeastern Electric Racing Project Management Dashboard website (“NER PM Dashboard”).
 This document will help articulate the why and what behind the product, the motivation for building it, and the impact that it should have on the team.
 
 ## Product Purpose
 
-The NER PM Dashboard is intended to assist NER’s Project Management Office (PMO) and other leadership with increasing efficiency in two aspects: 
-1) understanding the state of the club’s projects and 
-2) handling the processes and procedures associated with a formal project and change management system
+The NER PM Dashboard is intended to assist NER’s Project Management Office (PMO) and other leadership with increasing efficiency in two aspects:
+
+1. understanding the state of the club’s projects and
+2. handling the processes and procedures associated with a formal project and change management system
 
 ## Product History
 
@@ -41,22 +42,20 @@ These three user segments will likely give rise to specific application user pro
 Below is a list of the focus and priorities for each user group:
 
 - Project Leads
-    - The one or two projects they are assigned to lead
-    - The expectations for what should be done for those projects
-    - Submitting the necessary updates to those projects
+  - The one or two projects they are assigned to lead
+  - The expectations for what should be done for those projects
+  - Submitting the necessary updates to those projects
 - PMO members
-    - The few projects that they are responsible for
-    - Understanding upcoming deadlines
-    - Both submitting and processing change requests
+  - The few projects that they are responsible for
+  - Understanding upcoming deadlines
+  - Both submitting and processing change requests
 - Other NER leadership
-    - Seeing a general view of active projects
-    - Drilling down into project details as is necessary
+  - Seeing a general view of active projects
+  - Drilling down into project details as is necessary
 
 ## Features
 
-// TODO: Fill in section
-
-The key features or feature categories… Dashboards, Details, Reports, and Changes.
+The key features and feature categories for the NER PM Dashboard application are described in a separate [Requirements document](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/Docs/Requirements.md).
 
 ## Metrics
 

@@ -4,7 +4,8 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { WorkPackage, mockContext, mockCallback, API_URL, apiRoutes, mockEvent } from 'utils';
+import { WorkPackage, API_URL, apiRoutes } from 'utils';
+import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
 import { handler } from '../functions/work-packages';
 
 describe('work packages api endpoint handler', () => {

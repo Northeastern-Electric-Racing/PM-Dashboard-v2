@@ -4,7 +4,8 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { apiRoutes, API_URL, ChangeRequest, mockContext, mockCallback, mockEvent } from 'utils';
+import { apiRoutes, API_URL, ChangeRequest } from 'utils';
+import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
 import { handler } from '../functions/change-requests';
 
 describe('change requests api endpoint handler', () => {

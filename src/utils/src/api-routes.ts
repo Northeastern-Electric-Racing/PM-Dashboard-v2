@@ -8,7 +8,7 @@ export const API_URL: string = `/.netlify/functions`;
 /**************** Users Endpoint ****************/
 const USERS: string = `/users`;
 const USERS_BY_ID: string = `${USERS}/:id`;
-const USERS_LOGIN: string = `${USERS}/login`;
+const USERS_LOGIN: string = `${USERS}\\:login`;
 
 /**************** Projects Endpoint ****************/
 const PROJECTS: string = `/projects`;

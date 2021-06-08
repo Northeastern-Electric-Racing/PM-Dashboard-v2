@@ -10,7 +10,7 @@ import { ApiHookReturn } from '../../services/api-request';
 import { ChangeRequest,exampleAllChangeRequests } from 'utils';
 import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils'
-import { wbsPipe } from '../../shared/pipes';
+import { fullNamePipe, wbsPipe } from '../../shared/pipes';
 
 
 jest.mock('../../services/change-requests');
@@ -55,7 +55,7 @@ describe('change requests table container', () => {
     renderComponent();
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText(exampleAllChangeRequests[0].id, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(exampleAllChangeRequests[0].submitterName!)).toBeInTheDocument();
+    expect(screen.getByText(fullNamePipe(exampleAllChangeRequests[0].submitter)!)).toBeInTheDocument();
     expect(screen.getByText(wbsPipe(exampleAllChangeRequests[0].wbsNum))).toBeInTheDocument();
     expect(screen.getByText(exampleAllChangeRequests[0].type)).toBeInTheDocument();
     expect(screen.getByText(exampleAllChangeRequests[0].dateReviewed!.toLocaleDateString())).toBeInTheDocument();

@@ -116,7 +116,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
       <div className="container">
         <dl className="row">
           <dt className="col-2">Submitted</dt>
-          <dd className="col-2">{changeRequest.submitterName}</dd>
+          <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
           <dd className="col-3">{changeRequest.dateSubmitted}</dd>
         </dl>
         <hr className={styles.divider} />

@@ -5,12 +5,22 @@ This is a living document that will take the place of an official Product Requir
 
 ## Table of Contents
 
-- example
+- TODO
 
-## Supported Platforms
+## Projects
 
-Supported Platforms.
+Section on features related to projects.
 
-## Viewing Projects
+## Work Packages
 
-## Viewing Work Packages
+Section on features related to work packages.
+
+## Change Requests
+
+Section on features related to change requests.
+
+## Other
+
+Section for other features and topics.
+
+### Supported Platforms

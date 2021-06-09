@@ -81,18 +81,29 @@ Metrics that are important and relevant to the NER PM Dashboard are as follows:
 
 ## Business Value
 
-// TODO: Fill in section
+The value of the NER PM Dashboard is in increaseing the accuracy, efficiency, and effectiveness of NER's Project Management System.
 
-The value of the NER PM Dashboard is…
+The NER PM Dashboard also serves as an engaging learning environment for club members intersted in learning about the design and development of professional-scale web applicatioons.
 
 ## Key Resources
 
-// TODO: Fill in section
+Key resources needed for the success of the NER PM Dashboard include student software engineers, software student mentors, cloud computing, project management expertise, and buy-in from the club's engineering leadership.
 
-Key resources needed for the success of the NER PM Dashboard…
+The development of the NER PM Dashboard is primarily driven by the efforts of a team of volunteer student software engineers.
+Without those engineers, the NER PM Dashboard would never be able to achieve the development milestones key for the application's success.
+
+As a warm and welcoming education-first team, many interested team members lack the neccessary skills and knowledge to effectively contribute to the project.
+The teaching, mentorship, and support that the software student mentors will provide to newer student software engineers will be key for the success of the project.
+
+As a cloud-native web-application, cloud computing resources will be utilized for the deployment of the NER PM Dashboard.
+
+Project management expertise, especially pertaining to the club's project management system, will be critical to ensure new features, enhancements, and bug fixes are created and implemented for the best.
 
 ## Risks
 
-// TODO: Fill in section
+The key risks associated with the NER PM Dashboard v2 project are related to team members and expertise.
 
-The key risks that may be encountered…
+Attracting and retaining committed team members to contribute to the project has proven to be difficult from experience with the NER PM Dashboard v1 and the first 6 months of the NEW PM Dashboard v2.
+Additionally, having team members that are experts in both the club's project management system and software development is close to impossible.
+
+Mitigation efforts primarily surround engaging the club's Outreach team to pursue student outreach to Khoury College students and holding learning sessions to teach project team members about the club's project management system.

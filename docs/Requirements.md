@@ -5,7 +5,11 @@ This is a living document that will take the place of an official Product Requir
 
 ## Table of Contents
 
-- TODO
+- Projects
+- Work Packages
+- Change Requests
+- Other
+  - Supported Platforms
 
 ## Projects
 
@@ -24,3 +28,13 @@ Section on features related to change requests.
 Section for other features and topics.
 
 ### Supported Platforms
+
+Desktop web browsers are the only officially supported platforms.
+
+- Chrome (v90 and above)
+- Firefox (v88 and above)
+- Safari (v14 and above)
+
+Mobile web browsers will likely function as expected, but are not officially supported.
+
+Mobile, desktop, and wearable device applications are under consideration for future development.

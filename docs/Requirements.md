@@ -15,17 +15,28 @@ This is a living document that will take the place of an official Product Requir
 
 Section on features related to projects.
 
+- The software shall allow users to view a list of all the projects.
+- The software shall allow users to view a single project.
+  - The software shall allow users to view a list of the work packages for the project.
+
 ## Work Packages
 
 Section on features related to work packages.
+
+- The software shall allow users to view a single work package.
 
 ## Change Requests
 
 Section on features related to change requests.
 
+- The software shall allow users to view a list of all the change requests.
+- The software shall allow users to view a single change request.
+
 ## Other
 
 Section for other features and topics.
+
+- The software shall allow users to log in and log out.
 
 ### Supported Platforms
 

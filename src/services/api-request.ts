@@ -5,7 +5,6 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { API_URL } from 'utils';
 
 /**
  * Output of any API request custom hook.
@@ -69,7 +68,7 @@ export const useApiRequest = <ReturnObj>(
     let isMounted = true;
 
     axios
-      .request<ReturnObj, AxiosResponse<ReturnObj>>({ ...config, baseURL: API_URL })
+      .request<ReturnObj, AxiosResponse<ReturnObj>>({ ...config })
       .then((response) => doIfMounted(isMounted, () => setResponseData(transform(response.data))))
       .catch((error) => doIfMounted(isMounted, () => setErrorMessage(buildErrorMessage(error))))
       .finally(() => doIfMounted(isMounted, () => setIsLoading(false)));

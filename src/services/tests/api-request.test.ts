@@ -6,20 +6,15 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { renderHook } from '@testing-library/react-hooks';
-import {
-  apiRoutes,
-  API_URL,
-  ChangeRequest,
-  exampleAllProjects,
-  exampleProject1,
-  exampleStandardChangeRequest,
-  Project
-} from 'utils';
+import { ChangeRequest, Project } from 'utils';
+import { apiUrls } from '../../shared/urls';
+import { exampleAllProjects, exampleProject1 } from '../../test-support/test-data/projects.stub';
+import { exampleStandardChangeRequest } from '../../test-support/test-data/change-requests.stub';
 import { useApiRequest } from '../api-request';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(
-  rest.get(API_URL + apiRoutes.CHANGE_REQUESTS, (req, res, ctx) => {
+  rest.get(apiUrls.changeRequests(), (req, res, ctx) => {
     return res(ctx.status(500, 'Mock server not set up yet'));
   })
 );
@@ -31,7 +26,7 @@ afterAll(() => server.close());
 describe('useApiRequest hook', () => {
   it('handles server responding with an error using status text', async () => {
     const { result, waitForNextUpdate } = renderHook(() =>
-      useApiRequest<ChangeRequest[]>({ method: 'GET', url: apiRoutes.CHANGE_REQUESTS }, (cr) => cr)
+      useApiRequest<ChangeRequest[]>({ method: 'GET', url: apiUrls.changeRequests() }, (cr) => cr)
     );
     expect(result.current.isLoading).toBeTruthy();
     expect(result.current.errorMessage).toEqual('');
@@ -47,7 +42,7 @@ describe('useApiRequest hook', () => {
 
   it('handles server responding with an error using response body message', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.CHANGE_REQUESTS + '/5', (req, res, ctx) => {
+      rest.get(apiUrls.changeRequestsById('5'), (req, res, ctx) => {
         return res(
           ctx.status(404),
           ctx.json({ message: 'Could not find the requested change request [#5].' })
@@ -57,7 +52,7 @@ describe('useApiRequest hook', () => {
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useApiRequest<ChangeRequest>(
-        { method: 'GET', url: apiRoutes.CHANGE_REQUESTS + '/5' },
+        { method: 'GET', url: apiUrls.changeRequestsById('5') },
         (cr) => cr
       )
     );
@@ -75,13 +70,13 @@ describe('useApiRequest hook', () => {
 
   it('handles server loading for a while', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.PROJECTS, (req, res, ctx) => {
+      rest.get(apiUrls.projects(), (req, res, ctx) => {
         return res(ctx.delay(300), ctx.status(200));
       })
     );
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useApiRequest<Project[]>({ method: 'GET', url: apiRoutes.PROJECTS }, (prj) => prj)
+      useApiRequest<Project[]>({ method: 'GET', url: apiUrls.projects() }, (prj) => prj)
     );
     expect(result.current.isLoading).toBeTruthy();
     expect(result.current.errorMessage).toEqual('');
@@ -95,13 +90,13 @@ describe('useApiRequest hook', () => {
 
   it('basic get array', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.PROJECTS, (req, res, ctx) => {
+      rest.get(apiUrls.projects(), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleAllProjects));
       })
     );
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useApiRequest<Project[]>({ method: 'GET', url: apiRoutes.PROJECTS }, (prj) => prj)
+      useApiRequest<Project[]>({ method: 'GET', url: apiUrls.projects() }, (prj) => prj)
     );
     expect(result.current.isLoading).toBeTruthy();
     expect(result.current.errorMessage).toEqual('');
@@ -117,13 +112,16 @@ describe('useApiRequest hook', () => {
 
   it('basic get single', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.PROJECTS + '/1.1.1', (req, res, ctx) => {
+      rest.get(apiUrls.projectsByWbsNum('1.1.1'), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleProject1));
       })
     );
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useApiRequest<Project>({ method: 'GET', url: apiRoutes.PROJECTS + '/1.1.1' }, (prj) => prj)
+      useApiRequest<Project>(
+        { method: 'GET', url: apiUrls.projectsByWbsNum('1.1.1') },
+        (prj) => prj
+      )
     );
     expect(result.current.isLoading).toBeTruthy();
     expect(result.current.errorMessage).toEqual('');
@@ -139,7 +137,7 @@ describe('useApiRequest hook', () => {
 
   it('basic post', async () => {
     server.use(
-      rest.post(API_URL + apiRoutes.CHANGE_REQUESTS, (req, res, ctx) => {
+      rest.post(apiUrls.changeRequests(), (req, res, ctx) => {
         return res(
           ctx.status(200),
           ctx.json({ ...exampleStandardChangeRequest, reviewNotes: req.body })
@@ -149,7 +147,7 @@ describe('useApiRequest hook', () => {
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useApiRequest<ChangeRequest>(
-        { method: 'POST', url: apiRoutes.CHANGE_REQUESTS, data: 'big issues' },
+        { method: 'POST', url: apiUrls.changeRequests(), data: 'big issues' },
         (cr) => cr
       )
     );

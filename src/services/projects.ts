@@ -5,8 +5,9 @@
 
 import { useMemo } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import { apiRoutes, Project, WbsNumber, WorkPackage } from 'utils';
+import { Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
+import { apiUrls } from '../shared/urls';
 import { useApiRequest } from './api-request';
 
 /**
@@ -35,7 +36,7 @@ const projectTransformer = (project: Project) => {
  */
 export const useAllProjects = () => {
   const config: AxiosRequestConfig = useMemo(
-    () => ({ method: 'GET', url: apiRoutes.PROJECTS }),
+    () => ({ method: 'GET', url: apiUrls.projects() }),
     []
   );
   const transformer = (response: Project[]) => response.map(projectTransformer);
@@ -50,7 +51,7 @@ export const useAllProjects = () => {
  */
 export const useSingleProject = (wbsNum: WbsNumber) => {
   const config: AxiosRequestConfig = useMemo(
-    () => ({ method: 'GET', url: `${apiRoutes.PROJECTS}/${wbsPipe(wbsNum)}` }),
+    () => ({ method: 'GET', url: apiUrls.projectsByWbsNum(wbsPipe(wbsNum)) }),
     [wbsNum]
   );
   return useApiRequest<Project>(config, projectTransformer);

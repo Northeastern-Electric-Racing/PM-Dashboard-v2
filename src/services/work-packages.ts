@@ -5,8 +5,9 @@
 
 import { useMemo } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import { apiRoutes, WbsNumber, WorkPackage } from 'utils';
+import { WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
+import { apiUrls } from '../shared/urls';
 import { useApiRequest } from './api-request';
 
 /**
@@ -37,7 +38,7 @@ const workPackageTransformer = (workPackage: WorkPackage) => {
  */
 export const useAllWorkPackages = () => {
   const config: AxiosRequestConfig = useMemo(
-    () => ({ method: 'GET', url: apiRoutes.WORK_PACKAGES }),
+    () => ({ method: 'GET', url: apiUrls.workPackages() }),
     []
   );
   const transformer = (response: WorkPackage[]) => response.map(workPackageTransformer);
@@ -52,7 +53,7 @@ export const useAllWorkPackages = () => {
  */
 export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
   const config: AxiosRequestConfig = useMemo(
-    () => ({ method: 'GET', url: `${apiRoutes.WORK_PACKAGES}/${wbsPipe(wbsNum)}` }),
+    () => ({ method: 'GET', url: apiUrls.workPackagesByWbsNum(wbsPipe(wbsNum)) }),
     [wbsNum]
   );
   return useApiRequest<WorkPackage>(config, workPackageTransformer);

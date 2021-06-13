@@ -5,7 +5,8 @@
 
 import { useMemo } from 'react';
 import { AxiosRequestConfig } from 'axios';
-import { apiRoutes, ChangeRequest, ChangeRequestType } from 'utils';
+import { ChangeRequest, ChangeRequestType } from 'utils';
+import { apiUrls } from '../shared/urls';
 import { useApiRequest } from './api-request';
 
 /**
@@ -39,7 +40,7 @@ export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
  */
 export const useAllChangeRequests = () => {
   const config: AxiosRequestConfig = useMemo(
-    () => ({ method: 'GET', url: apiRoutes.CHANGE_REQUESTS }),
+    () => ({ method: 'GET', url: apiUrls.changeRequests() }),
     []
   );
   const transformer = (response: ChangeRequest[]) => response.map(changeRequestTransformer);
@@ -54,7 +55,7 @@ export const useAllChangeRequests = () => {
  */
 export const useSingleChangeRequest = (id: number) => {
   const config: AxiosRequestConfig = useMemo(
-    () => ({ method: 'GET', url: `${apiRoutes.CHANGE_REQUESTS}/${id}` }),
+    () => ({ method: 'GET', url: apiUrls.changeRequestsById(`${id}`) }),
     [id]
   );
   return useApiRequest<ChangeRequest>(config, changeRequestTransformer);

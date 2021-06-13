@@ -6,12 +6,13 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { renderHook } from '@testing-library/react-hooks';
-import { apiRoutes, API_URL, exampleAllProjects, exampleProject1 } from 'utils';
+import { apiUrls } from '../../shared/urls';
+import { exampleAllProjects, exampleProject1 } from '../../test-support/test-data/projects.stub';
 import { useAllProjects, useSingleProject } from '../projects';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(
-  rest.get(API_URL + apiRoutes.PROJECTS, (req, res, ctx) => {
+  rest.get(apiUrls.projects(), (req, res, ctx) => {
     return res(ctx.status(500, 'Mock server not set up yet'));
   })
 );
@@ -23,7 +24,7 @@ afterAll(() => server.close());
 describe('project hooks', () => {
   it('handles getting a list of projects', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.PROJECTS, (req, res, ctx) => {
+      rest.get(apiUrls.projects(), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleAllProjects));
       })
     );
@@ -44,7 +45,7 @@ describe('project hooks', () => {
 
   it('handles getting a single project', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.PROJECTS + '/1.1.0', (req, res, ctx) => {
+      rest.get(apiUrls.projectsByWbsNum('1.1.0'), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleProject1));
       })
     );

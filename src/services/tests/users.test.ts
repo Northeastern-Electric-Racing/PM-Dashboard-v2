@@ -6,12 +6,13 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { renderHook } from '@testing-library/react-hooks';
-import { apiRoutes, API_URL, exampleAdminUser, exampleAllUsers } from 'utils';
+import { apiUrls } from '../../shared/urls';
+import { exampleAllUsers, exampleAdminUser } from '../../test-support/test-data/users.stub';
 import { useAllUsers, useSingleUser } from '../users';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(
-  rest.get(API_URL + apiRoutes.USERS, (req, res, ctx) => {
+  rest.get(apiUrls.users(), (req, res, ctx) => {
     return res(ctx.status(500, 'Mock server not set up yet'));
   })
 );
@@ -23,7 +24,7 @@ afterAll(() => server.close());
 describe('user hooks', () => {
   it('handles getting a list of users', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.USERS, (req, res, ctx) => {
+      rest.get(apiUrls.users(), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleAllUsers));
       })
     );
@@ -43,7 +44,7 @@ describe('user hooks', () => {
 
   it('handles getting a single user', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.USERS + '/24', (req, res, ctx) => {
+      rest.get(apiUrls.usersById('24'), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleAdminUser));
       })
     );

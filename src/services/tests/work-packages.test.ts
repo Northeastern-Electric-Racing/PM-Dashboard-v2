@@ -6,12 +6,16 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { renderHook } from '@testing-library/react-hooks';
-import { apiRoutes, API_URL, exampleAllWorkPackages, exampleWorkPackage1 } from 'utils';
+import { apiUrls } from '../../shared/urls';
+import {
+  exampleAllWorkPackages,
+  exampleWorkPackage1
+} from '../../test-support/test-data/work-packages.stub';
 import { useAllWorkPackages, useSingleWorkPackage } from '../work-packages';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(
-  rest.get(API_URL + apiRoutes.WORK_PACKAGES, (req, res, ctx) => {
+  rest.get(apiUrls.workPackages(), (req, res, ctx) => {
     return res(ctx.status(500, 'Mock server not set up yet'));
   })
 );
@@ -23,7 +27,7 @@ afterAll(() => server.close());
 describe('project hooks', () => {
   it('handles getting a list of projects', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.WORK_PACKAGES, (req, res, ctx) => {
+      rest.get(apiUrls.workPackages(), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleAllWorkPackages));
       })
     );
@@ -45,7 +49,7 @@ describe('project hooks', () => {
 
   it('handles getting a single project', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.WORK_PACKAGES + '/1.1.1', (req, res, ctx) => {
+      rest.get(apiUrls.workPackagesByWbsNum('1.1.1'), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleWorkPackage1));
       })
     );

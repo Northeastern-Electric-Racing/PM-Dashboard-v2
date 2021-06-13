@@ -6,12 +6,16 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { renderHook } from '@testing-library/react-hooks';
-import { apiRoutes, API_URL, exampleAllChangeRequests, exampleStageGateChangeRequest } from 'utils';
+import { apiUrls } from '../../shared/urls';
+import {
+  exampleAllChangeRequests,
+  exampleStageGateChangeRequest
+} from '../../test-support/test-data/change-requests.stub';
 import { useAllChangeRequests, useSingleChangeRequest } from '../change-requests';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(
-  rest.get(API_URL + apiRoutes.CHANGE_REQUESTS, (req, res, ctx) => {
+  rest.get(apiUrls.changeRequests(), (req, res, ctx) => {
     return res(ctx.status(500, 'Mock server not set up yet'));
   })
 );
@@ -23,7 +27,7 @@ afterAll(() => server.close());
 describe('change request hooks', () => {
   it('handles getting a list of change requests', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.CHANGE_REQUESTS, (req, res, ctx) => {
+      rest.get(apiUrls.changeRequests(), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleAllChangeRequests));
       })
     );
@@ -43,7 +47,7 @@ describe('change request hooks', () => {
 
   it('handles getting a single change request', async () => {
     server.use(
-      rest.get(API_URL + apiRoutes.CHANGE_REQUESTS + '/50', (req, res, ctx) => {
+      rest.get(apiUrls.changeRequestsById('50'), (req, res, ctx) => {
         return res(ctx.status(200), ctx.json(exampleStageGateChangeRequest));
       })
     );

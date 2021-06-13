@@ -4,7 +4,8 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { apiRoutes, API_URL, ChangeRequest } from 'utils';
+import { ChangeRequest } from 'utils';
+import { apiUrls } from '../../shared/urls';
 import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
 import { handler } from '../functions/change-requests';
 
@@ -14,7 +15,7 @@ describe('change requests api endpoint handler', () => {
     let crResponse: ChangeRequest[];
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(API_URL + apiRoutes.CHANGE_REQUESTS, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.changeRequests(), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       crResponse = JSON.parse(responseObject.body);
     });
@@ -43,7 +44,7 @@ describe('change requests api endpoint handler', () => {
     let crResponse: ChangeRequest;
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL + apiRoutes.CHANGE_REQUESTS}/37`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.changeRequestsById('37'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       crResponse = JSON.parse(responseObject.body);
     });
@@ -61,7 +62,7 @@ describe('change requests api endpoint handler', () => {
     });
 
     it('handles 404 when project not found', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL + apiRoutes.CHANGE_REQUESTS}/105`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.changeRequestsById('105'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 

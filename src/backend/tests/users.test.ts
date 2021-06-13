@@ -4,7 +4,8 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { User, API_URL, apiRoutes } from 'utils';
+import { User } from 'utils';
+import { apiUrls } from '../../shared/urls';
 import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
 import { exampleAdminUser } from '../../test-support/test-data/users.stub';
 import { handler } from '../functions/users';
@@ -25,7 +26,7 @@ describe('users api endpoint handler', () => {
     let usersResponse: User[];
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.users(), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       usersResponse = JSON.parse(responseObject.body);
     });
@@ -50,7 +51,7 @@ describe('users api endpoint handler', () => {
     let userResponse: User;
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}/1`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.usersById('1'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       userResponse = JSON.parse(responseObject.body);
     });
@@ -64,7 +65,7 @@ describe('users api endpoint handler', () => {
     });
 
     it('handles 404 when user not found', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}/420`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.usersById('420'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 
@@ -78,7 +79,7 @@ describe('users api endpoint handler', () => {
     let userResponse: User;
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST', {
+      const event: HandlerEvent = mockEvent(apiUrls.usersLogin(), 'POST', {
         emailId: exampleAdminUser.emailId
       });
       responseObject = await handler(event, mockContext, mockCallback);
@@ -94,7 +95,7 @@ describe('users api endpoint handler', () => {
     });
 
     it('handles 404 when user not found', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST', {
+      const event: HandlerEvent = mockEvent(apiUrls.usersLogin(), 'POST', {
         emailId: 'not.a'
       });
       responseObject = await handler(event, mockContext, mockCallback);
@@ -105,7 +106,7 @@ describe('users api endpoint handler', () => {
     });
 
     it('throws when no emailId is provided in the body', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST', {});
+      const event: HandlerEvent = mockEvent(apiUrls.usersLogin(), 'POST', {});
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 
@@ -114,7 +115,7 @@ describe('users api endpoint handler', () => {
     });
 
     it('throws when no body', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.USERS}:login`, 'POST');
+      const event: HandlerEvent = mockEvent(apiUrls.usersLogin(), 'POST');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 

@@ -4,7 +4,8 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { WorkPackage, API_URL, apiRoutes } from 'utils';
+import { WorkPackage } from 'utils';
+import { apiUrls } from '../../shared/urls';
 import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
 import { handler } from '../functions/work-packages';
 
@@ -14,7 +15,7 @@ describe('work packages api endpoint handler', () => {
     let workPackagesResponse: WorkPackage[];
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.WORK_PACKAGES}`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.workPackages(), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       workPackagesResponse = JSON.parse(responseObject.body);
     });
@@ -50,7 +51,7 @@ describe('work packages api endpoint handler', () => {
     let workPackageResponse: WorkPackage;
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.WORK_PACKAGES}/1.1.1`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.workPackagesByWbsNum('1.1.1'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       workPackageResponse = JSON.parse(responseObject.body);
     });
@@ -71,7 +72,7 @@ describe('work packages api endpoint handler', () => {
     });
 
     it('handles 404 when work package not found', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.WORK_PACKAGES}/1.0.0`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.workPackagesByWbsNum('1.0.0'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 

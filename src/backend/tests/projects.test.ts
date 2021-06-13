@@ -4,7 +4,8 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { Project, API_URL, apiRoutes } from 'utils';
+import { Project } from 'utils';
+import { apiUrls } from '../../shared/urls';
 import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
 import { handler } from '../functions/projects';
 
@@ -14,7 +15,7 @@ describe('projects api endpoint handler', () => {
     let projectsResponse: Project[];
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.PROJECTS}`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.projects(), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       projectsResponse = JSON.parse(responseObject.body);
     });
@@ -50,7 +51,7 @@ describe('projects api endpoint handler', () => {
     let projectResponse: Project;
 
     beforeEach(async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.PROJECTS}/1.2.0`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.projectsByWbsNum('1.2.0'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       projectResponse = JSON.parse(responseObject.body);
     });
@@ -71,7 +72,7 @@ describe('projects api endpoint handler', () => {
     });
 
     it('handles 404 when project not found', async () => {
-      const event: HandlerEvent = mockEvent(`${API_URL}${apiRoutes.PROJECTS}/1.0.0`, 'GET');
+      const event: HandlerEvent = mockEvent(apiUrls.projectsByWbsNum('1.0.0'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);
 

@@ -8,7 +8,7 @@ export const API_URL: string = `/.netlify/functions`;
 /**************** Users Endpoint ****************/
 const USERS: string = `/users`;
 const USERS_BY_ID: string = `${USERS}/:id`;
-const USERS_LOGIN: string = `${USERS}\\:login`;
+const USERS_LOGIN: string = `${USERS}/auth\\:login`;
 
 /**************** Projects Endpoint ****************/
 const PROJECTS: string = `/projects`;
@@ -21,7 +21,7 @@ const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbs`;
 /**************** Change Requests Endpoint ****************/
 const CHANGE_REQUESTS: string = `/change-requests`;
 const CHANGE_REQUESTS_BY_ID: string = `${CHANGE_REQUESTS}/:id`;
-const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS_BY_ID}\\:review`;
+const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS_BY_ID}/process\\:review`;
 
 export const apiRoutes = {
   USERS,

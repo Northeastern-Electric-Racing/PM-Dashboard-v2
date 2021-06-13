@@ -47,3 +47,17 @@ export const useSingleUser = (id: number) => {
   );
   return useApiRequest<User>(config, userTransformer);
 };
+
+/**
+ * Custom React Hook to execute logging in a user.
+ *
+ * @param emailId The emailId of the user to log in.
+ * @returns The logged in user.
+ */
+export const useLogUserIn = (emailId: string) => {
+  const config: AxiosRequestConfig = useMemo(
+    () => ({ method: 'POST', url: apiUrls.usersLogin(), data: { emailId } }),
+    [emailId]
+  );
+  return useApiRequest<User>(config, userTransformer);
+};

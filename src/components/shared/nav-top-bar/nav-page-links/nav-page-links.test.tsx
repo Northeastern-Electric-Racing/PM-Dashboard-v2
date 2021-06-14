@@ -4,7 +4,7 @@
  */
 
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../../test-support/test-utils';
+import { renderWithRouter } from '../../../../test-support/test-utils';
 import NavPageLinks from './nav-page-links';
 
 /**

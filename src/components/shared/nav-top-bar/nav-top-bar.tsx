@@ -5,9 +5,9 @@
 
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import NavUserMenu from '../nav-user-menu/nav-user-menu';
-import NavPageLinks from '../nav-page-links/nav-page-links';
-import NavNotificationsMenu from '../nav-notifications-menu/nav-notifications-menu';
+import NavUserMenu from './nav-user-menu/nav-user-menu';
+import NavPageLinks from './nav-page-links/nav-page-links';
+import NavNotificationsMenu from './nav-notifications-menu/nav-notifications-menu';
 import styles from './nav-top-bar.module.css';
 
 const NavTopBar: React.FC = () => {

@@ -4,6 +4,7 @@
  */
 
 import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
+import { AxiosResponse } from 'axios';
 import { ApiRoute, API_URL } from 'utils';
 
 export const exampleApiRoutes: ApiRoute[] = [
@@ -67,4 +68,10 @@ export const mockEvent = (path: string, httpMethod: string, body?: any): Handler
     body: body ? JSON.stringify(body) : null,
     isBase64Encoded: false
   };
+};
+
+export const mockPromiseAxiosResponse = <Return>(data: Return) => {
+  return new Promise((res, rej) =>
+    res({ status: 0, statusText: '', headers: null, config: {}, data })
+  ) as Promise<AxiosResponse<Return>>;
 };

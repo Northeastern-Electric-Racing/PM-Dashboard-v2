@@ -4,18 +4,21 @@
  */
 
 import { screen } from '@testing-library/react';
+import { UseQueryResult } from 'react-query';
 import { exampleProject1, Project } from 'utils';
-import { ApiHookReturn } from '../../services/api-request';
-import { useSingleProject } from '../../services/projects';
 import { renderWithRouter } from '../../test-support/test-utils';
+import { mockUseQueryResult } from '../../test-support/test-data/test-utils.stub';
+import { useSingleProject } from '../../services/api-hooks/projects.hooks';
 import ProjectContainer from './project-container';
 
-jest.mock('../../services/projects');
+jest.mock('../../services/api-hooks/projects.hooks');
 
-const mockedUseSingleChangeRequest = useSingleProject as jest.Mock<ApiHookReturn<Project>>;
+const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 
-const mockHook = (isLoading: boolean, errorMessage: string, responseData?: Project) => {
-  mockedUseSingleChangeRequest.mockReturnValue({ isLoading, errorMessage, responseData });
+const mockHook = (isLoading: boolean, isError: boolean, data?: Project, error?: Error) => {
+  mockedUseSingleProject.mockReturnValue(
+    mockUseQueryResult<Project>(isLoading, isError, data, error)
+  );
 };
 
 // Sets up the component under test with the desired values and renders it.
@@ -25,14 +28,14 @@ const renderComponent = () => {
 
 describe('Rendering Project Container', () => {
   it('renders the loading indicator', () => {
-    mockHook(true, '');
+    mockHook(true, false);
     renderComponent();
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('renders the loaded project', () => {
-    mockHook(false, '', exampleProject1);
+    mockHook(false, false, exampleProject1);
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -43,7 +46,7 @@ describe('Rendering Project Container', () => {
   });
 
   it('handles the error with message', () => {
-    mockHook(false, '404 could not find the requested project');
+    mockHook(false, true, undefined, new Error('404 could not find the requested project'));
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -52,7 +55,7 @@ describe('Rendering Project Container', () => {
   });
 
   it('handles the error with no message', () => {
-    mockHook(false, '');
+    mockHook(false, true);
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();

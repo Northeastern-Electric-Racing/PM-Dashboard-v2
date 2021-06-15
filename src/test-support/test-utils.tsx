@@ -6,6 +6,7 @@
 import { render } from '@testing-library/react';
 import { ReactElement } from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // Regular Expression to match WBS Numbers
 export const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
@@ -23,4 +24,9 @@ export const renderWithRouter = (ui: ReactElement, { path = '/', route = '/' }) 
     </MemoryRouter>
   );
   render(toRender);
+};
+
+export const queryClientProvdierWrapper = ({ children }: any) => {
+  const queryClient = new QueryClient();
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };

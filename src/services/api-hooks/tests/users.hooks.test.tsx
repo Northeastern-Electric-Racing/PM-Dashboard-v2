@@ -4,9 +4,9 @@
  */
 
 import { renderHook } from '@testing-library/react-hooks';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { AxiosResponse } from 'axios';
 import { User } from 'utils';
+import { queryClientProvdierWrapper as wrapper } from '../../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../../test-support/test-data/test-utils.stub';
 import { exampleAllUsers, exampleAdminUser } from '../../../test-support/test-data/users.stub';
 import { getAllUsers, getSingleUser } from '../../apis/users.api';
@@ -14,17 +14,7 @@ import { useAllUsers, useSingleUser } from '../users.hooks';
 
 jest.mock('../../apis/users.api');
 
-let queryClient: QueryClient;
-let wrapper: any;
-
 describe('user hooks', () => {
-  beforeEach(() => {
-    queryClient = new QueryClient();
-    wrapper = ({ children }: any) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
-  });
-
   it('handles getting a list of users', async () => {
     const mockedGetAllUsers = getAllUsers as jest.Mock<Promise<AxiosResponse<User[]>>>;
     mockedGetAllUsers.mockReturnValue(mockPromiseAxiosResponse<User[]>(exampleAllUsers));

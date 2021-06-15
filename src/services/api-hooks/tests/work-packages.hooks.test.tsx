@@ -4,9 +4,9 @@
  */
 
 import { renderHook } from '@testing-library/react-hooks';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { AxiosResponse } from 'axios';
 import { WorkPackage } from 'utils';
+import { queryClientProvdierWrapper as wrapper } from '../../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../../test-support/test-data/test-utils.stub';
 import {
   exampleAllWorkPackages,
@@ -18,17 +18,7 @@ import { useAllWorkPackages, useSingleWorkPackage } from '../work-packages.hooks
 
 jest.mock('../../apis/work-packages.api');
 
-let queryClient: QueryClient;
-let wrapper: any;
-
 describe('work package hooks', () => {
-  beforeEach(() => {
-    queryClient = new QueryClient();
-    wrapper = ({ children }: any) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
-  });
-
   it('handles getting a list of work packages', async () => {
     const mockedGetAllWorkPackages = getAllWorkPackages as jest.Mock<
       Promise<AxiosResponse<WorkPackage[]>>

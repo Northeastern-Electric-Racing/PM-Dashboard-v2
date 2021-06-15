@@ -4,9 +4,9 @@
  */
 
 import { renderHook } from '@testing-library/react-hooks';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { AxiosResponse } from 'axios';
 import { ChangeRequest } from 'utils';
+import { queryClientProvdierWrapper as wrapper } from '../../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../../test-support/test-data/test-utils.stub';
 import {
   exampleAllChangeRequests,
@@ -17,17 +17,7 @@ import { useAllChangeRequests, useSingleChangeRequest } from '../change-requests
 
 jest.mock('../../apis/change-requests.api');
 
-let queryClient: QueryClient;
-let wrapper: any;
-
 describe('change request hooks', () => {
-  beforeEach(() => {
-    queryClient = new QueryClient();
-    wrapper = ({ children }: any) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
-  });
-
   it('handles getting a list of change requests', async () => {
     const mockedGetAllChangeRequests = getAllChangeRequests as jest.Mock<
       Promise<AxiosResponse<ChangeRequest[]>>

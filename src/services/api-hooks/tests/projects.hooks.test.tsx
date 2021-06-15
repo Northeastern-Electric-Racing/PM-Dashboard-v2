@@ -4,9 +4,9 @@
  */
 
 import { renderHook } from '@testing-library/react-hooks';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { AxiosResponse } from 'axios';
 import { Project } from 'utils';
+import { queryClientProvdierWrapper as wrapper } from '../../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../../test-support/test-data/test-utils.stub';
 import { exampleAllProjects, exampleProject1 } from '../../../test-support/test-data/projects.stub';
 import { exampleWbsProject1 } from '../../../test-support/test-data/wbs-numbers.stub';
@@ -15,17 +15,7 @@ import { useAllProjects, useSingleProject } from '../projects.hooks';
 
 jest.mock('../../apis/projects.api');
 
-let queryClient: QueryClient;
-let wrapper: any;
-
 describe('project hooks', () => {
-  beforeEach(() => {
-    queryClient = new QueryClient();
-    wrapper = ({ children }: any) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
-  });
-
   it('handles getting a list of projects', async () => {
     const mockedGetAllProjects = getAllProjects as jest.Mock<Promise<AxiosResponse<Project[]>>>;
     mockedGetAllProjects.mockReturnValue(mockPromiseAxiosResponse<Project[]>(exampleAllProjects));

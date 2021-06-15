@@ -3,19 +3,22 @@
  * See the LICENSE file in the repository root folder for details.
  */
 import { render, screen } from '@testing-library/react';
+import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
-import { ApiHookReturn } from '../../services/api-request';
-import { useSingleWorkPackage } from '../../services/work-packages';
+import { mockUseQueryResult } from '../../test-support/test-data/test-utils.stub';
+import { useSingleWorkPackage } from '../../services/api-hooks/work-packages.hooks';
 import { exampleWbsProject1 } from '../../test-support/test-data/wbs-numbers.stub';
 import { exampleWorkPackage1 } from '../../test-support/test-data/work-packages.stub';
 import WorkPackageContainer from './work-package-container';
 
-jest.mock('../../services/work-packages');
+jest.mock('../../services/api-hooks/work-packages.hooks');
 
-const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<ApiHookReturn<WorkPackage>>;
+const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<UseQueryResult<WorkPackage>>;
 
-const mockHook = (isLoading: boolean, errorMessage: string, responseData?: WorkPackage) => {
-  mockedUseSingleWorkPackage.mockReturnValue({ isLoading, errorMessage, responseData });
+const mockHook = (isLoading: boolean, isError: boolean, data?: WorkPackage, error?: Error) => {
+  mockedUseSingleWorkPackage.mockReturnValue(
+    mockUseQueryResult<WorkPackage>(isLoading, isError, data, error)
+  );
 };
 
 // Sets up the component under test with the desired values and renders it.
@@ -25,14 +28,14 @@ const renderComponent = () => {
 
 describe('work package container', () => {
   it('renders the loading indicator', () => {
-    mockHook(true, '');
+    mockHook(true, false);
     renderComponent();
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('renders the loaded project', () => {
-    mockHook(false, '', exampleWorkPackage1);
+    mockHook(false, false, exampleWorkPackage1);
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -44,7 +47,7 @@ describe('work package container', () => {
   });
 
   it('handles the error with message', () => {
-    mockHook(false, '404 could not find the requested work package');
+    mockHook(false, true, undefined, new Error('404 could not find the requested work package'));
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -53,7 +56,7 @@ describe('work package container', () => {
   });
 
   it('handles the error with no message', () => {
-    mockHook(false, '');
+    mockHook(false, true);
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();

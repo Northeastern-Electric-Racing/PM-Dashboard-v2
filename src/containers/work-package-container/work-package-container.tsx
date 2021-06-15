@@ -5,7 +5,7 @@
 
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../shared/pipes';
-import { useSingleWorkPackage } from '../../services/work-packages';
+import { useSingleWorkPackage } from '../../services/api-hooks/work-packages.hooks';
 import WorkPackageDetails from '../../components/work-package-details/work-package-details';
 import WorkPackageDependencies from '../../components/work-package-dependencies/work-package-dependencies';
 import WorkPackageRules from '../../components/work-package-rules/work-package-rules';
@@ -18,17 +18,18 @@ interface WorkPackageContainerProps {
 }
 
 const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) => {
-  const { isLoading, errorMessage, responseData } = useSingleWorkPackage(wbsNum);
+  const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
-  if (errorMessage !== '' || responseData === undefined) {
+
+  if (isError) {
     return (
       <>
         <h3>Oops, sorry!</h3>
         <h5>There was an error loading the page.</h5>
-        <p>{errorMessage ? errorMessage : 'The data did not load properly.'}</p>
+        <p>{error ? error.message : 'There was an error loading the data.'}</p>
       </>
     );
   }
@@ -38,23 +39,23 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
     <div className="mb-5">
       <div className="mx-5 pt-2 pb-1">
         <h3>
-          {wbsPipe(wbsNum)} - {responseData.name}
+          {wbsPipe(wbsNum)} - {data!.name}
         </h3>
       </div>
       <div className={cardPadding}>
-        <WorkPackageDetails workPackage={responseData!} />
+        <WorkPackageDetails workPackage={data!} />
       </div>
       <div className={cardPadding}>
-        <WorkPackageDependencies workPackage={responseData!} />
+        <WorkPackageDependencies workPackage={data!} />
       </div>
       <div className={cardPadding}>
-        <WorkPackageRules workPackage={responseData!} />
+        <WorkPackageRules workPackage={data!} />
       </div>
       <div className={cardPadding}>
-        <DescriptionList workPackage={responseData!} />
+        <DescriptionList workPackage={data!} />
       </div>
       <div className={cardPadding}>
-        <WorkPackageChanges workPackage={responseData!} />
+        <WorkPackageChanges workPackage={data!} />
       </div>
     </div>
   );

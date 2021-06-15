@@ -4,7 +4,7 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { useSingleChangeRequest } from '../../services/change-requests';
+import { useSingleChangeRequest } from '../../services/api-hooks/change-requests.hooks';
 import ChangeRequestDetailsView from '../../components/change-request-details/change-request-details';
 import './change-request-details.module.css';
 
@@ -13,21 +13,23 @@ const ChangeRequestDetails: React.FC = () => {
     id: string;
   }
   const { id } = useParams<ParamTypes>();
-  const { isLoading, errorMessage, responseData } = useSingleChangeRequest(parseInt(id));
+  const { isLoading, isError, data, error } = useSingleChangeRequest(parseInt(id));
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
-  if (errorMessage !== '' || responseData === undefined) {
+
+  if (isError) {
     return (
       <>
         <h3>Oops, sorry!</h3>
         <h5>There was an error loading the page.</h5>
-        <p>{errorMessage ? errorMessage : 'The data did not load properly.'}</p>
+        <p>{error ? error.message : 'There was an error loading the data.'}</p>
       </>
     );
   }
-  return <ChangeRequestDetailsView changeRequest={responseData!} />;
+
+  return <ChangeRequestDetailsView changeRequest={data!} />;
 };
 
 export default ChangeRequestDetails;

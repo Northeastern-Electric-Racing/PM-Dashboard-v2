@@ -20,7 +20,7 @@ export const useAllProjects = () => {
 /**
  * Custom React Hook to supply a single project.
  *
- * @param wbsNum Project WBS number of the requested project.
+ * @param wbsNum WBS number of the requested project.
  */
 export const useSingleProject = (wbsNum: WbsNumber) => {
   return useQuery<Project, Error>(['project', wbsNum], async () => {

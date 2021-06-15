@@ -26,7 +26,7 @@ export const renderWithRouter = (ui: ReactElement, { path = '/', route = '/' }) 
   render(toRender);
 };
 
-export const queryClientProvdierWrapper = ({ children }: any) => {
+export const queryClientProviderWrapper = ({ children }: any) => {
   const queryClient = new QueryClient();
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };

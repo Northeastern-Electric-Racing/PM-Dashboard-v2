@@ -6,7 +6,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { AxiosResponse } from 'axios';
 import { User } from 'utils';
-import { queryClientProvdierWrapper as wrapper } from '../../../test-support/test-utils';
+import { queryClientProviderWrapper as wrapper } from '../../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../../test-support/test-data/test-utils.stub';
 import { exampleAllUsers, exampleAdminUser } from '../../../test-support/test-data/users.stub';
 import { getAllUsers, getSingleUser } from '../../apis/users.api';

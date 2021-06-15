@@ -10,7 +10,7 @@ import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbe
 import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
 import WorkPackageContainer from './work-package-container';
 
-jest.mock('../../services/work-packages');
+jest.mock('../../../../services/work-packages');
 
 const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<ApiHookReturn<WorkPackage>>;
 

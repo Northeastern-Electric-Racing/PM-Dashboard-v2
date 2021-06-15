@@ -10,7 +10,7 @@ import { useSingleProject } from '../../../../services/projects';
 import { renderWithRouter } from '../../../../test-support/test-utils';
 import ProjectContainer from './project-container';
 
-jest.mock('../../services/projects');
+jest.mock('../../../../services/projects');
 
 const mockedUseSingleChangeRequest = useSingleProject as jest.Mock<ApiHookReturn<Project>>;
 

@@ -8,7 +8,7 @@ import { routes } from '../../../shared/routes';
 import { renderWithRouter } from '../../../test-support/test-utils';
 import WBSDetails from './wbs-details';
 
-jest.mock('../../containers/project-container/project-container', () => {
+jest.mock('./project-container/project-container', () => {
   return {
     __esModule: true,
     default: () => {
@@ -17,7 +17,7 @@ jest.mock('../../containers/project-container/project-container', () => {
   };
 });
 
-jest.mock('../../containers/work-package-container/work-package-container', () => {
+jest.mock('./work-package-container/work-package-container', () => {
   return {
     __esModule: true,
     default: () => {

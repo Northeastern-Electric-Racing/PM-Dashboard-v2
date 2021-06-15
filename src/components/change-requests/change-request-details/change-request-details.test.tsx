@@ -11,7 +11,7 @@ import { ApiHookReturn } from '../../../services/api-request';
 import { useSingleChangeRequest } from '../../../services/change-requests';
 import ChangeRequestDetails from './change-request-details';
 
-jest.mock('../../services/change-requests');
+jest.mock('../../../services/change-requests');
 
 const mockedUseSingleChangeRequest = useSingleChangeRequest as jest.Mock<
   ApiHookReturn<ChangeRequest>

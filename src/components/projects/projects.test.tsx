@@ -8,7 +8,7 @@ import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
 import Projects from './projects';
 
-jest.mock('../../containers/projects-table/projects-table', () => {
+jest.mock('./projects-table/projects-table', () => {
   return {
     __esModule: true,
     default: () => {
@@ -17,7 +17,7 @@ jest.mock('../../containers/projects-table/projects-table', () => {
   };
 });
 
-jest.mock('../wbs-details/wbs-details', () => {
+jest.mock('./wbs-details/wbs-details', () => {
   return {
     __esModule: true,
     default: () => {

@@ -5,7 +5,7 @@
 
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../shared/pipes';
-import { useSingleWorkPackage } from '../../services/api-hooks/work-packages.hooks';
+import { useSingleWorkPackage } from '../../services/work-packages.hooks';
 import WorkPackageDetails from '../../components/work-package-details/work-package-details';
 import WorkPackageDependencies from '../../components/work-package-dependencies/work-package-dependencies';
 import WorkPackageRules from '../../components/work-package-rules/work-package-rules';

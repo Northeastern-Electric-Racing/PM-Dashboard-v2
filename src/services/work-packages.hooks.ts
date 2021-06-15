@@ -5,7 +5,7 @@
 
 import { useQuery } from 'react-query';
 import { WorkPackage, WbsNumber } from 'utils';
-import { getAllWorkPackages, getSingleWorkPackage } from '../apis/work-packages.api';
+import { getAllWorkPackages, getSingleWorkPackage } from './work-packages.api';
 
 /**
  * Custom React Hook to supply all work packages.

@@ -5,7 +5,7 @@
 
 import { useQuery } from 'react-query';
 import { Project, WbsNumber } from 'utils';
-import { getAllProjects, getSingleProject } from '../apis/projects.api';
+import { getAllProjects, getSingleProject } from './projects.api';
 
 /**
  * Custom React Hook to supply all projects.

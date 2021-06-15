@@ -5,8 +5,8 @@
 
 import axios from 'axios';
 import { Project, WbsNumber, WorkPackage } from 'utils';
-import { wbsPipe } from '../../shared/pipes';
-import { apiUrls } from '../../shared/urls';
+import { wbsPipe } from '../shared/pipes';
+import { apiUrls } from '../shared/urls';
 
 /**
  * Transforms a project to ensure deep field transformation of date objects.

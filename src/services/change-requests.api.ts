@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 import { ChangeRequest, ChangeRequestType } from 'utils';
-import { apiUrls } from '../../shared/urls';
+import { apiUrls } from '../shared/urls';
 
 /**
  * Transforms a change request to ensure deep field transformation of date objects.

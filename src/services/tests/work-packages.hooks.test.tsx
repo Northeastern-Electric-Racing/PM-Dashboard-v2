@@ -6,17 +6,17 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { AxiosResponse } from 'axios';
 import { WorkPackage } from 'utils';
-import { queryClientProviderWrapper as wrapper } from '../../../test-support/test-utils';
-import { mockPromiseAxiosResponse } from '../../../test-support/test-data/test-utils.stub';
+import { queryClientProviderWrapper as wrapper } from '../../test-support/test-utils';
+import { mockPromiseAxiosResponse } from '../../test-support/test-data/test-utils.stub';
 import {
   exampleAllWorkPackages,
   exampleWorkPackage1
-} from '../../../test-support/test-data/work-packages.stub';
-import { exampleWbsWorkPackage1 } from '../../../test-support/test-data/wbs-numbers.stub';
-import { getAllWorkPackages, getSingleWorkPackage } from '../../apis/work-packages.api';
+} from '../../test-support/test-data/work-packages.stub';
+import { exampleWbsWorkPackage1 } from '../../test-support/test-data/wbs-numbers.stub';
+import { getAllWorkPackages, getSingleWorkPackage } from '../work-packages.api';
 import { useAllWorkPackages, useSingleWorkPackage } from '../work-packages.hooks';
 
-jest.mock('../../apis/work-packages.api');
+jest.mock('../work-packages.api');
 
 describe('work package hooks', () => {
   it('handles getting a list of work packages', async () => {

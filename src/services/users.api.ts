@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 import { User } from 'utils';
-import { apiUrls } from '../../shared/urls';
+import { apiUrls } from '../shared/urls';
 
 /**
  * Transforms a user to ensure deep field transformation of date objects.

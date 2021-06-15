@@ -5,7 +5,7 @@
 
 import { WorkPackage, WbsNumber } from 'utils';
 import { wbsPipe } from '../../shared/pipes';
-import { useSingleProject } from '../../services/api-hooks/projects.hooks';
+import { useSingleProject } from '../../services/projects.hooks';
 import ProjectDetails from '../../components/project-details/project-details';
 import WorkPackageSummary from '../../components/work-package-summary/work-package-summary';
 import styles from './project-container.module.css';

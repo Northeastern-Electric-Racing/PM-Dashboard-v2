@@ -9,10 +9,10 @@ import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
 import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
 import { mockUseQueryResult } from '../../test-support/test-data/test-utils.stub';
-import { useSingleChangeRequest } from '../../services/api-hooks/change-requests.hooks';
+import { useSingleChangeRequest } from '../../services/change-requests.hooks';
 import ChangeRequestDetails from './change-request-details';
 
-jest.mock('../../services/api-hooks/change-requests.hooks');
+jest.mock('../../services/change-requests.hooks');
 
 const mockedUseSingleChangeRequest = useSingleChangeRequest as jest.Mock<
   UseQueryResult<ChangeRequest>

@@ -8,10 +8,10 @@ import { UseQueryResult } from 'react-query';
 import { exampleProject1, Project } from 'utils';
 import { renderWithRouter } from '../../test-support/test-utils';
 import { mockUseQueryResult } from '../../test-support/test-data/test-utils.stub';
-import { useSingleProject } from '../../services/api-hooks/projects.hooks';
+import { useSingleProject } from '../../services/projects.hooks';
 import ProjectContainer from './project-container';
 
-jest.mock('../../services/api-hooks/projects.hooks');
+jest.mock('../../services/projects.hooks');
 
 const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 

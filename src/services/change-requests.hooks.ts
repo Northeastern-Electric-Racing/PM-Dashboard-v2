@@ -5,7 +5,7 @@
 
 import { useQuery } from 'react-query';
 import { ChangeRequest } from 'utils';
-import { getAllChangeRequests, getSingleChangeRequest } from '../apis/change-requests.api';
+import { getAllChangeRequests, getSingleChangeRequest } from './change-requests.api';
 
 /**
  * Custom React Hook to supply all change requests.

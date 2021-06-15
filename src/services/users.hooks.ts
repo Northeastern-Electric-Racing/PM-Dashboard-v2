@@ -5,7 +5,7 @@
 
 import { useQuery } from 'react-query';
 import { User } from 'utils';
-import { getAllUsers, getSingleUser } from '../apis/users.api';
+import { getAllUsers, getSingleUser } from './users.api';
 
 /**
  * Custom React Hook to supply all users.

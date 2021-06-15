@@ -4,7 +4,7 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { useSingleChangeRequest } from '../../services/api-hooks/change-requests.hooks';
+import { useSingleChangeRequest } from '../../services/change-requests.hooks';
 import ChangeRequestDetailsView from '../../components/change-request-details/change-request-details';
 import './change-request-details.module.css';
 

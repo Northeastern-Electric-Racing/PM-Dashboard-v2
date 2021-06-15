@@ -6,12 +6,12 @@ import { render, screen } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
 import { mockUseQueryResult } from '../../test-support/test-data/test-utils.stub';
-import { useSingleWorkPackage } from '../../services/api-hooks/work-packages.hooks';
+import { useSingleWorkPackage } from '../../services/work-packages.hooks';
 import { exampleWbsProject1 } from '../../test-support/test-data/wbs-numbers.stub';
 import { exampleWorkPackage1 } from '../../test-support/test-data/work-packages.stub';
 import WorkPackageContainer from './work-package-container';
 
-jest.mock('../../services/api-hooks/work-packages.hooks');
+jest.mock('../../services/work-packages.hooks');
 
 const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<UseQueryResult<WorkPackage>>;
 

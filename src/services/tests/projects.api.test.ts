@@ -5,8 +5,8 @@
 
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { apiUrls } from '../../../shared/urls';
-import { exampleAllProjects, exampleProject1 } from '../../../test-support/test-data/projects.stub';
+import { apiUrls } from '../../shared/urls';
+import { exampleAllProjects, exampleProject1 } from '../../test-support/test-data/projects.stub';
 import { getAllProjects, getSingleProject } from '../projects.api';
 
 // Mock the server endpoint(s) that the component will hit

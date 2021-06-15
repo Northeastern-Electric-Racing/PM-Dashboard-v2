@@ -7,6 +7,15 @@ import { fireEvent, screen } from '@testing-library/react';
 import { renderWithRouter } from '../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
+jest.mock('../../pages/projects/projects', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>projects page</div>;
+    }
+  };
+});
+
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
   renderWithRouter(<AppAuthenticated />, { path, route });
@@ -22,10 +31,12 @@ describe('app authenticated section', () => {
 
   it('can navigate to projects page', () => {
     renderComponent();
+
     const homeEle: HTMLElement = screen.getByText('This is the Home Page');
     expect(homeEle).toBeInTheDocument();
     fireEvent.click(screen.getByText('Projects'));
+
     expect(homeEle).not.toBeInTheDocument();
-    expect(screen.getByText(/Projects Table/i)).toBeInTheDocument();
+    expect(screen.getByText('projects page')).toBeInTheDocument();
   });
 });

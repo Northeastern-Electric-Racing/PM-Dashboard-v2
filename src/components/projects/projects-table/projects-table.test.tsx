@@ -13,7 +13,7 @@ import { exampleAllProjects } from '../../../test-support/test-data/projects.stu
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import ProjectsTable from './projects-table';
 
-jest.mock('../../services/projects.hooks');
+jest.mock('../../../services/projects.hooks');
 
 const mockedUseAllProjects = useAllProjects as jest.Mock<UseQueryResult<Project[]>>;
 

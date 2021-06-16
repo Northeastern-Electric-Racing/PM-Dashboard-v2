@@ -11,7 +11,7 @@ import { mockUseQueryResult } from '../../../../test-support/test-data/test-util
 import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectContainer from './project-container';
 
-jest.mock('../../services/projects.hooks');
+jest.mock('../../../../services/projects.hooks');
 
 const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 

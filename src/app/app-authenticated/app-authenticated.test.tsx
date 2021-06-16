@@ -7,7 +7,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { renderWithRouter } from '../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
-jest.mock('../../pages/projects/projects', () => {
+jest.mock('../../components/projects/projects', () => {
   return {
     __esModule: true,
     default: () => {

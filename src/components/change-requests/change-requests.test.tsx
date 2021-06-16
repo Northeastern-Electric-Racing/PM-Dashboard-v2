@@ -8,7 +8,7 @@ import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
 import ChangeRequests from './change-requests';
 
-jest.mock('../../containers/change-requests-table/change-requests-table', () => {
+jest.mock('./change-requests-table/change-requests-table', () => {
   return {
     __esModule: true,
     default: () => {
@@ -17,7 +17,7 @@ jest.mock('../../containers/change-requests-table/change-requests-table', () => 
   };
 });
 
-jest.mock('../change-request-details/change-request-details', () => {
+jest.mock('./change-request-details/change-request-details', () => {
   return {
     __esModule: true,
     default: () => {

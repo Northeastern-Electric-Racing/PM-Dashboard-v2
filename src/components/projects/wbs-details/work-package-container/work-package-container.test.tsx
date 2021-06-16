@@ -11,7 +11,7 @@ import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-pac
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import WorkPackageContainer from './work-package-container';
 
-jest.mock('../../services/work-packages.hooks');
+jest.mock('../../../../services/work-packages.hooks');
 
 const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<UseQueryResult<WorkPackage>>;
 

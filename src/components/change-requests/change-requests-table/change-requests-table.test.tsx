@@ -12,7 +12,7 @@ import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.s
 import { exampleAllChangeRequests } from '../../../test-support/test-data/change-requests.stub';
 import ChangeRequestsTable from './change-requests-table';
 
-jest.mock('../../services/change-requests.hooks');
+jest.mock('../../../services/change-requests.hooks');
 
 const mockedUseAllChangeRequests = useAllChangeRequests as jest.Mock<
   UseQueryResult<ChangeRequest[]>

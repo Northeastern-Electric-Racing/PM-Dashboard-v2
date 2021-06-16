@@ -12,7 +12,7 @@ import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.s
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
 import ChangeRequestDetails from './change-request-details';
 
-jest.mock('../../services/change-requests.hooks');
+jest.mock('../../../services/change-requests.hooks');
 
 const mockedUseSingleChangeRequest = useSingleChangeRequest as jest.Mock<
   UseQueryResult<ChangeRequest>

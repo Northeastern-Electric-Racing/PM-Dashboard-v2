@@ -9,15 +9,8 @@ import { WorkPackage, Project } from 'utils';
 import { wbsRegex } from '../../test-support/test-utils';
 import { wbsPipe, fullNamePipe } from '../../shared/pipes';
 import { useAllProjects } from '../../services/projects.hooks';
+import { exampleAllProjects } from '../../test-support/test-data/projects.stub';
 import { mockUseQueryResult } from '../../test-support/test-data/test-utils.stub';
-import {
-  exampleProject1,
-  exampleProject2,
-  exampleProject3,
-  exampleProject4,
-  exampleProject5,
-  exampleAllProjects
-} from '../../test-support/test-data/projects.stub';
 import ProjectsTable from './projects-table';
 
 jest.mock('../../services/projects.hooks');
@@ -64,19 +57,23 @@ describe('projects table component', () => {
   it('handles the api returning a normal array of projects', async () => {
     mockHook(false, false, exampleAllProjects);
     renderComponent();
-    await waitFor(() => screen.getByText(wbsPipe(exampleProject1.wbsNum)));
+    await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     expect(
       screen.getByText(
-        exampleProject2.workPackages.reduce(
+        exampleAllProjects[1].workPackages.reduce(
           (tot: number, cur: WorkPackage) => tot + cur.duration,
           0
         ) + ' weeks'
       )
     ).toBeInTheDocument();
-    expect(screen.getAllByText(fullNamePipe(exampleProject3.projectLead))[0]).toBeInTheDocument();
-    expect(screen.getByText(fullNamePipe(exampleProject4.projectManager))).toBeInTheDocument();
-    expect(screen.getByText(wbsPipe(exampleProject5.wbsNum))).toBeInTheDocument();
+    expect(
+      screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(fullNamePipe(exampleAllProjects[3].projectManager))
+    ).toBeInTheDocument();
+    expect(screen.getByText(wbsPipe(exampleAllProjects[4].wbsNum))).toBeInTheDocument();
 
     expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
     expect(screen.queryByText('No projects to display', { exact: false })).not.toBeInTheDocument();
@@ -85,7 +82,7 @@ describe('projects table component', () => {
   it.skip('handles sorting and reverse sorting the table by wbs num', async () => {
     mockHook(false, false, exampleAllProjects);
     renderComponent();
-    await waitFor(() => screen.getByText(wbsPipe(exampleProject1.wbsNum)));
+    await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     const column: string = 'WBS #';
     const expectedWbsOrder: string[] = exampleAllProjects.map((prj: Project) =>

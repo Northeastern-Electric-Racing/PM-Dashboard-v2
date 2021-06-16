@@ -4,8 +4,8 @@
  */
 
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../test-support/test-utils';
-import { routes } from '../../shared/routes';
+import { renderWithRouter } from '../../../test-support/test-utils';
+import { routes } from '../../../shared/routes';
 import AppPublic from './app-public';
 
 jest.mock('../app-authenticated/app-authenticated', () => {

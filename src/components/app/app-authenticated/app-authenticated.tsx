@@ -4,11 +4,11 @@
  */
 
 import { Switch, Route } from 'react-router-dom';
-import ChangeRequests from '../../components/change-requests/change-requests';
-import Projects from '../../components/projects/projects';
-import { PageNotFound } from '../../components/page-not-found/page-not-found';
-import Home from '../../components/home/home';
-import NavTopBar from '../../components/shared/nav-top-bar/nav-top-bar';
+import ChangeRequests from '../../change-requests/change-requests';
+import Projects from '../../projects/projects';
+import { PageNotFound } from '../../whole-app/page-not-found/page-not-found';
+import Home from '../../home/home';
+import NavTopBar from '../../whole-app/nav-top-bar/nav-top-bar';
 import styles from './app-authenticated.module.css';
 
 const AppAuthenticated: React.FC = () => {

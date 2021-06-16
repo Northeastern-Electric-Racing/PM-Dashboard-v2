@@ -4,10 +4,10 @@
  */
 
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../test-support/test-utils';
+import { renderWithRouter } from '../../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
-jest.mock('../../components/projects/projects', () => {
+jest.mock('../../projects/projects', () => {
   return {
     __esModule: true,
     default: () => {

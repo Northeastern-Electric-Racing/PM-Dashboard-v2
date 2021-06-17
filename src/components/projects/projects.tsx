@@ -4,6 +4,7 @@
  */
 
 import { Route, Switch } from 'react-router-dom';
+import { routes } from '../../shared/routes';
 import ProjectsTable from './projects-table/projects-table';
 import WBSDetails from './wbs-details/wbs-details';
 import './projects.module.css';
@@ -11,8 +12,8 @@ import './projects.module.css';
 const Projects: React.FC = () => {
   return (
     <Switch>
-      <Route path="/projects/:wbsNum" component={WBSDetails} />
-      <Route path="/projects" component={ProjectsTable} />
+      <Route path={routes.PROJECTS_BY_WBS} component={WBSDetails} />
+      <Route path={routes.PROJECTS} component={ProjectsTable} />
     </Switch>
   );
 };

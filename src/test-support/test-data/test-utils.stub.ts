@@ -4,6 +4,8 @@
  */
 
 import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
+import { AxiosResponse } from 'axios';
+import { UseQueryResult } from 'react-query';
 import { ApiRoute, API_URL } from 'utils';
 
 export const exampleApiRoutes: ApiRoute[] = [
@@ -67,4 +69,44 @@ export const mockEvent = (path: string, httpMethod: string, body?: any): Handler
     body: body ? JSON.stringify(body) : null,
     isBase64Encoded: false
   };
+};
+
+export const mockPromiseAxiosResponse = <Return>(data: Return) => {
+  return new Promise((res, rej) =>
+    res({ status: 0, statusText: '', headers: null, config: {}, data })
+  ) as Promise<AxiosResponse<Return>>;
+};
+
+export const mockUseQueryResult = <Return>(
+  isLoading: boolean,
+  isError: boolean,
+  data?: Return,
+  err?: Error
+) => {
+  return {
+    data: data || undefined,
+    error: err || null,
+    isError: isError,
+    isIdle: true,
+    isLoading: isLoading,
+    isLoadingError: false,
+    isRefetchError: false,
+    isSuccess: false,
+    status: 'idle',
+    dataUpdatedAt: 0,
+    errorUpdatedAt: 0,
+    failureCount: 0,
+    isFetched: false,
+    isFetchedAfterMount: false,
+    isFetching: false,
+    isPlaceholderData: false,
+    isPreviousData: false,
+    isStale: false,
+    refetch: () => {
+      return new Promise((_res, _rej) => 5);
+    },
+    remove: () => {
+      return 0;
+    }
+  } as UseQueryResult<Return, Error>;
 };

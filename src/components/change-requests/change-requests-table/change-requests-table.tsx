@@ -3,58 +3,45 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
 import { ChangeRequest } from 'utils';
-import { apiFetch } from '../../../shared/axios';
 import { booleanPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
-import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
+import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';
+import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
 import './change-requests-table.module.css';
 
 const ChangeRequestsTable: React.FC = () => {
-  const [allChangeRequests, setAllChangeRequests] = useState<DisplayChangeRequest[]>([]); // store projects data
+  const { isLoading, isError, data, error } = useAllChangeRequests();
 
-  // Transforms given change request data and sets local state
-  const updateData: (response: AxiosResponse) => void = (res) => {
-    setAllChangeRequests(
-      res.data.map((cr: ChangeRequest) => {
-        return {
-          id: cr.id,
-          submitterName: fullNamePipe(cr.submitter),
-          wbsNum: wbsPipe(cr.wbsNum),
-          type: cr.type,
-          dateReviewed: cr.dateReviewed ? new Date(cr.dateReviewed).toLocaleDateString() : '',
-          accepted: cr.accepted ? booleanPipe(cr.accepted) : '',
-          dateImplemented: cr.dateImplemented
-            ? new Date(cr.dateImplemented).toLocaleDateString()
-            : ''
-        };
-      })
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return (
+      <>
+        <h3>Oops, sorry!</h3>
+        <h5>There was an error loading the page.</h5>
+        <p>{error ? error.message : 'There was an error loading the data.'}</p>
+      </>
     );
+  }
+
+  const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
+    return changeRequests.map((cr: ChangeRequest) => {
+      return {
+        id: cr.id,
+        submitterName: fullNamePipe(cr.submitter),
+        wbsNum: wbsPipe(cr.wbsNum),
+        type: cr.type,
+        dateReviewed: cr.dateReviewed ? new Date(cr.dateReviewed).toLocaleDateString() : '',
+        accepted: cr.accepted ? booleanPipe(cr.accepted) : '',
+        dateImplemented: cr.dateImplemented ? new Date(cr.dateImplemented).toLocaleDateString() : ''
+      };
+    }) as DisplayChangeRequest[];
   };
 
-  // Fetch list of change requests from API on component loading
-  useEffect(() => {
-    let mounted = true; // indicates component is mounted
-
-    const fetchChangeRequests = async () => {
-      apiFetch
-        .get('/change-requests')
-        .then((response: AxiosResponse) => (mounted ? updateData(response) : ''))
-        .catch((error) =>
-          mounted ? console.log('fetch change requests error: ' + error.message) : ''
-        );
-    };
-    fetchChangeRequests();
-
-    // cleanup function indicates component has been unmounted
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  return <CRTable changeRequests={allChangeRequests} />;
+  return <CRTable changeRequests={transformToDisplayChangeRequests(data!)} />;
 };
 
 export default ChangeRequestsTable;

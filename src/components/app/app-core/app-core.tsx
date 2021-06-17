@@ -5,7 +5,7 @@
 
 import { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { routes } from '../../shared/routes';
+import { routes } from '../../../shared/routes';
 import { UserContext, UserLogInContext } from '../app-context/app-context';
 import AppPublic from '../app-public/app-public';
 import './app-core.module.css';

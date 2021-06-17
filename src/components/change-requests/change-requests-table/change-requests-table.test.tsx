@@ -3,33 +3,37 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { UseQueryResult } from 'react-query';
+import { ChangeRequest } from 'utils';
+import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
+import { useAllChangeRequests } from '../../../services/change-requests.hooks';
+import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import { exampleAllChangeRequests } from '../../../test-support/test-data/change-requests.stub';
 import ChangeRequestsTable from './change-requests-table';
 
-const endpointURL: string = '/.netlify/functions/change-requests';
+jest.mock('../../../services/change-requests.hooks');
 
-// Mock the server endpoint(s) that the component will hit
-const server = setupServer(
-  rest.get(endpointURL, (req, res, ctx) => {
-    return res(ctx.json(exampleAllChangeRequests));
-  })
-);
+const mockedUseAllChangeRequests = useAllChangeRequests as jest.Mock<
+  UseQueryResult<ChangeRequest[]>
+>;
+
+const mockHook = (isLoading: boolean, isError: boolean, data?: ChangeRequest[], error?: Error) => {
+  mockedUseAllChangeRequests.mockReturnValue(
+    mockUseQueryResult<ChangeRequest[]>(isLoading, isError, data, error)
+  );
+};
 
 // Sets up the component under test with the desired values and renders it.
-const renderComponent: () => void = () => {
+const renderComponent = () => {
   render(<ChangeRequestsTable />);
 };
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 describe('change requests table container', () => {
   it('renders the table headers', async () => {
+    mockHook(false, false, []);
     renderComponent();
+
     expect(screen.getByText(/ID/i)).toBeInTheDocument();
     expect(screen.getByText(/Submitter/i)).toBeInTheDocument();
     expect(screen.getByText(/WBS #/i)).toBeInTheDocument();
@@ -38,14 +42,32 @@ describe('change requests table container', () => {
   });
 
   it('handles the api throwing an error', async () => {
-    server.use(
-      rest.get(endpointURL, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
-
+    mockHook(false, true);
     renderComponent();
 
-    expect(screen.getByText(/No Change Requests to Display/i)).toBeInTheDocument();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
+    // expect(screen.getByText(/No Change Requests to Display/i)).toBeInTheDocument();
+  });
+
+  it('handles the api returning an empty array', async () => {
+    mockHook(false, false, []);
+    renderComponent();
+
+    expect(screen.getByText('No Change Requests to Display')).toBeInTheDocument();
+  });
+
+  it('handles the api returning a normal array of change requests', async () => {
+    mockHook(false, false, exampleAllChangeRequests);
+    renderComponent();
+    await waitFor(() => screen.getByText(exampleAllChangeRequests[0].id));
+
+    expect(
+      screen.getAllByText(fullNamePipe(exampleAllChangeRequests[1].submitter))[0]
+    ).toBeInTheDocument();
+    expect(screen.getByText(exampleAllChangeRequests[1].id)).toBeInTheDocument();
+    expect(screen.getAllByText(wbsPipe(exampleAllChangeRequests[2].wbsNum))[0]).toBeInTheDocument();
+
+    expect(screen.queryByText('No Change Requests to Display')).not.toBeInTheDocument();
   });
 });

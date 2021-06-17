@@ -4,8 +4,8 @@
  */
 
 import { Switch, Route } from 'react-router-dom';
-import { routes } from '../../shared/routes';
-import Login from '../../components/login/login';
+import { routes } from '../../../shared/routes';
+import Login from '../../whole-app/login/login';
 import AppAuthenticated from '../app-authenticated/app-authenticated';
 import './app-public.module.css';
 

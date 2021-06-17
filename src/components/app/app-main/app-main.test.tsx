@@ -4,7 +4,7 @@
  */
 
 import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../test-support/test-utils';
+import { renderWithRouter } from '../../../test-support/test-utils';
 import AppMain from './app-main';
 
 jest.mock('../app-core/app-core', () => {

@@ -5,8 +5,8 @@
 
 import { useHistory } from 'react-router-dom';
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../test-support/test-utils';
-import { routes } from '../../shared/routes';
+import { renderWithRouter } from '../../../test-support/test-utils';
+import { routes } from '../../../shared/routes';
 import Login from './login';
 
 const mockedLocalStorageGetItem = localStorage.getItem as jest.Mock;

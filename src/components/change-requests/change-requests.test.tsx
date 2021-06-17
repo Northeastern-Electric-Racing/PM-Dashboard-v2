@@ -4,14 +4,27 @@
  */
 
 import { screen } from '@testing-library/react';
-import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
 import { routes } from '../../shared/routes';
 import { renderWithRouter } from '../../test-support/test-utils';
-import { ApiHookReturn } from '../../services/api-request';
-import { useSingleChangeRequest } from '../../services/change-requests';
 import ChangeRequests from './change-requests';
 
-jest.mock('../../services/change-requests');
+jest.mock('./change-requests-table/change-requests-table', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>change-requests-table</div>;
+    }
+  };
+});
+
+jest.mock('./change-request-details/change-request-details', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>change-request-details</div>;
+    }
+  };
+});
 
 describe('change request page', () => {
   it('renders the page title', () => {
@@ -29,25 +42,15 @@ describe('change request page', () => {
       route: routes.CHANGE_REQUESTS
     });
 
-    expect(screen.getByText(/No Change Requests to Display/i)).toBeInTheDocument();
+    expect(screen.getByText('change-requests-table')).toBeInTheDocument();
   });
 
   it('renders the change request id title', async () => {
-    const mockedUseSingleChangeRequest = useSingleChangeRequest as jest.Mock<
-      ApiHookReturn<ChangeRequest>
-    >;
-    mockedUseSingleChangeRequest.mockReturnValue({
-      isLoading: false,
-      errorMessage: '',
-      responseData: exampleStandardChangeRequest
-    });
-
     renderWithRouter(<ChangeRequests />, {
       path: routes.CHANGE_REQUESTS_BY_ID,
       route: `${routes.CHANGE_REQUESTS}/37`
     });
 
-    expect(screen.getByText('37', { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(exampleStandardChangeRequest.scopeImpact)).toBeInTheDocument();
+    expect(screen.getByText('change-request-details')).toBeInTheDocument();
   });
 });

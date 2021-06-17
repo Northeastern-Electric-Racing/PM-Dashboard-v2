@@ -8,7 +8,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { UserContext, UserLogOutContext } from '../../../../app/app-context/app-context';
+import { UserContext, UserLogOutContext } from '../../../app/app-context/app-context';
 import './nav-user-menu.module.css';
 
 const NavUserMenu: React.FC = () => {

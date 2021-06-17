@@ -3,100 +3,91 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import ProjectsTable from './projects-table';
+import { UseQueryResult } from 'react-query';
 import { WorkPackage, Project } from 'utils';
-import { wbsPipe, fullNamePipe } from '../../../shared/pipes';
 import { wbsRegex } from '../../../test-support/test-utils';
-import {
-  exampleProject1,
-  exampleProject2,
-  exampleProject3,
-  exampleProject4,
-  exampleProject5,
-  exampleAllProjects
-} from '../../../test-support/test-data/projects.stub';
+import { wbsPipe, fullNamePipe } from '../../../shared/pipes';
+import { useAllProjects } from '../../../services/projects.hooks';
+import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';
+import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
+import ProjectsTable from './projects-table';
 
-const endpointURL: string = '/.netlify/functions/projects';
+jest.mock('../../../services/projects.hooks');
 
-// Mock the server endpoint(s) that the component will hit
-const server = setupServer(
-  rest.get(endpointURL, (req, res, ctx) => {
-    return res(ctx.json(exampleAllProjects));
-  })
-);
+const mockedUseAllProjects = useAllProjects as jest.Mock<UseQueryResult<Project[]>>;
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+const mockHook = (isLoading: boolean, isError: boolean, data?: Project[], error?: Error) => {
+  mockedUseAllProjects.mockReturnValue(
+    mockUseQueryResult<Project[]>(isLoading, isError, data, error)
+  );
+};
+
+// Sets up the component under test with the desired values and renders it.
+const renderComponent = () => {
+  render(<ProjectsTable />);
+};
 
 describe('projects table component', () => {
   it('renders the title', async () => {
-    render(<ProjectsTable />);
+    mockHook(false, false, []);
+    renderComponent();
 
     expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
   });
 
   it('handles the api throwing an error', async () => {
-    server.use(
-      rest.get(endpointURL, (req, res, ctx) => {
-        return res(ctx.status(500));
-      })
-    );
+    mockHook(false, true);
+    renderComponent();
 
-    render(<ProjectsTable />);
-
-    expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
-    expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
+    // expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
+    // expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
   });
 
   it('handles the api returning an empty array', async () => {
-    server.use(
-      rest.get(endpointURL, (req, res, ctx) => {
-        return res(ctx.json([]));
-      })
-    );
-
-    render(<ProjectsTable />);
+    mockHook(false, false, []);
+    renderComponent();
 
     expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
     expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
   });
 
   it('handles the api returning a normal array of projects', async () => {
-    render(<ProjectsTable />);
-    await waitFor(() => screen.getByText(wbsPipe(exampleProject1.wbsNum)));
+    mockHook(false, false, exampleAllProjects);
+    renderComponent();
+    await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     expect(
       screen.getByText(
-        exampleProject2.workPackages.reduce(
+        exampleAllProjects[1].workPackages.reduce(
           (tot: number, cur: WorkPackage) => tot + cur.duration,
           0
         ) + ' weeks'
       )
     ).toBeInTheDocument();
-    expect(screen.getAllByText(fullNamePipe(exampleProject3.projectLead))[0]).toBeInTheDocument();
-    expect(screen.getByText(fullNamePipe(exampleProject4.projectManager))).toBeInTheDocument();
-    expect(screen.getByText(wbsPipe(exampleProject5.wbsNum))).toBeInTheDocument();
+    expect(
+      screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(fullNamePipe(exampleAllProjects[3].projectManager))
+    ).toBeInTheDocument();
+    expect(screen.getByText(wbsPipe(exampleAllProjects[4].wbsNum))).toBeInTheDocument();
 
     expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
     expect(screen.queryByText('No projects to display', { exact: false })).not.toBeInTheDocument();
   });
 
   it.skip('handles sorting and reverse sorting the table by wbs num', async () => {
-    render(<ProjectsTable />);
-    await waitFor(() => screen.getByText(wbsPipe(exampleProject1.wbsNum)));
+    mockHook(false, false, exampleAllProjects);
+    renderComponent();
+    await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     const column: string = 'WBS #';
-    const expectedWbsOrder: string[] = [
-      exampleProject1,
-      exampleProject2,
-      exampleProject3,
-      exampleProject4,
-      exampleProject5
-    ].map((prj: Project) => wbsPipe(prj.wbsNum));
+    const expectedWbsOrder: string[] = exampleAllProjects.map((prj: Project) =>
+      wbsPipe(prj.wbsNum)
+    );
 
     // Default sort is wbs ascending
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);

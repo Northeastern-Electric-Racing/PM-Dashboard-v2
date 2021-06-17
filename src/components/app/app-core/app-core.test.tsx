@@ -8,7 +8,7 @@ import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, useHistory } from 'react-router-dom';
 import AppContext, { UserContext, UserLogInContext } from '../app-context/app-context';
 import AppCore from './app-core';
-import { routes } from '../../shared/routes';
+import { routes } from '../../../shared/routes';
 
 jest.mock('../app-public/app-public', () => {
   return {

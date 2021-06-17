@@ -10,12 +10,10 @@ import './projects.module.css';
 
 const Projects: React.FC = () => {
   return (
-    <div>
-      <Switch>
-        <Route path="/projects/:wbsNum" component={WBSDetails} />
-        <Route path="/projects" component={ProjectsTable} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route path="/projects/:wbsNum" component={WBSDetails} />
+      <Route path="/projects" component={ProjectsTable} />
+    </Switch>
   );
 };
 

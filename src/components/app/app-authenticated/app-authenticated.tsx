@@ -4,6 +4,7 @@
  */
 
 import { Switch, Route } from 'react-router-dom';
+import { routes } from '../../../shared/routes';
 import ChangeRequests from '../../change-requests/change-requests';
 import Projects from '../../projects/projects';
 import { PageNotFound } from '../../whole-app/page-not-found/page-not-found';
@@ -18,10 +19,10 @@ const AppAuthenticated: React.FC = () => {
       <NavTopBar />
       <div className={styles.content}>
         <Switch>
-          <Route path="/projects" component={Projects} />
-          <Route path="/change-requests" component={ChangeRequests} />
-          <Route path="/settings" component={Settings} />
-          <Route exact path="/" component={Home} />
+          <Route path={routes.PROJECTS} component={Projects} />
+          <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
+          <Route path={routes.SETTINGS} component={Settings} />
+          <Route exact path={routes.HOME} component={Home} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>

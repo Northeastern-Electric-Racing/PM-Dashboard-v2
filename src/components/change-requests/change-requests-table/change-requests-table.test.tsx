@@ -30,6 +30,14 @@ const renderComponent = () => {
 };
 
 describe('change requests table container', () => {
+  it('renders the loading indicator', () => {
+    mockHook(true, false);
+    renderComponent();
+
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Submitter')).not.toBeInTheDocument();
+  });
+
   it('renders the table headers', async () => {
     mockHook(false, false, []);
     renderComponent();

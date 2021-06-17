@@ -6,6 +6,7 @@
 import { useParams } from 'react-router-dom';
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
 import ChangeRequestDetailsView from './change-request-details/change-request-details';
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import './change-request-details.module.css';
 
 const ChangeRequestDetails: React.FC = () => {
@@ -15,9 +16,7 @@ const ChangeRequestDetails: React.FC = () => {
   const { id } = useParams<ParamTypes>();
   const { isLoading, isError, data, error } = useSingleChangeRequest(parseInt(id));
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <LoadingIndicator />;
 
   if (isError) {
     return (

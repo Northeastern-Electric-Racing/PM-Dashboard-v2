@@ -27,15 +27,6 @@ jest.mock('./change-request-details/change-request-details', () => {
 });
 
 describe('change request page', () => {
-  it('renders the page title', () => {
-    renderWithRouter(<ChangeRequests />, {
-      path: routes.CHANGE_REQUESTS,
-      route: routes.CHANGE_REQUESTS
-    });
-
-    expect(screen.getByText(/Change Requests Page/i)).toBeInTheDocument();
-  });
-
   it('renders the change requests list page', () => {
     renderWithRouter(<ChangeRequests />, {
       path: routes.CHANGE_REQUESTS,

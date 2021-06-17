@@ -9,12 +9,7 @@ import styles from './home.module.css';
 
 const Home: React.FC = () => {
   const user = useContext(UserContext);
-  return (
-    <>
-      <h1 className={styles.title}>This is the Home Page</h1>
-      <h1 className={styles.title}>Welcome, {user}!</h1>
-    </>
-  );
+  return <h1 className={styles.title}>Welcome, {user}!</h1>;
 };
 
 export default Home;

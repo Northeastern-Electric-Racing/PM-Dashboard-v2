@@ -16,11 +16,6 @@ const renderComponent = () => {
 };
 
 describe('home component', () => {
-  it('renders title', () => {
-    renderComponent();
-    expect(screen.getByText('This is the Home Page')).toBeInTheDocument();
-  });
-
   it('renders welcome', () => {
     renderComponent();
     expect(screen.getByText(/Welcome/i)).toBeInTheDocument();

@@ -10,6 +10,7 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import styles from './change-requests-table.module.css';
+import PageTitle from '../../../shared/page-title/page-title';
 
 export interface DisplayChangeRequest {
   id: number;
@@ -59,19 +60,22 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
   };
 
   return (
-    <BootstrapTable
-      striped
-      hover
-      condensed
-      wrapperClasses={styles.table}
-      bootstrap4={true}
-      keyField="id"
-      data={changeRequests}
-      columns={columns}
-      defaultSorted={defaultSort}
-      rowEvents={rowEvents}
-      noDataIndication="No Change Requests to Display"
-    />
+    <>
+      <PageTitle title={'All Change Requests'} />
+      <BootstrapTable
+        striped
+        hover
+        condensed
+        wrapperClasses={styles.table}
+        bootstrap4={true}
+        keyField="id"
+        data={changeRequests}
+        columns={columns}
+        defaultSorted={defaultSort}
+        rowEvents={rowEvents}
+        noDataIndication="No Change Requests to Display"
+      />
+    </>
   );
 };
 

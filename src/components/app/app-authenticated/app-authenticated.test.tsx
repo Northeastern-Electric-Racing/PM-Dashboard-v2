@@ -32,7 +32,7 @@ describe('app authenticated section', () => {
   it('can navigate to projects page', () => {
     renderComponent();
 
-    const homeEle: HTMLElement = screen.getByText('This is the Home Page');
+    const homeEle: HTMLElement = screen.getByText('Welcome', { exact: false });
     expect(homeEle).toBeInTheDocument();
     fireEvent.click(screen.getByText('Projects'));
 

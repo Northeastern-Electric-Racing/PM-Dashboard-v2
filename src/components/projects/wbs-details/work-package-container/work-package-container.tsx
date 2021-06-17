@@ -13,6 +13,7 @@ import DescriptionList from './description-list/description-list';
 import WorkPackageChanges from './work-package-changes/work-package-changes';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
+import PageTitle from '../../../shared/page-title/page-title';
 import './work-package-container.module.css';
 
 interface WorkPackageContainerProps {
@@ -29,11 +30,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   const cardPadding = 'px-4 py-2';
   return (
     <div className="mb-5">
-      <div className="mx-5 pt-2 pb-1">
-        <h3>
-          {wbsPipe(wbsNum)} - {data!.name}
-        </h3>
-      </div>
+      <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <div className={cardPadding}>
         <WorkPackageDetails workPackage={data!} />
       </div>

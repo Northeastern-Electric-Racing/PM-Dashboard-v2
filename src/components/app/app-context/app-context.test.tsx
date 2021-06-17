@@ -5,6 +5,7 @@
 
 import { useContext } from 'react';
 import { act, render, screen } from '@testing-library/react';
+import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import AppContext, { UserContext, UserLogInContext, UserLogOutContext } from './app-context';
 
 describe('app context', () => {
@@ -84,5 +85,19 @@ describe('app context', () => {
 
     expect(localStorage.setItem).toBeCalledTimes(1);
     expect(localStorage.removeItem).toBeCalledTimes(1);
+  });
+
+  it('properly provider query client', () => {
+    const TestComponent = () => {
+      const result = useAllChangeRequests();
+      return <p>{result.status}</p>;
+    };
+    render(
+      <AppContext>
+        <TestComponent />
+      </AppContext>
+    );
+
+    expect(screen.getByText('loading')).toBeInTheDocument();
   });
 });

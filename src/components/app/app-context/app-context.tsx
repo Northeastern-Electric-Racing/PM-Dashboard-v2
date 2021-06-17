@@ -4,6 +4,7 @@
  */
 
 import { createContext, useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import './app-context.module.css';
 
@@ -23,11 +24,15 @@ const AppContext: React.FC = (props) => {
     localStorage.removeItem('userId');
   };
 
+  const queryClient = new QueryClient();
+
   return (
     <UserContext.Provider value={user}>
       <UserLogInContext.Provider value={logUserIn}>
         <UserLogOutContext.Provider value={logUserOut}>
-          <BrowserRouter>{props.children}</BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>{props.children}</BrowserRouter>
+          </QueryClientProvider>
         </UserLogOutContext.Provider>
       </UserLogInContext.Provider>
     </UserContext.Provider>

@@ -18,12 +18,10 @@ const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
   return (
     <Card className={'mx-4 my-2'} border="dark" bg="light">
       <Card.Body>
-        <div className={styles.header}>
-          <Card.Title className={styles.titleWrapper}>
-            <div className={styles.title}>{title}</div>
-          </Card.Title>
+        <Card.Title className={styles.header}>
+          <div className={styles.title}>{title}</div>
           <div className={styles.headerRight}>{headerRight}</div>
-        </div>
+        </Card.Title>
         {body}
       </Card.Body>
     </Card>

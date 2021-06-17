@@ -6,11 +6,7 @@
 .header {
   width: 100%;
   overflow: auto;
-  margin-bottom: 10px;
-}
-
-.titleWrapper {
-  float: left;
+  margin-bottom: 1em;
 }
 
 .title {

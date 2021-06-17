@@ -3,20 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactElement } from 'react';
 import { Card } from 'react-bootstrap';
 import styles from './page-block.module.css';
 
 interface PageBlockProps {
   title: string;
-  headerRight: ReactElement;
-  body: ReactElement;
+  headerRight: JSX.Element;
+  body: JSX.Element;
 }
 
 // Custom card component for page blocks
 const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
   return (
-    <Card className={'mx-4 my-2'} border="dark" bg="light">
+    <Card className={'mx-3 my-3'} border="dark" bg="light">
       <Card.Body>
         <Card.Title className={styles.header}>
           <div className={styles.title}>{title}</div>

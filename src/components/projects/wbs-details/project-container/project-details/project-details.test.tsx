@@ -30,4 +30,8 @@ describe('project details component', () => {
     const projectNameElement = screen.getByText(fullNamePipe(exampleProject3.projectLead));
     expect(projectNameElement).toBeInTheDocument();
   });
+
+  it.todo('test display dates');
+
+  it.todo('test display duration');
 });

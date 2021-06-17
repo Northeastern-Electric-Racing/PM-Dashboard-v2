@@ -11,7 +11,8 @@ import WorkPackageSummary from './work-package-summary/work-package-summary';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
-import styles from './project-container.module.css';
+import PageBlock from '../../../shared/page-block/page-block';
+import './project-container.module.css';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -25,23 +26,22 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   if (isError) return <ErrorPage message={error?.message} />;
 
   return (
-    <div className={styles.projectContainer}>
+    <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-      <hr />
-      <div className={styles.projectContainerBox}>
-        <ProjectDetails project={data!} />
-      </div>
-      <div className={`${styles.projectContainerBox} ${styles.workPackageList}`}>
-        <h4>Work Packages</h4>
-        <hr />
-        {data!.workPackages.map((ele: WorkPackage) => (
-          <WorkPackageSummary
-            className={styles.workPackageSummary}
-            key={wbsPipe(ele.wbsNum)}
-            workPackage={ele}
-          />
-        ))}
-      </div>
+      <ProjectDetails project={data!} />
+      <PageBlock
+        title={'Work Packages'}
+        headerRight={<></>}
+        body={
+          <>
+            {data!.workPackages.map((ele: WorkPackage) => (
+              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+                <WorkPackageSummary workPackage={ele} />
+              </div>
+            ))}
+          </>
+        }
+      />
     </div>
   );
 };

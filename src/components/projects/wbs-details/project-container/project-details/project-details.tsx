@@ -4,7 +4,15 @@
  */
 
 import { Project } from 'utils';
-import { fullNamePipe, linkPipe, wbsPipe, weeksPipe } from '../../../../../shared/pipes';
+import {
+  dollarsPipe,
+  endDatePipe,
+  fullNamePipe,
+  linkPipe,
+  wbsPipe,
+  weeksPipe
+} from '../../../../../shared/pipes';
+import PageBlock from '../../../../shared/page-block/page-block';
 import styles from './project-details.module.css';
 
 interface ProjectDetailsProps {
@@ -12,37 +20,72 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
-  const wbsNum = wbsPipe(project.wbsNum);
-  const projectLead = fullNamePipe(project.projectLead);
-  const projectManager = fullNamePipe(project.projectManager);
-  // duration of the project in weeks
-  // TODO: fix the function below
-  const duration = weeksPipe(7);
+  const detailsBody = (
+    <>
+      <div className={styles.halfDiv}>
+        <p>
+          <b>Project Name:</b> {project.name}
+        </p>
+        <p>
+          <b>WBS #:</b> {wbsPipe(project.wbsNum)}
+        </p>
+        <p>
+          <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
+        </p>
+        <p>
+          <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
+        </p>
+        <p>
+          <b>Budget:</b>{' '}
+          {dollarsPipe(project.workPackages.reduce((tot, cur) => tot + cur.budget, 0))}
+        </p>
+        <div className={styles.horizontal}>
+          <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
+          <li>{linkPipe('Task List', project.taskListLink)}</li>
+          <li>{linkPipe('BOM', project.bomLink)}</li>
+          <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
+        </div>
+      </div>
+      <div className={styles.halfDiv}>
+        <p>
+          <b>Duration:</b>{' '}
+          {weeksPipe(project.workPackages.reduce((tot, cur) => tot + cur.duration, 0))}
+        </p>
+        <p>
+          <b>Start Date:</b>{' '}
+          {project.workPackages.length > 0
+            ? project.workPackages
+                .reduce(
+                  (min, cur) => (cur.startDate < min ? cur.startDate : min),
+                  project.workPackages[0].startDate
+                )
+                .toLocaleDateString()
+            : 'n/a'}
+        </p>
+        <p>
+          <b>End Date:</b>{' '}
+          {project.workPackages.length > 0
+            ? endDatePipe(
+                project.workPackages.reduce(
+                  (min, cur) => (cur.startDate < min ? cur.startDate : min),
+                  project.workPackages[0].startDate
+                ),
+                project.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
+              )
+            : 'n/a'}
+        </p>
+        <p>
+          <b>Expected Progress:</b>
+        </p>
+        <p>
+          <b>Timeline Status:</b>
+        </p>
+      </div>
+    </>
+  );
 
   return (
-    <div className="item-box">
-      <div className={styles.horizontal}>
-        <h4>Project Details</h4>
-        <p className={styles.status}>{project.status}</p>
-      </div>
-      <div className={styles.horizontal}>
-        Project Name: <p>{project.name}</p>
-        WBS# <p>{wbsNum}</p>
-      </div>
-      <div className={styles.horizontal}>
-        Project Lead: <p>{projectLead}</p>
-        Project Manager: <p>{projectManager}</p>
-      </div>
-      <div className={styles.horizontal}>
-        Duration: <p>{duration}</p>
-      </div>
-      <div className={styles.horizontal}>
-        <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
-        <li>{linkPipe('Task List', project.taskListLink)}</li>
-        <li>{linkPipe('BOM', project.bomLink)}</li>
-        <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
-      </div>
-    </div>
+    <PageBlock title={'Project Details'} headerRight={<b>{project.status}</b>} body={detailsBody} />
   );
 };
 

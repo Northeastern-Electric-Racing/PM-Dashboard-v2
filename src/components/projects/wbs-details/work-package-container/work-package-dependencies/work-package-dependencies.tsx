@@ -4,38 +4,23 @@
  */
 
 import { Link } from 'react-router-dom';
-import { WbsNumber, WorkPackage } from 'utils';
+import { WorkPackage } from 'utils';
+import { routes } from '../../../../../shared/routes';
 import { wbsPipe } from '../../../../../shared/pipes';
+import PageBlock from '../../../../shared/page-block/page-block';
 import styles from './work-package-dependencies.module.css';
 
 interface WorkPackageDependenciesProps {
   workPackage: WorkPackage;
-  className?: string;
 }
 
-const WorkPackageDependencies: React.FC<WorkPackageDependenciesProps> = ({
-  workPackage,
-  className
-}: WorkPackageDependenciesProps) => {
-  const linkString: string = `/projects/${wbsPipe(workPackage.wbsNum)}`;
-  return (
-    <div className={className}>
-      <div className={styles.wpDepBox}>
-        <div className={styles.header}>
-          <h5>
-            <b>Dependencies</b>
-          </h5>
-        </div>
-        <div>
-          {workPackage.dependencies.map((ele: WbsNumber) => (
-            <p key={wbsPipe(ele)} className={styles.wbsNum}>
-              <Link to={linkString}>{wbsPipe(ele)}</Link>
-            </p>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+const WorkPackageDependencies: React.FC<WorkPackageDependenciesProps> = ({ workPackage }) => {
+  const list = workPackage.dependencies.map((ele) => (
+    <p key={wbsPipe(ele)} className={styles.wbsNum}>
+      <Link to={`${routes.PROJECTS}/${wbsPipe(ele)}`}>{wbsPipe(ele)}</Link>
+    </p>
+  ));
+  return <PageBlock title={'Dependencies'} headerRight={<></>} body={<>{list}</>} />;
 };
 
 export default WorkPackageDependencies;

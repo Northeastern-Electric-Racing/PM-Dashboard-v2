@@ -8,7 +8,8 @@ import {
   ChangeRequest,
   StandardChangeRequest,
   ActivationChangeRequest,
-  StageGateChangeRequest
+  StageGateChangeRequest,
+  ChangeRequestExplanation
 } from 'utils';
 import {
   exampleStandardChangeRequest,
@@ -52,7 +53,6 @@ describe('Change request details common display element tests', () => {
     'Renders status data for CR %#',
     (cr: ChangeRequest) => {
       render(<ChangeRequestDetails changeRequest={cr} />);
-      expect(screen.getByText(`Status`)).toBeInTheDocument();
       if (cr.dateImplemented) {
         expect(screen.getByText(`Implemented`)).toBeInTheDocument();
       }
@@ -72,7 +72,7 @@ describe('Change request details common display element tests', () => {
     'Renders changes data for CR %#',
     (cr: ChangeRequest) => {
       render(<ChangeRequestDetails changeRequest={cr} />);
-      expect(screen.getByText(`Changes`)).toBeInTheDocument();
+      expect(screen.getByText(`Implemented Changes`)).toBeInTheDocument();
       expect(screen.getByText(`list of changes`)).toBeInTheDocument();
     }
   );
@@ -88,7 +88,7 @@ describe('Change request details standard cr display element tests', () => {
   it('Renders why section', () => {
     render(<ChangeRequestDetails changeRequest={exampleStandardChangeRequest} />);
     expect(screen.getByText(`Why`)).toBeInTheDocument();
-    exampleStandardChangeRequest.why.forEach((explanation) => {
+    exampleStandardChangeRequest.why.forEach((explanation: ChangeRequestExplanation) => {
       expect(screen.getByText(`${explanation.reason}`)).toBeInTheDocument();
       expect(screen.getByText(`${explanation.explain}`)).toBeInTheDocument();
     });

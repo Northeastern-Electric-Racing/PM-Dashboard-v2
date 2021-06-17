@@ -27,25 +27,14 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  const cardPadding = 'px-4 py-2';
   return (
     <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-      <div className={cardPadding}>
-        <WorkPackageDetails workPackage={data!} />
-      </div>
-      <div className={cardPadding}>
-        <WorkPackageDependencies workPackage={data!} />
-      </div>
-      <div className={cardPadding}>
-        <WorkPackageRules workPackage={data!} />
-      </div>
-      <div className={cardPadding}>
-        <DescriptionList workPackage={data!} />
-      </div>
-      <div className={cardPadding}>
-        <WorkPackageChanges workPackage={data!} />
-      </div>
+      <WorkPackageDetails workPackage={data!} />
+      <WorkPackageDependencies workPackage={data!} />
+      <WorkPackageRules workPackage={data!} />
+      <DescriptionList workPackage={data!} />
+      <WorkPackageChanges workPackage={data!} />
     </div>
   );
 };

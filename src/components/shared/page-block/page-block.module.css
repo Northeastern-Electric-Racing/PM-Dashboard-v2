@@ -3,13 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.halfDiv {
-  width: 50%;
-  float: left;
-  padding-right: 60px;
-  min-width: 200px;
+.header {
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 1em;
 }
 
-b {
+.title {
   font-weight: bold;
+  float: left;
+}
+
+.headerRight {
+  float: right;
 }

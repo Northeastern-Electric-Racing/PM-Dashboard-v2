@@ -6,6 +6,7 @@
 import { useParams } from 'react-router-dom';
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
 import ChangeRequestDetailsView from './change-request-details/change-request-details';
+import ErrorPage from '../../shared/error-page/error-page';
 import './change-request-details.module.css';
 
 const ChangeRequestDetails: React.FC = () => {
@@ -19,15 +20,7 @@ const ChangeRequestDetails: React.FC = () => {
     return <p>Loading...</p>;
   }
 
-  if (isError) {
-    return (
-      <>
-        <h3>Oops, sorry!</h3>
-        <h5>There was an error loading the page.</h5>
-        <p>{error ? error.message : 'There was an error loading the data.'}</p>
-      </>
-    );
-  }
+  if (isError) return <ErrorPage message={error?.message} />;
 
   return <ChangeRequestDetailsView changeRequest={data!} />;
 };

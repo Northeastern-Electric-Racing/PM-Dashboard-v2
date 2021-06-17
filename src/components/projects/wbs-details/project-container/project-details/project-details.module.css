@@ -3,16 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.status {
-  float: right;
-}
-
-.horizontal {
-  color: grey;
+.halfDiv {
+  width: 50%;
+  float: left;
+  padding-right: 60px;
+  min-width: 200px;
 }
 
 .horizontal > * {
-  color: black;
   display: inline-block;
   margin-right: 30px;
 }

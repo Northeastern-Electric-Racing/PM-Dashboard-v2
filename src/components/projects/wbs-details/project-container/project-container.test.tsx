@@ -63,4 +63,6 @@ describe('Rendering Project Container', () => {
     expect(screen.queryByText('project')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
   });
+
+  it.todo('simplify testing with mocks?');
 });

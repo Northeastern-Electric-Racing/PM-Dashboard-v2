@@ -3,34 +3,35 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import styles from './work-package-summary.module.css';
+import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import { weeksPipe, dollarsPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
+import {
+  weeksPipe,
+  dollarsPipe,
+  wbsPipe,
+  endDatePipe,
+  listPipe
+} from '../../../../../shared/pipes';
+import { routes } from '../../../../../shared/routes';
+import styles from './work-package-summary.module.css';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
-  className?: string;
 }
 
-const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({
-  workPackage,
-  className
-}: WorkPackageSummaryProps) => {
+const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) => {
   const [open, setOpen] = useState(false);
-  const linkString: string = `/projects/${wbsPipe(workPackage.wbsNum)}`;
-
   return (
-    <Card className={className}>
+    <Card>
       <Card.Header className={styles.header} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div>
-          <h5 className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</h5>
-          <h5 className={styles.name}>
-            <Link to={linkString}>{workPackage.name}</Link>
-          </h5>
-          <h5 className={styles.duration}>{weeksPipe(workPackage.duration)}</h5>
+          <p className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</p>
+          <p className={styles.name}>
+            <Link to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}>{workPackage.name}</Link>
+          </p>
+          <p className={styles.duration}>{weeksPipe(workPackage.duration)}</p>
         </div>
       </Card.Header>
 

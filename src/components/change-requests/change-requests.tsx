@@ -6,17 +6,14 @@
 import { Route, Switch } from 'react-router-dom';
 import ChangeRequestsTable from './change-requests-table/change-requests-table';
 import ChangeRequestDetails from './change-request-details/change-request-details';
-import styles from './change-requests.module.css';
+import './change-requests.module.css';
 
 const ChangeRequests: React.FC = () => {
   return (
-    <div>
-      <h1 className={styles.title}>This is the Change Requests Page</h1>
-      <Switch>
-        <Route path="/change-requests/:id" component={ChangeRequestDetails} />
-        <Route path="/change-requests" component={ChangeRequestsTable} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route path="/change-requests/:id" component={ChangeRequestDetails} />
+      <Route path="/change-requests" component={ChangeRequestsTable} />
+    </Switch>
   );
 };
 

@@ -59,19 +59,22 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
   };
 
   return (
-    <BootstrapTable
-      striped
-      hover
-      condensed
-      wrapperClasses={styles.table}
-      bootstrap4={true}
-      keyField="id"
-      data={changeRequests}
-      columns={columns}
-      defaultSorted={defaultSort}
-      rowEvents={rowEvents}
-      noDataIndication="No Change Requests to Display"
-    />
+    <>
+      <h3 className="mx-5 pt-2 pb-1">Change Requests</h3>
+      <BootstrapTable
+        striped
+        hover
+        condensed
+        wrapperClasses={styles.table}
+        bootstrap4={true}
+        keyField="id"
+        data={changeRequests}
+        columns={columns}
+        defaultSorted={defaultSort}
+        rowEvents={rowEvents}
+        noDataIndication="No Change Requests to Display"
+      />
+    </>
   );
 };
 

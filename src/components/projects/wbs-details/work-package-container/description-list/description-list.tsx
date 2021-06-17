@@ -4,24 +4,23 @@
  */
 
 import { WorkPackage } from 'utils';
+import PageBlock from '../../../../shared/page-block/page-block';
 import styles from './description-list.module.css';
 
 interface DescriptionListProps {
   workPackage: WorkPackage;
 }
 
-const DescriptionList: React.FC<DescriptionListProps> = ({ workPackage }: DescriptionListProps) => {
+const DescriptionList: React.FC<DescriptionListProps> = ({ workPackage }) => {
+  const list = workPackage.descriptionBullets.map((bullet, idx) => (
+    <li key={idx}>{bullet.detail}</li>
+  ));
   return (
-    <div className={styles.descriptionListBox}>
-      <h5>
-        <b>Description</b>
-      </h5>
-      <ul>
-        {workPackage.descriptionBullets.map((bullet, idx) => (
-          <li key={idx}>{bullet.detail}</li>
-        ))}
-      </ul>
-    </div>
+    <PageBlock
+      title={'Description'}
+      headerRight={<></>}
+      body={<ul className={styles.bulletList}>{list}</ul>}
+    />
   );
 };
 

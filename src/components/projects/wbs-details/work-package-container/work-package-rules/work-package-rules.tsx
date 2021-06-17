@@ -4,31 +4,20 @@
  */
 
 import { WorkPackage } from 'utils';
+import PageBlock from '../../../../shared/page-block/page-block';
 import styles from './work-package-rules.module.css';
 
 interface WorkPackageRulesProps {
   workPackage: WorkPackage;
-  className?: string;
 }
 
-const WorkPackageRules: React.FC<WorkPackageRulesProps> = ({
-  workPackage,
-  className
-}: WorkPackageRulesProps) => {
-  return (
-    <div className={className}>
-      <div className={styles.wpRulesBox}>
-        <h5>
-          <b>Rules</b>
-        </h5>
-        {workPackage.rules.map((str, idx) => (
-          <p key={idx} className={styles.ruleReferences}>
-            {str}
-          </p>
-        ))}
-      </div>
-    </div>
-  );
+const WorkPackageRules: React.FC<WorkPackageRulesProps> = ({ workPackage }) => {
+  const list = workPackage.rules.map((str, idx) => (
+    <p key={idx} className={styles.ruleReferences}>
+      {str}
+    </p>
+  ));
+  return <PageBlock title={'Rules'} headerRight={<></>} body={<>{list}</>} />;
 };
 
 export default WorkPackageRules;

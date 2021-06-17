@@ -3,16 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.wpRulesBox {
-  background-color: #f7f7f7;
-  box-shadow: 2px 2px 5px #dddddd;
-  padding: 30px;
-  border: 0.5px solid;
-  border-radius: 5px;
-  overflow: auto;
-}
-
 .ruleReferences {
   float: left;
   padding-right: 30px;
+  margin-bottom: 0;
 }

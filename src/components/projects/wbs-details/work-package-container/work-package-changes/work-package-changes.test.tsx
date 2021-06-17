@@ -3,23 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import WorkPackageChanges from './work-package-changes';
+import { renderWithRouter } from '../../../../../test-support/test-utils';
 import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
 
 describe('Rendering Work Package Changes Component', () => {
   it('renders the component title', () => {
-    render(<WorkPackageChanges workPackage={exampleWorkPackage2} />);
+    renderWithRouter(<WorkPackageChanges workPackage={exampleWorkPackage2} />, {});
 
     expect(screen.getByText(`Changes`)).toBeInTheDocument();
   });
 
   it('renders all the changes', () => {
-    render(<WorkPackageChanges workPackage={exampleWorkPackage2} />);
+    renderWithRouter(<WorkPackageChanges workPackage={exampleWorkPackage2} />, {});
 
-    expect(
-      screen.getByText('[#1] Decreased duration from 10 weeks to 7 weeks.')
-    ).toBeInTheDocument();
-    expect(screen.getByText('[#54] Added "jet fuel burns hot" bullet.')).toBeInTheDocument();
+    expect(screen.getByText('#1')).toBeInTheDocument();
+    expect(screen.getByText(/Decreased duration from 10 weeks to 7 weeks./i)).toBeInTheDocument();
+    expect(screen.getByText('#54')).toBeInTheDocument();
+    expect(screen.getByText(/Added "jet fuel burns hot" bullet./i)).toBeInTheDocument();
   });
 });

@@ -35,8 +35,8 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         body={
           <>
             {data!.workPackages.map((ele: WorkPackage) => (
-              <div className="mt-3">
-                <WorkPackageSummary key={wbsPipe(ele.wbsNum)} workPackage={ele} />
+              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+                <WorkPackageSummary workPackage={ele} />
               </div>
             ))}
           </>

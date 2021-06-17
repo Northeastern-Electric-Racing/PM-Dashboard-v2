@@ -31,7 +31,8 @@ describe('work package container', () => {
     mockHook(true, false);
     renderComponent();
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Project Manager')).not.toBeInTheDocument();
   });
 
   it('renders the loaded project', () => {

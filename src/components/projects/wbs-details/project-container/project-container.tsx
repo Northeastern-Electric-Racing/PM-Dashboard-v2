@@ -8,6 +8,7 @@ import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectDetails from './project-details/project-details';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
+import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import styles from './project-container.module.css';
 
@@ -18,9 +19,7 @@ interface ProjectContainerProps {
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
 

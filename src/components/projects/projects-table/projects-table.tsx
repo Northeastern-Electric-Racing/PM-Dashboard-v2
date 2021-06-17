@@ -8,15 +8,14 @@ import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';
 import PrjsTable from './projects-table/projects-table'; // Directly rename the default import
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import './projects-table.module.css';
 
 const ProjectsTable: React.FC = () => {
   const { isLoading, isError, data, error } = useAllProjects();
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
 

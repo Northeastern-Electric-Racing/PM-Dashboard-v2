@@ -36,6 +36,14 @@ describe('projects table component', () => {
     expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
   });
 
+  it('renders the loading indicator', () => {
+    mockHook(true, false);
+    renderComponent();
+
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Name')).not.toBeInTheDocument();
+  });
+
   it('handles the api throwing an error', async () => {
     mockHook(false, true);
     renderComponent();

@@ -38,12 +38,15 @@ describe('change request details container', () => {
   it('renders the loading indicator', () => {
     mockHook(true, false);
     renderComponent();
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Date Submitted')).not.toBeInTheDocument();
   });
 
   it('renders the loaded change request', () => {
     mockHook(false, false, exampleStandardChangeRequest);
     renderComponent();
+
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText(exampleStandardChangeRequest.id, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(exampleStandardChangeRequest.scopeImpact)).toBeInTheDocument();
@@ -52,6 +55,7 @@ describe('change request details container', () => {
   it('handles the error with message', () => {
     mockHook(false, true, undefined, new Error('404 could not find the requested change request'));
     renderComponent();
+
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
     expect(screen.getByText('404 could not find the requested change request')).toBeInTheDocument();
@@ -60,6 +64,7 @@ describe('change request details container', () => {
   it('handles the error with no message', () => {
     mockHook(false, true, undefined);
     renderComponent();
+
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.queryByText('Change Request')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();

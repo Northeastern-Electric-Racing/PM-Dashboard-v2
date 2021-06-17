@@ -11,6 +11,7 @@ import WorkPackageDependencies from './work-package-dependencies/work-package-de
 import WorkPackageRules from './work-package-rules/work-package-rules';
 import DescriptionList from './description-list/description-list';
 import WorkPackageChanges from './work-package-changes/work-package-changes';
+import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import './work-package-container.module.css';
 
@@ -21,9 +22,7 @@ interface WorkPackageContainerProps {
 const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) => {
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
 

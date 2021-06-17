@@ -8,15 +8,14 @@ import { booleanPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';
 import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import './change-requests-table.module.css';
 
 const ChangeRequestsTable: React.FC = () => {
   const { isLoading, isError, data, error } = useAllChangeRequests();
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
 

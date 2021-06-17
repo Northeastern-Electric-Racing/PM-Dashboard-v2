@@ -31,7 +31,8 @@ describe('Rendering Project Container', () => {
     mockHook(true, false);
     renderComponent();
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.queryByText('Project Lead')).not.toBeInTheDocument();
   });
 
   it('renders the loaded project', () => {

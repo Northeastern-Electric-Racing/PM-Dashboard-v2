@@ -8,6 +8,7 @@ import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';
 import PrjsTable from './projects-table/projects-table'; // Directly rename the default import
+import ErrorPage from '../../shared/error-page/error-page';
 import './projects-table.module.css';
 
 const ProjectsTable: React.FC = () => {
@@ -17,15 +18,7 @@ const ProjectsTable: React.FC = () => {
     return <p>Loading...</p>;
   }
 
-  if (isError) {
-    return (
-      <>
-        <h3>Oops, sorry!</h3>
-        <h5>There was an error loading the page.</h5>
-        <p>{error ? error.message : 'There was an error loading the data.'}</p>
-      </>
-    );
-  }
+  if (isError) return <ErrorPage message={error?.message} />;
 
   const transformToDisplayProjects = (projects: Project[]) => {
     return projects.map((prj: Project) => {

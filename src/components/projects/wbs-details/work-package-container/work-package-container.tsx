@@ -29,11 +29,9 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   const cardPadding = 'px-4 py-2';
   return (
     <div className="mb-5">
-      <div className="mx-5 pt-2 pb-1">
-        <h3>
-          {wbsPipe(wbsNum)} - {data!.name}
-        </h3>
-      </div>
+      <h3 className="mx-5 pt-2 pb-1">
+        {wbsPipe(wbsNum)} - {data!.name}
+      </h3>
       <div className={cardPadding}>
         <WorkPackageDetails workPackage={data!} />
       </div>

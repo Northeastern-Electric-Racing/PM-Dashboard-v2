@@ -10,6 +10,7 @@ import ProjectDetails from './project-details/project-details';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
+import PageTitle from '../../../shared/page-title/page-title';
 import styles from './project-container.module.css';
 
 interface ProjectContainerProps {
@@ -25,9 +26,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
 
   return (
     <div className={styles.projectContainer}>
-      <h2>
-        {wbsPipe(data!.wbsNum)} - {data!.name}
-      </h2>
+      <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <hr />
       <div className={styles.projectContainerBox}>
         <ProjectDetails project={data!} />

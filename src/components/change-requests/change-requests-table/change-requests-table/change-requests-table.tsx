@@ -10,6 +10,7 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import styles from './change-requests-table.module.css';
+import PageTitle from '../../../shared/page-title/page-title';
 
 export interface DisplayChangeRequest {
   id: number;
@@ -60,7 +61,7 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
 
   return (
     <>
-      <h3 className="mx-5 pt-2 pb-1">Change Requests</h3>
+      <PageTitle title={'All Change Requests'} />
       <BootstrapTable
         striped
         hover

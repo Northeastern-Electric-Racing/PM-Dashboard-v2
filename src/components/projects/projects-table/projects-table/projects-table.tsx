@@ -9,6 +9,7 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
+import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
 
 export interface DisplayProject {
@@ -56,7 +57,7 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
 
   return (
     <>
-      <h3>This is the Projects Table container</h3>
+      <PageTitle title={'All Projects'} />
       <BootstrapTable
         striped
         hover

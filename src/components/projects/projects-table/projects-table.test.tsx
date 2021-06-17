@@ -33,7 +33,7 @@ describe('projects table component', () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
+    expect(screen.getByText('All Projects')).toBeInTheDocument();
   });
 
   it('renders the loading indicator', () => {
@@ -58,7 +58,7 @@ describe('projects table component', () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
+    expect(screen.getByText('All Projects')).toBeInTheDocument();
     expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
   });
 
@@ -83,7 +83,7 @@ describe('projects table component', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(wbsPipe(exampleAllProjects[4].wbsNum))).toBeInTheDocument();
 
-    expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
+    expect(screen.getByText('All Projects')).toBeInTheDocument();
     expect(screen.queryByText('No projects to display', { exact: false })).not.toBeInTheDocument();
   });
 

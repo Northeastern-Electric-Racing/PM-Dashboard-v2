@@ -31,7 +31,7 @@ describe('change requests table view component', () => {
   it('renders the page title', () => {
     renderComponent([]);
 
-    expect(screen.getByText('Change Requests')).toBeInTheDocument();
+    expect(screen.getByText('All Change Requests')).toBeInTheDocument();
   });
   it('renders the table headers', async () => {
     renderComponent([]);

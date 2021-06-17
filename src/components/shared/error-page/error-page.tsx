@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import './error-page.module.css';
+import styles from './error-page.module.css';
 
 interface ErrorPageProps {
   message?: string;
@@ -12,7 +12,7 @@ interface ErrorPageProps {
 // Common page to display an error
 const ErrorPage: React.FC<ErrorPageProps> = ({ message }) => {
   return (
-    <div className="">
+    <div className={styles.text}>
       <h3>Oops, sorry!</h3>
       <h5>There was an error loading the page.</h5>
       {message ? <p>{message}</p> : ''}

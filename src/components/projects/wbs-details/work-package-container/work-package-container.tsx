@@ -12,6 +12,7 @@ import WorkPackageRules from './work-package-rules/work-package-rules';
 import DescriptionList from './description-list/description-list';
 import WorkPackageChanges from './work-package-changes/work-package-changes';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
+import ErrorPage from '../../../shared/error-page/error-page';
 import './work-package-container.module.css';
 
 interface WorkPackageContainerProps {
@@ -23,15 +24,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
 
   if (isLoading) return <LoadingIndicator />;
 
-  if (isError) {
-    return (
-      <>
-        <h3>Oops, sorry!</h3>
-        <h5>There was an error loading the page.</h5>
-        <p>{error ? error.message : 'There was an error loading the data.'}</p>
-      </>
-    );
-  }
+  if (isError) return <ErrorPage message={error?.message} />;
 
   const cardPadding = 'px-4 py-2';
   return (

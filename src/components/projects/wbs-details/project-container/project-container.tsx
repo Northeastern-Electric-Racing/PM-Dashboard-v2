@@ -9,6 +9,7 @@ import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectDetails from './project-details/project-details';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
+import ErrorPage from '../../../shared/error-page/error-page';
 import styles from './project-container.module.css';
 
 interface ProjectContainerProps {
@@ -20,15 +21,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
 
   if (isLoading) return <LoadingIndicator />;
 
-  if (isError) {
-    return (
-      <>
-        <h3>Oops, sorry!</h3>
-        <h5>There was an error loading the page.</h5>
-        <p>{error ? error.message : 'There was an error loading the data.'}</p>
-      </>
-    );
-  }
+  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <div className={styles.projectContainer}>

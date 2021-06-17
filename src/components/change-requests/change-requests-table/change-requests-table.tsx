@@ -9,6 +9,7 @@ import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';
 import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
+import ErrorPage from '../../shared/error-page/error-page';
 import './change-requests-table.module.css';
 
 const ChangeRequestsTable: React.FC = () => {
@@ -16,15 +17,7 @@ const ChangeRequestsTable: React.FC = () => {
 
   if (isLoading) return <LoadingIndicator />;
 
-  if (isError) {
-    return (
-      <>
-        <h3>Oops, sorry!</h3>
-        <h5>There was an error loading the page.</h5>
-        <p>{error ? error.message : 'There was an error loading the data.'}</p>
-      </>
-    );
-  }
+  if (isError) return <ErrorPage message={error?.message} />;
 
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
     return changeRequests.map((cr: ChangeRequest) => {

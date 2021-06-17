@@ -16,10 +16,4 @@ describe('error page', () => {
 
     expect(getByText('test')).toBeInTheDocument();
   });
-
-  it('renders when provided className', () => {
-    const { getByText } = render(<PageTitle title={'test'} className={'pt-5'} />);
-
-    expect(getByText('test')).toBeInTheDocument();
-  });
 });

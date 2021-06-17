@@ -11,7 +11,7 @@ interface PageTitleProps {
 
 // Common component for all page titles
 const PageTitle: React.FC<PageTitleProps> = ({ title }) => {
-  return <h3 className={'mx-5 pt-2 pb-1'}>{title}</h3>;
+  return <h3 className={'mx-5 pt-3 pb-1'}>{title}</h3>;
 };
 
 export default PageTitle;

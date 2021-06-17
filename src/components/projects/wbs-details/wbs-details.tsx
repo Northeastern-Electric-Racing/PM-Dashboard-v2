@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { validateWBS, isProject } from 'utils';
 import ProjectContainer from './project-container/project-container';
 import WorkPackageContainer from './work-package-container/work-package-container';
+import ErrorPage from '../../shared/error-page/error-page';
 import './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
@@ -18,13 +19,7 @@ const WBSDetails: React.FC = () => {
   try {
     wbsNumber = validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
   } catch (error) {
-    return (
-      <>
-        <h3>Oops, sorry!</h3>
-        <h5>There was an error loading the page.</h5>
-        <p>{error.message ? error.message : 'The wbsNumber did not parse properly.'}</p>
-      </>
-    );
+    return <ErrorPage message={error.message} />;
   }
 
   if (isProject(wbsNumber)) {

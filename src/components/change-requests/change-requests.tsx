@@ -4,6 +4,7 @@
  */
 
 import { Route, Switch } from 'react-router-dom';
+import { routes } from '../../shared/routes';
 import ChangeRequestsTable from './change-requests-table/change-requests-table';
 import ChangeRequestDetails from './change-request-details/change-request-details';
 import './change-requests.module.css';
@@ -11,8 +12,8 @@ import './change-requests.module.css';
 const ChangeRequests: React.FC = () => {
   return (
     <Switch>
-      <Route path="/change-requests/:id" component={ChangeRequestDetails} />
-      <Route path="/change-requests" component={ChangeRequestsTable} />
+      <Route path={routes.CHANGE_REQUESTS_BY_ID} component={ChangeRequestDetails} />
+      <Route path={routes.CHANGE_REQUESTS} component={ChangeRequestsTable} />
     </Switch>
   );
 };

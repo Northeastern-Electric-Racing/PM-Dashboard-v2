@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { User } from 'utils';
-import { getAllUsers, getSingleUser } from './users.api';
+import { getAllUsers, getSingleUser, logUserIn } from './users.api';
 
 /**
  * Custom React Hook to supply all users.
@@ -29,4 +29,12 @@ export const useSingleUser = (id: number) => {
   });
 };
 
-// TODO --- Add hook for user login mutation.
+/**
+ * Custom React Hook to log a user in.
+ */
+export const useLogUserIn = () => {
+  return useMutation<User, Error, string>(['login'], async (emailId: string) => {
+    const { data } = await logUserIn(emailId);
+    return data;
+  });
+};

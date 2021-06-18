@@ -4,13 +4,14 @@
  */
 
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react-dom/test-utils';
 import { AxiosResponse } from 'axios';
 import { User } from 'utils';
 import { queryClientProviderWrapper as wrapper } from '../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../test-support/test-data/test-utils.stub';
 import { exampleAllUsers, exampleAdminUser } from '../../test-support/test-data/users.stub';
-import { getAllUsers, getSingleUser } from '../users.api';
-import { useAllUsers, useSingleUser } from '../users.hooks';
+import { getAllUsers, getSingleUser, logUserIn } from '../users.api';
+import { useAllUsers, useSingleUser, useLogUserIn } from '../users.hooks';
 
 jest.mock('../users.api');
 
@@ -33,5 +34,18 @@ describe('user hooks', () => {
     expect(result.current.data).toEqual(exampleAdminUser);
   });
 
-  it.todo('handles logging in a user');
+  it('handles logging in a user', async () => {
+    const mockedLogUserIn = logUserIn as jest.Mock<Promise<AxiosResponse<User>>>;
+    mockedLogUserIn.mockReturnValue(mockPromiseAxiosResponse<User>(exampleAdminUser));
+
+    const { result, waitFor } = renderHook(() => useLogUserIn(), {
+      wrapper
+    });
+    act(() => {
+      result.current.mutate(exampleAdminUser.emailId);
+    });
+
+    await waitFor(() => result.current.isSuccess);
+    expect(result.current.data).toEqual(exampleAdminUser);
+  });
 });

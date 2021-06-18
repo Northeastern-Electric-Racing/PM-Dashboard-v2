@@ -5,7 +5,7 @@
 
 import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
-import { UseQueryResult } from 'react-query';
+import { UseMutationResult, UseMutateFunction, UseQueryResult } from 'react-query';
 import { ApiRoute, API_URL } from 'utils';
 
 export const exampleApiRoutes: ApiRoute[] = [
@@ -109,4 +109,31 @@ export const mockUseQueryResult = <Return>(
       return 0;
     }
   } as UseQueryResult<Return, Error>;
+};
+
+export const mockUseMutationResult = <Vars, Return>(
+  flags: { [key: string]: boolean },
+  mutate: UseMutateFunction<Return, Error, Vars>,
+  data?: Return,
+  err?: Error
+) => {
+  return {
+    context: undefined,
+    data: data || undefined,
+    error: err || null,
+    failureCount: 0,
+    isError: false,
+    isIdle: false,
+    isLoading: false,
+    isPaused: false,
+    isSuccess: false,
+    mutate,
+    mutateAsync: () => {
+      return new Promise((_res, _rej) => 5);
+    },
+    reset: () => 5,
+    status: 'idle',
+    variables: undefined,
+    ...flags
+  } as UseMutationResult<Return, Error, Vars>;
 };

@@ -33,7 +33,7 @@ describe('app public section', () => {
     expect(screen.getByText('NER PM Dashboard')).toBeInTheDocument();
     expect(screen.getByText('Login Required')).toBeInTheDocument();
     expect(screen.getByText('Log In')).toBeInTheDocument();
-    expect(screen.getByLabelText('name')).toBeInTheDocument();
+    expect(screen.getByLabelText('emailId')).toBeInTheDocument();
   });
 
   it('renders app authenticated', () => {

@@ -3,20 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
 import { WorkPackage } from 'utils';
+import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
 import { dollarsPipe, wbsPipe, listPipe, endDatePipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
   exampleWorkPackage3
 } from '../../../../../test-support/test-data/work-packages.stub';
-import { renderWithRouter } from '../../../../../test-support/test-utils';
 import WorkPackageSummary from './work-package-summary';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (wps: WorkPackage, path?: string, route?: string) => {
-  renderWithRouter(<WorkPackageSummary workPackage={wps} />, { path, route });
+  const RouterWrapper = routerWrapperBuilder({ path, route });
+  return render(
+    <RouterWrapper>
+      <WorkPackageSummary workPackage={wps} />
+    </RouterWrapper>
+  );
 };
 
 describe('Rendering Work Packagae Summary Test', () => {

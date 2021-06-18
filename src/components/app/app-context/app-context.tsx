@@ -5,7 +5,6 @@
 
 import { createContext, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter } from 'react-router-dom';
 import './app-context.module.css';
 
 export const UserContext = createContext<string>('');
@@ -30,9 +29,7 @@ const AppContext: React.FC = (props) => {
     <UserContext.Provider value={user}>
       <UserLogInContext.Provider value={logUserIn}>
         <UserLogOutContext.Provider value={logUserOut}>
-          <QueryClientProvider client={queryClient}>
-            <BrowserRouter>{props.children}</BrowserRouter>
-          </QueryClientProvider>
+          <QueryClientProvider client={queryClient}>{props.children}</QueryClientProvider>
         </UserLogOutContext.Provider>
       </UserLogInContext.Provider>
     </UserContext.Provider>

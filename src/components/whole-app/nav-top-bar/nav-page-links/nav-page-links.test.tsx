@@ -3,15 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../../../test-support/test-utils';
+import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
 import NavPageLinks from './nav-page-links';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(<NavPageLinks />, {});
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <NavPageLinks />
+    </RouterWrapper>
+  );
 };
 
 describe('navigation page links tests', () => {

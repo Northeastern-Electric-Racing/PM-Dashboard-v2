@@ -3,16 +3,20 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
+import { render, screen, routerWrapperBuilder } from '../../test-support/test-utils';
 import { routes } from '../../shared/routes';
-import { renderWithRouter } from '../../test-support/test-utils';
 import Settings from './settings';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(<Settings />, { path: routes.SETTINGS, route: routes.SETTINGS });
+  const RouterWrapper = routerWrapperBuilder({ path: routes.SETTINGS, route: routes.SETTINGS });
+  return render(
+    <RouterWrapper>
+      <Settings />
+    </RouterWrapper>
+  );
 };
 
 describe('settings page component', () => {

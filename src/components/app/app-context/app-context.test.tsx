@@ -4,7 +4,7 @@
  */
 
 import { useContext } from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react'; // avoid circular dependency
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import AppContext, { UserContext, UserLogInContext, UserLogOutContext } from './app-context';
 

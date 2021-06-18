@@ -3,15 +3,25 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from '../../../../test-support/test-utils';
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  routerWrapperBuilder
+} from '../../../../test-support/test-utils';
 import NavUserMenu from './nav-user-menu';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(<NavUserMenu />, {});
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <NavUserMenu />
+    </RouterWrapper>
+  );
 };
 
 describe('navigation user menu tests', () => {

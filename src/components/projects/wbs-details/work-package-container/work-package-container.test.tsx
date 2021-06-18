@@ -2,10 +2,9 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-import { screen } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
-import { renderWithRouter } from '../../../../test-support/test-utils';
+import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
 import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
 import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
 import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
@@ -24,7 +23,12 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: WorkPackage, erro
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
-  renderWithRouter(<WorkPackageContainer wbsNum={exampleWbsProject1} />, {});
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <WorkPackageContainer wbsNum={exampleWbsProject1} />
+    </RouterWrapper>
+  );
 };
 
 describe('work package container', () => {

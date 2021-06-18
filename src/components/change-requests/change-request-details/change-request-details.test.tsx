@@ -3,11 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
-import { ChangeRequest, exampleStandardChangeRequest } from 'utils';
-import { routes } from '../../../shared/routes';
-import { renderWithRouter } from '../../../test-support/test-utils';
+import { ChangeRequest } from 'utils';
+import { exampleStandardChangeRequest } from '../../../test-support/test-data/change-requests.stub';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
 import ChangeRequestDetails from './change-request-details';
@@ -28,10 +27,12 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: ChangeRequest, er
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  renderWithRouter(<ChangeRequestDetails />, {
-    path: routes.CHANGE_REQUESTS_BY_ID,
-    route: `${routes.CHANGE_REQUESTS}/1`
-  });
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <ChangeRequestDetails />
+    </RouterWrapper>
+  );
 };
 
 describe('change request details container', () => {

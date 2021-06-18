@@ -3,9 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
+import { render, screen, routerWrapperBuilder } from '../../test-support/test-utils';
 import { routes } from '../../shared/routes';
-import { renderWithRouter } from '../../test-support/test-utils';
 import ChangeRequests from './change-requests';
 
 jest.mock('./change-requests-table/change-requests-table', () => {
@@ -26,21 +25,27 @@ jest.mock('./change-request-details/change-request-details', () => {
   };
 });
 
+/**
+ * Sets up the component under test with the desired values and renders it.
+ */
+const renderComponent = (route: string) => {
+  const RouterWrapper = routerWrapperBuilder({ route });
+  return render(
+    <RouterWrapper>
+      <ChangeRequests />
+    </RouterWrapper>
+  );
+};
+
 describe('change request page', () => {
   it('renders the change requests list page', () => {
-    renderWithRouter(<ChangeRequests />, {
-      path: routes.CHANGE_REQUESTS,
-      route: routes.CHANGE_REQUESTS
-    });
+    renderComponent(routes.CHANGE_REQUESTS);
 
     expect(screen.getByText('change-requests-table')).toBeInTheDocument();
   });
 
   it('renders the change request id title', async () => {
-    renderWithRouter(<ChangeRequests />, {
-      path: routes.CHANGE_REQUESTS_BY_ID,
-      route: `${routes.CHANGE_REQUESTS}/37`
-    });
+    renderComponent(routes.CHANGE_REQUESTS_BY_ID);
 
     expect(screen.getByText('change-request-details')).toBeInTheDocument();
   });

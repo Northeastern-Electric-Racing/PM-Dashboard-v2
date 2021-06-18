@@ -3,9 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
+import { render, screen, routerWrapperBuilder } from '../../test-support/test-utils';
 import { routes } from '../../shared/routes';
-import { renderWithRouter } from '../../test-support/test-utils';
 import Projects from './projects';
 
 jest.mock('./projects-table/projects-table', () => {
@@ -29,20 +28,24 @@ jest.mock('./wbs-details/wbs-details', () => {
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = (routeOverride?: string) => {
-  const renderRoute: string = routeOverride || routes.PROJECTS;
-  renderWithRouter(<Projects />, { route: renderRoute });
+const renderComponent = (route: string) => {
+  const RouterWrapper = routerWrapperBuilder({ route });
+  return render(
+    <RouterWrapper>
+      <Projects />
+    </RouterWrapper>
+  );
 };
 
 describe('projects page component', () => {
   it('renders the projects table page title', () => {
-    renderComponent();
+    renderComponent(routes.PROJECTS);
+
     expect(screen.getByText('Projects Table')).toBeInTheDocument();
   });
 
   it('renders the wbs element page title', () => {
-    const wbsNumToRender: string = '1.8.1';
-    renderComponent(`${routes.PROJECTS}/${wbsNumToRender}`);
+    renderComponent(`${routes.PROJECTS}/1.8.1`);
     expect(screen.getByText('WBS Details')).toBeInTheDocument();
   });
 });

@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../../test-support/test-utils';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { routes } from '../../../shared/routes';
 import AppPublic from './app-public';
 
@@ -19,7 +18,12 @@ jest.mock('../app-authenticated/app-authenticated', () => {
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
-  renderWithRouter(<AppPublic />, { path, route });
+  const RouterWrapper = routerWrapperBuilder({ path, route });
+  return render(
+    <RouterWrapper>
+      <AppPublic />
+    </RouterWrapper>
+  );
 };
 
 describe('app public section', () => {

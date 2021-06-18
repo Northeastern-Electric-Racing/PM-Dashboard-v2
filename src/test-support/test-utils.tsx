@@ -3,30 +3,38 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render } from '@testing-library/react';
 import { ReactElement } from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { render, RenderOptions } from '@testing-library/react';
+import { routes } from '../shared/routes';
+import AppContext from '../components/app/app-context/app-context';
 
 // Regular Expression to match WBS Numbers
-export const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
+const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
 
-/**
- * Render a React component wrapped in a memory router for testing.
- *
- * @param ui React component under test
- * @param options Path to place component and route to navigate to (both optional)
- */
-export const renderWithRouter = (ui: ReactElement, { path = '/', route = '/' }) => {
-  const toRender: ReactElement = (
-    <MemoryRouter initialEntries={[route]}>
-      <Route path={path}>{ui}</Route>
-    </MemoryRouter>
-  );
-  render(toRender);
-};
-
-export const queryClientProviderWrapper = ({ children }: any) => {
+// mostly for services hooks tests
+const queryClientProviderWrapper = ({ children }: any) => {
   const queryClient = new QueryClient();
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
+
+// to allow configuring paths/routes within tests
+const routerWrapperBuilder = ({ path = routes.HOME, route = routes.HOME }) => {
+  const RouterWrapper: React.FC = ({ children }) => {
+    return (
+      <MemoryRouter initialEntries={[route]}>
+        <Route path={path}>{children}</Route>
+      </MemoryRouter>
+    );
+  };
+  return RouterWrapper;
+};
+
+// always provide contexts and providers in test renders
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'>) =>
+  render(ui, { wrapper: AppContext, ...options });
+
+export * from '@testing-library/react';
+
+export { wbsRegex, queryClientProviderWrapper, routerWrapperBuilder, customRender as render };

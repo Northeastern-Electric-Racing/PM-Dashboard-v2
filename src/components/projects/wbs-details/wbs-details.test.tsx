@@ -3,9 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { routes } from '../../../shared/routes';
-import { renderWithRouter } from '../../../test-support/test-utils';
 import WBSDetails from './wbs-details';
 
 jest.mock('./project-container/project-container', () => {
@@ -32,10 +31,15 @@ jest.mock('./work-package-container/work-package-container', () => {
  * @param options WBS number to render the component at
  */
 const renderComponent = (wbsNumber: string) => {
-  renderWithRouter(<WBSDetails />, {
+  const RouterWrapper = routerWrapperBuilder({
     path: routes.PROJECTS_BY_WBS,
     route: `${routes.PROJECTS}/${wbsNumber}`
   });
+  return render(
+    <RouterWrapper>
+      <WBSDetails />
+    </RouterWrapper>
+  );
 };
 
 describe('wbs element details component', () => {

@@ -3,20 +3,31 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
-import WorkPackageChanges from './work-package-changes';
-import { renderWithRouter } from '../../../../../test-support/test-utils';
+import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
 import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
+import WorkPackageChanges from './work-package-changes';
+
+/**
+ * Sets up the component under test with the desired values and renders it.
+ */
+const renderComponent = () => {
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <WorkPackageChanges workPackage={exampleWorkPackage2} />
+    </RouterWrapper>
+  );
+};
 
 describe('Rendering Work Package Changes Component', () => {
   it('renders the component title', () => {
-    renderWithRouter(<WorkPackageChanges workPackage={exampleWorkPackage2} />, {});
+    renderComponent();
 
     expect(screen.getByText(`Changes`)).toBeInTheDocument();
   });
 
   it('renders all the changes', () => {
-    renderWithRouter(<WorkPackageChanges workPackage={exampleWorkPackage2} />, {});
+    renderComponent();
 
     expect(screen.getByText('#1')).toBeInTheDocument();
     expect(screen.getByText(/Decreased duration from 10 weeks to 7 weeks./i)).toBeInTheDocument();

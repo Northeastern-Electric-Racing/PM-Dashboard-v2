@@ -3,10 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
 import { WorkPackage, Project } from 'utils';
-import { wbsRegex } from '../../../test-support/test-utils';
+import { wbsRegex, fireEvent, render, screen, waitFor } from '../../../test-support/test-utils';
 import { wbsPipe, fullNamePipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';

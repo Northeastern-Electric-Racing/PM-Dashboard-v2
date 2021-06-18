@@ -3,11 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
-import { exampleProject1, Project } from 'utils';
-import { renderWithRouter } from '../../../../test-support/test-utils';
+import { Project } from 'utils';
+import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
 import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
+import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
+import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectContainer from './project-container';
 
@@ -23,7 +24,12 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: Project, error?: 
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
-  renderWithRouter(<ProjectContainer wbsNum={{ car: 1, project: 1, workPackage: 0 }} />, {});
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <ProjectContainer wbsNum={exampleWbsProject1} />
+    </RouterWrapper>
+  );
 };
 
 describe('Rendering Project Container', () => {
@@ -40,7 +46,7 @@ describe('Rendering Project Container', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.1.0 - Impact Attenuator')).toBeInTheDocument();
+    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
     expect(screen.getByText('Project Details')).toBeInTheDocument();
     expect(screen.getByText('Work Packages')).toBeInTheDocument();
     expect(screen.getByText('Bodywork Concept of Design')).toBeInTheDocument();

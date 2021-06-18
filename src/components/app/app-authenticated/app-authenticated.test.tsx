@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../../test-support/test-utils';
+import { fireEvent, screen, render, routerWrapperBuilder } from '../../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
 jest.mock('../../projects/projects', () => {
@@ -18,7 +17,12 @@ jest.mock('../../projects/projects', () => {
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
-  renderWithRouter(<AppAuthenticated />, { path, route });
+  const RouterWrapper = routerWrapperBuilder({ path, route });
+  return render(
+    <RouterWrapper>
+      <AppAuthenticated />
+    </RouterWrapper>
+  );
 };
 
 describe('app authenticated section', () => {

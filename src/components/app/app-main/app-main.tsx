@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { BrowserRouter } from 'react-router-dom';
 import AppContext from '../app-context/app-context';
 import AppCore from '../app-core/app-core';
 import './app-main.module.css';
@@ -10,7 +11,9 @@ import './app-main.module.css';
 const AppMain: React.FC = () => {
   return (
     <AppContext>
-      <AppCore />
+      <BrowserRouter>
+        <AppCore />
+      </BrowserRouter>
     </AppContext>
   );
 };

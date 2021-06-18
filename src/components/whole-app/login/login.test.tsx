@@ -4,8 +4,7 @@
  */
 
 import { useHistory } from 'react-router-dom';
-import { fireEvent, screen } from '@testing-library/react';
-import { renderWithRouter } from '../../../test-support/test-utils';
+import { render, screen, fireEvent, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { routes } from '../../../shared/routes';
 import Login from './login';
 
@@ -23,7 +22,12 @@ const renderComponent = () => {
     });
     return <Login />;
   };
-  renderWithRouter(<TestComponent />, { path: routes.LOGIN, route: routes.LOGIN });
+  const RouterWrapper = routerWrapperBuilder({ path: routes.LOGIN, route: routes.LOGIN });
+  return render(
+    <RouterWrapper>
+      <TestComponent />
+    </RouterWrapper>
+  );
 };
 
 describe('login component', () => {

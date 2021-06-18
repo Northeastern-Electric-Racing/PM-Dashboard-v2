@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { screen } from '@testing-library/react';
-import { renderWithRouter } from '../../../test-support/test-utils';
+import { render, screen } from '../../../test-support/test-utils';
 import AppMain from './app-main';
 
 jest.mock('../app-core/app-core', () => {
@@ -27,14 +26,14 @@ jest.mock('../app-context/app-context', () => {
 });
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent = (path?: string, route?: string) => {
-  renderWithRouter(<AppMain />, { path, route });
+const renderComponent = () => {
+  render(<AppMain />);
 };
 
 describe('app main, entry component', () => {
   it('renders the app context component', () => {
     renderComponent();
-    expect(screen.getByText('context')).toBeInTheDocument();
+    expect(screen.getAllByText('context')[0]).toBeInTheDocument();
   });
 
   it('renders the app core component', () => {

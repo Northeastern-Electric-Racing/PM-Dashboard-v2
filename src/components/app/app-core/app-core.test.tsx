@@ -4,11 +4,11 @@
  */
 
 import { useContext } from 'react';
-import { act, render, screen } from '@testing-library/react';
-import { MemoryRouter, Route, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import AppContext, { UserContext, UserLogInContext } from '../app-context/app-context';
-import AppCore from './app-core';
+import { act, render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { routes } from '../../../shared/routes';
+import AppCore from './app-core';
 
 jest.mock('../app-public/app-public', () => {
   return {
@@ -40,16 +40,15 @@ const TestComponent = () => {
 };
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent = () => {
-  render(
-    <MemoryRouter initialEntries={['/']}>
-      <Route path={'/'}>
-        <AppContext>
-          <AppCore />
-          <TestComponent />
-        </AppContext>
-      </Route>
-    </MemoryRouter>
+const renderComponent = (route?: string) => {
+  const RouterWrapper = routerWrapperBuilder({ route });
+  return render(
+    <RouterWrapper>
+      <AppContext>
+        <AppCore />
+        <TestComponent />
+      </AppContext>
+    </RouterWrapper>
   );
 };
 
@@ -93,12 +92,12 @@ describe('app core', () => {
   });
 
   it('no stored user', () => {
-    renderComponent();
+    renderComponent(routes.CHANGE_REQUESTS);
 
     expect(localStorage.getItem).toBeCalledTimes(2);
     expect(localStorage.getItem).toBeCalledWith('userId');
     expect(localStorage.setItem).toBeCalledTimes(1);
-    expect(localStorage.setItem).toBeCalledWith('redirectUrl', routes.LOGIN);
+    expect(localStorage.setItem).toBeCalledWith('redirectUrl', routes.CHANGE_REQUESTS);
 
     expect(pushed).toEqual([routes.LOGIN]);
 

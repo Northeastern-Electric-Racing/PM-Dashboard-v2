@@ -47,3 +47,17 @@ export const validateWBS = (wbsNum: string): WbsNumber => {
 export const isProject = (wbsNum: WbsNumber) => {
   return wbsNum.workPackage === 0;
 };
+
+/**
+ * Are the two given WbsNumber equal?
+ *
+ * @param wbsNum1 first WbsNumber to compare
+ * @param wbsNum2 second WbsNumber to compare
+ */
+export const equals = (wbsNum1: WbsNumber, wbsNum2: WbsNumber): boolean => {
+  return (
+    wbsNum1.car === wbsNum2.car &&
+    wbsNum1.project === wbsNum2.project &&
+    wbsNum1.workPackage === wbsNum2.workPackage
+  );
+};

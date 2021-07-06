@@ -54,7 +54,7 @@ export const isProject = (wbsNum: WbsNumber) => {
  * @param wbsNum1 first WbsNumber to compare
  * @param wbsNum2 second WbsNumber to compare
  */
-export const equals = (wbsNum1: WbsNumber, wbsNum2: WbsNumber): boolean => {
+export const equalsWbsNumber = (wbsNum1: WbsNumber, wbsNum2: WbsNumber): boolean => {
   return (
     wbsNum1.car === wbsNum2.car &&
     wbsNum1.project === wbsNum2.project &&

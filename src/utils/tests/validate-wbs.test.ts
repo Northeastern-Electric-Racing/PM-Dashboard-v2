@@ -8,8 +8,12 @@ import {
   exampleWbsProject1,
   exampleWbsProject2,
   exampleWbsWorkPackage1,
-  exampleWbsWorkPackage2
+  exampleWbsWorkPackage2,
+  exampleWbs1,
+  exampleWbs2,
+  exampleWbs3
 } from '../../test-support/test-data/wbs-numbers.stub';
+import { equalsWbsNumber } from '../lib';
 
 describe('validate wbs numbers', () => {
   it('does not throw on valid WBS nums', () => {
@@ -62,5 +66,44 @@ describe('check wbs numbers are projects', () => {
   it('detects work package wbsNumbers', () => {
     expect(isProject(exampleWbsWorkPackage1)).toBeFalsy();
     expect(isProject(exampleWbsWorkPackage2)).toBeFalsy();
+  });
+});
+
+describe('check wbs numbers are not equal', () => {
+  it('wbsNumbers not equal when only car field is equal', () => {
+    expect(equalsWbsNumber(exampleWbsWorkPackage1, exampleWbsProject1)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when only project field is equal', () => {
+    expect(equalsWbsNumber(exampleWbsWorkPackage2, exampleWbs2)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when only workPackage field is equal', () => {
+    expect(equalsWbsNumber(exampleWbsProject1, exampleWbsProject2)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when none of the fields are equal', () => {
+    expect(equalsWbsNumber(exampleWbsProject1, exampleWbsProject2)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when only car and project field are equal', () => {
+    expect(equalsWbsNumber(exampleWbs2, exampleWbs3)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when only project and workPackage field are equal', () => {
+    expect(equalsWbsNumber(exampleWbsWorkPackage2, exampleWbs3)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when only car and workPackage field are equal', () => {
+    expect(equalsWbsNumber(exampleWbsProject1, exampleWbs2)).toBeFalsy();
+  });
+  it('wbsNumbers not equal when only car and workPackage field are equal (order of args does not matter)', () => {
+    expect(equalsWbsNumber(exampleWbs2, exampleWbsProject1)).toBeFalsy();
+  });
+});
+
+describe('check wbs numbers are equal', () => {
+  it('wbsNumbers equal when car, project, and workPackage field are equal', () => {
+    expect(equalsWbsNumber(exampleWbsWorkPackage1, exampleWbs1)).toBeTruthy();
+  });
+  it('wbsNumbers equal when car, project, and workPackage field are equal (order of args does not matter)', () => {
+    expect(equalsWbsNumber(exampleWbs1, exampleWbsWorkPackage1)).toBeTruthy();
+  });
+  it('wbsNumber equal to itself', () => {
+    expect(equalsWbsNumber(exampleWbs1, exampleWbs1)).toBeTruthy();
   });
 });

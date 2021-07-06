@@ -15,9 +15,9 @@ import { PageBlock } from '../shared/page-block/page-block';
 const Settings: React.FC = () => {
   const user = useContext(UserContext);
   const title = PageTitle("This is the Settings Page");
-  const body = PageBlock("User Settings", "", "User: {user}");
-  // PageBlock({title: "User Settings", headerRight: "", User: {user}})
-  // <p>User: {user}</p>
+  // const body = PageBlock("User Settings", "", "User: {user}");
+  const pageBlockBody = <p>User: {user}</p>;
+  const body = <PageBlock headerRight="" title="User Settings" body={{pageBlockBody}} />
   return (
     <>
       title

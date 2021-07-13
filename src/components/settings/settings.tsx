@@ -14,15 +14,15 @@ import PageBlock from '../shared/page-block/page-block';
 
 const Settings: React.FC = () => {
   const user = useContext(UserContext);
-  const title = <PageTitle title="User settings" />
+  const title = <PageTitle title="This is the Settings Page" />
   // const body = PageBlock("User Settings", "", "User: {user}");
   // render(<PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />);
   const pageBlockBody = <>User: {user}</>;
   const body = <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
   return (
     <>
-      title
-      body
+      {title}
+      {body}
     </>
   );
 };

@@ -7,12 +7,22 @@ import { useContext } from 'react';
 import { UserContext } from '../app/app-context/app-context';
 import './settings.module.css';
 
+import PageTitle from '../shared/page-title/page-title';
+import PageBlock from '../shared/page-block/page-block';
+
+// †ødø; add the two new components, Page Title and Page Block, from shared
+
 const Settings: React.FC = () => {
   const user = useContext(UserContext);
+  const title = <PageTitle title="This is the Settings Page" />
+  // const body = PageBlock("User Settings", "", "User: {user}");
+  // render(<PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />);
+  const pageBlockBody = <>User: {user}</>;
+  const body = <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
   return (
     <>
-      <h3>This is the Settings Page</h3>
-      <p>User: {user}</p>
+      {title}
+      {body}
     </>
   );
 };

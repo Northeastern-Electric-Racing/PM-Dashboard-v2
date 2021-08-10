@@ -5,8 +5,10 @@
 
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { User } from 'utils';
 import AppContext, { UserContext, UserLogInContext } from '../app-context/app-context';
 import { act, render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { TEST_USER } from '../../../test-support/test-data/users.stub';
 import { routes } from '../../../shared/routes';
 import AppCore from './app-core';
 
@@ -20,7 +22,7 @@ jest.mock('../app-public/app-public', () => {
 });
 
 const mockedLocalStorageGetItem = localStorage.getItem as jest.Mock;
-let setupUser = (_a: string) => {};
+let setupUser = (_a: User) => {};
 let pushed: string[] = [];
 
 const TestComponent = () => {
@@ -61,17 +63,17 @@ describe('app core', () => {
     renderComponent(); // component must render with no mocked setup
     jest.resetAllMocks(); // reset mocks to get clean slate for testing
     pushed = []; // reset pushed for clean slate for testing
-    act(() => setupUser('test-user')); // set the user, also triggers re-render
+    act(() => setupUser(TEST_USER)); // set the user, also triggers re-render
 
     expect(localStorage.getItem).toBeCalledTimes(2);
     expect(localStorage.getItem).toBeCalledWith('userId');
     expect(localStorage.setItem).toBeCalledTimes(1);
-    expect(localStorage.setItem).toBeCalledWith('userId', 'test-user');
+    expect(localStorage.setItem).toBeCalledWith('userId', TEST_USER.emailId);
 
     expect(pushed).toEqual([]);
 
     expect(screen.getByText('app public')).toBeInTheDocument();
-    expect(screen.getByText('user: test-user')).toBeInTheDocument();
+    expect(screen.getByText('user: ' + TEST_USER.emailId)).toBeInTheDocument();
     expect(screen.getByText('stored user:')).toBeInTheDocument();
   });
 

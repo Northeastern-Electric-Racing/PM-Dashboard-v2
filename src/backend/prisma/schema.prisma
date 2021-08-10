@@ -47,7 +47,10 @@ model User {
   userId                 Int              @id @default(autoincrement())
   firstName              String
   lastName               String
-  emailId                String           @unique
+  emailId                String           @unique // potentially optional
+  // add northeastern boolean?
+  // add email
+  // add auth server id
   firstLogin             DateTime         @default(now())
   lastLogin              DateTime         @default(now())
   role                   Role             @default(GUEST)

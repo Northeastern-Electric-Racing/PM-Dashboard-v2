@@ -58,6 +58,7 @@ const routes: ApiRoute[] = [
 
 // Handler for incoming requests
 const handler: Handler = async (event, context) => {
+  console.log(event.headers);
   try {
     return routeMatcher(routes, event, context);
   } catch (error) {

@@ -5,6 +5,16 @@
 
 import { User, Role } from 'utils';
 
+export const TEST_USER: User = {
+  id: 0,
+  firstName: '',
+  lastName: '',
+  emailId: '',
+  firstLogin: new Date('01/01/2019'),
+  lastLogin: new Date('01/01/2019'),
+  role: Role.Guest
+};
+
 export const exampleAppAdminUser: User = {
   id: 1,
   firstName: 'Thomas',

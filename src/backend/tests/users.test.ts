@@ -127,4 +127,45 @@ describe('users api endpoint handler', () => {
 
     it.todo('logs the login');
   });
+
+  describe('login check route', () => {
+    it('handles when proper userId cookie is found', async () => {
+      const event: HandlerEvent = mockEvent(apiUrls.usersLoginCheck(), 'POST', undefined, {
+        cookie: 'user=shmoe.j'
+      });
+      const responseObject: any = await handler(event, mockContext, mockCallback);
+      expect(responseObject.statusCode).toBe(200);
+    });
+
+    it('handles when no cookies found', async () => {
+      const event: HandlerEvent = mockEvent(apiUrls.usersLoginCheck(), 'POST', undefined, {});
+      const responseObject: any = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(400);
+      expect(errorObject.message).toEqual('Client error: No cookies found.');
+    });
+
+    it('handles when no userId cookie found', async () => {
+      const event: HandlerEvent = mockEvent(apiUrls.usersLoginCheck(), 'POST', undefined, {
+        cookie: 'thing=unknown'
+      });
+      const responseObject: any = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(400);
+      expect(errorObject.message).toEqual('Client error: No user auth found.');
+    });
+
+    it('handles when userId cookie is invalid', async () => {
+      const event: HandlerEvent = mockEvent(apiUrls.usersLoginCheck(), 'POST', undefined, {
+        cookie: 'thing=unknown; user=mccauley.m'
+      });
+      const responseObject: any = await handler(event, mockContext, mockCallback);
+      const errorObject = JSON.parse(responseObject.body);
+
+      expect(responseObject.statusCode).toBe(401);
+      expect(errorObject.message).toEqual('Authentication is required to perform the request.');
+    });
+  });
 });

@@ -7,7 +7,7 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { apiUrls } from '../../shared/urls';
 import { exampleAllUsers, exampleAdminUser } from '../../test-support/test-data/users.stub';
-import { getAllUsers, getSingleUser, logUserIn } from '../users.api';
+import { getAllUsers, getSingleUser, logUserIn, checkLogin } from '../users.api';
 
 // Mock the server endpoint(s) that the component will hit
 const server = setupServer(
@@ -58,5 +58,16 @@ describe('user api methods', () => {
     expect(result.data).not.toHaveProperty('length');
     expect(result.data).toHaveProperty('firstName');
     expect(result.data).toHaveProperty('role');
+  });
+
+  it('handles checking user credentials', async () => {
+    server.use(
+      rest.post(apiUrls.usersLoginCheck(), (req, res, ctx) => {
+        return res(ctx.status(200));
+      })
+    );
+
+    const result = await checkLogin();
+    expect(result.status).toBe(200);
   });
 });

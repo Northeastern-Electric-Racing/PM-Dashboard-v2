@@ -4,6 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { OAuth2Client } from 'google-auth-library';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -15,8 +16,14 @@ import {
   buildSuccessResponse,
   exampleAllUsers,
   routeMatcher,
-  User
+  User,
+  buildResponse,
+  buildNoAuthResponse,
+  Role
 } from 'utils';
+import { exampleAppAdminUser } from '../../utils/lib/dummy-data';
+
+const COOKIE_DURATION = 4; // in hours
 
 // Fetch all users
 const getAllUsers: ApiRouteFunction = () => {
@@ -39,15 +46,44 @@ const logUserIn: ApiRouteFunction = (_params, event) => {
     return buildClientFailureResponse('No user info found for login.');
   }
   const body = JSON.parse(event.body!);
-  if (!body.emailId) {
-    return buildClientFailureResponse('No emailId found for login.');
+  if (!body.id_token) {
+    return buildClientFailureResponse('No id_token found for login.');
   }
-  const userToLogIn: User | undefined = exampleAllUsers.find(
-    (usr: User) => usr.emailId === body.emailId
+  const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID);
+  const verify = async () => {
+    const ticket = await client.verifyIdToken({
+      idToken: body.id_token,
+      audience: process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID
+    });
+    const payload = ticket.getPayload();
+    if (!payload) throw new Error('Auth server response payload invalid');
+    const userid = payload['sub']; // google user id
+    if (userid !== '106213939999162727811') throw new Error('you are not james');
+    // check if user is already in the database via Google ID
+    // if yes, register a login
+    // if no, register the user and then register a login
+    return payload;
+  };
+  let userToLogIn: User | undefined = exampleAllUsers.find(
+    (usr: User) => usr.emailId === 'shmoe.j'
   );
   if (userToLogIn === undefined) {
     return buildNotFoundResponse('user', `${body.emailId}`);
   }
+  verify()
+    .then((payload) => {
+      const createdUser: User = {
+        id: 1,
+        firstName: payload['given_name']!,
+        lastName: payload['family_name']!,
+        emailId: payload['email']!,
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        role: Role.Guest
+      };
+      userToLogIn = createdUser;
+    })
+    .catch(console.error);
   return buildSuccessResponse(userToLogIn);
 };
 
@@ -73,7 +109,8 @@ const routes: ApiRoute[] = [
 // Handler for incoming requests
 const handler: Handler = async (event, context) => {
   try {
-    return routeMatcher(routes, event, context);
+    const result = routeMatcher(routes, event, context);
+    return result;
   } catch (error) {
     console.error(error);
     return buildServerFailureResponse(error.message);

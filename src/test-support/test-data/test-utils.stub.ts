@@ -56,13 +56,18 @@ export const mockContext: HandlerContext = {
 
 export const mockCallback: HandlerCallback = (_error, _response) => {};
 
-export const mockEvent = (path: string, httpMethod: string, body?: any): HandlerEvent => {
+export const mockEvent = (
+  path: string,
+  httpMethod: string,
+  body?: any,
+  headers?: any
+): HandlerEvent => {
   return {
     rawUrl: '',
     rawQuery: '',
     path,
     httpMethod,
-    headers: {},
+    headers: { ...headers },
     multiValueHeaders: {},
     queryStringParameters: {},
     multiValueQueryStringParameters: {},

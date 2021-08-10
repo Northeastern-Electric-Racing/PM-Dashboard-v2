@@ -10,8 +10,8 @@ import { User } from 'utils';
 import { queryClientProviderWrapper as wrapper } from '../../test-support/test-utils';
 import { mockPromiseAxiosResponse } from '../../test-support/test-data/test-utils.stub';
 import { exampleAllUsers, exampleAdminUser } from '../../test-support/test-data/users.stub';
-import { getAllUsers, getSingleUser, logUserIn } from '../users.api';
-import { useAllUsers, useSingleUser, useLogUserIn } from '../users.hooks';
+import { getAllUsers, getSingleUser, logUserIn, checkLogin } from '../users.api';
+import { useAllUsers, useSingleUser, useLogUserIn, useCheckLogin } from '../users.hooks';
 
 jest.mock('../users.api');
 
@@ -47,5 +47,20 @@ describe('user hooks', () => {
 
     await waitFor(() => result.current.isSuccess);
     expect(result.current.data).toEqual(exampleAdminUser);
+  });
+
+  it('handles checking user credentials', async () => {
+    const mockedCheckLogin = checkLogin as jest.Mock<Promise<AxiosResponse<undefined>>>;
+    mockedCheckLogin.mockReturnValue(mockPromiseAxiosResponse(undefined));
+
+    const { result, waitFor } = renderHook(() => useCheckLogin(), {
+      wrapper
+    });
+    act(() => {
+      result.current.mutate();
+    });
+
+    await waitFor(() => result.current.isSuccess);
+    expect(result.current.isSuccess).toBeTruthy();
   });
 });

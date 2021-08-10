@@ -3,13 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
-import { UserContext } from '../app/app-context/app-context';
+import { useAuth } from '../../services/auth.hooks';
 import styles from './home.module.css';
 
 const Home: React.FC = () => {
-  const user = useContext(UserContext);
-  return <h1 className={styles.title}>Welcome, {user}!</h1>;
+  const auth = useAuth();
+  return <h1 className={styles.title}>Welcome, {auth!.user.emailId}!</h1>;
 };
 
 export default Home;

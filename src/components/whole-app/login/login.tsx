@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router';
-import { UserLogInContext } from '../../app/app-context/app-context';
+import { UserLogInContext } from '../../app/app-context-query/app-context-query';
 import { useLogUserIn } from '../../../services/users.hooks';
 import { routes } from '../../../shared/routes';
 import LoginPage from './login-page/login-page';

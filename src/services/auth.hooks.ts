@@ -5,15 +5,9 @@
 
 import { useState, useContext } from 'react';
 import { User } from 'utils';
-import { AuthContext } from '../components/app/app-context/app-context';
+import { AuthContext } from '../components/app/app-context-auth/app-context-auth';
 import { useLogUserIn } from './users.hooks';
-
-export interface Auth {
-  user: User | undefined;
-  devSignin: (user: User) => User;
-  signin: (token: string) => Promise<User>;
-  signout: () => void;
-}
+import { Auth } from '../shared/types';
 
 // Provider hook that creates auth object and handles state
 export const useProvideAuth = () => {
@@ -40,7 +34,7 @@ export const useProvideAuth = () => {
     devSignin,
     signin,
     signout
-  };
+  } as Auth;
 };
 
 // Hook for child components to get the auth object

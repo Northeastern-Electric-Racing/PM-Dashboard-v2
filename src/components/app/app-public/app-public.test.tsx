@@ -4,8 +4,11 @@
  */
 
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
+import { Auth } from '../../../shared/types';
 import AppPublic from './app-public';
+import { mockAuth } from '../../../test-support/test-data/test-utils.stub';
 
 jest.mock('../app-authenticated/app-authenticated', () => {
   return {
@@ -16,8 +19,17 @@ jest.mock('../app-authenticated/app-authenticated', () => {
   };
 });
 
+jest.mock('../../../services/auth.hooks');
+
+const mockedUseAuth = useAuth as jest.Mock<Auth>;
+
+const mockHook = () => {
+  mockedUseAuth.mockReturnValue(mockAuth());
+};
+
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
+  mockHook();
   const RouterWrapper = routerWrapperBuilder({ path, route });
   return render(
     <RouterWrapper>

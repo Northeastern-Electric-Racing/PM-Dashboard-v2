@@ -3,101 +3,49 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
-import { act, render, screen } from '@testing-library/react'; // avoid circular dependency
-import { useAllChangeRequests } from '../../../services/change-requests.hooks';
-import AppContext, { UserContext, UserLogInContext, UserLogOutContext } from './app-context';
+import { render, screen } from '../../../test-support/test-utils';
+import AppContext from './app-context';
+
+jest.mock('../app-context-query/app-context-query', () => {
+  return {
+    __esModule: true,
+    default: (props: any) => {
+      return <div>app context query {props.children}</div>;
+    }
+  };
+});
+
+jest.mock('../app-context-auth/app-context-auth', () => {
+  return {
+    __esModule: true,
+    default: (props: any) => {
+      return <div>app context auth {props.children}</div>;
+    }
+  };
+});
+
+// Sets up the component under test with the desired values and renders it
+const renderComponent = () => {
+  render(
+    <AppContext>
+      <p>full context</p>
+    </AppContext>
+  );
+};
 
 describe('app context', () => {
-  it('renders simple text as children', () => {
-    render(<AppContext>hello</AppContext>);
-    expect(screen.getByText('hello')).toBeInTheDocument();
+  it('renders the app context query component', () => {
+    renderComponent();
+    expect(screen.getAllByText('app context query')[0]).toBeInTheDocument();
   });
 
-  it('provides the user and login function to child components', () => {
-    let setupUser = (_a: string) => {};
-    const TestComponent = () => {
-      const user = useContext(UserContext);
-      setupUser = useContext(UserLogInContext);
-      return <p>{user}</p>;
-    };
-    render(
-      <AppContext>
-        <TestComponent />
-      </AppContext>
-    );
-    act(() => setupUser('test-user'));
-    expect(screen.getByText('test-user')).toBeInTheDocument();
+  it('renders the app context auth component', () => {
+    renderComponent();
+    expect(screen.getByText('app context auth')).toBeInTheDocument();
   });
 
-  it('provides the logout function to child components', () => {
-    let setupUser = (_a: string) => {};
-    const TestComponent = () => {
-      const user = useContext(UserContext);
-      setupUser = useContext(UserLogInContext);
-      const logOutUser = useContext(UserLogOutContext);
-      return (
-        <>
-          <p>{user}</p>
-          <button onClick={logOutUser}>log out</button>
-        </>
-      );
-    };
-    render(
-      <AppContext>
-        <TestComponent />
-      </AppContext>
-    );
-    act(() => setupUser('test-user'));
-    expect(screen.getByText('test-user')).toBeInTheDocument();
-    screen.getByText('log out').click();
-    expect(screen.queryByText('test-user')).not.toBeInTheDocument();
-  });
-
-  it('properly interacts with local storage for log in and log out', () => {
-    let setupUser = (_a: string) => {};
-    const TestComponent = () => {
-      const user = useContext(UserContext);
-      setupUser = useContext(UserLogInContext);
-      const logOutUser = useContext(UserLogOutContext);
-      return (
-        <>
-          <p>{user}</p>
-          <button onClick={logOutUser}>log out</button>
-        </>
-      );
-    };
-    render(
-      <AppContext>
-        <TestComponent />
-      </AppContext>
-    );
-
-    act(() => setupUser('test-user'));
-    expect(localStorage.setItem).toBeCalledTimes(1);
-    expect(localStorage.setItem).toBeCalledWith('userId', 'test-user');
-    expect(screen.getByText('test-user')).toBeInTheDocument();
-
-    screen.getByText('log out').click();
-    expect(localStorage.removeItem).toBeCalledTimes(1);
-    expect(localStorage.removeItem).toBeCalledWith('userId');
-    expect(screen.queryByText('test-user')).not.toBeInTheDocument();
-
-    expect(localStorage.setItem).toBeCalledTimes(1);
-    expect(localStorage.removeItem).toBeCalledTimes(1);
-  });
-
-  it('properly provider query client', () => {
-    const TestComponent = () => {
-      const result = useAllChangeRequests();
-      return <p>{result.status}</p>;
-    };
-    render(
-      <AppContext>
-        <TestComponent />
-      </AppContext>
-    );
-
-    expect(screen.getByText('loading')).toBeInTheDocument();
+  it('renders the app context text', () => {
+    renderComponent();
+    expect(screen.getByText('full context')).toBeInTheDocument();
   });
 });

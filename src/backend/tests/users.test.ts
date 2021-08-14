@@ -4,11 +4,9 @@
  */
 
 import { HandlerEvent } from '@netlify/functions';
-import { OAuth2Client } from 'google-auth-library';
 import { User } from 'utils';
 import { apiUrls } from '../../shared/urls';
 import { mockCallback, mockContext, mockEvent } from '../../test-support/test-data/test-utils.stub';
-import { exampleAdminUser } from '../../test-support/test-data/users.stub';
 import { handler } from '../functions/users';
 
 const expectUserFields = (user: User) => {

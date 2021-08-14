@@ -59,7 +59,7 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
     }
   };
 
-  return (
+  return ( 
     <>
       <PageTitle title={'All Change Requests'} />
       <BootstrapTable

@@ -4,7 +4,9 @@
  */
 
 import { Button } from 'react-bootstrap';
+import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
+import CommonFormFields from './common-form-fields/common-form-fields';
 import styles from './new-change-request-page.module.css';
 
 const NewChangeRequestPage: React.FC = () => {
@@ -15,8 +17,16 @@ const NewChangeRequestPage: React.FC = () => {
   return (
     <>
       <PageTitle title={'New Change Request'} />
-      <p>placeholder for common form fields</p>
-      <p>placeholder for specific form fields</p>
+      <PageBlock
+        title={''}
+        headerRight={<></>}
+        body={
+          <>
+            <CommonFormFields />
+            <p>placeholder for specific form fields</p>
+          </>
+        }
+      />
       <Button className={styles.submitButton} onClick={(e) => submitHandler()}>
         Submit
       </Button>

@@ -5,7 +5,7 @@
 
 import AppContextAuth from '../app-context-auth/app-context-auth';
 import AppContextQuery from '../app-context-query/app-context-query';
-import './app-core.module.css';
+import './app-context.module.css';
 
 const AppContext: React.FC = (props) => {
   return (

@@ -4,7 +4,7 @@
  */
 
 import { useHistory } from 'react-router-dom';
-import BootstrapTable, { 
+import BootstrapTable, {  
   ColumnDescription,
   RowEventHandlerProps,
   SortOrder

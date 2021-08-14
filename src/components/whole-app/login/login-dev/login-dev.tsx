@@ -13,7 +13,7 @@ interface LoginDevProps {
 }
 
 /**
- * Page for unauthenticated users to do login.
+ * Form for dev users to do login on the dev environment.
  */
 const LoginDev: React.FC<LoginDevProps> = ({ devSetRole, devFormSubmit }) => {
   return (

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from '../../../test-support/test-utils';
+import { render, screen } from '@testing-library/react'; // avoid circular dependency
 import AppContext from './app-context';
 
 jest.mock('../app-context-query/app-context-query', () => {
@@ -36,7 +36,7 @@ const renderComponent = () => {
 describe('app context', () => {
   it('renders the app context query component', () => {
     renderComponent();
-    expect(screen.getAllByText('app context query')[0]).toBeInTheDocument();
+    expect(screen.getByText('app context query')).toBeInTheDocument();
   });
 
   it('renders the app context auth component', () => {

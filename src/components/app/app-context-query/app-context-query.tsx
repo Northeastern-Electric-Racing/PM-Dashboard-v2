@@ -3,12 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { createContext } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Auth } from '../../../services/auth.hooks';
 import './app-context-query.module.css';
-
-export const AuthContext = createContext<Auth | undefined>(undefined);
 
 const AppContextQuery: React.FC = (props) => {
   const queryClient = new QueryClient();

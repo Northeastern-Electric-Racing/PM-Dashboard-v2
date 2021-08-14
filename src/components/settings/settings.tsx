@@ -8,6 +8,7 @@ import './settings.module.css';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
+  console.log('logged in user:', auth.user);
   return (
     <>
       <h3>This is the Settings Page</h3>

@@ -52,8 +52,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   const payload = ticket.getPayload();
   if (!payload) throw new Error('Auth server response payload invalid');
   const userid = payload['sub']; // google user id
-  console.log(process.env.JAMES_GOOGLE_ID);
-  if (userid !== process.env.JAMES_GOOGLE_ID) throw new Error('you are not james');
+  console.log(userid);
   // check if user is already in the database via Google ID
   // if yes, register a login
   // if no, register the user and then register a login

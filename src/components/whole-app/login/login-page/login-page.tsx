@@ -3,60 +3,49 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
-import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
-import ErrorPage from '../../../shared/error-page/error-page';
+import GoogleLogin from 'react-google-login';
+import { Card } from 'react-bootstrap';
 import styles from './login-page.module.css';
+import LoginDev from '../login-dev/login-dev';
 
 interface LoginPageProps {
-  isLoading: boolean;
-  isError: boolean;
-  message?: string;
-  formSubmit: (e: any) => void;
-  emailId: string;
-  updateEmailId: (e: any) => void;
+  devSetRole: (role: string) => void;
+  devFormSubmit: (e: any) => any;
+  prodSuccess: (res: any) => any;
+  prodFailure: (res: any) => any;
 }
 
 /**
  * Page for unauthenticated users to do login.
  */
 const LoginPage: React.FC<LoginPageProps> = ({
-  isLoading,
-  isError,
-  message,
-  formSubmit,
-  emailId,
-  updateEmailId
+  devSetRole,
+  devFormSubmit,
+  prodSuccess,
+  prodFailure
 }) => {
-  if (isLoading) return <LoadingIndicator />;
-
-  if (isError) return <ErrorPage message={message} />;
-
   return (
-    <div className={`card mx-auto mt-sm-5 ${styles.card}`}>
-      <div className="card-body">
-        <h5 className="card-title">NER PM Dashboard</h5>
-        <p id="login-text" className="card-text">
-          Login Required
-        </p>
-        <Form onSubmit={formSubmit}>
-          <InputGroup>
-            <FormControl
-              value={emailId}
-              onChange={updateEmailId}
-              placeholder="Email ID"
-              aria-label="emailId"
-              aria-describedby="login-text"
-            />
-            <InputGroup.Append>
-              <Button variant="primary" type="submit">
-                Log In
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Form>
-      </div>
-    </div>
+    <Card className={'mx-auto mt-sm-5 ' + styles.card}>
+      <Card.Body>
+        <Card.Title>NER PM Dashboard</Card.Title>
+        <Card.Text>Login Required. Students must use their Husky Google account.</Card.Text>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}
+          jsSrc={'accounts.google.com/gsi/client'}
+          buttonText="Login"
+          onSuccess={prodSuccess}
+          onFailure={prodFailure}
+          cookiePolicy={'single_host_origin'}
+          isSignedIn={true}
+        />
+        {process.env.NODE_ENV === 'development' ? (
+          <LoginDev devSetRole={devSetRole} devFormSubmit={devFormSubmit} />
+        ) : (
+          ''
+        )}
+      </Card.Body>
+      <Card.Footer className="text-muted">This site uses cookies.</Card.Footer>
+    </Card>
   );
 };
 

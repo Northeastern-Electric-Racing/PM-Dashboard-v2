@@ -4,10 +4,10 @@
  */
 
 import { useState } from 'react';
-import { useContext } from 'react';
 import { useHistory } from 'react-router';
-import { UserLogInContext } from '../../app/app-context-query/app-context-query';
-import { useLogUserIn } from '../../../services/users.hooks';
+import { Role } from 'utils';
+import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
+import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
 import LoginPage from './login-page/login-page';
 import './login.module.css';
@@ -16,33 +16,35 @@ import './login.module.css';
  * Page for unauthenticated users to do login.
  */
 const Login: React.FC = () => {
+  const [devUserRole, setDevUserRole] = useState<string>(Role.AppAdmin);
   const history = useHistory();
-  const serverLogin = useLogUserIn();
-  const loginFunc = useContext(UserLogInContext);
-  const [emailId, setEmailId] = useState<string>('');
-  const storedUrl = localStorage.getItem('redirectUrl');
+  const auth = useAuth();
 
-  const updateEmailId = (event: any) => setEmailId(event.target.value);
-
-  const formSubmit = (event: any) => {
-    event.preventDefault();
-    serverLogin.mutate(emailId);
+  const devFormSubmit = (e: any) => {
+    e.preventDefault();
+    const user = exampleAllUsers.find((u) => u.role === devUserRole);
+    if (!user) throw new Error('user for dev not found from role: ' + devUserRole);
+    auth.devSignin(user!);
+    history.push(routes.HOME);
   };
 
-  if (serverLogin.isSuccess) {
-    loginFunc(emailId);
-    history.push(storedUrl || routes.HOME);
-    localStorage.removeItem('redirectUrl');
-  }
+  const verifyLogin = async (response: any) => {
+    const id_token: string = response.getAuthResponse().id_token;
+    if (!id_token) throw new Error('Invalid login object');
+    await auth.signin(id_token);
+    history.push(routes.HOME);
+  };
+
+  const handleFailure = (response: any) => {
+    console.log(response);
+  };
 
   return (
     <LoginPage
-      isLoading={serverLogin.isLoading}
-      isError={serverLogin.isError}
-      message={serverLogin.error?.message}
-      formSubmit={formSubmit}
-      emailId={emailId}
-      updateEmailId={updateEmailId}
+      devSetRole={setDevUserRole}
+      devFormSubmit={devFormSubmit}
+      prodSuccess={verifyLogin}
+      prodFailure={handleFailure}
     />
   );
 };

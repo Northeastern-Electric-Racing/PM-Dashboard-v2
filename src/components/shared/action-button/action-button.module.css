@@ -3,14 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.titleRow {
-  overflow: auto;
+.button {
+  display: flex;
 }
 
-.title {
-  float: left;
-}
-
-.actionButton {
-  float: right;
+.buttonText {
+  color: white;
 }

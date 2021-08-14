@@ -5,6 +5,7 @@
 
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { routes } from '../../../shared/routes';
 import NavUserMenu from './nav-user-menu/nav-user-menu';
 import NavPageLinks from './nav-page-links/nav-page-links';
 import NavNotificationsMenu from './nav-notifications-menu/nav-notifications-menu';
@@ -14,7 +15,7 @@ const NavTopBar: React.FC = () => {
   return (
     <Navbar className={styles.mainBackground} variant="light" expand="md" fixed="top">
       <Navbar.Brand as="div">
-        <Link className="d-flex" to="/" style={{ textDecoration: 'none' }}>
+        <Link className="d-flex" to={routes.HOME} style={{ textDecoration: 'none' }}>
           <img
             className={`d-inline-block align-top ${styles.logo}`}
             src={'NER-Logo-App-Icon.png'}

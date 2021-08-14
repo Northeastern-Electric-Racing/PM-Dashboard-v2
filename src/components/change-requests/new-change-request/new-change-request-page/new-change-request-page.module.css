@@ -3,14 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.titleRow {
-  overflow: auto;
-}
-
-.title {
-  float: left;
-}
-
-.actionButton {
+.submitButton {
   float: right;
+  margin-right: 2em;
 }

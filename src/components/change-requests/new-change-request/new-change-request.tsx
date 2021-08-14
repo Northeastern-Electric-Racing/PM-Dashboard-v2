@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import './change-requests.module.css';
+import './new-change-request.module.css';
 
 const NewChangeRequest: React.FC = () => {
   // logic for submitting a change request

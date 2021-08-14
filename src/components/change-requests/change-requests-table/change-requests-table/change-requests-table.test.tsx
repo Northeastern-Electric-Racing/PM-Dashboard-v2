@@ -5,12 +5,14 @@
 
 import { render, screen } from '@testing-library/react';
 import { ChangeRequest } from 'utils';
-import { booleanPipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
 import { exampleAllChangeRequests } from '../../../../test-support/test-data/change-requests.stub';
+import { booleanPipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
+import { routerWrapperBuilder } from '../../../../test-support/test-utils';
 import ChangeRequestsTable, { DisplayChangeRequest } from './change-requests-table';
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent: (changeRequests?: DisplayChangeRequest[]) => void = (crs) => {
+  const RouterWrapper = routerWrapperBuilder({});
   if (!crs) {
     crs = exampleAllChangeRequests.map((cr: ChangeRequest) => {
       return {
@@ -24,7 +26,11 @@ const renderComponent: (changeRequests?: DisplayChangeRequest[]) => void = (crs)
       };
     });
   }
-  render(<ChangeRequestsTable changeRequests={crs!} />);
+  render(
+    <RouterWrapper>
+      <ChangeRequestsTable changeRequests={crs!} />
+    </RouterWrapper>
+  );
 };
 
 describe('change requests table view component', () => {

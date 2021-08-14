@@ -6,10 +6,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
 import { ChangeRequest } from 'utils';
-import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
-import { useAllChangeRequests } from '../../../services/change-requests.hooks';
-import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import { exampleAllChangeRequests } from '../../../test-support/test-data/change-requests.stub';
+import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
+import { useAllChangeRequests } from '../../../services/change-requests.hooks';
+import { routerWrapperBuilder } from '../../../test-support/test-utils';
+import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import ChangeRequestsTable from './change-requests-table';
 
 jest.mock('../../../services/change-requests.hooks');
@@ -26,7 +27,12 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: ChangeRequest[], 
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
-  render(<ChangeRequestsTable />);
+  const RouterWrapper = routerWrapperBuilder({});
+  render(
+    <RouterWrapper>
+      <ChangeRequestsTable />
+    </RouterWrapper>
+  );
 };
 
 describe('change requests table container', () => {

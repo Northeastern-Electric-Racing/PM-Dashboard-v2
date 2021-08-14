@@ -44,14 +44,12 @@ export const getSingleUser = (id: number) => {
 /**
  * Log in a user.
  *
- * @param emailId The emailId of the user to log in.
+ * @param id_token The login token for the user.
  */
-export const logUserIn = (emailId: string) => {
+export const logUserIn = (id_token: string) => {
   return axios.post<User>(
     apiUrls.usersLogin(),
-    { emailId },
-    {
-      transformResponse: (data) => userTransformer(JSON.parse(data))
-    }
+    { id_token },
+    { transformResponse: (data) => userTransformer(JSON.parse(data)) }
   );
 };

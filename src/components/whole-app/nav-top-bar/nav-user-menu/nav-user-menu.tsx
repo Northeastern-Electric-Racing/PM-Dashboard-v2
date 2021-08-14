@@ -8,11 +8,12 @@ import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { UserContext, UserLogOutContext } from '../../../app/app-context-query/app-context-query';
+import { UserLogOutContext } from '../../../app/app-context-query/app-context-query';
 import './nav-user-menu.module.css';
+import { useAuth } from '../../../../services/auth.hooks';
 
 const NavUserMenu: React.FC = () => {
-  const user = useContext(UserContext);
+  const auth = useAuth();
   const logoutFunc = useContext(UserLogOutContext);
 
   return (
@@ -22,7 +23,7 @@ const NavUserMenu: React.FC = () => {
       id="user-dropdown"
       alignRight
     >
-      <NavDropdown.ItemText>Logged in as: {user}</NavDropdown.ItemText>
+      <NavDropdown.ItemText>Logged in as: {auth.user?.emailId}</NavDropdown.ItemText>
       <NavDropdown.Divider />
       <NavDropdown.Item as="div">
         <Link className="nav-link p-0" role="button" to="/settings">

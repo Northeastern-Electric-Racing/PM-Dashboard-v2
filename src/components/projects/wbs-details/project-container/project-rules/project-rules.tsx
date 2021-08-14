@@ -3,16 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage } from 'utils';
 import PageBlock from '../../../../shared/page-block/page-block';
-import styles from './work-package-rules.module.css';
+import styles from './project-rules.module.css';
 
-interface WorkPackageRulesProps {
-  workPackage: WorkPackage;
+interface RulesProps {
+  rules: string[];
 }
 
-const WorkPackageRules: React.FC<WorkPackageRulesProps> = ({ workPackage }) => {
-  const list = workPackage.rules.map((str, idx) => (
+const ProjectRules: React.FC<RulesProps> = ({ rules }) => {
+  const list = rules.map((str, idx) => (
     <p key={idx} className={styles.ruleReferences}>
       {str}
     </p>
@@ -20,4 +19,4 @@ const WorkPackageRules: React.FC<WorkPackageRulesProps> = ({ workPackage }) => {
   return <PageBlock title={'Rules'} headerRight={<></>} body={<>{list}</>} />;
 };
 
-export default WorkPackageRules;
+export default ProjectRules;

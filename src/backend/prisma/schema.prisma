@@ -156,6 +156,7 @@ model Project {
   slideDeckLink         String
   bomLink               String
   taskListLink          String
+  rules                 String[]
   workPackages          Work_Package[]
 }
 
@@ -172,7 +173,6 @@ model Work_Package {
   budget             Int
   dependencies       WBS_Element[]        @relation(name: "dependencies")
   deliverables       String
-  rules              String[]
   descriptionBullets Description_Bullet[]
 }
 

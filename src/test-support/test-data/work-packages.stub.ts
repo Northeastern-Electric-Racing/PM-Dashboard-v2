@@ -34,7 +34,6 @@ export const exampleWorkPackage1: WorkPackage = {
   budget: 0,
   dependencies: [],
   deliverable: 'High-level anaylsis of options and direction to go in for the project',
-  rules: ['EV3.5.2'],
   descriptionBullets: [
     {
       id: 1,
@@ -81,7 +80,6 @@ export const exampleWorkPackage2: WorkPackage = {
   dependencies: [exampleWbsWorkPackage1],
   deliverable:
     'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
-  rules: ['T12.3.2', 'T8.2.6'],
   descriptionBullets: [
     {
       id: 3,
@@ -135,7 +133,6 @@ export const exampleWorkPackage3: WorkPackage = {
   budget: 124,
   dependencies: [exampleWbsProject1, exampleWbsProject2],
   deliverable: 'Completed wiring harness for the entire car',
-  rules: ['EV1.4.7', 'EV6.3.10'],
   descriptionBullets: [
     {
       id: 6,

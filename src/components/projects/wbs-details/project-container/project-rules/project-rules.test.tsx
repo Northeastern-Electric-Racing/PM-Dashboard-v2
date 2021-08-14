@@ -4,18 +4,18 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
-import WorkPackageRules from './work-package-rules';
+import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
+import ProjectRules from './project-rules';
 
 describe('Rendering Work Package Rules Component', () => {
   it('renders the component title', () => {
-    render(<WorkPackageRules workPackage={exampleWorkPackage2} />);
+    render(<ProjectRules rules={exampleProject1.rules} />);
 
     expect(screen.getByText(`Rules`)).toBeInTheDocument();
   });
 
   it('renders all the listed rules', () => {
-    render(<WorkPackageRules workPackage={exampleWorkPackage2} />);
+    render(<ProjectRules rules={exampleProject1.rules} />);
 
     expect(screen.getByText('T12.3.2')).toBeInTheDocument();
     expect(screen.getByText('T8.2.6')).toBeInTheDocument();

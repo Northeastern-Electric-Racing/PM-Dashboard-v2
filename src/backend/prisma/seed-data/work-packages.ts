@@ -23,8 +23,7 @@ const dbSeedWorkPackage1: any = {
     progress: 25,
     duration: 3,
     budget: 0,
-    deliverables: 'High-level anaylsis of options and direction to go in for the project',
-    rules: ['EV3.5.2']
+    deliverables: 'High-level anaylsis of options and direction to go in for the project'
   },
   descriptionBullets: [
     {
@@ -59,8 +58,7 @@ const dbSeedWorkPackage2: any = {
     duration: 5,
     budget: 75,
     deliverables:
-      'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
-    rules: ['T12.3.2', 'T8.2.6']
+      'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best'
   },
   descriptionBullets: [
     {
@@ -97,8 +95,7 @@ const dbSeedWorkPackage3: any = {
     progress: 100,
     duration: 2,
     budget: 124,
-    deliverables: 'Completed wiring harness for the entire car',
-    rules: ['EV1.4.7', 'EV6.3.10']
+    deliverables: 'Completed wiring harness for the entire car'
   },
   descriptionBullets: [
     {

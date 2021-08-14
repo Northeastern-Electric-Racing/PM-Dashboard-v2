@@ -13,6 +13,7 @@ import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import './project-container.module.css';
+import ProjectRules from './project-rules/project-rules';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -42,6 +43,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
           </>
         }
       />
+      <ProjectRules rules={data!.rules} />
     </div>
   );
 };

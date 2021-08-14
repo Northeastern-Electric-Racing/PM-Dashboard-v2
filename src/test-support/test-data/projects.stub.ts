@@ -30,6 +30,7 @@ export const exampleProject1: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  rules: ['T12.3.2', 'T8.2.6'],
   workPackages: [exampleWorkPackage1, exampleWorkPackage2]
 };
 
@@ -45,6 +46,7 @@ export const exampleProject2: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  rules: ['EV1.4.7', 'EV6.3.10'],
   workPackages: []
 };
 
@@ -60,6 +62,7 @@ export const exampleProject3: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  rules: ['EV3.5.2'],
   workPackages: [exampleWorkPackage1]
 };
 
@@ -75,6 +78,7 @@ export const exampleProject4: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  rules: ['EV3.5.2'],
   workPackages: [exampleWorkPackage2]
 };
 
@@ -90,6 +94,7 @@ export const exampleProject5: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  rules: ['EV3.5.2'],
   workPackages: [exampleWorkPackage3]
 };
 

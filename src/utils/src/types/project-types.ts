@@ -33,6 +33,7 @@ export interface Project extends WbsElement {
   taskListLink: string;
   slideDeckLink: string;
   bomLink: string;
+  rules: string[];
   workPackages: WorkPackage[];
 }
 
@@ -44,7 +45,6 @@ export interface WorkPackage extends WbsElement {
   budget: number;
   dependencies: WbsNumber[];
   deliverable: string;
-  rules: string[];
   descriptionBullets: DescriptionBullet[];
   changes: ImplementedChange[];
 }

@@ -3,14 +3,23 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Button } from 'react-bootstrap';
 import PageTitle from '../../../shared/page-title/page-title';
-import './change-requests-page.module.css';
+import styles from './new-change-request-page.module.css';
 
 const NewChangeRequestPage: React.FC = () => {
+  const submitHandler = () => {
+    alert('submitted');
+  };
+
   return (
     <>
       <PageTitle title={'New Change Request'} />
-      <p>placeholder page</p>
+      <p>placeholder for common form fields</p>
+      <p>placeholder for specific form fields</p>
+      <Button className={styles.submitButton} onClick={(e) => submitHandler()}>
+        Submit
+      </Button>
     </>
   );
 };

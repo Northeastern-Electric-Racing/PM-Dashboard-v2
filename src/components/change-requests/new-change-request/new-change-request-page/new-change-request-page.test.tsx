@@ -17,6 +17,6 @@ describe('new change request page', () => {
   it('renders the new change requests page', () => {
     renderComponent();
 
-    expect(screen.getByText('placeholder page')).toBeInTheDocument();
+    expect(screen.getAllByText(/placeholder/i)[0]).toBeInTheDocument();
   });
 });

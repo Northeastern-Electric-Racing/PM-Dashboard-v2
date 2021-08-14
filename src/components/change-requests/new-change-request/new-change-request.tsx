@@ -3,11 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import NewChangeRequestPage from './new-change-request-page/new-change-request-page';
 import './new-change-request.module.css';
 
 const NewChangeRequest: React.FC = () => {
   // logic for submitting a change request
-  return <p>placeholder</p>;
+  return <NewChangeRequestPage />;
 };
 
 export default NewChangeRequest;

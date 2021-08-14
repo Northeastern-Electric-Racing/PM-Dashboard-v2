@@ -70,7 +70,7 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
         defaultSorted={defaultSort}
         rowEvents={rowEvents}
         noDataIndication="No Projects to Display"
-      />
+        rowStyle={  { cursor: 'pointer' } }      />
     </>
   );
 };

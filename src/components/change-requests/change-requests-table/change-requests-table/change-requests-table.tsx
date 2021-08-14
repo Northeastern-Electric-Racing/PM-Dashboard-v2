@@ -74,7 +74,7 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
         defaultSorted={defaultSort}
         rowEvents={rowEvents}
         noDataIndication="No Change Requests to Display"
-      />
+        rowStyle={  { cursor: 'pointer' } }/>
     </>
   );
 };

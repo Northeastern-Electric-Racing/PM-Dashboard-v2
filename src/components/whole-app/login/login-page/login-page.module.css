@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.logoutButton {
-  background-color: transparent;
-  border: none;
+.card {
+  width: 25em;
 }

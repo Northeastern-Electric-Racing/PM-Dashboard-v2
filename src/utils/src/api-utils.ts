@@ -88,7 +88,7 @@ export const routeMatcher = (
   routes: ApiRoute[],
   event: HandlerEvent,
   context: HandlerContext
-): HandlerResponse => {
+): HandlerResponse | Promise<HandlerResponse> => {
   for (let index = 0; index < routes.length; index += 1) {
     const singleRoute: ApiRoute = routes[index];
     const requestPath: string = !event.path.startsWith(API_URL) ? API_URL + event.path : event.path;

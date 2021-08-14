@@ -33,7 +33,7 @@ const NavUserMenu: React.FC = () => {
       <NavDropdown.Item as="div">
         <GoogleLogout
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}
-          jsSrc={'accounts.google.com/gsi/client'}
+          //jsSrc={'accounts.google.com/gsi/client'}
           onLogoutSuccess={() => {
             auth!.signout();
             history.push(routes.HOME);

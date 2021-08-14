@@ -31,7 +31,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
         <Card.Text>Login Required. Students must use their Husky Google account.</Card.Text>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}
-          jsSrc={'accounts.google.com/gsi/client'}
+          //jsSrc={'accounts.google.com/gsi/client.js'}
           buttonText="Login"
           onSuccess={prodSuccess}
           onFailure={prodFailure}

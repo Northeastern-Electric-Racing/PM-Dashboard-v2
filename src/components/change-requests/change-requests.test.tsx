@@ -25,6 +25,15 @@ jest.mock('./change-request-details/change-request-details', () => {
   };
 });
 
+jest.mock('./new-change-request/new-change-request', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>new-change-request</div>;
+    }
+  };
+});
+
 /**
  * Sets up the component under test with the desired values and renders it.
  */
@@ -37,7 +46,7 @@ const renderComponent = (route: string) => {
   );
 };
 
-describe('change request page', () => {
+describe('change request pages', () => {
   it('renders the change requests list page', () => {
     renderComponent(routes.CHANGE_REQUESTS);
 
@@ -48,5 +57,11 @@ describe('change request page', () => {
     renderComponent(routes.CHANGE_REQUESTS_BY_ID);
 
     expect(screen.getByText('change-request-details')).toBeInTheDocument();
+  });
+
+  it('renders the new change request form title', async () => {
+    renderComponent(routes.CHANGE_REQUESTS_NEW);
+
+    expect(screen.getByText('new-change-request')).toBeInTheDocument();
   });
 });

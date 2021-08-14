@@ -3,18 +3,18 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { GoogleLogout } from 'react-google-login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { UserLogOutContext } from '../../../app/app-context-query/app-context-query';
-import './nav-user-menu.module.css';
 import { useAuth } from '../../../../services/auth.hooks';
+import { routes } from '../../../../shared/routes';
+import styles from './nav-user-menu.module.css';
 
 const NavUserMenu: React.FC = () => {
+  const history = useHistory();
   const auth = useAuth();
-  const logoutFunc = useContext(UserLogOutContext);
 
   return (
     <NavDropdown
@@ -31,9 +31,23 @@ const NavUserMenu: React.FC = () => {
         </Link>
       </NavDropdown.Item>
       <NavDropdown.Item as="div">
-        <p className="nav-link p-0 m-0" role="button" onClick={(e) => logoutFunc()}>
-          Log Out
-        </p>
+        <GoogleLogout
+          clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}
+          jsSrc={'accounts.google.com/gsi/client'}
+          onLogoutSuccess={() => {
+            auth!.signout();
+            history.push(routes.HOME);
+          }}
+          render={(renderProps) => (
+            <button
+              className={'nav-link p-0 m-0 ' + styles.logoutButton}
+              onClick={renderProps.onClick}
+              disabled={renderProps.disabled}
+            >
+              Logout
+            </button>
+          )}
+        ></GoogleLogout>
       </NavDropdown.Item>
     </NavDropdown>
   );

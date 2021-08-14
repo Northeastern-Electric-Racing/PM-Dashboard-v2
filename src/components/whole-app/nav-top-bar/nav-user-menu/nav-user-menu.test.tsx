@@ -40,6 +40,6 @@ describe('navigation user menu tests', () => {
     await waitFor(() => screen.getByText(/Settings/i));
 
     expect(screen.getByText('Settings')).toBeInTheDocument();
-    expect(screen.getByText('Log Out')).toBeInTheDocument();
+    expect(screen.getByText('Logout')).toBeInTheDocument();
   });
 });

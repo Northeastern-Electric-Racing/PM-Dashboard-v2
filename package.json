@@ -122,6 +122,7 @@
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-table-next": "^4.0.3",
     "react-dom": "^17.0.1",
+    "react-google-login": "^5.2.2",
     "react-query": "3.17.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",

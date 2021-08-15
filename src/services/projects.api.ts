@@ -4,9 +4,23 @@
  */
 
 import axios from 'axios';
-import { Project, WbsNumber, WorkPackage } from 'utils';
+import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
+
+/**
+ * Transforms a description bullet to ensure deep field transformation of date objects.
+ *
+ * @param bullet Incoming description bullet object supplied by the HTTP response.
+ * @returns Properly transformed description bullet object.
+ */
+export const descriptionBulletTransformer = (bullet: DescriptionBullet) => {
+  return {
+    ...bullet,
+    dateAdded: new Date(bullet.dateAdded),
+    dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
+  };
+};
 
 /**
  * Transforms a project to ensure deep field transformation of date objects.
@@ -24,27 +38,9 @@ const projectTransformer = (project: Project) => {
         startDate: new Date(ele.startDate)
       };
     }),
-    goals: project.goals.map((bullet) => {
-      return {
-        ...bullet,
-        dateAdded: new Date(bullet.dateAdded),
-        dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
-      };
-    }),
-    features: project.features.map((bullet) => {
-      return {
-        ...bullet,
-        dateAdded: new Date(bullet.dateAdded),
-        dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
-      };
-    }),
-    otherConstraints: project.otherConstraints.map((bullet) => {
-      return {
-        ...bullet,
-        dateAdded: new Date(bullet.dateAdded),
-        dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
-      };
-    })
+    goals: project.goals.map(descriptionBulletTransformer),
+    features: project.features.map(descriptionBulletTransformer),
+    otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)
   };
 };
 

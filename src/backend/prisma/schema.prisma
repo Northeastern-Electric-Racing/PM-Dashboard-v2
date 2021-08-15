@@ -149,14 +149,15 @@ model WBS_Element {
 }
 
 model Project {
-  projectId             Int            @id @default(autoincrement())
+  projectId             Int                  @id @default(autoincrement())
   wbsElementId          Int
-  wbsElement            WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
+  wbsElement            WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
   googleDriveFolderLink String
   slideDeckLink         String
   bomLink               String
   taskListLink          String
   rules                 String[]
+  otherConstraints      Description_Bullet[]
   workPackages          Work_Package[]
 }
 
@@ -177,10 +178,12 @@ model Work_Package {
 }
 
 model Description_Bullet {
-  descriptionId Int          @id @default(autoincrement())
-  workPackageId Int
-  workPackage   Work_Package @relation(fields: [workPackageId], references: [workPackageId])
-  dateAdded     DateTime     @default(now())
+  descriptionId Int           @id @default(autoincrement())
+  projectId     Int?
+  project       Project?      @relation(fields: [projectId], references: [projectId])
+  workPackageId Int?
+  workPackage   Work_Package? @relation(fields: [workPackageId], references: [workPackageId])
+  dateAdded     DateTime      @default(now())
   dateDeleted   DateTime?
   detail        String
 }

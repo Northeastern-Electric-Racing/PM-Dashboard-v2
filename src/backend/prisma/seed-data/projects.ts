@@ -24,7 +24,13 @@ const dbSeedProject1: any = {
     projectLeadId: 4,
     projectManagerId: 5
   },
-  projectFields: dbSeedProjectLinks
+  projectFields: dbSeedProjectLinks,
+  otherConstraints: [
+    {
+      detail: 'Cannot go further towards the rear of the car than the front roll hoop',
+      dateAdded: new Date('05/27/21')
+    }
+  ]
 };
 
 const dbSeedProject2: any = {
@@ -37,7 +43,13 @@ const dbSeedProject2: any = {
     projectLeadId: 3,
     projectManagerId: 4
   },
-  projectFields: dbSeedProjectLinks
+  projectFields: dbSeedProjectLinks,
+  otherConstraints: [
+    {
+      detail: 'Compatible with a side-pod chassis design',
+      dateAdded: new Date('06/12/21')
+    }
+  ]
 };
 
 const dbSeedProject3: any = {
@@ -51,7 +63,13 @@ const dbSeedProject3: any = {
     projectLeadId: 2,
     projectManagerId: 3
   },
-  projectFields: dbSeedProjectLinks
+  projectFields: dbSeedProjectLinks,
+  otherConstraints: [
+    {
+      detail: 'Maximum power consumption of 25 watts from the low voltage system',
+      dateAdded: new Date('08/05/21')
+    }
+  ]
 };
 
 const dbSeedProject4: any = {
@@ -65,7 +83,13 @@ const dbSeedProject4: any = {
     projectLeadId: 4,
     projectManagerId: 5
   },
-  projectFields: dbSeedProjectLinks
+  projectFields: dbSeedProjectLinks,
+  otherConstraints: [
+    {
+      detail: 'Must be compatible with chain drive',
+      dateAdded: new Date('05/12/21')
+    }
+  ]
 };
 
 const dbSeedProject5: any = {
@@ -79,7 +103,13 @@ const dbSeedProject5: any = {
     projectLeadId: 4,
     projectManagerId: 5
   },
-  projectFields: dbSeedProjectLinks
+  projectFields: dbSeedProjectLinks,
+  otherConstraints: [
+    {
+      detail: 'Utilizes 8020 frame construction',
+      dateAdded: new Date('02/16/21')
+    }
+  ]
 };
 
 export const dbSeedAllProjects: any[] = [

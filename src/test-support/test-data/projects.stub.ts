@@ -31,6 +31,13 @@ export const exampleProject1: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['T12.3.2', 'T8.2.6'],
+  otherConstraints: [
+    {
+      id: 10,
+      detail: 'Cannot go further towards the rear of the car than the front roll hoop',
+      dateAdded: new Date('05/27/21')
+    }
+  ],
   workPackages: [exampleWorkPackage1, exampleWorkPackage2]
 };
 
@@ -47,6 +54,9 @@ export const exampleProject2: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV1.4.7', 'EV6.3.10'],
+  otherConstraints: [
+    { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
+  ],
   workPackages: []
 };
 
@@ -63,6 +73,13 @@ export const exampleProject3: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV3.5.2'],
+  otherConstraints: [
+    {
+      id: 12,
+      detail: 'Maximum power consumption of 25 watts from the low voltage system',
+      dateAdded: new Date('08/05/21')
+    }
+  ],
   workPackages: [exampleWorkPackage1]
 };
 
@@ -79,6 +96,9 @@ export const exampleProject4: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV3.5.2'],
+  otherConstraints: [
+    { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
+  ],
   workPackages: [exampleWorkPackage2]
 };
 
@@ -95,6 +115,9 @@ export const exampleProject5: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV3.5.2'],
+  otherConstraints: [
+    { id: 14, detail: 'Utilizes 8020 frame construction', dateAdded: new Date('02/16/21') }
+  ],
   workPackages: [exampleWorkPackage3]
 };
 

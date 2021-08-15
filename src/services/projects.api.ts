@@ -23,6 +23,13 @@ const projectTransformer = (project: Project) => {
         ...ele,
         startDate: new Date(ele.startDate)
       };
+    }),
+    otherConstraints: project.otherConstraints.map((bullet) => {
+      return {
+        ...bullet,
+        dateAdded: new Date(bullet.dateAdded),
+        dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
+      };
     })
   };
 };

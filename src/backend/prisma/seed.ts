@@ -35,7 +35,8 @@ const performSeed: () => Promise<void> = async () => {
     await prisma.project.create({
       data: {
         wbsElement: { create: { ...seedProject.wbsElementFields } },
-        ...seedProject.projectFields
+        ...seedProject.projectFields,
+        otherConstraints: { create: seedProject.otherConstraints }
       }
     });
   }

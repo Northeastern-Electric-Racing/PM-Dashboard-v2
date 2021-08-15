@@ -31,6 +31,9 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <ProjectDetails project={data!} />
+      <DescriptionList title={'Goals'} items={data!.goals} />
+      <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
+      <RulesList rules={data!.rules} />
       <PageBlock
         title={'Work Packages'}
         headerRight={<></>}
@@ -44,9 +47,6 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
           </>
         }
       />
-      <RulesList rules={data!.rules} />
-      <DescriptionList title={'Goals'} items={data!.goals} />
-      <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
     </div>
   );
 };

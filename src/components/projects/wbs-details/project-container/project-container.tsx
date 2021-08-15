@@ -45,8 +45,8 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         }
       />
       <RulesList rules={data!.rules} />
-      <DescriptionList items={data!.goals} />
-      <DescriptionList items={data!.otherConstraints} />
+      <DescriptionList title={'Goals'} items={data!.goals} />
+      <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
     </div>
   );
 };

@@ -8,13 +8,14 @@ import BulletList from '../bullet-list/bullet-list';
 import './description-list.module.css';
 
 interface DescriptionListProps {
+  title: string;
   items: DescriptionBullet[];
 }
 
-const DescriptionList: React.FC<DescriptionListProps> = ({ items }) => {
+const DescriptionList: React.FC<DescriptionListProps> = ({ title, items }) => {
   return (
     <BulletList
-      title={'Description'}
+      title={title}
       headerRight={<></>}
       list={items.map((b) => (
         <>{b.detail}</>

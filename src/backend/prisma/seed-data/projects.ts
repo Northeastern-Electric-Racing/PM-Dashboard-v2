@@ -31,6 +31,12 @@ const dbSeedProject1: any = {
       dateAdded: new Date('05/26/21')
     }
   ],
+  features: [
+    {
+      detail: 'Capable of absorbing 5000N in a head-on collision',
+      dateAdded: new Date('05/26/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Cannot go further towards the rear of the car than the front roll hoop',
@@ -54,6 +60,12 @@ const dbSeedProject2: any = {
     {
       detail: 'Decrease weight by 90% from 4.8 pounds to 0.48 pounds',
       dateAdded: new Date('06/10/21')
+    }
+  ],
+  features: [
+    {
+      detail: 'Provides removable section for easy access to the pedal box',
+      dateAdded: new Date('06/11/21')
     }
   ],
   otherConstraints: [
@@ -82,6 +94,12 @@ const dbSeedProject3: any = {
       dateAdded: new Date('08/02/21')
     }
   ],
+  features: [
+    {
+      detail: 'Provides 50,000 Wh of energy discharge',
+      dateAdded: new Date('08/01/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Maximum power consumption of 25 watts from the low voltage system',
@@ -108,6 +126,12 @@ const dbSeedProject4: any = {
       dateAdded: new Date('05/11/21')
     }
   ],
+  features: [
+    {
+      detail: 'Capable of interfacing via I2C or comparable serial interface.',
+      dateAdded: new Date('05/14/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Must be compatible with chain drive',
@@ -132,6 +156,12 @@ const dbSeedProject5: any = {
     {
       detail: 'Decrease installed component costs by 63% from $2,700 to $1000',
       dateAdded: new Date('02/05/21')
+    }
+  ],
+  features: [
+    {
+      detail: 'All wires are bundled and secured to the chassis at least every 6 inches',
+      dateAdded: new Date('02/14/21')
     }
   ],
   otherConstraints: [

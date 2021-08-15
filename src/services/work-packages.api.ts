@@ -19,7 +19,7 @@ const workPackageTransformer = (workPackage: WorkPackage) => {
     ...workPackage,
     dateCreated: new Date(workPackage.dateCreated),
     startDate: new Date(workPackage.startDate),
-    descriptionBullets: workPackage.descriptionBullets.map((bullet) => {
+    expectedActivities: workPackage.expectedActivities.map((bullet) => {
       return {
         ...bullet,
         dateAdded: new Date(bullet.dateAdded),

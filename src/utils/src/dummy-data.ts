@@ -150,7 +150,7 @@ export const exampleWorkPackage1: WorkPackage = {
   budget: 0,
   dependencies: [],
   deliverable: 'High-level anaylsis of options and direction to go in for the project',
-  descriptionBullets: [
+  expectedActivities: [
     {
       id: 1,
       detail:
@@ -196,7 +196,7 @@ export const exampleWorkPackage2: WorkPackage = {
   dependencies: [exampleWbsWorkPackage1],
   deliverable:
     'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
-  descriptionBullets: [
+  expectedActivities: [
     {
       id: 3,
       detail:
@@ -249,7 +249,7 @@ export const exampleWorkPackage3: WorkPackage = {
   budget: 124,
   dependencies: [exampleWbsProject1, exampleWbsProject2],
   deliverable: 'Completed wiring harness for the entire car',
-  descriptionBullets: [
+  expectedActivities: [
     {
       id: 6,
       detail: 'Manufacutre section A of the wiring harness',

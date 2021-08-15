@@ -32,6 +32,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <ProjectDetails project={data!} />
       <DescriptionList title={'Goals'} items={data!.goals} />
+      <DescriptionList title={'Features'} items={data!.features} />
       <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
       <RulesList rules={data!.rules} />
       <PageBlock

@@ -158,6 +158,7 @@ model Project {
   taskListLink          String
   rules                 String[]
   goals                 Description_Bullet[] @relation(name: "projectGoals")
+  features              Description_Bullet[] @relation(name: "projectFeatures")
   otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
 }
@@ -186,6 +187,8 @@ model Description_Bullet {
   // Relation references
   projectIdGoals            Int?
   projectGoals              Project?      @relation(name: "projectGoals", fields: [projectIdGoals], references: [projectId])
+  projectIdFeatures         Int?
+  projectFeatures           Project?      @relation(name: "projectFeatures", fields: [projectIdFeatures], references: [projectId])
   projectIdOtherConstraints Int?
   projectOtherConstraints   Project?      @relation(name: "projectOtherConstraints", fields: [projectIdOtherConstraints], references: [projectId])
   workPackageId             Int?

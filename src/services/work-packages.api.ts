@@ -7,6 +7,7 @@ import axios from 'axios';
 import { WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
+import { descriptionBulletTransformer } from './projects.api';
 
 /**
  * Transforms a work package to ensure deep field transformation of date objects.
@@ -14,18 +15,12 @@ import { apiUrls } from '../shared/urls';
  * @param workPackage Incoming work package object supplied by the HTTP response.
  * @returns Properly transformed work package object.
  */
-const workPackageTransformer = (workPackage: WorkPackage) => {
+export const workPackageTransformer = (workPackage: WorkPackage) => {
   return {
     ...workPackage,
     dateCreated: new Date(workPackage.dateCreated),
     startDate: new Date(workPackage.startDate),
-    expectedActivities: workPackage.expectedActivities.map((bullet) => {
-      return {
-        ...bullet,
-        dateAdded: new Date(bullet.dateAdded),
-        dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
-      };
-    })
+    expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer)
   };
 };
 

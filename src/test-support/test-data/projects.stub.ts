@@ -38,6 +38,13 @@ export const exampleProject1: Project = {
       dateAdded: new Date('05/26/21')
     }
   ],
+  features: [
+    {
+      id: 20,
+      detail: 'Capable of absorbing 5000N in a head-on collision',
+      dateAdded: new Date('05/26/21')
+    }
+  ],
   otherConstraints: [
     {
       id: 10,
@@ -68,6 +75,13 @@ export const exampleProject2: Project = {
       dateAdded: new Date('06/10/21')
     }
   ],
+  features: [
+    {
+      id: 21,
+      detail: 'Provides removable section for easy access to the pedal box',
+      dateAdded: new Date('06/11/21')
+    }
+  ],
   otherConstraints: [
     { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
   ],
@@ -92,6 +106,13 @@ export const exampleProject3: Project = {
       id: 17,
       detail: 'Decrease weight by 60% from 100 pounds to 40 pounds',
       dateAdded: new Date('08/02/21')
+    }
+  ],
+  features: [
+    {
+      id: 22,
+      detail: 'Provides 50,000 Wh of energy discharge',
+      dateAdded: new Date('08/01/21')
     }
   ],
   otherConstraints: [
@@ -124,6 +145,13 @@ export const exampleProject4: Project = {
       dateAdded: new Date('05/11/21')
     }
   ],
+  features: [
+    {
+      id: 23,
+      detail: 'Capable of interfacing via I2C or comparable serial interface.',
+      dateAdded: new Date('05/14/21')
+    }
+  ],
   otherConstraints: [
     { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
   ],
@@ -148,6 +176,13 @@ export const exampleProject5: Project = {
       id: 19,
       detail: 'Decrease installed component costs by 63% from $2,700 to $1000',
       dateAdded: new Date('02/05/21')
+    }
+  ],
+  features: [
+    {
+      id: 24,
+      detail: 'All wires are bundled and secured to the chassis at least every 6 inches',
+      dateAdded: new Date('02/14/21')
     }
   ],
   otherConstraints: [

@@ -8,20 +8,20 @@ import BulletList from './bullet-list';
 
 describe('Bullet List Component', () => {
   it('renders the component title', () => {
-    render(<BulletList title={'test'} list={[<></>]} />);
+    render(<BulletList title={'test'} headerRight={<></>} list={[<></>]} />);
 
     expect(screen.getByText('test')).toBeInTheDocument();
   });
 
   it('renders all bullets', () => {
-    render(<BulletList title={'test'} list={[<>one</>, <>two</>]} />);
+    render(<BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} />);
 
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();
   });
 
   it('renders ordered list', () => {
-    render(<BulletList title={'test'} list={[<>one</>, <>two</>]} ordered />);
+    render(<BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} ordered />);
 
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();

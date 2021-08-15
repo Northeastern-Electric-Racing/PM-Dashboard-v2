@@ -8,17 +8,18 @@ import styles from './bullet-list.module.css';
 
 interface BulletListProps {
   title: string;
+  headerRight: JSX.Element;
   list: JSX.Element[];
   ordered?: boolean;
 }
 
-const BulletList: React.FC<BulletListProps> = ({ title, list, ordered }) => {
+const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, ordered }) => {
   const listPrepared = list.map((bullet, idx) => <li key={idx}>{bullet}</li>);
   let builtList = <ul className={styles.bulletList}>{listPrepared}</ul>;
   if (ordered) {
     builtList = <ol className={styles.bulletList}>{listPrepared}</ol>;
   }
-  return <PageBlock title={title} headerRight={<></>} body={builtList} />;
+  return <PageBlock title={title} headerRight={headerRight} body={builtList} />;
 };
 
 export default BulletList;

@@ -37,9 +37,6 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
         <p>
           <b>Budget:</b> {dollarsPipe(workPackage.budget)}
         </p>
-        <p>
-          <b>Deliverables:</b> {workPackage.deliverable}
-        </p>
       </div>
       <div className={styles.halfDiv}>
         <p>

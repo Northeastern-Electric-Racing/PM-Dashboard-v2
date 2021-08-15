@@ -116,6 +116,7 @@ CREATE TABLE "Project" (
     "slideDeckLink" TEXT NOT NULL,
     "bomLink" TEXT NOT NULL,
     "taskListLink" TEXT NOT NULL,
+    "rules" TEXT[],
 
     PRIMARY KEY ("projectId")
 );
@@ -130,8 +131,6 @@ CREATE TABLE "Work_Package" (
     "progress" INTEGER NOT NULL,
     "duration" INTEGER NOT NULL,
     "budget" INTEGER NOT NULL,
-    "deliverables" TEXT NOT NULL,
-    "rules" TEXT[],
 
     PRIMARY KEY ("workPackageId")
 );
@@ -139,10 +138,14 @@ CREATE TABLE "Work_Package" (
 -- CreateTable
 CREATE TABLE "Description_Bullet" (
     "descriptionId" SERIAL NOT NULL,
-    "workPackageId" INTEGER NOT NULL,
     "dateAdded" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dateDeleted" TIMESTAMP(3),
     "detail" TEXT NOT NULL,
+    "projectIdGoals" INTEGER,
+    "projectIdFeatures" INTEGER,
+    "projectIdOtherConstraints" INTEGER,
+    "workPackageIdExpectedActivities" INTEGER,
+    "workPackageIdDeliverables" INTEGER,
 
     PRIMARY KEY ("descriptionId")
 );
@@ -229,7 +232,19 @@ ALTER TABLE "Work_Package" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Elem
 ALTER TABLE "Work_Package" ADD FOREIGN KEY ("projectId") REFERENCES "Project"("projectId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("workPackageId") REFERENCES "Work_Package"("workPackageId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("projectIdGoals") REFERENCES "Project"("projectId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("projectIdFeatures") REFERENCES "Project"("projectId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("projectIdOtherConstraints") REFERENCES "Project"("projectId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("workPackageIdExpectedActivities") REFERENCES "Work_Package"("workPackageId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("workPackageIdDeliverables") REFERENCES "Work_Package"("workPackageId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_dependencies" ADD FOREIGN KEY ("A") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;

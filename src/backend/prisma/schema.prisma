@@ -174,7 +174,7 @@ model Work_Package {
   budget             Int
   dependencies       WBS_Element[]        @relation(name: "dependencies")
   deliverables       String
-  descriptionBullets Description_Bullet[]
+  expectedActivities Description_Bullet[]
 }
 
 model Description_Bullet {

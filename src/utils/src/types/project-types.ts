@@ -46,7 +46,7 @@ export interface WorkPackage extends WbsElement {
   budget: number;
   dependencies: WbsNumber[];
   deliverable: string;
-  descriptionBullets: DescriptionBullet[];
+  expectedActivities: DescriptionBullet[];
   changes: ImplementedChange[];
 }
 

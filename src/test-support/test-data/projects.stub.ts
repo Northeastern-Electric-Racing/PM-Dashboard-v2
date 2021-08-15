@@ -31,6 +31,13 @@ export const exampleProject1: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['T12.3.2', 'T8.2.6'],
+  goals: [
+    {
+      id: 15,
+      detail: 'Decrease size by 90% from 247 cubic inches to 24.7 cubic inches',
+      dateAdded: new Date('05/26/21')
+    }
+  ],
   otherConstraints: [
     {
       id: 10,
@@ -54,6 +61,13 @@ export const exampleProject2: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV1.4.7', 'EV6.3.10'],
+  goals: [
+    {
+      id: 16,
+      detail: 'Decrease weight by 90% from 4.8 pounds to 0.48 pounds',
+      dateAdded: new Date('06/10/21')
+    }
+  ],
   otherConstraints: [
     { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
   ],
@@ -73,6 +87,13 @@ export const exampleProject3: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV3.5.2'],
+  goals: [
+    {
+      id: 17,
+      detail: 'Decrease weight by 60% from 100 pounds to 40 pounds',
+      dateAdded: new Date('08/02/21')
+    }
+  ],
   otherConstraints: [
     {
       id: 12,
@@ -96,6 +117,13 @@ export const exampleProject4: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV3.5.2'],
+  goals: [
+    {
+      id: 18,
+      detail: 'Power consumption stays under 10 watts from the low voltage system',
+      dateAdded: new Date('05/11/21')
+    }
+  ],
   otherConstraints: [
     { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
   ],
@@ -115,6 +143,13 @@ export const exampleProject5: Project = {
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
   rules: ['EV3.5.2'],
+  goals: [
+    {
+      id: 19,
+      detail: 'Decrease installed component costs by 63% from $2,700 to $1000',
+      dateAdded: new Date('02/05/21')
+    }
+  ],
   otherConstraints: [
     { id: 14, detail: 'Utilizes 8020 frame construction', dateAdded: new Date('02/16/21') }
   ],

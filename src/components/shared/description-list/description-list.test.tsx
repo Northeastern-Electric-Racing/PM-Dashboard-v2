@@ -4,7 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
+import { exampleWorkPackage2 } from '../../../test-support/test-data/work-packages.stub';
 import DescriptionList from './description-list';
 
 describe('Rendering Description List Component', () => {

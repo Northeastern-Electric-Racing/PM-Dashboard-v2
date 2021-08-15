@@ -4,7 +4,7 @@
  */
 
 import { DescriptionBullet } from 'utils';
-import BulletList from '../../../../shared/bullet-list/bullet-list';
+import BulletList from '../bullet-list/bullet-list';
 import './description-list.module.css';
 
 interface DescriptionListProps {

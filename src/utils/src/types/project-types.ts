@@ -34,6 +34,7 @@ export interface Project extends WbsElement {
   slideDeckLink: string;
   bomLink: string;
   rules: string[];
+  goals: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
   workPackages: WorkPackage[];
 }

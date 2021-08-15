@@ -36,6 +36,7 @@ const performSeed: () => Promise<void> = async () => {
       data: {
         wbsElement: { create: { ...seedProject.wbsElementFields } },
         ...seedProject.projectFields,
+        goals: { create: seedProject.goals },
         otherConstraints: { create: seedProject.otherConstraints }
       }
     });

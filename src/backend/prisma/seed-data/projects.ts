@@ -25,6 +25,12 @@ const dbSeedProject1: any = {
     projectManagerId: 5
   },
   projectFields: dbSeedProjectLinks,
+  goals: [
+    {
+      detail: 'Decrease size by 90% from 247 cubic inches to 24.7 cubic inches',
+      dateAdded: new Date('05/26/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Cannot go further towards the rear of the car than the front roll hoop',
@@ -44,6 +50,12 @@ const dbSeedProject2: any = {
     projectManagerId: 4
   },
   projectFields: dbSeedProjectLinks,
+  goals: [
+    {
+      detail: 'Decrease weight by 90% from 4.8 pounds to 0.48 pounds',
+      dateAdded: new Date('06/10/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Compatible with a side-pod chassis design',
@@ -64,6 +76,12 @@ const dbSeedProject3: any = {
     projectManagerId: 3
   },
   projectFields: dbSeedProjectLinks,
+  goals: [
+    {
+      detail: 'Decrease weight by 60% from 100 pounds to 40 pounds',
+      dateAdded: new Date('08/02/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Maximum power consumption of 25 watts from the low voltage system',
@@ -84,6 +102,12 @@ const dbSeedProject4: any = {
     projectManagerId: 5
   },
   projectFields: dbSeedProjectLinks,
+  goals: [
+    {
+      detail: 'Power consumption stays under 10 watts from the low voltage system',
+      dateAdded: new Date('05/11/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Must be compatible with chain drive',
@@ -104,6 +128,12 @@ const dbSeedProject5: any = {
     projectManagerId: 5
   },
   projectFields: dbSeedProjectLinks,
+  goals: [
+    {
+      detail: 'Decrease installed component costs by 63% from $2,700 to $1000',
+      dateAdded: new Date('02/05/21')
+    }
+  ],
   otherConstraints: [
     {
       detail: 'Utilizes 8020 frame construction',

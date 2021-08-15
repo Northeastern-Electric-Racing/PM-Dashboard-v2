@@ -6,13 +6,13 @@
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
-import WorkPackageDetails from './work-package-details/work-package-details';
-import DependenciesList from './dependencies-list/dependencies-list';
-import DescriptionList from './description-list/description-list';
-import ChangesList from './changes-list/changes-list';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
+import DescriptionList from '../../../shared/description-list/description-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
+import WorkPackageDetails from './work-package-details/work-package-details';
+import DependenciesList from './dependencies-list/dependencies-list';
+import ChangesList from './changes-list/changes-list';
 import './work-package-container.module.css';
 
 interface WorkPackageContainerProps {
@@ -31,7 +31,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <WorkPackageDetails workPackage={data!} />
       <DependenciesList dependencies={data!.dependencies} />
-      <DescriptionList items={data!.expectedActivities} />
+      <DescriptionList title={'Expected Activities'} items={data!.expectedActivities} />
       <ChangesList changes={data!.changes} />
     </div>
   );

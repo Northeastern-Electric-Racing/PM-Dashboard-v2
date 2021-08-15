@@ -157,7 +157,8 @@ model Project {
   bomLink               String
   taskListLink          String
   rules                 String[]
-  otherConstraints      Description_Bullet[]
+  goals                 Description_Bullet[] @relation(name: "projectGoals")
+  otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
 }
 
@@ -178,12 +179,15 @@ model Work_Package {
 }
 
 model Description_Bullet {
-  descriptionId Int           @id @default(autoincrement())
-  projectId     Int?
-  project       Project?      @relation(fields: [projectId], references: [projectId])
-  workPackageId Int?
-  workPackage   Work_Package? @relation(fields: [workPackageId], references: [workPackageId])
-  dateAdded     DateTime      @default(now())
-  dateDeleted   DateTime?
-  detail        String
+  descriptionId             Int           @id @default(autoincrement())
+  dateAdded                 DateTime      @default(now())
+  dateDeleted               DateTime?
+  detail                    String
+  // Relation references
+  projectIdGoals            Int?
+  projectGoals              Project?      @relation(name: "projectGoals", fields: [projectIdGoals], references: [projectId])
+  projectIdOtherConstraints Int?
+  projectOtherConstraints   Project?      @relation(name: "projectOtherConstraints", fields: [projectIdOtherConstraints], references: [projectId])
+  workPackageId             Int?
+  workPackage               Work_Package? @relation(fields: [workPackageId], references: [workPackageId])
 }

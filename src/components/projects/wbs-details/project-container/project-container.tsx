@@ -9,12 +9,12 @@ import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectDetails from './project-details/project-details';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
+import DescriptionList from '../../../shared/description-list/description-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
 import './project-container.module.css';
-import DescriptionList from '../work-package-container/description-list/description-list';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -31,6 +31,9 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <ProjectDetails project={data!} />
+      <DescriptionList title={'Goals'} items={data!.goals} />
+      <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
+      <RulesList rules={data!.rules} />
       <PageBlock
         title={'Work Packages'}
         headerRight={<></>}
@@ -44,8 +47,6 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
           </>
         }
       />
-      <RulesList rules={data!.rules} />
-      <DescriptionList items={data!.otherConstraints} />
     </div>
   );
 };

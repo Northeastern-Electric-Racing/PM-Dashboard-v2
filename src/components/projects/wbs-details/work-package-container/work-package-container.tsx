@@ -9,7 +9,7 @@ import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import WorkPackageDetails from './work-package-details/work-package-details';
 import WorkPackageDependencies from './work-package-dependencies/work-package-dependencies';
 import DescriptionList from './description-list/description-list';
-import WorkPackageChanges from './work-package-changes/work-package-changes';
+import ChangesList from './changes-list/changes-list';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -32,7 +32,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
       <WorkPackageDetails workPackage={data!} />
       <WorkPackageDependencies workPackage={data!} />
       <DescriptionList workPackage={data!} />
-      <WorkPackageChanges workPackage={data!} />
+      <ChangesList workPackage={data!} />
     </div>
   );
 };

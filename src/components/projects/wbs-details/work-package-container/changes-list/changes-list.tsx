@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 import { WorkPackage } from 'utils';
 import { routes } from '../../../../../shared/routes';
 import BulletList from '../../../../shared/bullet-list/bullet-list';
-import './work-package-changes.module.css';
+import './changes-list.module.css';
 
-interface WorkPackageChangesProps {
+interface ChangesListProps {
   workPackage: WorkPackage;
 }
 
-const WorkPackageChanges: React.FC<WorkPackageChangesProps> = ({ workPackage }) => {
+const ChangesList: React.FC<ChangesListProps> = ({ workPackage }) => {
   return (
     <BulletList
       title={'Changes'}
@@ -27,4 +27,4 @@ const WorkPackageChanges: React.FC<WorkPackageChangesProps> = ({ workPackage }) 
   );
 };
 
-export default WorkPackageChanges;
+export default ChangesList;

@@ -20,7 +20,8 @@ export const workPackageTransformer = (workPackage: WorkPackage) => {
     ...workPackage,
     dateCreated: new Date(workPackage.dateCreated),
     startDate: new Date(workPackage.startDate),
-    expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer)
+    expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
+    deliverables: workPackage.deliverables.map(descriptionBulletTransformer)
   };
 };
 

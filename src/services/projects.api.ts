@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
+import { DescriptionBullet, Project, WbsNumber } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
 import { workPackageTransformer } from './work-packages.api';

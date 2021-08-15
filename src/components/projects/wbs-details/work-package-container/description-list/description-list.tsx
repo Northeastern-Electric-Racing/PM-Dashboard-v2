@@ -3,20 +3,20 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage } from 'utils';
+import { DescriptionBullet } from 'utils';
 import BulletList from '../../../../shared/bullet-list/bullet-list';
 import './description-list.module.css';
 
 interface DescriptionListProps {
-  workPackage: WorkPackage;
+  items: DescriptionBullet[];
 }
 
-const DescriptionList: React.FC<DescriptionListProps> = ({ workPackage }) => {
+const DescriptionList: React.FC<DescriptionListProps> = ({ items }) => {
   return (
     <BulletList
       title={'Description'}
       headerRight={<></>}
-      list={workPackage.descriptionBullets.map((b) => (
+      list={items.map((b) => (
         <>{b.detail}</>
       ))}
     />

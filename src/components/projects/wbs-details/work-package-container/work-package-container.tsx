@@ -31,7 +31,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <WorkPackageDetails workPackage={data!} />
       <WorkPackageDependencies workPackage={data!} />
-      <DescriptionList workPackage={data!} />
+      <DescriptionList items={data!.descriptionBullets} />
       <ChangesList changes={data!.changes} />
     </div>
   );

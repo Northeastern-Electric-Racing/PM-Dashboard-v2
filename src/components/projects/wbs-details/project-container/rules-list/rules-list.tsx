@@ -6,11 +6,11 @@
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import './rules-list.module.css';
 
-interface RulesProps {
+interface RulesListProps {
   rules: string[];
 }
 
-const ProjectRules: React.FC<RulesProps> = ({ rules }) => {
+const RulesList: React.FC<RulesListProps> = ({ rules }) => {
   return (
     <HorizontalList
       title={'Rules'}
@@ -22,4 +22,4 @@ const ProjectRules: React.FC<RulesProps> = ({ rules }) => {
   );
 };
 
-export default ProjectRules;
+export default RulesList;

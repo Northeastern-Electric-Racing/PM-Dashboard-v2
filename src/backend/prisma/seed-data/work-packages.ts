@@ -25,7 +25,7 @@ const dbSeedWorkPackage1: any = {
     budget: 0,
     deliverables: 'High-level anaylsis of options and direction to go in for the project'
   },
-  descriptionBullets: [
+  expectedActivities: [
     {
       detail:
         'Assess the bodywork captsone and determine what can be learned from their deliverables',
@@ -60,7 +60,7 @@ const dbSeedWorkPackage2: any = {
     deliverables:
       'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best'
   },
-  descriptionBullets: [
+  expectedActivities: [
     {
       detail:
         'Build a test procedure for destructively measuring the shear strength of various adhesives interacting with foam and steel plates',
@@ -97,7 +97,7 @@ const dbSeedWorkPackage3: any = {
     budget: 124,
     deliverables: 'Completed wiring harness for the entire car'
   },
-  descriptionBullets: [
+  expectedActivities: [
     {
       detail: 'Manufacutre section A of the wiring harness',
       dateAdded: new Date('09/27/20')

@@ -46,7 +46,7 @@ const performSeed: () => Promise<void> = async () => {
         wbsElement: { create: { ...seedWorkPackage.wbsElementFields } },
         project: { connect: { projectId: seedWorkPackage.projectId } },
         ...seedWorkPackage.workPackageFields,
-        descriptionBullets: { create: seedWorkPackage.descriptionBullets }
+        expectedActivities: { create: seedWorkPackage.expectedActivities }
       }
     });
   }

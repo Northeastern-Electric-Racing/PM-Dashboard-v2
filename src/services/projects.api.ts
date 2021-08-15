@@ -31,6 +31,13 @@ const projectTransformer = (project: Project) => {
         dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
       };
     }),
+    features: project.features.map((bullet) => {
+      return {
+        ...bullet,
+        dateAdded: new Date(bullet.dateAdded),
+        dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
+      };
+    }),
     otherConstraints: project.otherConstraints.map((bullet) => {
       return {
         ...bullet,

@@ -20,6 +20,7 @@ export interface WbsElement {
   status: WbsElementStatus;
   projectLead: User;
   projectManager: User;
+  changes: ImplementedChange[];
 }
 
 export enum WbsElementStatus {
@@ -49,7 +50,6 @@ export interface WorkPackage extends WbsElement {
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];
   deliverables: DescriptionBullet[];
-  changes: ImplementedChange[];
 }
 
 export interface DescriptionBullet {

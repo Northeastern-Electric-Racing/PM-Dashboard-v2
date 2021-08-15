@@ -4,26 +4,26 @@
  */
 
 import { Link } from 'react-router-dom';
-import { WorkPackage } from 'utils';
+import { WbsNumber } from 'utils';
 import { routes } from '../../../../../shared/routes';
 import { wbsPipe } from '../../../../../shared/pipes';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
-import './work-package-dependencies.module.css';
+import './dependencies-list.module.css';
 
-interface WorkPackageDependenciesProps {
-  workPackage: WorkPackage;
+interface DependenciesListProps {
+  dependencies: WbsNumber[];
 }
 
-const WorkPackageDependencies: React.FC<WorkPackageDependenciesProps> = ({ workPackage }) => {
+const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
   return (
     <HorizontalList
       title={'Dependencies'}
       headerRight={<></>}
-      items={workPackage.dependencies.map((ele) => (
+      items={dependencies.map((ele) => (
         <Link to={`${routes.PROJECTS}/${wbsPipe(ele)}`}>{wbsPipe(ele)}</Link>
       ))}
     />
   );
 };
 
-export default WorkPackageDependencies;
+export default DependenciesList;

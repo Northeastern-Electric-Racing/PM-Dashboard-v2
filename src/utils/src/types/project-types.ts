@@ -35,6 +35,7 @@ export interface Project extends WbsElement {
   bomLink: string;
   rules: string[];
   goals: DescriptionBullet[];
+  features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
   workPackages: WorkPackage[];
 }

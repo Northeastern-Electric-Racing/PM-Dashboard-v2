@@ -9,13 +9,13 @@ import DescriptionList from './description-list';
 
 describe('Rendering Description List Component', () => {
   it('renders the component title', () => {
-    render(<DescriptionList workPackage={exampleWorkPackage2} />);
+    render(<DescriptionList items={exampleWorkPackage2.descriptionBullets} />);
 
     expect(screen.getByText(`Description`)).toBeInTheDocument();
   });
 
   it('renders all bullets', () => {
-    render(<DescriptionList workPackage={exampleWorkPackage2} />);
+    render(<DescriptionList items={exampleWorkPackage2.descriptionBullets} />);
 
     expect(
       screen.getByText(

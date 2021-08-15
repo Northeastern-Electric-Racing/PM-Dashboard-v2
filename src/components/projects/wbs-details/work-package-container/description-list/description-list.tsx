@@ -3,23 +3,22 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage } from 'utils';
-import PageBlock from '../../../../shared/page-block/page-block';
-import styles from './description-list.module.css';
+import { DescriptionBullet } from 'utils';
+import BulletList from '../../../../shared/bullet-list/bullet-list';
+import './description-list.module.css';
 
 interface DescriptionListProps {
-  workPackage: WorkPackage;
+  items: DescriptionBullet[];
 }
 
-const DescriptionList: React.FC<DescriptionListProps> = ({ workPackage }) => {
-  const list = workPackage.descriptionBullets.map((bullet, idx) => (
-    <li key={idx}>{bullet.detail}</li>
-  ));
+const DescriptionList: React.FC<DescriptionListProps> = ({ items }) => {
   return (
-    <PageBlock
+    <BulletList
       title={'Description'}
       headerRight={<></>}
-      body={<ul className={styles.bulletList}>{list}</ul>}
+      list={items.map((b) => (
+        <>{b.detail}</>
+      ))}
     />
   );
 };

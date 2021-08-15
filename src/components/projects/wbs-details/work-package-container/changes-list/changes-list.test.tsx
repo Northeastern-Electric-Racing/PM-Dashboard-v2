@@ -14,7 +14,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ChangesList workPackage={exampleWorkPackage2} />
+      <ChangesList changes={exampleWorkPackage2.changes} />
     </RouterWrapper>
   );
 };

@@ -4,21 +4,21 @@
  */
 
 import { Link } from 'react-router-dom';
-import { WorkPackage } from 'utils';
+import { ImplementedChange } from 'utils';
 import { routes } from '../../../../../shared/routes';
 import BulletList from '../../../../shared/bullet-list/bullet-list';
 import './changes-list.module.css';
 
 interface ChangesListProps {
-  workPackage: WorkPackage;
+  changes: ImplementedChange[];
 }
 
-const ChangesList: React.FC<ChangesListProps> = ({ workPackage }) => {
+const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
   return (
     <BulletList
       title={'Changes'}
       headerRight={<></>}
-      list={workPackage.changes.map((ic) => (
+      list={changes.map((ic) => (
         <>
           [<Link to={`${routes.CHANGE_REQUESTS}/${ic.crId}`}>#{ic.crId}</Link>] {ic.detail}
         </>

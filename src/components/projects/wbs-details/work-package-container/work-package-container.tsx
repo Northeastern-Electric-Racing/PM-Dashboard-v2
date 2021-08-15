@@ -32,7 +32,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
       <WorkPackageDetails workPackage={data!} />
       <WorkPackageDependencies workPackage={data!} />
       <DescriptionList workPackage={data!} />
-      <ChangesList workPackage={data!} />
+      <ChangesList changes={data!.changes} />
     </div>
   );
 };

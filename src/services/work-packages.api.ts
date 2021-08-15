@@ -15,7 +15,7 @@ import { descriptionBulletTransformer } from './projects.api';
  * @param workPackage Incoming work package object supplied by the HTTP response.
  * @returns Properly transformed work package object.
  */
-const workPackageTransformer = (workPackage: WorkPackage) => {
+export const workPackageTransformer = (workPackage: WorkPackage) => {
   return {
     ...workPackage,
     dateCreated: new Date(workPackage.dateCreated),

@@ -7,6 +7,7 @@ import axios from 'axios';
 import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
+import { workPackageTransformer } from './work-packages.api';
 
 /**
  * Transforms a description bullet to ensure deep field transformation of date objects.
@@ -32,12 +33,7 @@ const projectTransformer = (project: Project) => {
   return {
     ...project,
     dateCreated: new Date(project.dateCreated),
-    workPackages: project.workPackages.map((ele: WorkPackage) => {
-      return {
-        ...ele,
-        startDate: new Date(ele.startDate)
-      };
-    }),
+    workPackages: project.workPackages.map(workPackageTransformer),
     goals: project.goals.map(descriptionBulletTransformer),
     features: project.features.map(descriptionBulletTransformer),
     otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)

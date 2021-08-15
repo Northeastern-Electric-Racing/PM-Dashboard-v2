@@ -4,7 +4,7 @@
  */
 
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
-import './project-rules.module.css';
+import './rules-list.module.css';
 
 interface RulesProps {
   rules: string[];

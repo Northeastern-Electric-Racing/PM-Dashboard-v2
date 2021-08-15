@@ -149,7 +149,6 @@ export const exampleWorkPackage1: WorkPackage = {
   duration: 3,
   budget: 0,
   dependencies: [],
-  deliverable: 'High-level anaylsis of options and direction to go in for the project',
   expectedActivities: [
     {
       id: 1,
@@ -164,7 +163,13 @@ export const exampleWorkPackage1: WorkPackage = {
       dateAdded: new Date('11/15/20')
     }
   ],
-
+  deliverables: [
+    {
+      id: 25,
+      detail: 'High-level anaylsis of options and direction to go in for the project',
+      dateAdded: new Date('11/11/20')
+    }
+  ],
   changes: [
     {
       id: 1,
@@ -194,8 +199,6 @@ export const exampleWorkPackage2: WorkPackage = {
   duration: 5,
   budget: 75,
   dependencies: [exampleWbsWorkPackage1],
-  deliverable:
-    'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
   expectedActivities: [
     {
       id: 3,
@@ -214,7 +217,14 @@ export const exampleWorkPackage2: WorkPackage = {
       dateAdded: new Date('10/05/20')
     }
   ],
-
+  deliverables: [
+    {
+      id: 26,
+      detail:
+        'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
+      dateAdded: new Date('10/10/20')
+    }
+  ],
   changes: [
     {
       id: 2,
@@ -248,7 +258,6 @@ export const exampleWorkPackage3: WorkPackage = {
   duration: 2,
   budget: 124,
   dependencies: [exampleWbsProject1, exampleWbsProject2],
-  deliverable: 'Completed wiring harness for the entire car',
   expectedActivities: [
     {
       id: 6,
@@ -270,6 +279,13 @@ export const exampleWorkPackage3: WorkPackage = {
       id: 9,
       detail: 'Cut all wires to length',
       dateAdded: new Date('11/6/20')
+    }
+  ],
+  deliverables: [
+    {
+      id: 27,
+      detail: 'Completed wiring harness for the entire car',
+      dateAdded: new Date('09/29/20')
     }
   ],
   changes: [

@@ -23,7 +23,6 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
     expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
     expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
 
     expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
@@ -40,7 +39,6 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
     expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
     expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
 
     expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
@@ -57,7 +55,6 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
     expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
     expect(screen.getByText(`${dollarsPipe(wp.budget)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.deliverable}`)).toBeInTheDocument();
 
     expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();

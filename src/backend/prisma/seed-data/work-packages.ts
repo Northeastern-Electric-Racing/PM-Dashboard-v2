@@ -22,8 +22,7 @@ const dbSeedWorkPackage1: any = {
     startDate: new Date('01/01/21'),
     progress: 25,
     duration: 3,
-    budget: 0,
-    deliverables: 'High-level anaylsis of options and direction to go in for the project'
+    budget: 0
   },
   expectedActivities: [
     {
@@ -35,6 +34,12 @@ const dbSeedWorkPackage1: any = {
       detail:
         'Compare various material, design, segmentation, and mounting choices available and propose the best combination',
       dateAdded: new Date('11/15/20')
+    }
+  ],
+  deliverables: [
+    {
+      detail: 'High-level anaylsis of options and direction to go in for the project',
+      dateAdded: new Date('11/11/20')
     }
   ]
 };
@@ -56,9 +61,7 @@ const dbSeedWorkPackage2: any = {
     startDate: new Date('01/01/21'),
     progress: 0,
     duration: 5,
-    budget: 75,
-    deliverables:
-      'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best'
+    budget: 75
   },
   expectedActivities: [
     {
@@ -73,6 +76,13 @@ const dbSeedWorkPackage2: any = {
     {
       detail: 'Write a report to summarize findings',
       dateAdded: new Date('10/05/20')
+    }
+  ],
+  deliverables: [
+    {
+      detail:
+        'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
+      dateAdded: new Date('10/10/20')
     }
   ]
 };
@@ -94,8 +104,7 @@ const dbSeedWorkPackage3: any = {
     startDate: new Date('01/01/21'),
     progress: 100,
     duration: 2,
-    budget: 124,
-    deliverables: 'Completed wiring harness for the entire car'
+    budget: 124
   },
   expectedActivities: [
     {
@@ -113,6 +122,12 @@ const dbSeedWorkPackage3: any = {
     },
     {
       detail: 'Cut all wires to length'
+    }
+  ],
+  deliverables: [
+    {
+      detail: 'Completed wiring harness for the entire car',
+      dateAdded: new Date('09/29/20')
     }
   ]
 };

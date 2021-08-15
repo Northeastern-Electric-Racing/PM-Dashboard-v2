@@ -38,7 +38,6 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
       <Collapse in={open}>
         <div>
           <Card.Body>
-            <p>{workPackage.deliverable}</p>
             <div className={styles.halfDiv}>
               <p>
                 <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}

@@ -28,11 +28,11 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
         <p>
           <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
         </p>
-      </div>
-      <div className={styles.halfDiv}>
         <p>
           <b>Duration:</b> {weeksPipe(workPackage.duration)}
         </p>
+      </div>
+      <div className={styles.halfDiv}>
         <p>
           <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()}
         </p>

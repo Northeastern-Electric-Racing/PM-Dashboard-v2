@@ -10,6 +10,7 @@ const dbSeedProjectLinks: any = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  budget: 124,
   rules: ['EV3.5.2', 'T12.3.2', 'T8.2.6', 'EV1.4.7', 'EV6.3.10']
 };
 

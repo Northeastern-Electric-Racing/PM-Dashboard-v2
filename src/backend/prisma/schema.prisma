@@ -152,6 +152,7 @@ model Project {
   projectId             Int                  @id @default(autoincrement())
   wbsElementId          Int
   wbsElement            WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
+  budget                Int
   googleDriveFolderLink String
   slideDeckLink         String
   bomLink               String
@@ -173,7 +174,6 @@ model Work_Package {
   startDate          DateTime
   progress           Int
   duration           Int
-  budget             Int
   dependencies       WBS_Element[]        @relation(name: "dependencies")
   expectedActivities Description_Bullet[] @relation(name: "workPackageExpectedActivities")
   deliverables       Description_Bullet[] @relation(name: "workPackageDeliverables")

@@ -30,7 +30,8 @@ export const exampleProject1: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
-  rules: ['T12.3.2', 'T8.2.6'],
+  budget: 124,
+  rules: ['EV3.5.2'],
   goals: [
     {
       id: 15,
@@ -76,7 +77,8 @@ export const exampleProject2: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
-  rules: ['EV1.4.7', 'EV6.3.10'],
+  budget: 50,
+  rules: ['T12.3.2', 'T8.2.6'],
   goals: [
     {
       id: 16,
@@ -110,7 +112,8 @@ export const exampleProject3: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
-  rules: ['EV3.5.2'],
+  budget: 5000,
+  rules: ['EV3.5.2', 'EV1.4.7', 'EV6.3.10'],
   goals: [
     {
       id: 17,
@@ -148,7 +151,8 @@ export const exampleProject4: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
-  rules: ['EV3.5.2'],
+  budget: 0,
+  rules: [],
   goals: [
     {
       id: 18,
@@ -182,7 +186,8 @@ export const exampleProject5: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
-  rules: ['EV3.5.2'],
+  budget: 234,
+  rules: ['EV3.5.2', 'T12.3.2', 'T8.2.6', 'EV1.4.7', 'EV6.3.10'],
   goals: [
     {
       id: 19,

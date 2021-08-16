@@ -31,7 +31,6 @@ export const exampleWorkPackage1: WorkPackage = {
   progress: 25,
   startDate: new Date('01/01/21'),
   duration: 3,
-  budget: 0,
   dependencies: [],
   expectedActivities: [
     {
@@ -81,7 +80,6 @@ export const exampleWorkPackage2: WorkPackage = {
   progress: 0,
   startDate: new Date('01/22/21'),
   duration: 5,
-  budget: 75,
   dependencies: [exampleWbsWorkPackage1],
   expectedActivities: [
     {
@@ -140,7 +138,6 @@ export const exampleWorkPackage3: WorkPackage = {
   progress: 100,
   startDate: new Date('01/01/21'),
   duration: 2,
-  budget: 124,
   dependencies: [exampleWbsProject1, exampleWbsProject2],
   expectedActivities: [
     {

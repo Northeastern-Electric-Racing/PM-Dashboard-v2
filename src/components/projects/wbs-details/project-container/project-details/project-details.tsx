@@ -36,8 +36,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
           <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
         </p>
         <p>
-          <b>Budget:</b>{' '}
-          {dollarsPipe(project.workPackages.reduce((tot, cur) => tot + cur.budget, 0))}
+          <b>Budget:</b> {dollarsPipe(project.budget)}
         </p>
         <div className={styles.horizontal}>
           <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>

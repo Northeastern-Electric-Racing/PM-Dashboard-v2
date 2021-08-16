@@ -32,6 +32,7 @@ describe('project api hooks', () => {
     expect(result.data).toHaveProperty('length', 5);
     expect(result.data[0]).toHaveProperty('gDriveLink');
     expect(result.data[1]).toHaveProperty('status');
+    expect(result.data[0]).toHaveProperty('budget');
     expect(result.data[1]).toHaveProperty('projectLead');
   });
 

@@ -178,10 +178,55 @@ const dbSeedChangeRequest5: any = {
   }
 };
 
+const dbSeedChangeRequest6: any = {
+  submitterId: 2,
+  wbsElementId: 1,
+  changeRequestFields: {
+    dateSubmitted: new Date('04/13/21'),
+    type: CR_Type.DESIGN_ISSUE,
+    dateReviewed: new Date('04/21/21'),
+    accepted: true,
+    reviewNotes: 'Adjust goals and add 3 weeks'
+  },
+  changes: [
+    {
+      dateImplemented: new Date('04/25/21'),
+      implementorId: 1,
+      wbsElementId: 1,
+      detail: 'Added goal for weight reduction'
+    },
+    {
+      dateImplemented: new Date('04/25/21'),
+      implementorId: 1,
+      wbsElementId: 7,
+      detail: 'Removed expected activity.'
+    }
+  ],
+  scopeChangeRequestFields: {
+    otherFields: {
+      what: 'The subsytem is too heavy to meet performance targets',
+      scopeImpact: 'Add requirements for specific weight reduction',
+      budgetImpact: 0,
+      timelineImpact: 0
+    },
+    why: [
+      {
+        type: Scope_CR_Why_Type.ESTIMATION,
+        explain: 'Original estimate did not account for weight'
+      },
+      {
+        type: Scope_CR_Why_Type.OTHER_PROJECT,
+        explain: '2.2.0'
+      }
+    ]
+  }
+};
+
 export const dbSeedAllChangeRequests: any[] = [
   dbSeedChangeRequest1,
   dbSeedChangeRequest2,
   dbSeedChangeRequest3,
   dbSeedChangeRequest4,
-  dbSeedChangeRequest5
+  dbSeedChangeRequest5,
+  dbSeedChangeRequest6
 ];

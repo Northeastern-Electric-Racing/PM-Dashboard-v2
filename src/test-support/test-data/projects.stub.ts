@@ -52,6 +52,15 @@ export const exampleProject1: Project = {
       dateAdded: new Date('05/27/21')
     }
   ],
+  changes: [
+    {
+      id: 10,
+      crId: 37,
+      wbsNum: exampleWbsProject1,
+      implementer: exampleAdminUser,
+      detail: 'Added goal for weight reduction'
+    }
+  ],
   workPackages: [exampleWorkPackage1, exampleWorkPackage2]
 };
 
@@ -85,6 +94,7 @@ export const exampleProject2: Project = {
   otherConstraints: [
     { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
   ],
+  changes: [],
   workPackages: []
 };
 
@@ -122,6 +132,7 @@ export const exampleProject3: Project = {
       dateAdded: new Date('08/05/21')
     }
   ],
+  changes: [],
   workPackages: [exampleWorkPackage1]
 };
 
@@ -155,6 +166,7 @@ export const exampleProject4: Project = {
   otherConstraints: [
     { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
   ],
+  changes: [],
   workPackages: [exampleWorkPackage2]
 };
 
@@ -188,6 +200,7 @@ export const exampleProject5: Project = {
   otherConstraints: [
     { id: 14, detail: 'Utilizes 8020 frame construction', dateAdded: new Date('02/16/21') }
   ],
+  changes: [],
   workPackages: [exampleWorkPackage3]
 };
 

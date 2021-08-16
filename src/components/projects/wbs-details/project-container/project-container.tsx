@@ -15,6 +15,7 @@ import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
 import './project-container.module.css';
+import ChangesList from '../work-package-container/changes-list/changes-list';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -35,6 +36,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       <DescriptionList title={'Features'} items={data!.features} />
       <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
       <RulesList rules={data!.rules} />
+      <ChangesList changes={data!.changes} />
       <PageBlock
         title={'Work Packages'}
         headerRight={<></>}

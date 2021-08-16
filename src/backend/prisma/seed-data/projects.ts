@@ -5,15 +5,6 @@
 
 import { WBS_Element_Status } from '@prisma/client';
 
-const dbSeedProjectLinks: any = {
-  googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
-  taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
-  slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
-  bomLink: 'https://youtu.be/dQw4w9WgXcQ',
-  budget: 124,
-  rules: ['EV3.5.2', 'T12.3.2', 'T8.2.6', 'EV1.4.7', 'EV6.3.10']
-};
-
 const dbSeedProject1: any = {
   wbsElementFields: {
     carNumber: 1,
@@ -25,7 +16,14 @@ const dbSeedProject1: any = {
     projectLeadId: 4,
     projectManagerId: 5
   },
-  projectFields: dbSeedProjectLinks,
+  projectFields: {
+    googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
+    taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
+    slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
+    bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+    budget: 124,
+    rules: ['EV3.5.2']
+  },
   goals: [
     {
       detail: 'Decrease size by 90% from 247 cubic inches to 24.7 cubic inches',
@@ -56,7 +54,14 @@ const dbSeedProject2: any = {
     projectLeadId: 3,
     projectManagerId: 4
   },
-  projectFields: dbSeedProjectLinks,
+  projectFields: {
+    googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
+    taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
+    slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
+    bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+    budget: 50,
+    rules: ['T12.3.2', 'T8.2.6']
+  },
   goals: [
     {
       detail: 'Decrease weight by 90% from 4.8 pounds to 0.48 pounds',
@@ -88,7 +93,14 @@ const dbSeedProject3: any = {
     projectLeadId: 2,
     projectManagerId: 3
   },
-  projectFields: dbSeedProjectLinks,
+  projectFields: {
+    googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
+    taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
+    slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
+    bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+    budget: 5000,
+    rules: ['EV3.5.2', 'EV1.4.7', 'EV6.3.10']
+  },
   goals: [
     {
       detail: 'Decrease weight by 60% from 100 pounds to 40 pounds',
@@ -120,7 +132,14 @@ const dbSeedProject4: any = {
     projectLeadId: 4,
     projectManagerId: 5
   },
-  projectFields: dbSeedProjectLinks,
+  projectFields: {
+    googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
+    taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
+    slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
+    bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+    budget: 0,
+    rules: []
+  },
   goals: [
     {
       detail: 'Power consumption stays under 10 watts from the low voltage system',
@@ -152,7 +171,14 @@ const dbSeedProject5: any = {
     projectLeadId: 4,
     projectManagerId: 5
   },
-  projectFields: dbSeedProjectLinks,
+  projectFields: {
+    googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
+    taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
+    slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
+    bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+    budget: 234,
+    rules: ['EV3.5.2', 'T12.3.2', 'T8.2.6', 'EV1.4.7', 'EV6.3.10']
+  },
   goals: [
     {
       detail: 'Decrease installed component costs by 63% from $2,700 to $1000',

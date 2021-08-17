@@ -35,7 +35,6 @@ describe('work package api methods', () => {
     expect(result.data).toHaveProperty('length', 3);
     expect(result.data[0]).toHaveProperty('progress');
     expect(result.data[1]).toHaveProperty('status');
-    expect(result.data[0]).toHaveProperty('budget');
     expect(result.data[1]).toHaveProperty('projectLead');
   });
 

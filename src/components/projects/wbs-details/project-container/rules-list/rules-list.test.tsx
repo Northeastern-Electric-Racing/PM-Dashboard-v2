@@ -17,7 +17,6 @@ describe('Rendering Work Package Rules Component', () => {
   it('renders all the listed rules', () => {
     render(<RulesList rules={exampleProject1.rules} />);
 
-    expect(screen.getByText('T12.3.2')).toBeInTheDocument();
-    expect(screen.getByText('T8.2.6')).toBeInTheDocument();
+    expect(screen.getByText('EV3.5.2')).toBeInTheDocument();
   });
 });

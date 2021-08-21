@@ -35,7 +35,10 @@ const performSeed: () => Promise<void> = async () => {
     await prisma.project.create({
       data: {
         wbsElement: { create: { ...seedProject.wbsElementFields } },
-        ...seedProject.projectFields
+        ...seedProject.projectFields,
+        goals: { create: seedProject.goals },
+        features: { create: seedProject.features },
+        otherConstraints: { create: seedProject.otherConstraints }
       }
     });
   }
@@ -46,7 +49,8 @@ const performSeed: () => Promise<void> = async () => {
         wbsElement: { create: { ...seedWorkPackage.wbsElementFields } },
         project: { connect: { projectId: seedWorkPackage.projectId } },
         ...seedWorkPackage.workPackageFields,
-        descriptionBullets: { create: seedWorkPackage.descriptionBullets }
+        expectedActivities: { create: seedWorkPackage.expectedActivities },
+        deliverables: { create: seedWorkPackage.deliverables }
       }
     });
   }

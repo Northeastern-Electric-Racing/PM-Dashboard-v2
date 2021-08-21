@@ -4,13 +4,7 @@
  */
 
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  dollarsPipe,
-  wbsPipe,
-  endDatePipe,
-  fullNamePipe
-} from '../../../../../shared/pipes';
+import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import styles from './work-package-details.module.css';
 
@@ -35,16 +29,10 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
         </p>
         <p>
-          <b>Budget:</b> {dollarsPipe(workPackage.budget)}
-        </p>
-        <p>
-          <b>Deliverables:</b> {workPackage.deliverable}
+          <b>Duration:</b> {weeksPipe(workPackage.duration)}
         </p>
       </div>
       <div className={styles.halfDiv}>
-        <p>
-          <b>Duration:</b> {weeksPipe(workPackage.duration)}
-        </p>
         <p>
           <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()}
         </p>

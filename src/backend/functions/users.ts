@@ -4,6 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { OAuth2Client } from 'google-auth-library';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -15,7 +16,8 @@ import {
   buildSuccessResponse,
   exampleAllUsers,
   routeMatcher,
-  User
+  User,
+  Role
 } from 'utils';
 
 // Fetch all users
@@ -34,21 +36,43 @@ const getSingleUser: ApiRouteFunction = (params: { id: string }) => {
 };
 
 // Log the user in via their emailId
-const logUserIn: ApiRouteFunction = (_params, event) => {
+const logUserIn: ApiRouteFunction = async (_params, event) => {
   if (!event.body) {
     return buildClientFailureResponse('No user info found for login.');
   }
   const body = JSON.parse(event.body!);
-  if (!body.emailId) {
-    return buildClientFailureResponse('No emailId found for login.');
+  if (!body.id_token) {
+    return buildClientFailureResponse('No id_token found for login.');
   }
-  const userToLogIn: User | undefined = exampleAllUsers.find(
-    (usr: User) => usr.emailId === body.emailId
-  );
-  if (userToLogIn === undefined) {
-    return buildNotFoundResponse('user', `${body.emailId}`);
-  }
-  return buildSuccessResponse(userToLogIn);
+  const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID);
+  const ticket = await client.verifyIdToken({
+    idToken: body.id_token,
+    audience: process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID
+  });
+  const payload = ticket.getPayload();
+  if (!payload) throw new Error('Auth server response payload invalid');
+  const userid = payload['sub']; // google user id
+  console.log(userid);
+  // check if user is already in the database via Google ID
+  // if yes, register a login
+  // if no, register the user and then register a login
+
+  const createdUser: User = {
+    id: 1,
+    firstName: payload['given_name']!,
+    lastName: payload['family_name']!,
+    emailId: payload['email']!,
+    firstLogin: new Date(),
+    lastLogin: new Date(),
+    role: Role.Guest
+  };
+  // const userToLogIn: User | undefined = exampleAllUsers.find(
+  //   (usr: User) => usr.emailId === body.emailId
+  // );
+  // if (userToLogIn === undefined) {
+  //   return buildNotFoundResponse('user', `${body.emailId}`);
+  // }
+  return buildSuccessResponse(createdUser);
 };
 
 // Define all valid routes for the endpoint

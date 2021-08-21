@@ -6,7 +6,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { AxiosResponse } from 'axios';
 import { WorkPackage } from 'utils';
-import { queryClientProviderWrapper as wrapper } from '../../test-support/test-utils';
+import wrapper from '../../components/app/app-context-query/app-context-query';
 import { mockPromiseAxiosResponse } from '../../test-support/test-data/test-utils.stub';
 import {
   exampleAllWorkPackages,

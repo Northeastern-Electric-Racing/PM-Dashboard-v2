@@ -4,18 +4,20 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
+import { exampleWorkPackage2 } from '../../../test-support/test-data/work-packages.stub';
 import DescriptionList from './description-list';
 
 describe('Rendering Description List Component', () => {
   it('renders the component title', () => {
-    render(<DescriptionList workPackage={exampleWorkPackage2} />);
+    render(
+      <DescriptionList title={'Description'} items={exampleWorkPackage2.expectedActivities} />
+    );
 
-    expect(screen.getByText(`Description`)).toBeInTheDocument();
+    expect(screen.getByText('Description')).toBeInTheDocument();
   });
 
   it('renders all bullets', () => {
-    render(<DescriptionList workPackage={exampleWorkPackage2} />);
+    render(<DescriptionList title={'test'} items={exampleWorkPackage2.expectedActivities} />);
 
     expect(
       screen.getByText(

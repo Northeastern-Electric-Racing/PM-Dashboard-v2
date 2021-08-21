@@ -149,14 +149,18 @@ model WBS_Element {
 }
 
 model Project {
-  projectId             Int            @id @default(autoincrement())
+  projectId             Int                  @id @default(autoincrement())
   wbsElementId          Int
-  wbsElement            WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
+  wbsElement            WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
+  budget                Int
   googleDriveFolderLink String
   slideDeckLink         String
   bomLink               String
   taskListLink          String
   rules                 String[]
+  goals                 Description_Bullet[] @relation(name: "projectGoals")
+  features              Description_Bullet[] @relation(name: "projectFeatures")
+  otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
 }
 
@@ -170,17 +174,25 @@ model Work_Package {
   startDate          DateTime
   progress           Int
   duration           Int
-  budget             Int
   dependencies       WBS_Element[]        @relation(name: "dependencies")
-  deliverables       String
-  descriptionBullets Description_Bullet[]
+  expectedActivities Description_Bullet[] @relation(name: "workPackageExpectedActivities")
+  deliverables       Description_Bullet[] @relation(name: "workPackageDeliverables")
 }
 
 model Description_Bullet {
-  descriptionId Int          @id @default(autoincrement())
-  workPackageId Int
-  workPackage   Work_Package @relation(fields: [workPackageId], references: [workPackageId])
-  dateAdded     DateTime     @default(now())
-  dateDeleted   DateTime?
-  detail        String
+  descriptionId                   Int           @id @default(autoincrement())
+  dateAdded                       DateTime      @default(now())
+  dateDeleted                     DateTime?
+  detail                          String
+  // Relation references
+  projectIdGoals                  Int?
+  projectGoals                    Project?      @relation(name: "projectGoals", fields: [projectIdGoals], references: [projectId])
+  projectIdFeatures               Int?
+  projectFeatures                 Project?      @relation(name: "projectFeatures", fields: [projectIdFeatures], references: [projectId])
+  projectIdOtherConstraints       Int?
+  projectOtherConstraints         Project?      @relation(name: "projectOtherConstraints", fields: [projectIdOtherConstraints], references: [projectId])
+  workPackageIdExpectedActivities Int?
+  workPackageExpectedActivities   Work_Package? @relation(name: "workPackageExpectedActivities", fields: [workPackageIdExpectedActivities], references: [workPackageId])
+  workPackageIdDeliverables       Int?
+  workPackageDeliverables         Work_Package? @relation(name: "workPackageDeliverables", fields: [workPackageIdDeliverables], references: [workPackageId])
 }

@@ -4,16 +4,16 @@
  */
 
 import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
-import { wbsPipe } from '../../../../../shared/pipes';
 import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
-import WorkPackageDependencies from './work-package-dependencies';
+import { wbsPipe } from '../../../../../shared/pipes';
+import DependenciesList from './dependencies-list';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
   const RouterWrapper = routerWrapperBuilder({ path, route });
   return render(
     <RouterWrapper>
-      <WorkPackageDependencies workPackage={exampleWorkPackage2} />
+      <DependenciesList dependencies={exampleWorkPackage2.dependencies} />
     </RouterWrapper>
   );
 };

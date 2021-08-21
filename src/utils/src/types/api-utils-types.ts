@@ -9,7 +9,7 @@ export type ApiRouteFunction = (
   params: any,
   event: HandlerEvent,
   context: HandlerContext
-) => HandlerResponse;
+) => HandlerResponse | Promise<HandlerResponse>;
 
 export interface ApiRoute {
   path: string;

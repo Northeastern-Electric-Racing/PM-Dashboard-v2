@@ -3,8 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { User } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { exampleAdminUser } from '../../../test-support/test-data/users.stub';
+import { mockAuth } from '../../../test-support/test-data/test-utils.stub';
+import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
+import { Auth } from '../../../shared/types';
 import AppPublic from './app-public';
 
 jest.mock('../app-authenticated/app-authenticated', () => {
@@ -15,6 +20,14 @@ jest.mock('../app-authenticated/app-authenticated', () => {
     }
   };
 });
+
+jest.mock('../../../services/auth.hooks');
+
+const mockedUseAuth = useAuth as jest.Mock<Auth>;
+
+const mockHook = (user?: User) => {
+  mockedUseAuth.mockReturnValue(mockAuth(user));
+};
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (path?: string, route?: string) => {
@@ -31,12 +44,12 @@ describe('app public section', () => {
     renderComponent(routes.LOGIN, routes.LOGIN);
 
     expect(screen.getByText('NER PM Dashboard')).toBeInTheDocument();
-    expect(screen.getByText('Login Required')).toBeInTheDocument();
-    expect(screen.getByText('Log In')).toBeInTheDocument();
-    expect(screen.getByLabelText('name')).toBeInTheDocument();
+    expect(screen.getByText(/Login Required/i)).toBeInTheDocument();
+    expect(screen.getByText('Login')).toBeInTheDocument();
   });
 
   it('renders app authenticated', () => {
+    mockHook(exampleAdminUser);
     renderComponent(routes.PROJECTS, routes.PROJECTS);
 
     expect(screen.getByText('app-authenticated')).toBeInTheDocument();

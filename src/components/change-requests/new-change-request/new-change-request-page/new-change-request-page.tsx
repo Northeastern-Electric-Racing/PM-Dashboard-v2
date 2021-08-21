@@ -4,10 +4,9 @@
  */
 
 import { Button } from 'react-bootstrap';
-import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
+import PageTitle from '../../../shared/page-title/page-title';
 import CommonFormFields from './common-form-fields/common-form-fields';
-import StandardFormFields from './standard-form-field/standard-form-field';
 import styles from './new-change-request-page.module.css';
 
 const NewChangeRequestPage: React.FC = () => {
@@ -24,7 +23,7 @@ const NewChangeRequestPage: React.FC = () => {
         body={
           <>
             <CommonFormFields />
-            <StandardFormFields />
+            <p>placeholder for specific form fields</p>
           </>
         }
       />

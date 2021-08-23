@@ -58,3 +58,12 @@ export interface DescriptionBullet {
   dateAdded: Date;
   dateDeleted?: Date;
 }
+
+export interface ProjectSummary {
+  wbsNum: WbsNumber;
+  name: string;
+  projectLead: User;
+  projectManager: User;
+  duration: number;
+  status: WbsElementStatus;
+}

@@ -11,11 +11,11 @@ generator client {
 }
 
 enum CR_Type {
-  DESIGN_ISSUE
-  NEW_FUNCTION
+  ISSUE
+  DEFINITION_CHANGE
   OTHER
   STAGE_GATE
-  WP_ACTIVATION
+  ACTIVATION
 }
 
 enum WBS_Element_Status {

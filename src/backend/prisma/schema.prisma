@@ -158,11 +158,12 @@ model Project {
   projectId             Int                  @id @default(autoincrement())
   wbsElementId          Int
   wbsElement            WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
-  budget                Int
-  googleDriveFolderLink String
-  slideDeckLink         String
-  bomLink               String
-  taskListLink          String
+  budget                Int                  @default(0)
+  summary               String
+  googleDriveFolderLink String?
+  slideDeckLink         String?
+  bomLink               String?
+  taskListLink          String?
   rules                 String[]
   goals                 Description_Bullet[] @relation(name: "projectGoals")
   features              Description_Bullet[] @relation(name: "projectFeatures")
@@ -178,7 +179,7 @@ model Work_Package {
   project            Project              @relation(fields: [projectId], references: [projectId])
   orderInProject     Int
   startDate          DateTime
-  progress           Int
+  progress           Int                  @default(0)
   duration           Int
   dependencies       WBS_Element[]        @relation(name: "dependencies")
   expectedActivities Description_Bullet[] @relation(name: "workPackageExpectedActivities")

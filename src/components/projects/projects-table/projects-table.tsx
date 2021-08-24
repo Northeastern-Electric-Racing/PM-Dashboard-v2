@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, ProjectSummary, WorkPackage } from 'utils';
+import { ProjectSummary } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';

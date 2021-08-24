@@ -1,11 +1,11 @@
 -- CreateEnum
-CREATE TYPE "CR_Type" AS ENUM ('DESIGN_ISSUE', 'NEW_FUNCTION', 'OTHER', 'STAGE_GATE', 'WP_ACTIVATION');
+CREATE TYPE "CR_Type" AS ENUM ('ISSUE', 'DEFINITION_CHANGE', 'OTHER', 'STAGE_GATE', 'ACTIVATION');
 
 -- CreateEnum
 CREATE TYPE "WBS_Element_Status" AS ENUM ('INACTIVE', 'ACTIVE', 'COMPLETE');
 
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('APP_ADMIN', 'ADMIN', 'LEADERSHIP', 'PROJECT_MANAGER', 'PROJECT_LEAD', 'MEMBER', 'GUEST');
+CREATE TYPE "Role" AS ENUM ('APP_ADMIN', 'ADMIN', 'LEADERSHIP', 'MEMBER', 'GUEST');
 
 -- CreateEnum
 CREATE TYPE "Scope_CR_Why_Type" AS ENUM ('ESTIMATION', 'SCHOOL', 'MANUFACTURING', 'RULES', 'OTHER_PROJECT', 'OTHER');
@@ -15,12 +15,21 @@ CREATE TABLE "User" (
     "userId" SERIAL NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
-    "emailId" TEXT NOT NULL,
-    "firstLogin" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "lastLogin" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "email" TEXT NOT NULL,
+    "emailId" TEXT,
     "role" "Role" NOT NULL DEFAULT E'GUEST',
 
     PRIMARY KEY ("userId")
+);
+
+-- CreateTable
+CREATE TABLE "Session" (
+    "sessionId" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deviceInfo" TEXT,
+
+    PRIMARY KEY ("sessionId")
 );
 
 -- CreateTable
@@ -102,8 +111,8 @@ CREATE TABLE "WBS_Element" (
     "workPackageNumber" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "status" "WBS_Element_Status" NOT NULL,
-    "projectLeadId" INTEGER NOT NULL,
-    "projectManagerId" INTEGER NOT NULL,
+    "projectLeadId" INTEGER,
+    "projectManagerId" INTEGER,
 
     PRIMARY KEY ("wbsElementId")
 );
@@ -112,10 +121,12 @@ CREATE TABLE "WBS_Element" (
 CREATE TABLE "Project" (
     "projectId" SERIAL NOT NULL,
     "wbsElementId" INTEGER NOT NULL,
-    "googleDriveFolderLink" TEXT NOT NULL,
-    "slideDeckLink" TEXT NOT NULL,
-    "bomLink" TEXT NOT NULL,
-    "taskListLink" TEXT NOT NULL,
+    "budget" INTEGER NOT NULL DEFAULT 0,
+    "summary" TEXT NOT NULL,
+    "googleDriveFolderLink" TEXT,
+    "slideDeckLink" TEXT,
+    "bomLink" TEXT,
+    "taskListLink" TEXT,
     "rules" TEXT[],
 
     PRIMARY KEY ("projectId")
@@ -128,9 +139,8 @@ CREATE TABLE "Work_Package" (
     "projectId" INTEGER NOT NULL,
     "orderInProject" INTEGER NOT NULL,
     "startDate" TIMESTAMP(3) NOT NULL,
-    "progress" INTEGER NOT NULL,
+    "progress" INTEGER NOT NULL DEFAULT 0,
     "duration" INTEGER NOT NULL,
-    "budget" INTEGER NOT NULL,
 
     PRIMARY KEY ("workPackageId")
 );
@@ -155,6 +165,9 @@ CREATE TABLE "_dependencies" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.emailId_unique" ON "User"("emailId");
@@ -182,6 +195,9 @@ CREATE UNIQUE INDEX "_dependencies_AB_unique" ON "_dependencies"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_dependencies_B_index" ON "_dependencies"("B");
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Change_Request" ADD FOREIGN KEY ("submitterId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -217,10 +233,10 @@ ALTER TABLE "Change" ADD FOREIGN KEY ("implementorId") REFERENCES "User"("userId
 ALTER TABLE "Change" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectLeadId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectLeadId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectManagerId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectManagerId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Project" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;

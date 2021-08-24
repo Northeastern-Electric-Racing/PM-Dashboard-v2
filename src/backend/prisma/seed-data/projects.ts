@@ -17,6 +17,7 @@ const dbSeedProject1: any = {
     projectManagerId: 5
   },
   projectFields: {
+    summary: 'Develop rules-compliant impact attenuator.',
     googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
     taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
     slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -55,6 +56,7 @@ const dbSeedProject2: any = {
     projectManagerId: 4
   },
   projectFields: {
+    summary: 'Develop rules-compliant bodywork.',
     googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
     taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
     slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -94,6 +96,7 @@ const dbSeedProject3: any = {
     projectManagerId: 3
   },
   projectFields: {
+    summary: 'Develop rules-compliant battery box.',
     googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
     taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
     slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -133,6 +136,7 @@ const dbSeedProject4: any = {
     projectManagerId: 5
   },
   projectFields: {
+    summary: 'Develop rules-compliant motor controller integration.',
     googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
     taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
     slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -172,6 +176,7 @@ const dbSeedProject5: any = {
     projectManagerId: 5
   },
   projectFields: {
+    summary: 'Develop rules-compliant wiring harness.',
     googleDriveFolderLink: 'https://youtu.be/dQw4w9WgXcQ',
     taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
     slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',

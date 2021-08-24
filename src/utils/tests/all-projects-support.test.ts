@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { calculateEndDate, projectDurationBuilder } from '../src/backend-supports/all-projects';
+import { calculateEndDate, projectDurationBuilder } from '../src/backend-supports/projects-get-all';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {

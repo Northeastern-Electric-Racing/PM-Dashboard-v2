@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, WorkPackage } from 'utils';
+import { Project, ProjectSummary, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';
@@ -19,16 +19,14 @@ const ProjectsTable: React.FC = () => {
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  const transformToDisplayProjects = (projects: Project[]) => {
-    return projects.map((prj: Project) => {
+  const transformToDisplayProjects = (projects: ProjectSummary[]) => {
+    return projects.map((prj) => {
       return {
+        ...prj,
         wbsNum: wbsPipe(prj.wbsNum),
-        name: prj.name,
         projectLead: fullNamePipe(prj.projectLead),
         projectManager: fullNamePipe(prj.projectManager),
-        duration: weeksPipe(
-          prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
-        )
+        duration: weeksPipe(prj.duration)
       };
     }) as DisplayProject[];
   };

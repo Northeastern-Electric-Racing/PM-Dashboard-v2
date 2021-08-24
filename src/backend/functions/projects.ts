@@ -4,6 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { PrismaClient } from '@prisma/client';
 import {
   routeMatcher,
   ApiRoute,
@@ -14,12 +15,18 @@ import {
   API_URL,
   buildSuccessResponse,
   buildNotFoundResponse,
-  buildServerFailureResponse
+  buildServerFailureResponse,
+  allProjectsSummaryQuery,
+  allProjectsSummaryTransformer
 } from 'utils';
 
+const prisma = new PrismaClient();
+
 // Fetch all projects
-const getAllProjects: ApiRouteFunction = () => {
-  return buildSuccessResponse(exampleAllProjects);
+const getAllProjects: ApiRouteFunction = async () => {
+  const p = await prisma.project.findMany(allProjectsSummaryQuery);
+  const summaryProjectOutput = allProjectsSummaryTransformer(p);
+  return buildSuccessResponse(summaryProjectOutput);
 };
 
 // Fetch the project for the specified WBS number
@@ -59,7 +66,9 @@ const routes: ApiRoute[] = [
 // Handler for incoming requests
 const handler: Handler = async (event, context) => {
   try {
-    return routeMatcher(routes, event, context);
+    const out = routeMatcher(routes, event, context);
+    await prisma.$disconnect();
+    return out;
   } catch (error) {
     console.error(error);
     return buildServerFailureResponse(error.message);

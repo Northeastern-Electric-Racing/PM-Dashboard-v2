@@ -49,8 +49,6 @@ model User {
   lastName               String
   email                  String           @unique
   emailId                String?          @unique
-  firstLogin             DateTime         @default(now())
-  lastLogin              DateTime         @default(now())
   role                   Role             @default(GUEST)
   changeRequests         Change_Request[]
   markedAsProjectLead    Activation_CR[]  @relation(name: "markAsProjectLead")
@@ -58,6 +56,15 @@ model User {
   changes                Change[]
   projectLead            WBS_Element[]    @relation(name: "projectLead")
   projectManager         WBS_Element[]    @relation(name: "projectManager")
+  Session                Session[]
+}
+
+model Session {
+  sessionId  Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [userId])
+  created    DateTime @default(now())
+  deviceInfo String?
 }
 
 model Change_Request {

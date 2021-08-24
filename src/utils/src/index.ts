@@ -8,6 +8,8 @@ export * from './types/project-types';
 export * from './types/user-types';
 export * from './types/api-utils-types';
 
+export * from './backend-supports/all-projects';
+
 export * from './dummy-data';
 export * from './validate-wbs';
 export * from './api-utils';

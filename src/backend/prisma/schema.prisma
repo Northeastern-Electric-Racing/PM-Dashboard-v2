@@ -47,7 +47,8 @@ model User {
   userId                 Int              @id @default(autoincrement())
   firstName              String
   lastName               String
-  emailId                String           @unique
+  email                  String           @unique
+  emailId                String?          @unique
   firstLogin             DateTime         @default(now())
   lastLogin              DateTime         @default(now())
   role                   Role             @default(GUEST)

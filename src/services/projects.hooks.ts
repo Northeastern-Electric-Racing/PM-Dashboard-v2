@@ -4,14 +4,14 @@
  */
 
 import { useQuery } from 'react-query';
-import { Project, WbsNumber } from 'utils';
+import { Project, ProjectSummary, WbsNumber } from 'utils';
 import { getAllProjects, getSingleProject } from './projects.api';
 
 /**
  * Custom React Hook to supply all projects.
  */
 export const useAllProjects = () => {
-  return useQuery<Project[], Error>('projects', async () => {
+  return useQuery<ProjectSummary[], Error>('projects', async () => {
     const { data } = await getAllProjects();
     return data;
   });

@@ -13,7 +13,7 @@ const renderComponent = () => {
   return render(<ActivationFormFields />);
 };
 
-describe('new change request page', () => {
+describe('new activation form fields', () => {
   it('renders the Project Lead form field', () => {
     renderComponent();
 

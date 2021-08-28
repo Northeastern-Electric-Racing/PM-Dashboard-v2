@@ -4,23 +4,22 @@
  */
 
 import { Form, Row } from 'react-bootstrap';
-import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
-import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
+import DatePicker from 'react-date-picker';
+import { exampleAllUsers } from '../../../../../utils/lib/dummy-data';
 import { fullNamePipe } from '../../../../../shared/pipes';
 import styles from './activation-form-fields.module.css'
-import DatePicker from 'react-date-picker';
 
 const ActivationFormFields: React.FC = () => {
   return (
     <Form>
-      <div className={`${'row'} ${styles.container}`}>
+      <div className={`row ${styles.container}`}>
         <div className={'px-4'}>
           <Form.Group controlId="newCR-project-lead">
             <Form.Label className={styles.label}>Project Lead</Form.Label>
             <Form.Control as="select" custom
               id="newCR-wbs-num">
-              {exampleAllWorkPackages.map((p) => (
-                <option key={p.id}>{fullNamePipe(p.projectLead)}</option>
+              {exampleAllUsers.map((p) => (
+                <option key={p.id}>{fullNamePipe(p)}</option>
               ))}
             </Form.Control>
 
@@ -33,8 +32,8 @@ const ActivationFormFields: React.FC = () => {
           <Form.Label className={styles.label}>Project Manager</Form.Label>
           <Form.Control as="select" custom
             id="newCR-project-manager">
-            {exampleAllProjects.map((p) => (
-              <option key={p.id}>{fullNamePipe(p.projectManager)}</option>
+            {exampleAllUsers.map((p) => (
+              <option key={p.id}>{fullNamePipe(p)}</option>
             ))}
           </Form.Control>
           <Form.Label className={styles.label}>Are the WP details correct?</Form.Label>

@@ -47,6 +47,6 @@ describe('new change request page', () => {
   it('renders the Documentation Link form field', () => {
     renderComponent();
 
-    expect(screen.getByText('Documentation Link')).toBeInTheDocument();
+    expect(screen.getByText(/Documentation Link/i)).toBeInTheDocument();
   });
 });

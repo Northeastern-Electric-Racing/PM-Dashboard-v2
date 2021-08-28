@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from 'utils';
+import { Project, ProjectSummary } from 'utils';
 import { WbsElementStatus } from 'utils/src';
 import {
   exampleAdminUser,
@@ -215,4 +215,27 @@ export const exampleAllProjects: Project[] = [
   exampleProject3,
   exampleProject4,
   exampleProject5
+];
+
+export const exampleProjectSummary1: ProjectSummary = {
+  wbsNum: exampleWbsProject1,
+  name: 'Project Summary 1',
+  projectLead: exampleAdminUser,
+  projectManager: exampleProjectManagerUser,
+  duration: 5,
+  status: WbsElementStatus.Active
+};
+
+export const exampleProjectSummary2: ProjectSummary = {
+  wbsNum: exampleWbsProject2,
+  name: 'Project Summary 2',
+  projectLead: exampleProjectLeadUser,
+  projectManager: exampleLeadershipUser,
+  duration: 17,
+  status: WbsElementStatus.Complete
+};
+
+export const exampleAllProjectSummaries: ProjectSummary[] = [
+  exampleProjectSummary1,
+  exampleProjectSummary2
 ];

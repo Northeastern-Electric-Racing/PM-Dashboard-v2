@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from 'utils';
+import { User } from '@prisma/client';
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { exampleAdminUser } from '../../../test-support/test-data/users.stub';
 import { mockAuth } from '../../../test-support/test-data/test-utils.stub';

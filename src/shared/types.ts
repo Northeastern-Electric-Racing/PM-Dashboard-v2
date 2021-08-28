@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from 'utils';
+import { User } from '@prisma/client';
 
 export interface Auth {
   user: User | undefined;

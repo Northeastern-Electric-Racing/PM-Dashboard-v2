@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import { User } from 'utils';
+import { User } from '@prisma/client';
 import { apiUrls } from '../shared/urls';
 
 /**
@@ -15,9 +15,7 @@ import { apiUrls } from '../shared/urls';
  */
 export const userTransformer = (user: User) => {
   return {
-    ...user,
-    firstLogin: new Date(user.firstLogin),
-    lastLogin: new Date(user.lastLogin)
+    ...user
   };
 };
 

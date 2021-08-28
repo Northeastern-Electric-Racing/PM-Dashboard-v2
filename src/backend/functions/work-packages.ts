@@ -4,6 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { PrismaClient } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -18,9 +19,12 @@ import {
   WorkPackage
 } from 'utils';
 
-// Fetch all users
-const getAllWorkPackages: ApiRouteFunction = () => {
-  return buildSuccessResponse(exampleAllWorkPackages);
+const prisma = new PrismaClient();
+
+// Fetch all work packages
+const getAllWorkPackages: ApiRouteFunction = async () => {
+  const workPackages = await prisma.work_Package.findMany();
+  return buildSuccessResponse(workPackages);
 };
 
 // Fetch the work package for the specified WBS number

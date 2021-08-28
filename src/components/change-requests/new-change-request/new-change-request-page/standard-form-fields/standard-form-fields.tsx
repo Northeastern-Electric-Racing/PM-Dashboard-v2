@@ -24,7 +24,7 @@ const StandardFormFields: React.FC = () => {
           </Form.Group>
           <Form.Row className="align-items-center">
             <Col xs="auto" >
-              Budget Impact
+              <Form.Label>Budget Impact</Form.Label>
               <InputGroup>
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
@@ -33,7 +33,7 @@ const StandardFormFields: React.FC = () => {
               </InputGroup>
             </Col>
             <Col xs="auto" >
-              Timeline Impact
+              <Form.Label>Timeline Impact</Form.Label>
               <InputGroup>
                 <FormControl id="newCR-timeline-impact" />
                 <InputGroup.Prepend>
@@ -45,7 +45,7 @@ const StandardFormFields: React.FC = () => {
         </div>
 
         <div className={'px-4'}>
-          Why
+          <Form.Label>Why</Form.Label>
           <Form.Group className={'px-4'} controlId="newCR-type">
             {['Estimation Error', 'School Work', 'Manufacturing Issues', 'Rules Compliance', 'Other Project/Work Package', 'Other'].map((type) => (
               <Row key={type} className="mb-3">
@@ -66,7 +66,7 @@ const StandardFormFields: React.FC = () => {
               </Row>
             ))}
           </Form.Group>
-          Documentation Link
+          <Form.Label>Documentation Link</Form.Label>
           <Form.Control type="text" id="newCR-documentation-link" />
         </div>
       </div>

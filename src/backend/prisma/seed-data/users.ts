@@ -5,70 +5,66 @@
 
 import { Role } from '@prisma/client';
 
-const dbSeedAppAdminUser: any = {
+const dbSeedUser1: any = {
   firstName: 'Thomas',
   lastName: 'Emrax',
+  email: 'emrax.t@husky.neu.edu',
   emailId: 'emrax.t',
-  firstLogin: new Date('02/01/21'),
-  lastLogin: new Date('03/04/21'),
   role: Role.APP_ADMIN
 };
 
-const dbSeedAdminUser: any = {
+const dbSeedUser2: any = {
   firstName: 'Joe',
   lastName: 'Shmoe',
+  email: 'shmoe.j@husky.neu.edu',
   emailId: 'shmoe.j',
-  firstLogin: new Date('02/10/21'),
-  lastLogin: new Date('02/25/21'),
   role: Role.ADMIN
 };
 
-const dbSeedLeadershipUser: any = {
+const dbSeedUser3: any = {
   firstName: 'Joe',
   lastName: 'Blow',
+  email: 'blow.j@husky.neu.edu',
   emailId: 'blow.j',
-  firstLogin: new Date('02/25/21'),
-  lastLogin: new Date('02/28/21'),
   role: Role.LEADERSHIP
 };
 
-const dbSeedProjectLeadUser: any = {
+const dbSeedUser4: any = {
   firstName: 'Amy',
   lastName: 'Smith',
+  email: 'smith.a@husky.neu.edu',
   emailId: 'smith.a',
-  firstLogin: new Date('02/19/21'),
-  lastLogin: new Date('03/12/21'),
-  role: Role.PROJECT_LEAD
+  role: Role.LEADERSHIP
 };
 
-const dbSeedProjectManagerUser: any = {
+const dbSeedUser5: any = {
   firstName: 'Rachel',
   lastName: 'Barmatha',
+  email: 'barmatha.r@husky.neu.edu',
   emailId: 'barmatha.r',
-  lastLogin: new Date('02/19/21'),
-  role: Role.PROJECT_MANAGER
-};
-
-const dbSeedMemberUser: any = {
-  firstName: 'Emily',
-  lastName: 'Bendara',
-  emailId: 'bendara.e',
-  firstLogin: new Date('02/28/21'),
   role: Role.MEMBER
 };
 
-const dbSeedGuestUser: any = {
+const dbSeedUser6: any = {
+  firstName: 'Emily',
+  lastName: 'Bendara',
+  email: 'bendara.e@husky.neu.edu',
+  emailId: 'bendara.e',
+  role: Role.MEMBER
+};
+
+const dbSeedUser7: any = {
   firstName: 'Jackson',
   lastName: 'James',
-  emailId: 'james.j'
+  email: 'james.j@gmail.com'
 };
 
 export const dbSeedAllUsers: any[] = [
-  dbSeedAppAdminUser,
-  dbSeedAdminUser,
-  dbSeedLeadershipUser,
-  dbSeedProjectLeadUser,
-  dbSeedProjectManagerUser,
-  dbSeedMemberUser,
-  dbSeedGuestUser
+  dbSeedUser1,
+  dbSeedUser2,
+  dbSeedUser3,
+  dbSeedUser4,
+  dbSeedUser5,
+  dbSeedUser6,
+  dbSeedUser7
 ];

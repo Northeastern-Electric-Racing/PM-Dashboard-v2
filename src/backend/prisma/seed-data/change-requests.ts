@@ -10,7 +10,7 @@ const dbSeedChangeRequest1: any = {
   wbsElementId: 8,
   changeRequestFields: {
     dateSubmitted: new Date('02/25/21'),
-    type: CR_Type.DESIGN_ISSUE,
+    type: CR_Type.ISSUE,
     dateReviewed: new Date('03/01/21'),
     accepted: true,
     reviewNotes: 'Adjust description, increase budget to 200, and add 3 weeks'
@@ -75,7 +75,7 @@ const dbSeedChangeRequest2: any = {
   wbsElementId: 6,
   changeRequestFields: {
     dateSubmitted: new Date('01/04/21'),
-    type: CR_Type.NEW_FUNCTION,
+    type: CR_Type.DEFINITION_CHANGE,
     dateReviewed: new Date('01/20/21'),
     accepted: true,
     reviewNotes: 'Adjust description, add $50 to budget, add 4 wks to duration'
@@ -151,7 +151,7 @@ const dbSeedChangeRequest4: any = {
   wbsElementId: 7,
   changeRequestFields: {
     dateSubmitted: new Date('04/19/21'),
-    type: CR_Type.WP_ACTIVATION
+    type: CR_Type.ACTIVATION
   },
   changes: [],
   activationChangeRequestFields: {
@@ -183,7 +183,7 @@ const dbSeedChangeRequest6: any = {
   wbsElementId: 1,
   changeRequestFields: {
     dateSubmitted: new Date('04/13/21'),
-    type: CR_Type.DESIGN_ISSUE,
+    type: CR_Type.ISSUE,
     dateReviewed: new Date('04/21/21'),
     accepted: true,
     reviewNotes: 'Adjust goals and add 3 weeks'

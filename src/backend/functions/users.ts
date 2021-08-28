@@ -4,6 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { PrismaClient } from '@prisma/client';
 import { OAuth2Client } from 'google-auth-library';
 import {
   ApiRoute,
@@ -14,22 +15,22 @@ import {
   buildServerFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
-  exampleAllUsers,
-  routeMatcher,
-  User,
-  Role
+  routeMatcher
 } from 'utils';
 
+const prisma = new PrismaClient();
+
 // Fetch all users
-const getAllUsers: ApiRouteFunction = () => {
-  return buildSuccessResponse(exampleAllUsers);
+const getAllUsers: ApiRouteFunction = async () => {
+  const users = await prisma.user.findMany();
+  return buildSuccessResponse(users);
 };
 
 // Fetch the user for the specified id
-const getSingleUser: ApiRouteFunction = (params: { id: string }) => {
+const getSingleUser: ApiRouteFunction = async (params: { id: string }) => {
   const userId: number = parseInt(params.id);
-  const requestedUser: User | undefined = exampleAllUsers.find((usr: User) => usr.id === userId);
-  if (requestedUser === undefined) {
+  const requestedUser = await prisma.user.findUnique({ where: { userId: userId } });
+  if (!requestedUser) {
     return buildNotFoundResponse('user', `#${params.id}`);
   }
   return buildSuccessResponse(requestedUser);
@@ -51,28 +52,37 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
   const payload = ticket.getPayload();
   if (!payload) throw new Error('Auth server response payload invalid');
-  const userid = payload['sub']; // google user id
-  console.log(userid);
-  // check if user is already in the database via Google ID
-  // if yes, register a login
-  // if no, register the user and then register a login
+  const userId = payload['sub']; // google user id
 
-  const createdUser: User = {
-    id: 1,
-    firstName: payload['given_name']!,
-    lastName: payload['family_name']!,
-    emailId: payload['email']!,
-    firstLogin: new Date(),
-    lastLogin: new Date(),
-    role: Role.Guest
-  };
-  // const userToLogIn: User | undefined = exampleAllUsers.find(
-  //   (usr: User) => usr.emailId === body.emailId
-  // );
-  // if (userToLogIn === undefined) {
-  //   return buildNotFoundResponse('user', `${body.emailId}`);
-  // }
-  return buildSuccessResponse(createdUser);
+  // check if user is already in the database via Google ID
+  let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
+
+  // if not in database, create user in database
+  if (user === null) {
+    const emailId = payload['email']!.includes('@husky.neu.edu')
+      ? payload['email']!.split('@')[0]
+      : null;
+    const createdUser = await prisma.user.create({
+      data: {
+        firstName: payload['given_name']!,
+        lastName: payload['family_name']!,
+        googleAuthId: userId,
+        email: payload['email']!,
+        emailId
+      }
+    });
+    user = createdUser;
+  }
+
+  // register a login
+  await prisma.session.create({
+    data: {
+      userId: user.userId,
+      deviceInfo: event.headers['user-agent']
+    }
+  });
+
+  return buildSuccessResponse(user);
 };
 
 // Define all valid routes for the endpoint

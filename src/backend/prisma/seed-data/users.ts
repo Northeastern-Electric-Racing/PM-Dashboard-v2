@@ -8,6 +8,7 @@ import { Role } from '@prisma/client';
 const dbSeedUser1: any = {
   firstName: 'Thomas',
   lastName: 'Emrax',
+  googleAuthId: '1',
   email: 'emrax.t@husky.neu.edu',
   emailId: 'emrax.t',
   role: Role.APP_ADMIN
@@ -16,6 +17,7 @@ const dbSeedUser1: any = {
 const dbSeedUser2: any = {
   firstName: 'Joe',
   lastName: 'Shmoe',
+  googleAuthId: '2',
   email: 'shmoe.j@husky.neu.edu',
   emailId: 'shmoe.j',
   role: Role.ADMIN
@@ -24,6 +26,7 @@ const dbSeedUser2: any = {
 const dbSeedUser3: any = {
   firstName: 'Joe',
   lastName: 'Blow',
+  googleAuthId: '3',
   email: 'blow.j@husky.neu.edu',
   emailId: 'blow.j',
   role: Role.LEADERSHIP
@@ -32,6 +35,7 @@ const dbSeedUser3: any = {
 const dbSeedUser4: any = {
   firstName: 'Amy',
   lastName: 'Smith',
+  googleAuthId: '4',
   email: 'smith.a@husky.neu.edu',
   emailId: 'smith.a',
   role: Role.LEADERSHIP
@@ -40,6 +44,7 @@ const dbSeedUser4: any = {
 const dbSeedUser5: any = {
   firstName: 'Rachel',
   lastName: 'Barmatha',
+  googleAuthId: '5',
   email: 'barmatha.r@husky.neu.edu',
   emailId: 'barmatha.r',
   role: Role.MEMBER
@@ -48,6 +53,7 @@ const dbSeedUser5: any = {
 const dbSeedUser6: any = {
   firstName: 'Emily',
   lastName: 'Bendara',
+  googleAuthId: '6',
   email: 'bendara.e@husky.neu.edu',
   emailId: 'bendara.e',
   role: Role.MEMBER
@@ -56,6 +62,7 @@ const dbSeedUser6: any = {
 const dbSeedUser7: any = {
   firstName: 'Jackson',
   lastName: 'James',
+  googleAuthId: '7',
   email: 'james.j@gmail.com'
 };
 

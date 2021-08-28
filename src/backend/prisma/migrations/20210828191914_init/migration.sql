@@ -15,6 +15,7 @@ CREATE TABLE "User" (
     "userId" SERIAL NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
+    "googleAuthId" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailId" TEXT,
     "role" "Role" NOT NULL DEFAULT E'GUEST',
@@ -165,6 +166,9 @@ CREATE TABLE "_dependencies" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User.googleAuthId_unique" ON "User"("googleAuthId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");

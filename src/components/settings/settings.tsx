@@ -5,9 +5,9 @@
 
 import { useContext } from 'react';
 import { UserContext } from '../app/app-context/app-context';
-import './settings.module.css';
 import PageTitle from '../shared/page-title/page-title';
 import PageBlock from '../shared/page-block/page-block';
+import './settings.module.css';
 
 const Settings: React.FC = () => {
   const user = useContext(UserContext);

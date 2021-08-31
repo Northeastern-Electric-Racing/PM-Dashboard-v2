@@ -147,11 +147,8 @@ export const exampleWorkPackage1: WorkPackage = {
   progress: 25,
   startDate: new Date('01/01/21'),
   duration: 3,
-  budget: 0,
   dependencies: [],
-  deliverable: 'High-level anaylsis of options and direction to go in for the project',
-  rules: ['EV3.5.2'],
-  descriptionBullets: [
+  expectedActivities: [
     {
       id: 1,
       detail:
@@ -165,7 +162,13 @@ export const exampleWorkPackage1: WorkPackage = {
       dateAdded: new Date('11/15/20')
     }
   ],
-
+  deliverables: [
+    {
+      id: 25,
+      detail: 'High-level anaylsis of options and direction to go in for the project',
+      dateAdded: new Date('11/11/20')
+    }
+  ],
   changes: [
     {
       id: 1,
@@ -193,12 +196,8 @@ export const exampleWorkPackage2: WorkPackage = {
   progress: 0,
   startDate: new Date('01/22/21'),
   duration: 5,
-  budget: 75,
   dependencies: [exampleWbsWorkPackage1],
-  deliverable:
-    'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
-  rules: ['T12.3.2', 'T8.2.6'],
-  descriptionBullets: [
+  expectedActivities: [
     {
       id: 3,
       detail:
@@ -216,7 +215,14 @@ export const exampleWorkPackage2: WorkPackage = {
       dateAdded: new Date('10/05/20')
     }
   ],
-
+  deliverables: [
+    {
+      id: 26,
+      detail:
+        'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
+      dateAdded: new Date('10/10/20')
+    }
+  ],
   changes: [
     {
       id: 2,
@@ -248,11 +254,8 @@ export const exampleWorkPackage3: WorkPackage = {
   progress: 100,
   startDate: new Date('01/01/21'),
   duration: 2,
-  budget: 124,
   dependencies: [exampleWbsProject1, exampleWbsProject2],
-  deliverable: 'Completed wiring harness for the entire car',
-  rules: ['EV1.4.7', 'EV6.3.10'],
-  descriptionBullets: [
+  expectedActivities: [
     {
       id: 6,
       detail: 'Manufacutre section A of the wiring harness',
@@ -273,6 +276,13 @@ export const exampleWorkPackage3: WorkPackage = {
       id: 9,
       detail: 'Cut all wires to length',
       dateAdded: new Date('11/6/20')
+    }
+  ],
+  deliverables: [
+    {
+      id: 27,
+      detail: 'Completed wiring harness for the entire car',
+      dateAdded: new Date('09/29/20')
     }
   ],
   changes: [
@@ -306,6 +316,38 @@ export const exampleProject1: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  budget: 124,
+  rules: ['EV3.5.2'],
+  goals: [
+    {
+      id: 15,
+      detail: 'Decrease size by 90% from 247 cubic inches to 24.7 cubic inches',
+      dateAdded: new Date('05/26/21')
+    }
+  ],
+  features: [
+    {
+      id: 20,
+      detail: 'Capable of absorbing 5000N in a head-on collision',
+      dateAdded: new Date('05/26/21')
+    }
+  ],
+  otherConstraints: [
+    {
+      id: 10,
+      detail: 'Cannot go further towards the rear of the car than the front roll hoop',
+      dateAdded: new Date('05/27/21')
+    }
+  ],
+  changes: [
+    {
+      id: 10,
+      crId: 37,
+      wbsNum: exampleWbsProject1,
+      implementer: exampleAdminUser,
+      detail: 'Added goal for weight reduction'
+    }
+  ],
   workPackages: [exampleWorkPackage1, exampleWorkPackage2]
 };
 
@@ -321,6 +363,26 @@ export const exampleProject2: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  budget: 50,
+  rules: ['T12.3.2', 'T8.2.6'],
+  goals: [
+    {
+      id: 16,
+      detail: 'Decrease weight by 90% from 4.8 pounds to 0.48 pounds',
+      dateAdded: new Date('06/10/21')
+    }
+  ],
+  features: [
+    {
+      id: 21,
+      detail: 'Provides removable section for easy access to the pedal box',
+      dateAdded: new Date('06/11/21')
+    }
+  ],
+  otherConstraints: [
+    { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
+  ],
+  changes: [],
   workPackages: []
 };
 
@@ -336,6 +398,30 @@ export const exampleProject3: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  budget: 5000,
+  rules: ['EV3.5.2', 'EV1.4.7', 'EV6.3.10'],
+  goals: [
+    {
+      id: 17,
+      detail: 'Decrease weight by 60% from 100 pounds to 40 pounds',
+      dateAdded: new Date('08/02/21')
+    }
+  ],
+  features: [
+    {
+      id: 22,
+      detail: 'Provides 50,000 Wh of energy discharge',
+      dateAdded: new Date('08/01/21')
+    }
+  ],
+  otherConstraints: [
+    {
+      id: 12,
+      detail: 'Maximum power consumption of 25 watts from the low voltage system',
+      dateAdded: new Date('08/05/21')
+    }
+  ],
+  changes: [],
   workPackages: [exampleWorkPackage1]
 };
 
@@ -351,6 +437,26 @@ export const exampleProject4: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  budget: 0,
+  rules: [],
+  goals: [
+    {
+      id: 18,
+      detail: 'Power consumption stays under 10 watts from the low voltage system',
+      dateAdded: new Date('05/11/21')
+    }
+  ],
+  features: [
+    {
+      id: 23,
+      detail: 'Capable of interfacing via I2C or comparable serial interface.',
+      dateAdded: new Date('05/14/21')
+    }
+  ],
+  otherConstraints: [
+    { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
+  ],
+  changes: [],
   workPackages: [exampleWorkPackage2]
 };
 
@@ -366,6 +472,26 @@ export const exampleProject5: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  budget: 234,
+  rules: ['EV3.5.2', 'T12.3.2', 'T8.2.6', 'EV1.4.7', 'EV6.3.10'],
+  goals: [
+    {
+      id: 19,
+      detail: 'Decrease installed component costs by 63% from $2,700 to $1000',
+      dateAdded: new Date('02/05/21')
+    }
+  ],
+  features: [
+    {
+      id: 24,
+      detail: 'All wires are bundled and secured to the chassis at least every 6 inches',
+      dateAdded: new Date('02/14/21')
+    }
+  ],
+  otherConstraints: [
+    { id: 14, detail: 'Utilizes 8020 frame construction', dateAdded: new Date('02/16/21') }
+  ],
+  changes: [],
   workPackages: [exampleWorkPackage3]
 };
 

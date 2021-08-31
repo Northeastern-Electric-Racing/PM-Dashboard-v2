@@ -3,15 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
-import { UserContext } from '../app/app-context/app-context';
+import { useAuth } from '../../services/auth.hooks';
 import PageTitle from '../shared/page-title/page-title';
 import PageBlock from '../shared/page-block/page-block';
 import './settings.module.css';
 
 const Settings: React.FC = () => {
-  const user = useContext(UserContext);
-  const pageBlockBody = <>User: {user}</>;
+  const auth = useAuth();
+  const pageBlockBody = <>User: {auth.user?.emailId}</>;
   return (
     <>
       <PageTitle title="This is the Settings Page" />

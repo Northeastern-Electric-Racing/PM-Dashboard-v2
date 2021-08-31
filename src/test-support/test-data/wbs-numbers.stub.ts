@@ -29,9 +29,30 @@ export const exampleWbsProject2: WbsNumber = {
   workPackage: 0
 };
 
+export const exampleWbs1: WbsNumber = {
+  car: 1,
+  project: 1,
+  workPackage: 1
+};
+
+export const exampleWbs2: WbsNumber = {
+  car: 1,
+  project: 7,
+  workPackage: 1
+};
+
+export const exampleWbs3: WbsNumber = {
+  car: 1,
+  project: 7,
+  workPackage: 3
+};
+
 export const exampleAllWbsNums: WbsNumber[] = [
   exampleWbsWorkPackage1,
   exampleWbsWorkPackage2,
   exampleWbsProject1,
-  exampleWbsProject2
+  exampleWbsProject2,
+  exampleWbs1,
+  exampleWbs2,
+  exampleWbs3
 ];

@@ -6,7 +6,9 @@
 import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
 import { UseQueryResult } from 'react-query';
-import { ApiRoute, API_URL } from 'utils';
+import { ApiRoute, API_URL, User } from 'utils';
+import { exampleAdminUser } from './users.stub';
+import { Auth } from '../../shared/types';
 
 export const exampleApiRoutes: ApiRoute[] = [
   {
@@ -109,4 +111,13 @@ export const mockUseQueryResult = <Return>(
       return 0;
     }
   } as UseQueryResult<Return, Error>;
+};
+
+export const mockAuth = (user?: User) => {
+  return {
+    user,
+    devSignin: (u) => u,
+    signin: (t) => new Promise((res, rej) => res(exampleAdminUser)),
+    signout: () => {}
+  } as Auth;
 };

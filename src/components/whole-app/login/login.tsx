@@ -4,68 +4,48 @@
  */
 
 import { useState } from 'react';
-import { useContext } from 'react';
 import { useHistory } from 'react-router';
-import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
-import { UserLogInContext } from '../../app/app-context/app-context';
-import { useLogUserIn } from '../../../services/users.hooks';
+import { Role } from 'utils';
+import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
+import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
-import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
-import ErrorPage from '../../shared/error-page/error-page';
-import styles from './login.module.css';
+import LoginPage from './login-page/login-page';
+import './login.module.css';
 
 /**
  * Page for unauthenticated users to do login.
  */
 const Login: React.FC = () => {
+  const [devUserRole, setDevUserRole] = useState<string>(Role.AppAdmin);
   const history = useHistory();
-  const serverLogin = useLogUserIn();
-  const loginFunc = useContext(UserLogInContext);
-  const [emailId, setEmailId] = useState<string>('');
-  const storedUrl = localStorage.getItem('redirectUrl');
+  const auth = useAuth();
 
-  const updateEmailId = (event: any) => setEmailId(event.target.value);
-
-  const formSubmit = (event: any) => {
-    event.preventDefault();
-    serverLogin.mutate(emailId);
+  const devFormSubmit = (e: any) => {
+    e.preventDefault();
+    const user = exampleAllUsers.find((u) => u.role === devUserRole);
+    if (!user) throw new Error('user for dev not found from role: ' + devUserRole);
+    auth.devSignin(user!);
+    history.push(routes.HOME);
   };
 
-  if (serverLogin.isSuccess) {
-    loginFunc(emailId);
-    history.push(storedUrl || routes.HOME);
-    localStorage.removeItem('redirectUrl');
-  }
+  const verifyLogin = async (response: any) => {
+    const id_token: string = response.getAuthResponse().id_token;
+    if (!id_token) throw new Error('Invalid login object');
+    await auth.signin(id_token);
+    history.push(routes.HOME);
+  };
 
-  if (serverLogin.isLoading) return <LoadingIndicator />;
-
-  if (serverLogin.isError) return <ErrorPage message={serverLogin.error?.message} />;
+  const handleFailure = (response: any) => {
+    console.log(response);
+  };
 
   return (
-    <div className={`card mx-auto mt-sm-5 ${styles.card}`}>
-      <div className="card-body">
-        <h5 className="card-title">NER PM Dashboard</h5>
-        <p id="login-text" className="card-text">
-          Login Required
-        </p>
-        <Form onSubmit={formSubmit}>
-          <InputGroup>
-            <FormControl
-              value={emailId}
-              onChange={updateEmailId}
-              placeholder="Email ID"
-              aria-label="emailId"
-              aria-describedby="login-text"
-            />
-            <InputGroup.Append>
-              <Button variant="primary" type="submit">
-                Log In
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Form>
-      </div>
-    </div>
+    <LoginPage
+      devSetRole={setDevUserRole}
+      devFormSubmit={devFormSubmit}
+      prodSuccess={verifyLogin}
+      prodFailure={handleFailure}
+    />
   );
 };
 

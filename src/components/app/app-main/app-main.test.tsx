@@ -6,10 +6,10 @@
 import { render, screen } from '../../../test-support/test-utils';
 import AppMain from './app-main';
 
-jest.mock('../app-core/app-core', () => {
+jest.mock('../app-public/app-public', () => {
   return {
     __esModule: true,
-    default: () => <div>core</div>
+    default: () => <div>public</div>
   };
 });
 
@@ -36,8 +36,8 @@ describe('app main, entry component', () => {
     expect(screen.getAllByText('context')[0]).toBeInTheDocument();
   });
 
-  it('renders the app core component', () => {
+  it('renders the app public component', () => {
     renderComponent();
-    expect(screen.getByText('core')).toBeInTheDocument();
+    expect(screen.getByText('public')).toBeInTheDocument();
   });
 });

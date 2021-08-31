@@ -7,13 +7,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  dollarsPipe,
-  wbsPipe,
-  endDatePipe,
-  listPipe
-} from '../../../../../shared/pipes';
+import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 
@@ -38,16 +32,9 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
       <Collapse in={open}>
         <div>
           <Card.Body>
-            <p>{workPackage.deliverable}</p>
             <div className={styles.halfDiv}>
               <p>
                 <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
-              </p>
-              <p>
-                <b>Rules:</b> {listPipe(workPackage.rules, (str: string) => str)}
-              </p>
-              <p>
-                <b>Budget:</b> {dollarsPipe(workPackage.budget)}
               </p>
             </div>
             <div className={styles.halfDiv}>

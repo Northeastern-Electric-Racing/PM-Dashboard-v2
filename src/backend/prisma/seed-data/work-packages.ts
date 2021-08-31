@@ -21,12 +21,9 @@ const dbSeedWorkPackage1: any = {
     orderInProject: 1,
     startDate: new Date('01/01/21'),
     progress: 25,
-    duration: 3,
-    budget: 0,
-    deliverables: 'High-level anaylsis of options and direction to go in for the project',
-    rules: ['EV3.5.2']
+    duration: 3
   },
-  descriptionBullets: [
+  expectedActivities: [
     {
       detail:
         'Assess the bodywork captsone and determine what can be learned from their deliverables',
@@ -36,6 +33,12 @@ const dbSeedWorkPackage1: any = {
       detail:
         'Compare various material, design, segmentation, and mounting choices available and propose the best combination',
       dateAdded: new Date('11/15/20')
+    }
+  ],
+  deliverables: [
+    {
+      detail: 'High-level anaylsis of options and direction to go in for the project',
+      dateAdded: new Date('11/11/20')
     }
   ]
 };
@@ -56,13 +59,9 @@ const dbSeedWorkPackage2: any = {
     orderInProject: 2,
     startDate: new Date('01/01/21'),
     progress: 0,
-    duration: 5,
-    budget: 75,
-    deliverables:
-      'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
-    rules: ['T12.3.2', 'T8.2.6']
+    duration: 5
   },
-  descriptionBullets: [
+  expectedActivities: [
     {
       detail:
         'Build a test procedure for destructively measuring the shear strength of various adhesives interacting with foam and steel plates',
@@ -75,6 +74,13 @@ const dbSeedWorkPackage2: any = {
     {
       detail: 'Write a report to summarize findings',
       dateAdded: new Date('10/05/20')
+    }
+  ],
+  deliverables: [
+    {
+      detail:
+        'Lab report with full data on the shear strength of adhesives under test including a summary and conclusion of which adhesive is best',
+      dateAdded: new Date('10/10/20')
     }
   ]
 };
@@ -95,12 +101,9 @@ const dbSeedWorkPackage3: any = {
     orderInProject: 3,
     startDate: new Date('01/01/21'),
     progress: 100,
-    duration: 2,
-    budget: 124,
-    deliverables: 'Completed wiring harness for the entire car',
-    rules: ['EV1.4.7', 'EV6.3.10']
+    duration: 2
   },
-  descriptionBullets: [
+  expectedActivities: [
     {
       detail: 'Manufacutre section A of the wiring harness',
       dateAdded: new Date('09/27/20')
@@ -116,6 +119,12 @@ const dbSeedWorkPackage3: any = {
     },
     {
       detail: 'Cut all wires to length'
+    }
+  ],
+  deliverables: [
+    {
+      detail: 'Completed wiring harness for the entire car',
+      dateAdded: new Date('09/29/20')
     }
   ]
 };

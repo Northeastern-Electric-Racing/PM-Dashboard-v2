@@ -8,34 +8,32 @@ import { dbSeedAllUsers } from './seed-data/users';
 import { dbSeedAllProjects } from './seed-data/projects';
 import { dbSeedAllWorkPackages } from './seed-data/work-packages';
 import { dbSeedAllChangeRequests } from './seed-data/change-requests';
+import { dbSeedAllSessions } from './seed-data/session';
 
 const prisma = new PrismaClient();
-
-// const reasonWhyTypeMap: Map<ChangeRequestReason, Scope_CR_Why_Type> = new Map();
-// reasonWhyTypeMap.set(ChangeRequestReason.Estimation, Scope_CR_Why_Type.ESTIMATION);
-// reasonWhyTypeMap.set(ChangeRequestReason.Manufacturing, Scope_CR_Why_Type.MANUFACTURING);
-// reasonWhyTypeMap.set(ChangeRequestReason.School, Scope_CR_Why_Type.SCHOOL);
-// reasonWhyTypeMap.set(ChangeRequestReason.Rules, Scope_CR_Why_Type.RULES);
-// reasonWhyTypeMap.set(ChangeRequestReason.OtherProject, Scope_CR_Why_Type.OTHER_PROJECT);
-// reasonWhyTypeMap.set(ChangeRequestReason.Other, Scope_CR_Why_Type.OTHER);
-
-// const reasonToDbWhyType: (reason: ChangeRequestReason) => Scope_CR_Why_Type = (reason) => {
-//   if (reasonWhyTypeMap.get(reason) === undefined) {
-//     throw new Error('reason not found in map');
-//   }
-//   return reasonWhyTypeMap.get(reason)!;
-// };
 
 const performSeed: () => Promise<void> = async () => {
   for (const seedUser of dbSeedAllUsers) {
     await prisma.user.create({ data: { ...seedUser } });
   }
 
+  for (const seedSession of dbSeedAllSessions) {
+    await prisma.session.create({
+      data: {
+        ...seedSession.fields,
+        user: { connect: { userId: seedSession.userId } }
+      }
+    });
+  }
+
   for (const seedProject of dbSeedAllProjects) {
     await prisma.project.create({
       data: {
         wbsElement: { create: { ...seedProject.wbsElementFields } },
-        ...seedProject.projectFields
+        ...seedProject.projectFields,
+        goals: { create: seedProject.goals },
+        features: { create: seedProject.features },
+        otherConstraints: { create: seedProject.otherConstraints }
       }
     });
   }
@@ -46,7 +44,8 @@ const performSeed: () => Promise<void> = async () => {
         wbsElement: { create: { ...seedWorkPackage.wbsElementFields } },
         project: { connect: { projectId: seedWorkPackage.projectId } },
         ...seedWorkPackage.workPackageFields,
-        descriptionBullets: { create: seedWorkPackage.descriptionBullets }
+        expectedActivities: { create: seedWorkPackage.expectedActivities },
+        deliverables: { create: seedWorkPackage.deliverables }
       }
     });
   }

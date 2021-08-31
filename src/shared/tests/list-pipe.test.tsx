@@ -9,6 +9,11 @@ import {
   exampleWorkPackage2,
   exampleWorkPackage3
 } from '../../test-support/test-data/work-packages.stub';
+import {
+  exampleProject1,
+  exampleProject2,
+  exampleProject3
+} from '../../test-support/test-data/projects.stub';
 
 describe('Formatting lists tests', () => {
   test('Formatting Wbs Numbers', () => {
@@ -18,9 +23,11 @@ describe('Formatting lists tests', () => {
   });
 
   test('Formatting Rules', () => {
-    expect(listPipe(exampleWorkPackage1.rules, (str: string) => str)).toBe('EV3.5.2');
-    expect(listPipe(exampleWorkPackage2.rules, (str: string) => str)).toBe('T12.3.2, T8.2.6');
-    expect(listPipe(exampleWorkPackage3.rules, (str: string) => str)).toBe('EV1.4.7, EV6.3.10');
+    expect(listPipe(exampleProject1.rules, (str: string) => str)).toBe('EV3.5.2');
+    expect(listPipe(exampleProject2.rules, (str: string) => str)).toBe('T12.3.2, T8.2.6');
+    expect(listPipe(exampleProject3.rules, (str: string) => str)).toBe(
+      'EV3.5.2, EV1.4.7, EV6.3.10'
+    );
   });
 
   test('for other case', () => {

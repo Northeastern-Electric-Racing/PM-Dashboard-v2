@@ -11,11 +11,11 @@ generator client {
 }
 
 enum CR_Type {
-  DESIGN_ISSUE
-  NEW_FUNCTION
+  ISSUE
+  DEFINITION_CHANGE
   OTHER
   STAGE_GATE
-  WP_ACTIVATION
+  ACTIVATION
 }
 
 enum WBS_Element_Status {
@@ -28,8 +28,6 @@ enum Role {
   APP_ADMIN
   ADMIN
   LEADERSHIP
-  PROJECT_MANAGER
-  PROJECT_LEAD
   MEMBER
   GUEST
 }
@@ -47,9 +45,8 @@ model User {
   userId                 Int              @id @default(autoincrement())
   firstName              String
   lastName               String
-  emailId                String           @unique
-  firstLogin             DateTime         @default(now())
-  lastLogin              DateTime         @default(now())
+  email                  String           @unique
+  emailId                String?          @unique
   role                   Role             @default(GUEST)
   changeRequests         Change_Request[]
   markedAsProjectLead    Activation_CR[]  @relation(name: "markAsProjectLead")
@@ -57,6 +54,15 @@ model User {
   changes                Change[]
   projectLead            WBS_Element[]    @relation(name: "projectLead")
   projectManager         WBS_Element[]    @relation(name: "projectManager")
+  Session                Session[]
+}
+
+model Session {
+  sessionId  Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [userId])
+  created    DateTime @default(now())
+  deviceInfo String?
 }
 
 model Change_Request {
@@ -135,10 +141,10 @@ model WBS_Element {
   workPackageNumber     Int
   name                  String
   status                WBS_Element_Status
-  projectLeadId         Int
-  projectLead           User               @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
-  projectManagerId      Int
-  projectManager        User               @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
+  projectLeadId         Int?
+  projectLead           User?              @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
+  projectManagerId      Int?
+  projectManager        User?              @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
   changeRequests        Change_Request[]
   changes               Change[]
   project               Project?
@@ -149,13 +155,19 @@ model WBS_Element {
 }
 
 model Project {
-  projectId             Int            @id @default(autoincrement())
+  projectId             Int                  @id @default(autoincrement())
   wbsElementId          Int
-  wbsElement            WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
-  googleDriveFolderLink String
-  slideDeckLink         String
-  bomLink               String
-  taskListLink          String
+  wbsElement            WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
+  budget                Int                  @default(0)
+  summary               String
+  googleDriveFolderLink String?
+  slideDeckLink         String?
+  bomLink               String?
+  taskListLink          String?
+  rules                 String[]
+  goals                 Description_Bullet[] @relation(name: "projectGoals")
+  features              Description_Bullet[] @relation(name: "projectFeatures")
+  otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
 }
 
@@ -167,20 +179,27 @@ model Work_Package {
   project            Project              @relation(fields: [projectId], references: [projectId])
   orderInProject     Int
   startDate          DateTime
-  progress           Int
+  progress           Int                  @default(0)
   duration           Int
-  budget             Int
   dependencies       WBS_Element[]        @relation(name: "dependencies")
-  deliverables       String
-  rules              String[]
-  descriptionBullets Description_Bullet[]
+  expectedActivities Description_Bullet[] @relation(name: "workPackageExpectedActivities")
+  deliverables       Description_Bullet[] @relation(name: "workPackageDeliverables")
 }
 
 model Description_Bullet {
-  descriptionId Int          @id @default(autoincrement())
-  workPackageId Int
-  workPackage   Work_Package @relation(fields: [workPackageId], references: [workPackageId])
-  dateAdded     DateTime     @default(now())
-  dateDeleted   DateTime?
-  detail        String
+  descriptionId                   Int           @id @default(autoincrement())
+  dateAdded                       DateTime      @default(now())
+  dateDeleted                     DateTime?
+  detail                          String
+  // Relation references
+  projectIdGoals                  Int?
+  projectGoals                    Project?      @relation(name: "projectGoals", fields: [projectIdGoals], references: [projectId])
+  projectIdFeatures               Int?
+  projectFeatures                 Project?      @relation(name: "projectFeatures", fields: [projectIdFeatures], references: [projectId])
+  projectIdOtherConstraints       Int?
+  projectOtherConstraints         Project?      @relation(name: "projectOtherConstraints", fields: [projectIdOtherConstraints], references: [projectId])
+  workPackageIdExpectedActivities Int?
+  workPackageExpectedActivities   Work_Package? @relation(name: "workPackageExpectedActivities", fields: [workPackageIdExpectedActivities], references: [workPackageId])
+  workPackageIdDeliverables       Int?
+  workPackageDeliverables         Work_Package? @relation(name: "workPackageDeliverables", fields: [workPackageIdDeliverables], references: [workPackageId])
 }

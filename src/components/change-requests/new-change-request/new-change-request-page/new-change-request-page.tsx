@@ -9,6 +9,7 @@ import PageTitle from '../../../shared/page-title/page-title';
 import CommonFormFields from './common-form-fields/common-form-fields';
 import StandardFormFields from './standard-form-fields/standard-form-fields';
 import ActivationFormFields from './activation-form-fields/activation-form-fields'
+import StageGateFormFields from './stage-gate-form-fileds/stage-gate-form-fields'
 import styles from './new-change-request-page.module.css';
 
 const NewChangeRequestPage: React.FC = () => {
@@ -25,6 +26,7 @@ const NewChangeRequestPage: React.FC = () => {
         body={
           <>
             <CommonFormFields />
+            <StageGateFormFields />
             <StandardFormFields />
             <ActivationFormFields />
           </>

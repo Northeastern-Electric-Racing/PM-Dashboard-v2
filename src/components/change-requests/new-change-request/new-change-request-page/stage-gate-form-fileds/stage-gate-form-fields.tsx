@@ -15,12 +15,7 @@ const StageGateFormFields: React.FC = () => {
         <div className={'px-4'}>
           <Form.Group controlId="newCR-project-design-review">
             <Form.Label className={styles.label}>Who is Required for Design Review?</Form.Label>
-            <Form.Control as="select" custom
-              id="newCR-wbs-num">
-              {exampleAllUsers.map((p) => (
-                <option key={p.id}>{fullNamePipe(p)}</option>
-              ))}
-            </Form.Control>
+            <Form.Control as="textarea" rows={3} />
 
             <Form.Label className={styles.label}>Leftover Budget</Form.Label>
             <InputGroup>

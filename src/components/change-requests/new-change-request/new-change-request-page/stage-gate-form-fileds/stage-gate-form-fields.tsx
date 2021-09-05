@@ -52,6 +52,4 @@ const StageGateFormFields: React.FC = () => {
   );
 };
 
-
-
 export default StageGateFormFields;

@@ -4,8 +4,6 @@
  */
 
 import { Form, FormControl, InputGroup, Row } from 'react-bootstrap';
-import { exampleAllUsers } from '../../../../../utils/lib/dummy-data';
-import { fullNamePipe } from '../../../../../shared/pipes';
 import styles from './stage-gate-form-fields.module.css';
 
 const StageGateFormFields: React.FC = () => {

@@ -11,22 +11,40 @@ import {
   Project,
   WbsNumber,
   ApiRouteFunction,
-  exampleAllProjects,
   API_URL,
   buildSuccessResponse,
   buildNotFoundResponse,
-  buildServerFailureResponse,
-  allProjectsSummaryQuery,
-  allProjectsSummaryTransformer
+  buildServerFailureResponse
 } from 'utils';
 
 const prisma = new PrismaClient();
 
 // Fetch all projects
 const getAllProjects: ApiRouteFunction = async () => {
-  const p = await prisma.project.findMany(allProjectsSummaryQuery);
-  const summaryProjectOutput = allProjectsSummaryTransformer(p);
-  return buildSuccessResponse(summaryProjectOutput);
+  const projects = await prisma.project.findMany({
+    include: {
+      wbsElement: {
+        include: { projectLead: true, projectManager: true }
+      },
+      workPackages: {
+        select: { startDate: true, duration: true }
+      }
+    }
+  });
+  return buildSuccessResponse(
+    projects.map((prj) => {
+      return {
+        ...prj,
+        ...prj.wbsElement,
+        wbsNum: {
+          car: prj.wbsElement.carNumber,
+          project: prj.wbsElement.projectNumber,
+          workPackage: prj.wbsElement.workPackageNumber
+        },
+        duration: prj.workPackages.reduce((prev, curr) => prev + curr.duration, 0)
+      };
+    })
+  );
 };
 
 // Fetch the project for the specified WBS number

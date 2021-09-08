@@ -4,32 +4,70 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { PrismaClient } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
   API_URL,
   apiRoutes,
-  ChangeRequest,
-  exampleAllChangeRequests,
   routeMatcher,
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse
 } from 'utils';
 
-const getAllChangeRequests: ApiRouteFunction = () => {
-  return buildSuccessResponse(exampleAllChangeRequests);
+const prisma = new PrismaClient();
+
+const getAllChangeRequests: ApiRouteFunction = async () => {
+  const changeRequests = await prisma.change_Request.findMany({
+    include: {
+      submitter: true,
+      wbsElement: true
+    }
+  });
+  return buildSuccessResponse(
+    changeRequests.map((val) => {
+      return {
+        ...val,
+        ...val.wbsElement,
+        wbsNumber: {
+          car: val.wbsElement.carNumber,
+          project: val.wbsElement.projectNumber,
+          workPackage: val.wbsElement.workPackageNumber
+        }
+      };
+    })
+  );
 };
 
-const getChangeRequestByID: ApiRouteFunction = (params: { id: string }) => {
+// Fetch the specific change request by its integer ID
+const getChangeRequestByID: ApiRouteFunction = async (params: { id: string }) => {
   const crId: number = parseInt(params.id);
-  const requestedCR: ChangeRequest | undefined = exampleAllChangeRequests.find(
-    (cr: ChangeRequest) => cr.id === crId
-  );
-  if (requestedCR === undefined) {
+  const requestedCR = await prisma.change_Request.findUnique({
+    where: { crId: crId },
+    include: {
+      submitter: true,
+      wbsElement: true,
+      scopeChangeRequest: true,
+      stageGateChangeRequest: true,
+      activationChangeRequest: true
+    }
+  });
+  if (requestedCR === null) {
     return buildNotFoundResponse('change request', `#${crId}`);
   }
-  return buildSuccessResponse(requestedCR);
+  return buildSuccessResponse({
+    ...requestedCR,
+    ...requestedCR.wbsElement,
+    ...requestedCR.scopeChangeRequest,
+    ...requestedCR.stageGateChangeRequest,
+    ...requestedCR.activationChangeRequest,
+    wbsNumber: {
+      car: requestedCR.wbsElement.carNumber,
+      project: requestedCR.wbsElement.projectNumber,
+      workPackage: requestedCR.wbsElement.workPackageNumber
+    }
+  });
 };
 
 const routes: ApiRoute[] = [

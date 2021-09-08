@@ -43,9 +43,10 @@ export interface Project extends WbsElement {
 }
 
 export interface WorkPackage extends WbsElement {
-  order: number;
+  orderInProject: number;
   progress: number;
   startDate: Date;
+  endDate: Date;
   duration: number;
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];

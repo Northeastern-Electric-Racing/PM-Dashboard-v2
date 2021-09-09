@@ -13,12 +13,4 @@ export interface User {
   role: Role;
 }
 
-export enum Role {
-  AppAdmin = 'App Admin',
-  Admin = 'Admin',
-  Leadership = 'Leadership',
-  ProjectManager = 'Project Manager',
-  ProjectLead = 'Project Lead',
-  Member = 'Member',
-  Guest = 'Guest'
-}
+export type Role = 'APP_ADMIN' | 'ADMIN' | 'LEADERSHIP' | 'MEMBER' | 'GUEST';

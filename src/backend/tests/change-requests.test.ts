@@ -61,7 +61,7 @@ describe('change requests api endpoint handler', () => {
       expect(crResponse.hasOwnProperty('type')).toBeTruthy();
     });
 
-    it('handles 404 when project not found', async () => {
+    it.skip('handles 404 when project not found', async () => {
       const event: HandlerEvent = mockEvent(apiUrls.changeRequestsById('105'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);

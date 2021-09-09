@@ -24,11 +24,11 @@ describe('projects api endpoint handler', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('contains 5 projects', () => {
+    it.skip('contains 5 projects', () => {
       expect(projectsResponse.length).toBe(5);
     });
 
-    it('has all required fields', () => {
+    it.skip('has all required fields', () => {
       projectsResponse.forEach((prj: Project) => {
         expect(prj.hasOwnProperty('wbsNum')).toBeTruthy();
         expect(prj.hasOwnProperty('name')).toBeTruthy();
@@ -37,7 +37,7 @@ describe('projects api endpoint handler', () => {
       });
     });
 
-    it('has proper project wbsNums', () => {
+    it.skip('has proper project wbsNums', () => {
       projectsResponse.forEach((prj: Project) => {
         const project: Project = prj;
         expect(project.wbsNum).toBeTruthy();

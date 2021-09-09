@@ -4,7 +4,7 @@
  */
 
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
-import { exampleAllUsers } from 'utils';
+import { exampleAllUsers } from '../../../../test-support/test-data/users.stub';
 import './login-dev.module.css';
 
 interface LoginDevProps {

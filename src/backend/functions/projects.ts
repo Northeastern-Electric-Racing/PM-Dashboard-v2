@@ -8,13 +8,15 @@ import { PrismaClient } from '@prisma/client';
 import {
   routeMatcher,
   ApiRoute,
-  Project,
   WbsNumber,
   ApiRouteFunction,
   API_URL,
   buildSuccessResponse,
   buildNotFoundResponse,
-  buildServerFailureResponse
+  buildServerFailureResponse,
+  buildClientFailureResponse,
+  validateWBS,
+  isProject
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -48,24 +50,48 @@ const getAllProjects: ApiRouteFunction = async () => {
 };
 
 // Fetch the project for the specified WBS number
-const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
-  const parseWbs: number[] = params.wbs.split('.').map((str) => parseInt(str));
-  const parsedWbs: WbsNumber = {
-    car: parseWbs[0],
-    project: parseWbs[1],
-    workPackage: parseWbs[2]
-  };
-  const requestedProject: Project | undefined = exampleAllProjects.find((prj: Project) => {
-    return (
-      prj.wbsNum.car === parsedWbs.car &&
-      prj.wbsNum.project === parsedWbs.project &&
-      prj.wbsNum.workPackage === parsedWbs.workPackage
-    );
+const getSingleProject: ApiRouteFunction = async (params: { wbs: string }) => {
+  const parsedWbs: WbsNumber = validateWBS(params.wbs);
+  if (!isProject(parsedWbs)) {
+    return buildClientFailureResponse('WBS Number is a Work Package WBS#, not a Project WBS#');
+  }
+  const wbsEle = await prisma.wBS_Element.findUnique({
+    where: {
+      wbsNumber: {
+        carNumber: parsedWbs.car,
+        projectNumber: parsedWbs.project,
+        workPackageNumber: parsedWbs.workPackage
+      }
+    },
+    include: {
+      project: {
+        include: { goals: true, features: true, otherConstraints: true, workPackages: true }
+      },
+      projectLead: true,
+      projectManager: true
+    }
   });
-  if (requestedProject === undefined) {
+  if (wbsEle === null) {
     return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
   }
-  return buildSuccessResponse(requestedProject);
+  let endDate = new Date(wbsEle!.project?.workPackages[0].startDate!);
+  for (const wp of wbsEle!.project?.workPackages!) {
+    const wpEnd = new Date(wp.startDate);
+    wpEnd.setDate(wpEnd.getDate() + wp.duration * 7);
+    if (wpEnd > endDate) {
+      endDate = wpEnd;
+    }
+  }
+  return buildSuccessResponse({
+    ...wbsEle!,
+    ...wbsEle!.project,
+    endDate,
+    wbsNumber: {
+      car: wbsEle!.carNumber,
+      project: wbsEle!.projectNumber,
+      workPackage: wbsEle!.workPackageNumber
+    }
+  });
 };
 
 const routes: ApiRoute[] = [

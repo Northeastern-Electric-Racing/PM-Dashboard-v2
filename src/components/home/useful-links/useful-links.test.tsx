@@ -4,17 +4,16 @@
  */
 
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
-import { routes } from '../../../shared/routes';
-import Home from '../home';
+import UsefulLinks from './useful-links';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  const RouterWrapper = routerWrapperBuilder({ path: routes.HOME, route: routes.HOME });
+  const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <Home />
+      <UsefulLinks />
     </RouterWrapper>
   );
 };

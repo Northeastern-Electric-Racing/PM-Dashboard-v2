@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { User } from '@prisma/client';
 import { Project } from 'utils';
 import {
   dollarsPipe,
@@ -30,10 +31,10 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
           <b>WBS #:</b> {wbsPipe(project.wbsNum)}
         </p>
         <p>
-          <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
+          <b>Project Lead:</b> {fullNamePipe((project.projectLead as unknown) as User)}
         </p>
         <p>
-          <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
+          <b>Project Manager:</b> {fullNamePipe((project.projectManager as unknown) as User)}
         </p>
         <p>
           <b>Budget:</b> {dollarsPipe(project.budget)}

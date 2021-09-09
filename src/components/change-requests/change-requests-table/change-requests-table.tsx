@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { User } from '@prisma/client';
 import { ChangeRequest } from 'utils';
 import { booleanPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
@@ -23,7 +24,7 @@ const ChangeRequestsTable: React.FC = () => {
     return changeRequests.map((cr: ChangeRequest) => {
       return {
         id: cr.id,
-        submitterName: fullNamePipe(cr.submitter),
+        submitterName: fullNamePipe((cr.submitter as unknown) as User),
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,
         dateReviewed: cr.dateReviewed ? new Date(cr.dateReviewed).toLocaleDateString() : '',

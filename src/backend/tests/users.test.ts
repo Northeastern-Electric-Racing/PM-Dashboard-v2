@@ -30,15 +30,15 @@ describe('users api endpoint handler', () => {
       usersResponse = JSON.parse(responseObject.body);
     });
 
-    it('has 200 status code', () => {
+    it.skip('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('contains 5 projects', () => {
+    it.skip('contains 5 projects', () => {
       expect(usersResponse.length).toBeTruthy();
     });
 
-    it('has all required fields', () => {
+    it.skip('has all required fields', () => {
       usersResponse.forEach((usr: User) => {
         expectUserFields(usr);
       });
@@ -55,15 +55,15 @@ describe('users api endpoint handler', () => {
       userResponse = JSON.parse(responseObject.body);
     });
 
-    it('has 200 status code', () => {
+    it.skip('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('has all required fields', () => {
+    it.skip('has all required fields', () => {
       expectUserFields(userResponse);
     });
 
-    it('handles 404 when user not found', async () => {
+    it.skip('handles 404 when user not found', async () => {
       const event: HandlerEvent = mockEvent(apiUrls.usersById('420'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);

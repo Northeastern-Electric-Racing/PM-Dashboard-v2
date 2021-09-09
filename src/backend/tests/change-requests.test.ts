@@ -20,15 +20,15 @@ describe('change requests api endpoint handler', () => {
       crResponse = JSON.parse(responseObject.body);
     });
 
-    it('has 200 status code', () => {
+    it.skip('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('contains 3 change requests', () => {
+    it.skip('contains 3 change requests', () => {
       expect(crResponse.length).toBe(3);
     });
 
-    it('has all required fields', () => {
+    it.skip('has all required fields', () => {
       crResponse.forEach((cr: ChangeRequest) => {
         expect(cr.hasOwnProperty('id')).toBeTruthy();
         expect(cr.hasOwnProperty('wbsNum')).toBeTruthy();
@@ -49,11 +49,11 @@ describe('change requests api endpoint handler', () => {
       crResponse = JSON.parse(responseObject.body);
     });
 
-    it('has 200 status code', () => {
+    it.skip('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('has all required fields', () => {
+    it.skip('has all required fields', () => {
       expect(crResponse.hasOwnProperty('id')).toBeTruthy();
       expect(crResponse.hasOwnProperty('wbsNum')).toBeTruthy();
       expect(crResponse.hasOwnProperty('submitter')).toBeTruthy();

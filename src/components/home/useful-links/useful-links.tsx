@@ -12,12 +12,22 @@ const UsefulLinks: React.FC = () => {
       <h3>Finance</h3>
       <ul>
         <li>
-          <a className={styles.link} href="https://twitter.com/" target="_blank" rel="noreferrer">
+          <a
+            className={styles.link}
+            href="https://docs.google.com/document/d/1M5Ldy9L1BifBo18tdKpv3CH-frRneyEK26hUXbtMg7Q/edit"
+            target="_blank"
+            rel="noreferrer"
+          >
             Personal purchasing guidelines
           </a>
         </li>
         <li>
-          <a className={styles.link} href="https://twitter.com/" target="_blank" rel="noreferrer">
+          <a
+            className={styles.link}
+            href="https://docs.google.com/forms/d/e/1FAIpQLSclphuizeo9t2R02E6LaH9m5p2lyWlXUVQUrSajSn-47OJ-Dw/viewform"
+            target="_blank"
+            rel="noreferrer"
+          >
             Procurement form
           </a>
         </li>
@@ -25,7 +35,12 @@ const UsefulLinks: React.FC = () => {
       <h3>Other</h3>
       <ul>
         <li>
-          <a className={styles.link} href="https://twitter.com/" target="_blank" rel="noreferrer">
+          <a
+            className={styles.link}
+            href="https://docs.google.com/spreadsheets/d/1av0ReONZF3r82kCvkUEGl3uue4jfQgbw-KQDZnsejPQ/edit#gid=0"
+            target="_blank"
+            rel="noreferrer"
+          >
             Part numbering spreadsheet
           </a>
         </li>

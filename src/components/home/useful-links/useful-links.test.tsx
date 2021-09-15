@@ -10,12 +10,7 @@ import UsefulLinks from './useful-links';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  const RouterWrapper = routerWrapperBuilder({});
-  return render(
-    <RouterWrapper>
-      <UsefulLinks />
-    </RouterWrapper>
-  );
+  return render(<UsefulLinks />);
 };
 
 describe('useful links component', () => {

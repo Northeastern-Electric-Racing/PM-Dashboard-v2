@@ -5,31 +5,52 @@
 
 import styles from './useful-links.module.css';
 import { linkPipe } from '../../../shared/pipes';
+import PageBlock from '../../shared/page-block/page-block';
+import BulletList from '../../shared/bullet-list/bullet-list';
 
 const UsefulLinks: React.FC = () => {
+  let financeLinks = [
+    linkPipe(
+      'Personal purchasing guidelines',
+      'https://docs.google.com/document/d/1M5Ldy9L1BifBo18tdKpv3CH-frRneyEK26hUXbtMg7Q/edit'
+    ),
+    linkPipe('Procurement Form', 'https://forms.gle/6ztRoa1iL7p1KHwP6')
+  ];
+  let otherLinks = [
+    linkPipe(
+      'Part numbering spreadsheet',
+      'https://docs.google.com/spreadsheets/d/1av0ReONZF3r82kCvkUEGl3uue4jfQgbw-KQDZnsejPQ/edit'
+    ),
+    linkPipe(
+      'Reimbursement guidelines',
+      'https://docs.google.com/document/d/1HvLnVNzZTftgoAXppIEp-gTmUBQGt-V6n97prziWWrs/edit'
+    ),
+    linkPipe(
+      'McMaster order sheet',
+      'https://docs.google.com/spreadsheets/d/1kqpnw8jZDx2GO5NFUtqefRXqT1XX46iMx5ZI4euPJgY/edit'
+    )
+  ];
   return (
-    <div>
-      <h2>Useful links</h2>
-      <h3>Finance</h3>
-      <ul>
-        <li>
-          {linkPipe(
-            'Personal purchasing guidelines',
-            'https://docs.google.com/document/d/1M5Ldy9L1BifBo18tdKpv3CH-frRneyEK26hUXbtMg7Q/edit'
-          )}
-        </li>
-        <li>{linkPipe('Procurement Form', 'https://forms.gle/6ztRoa1iL7p1KHwP6')}</li>
-      </ul>
-      <h3>Other</h3>
-      <ul>
-        <li>
-          {linkPipe(
-            'Part numbering spreadsheet',
-            'https://docs.google.com/spreadsheets/d/1av0ReONZF3r82kCvkUEGl3uue4jfQgbw-KQDZnsejPQ/edit'
-          )}
-        </li>
-      </ul>
-    </div>
+    <PageBlock
+      title={'Useful Links'}
+      headerRight={<></>}
+      body={
+        <>
+          <BulletList
+            title={'Finance'}
+            headerRight={<></>}
+            list={financeLinks}
+            ordered={false}
+          ></BulletList>
+          <BulletList
+            title={'Other'}
+            headerRight={<></>}
+            list={otherLinks}
+            ordered={false}
+          ></BulletList>
+        </>
+      }
+    ></PageBlock>
   );
 };
 

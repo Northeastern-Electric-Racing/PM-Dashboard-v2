@@ -9,7 +9,7 @@ export interface User {
   lastName: string;
   googleAuthId: string;
   email: string;
-  emailId: string;
+  emailId: string | null;
   role: Role;
 }
 

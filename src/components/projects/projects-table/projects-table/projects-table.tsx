@@ -31,31 +31,40 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
   const history = useHistory();
 
   // Configures display options for all data columns
+  // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
   // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
-    { headerAlign: 'center', dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true,
-
-      // Custom Sort algorithm for version numbers separated by ".".
-      sortFunc: (a, b, order:SortOrder) => {
-        const a_arr = a.split('.');
-        const b_arr = b.split('.');
-        const len = Math.min(a_arr.length, b_arr.length);
+    {
+      headerAlign: 'center',
+      dataField: 'wbsNum',
+      text: 'WBS #',
+      align: 'center',
+      sort: true,
+      sortFunc: (a, b, order: SortOrder) => {
+        const a1 = a.split('.');
+        const b1 = b.split('.');
+        const len = Math.min(a1.length, b1.length);
         for (let i = 0; i < len; i++) {
-          const a_current = +a_arr[i] || 0;
-          const b_current = +b_arr[i] || 0;
-          if (a_current !== b_current) {
-            if (order === "asc") {
-              return a_current > b_current ? 1 : -1;
+          const a2 = +a1[i] || 0;
+          const b2 = +b1[i] || 0;
+          if (a2 !== b2) {
+            if (order === 'asc') {
+              return a2 > b2 ? 1 : -1;
             } else {
-              return a_current > b_current ? -1 : 1;
+              return a2 > b2 ? -1 : 1;
             }
           }
         }
-        return b_arr.length - a_arr.length;
+        return b1.length - a1.length;
       }
-
     },
-    { headerAlign: 'center', dataField: 'name', text: 'Name', align: 'center', sort: true },
+    {
+      headerAlign: 'center',
+      dataField: 'name',
+      text: 'Name',
+      align: 'center',
+      sort: true
+    },
     {
       headerAlign: 'center',
       dataField: 'projectLead',

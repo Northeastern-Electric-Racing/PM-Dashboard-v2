@@ -34,11 +34,23 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
   // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
   // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
-    { dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
-    { dataField: 'name', text: 'Name', align: 'left', sort: true },
-    { dataField: 'projectLead', text: 'Project Lead', align: 'left', sort: true },
-    { dataField: 'projectManager', text: 'Project Manager', align: 'left', sort: true },
-    { dataField: 'duration', text: 'Duration', align: 'center', sort: true }
+    { headerAlign: 'center', dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
+    { headerAlign: 'center', dataField: 'name', text: 'Name', align: 'center', sort: true },
+    {
+      headerAlign: 'center',
+      dataField: 'projectLead',
+      text: 'Project Lead',
+      align: 'center',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'projectManager',
+      text: 'Project Manager',
+      align: 'center',
+      sort: true
+    },
+    { headerAlign: 'center', dataField: 'duration', text: 'Duration', align: 'center', sort: true }
   ];
 
   const defaultSort: [{ dataField: any; order: SortOrder }] = [
@@ -70,7 +82,8 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
         defaultSorted={defaultSort}
         rowEvents={rowEvents}
         noDataIndication="No Projects to Display"
-        rowStyle={{ cursor: 'pointer' }} />
+        rowStyle={{ cursor: 'pointer' }}
+      />
     </>
   );
 };

@@ -31,10 +31,30 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
   const history = useHistory();
 
   // Configures display options for all data columns
-  // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
   // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
-    { headerAlign: 'center', dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
+    { headerAlign: 'center', dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true,
+
+      // Custom Sort algorithm for version numbers separated by ".".
+      sortFunc: (a, b, order:SortOrder) => {
+        const a_arr = a.split('.');
+        const b_arr = b.split('.');
+        const len = Math.min(a_arr.length, b_arr.length);
+        for (let i = 0; i < len; i++) {
+          const a_current = +a_arr[i] || 0;
+          const b_current = +b_arr[i] || 0;
+          if (a_current !== b_current) {
+            if (order === "asc") {
+              return a_current > b_current ? 1 : -1;
+            } else {
+              return a_current > b_current ? -1 : 1;
+            }
+          }
+        }
+        return b_arr.length - a_arr.length;
+      }
+
+    },
     { headerAlign: 'center', dataField: 'name', text: 'Name', align: 'center', sort: true },
     {
       headerAlign: 'center',

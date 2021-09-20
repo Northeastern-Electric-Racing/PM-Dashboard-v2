@@ -34,8 +34,37 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
   // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
   // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
-    { headerAlign: 'center', dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
-    { headerAlign: 'center', dataField: 'name', text: 'Name', align: 'center', sort: true },
+    {
+      headerAlign: 'center',
+      dataField: 'wbsNum',
+      text: 'WBS #',
+      align: 'center',
+      sort: true,
+      sortFunc: (a, b, order: SortOrder) => {
+        const a1 = a.split('.');
+        const b1 = b.split('.');
+        const len = Math.min(a1.length, b1.length);
+        for (let i = 0; i < len; i++) {
+          const a2 = +a1[i] || 0;
+          const b2 = +b1[i] || 0;
+          if (a2 !== b2) {
+            if (order === 'asc') {
+              return a2 > b2 ? 1 : -1;
+            } else {
+              return a2 > b2 ? -1 : 1;
+            }
+          }
+        }
+        return b1.length - a1.length;
+      }
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'name',
+      text: 'Name',
+      align: 'center',
+      sort: true
+    },
     {
       headerAlign: 'center',
       dataField: 'projectLead',

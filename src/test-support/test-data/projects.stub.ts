@@ -30,6 +30,7 @@ export const exampleProject1: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  summary: 'Make an impact attenuator',
   budget: 124,
   rules: ['EV3.5.2'],
   goals: [
@@ -77,6 +78,7 @@ export const exampleProject2: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  summary: 'Do some bodywork',
   budget: 50,
   rules: ['T12.3.2', 'T8.2.6'],
   goals: [
@@ -112,6 +114,7 @@ export const exampleProject3: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  summary: 'Make a box for the battery',
   budget: 5000,
   rules: ['EV3.5.2', 'EV1.4.7', 'EV6.3.10'],
   goals: [
@@ -151,6 +154,7 @@ export const exampleProject4: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  summary: 'Integrate the motor controller',
   budget: 0,
   rules: [],
   goals: [
@@ -186,6 +190,7 @@ export const exampleProject5: Project = {
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
   slideDeckLink: 'https://youtu.be/dQw4w9WgXcQ',
   bomLink: 'https://youtu.be/dQw4w9WgXcQ',
+  summary: 'Harness the wiring',
   budget: 234,
   rules: ['EV3.5.2', 'T12.3.2', 'T8.2.6', 'EV1.4.7', 'EV6.3.10'],
   goals: [

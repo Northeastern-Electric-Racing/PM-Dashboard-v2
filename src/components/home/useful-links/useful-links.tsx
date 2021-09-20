@@ -1,12 +1,14 @@
 /*
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
+ *
+ * React-bootstrap grid documentation: https://react-bootstrap.github.io/layout/grid/
  */
 
 import styles from './useful-links.module.css';
 import { linkPipe } from '../../../shared/pipes';
 import PageBlock from '../../shared/page-block/page-block';
-import BulletList from '../../shared/bullet-list/bullet-list';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const UsefulLinks: React.FC = () => {
   let financeLinks = [
@@ -16,6 +18,8 @@ const UsefulLinks: React.FC = () => {
     ),
     linkPipe('Procurement Form', 'https://forms.gle/6ztRoa1iL7p1KHwP6')
   ];
+  const financeBullets = financeLinks.map((link, idx) => <li key={idx}>{link}</li>);
+
   let otherLinks = [
     linkPipe(
       'Part numbering spreadsheet',
@@ -30,27 +34,27 @@ const UsefulLinks: React.FC = () => {
       'https://docs.google.com/spreadsheets/d/1kqpnw8jZDx2GO5NFUtqefRXqT1XX46iMx5ZI4euPJgY/edit'
     )
   ];
+  const otherBullets = otherLinks.map((link, idx) => <li key={idx}>{link}</li>);
+
   return (
     <PageBlock
       title={'Useful Links'}
       headerRight={<></>}
       body={
-        <>
-          <BulletList
-            title={'Finance'}
-            headerRight={<></>}
-            list={financeLinks}
-            ordered={false}
-          ></BulletList>
-          <BulletList
-            title={'Other'}
-            headerRight={<></>}
-            list={otherLinks}
-            ordered={false}
-          ></BulletList>
-        </>
+        <Container fluid className={styles.linksContainer}>
+          <Row>
+            <Col md>
+              <h4>Finance</h4>
+              <ul>{financeBullets}</ul>
+            </Col>
+            <Col md>
+              <h4>Other</h4>
+              <ul>{otherBullets}</ul>
+            </Col>
+          </Row>
+        </Container>
       }
-    ></PageBlock>
+    />
   );
 };
 

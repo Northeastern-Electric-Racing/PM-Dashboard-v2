@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   return (
     <>
       <h1 className={styles.title}>Welcome, {auth.user?.emailId}!</h1>
-      <UsefulLinks></UsefulLinks>
+      <UsefulLinks />
     </>
   );
 };

@@ -27,12 +27,12 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
-  console.log(data!.summary);
+
   return (
     <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <ProjectDetails project={data!} />
-      <PageBlock title={'Summary'} headerRight={<></>} body={<p>{data!.summary}</p>} />
+      <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
       <DescriptionList title={'Goals'} items={data!.goals} />
       <DescriptionList title={'Features'} items={data!.features} />
       <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />

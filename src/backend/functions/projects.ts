@@ -24,8 +24,8 @@ const getAllProjects: ApiRouteFunction = () => {
 };
 
 // Fetch the project for the specified WBS number
-const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
-  const parseWbs: number[] = params.wbs.split('.').map((str) => parseInt(str));
+const getSingleProject: ApiRouteFunction = (params: { wbsNum: string }) => {
+  const parseWbs: number[] = params.wbsNum.split('.').map((str) => parseInt(str));
   const parsedWbs: WbsNumber = {
     car: parseWbs[0],
     project: parseWbs[1],
@@ -39,7 +39,7 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
     );
   });
   if (requestedProject === undefined) {
-    return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
+    return buildNotFoundResponse('project', `WBS # ${params.wbsNum}`);
   }
   return buildSuccessResponse(requestedProject);
 };

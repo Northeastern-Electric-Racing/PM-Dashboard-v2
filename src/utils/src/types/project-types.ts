@@ -30,6 +30,7 @@ export enum WbsElementStatus {
 }
 
 export interface Project extends WbsElement {
+  summary: string;
   budget: number;
   gDriveLink: string;
   taskListLink: string;

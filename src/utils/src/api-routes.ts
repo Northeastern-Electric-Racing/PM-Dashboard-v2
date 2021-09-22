@@ -12,7 +12,7 @@ const USERS_LOGIN: string = `${USERS}/auth\\:login`;
 
 /**************** Projects Endpoint ****************/
 const PROJECTS: string = `/projects`;
-const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbs`;
+const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbsNum`;
 
 /**************** Work Packages Endpoint ****************/
 const WORK_PACKAGES: string = `/work-packages`;

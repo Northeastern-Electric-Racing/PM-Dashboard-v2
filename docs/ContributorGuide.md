@@ -68,9 +68,9 @@ See [common git commands](https://github.com/Northeastern-Electric-Racing/PM-Das
 
 ## Testing Your Code
 
-Run the unit tests and try to ensure they all pass.
+Run the unit tests using `npm test` and try to ensure they all pass.
 
-You can run a test coverage report too, to see where there may be gaps in test cases.
+You can run a test coverage report using `npm run coverage` to see where there may be gaps in test cases.
 Test coverage reports only go by lines of code, so make sure to also consider if edge cases have been tested.
 
 ## Running the App Locally

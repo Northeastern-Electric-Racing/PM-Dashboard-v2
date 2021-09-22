@@ -7,6 +7,7 @@ import { Handler } from '@netlify/functions';
 import {
   routeMatcher,
   ApiRoute,
+  apiRoutes,
   Project,
   WbsNumber,
   ApiRouteFunction,
@@ -45,12 +46,12 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
 
 const routes: ApiRoute[] = [
   {
-    path: `${API_URL}/projects`,
+    path: API_URL + apiRoutes.PROJECTS,
     httpMethod: 'GET',
     func: getAllProjects
   },
   {
-    path: `${API_URL}/projects/:wbs`,
+    path: API_URL + apiRoutes.PROJECTS_BY_WBS,
     httpMethod: 'GET',
     func: getSingleProject
   }

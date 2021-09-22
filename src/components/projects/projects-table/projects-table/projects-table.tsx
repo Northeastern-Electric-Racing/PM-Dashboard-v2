@@ -11,6 +11,7 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next';
 import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
+import {validateWBS, WbsNumber} from "utils";
 
 export interface DisplayProject {
   wbsNum: string;
@@ -31,8 +32,6 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
   const history = useHistory();
 
   // Configures display options for all data columns
-  // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
-  // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
     {
       headerAlign: 'center',
@@ -40,43 +39,30 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
       text: 'WBS #',
       align: 'center',
       sort: true,
+      // Custom sort order for wbsNum.
       sortFunc: (a, b, order: SortOrder) => {
-        const a1 = a.split('.');
-        const b1 = b.split('.');
-        const len = Math.min(a1.length, b1.length);
-        for (let i = 0; i < len; i++) {
-          const a2 = +a1[i] || 0;
-          const b2 = +b1[i] || 0;
-          if (a2 !== b2) {
-            if (order === 'asc') {
-              return a2 > b2 ? 1 : -1;
-            } else {
-              return a2 > b2 ? -1 : 1;
-            }
-          }
-        }
-        return b1.length - a1.length;
+        return wbsNumSort(a, b, order);
       }
     },
     {
       headerAlign: 'center',
       dataField: 'name',
       text: 'Name',
-      align: 'center',
+      align: 'left',
       sort: true
     },
     {
       headerAlign: 'center',
       dataField: 'projectLead',
       text: 'Project Lead',
-      align: 'center',
+      align: 'left',
       sort: true
     },
     {
       headerAlign: 'center',
       dataField: 'projectManager',
       text: 'Project Manager',
-      align: 'center',
+      align: 'left',
       sort: true
     },
     { headerAlign: 'center', dataField: 'duration', text: 'Duration', align: 'center', sort: true }
@@ -116,5 +102,41 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
     </>
   );
 };
+
+/***
+ * Custom sorting order for wbsNums according to car, then project, then workPackage.
+ * @param a 1st wbsNum in string form
+ * @param b 2nd wbsNum in string form
+ * @param order Imported SortOrder values 'asc' or 'desc'
+ * @return number A number -1, 0, or 1 describing the order a and b should be in,
+ *                according to the specified SortOrder.
+ */
+function wbsNumSort(a: string, b:string, order:SortOrder): number {
+  const wbs_a = validateWBS(a);
+  const wbs_b = validateWBS(b);
+  if (wbs_a.car !== wbs_b.car) {
+    if (order === 'asc') {
+      return wbs_a.car > wbs_b.car ? 1 : -1;
+    } else {
+      return wbs_a.car > wbs_b.car ? -1 : 1;
+    }
+  }
+  if (wbs_a.project !== wbs_b.project) {
+    if (order === 'asc') {
+      return wbs_a.project > wbs_b.project ? 1 : -1;
+    } else {
+      return wbs_a.project > wbs_b.project ? -1 : 1;
+    }
+  }
+  if (wbs_a.workPackage !== wbs_b.workPackage) {
+    if (order === 'asc') {
+      return wbs_a.workPackage > wbs_b.workPackage ? 1 : -1;
+    } else {
+      return wbs_a.workPackage > wbs_b.workPackage ? -1 : 1;
+    }
+  } else {
+    return 0;
+  }
+}
 
 export default ProjectsTable;

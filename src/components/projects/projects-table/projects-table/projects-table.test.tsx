@@ -116,4 +116,27 @@ describe('projects table component', () => {
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
     expect(wbsNumsAsc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
   });
+
+  it('handles sorting and reverse sorting the table by wbsNum', async () => {
+    renderComponent(exampleAllProjects);
+
+    const column: string = 'WBS #';
+    const expectedWbsOrder: string[] = [
+      exampleProject5,
+      exampleProject4,
+      exampleProject3,
+      exampleProject2,
+      exampleProject1
+    ].map((prj: Project) => wbsPipe(prj.wbsNum));
+
+    fireEvent.click(screen.getByText(column));
+    const wbsNumsDesc: HTMLElement[] = await screen.findAllByText(wbsRegex);
+    expect(wbsNumsDesc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder);
+
+    fireEvent.click(screen.getByText(column));
+    const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
+    expect(wbsNumsAsc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
+  });
 });
+
+

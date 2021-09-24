@@ -138,5 +138,3 @@ describe('projects table component', () => {
     expect(wbsNumsAsc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
   });
 });
-
-

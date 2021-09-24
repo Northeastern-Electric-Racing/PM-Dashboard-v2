@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import BootstrapTable, {
   ColumnDescription,
   RowEventHandlerProps,
@@ -11,7 +11,7 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next';
 import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
-import {validateWBS, WbsNumber} from "utils";
+import { validateWBS, WbsNumber } from 'utils';
 
 export interface DisplayProject {
   wbsNum: string;
@@ -64,7 +64,7 @@ function wbsNumSort(a: string, b: string, order: SortOrder): number {
 /**
  * Interactive table for displaying all projects table data.
  */
-const ProjectsTable: React.FC<DisplayProjectProps> = ({allProjects}: DisplayProjectProps) => {
+const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayProjectProps) => {
   const history = useHistory();
 
   // Configures display options for all data columns
@@ -125,23 +125,23 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({allProjects}: DisplayProj
   };
 
   return (
-      <>
-        <PageTitle title={'All Projects'}/>
-        <BootstrapTable
-            striped
-            hover
-            condensed
-            bootstrap4
-            wrapperClasses={styles.table}
-            keyField="wbsNum"
-            data={allProjects}
-            columns={columns}
-            defaultSorted={defaultSort}
-            rowEvents={rowEvents}
-            noDataIndication="No Projects to Display"
-            rowStyle={{cursor: 'pointer'}}
-        />
-      </>
+    <>
+      <PageTitle title={'All Projects'} />
+      <BootstrapTable
+        striped
+        hover
+        condensed
+        bootstrap4
+        wrapperClasses={styles.table}
+        keyField="wbsNum"
+        data={allProjects}
+        columns={columns}
+        defaultSorted={defaultSort}
+        rowEvents={rowEvents}
+        noDataIndication="No Projects to Display"
+        rowStyle={{ cursor: 'pointer' }}
+      />
+    </>
   );
 };
 

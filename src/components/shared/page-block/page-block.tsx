@@ -21,6 +21,9 @@ const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
           <div className={styles.title}>{title}</div>
           <div className={styles.headerRight}>{headerRight}</div>
         </Card.Title>
+        <Card.Link>
+          href="#"https://docs.google.com/document/d/1ctquLaeJv3WH0QW10vOUI14ku6OfRwOEyodM4Iln2h8/edit?usp=sharing
+        </Card.Link>
         {body}
       </Card.Body>
     </Card>

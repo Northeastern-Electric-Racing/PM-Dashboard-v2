@@ -15,6 +15,7 @@ const Settings: React.FC = () => {
     <>
       <PageTitle title="This is the Settings Page" />
       <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
+      <PageBlock title="Glossary" headerRight={<></>} body={pageBlockBody} />
     </>
   );
 };

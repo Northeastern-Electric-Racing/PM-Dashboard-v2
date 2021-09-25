@@ -11,7 +11,7 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next';
 import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
-import { validateWBS, WbsNumber } from 'utils';
+import { validateWBS } from 'utils';
 
 export interface DisplayProject {
   wbsNum: string;

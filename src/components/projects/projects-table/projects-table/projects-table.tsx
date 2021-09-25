@@ -25,39 +25,47 @@ interface DisplayProjectProps {
   allProjects: DisplayProject[];
 }
 
-/***
+/**
  * Custom sorting order for wbsNums according to car, then project, then workPackage.
  * @param a 1st wbsNum in string form
  * @param b 2nd wbsNum in string form
  * @param order Imported SortOrder values 'asc' or 'desc'
- * @return number A number -1, 0, or 1 describing the value of a relative to b,
+ * @return number A number describing the value of a relative to b,
  *                according to the specified SortOrder.
  */
-function wbsNumSort(a: string, b: string, order: SortOrder): number {
+export function wbsNumSort(a: string, b: string, order: SortOrder) {
   const wbs_a = validateWBS(a);
   const wbs_b = validateWBS(b);
   if (wbs_a.car !== wbs_b.car) {
     if (order === 'asc') {
-      return wbs_a.car > wbs_b.car ? 1 : -1;
+      return wbs_a.car > wbs_b.car ? wbs_a.car - wbs_b.car : wbs_b.car - wbs_a.car;
     } else {
-      return wbs_a.car > wbs_b.car ? -1 : 1;
+      return wbs_a.car > wbs_b.car ? wbs_b.car - wbs_a.car : wbs_a.car - wbs_b.car;
     }
   }
   if (wbs_a.project !== wbs_b.project) {
     if (order === 'asc') {
-      return wbs_a.project > wbs_b.project ? 1 : -1;
+      return wbs_a.project > wbs_b.project
+        ? wbs_a.project - wbs_b.project
+        : wbs_b.project - wbs_a.project;
     } else {
-      return wbs_a.project > wbs_b.project ? -1 : 1;
+      return wbs_a.project > wbs_b.project
+        ? wbs_b.project - wbs_a.project
+        : wbs_a.project - wbs_b.project;
     }
   }
   if (wbs_a.workPackage !== wbs_b.workPackage) {
     if (order === 'asc') {
-      return wbs_a.workPackage > wbs_b.workPackage ? 1 : -1;
+      return wbs_a.workPackage > wbs_b.workPackage
+        ? wbs_a.workPackage - wbs_b.workPackage
+        : wbs_b.workPackage - wbs_a.workPackage;
     } else {
-      return wbs_a.workPackage > wbs_b.workPackage ? -1 : 1;
+      return wbs_a.workPackage > wbs_b.workPackage
+        ? wbs_b.workPackage - wbs_a.workPackage
+        : wbs_a.workPackage - wbs_b.workPackage;
     }
   } else {
-    return 0;
+    return 0; // Both wbsNums are exactly equal.
   }
 }
 

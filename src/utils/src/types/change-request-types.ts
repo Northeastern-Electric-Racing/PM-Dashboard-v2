@@ -7,13 +7,16 @@ import { User } from './user-types';
 import { WbsNumber } from './project-types';
 
 export interface ChangeRequest {
-  crId: number;
+  id: number;
+  wbsNum: WbsNumber;
   submitter: User;
-  wbsElementId: number;
+  dateSubmitted: Date;
   type: ChangeRequestType;
-  dateReviewed: Date;
-  accepted: boolean;
-  dateImplemented: Date;
+  dateReviewed?: Date;
+  accepted?: boolean;
+  reviewNotes?: string;
+  dateImplemented?: Date;
+  implementedChanges?: ImplementedChange[];
 }
 
 export enum ChangeRequestType {

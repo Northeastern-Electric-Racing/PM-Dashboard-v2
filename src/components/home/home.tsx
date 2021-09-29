@@ -5,10 +5,18 @@
 
 import { useAuth } from '../../services/auth.hooks';
 import styles from './home.module.css';
+import PageBlock from '../shared/page-block/page-block';
+
 
 const Home: React.FC = () => {
   const auth = useAuth();
-  return <h1 className={styles.title}>Welcome, {auth.user?.emailId}!</h1>;
+  const pageBlockLink = <a href="https://docs.google.com/document/d/1ctquLaeJv3WH0QW10vOUI14ku6OfRwOEyodM4Iln2h8/edit?usp=sharing">Glossary Document</a>;
+  return (
+    <>
+      <h1 className={styles.title}>Welcome, {auth.user?.emailId}!</h1>
+      <PageBlock title="Glossary" headerRight={<></>} body={pageBlockLink} />
+    </>
+  );
 };
 
 export default Home;

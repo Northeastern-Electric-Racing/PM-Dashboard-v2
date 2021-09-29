@@ -7,114 +7,66 @@ import { wbsNumSort } from '../../components/projects/projects-table/projects-ta
 
 describe('sort wbs numbers', () => {
   it('equal wbsNums, asc', () => {
-    const a = '0.0.0';
-    const b = '0.0.0';
-
-    expect(wbsNumSort(a, b, 'asc')).toEqual(0);
+    expect(wbsNumSort('0.0.0', '0.0.0', 'asc')).toEqual(0);
   });
 
   it('equal wbsNums, desc', () => {
-    const a = '0.0.0';
-    const b = '0.0.0';
-
-    expect(wbsNumSort(a, b, 'desc')).toEqual(0);
+    expect(wbsNumSort('0.0.0', '0.0.0', 'desc')).toEqual(0);
   });
 
   it('equal wbsNums with different values for each part, asc', () => {
-    const a = '0.1.2';
-    const b = '0.1.2';
-
-    expect(wbsNumSort(a, b, 'asc')).toEqual(0);
+    expect(wbsNumSort('0.1.2', '0.1.2', 'asc')).toEqual(0);
   });
 
   it('equal wbsNums with different values for each part, desc', () => {
-    const a = '24.36.12';
-    const b = '24.36.12';
-
-    expect(wbsNumSort(a, b, 'desc')).toEqual(0);
+    expect(wbsNumSort('24.36.12', '24.36.12', 'desc')).toEqual(0);
   });
 
   it('a.car < b.car, asc', () => {
-    const a = '0.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(a, b, 'asc')).toEqual(-1);
+    expect(wbsNumSort('0.7.12', '1.56.44', 'asc')).toEqual(-1);
   });
 
   it('a.car > b.car, asc', () => {
-    const a = '0.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(b, a, 'asc')).toEqual(1);
+    expect(wbsNumSort('1.56.44', '0.7.12', 'asc')).toEqual(1);
   });
 
   it('a.car < b.car, desc', () => {
-    const a = '0.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(a, b, 'desc')).toEqual(1);
+    expect(wbsNumSort('0.7.12', '1.56.44', 'desc')).toEqual(1);
   });
 
   it('a.car > b.car, desc', () => {
-    const a = '0.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(b, a, 'desc')).toEqual(-1);
+    expect(wbsNumSort('1.56.44', '0.7.12', 'desc')).toEqual(-1);
   });
 
   it('a.project < b.project, asc', () => {
-    const a = '1.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(a, b, 'asc')).toEqual(-49);
+    expect(wbsNumSort('1.7.12', '1.56.44', 'asc')).toEqual(-49);
   });
 
   it('a.project > b.project, asc', () => {
-    const a = '1.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(b, a, 'asc')).toEqual(49);
+    expect(wbsNumSort('1.56.44', '1.7.12', 'asc')).toEqual(49);
   });
 
   it('a.project < b.project, desc', () => {
-    const a = '1.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(a, b, 'desc')).toEqual(49);
+    expect(wbsNumSort('1.7.12', '1.56.44', 'desc')).toEqual(49);
   });
 
   it('a.project > b.project, desc', () => {
-    const a = '1.7.12';
-    const b = '1.56.44';
-
-    expect(wbsNumSort(b, a, 'desc')).toEqual(-49);
+    expect(wbsNumSort('1.56.44', '1.7.12', 'desc')).toEqual(-49);
   });
 
   it('a.workPackage < b.workPackage, asc', () => {
-    const a = '1.2.12';
-    const b = '1.2.44';
-
-    expect(wbsNumSort(a, b, 'asc')).toEqual(-32);
+    expect(wbsNumSort('1.2.12', '1.2.44', 'asc')).toEqual(-32);
   });
 
   it('a.workPackage > b.workPackage, asc', () => {
-    const a = '1.2.12';
-    const b = '1.2.44';
-
-    expect(wbsNumSort(b, a, 'asc')).toEqual(32);
+    expect(wbsNumSort('1.2.44', '1.2.12', 'asc')).toEqual(32);
   });
 
   it('a.workPackage < b.workPackage, desc', () => {
-    const a = '1.2.12';
-    const b = '1.2.44';
-
-    expect(wbsNumSort(a, b, 'desc')).toEqual(32);
+    expect(wbsNumSort('1.2.12', '1.2.44', 'desc')).toEqual(32);
   });
 
   it('a.workPackage > b.workPackage, desc', () => {
-    const a = '1.2.12';
-    const b = '1.2.44';
-
-    expect(wbsNumSort(b, a, 'desc')).toEqual(-32);
+    expect(wbsNumSort('1.2.44', '1.2.12', 'desc')).toEqual(-32);
   });
 });

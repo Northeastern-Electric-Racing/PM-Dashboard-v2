@@ -75,10 +75,7 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
       text: 'WBS #',
       align: 'center',
       sort: true,
-      // Custom sort order for wbsNum.
-      sortFunc: (a, b, order: SortOrder) => {
-        return wbsNumSort(a, b, order);
-      }
+      sortFunc: wbsNumSort
     },
     {
       headerAlign: 'center',

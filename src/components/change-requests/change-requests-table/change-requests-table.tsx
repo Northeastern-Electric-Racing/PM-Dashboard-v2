@@ -11,6 +11,8 @@ import CRTable from './change-requests-table/change-requests-table'; // Directly
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import './change-requests-table.module.css';
+import ChangeRequestsFilter from '../change-requests-filter/change-requests-filter';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const ChangeRequestsTable: React.FC = () => {
   const { isLoading, isError, data, error } = useAllChangeRequests();
@@ -33,7 +35,17 @@ const ChangeRequestsTable: React.FC = () => {
     }) as DisplayChangeRequest[];
   };
 
-  return <CRTable changeRequests={transformToDisplayChangeRequests(data!)} />;
+  const changeRequestsTable = <CRTable changeRequests={transformToDisplayChangeRequests(data!)} />;
+
+  const changeRequestsContainer =  
+      <Container>
+        <Row>
+          <Col><ChangeRequestsFilter></ChangeRequestsFilter></Col>
+          <Col>{changeRequestsTable}</Col>
+        </Row>
+      </Container>;
+
+  return changeRequestsContainer;
 };
 
 export default ChangeRequestsTable;

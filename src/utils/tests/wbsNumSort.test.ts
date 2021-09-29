@@ -38,7 +38,7 @@ describe('sort wbs numbers', () => {
     const a = '0.7.12';
     const b = '1.56.44';
 
-    expect(wbsNumSort(a, b, 'asc')).toEqual(1);
+    expect(wbsNumSort(a, b, 'asc')).toEqual(-1);
   });
 
   it('a.car > b.car, asc', () => {
@@ -52,7 +52,7 @@ describe('sort wbs numbers', () => {
     const a = '0.7.12';
     const b = '1.56.44';
 
-    expect(wbsNumSort(a, b, 'desc')).toEqual(-1);
+    expect(wbsNumSort(a, b, 'desc')).toEqual(1);
   });
 
   it('a.car > b.car, desc', () => {
@@ -66,7 +66,7 @@ describe('sort wbs numbers', () => {
     const a = '1.7.12';
     const b = '1.56.44';
 
-    expect(wbsNumSort(a, b, 'asc')).toEqual(49);
+    expect(wbsNumSort(a, b, 'asc')).toEqual(-49);
   });
 
   it('a.project > b.project, asc', () => {
@@ -80,7 +80,7 @@ describe('sort wbs numbers', () => {
     const a = '1.7.12';
     const b = '1.56.44';
 
-    expect(wbsNumSort(a, b, 'desc')).toEqual(-49);
+    expect(wbsNumSort(a, b, 'desc')).toEqual(49);
   });
 
   it('a.project > b.project, desc', () => {
@@ -94,7 +94,7 @@ describe('sort wbs numbers', () => {
     const a = '1.2.12';
     const b = '1.2.44';
 
-    expect(wbsNumSort(a, b, 'asc')).toEqual(32);
+    expect(wbsNumSort(a, b, 'asc')).toEqual(-32);
   });
 
   it('a.workPackage > b.workPackage, asc', () => {
@@ -108,7 +108,7 @@ describe('sort wbs numbers', () => {
     const a = '1.2.12';
     const b = '1.2.44';
 
-    expect(wbsNumSort(a, b, 'desc')).toEqual(-32);
+    expect(wbsNumSort(a, b, 'desc')).toEqual(32);
   });
 
   it('a.workPackage > b.workPackage, desc', () => {

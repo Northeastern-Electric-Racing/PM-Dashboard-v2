@@ -117,7 +117,7 @@ describe('projects table component', () => {
     expect(wbsNumsAsc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
   });
 
-  it.skip('handles sorting and reverse sorting the table by wbsNum', async () => {
+  it('handles sorting and reverse sorting the table by wbsNum', async () => {
     renderComponent(exampleAllProjects);
 
     const column: string = 'WBS #';

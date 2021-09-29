@@ -38,31 +38,23 @@ export function wbsNumSort(a: string, b: string, order: SortOrder) {
   const wbs_b = validateWBS(b);
   if (wbs_a.car !== wbs_b.car) {
     if (order === 'asc') {
-      return wbs_a.car > wbs_b.car ? wbs_a.car - wbs_b.car : wbs_b.car - wbs_a.car;
+      return wbs_a.car - wbs_b.car;
     } else {
-      return wbs_a.car > wbs_b.car ? wbs_b.car - wbs_a.car : wbs_a.car - wbs_b.car;
+      return wbs_b.car - wbs_a.car;
     }
   }
   if (wbs_a.project !== wbs_b.project) {
     if (order === 'asc') {
-      return wbs_a.project > wbs_b.project
-        ? wbs_a.project - wbs_b.project
-        : wbs_b.project - wbs_a.project;
+      return wbs_a.project - wbs_b.project;
     } else {
-      return wbs_a.project > wbs_b.project
-        ? wbs_b.project - wbs_a.project
-        : wbs_a.project - wbs_b.project;
+      return wbs_b.project - wbs_a.project;
     }
   }
   if (wbs_a.workPackage !== wbs_b.workPackage) {
     if (order === 'asc') {
-      return wbs_a.workPackage > wbs_b.workPackage
-        ? wbs_a.workPackage - wbs_b.workPackage
-        : wbs_b.workPackage - wbs_a.workPackage;
+      return wbs_a.workPackage - wbs_b.workPackage;
     } else {
-      return wbs_a.workPackage > wbs_b.workPackage
-        ? wbs_b.workPackage - wbs_a.workPackage
-        : wbs_a.workPackage - wbs_b.workPackage;
+      return wbs_b.workPackage - wbs_a.workPackage;
     }
   } else {
     return 0; // Both wbsNums are exactly equal.

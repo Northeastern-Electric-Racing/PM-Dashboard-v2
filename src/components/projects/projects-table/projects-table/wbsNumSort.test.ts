@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { wbsNumSort } from '../../components/projects/projects-table/projects-table/projects-table';
+import { wbsNumSort } from './projects-table';
 
 describe('sort wbs numbers', () => {
   it('equal wbsNums, asc', () => {

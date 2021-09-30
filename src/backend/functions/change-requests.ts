@@ -26,7 +26,7 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
     wbsElement: true,
     changes: {
       include: {
-        implementor: true
+        implementer: true
       }
     },
     scopeChangeRequest: true,
@@ -69,7 +69,7 @@ const changeRequestTransformer = (
       id: change.changeId,
       crId: change.changeRequestId,
       wbsNum,
-      implementer: change.implementor,
+      implementer: change.implementer,
       detail: change.detail
     })),
     wbsNum

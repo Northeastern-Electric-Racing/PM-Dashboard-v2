@@ -96,7 +96,7 @@ CREATE TABLE "Change" (
     "changeId" SERIAL NOT NULL,
     "changeRequestId" INTEGER NOT NULL,
     "dateImplemented" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "implementorId" INTEGER NOT NULL,
+    "implementerId" INTEGER NOT NULL,
     "wbsElementId" INTEGER NOT NULL,
     "detail" TEXT NOT NULL,
 
@@ -231,7 +231,7 @@ ALTER TABLE "Activation_CR" ADD FOREIGN KEY ("projectManagerId") REFERENCES "Use
 ALTER TABLE "Change" ADD FOREIGN KEY ("changeRequestId") REFERENCES "Change_Request"("crId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Change" ADD FOREIGN KEY ("implementorId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Change" ADD FOREIGN KEY ("implementerId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Change" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;

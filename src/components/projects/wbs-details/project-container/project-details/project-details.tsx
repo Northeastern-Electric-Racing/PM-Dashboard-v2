@@ -24,41 +24,41 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   const detailsBody = (
     <Container fluid className={styles.projectDetails}>
       <Row>
-        <Col sm={6}><b>Project Name:</b> {project.name}</Col>
-        <Col sm={6}><b>Duration:</b>{' '}{weeksPipe(project.workPackages.reduce((tot: any, cur: any) => tot + cur.duration, 0))}</Col>
-      </Row>
-      <Row>
-        <Col sm={6}><b>WBS #:</b> {wbsPipe(project.wbsNum)}</Col>
-        <Col sm={6}><b>Start Date:</b>{' '}
-          {project.workPackages.length > 0
-            ? project.workPackages
+        <Col xs={12} md={6}>
+          <div>
+            <b>Project Name:</b> {project.name} <br />
+            <b>WBS #:</b> {wbsPipe(project.wbsNum)} <br />
+            <b>Project Lead:</b> {fullNamePipe(project.projectLead)} <br />
+            <b>Project Manager:</b> {fullNamePipe(project.projectManager)} <br />
+            <b>Budget:</b> {dollarsPipe(project.budget)}
+          </div>
+        </Col>
+        <Col xs={6} md={4}>
+          <div>
+            <b>Duration:</b>{' '}{weeksPipe(project.workPackages.reduce((tot: any, cur: any) => tot + cur.duration, 0))} <br />
+            <b>Start Date:</b>{' '}
+            {project.workPackages.length > 0
+              ? project.workPackages
                 .reduce(
                   (min: any, cur: any) => (cur.startDate < min ? cur.startDate : min),
                   project.workPackages[0].startDate
                 )
                 .toLocaleDateString()
-            : 'n/a'}</Col>
-      </Row>
-      <Row>
-        <Col sm={6}><b>Project Lead:</b> {fullNamePipe(project.projectLead)}</Col>
-        <Col sm={6}><b>End Date:</b>{' '}
-          {project.workPackages.length > 0
-            ? endDatePipe(
+              : 'n/a'} <br />
+            <b>End Date:</b>{' '}
+              {project.workPackages.length > 0
+              ? endDatePipe(
                 project.workPackages.reduce(
                   (min: any, cur: any) => (cur.startDate < min ? cur.startDate : min),
                   project.workPackages[0].startDate
                 ),
                 project.workPackages.reduce((tot: any, cur: any) => tot + cur.duration, 0)
               )
-            : 'n/a'}</Col>
-      </Row>
-      <Row>
-        <Col sm={6}><b>Project Manager:</b> {fullNamePipe(project.projectManager)}</Col>
-        <Col sm={6}><b>Expected Progress:</b></Col>
-      </Row>
-      <Row>
-        <Col sm={6}><b>Budget:</b> {dollarsPipe(project.budget)}</Col>
-        <Col sm={6}><b>Timeline Status:</b></Col>
+              : 'n/a'} <br />
+            <b>Expected Progress:</b> <br />
+            <b>Timeline Status:</b>
+          </div>
+        </Col>
       </Row>
       <Row>
         <Col><div className={styles.horizontal}>

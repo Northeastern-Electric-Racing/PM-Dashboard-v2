@@ -17,28 +17,20 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   const detailsBody = (
       <Container fluid className={styles.workPackageDetails}>
         <Row>
-        <Col><b>Work Package Name:</b> {workPackage.name}</Col>
-        <Col><b>Duration:</b> {weeksPipe(workPackage.duration)}</Col>
-        </Row>
-        <Row>
-        <Col><b>WBS #:</b> {wbsPipe(workPackage.wbsNum)}</Col>
-        <Col><b>Start Date:</b> {workPackage.startDate.toLocaleDateString()}</Col>
-        </Row>
-        <Row>
-          <Col> <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}</Col>
-          <Col><b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}</Col>
-        </Row>
-        <Row>
-          <Col><b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}</Col>
-          <Col><b>Progress:</b> {workPackage.progress}%</Col>
-        </Row>
-        <Row>
-          <Col><b>Budget:</b></Col>
-          <Col><b>Expected Progress:</b></Col>
-        </Row>
-        <Row>
-          <Col><b>Deliverables:</b></Col>
-          <Col><b>Timeline Status:</b></Col>
+          <Col xs={12} md={6}>
+            <b>Work Package Name:</b> {workPackage.name} <br />
+            <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
+            <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)} <br />
+            <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
+            <b>Duration:</b> {weeksPipe(workPackage.duration)} <br />
+          </Col>
+          <Col xs={6} md={4}>
+            <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()} <br />
+            <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)} <br />
+            <b>Progress:</b> {workPackage.progress}% <br />
+            <b>Expected Progress:</b> <br />
+            <b>Timeline Status:</b> <br />
+          </Col>
         </Row>
       </Container>
   );

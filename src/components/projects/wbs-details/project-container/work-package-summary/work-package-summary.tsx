@@ -36,12 +36,11 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
           <Card.Body>
             <Container fluid className={styles.workPackageSummary}>
               <Row>
-                <Col><b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}</Col>
-                <Col><b>Start date:</b> {workPackage.startDate.toLocaleDateString()}</Col>
-              </Row>
-              <Row>
-                <Col></Col>
-                <Col><b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}</Col>
+                <Col xs={12} md={6}><b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}</Col>
+                <Col xs={6} md={4}>
+                  <b>Start date:</b> {workPackage.startDate.toLocaleDateString()} <br />
+                  <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
+                </Col>
               </Row>
             </Container>
           </Card.Body>

@@ -30,7 +30,7 @@ describe('change requests api endpoint handler', () => {
 
     it.skip('has all required fields', () => {
       crResponse.forEach((cr: ChangeRequest) => {
-        expect(cr.hasOwnProperty('id')).toBeTruthy();
+        expect(cr.hasOwnProperty('crId')).toBeTruthy();
         expect(cr.hasOwnProperty('wbsNum')).toBeTruthy();
         expect(cr.hasOwnProperty('submitter')).toBeTruthy();
         expect(cr.hasOwnProperty('dateSubmitted')).toBeTruthy();
@@ -54,7 +54,7 @@ describe('change requests api endpoint handler', () => {
     });
 
     it.skip('has all required fields', () => {
-      expect(crResponse.hasOwnProperty('id')).toBeTruthy();
+      expect(crResponse.hasOwnProperty('crId')).toBeTruthy();
       expect(crResponse.hasOwnProperty('wbsNum')).toBeTruthy();
       expect(crResponse.hasOwnProperty('submitter')).toBeTruthy();
       expect(crResponse.hasOwnProperty('dateSubmitted')).toBeTruthy();

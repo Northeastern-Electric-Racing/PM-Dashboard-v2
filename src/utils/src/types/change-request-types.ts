@@ -7,7 +7,7 @@ import { User } from './user-types';
 import { WbsNumber } from './project-types';
 
 export interface ChangeRequest {
-  id: number;
+  crId: number;
   wbsNum: WbsNumber;
   submitter: User;
   dateSubmitted: Date;

@@ -74,7 +74,7 @@ describe('change requests table container', () => {
   it('handles the api returning a normal array of change requests', async () => {
     mockHook(false, false, exampleAllChangeRequests);
     renderComponent();
-    await waitFor(() => screen.getByText(exampleAllChangeRequests[0].id));
+    await waitFor(() => screen.getByText(exampleAllChangeRequests[0].crId));
 
     expect(
       screen.getAllByText(fullNamePipe(exampleAllChangeRequests[1].submitter))[0]

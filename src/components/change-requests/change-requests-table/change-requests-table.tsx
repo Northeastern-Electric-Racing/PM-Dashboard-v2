@@ -23,7 +23,7 @@ const ChangeRequestsTable: React.FC = () => {
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
     return changeRequests.map((cr: ChangeRequest) => {
       return {
-        id: cr.id,
+        id: cr.crId,
         submitterName: fullNamePipe((cr.submitter as unknown) as User),
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,

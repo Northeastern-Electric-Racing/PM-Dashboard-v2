@@ -24,7 +24,7 @@ describe('Change request details common display element tests', () => {
     'Renders the title for CR %#',
     (cr: ChangeRequest) => {
       render(<ChangeRequestDetails changeRequest={cr} />);
-      expect(screen.getByText(`Change Request #${cr.id}`)).toBeInTheDocument();
+      expect(screen.getByText(`Change Request #${cr.crId}`)).toBeInTheDocument();
     }
   );
 

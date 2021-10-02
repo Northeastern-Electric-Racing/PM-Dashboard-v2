@@ -13,8 +13,47 @@ import ErrorPage from '../../shared/error-page/error-page';
 import './change-requests-table.module.css';
 import ChangeRequestsFilter from '../change-requests-filter/change-requests-filter';
 import { Col, Container, Row } from 'react-bootstrap';
+import { useState } from 'react';
+
+type FormFieldType = "select" | "checkbox";
+
+interface FilterFormField {
+  label: string;
+  type: FormFieldType;
+  values: string[];
+  currentValue: number[];
+}
+
+const filterFieldsList: FilterFormField[] = [
+  {
+    label: "Requester",
+    type: "select",
+    values: ["a"],
+    currentValue: [0],
+  },
+  {
+    label: "Project",
+    type: "select",
+    values: ["a"],
+    currentValue: [0],
+  },
+  {
+    label: "Type",
+    type: "select",
+    values: ["a"],
+    currentValue: [0],
+  },
+  {
+    label: "Implemented",
+    type: "select",
+    values: ["a"],
+    currentValue: [0],
+  },
+];
+
 
 const ChangeRequestsTable: React.FC = () => {
+  const [filterFields, setFilterFields] = useState(filterFieldsList);
   const { isLoading, isError, data, error } = useAllChangeRequests();
 
   if (isLoading) return <LoadingIndicator />;
@@ -40,7 +79,7 @@ const ChangeRequestsTable: React.FC = () => {
   const changeRequestsContainer =  
       <Container>
         <Row>
-          <Col><ChangeRequestsFilter></ChangeRequestsFilter></Col>
+          <Col><ChangeRequestsFilter filterFields={filterFields}></ChangeRequestsFilter></Col>
           <Col>{changeRequestsTable}</Col>
         </Row>
       </Container>;

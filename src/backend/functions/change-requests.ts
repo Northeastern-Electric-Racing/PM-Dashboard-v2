@@ -36,13 +36,13 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
 });
 
 const convertChangeRequestType = (type: CR_Type): ChangeRequestType =>
-({
-  ISSUE: ChangeRequestType.DesignIssue,
-  DEFINITION_CHANGE: ChangeRequestType.NewFunction,
-  OTHER: ChangeRequestType.Other,
-  STAGE_GATE: ChangeRequestType.StageGate,
-  ACTIVATION: ChangeRequestType.Activation
-}[type]);
+  ({
+    ISSUE: ChangeRequestType.DesignIssue,
+    DEFINITION_CHANGE: ChangeRequestType.NewFunction,
+    OTHER: ChangeRequestType.Other,
+    STAGE_GATE: ChangeRequestType.StageGate,
+    ACTIVATION: ChangeRequestType.Activation
+  }[type]);
 
 const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
@@ -65,8 +65,6 @@ const changeRequestTransformer = (
     ),
     implementedChanges: changeRequest.changes.map((change) => ({
       ...change,
-      id: change.changeId,
-      crId: change.changeRequestId,
       wbsNum
     })),
     wbsNum

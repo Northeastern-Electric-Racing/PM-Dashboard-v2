@@ -56,8 +56,8 @@ export const exampleWorkPackage1: WorkPackage = {
   ],
   changes: [
     {
-      id: 1,
-      crId: 33,
+      changeId: 1,
+      changeRequestId: 33,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleGuestUser,
       detail: 'Increased funding by $500.'
@@ -111,16 +111,16 @@ export const exampleWorkPackage2: WorkPackage = {
   ],
   changes: [
     {
-      id: 2,
-      crId: 1,
+      changeId: 2,
+      changeRequestId: 1,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleAppAdminUser,
       detail: 'Decreased duration from 10 weeks to 7 weeks.'
     },
 
     {
-      id: 13,
-      crId: 54,
+      changeId: 13,
+      changeRequestId: 54,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleProjectLeadUser,
       detail: 'Added "jet fuel burns hot" bullet.'
@@ -174,8 +174,8 @@ export const exampleWorkPackage3: WorkPackage = {
   ],
   changes: [
     {
-      id: 7,
-      crId: 14,
+      changeId: 7,
+      changeRequestId: 14,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleAdminUser,
       detail: 'Increased budget from $10 to $200.'

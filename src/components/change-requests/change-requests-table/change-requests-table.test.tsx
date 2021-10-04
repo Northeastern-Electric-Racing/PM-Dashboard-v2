@@ -79,7 +79,7 @@ describe('change requests table container', () => {
     expect(
       screen.getAllByText(fullNamePipe(exampleAllChangeRequests[1].submitter))[0]
     ).toBeInTheDocument();
-    expect(screen.getByText(exampleAllChangeRequests[1].id)).toBeInTheDocument();
+    expect(screen.getByText(exampleAllChangeRequests[1].crId)).toBeInTheDocument();
     expect(screen.getAllByText(wbsPipe(exampleAllChangeRequests[2].wbsNum))[0]).toBeInTheDocument();
 
     expect(screen.queryByText('No Change Requests to Display')).not.toBeInTheDocument();

@@ -62,8 +62,8 @@ export enum ChangeRequestReason {
 }
 
 export interface ImplementedChange {
-  id: number;
-  crId: number;
+  changeId: number;
+  changeRequestId: number;
   wbsNum: WbsNumber;
   implementer: User;
   detail: string;

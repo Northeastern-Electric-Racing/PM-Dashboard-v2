@@ -201,13 +201,16 @@ describe('Formatting Empty Strings With Dash', () => {
 });
 
 describe('Formatting Dates', () => {
+  test('invalid test', () => {
+    expect(datePipe(new Date(99999999999999999999))).toBe('Invalid Date');
+  });
   test('empty constructor/current time', () => {
     let current_time = new Date();
     let answer = current_time.toLocaleString('en-US');
     expect(datePipe(new Date())).toBe(answer);
   });
   test('milliseconds', () => {
-    expect(datePipe(new Date(99999999))).toBe('1/1/1970, 10:46:39 PM');
+    expect(datePipe(new Date(1000000000))).toBe('1/12/1970, 8:46:40 AM');
   });
   test('datestring', () => {
     expect(datePipe(new Date('2021-10-5'))).toBe('10/5/2021, 12:00:00 AM');

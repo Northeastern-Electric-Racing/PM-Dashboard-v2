@@ -18,18 +18,18 @@ const dbSeedChangeRequest1: any = {
   changes: [
     {
       dateImplemented: new Date('02/10/21'),
-      implementorId: 1,
+      implementerId: 1,
       wbsElementId: 8,
       detail: 'Added "big spacers" bullet.'
     },
     {
       dateImplemented: new Date('02/10/21'),
-      implementorId: 2,
+      implementerId: 2,
       wbsElementId: 8,
       detail: 'Increased budget from $124 to $224.'
     },
     {
-      implementorId: 1,
+      implementerId: 1,
       wbsElementId: 8,
       detail: 'Increased duration from 2 weeks to 5 weeks.'
     }
@@ -83,19 +83,19 @@ const dbSeedChangeRequest2: any = {
   changes: [
     {
       dateImplemented: new Date('02/10/21'),
-      implementorId: 5,
+      implementerId: 5,
       wbsElementId: 6,
       detail: 'Added "removable side panels" bullet.'
     },
     {
       dateImplemented: new Date('02/10/21'),
-      implementorId: 5,
+      implementerId: 5,
       wbsElementId: 7,
       detail: 'Increased budget from $0 to $50.'
     },
     {
       dateImplemented: new Date('02/10/21'),
-      implementorId: 5,
+      implementerId: 5,
       wbsElementId: 6,
       detail: 'Increased duration from 3 weeks to 7 weeks.'
     }
@@ -191,13 +191,13 @@ const dbSeedChangeRequest6: any = {
   changes: [
     {
       dateImplemented: new Date('04/25/21'),
-      implementorId: 1,
+      implementerId: 1,
       wbsElementId: 1,
       detail: 'Added goal for weight reduction'
     },
     {
       dateImplemented: new Date('04/25/21'),
-      implementorId: 1,
+      implementerId: 1,
       wbsElementId: 7,
       detail: 'Removed expected activity.'
     }

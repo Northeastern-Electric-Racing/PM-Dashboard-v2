@@ -55,8 +55,8 @@ export const exampleProject1: Project = {
   ],
   changes: [
     {
-      id: 10,
-      crId: 37,
+      changeId: 10,
+      changeRequestId: 37,
       wbsNum: exampleWbsProject1,
       implementer: exampleAdminUser,
       detail: 'Added goal for weight reduction'

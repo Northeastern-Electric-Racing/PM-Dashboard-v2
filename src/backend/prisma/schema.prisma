@@ -127,8 +127,8 @@ model Change {
   changeRequestId Int
   changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
   dateImplemented DateTime       @default(now())
-  implementorId   Int
-  implementor     User           @relation(fields: [implementorId], references: [userId])
+  implementerId   Int
+  implementer     User           @relation(fields: [implementerId], references: [userId])
   wbsElementId    Int
   wbsElement      WBS_Element    @relation(fields: [wbsElementId], references: [wbsElementId])
   detail          String

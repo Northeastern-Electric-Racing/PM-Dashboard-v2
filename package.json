@@ -37,7 +37,7 @@
     "prisma:reset": "npx prisma migrate reset",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate",
-    "ts-node": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
+    "ts-node": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"}",
     "postinstall": "npm run prisma:generate",
     "preinstall": "npm run repack-utils-pkg"
   },

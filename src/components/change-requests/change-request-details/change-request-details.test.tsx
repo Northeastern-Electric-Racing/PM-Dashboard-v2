@@ -49,7 +49,7 @@ describe('change request details container', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText(exampleStandardChangeRequest.id, { exact: false })).toBeInTheDocument();
+    expect(screen.getByText(exampleStandardChangeRequest.crId, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(exampleStandardChangeRequest.scopeImpact)).toBeInTheDocument();
   });
 

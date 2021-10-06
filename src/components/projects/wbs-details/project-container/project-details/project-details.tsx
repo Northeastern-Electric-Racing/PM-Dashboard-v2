@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from 'utils';
+import { Project, WorkPackage } from 'utils';
 import {
   dollarsPipe,
   endDatePipe,
@@ -22,7 +22,7 @@ interface ProjectDetailsProps {
 
 const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetailsProps) => {
   const detailsBody = (
-    <Container fluid className={styles.projectDetails}>
+    <Container fluid>
       <Row>
         <Col xs={12} md={6}>
           <div>
@@ -35,12 +35,12 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
         </Col>
         <Col xs={6} md={4}>
           <div>
-            <b>Duration:</b>{' '}{weeksPipe(project.workPackages.reduce((tot: any, cur: any) => tot + cur.duration, 0))} <br />
+            <b>Duration:</b>{' '}{weeksPipe(project.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0))} <br />
             <b>Start Date:</b>{' '}
             {project.workPackages.length > 0
               ? project.workPackages
                 .reduce(
-                  (min: any, cur: any) => (cur.startDate < min ? cur.startDate : min),
+                  (min: Date, cur: WorkPackage) => (cur.startDate < min ? cur.startDate : min),
                   project.workPackages[0].startDate
                 )
                 .toLocaleDateString()
@@ -49,10 +49,10 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
               {project.workPackages.length > 0
               ? endDatePipe(
                 project.workPackages.reduce(
-                  (min: any, cur: any) => (cur.startDate < min ? cur.startDate : min),
+                  (min: Date, cur: WorkPackage) => (cur.startDate < min ? cur.startDate : min),
                   project.workPackages[0].startDate
                 ),
-                project.workPackages.reduce((tot: any, cur: any) => tot + cur.duration, 0)
+                project.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
               )
               : 'n/a'} <br />
             <b>Expected Progress:</b> <br />

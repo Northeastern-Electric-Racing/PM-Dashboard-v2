@@ -18,44 +18,43 @@ describe('Rendering Work Packagae Details Component', () => {
     const wp: WorkPackage = exampleWorkPackage1;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.status}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
+    expect(screen.getByText(`${wp.status}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.name}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`, {exact: false})).toBeInTheDocument();
 
-    expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
-    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.progress}%`)).toBeInTheDocument();
+    expect(screen.getByText(`${weeksPipe(wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.progress}%`, {exact: false})).toBeInTheDocument();
   });
 
   it('renders all the fields, example 2', () => {
     const wp: WorkPackage = exampleWorkPackage2;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.status}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
+    expect(screen.getByText(`${wp.status}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.name}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`, {exact: false})).toBeInTheDocument();
 
-    expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
-    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.progress}%`)).toBeInTheDocument();
+    expect(screen.getByText(`${weeksPipe(wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.progress}%`, {exact: false})).toBeInTheDocument();
   });
 
   it('renders all the fields, example 3', () => {
     const wp: WorkPackage = exampleWorkPackage3;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.status}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
-
-    expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
-    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.progress}%`)).toBeInTheDocument();
+    expect(screen.getByText(`${wp.status}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.name}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${weeksPipe(wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(screen.getByText(`${wp.progress}%`, {exact: false})).toBeInTheDocument();
   });
 });

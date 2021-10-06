@@ -34,7 +34,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
       <Collapse in={open}>
         <div>
           <Card.Body>
-            <Container fluid className={styles.workPackageSummary}>
+            <Container fluid>
               <Row>
                 <Col xs={12} md={6}><b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}</Col>
                 <Col xs={6} md={4}>

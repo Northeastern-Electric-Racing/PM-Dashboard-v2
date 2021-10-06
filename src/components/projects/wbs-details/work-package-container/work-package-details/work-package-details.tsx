@@ -6,7 +6,6 @@
 import { WorkPackage } from 'utils';
 import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
-import styles from './work-package-details.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 interface WorkPackageDetailsProps {
@@ -15,7 +14,7 @@ interface WorkPackageDetailsProps {
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const detailsBody = (
-      <Container fluid className={styles.workPackageDetails}>
+      <Container fluid>
         <Row>
           <Col xs={12} md={6}>
             <b>Work Package Name:</b> {workPackage.name} <br />

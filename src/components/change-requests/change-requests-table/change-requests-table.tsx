@@ -15,7 +15,7 @@ import ChangeRequestsFilter from '../change-requests-filter/change-requests-filt
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
 
-type FormFieldType = "select" | "checkbox";
+type FormFieldType = 'select' | 'checkbox';
 
 interface FilterFormField {
   label: string;
@@ -26,31 +26,30 @@ interface FilterFormField {
 
 const filterFieldsList: FilterFormField[] = [
   {
-    label: "Requester",
-    type: "select",
-    values: ["a"],
-    currentValue: [0],
+    label: 'Requester',
+    type: 'select',
+    values: ['a', 'b'],
+    currentValue: [0]
   },
   {
-    label: "Project",
-    type: "select",
-    values: ["a"],
-    currentValue: [0],
+    label: 'Project',
+    type: 'checkbox',
+    values: ['a', 'b'],
+    currentValue: [0]
   },
   {
-    label: "Type",
-    type: "select",
-    values: ["a"],
-    currentValue: [0],
+    label: 'Type',
+    type: 'select',
+    values: ['a'],
+    currentValue: [0]
   },
   {
-    label: "Implemented",
-    type: "select",
-    values: ["a"],
-    currentValue: [0],
-  },
+    label: 'Implemented',
+    type: 'select',
+    values: ['a'],
+    currentValue: [0]
+  }
 ];
-
 
 const ChangeRequestsTable: React.FC = () => {
   const [filterFields, setFilterFields] = useState(filterFieldsList);
@@ -76,13 +75,19 @@ const ChangeRequestsTable: React.FC = () => {
 
   const changeRequestsTable = <CRTable changeRequests={transformToDisplayChangeRequests(data!)} />;
 
-  const changeRequestsContainer =  
-      <Container>
-        <Row>
-          <Col><ChangeRequestsFilter filterFields={filterFields}></ChangeRequestsFilter></Col>
-          <Col>{changeRequestsTable}</Col>
-        </Row>
-      </Container>;
+  const changeRequestsContainer = (
+    <Container>
+      <Row>
+        <Col>
+          <ChangeRequestsFilter
+            filterFields={filterFields}
+            setFilterFields={setFilterFields}
+          ></ChangeRequestsFilter>
+        </Col>
+        <Col>{changeRequestsTable}</Col>
+      </Row>
+    </Container>
+  );
 
   return changeRequestsContainer;
 };

@@ -3,10 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactElement } from 'react';
-import { Form } from 'react-bootstrap';
+import React, { ReactElement } from 'react';
+import { Form, FormControlProps } from 'react-bootstrap';
 
-type FormFieldType = "select" | "checkbox";
+type FormFieldType = 'select' | 'checkbox';
 
 interface FilterFormField {
   label: string;
@@ -17,24 +17,69 @@ interface FilterFormField {
 
 interface FilterFieldStateProps {
   filterFields: FilterFormField[];
-  setFilterFields?: Function;
+  setFilterFields: Function;
 }
 
-const selectFilterOptions = (filterField: FilterFormField): ReactElement => {
-  return <Form.Control as="select">
-    {filterField.values.map(value => <option value={value}>{value}</option>)}
-  </Form.Control>
-}
+const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
+  filterFields,
+  setFilterFields
+}) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, label: String) => {
+    console.log(label);
+    console.log(event.target.id);
+    setFilterFields(filterFields);
+  };
 
-const filterGroup = (filterField: FilterFormField): ReactElement => {
-  return <Form.Group>
-    <Form.Label>{filterField.label}</Form.Label>
-    {filterField.type === "select" ? selectFilterOptions(filterField) : <h1>No</h1>}
-  </Form.Group>
-}
+  const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>, label: String) => {
+    console.log(label);
+    console.log(event.target.value);
+    setFilterFields(filterFields);
+  };
 
-const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({filterFields}) => {
-  return <div>{ filterFields.map((field: FilterFormField) => filterGroup(field)) }</div>
+  const selectFilterOptions = (filterField: FilterFormField): ReactElement => {
+    return (
+      <Form.Control
+        onChange={(e) =>
+          handleSelectChange(e as React.ChangeEvent<HTMLInputElement>, filterField.label)
+        }
+        as="select"
+      >
+        {filterField.values.map((value, key) => (
+          <option value={String(key)}>{value}</option>
+        ))}
+      </Form.Control>
+    );
+  };
+
+  const checkboxFilterOptions = (filterField: FilterFormField): ReactElement => {
+    return (
+      <>
+        {filterField.values.map((value, key) => (
+          <Form.Check
+            id={key.toString()}
+            type="checkbox"
+            onChange={(e) =>
+              handleCheckboxChange(e as React.ChangeEvent<HTMLInputElement>, filterField.label)
+            }
+            label={value}
+          />
+        ))}
+      </>
+    );
+  };
+
+  const filterGroup = (filterField: FilterFormField): ReactElement => {
+    return (
+      <Form.Group>
+        <Form.Label>{filterField.label}</Form.Label>
+        {filterField.type === 'select'
+          ? selectFilterOptions(filterField)
+          : checkboxFilterOptions(filterField)}
+      </Form.Group>
+    );
+  };
+
+  return <>{filterFields.map((field: FilterFormField) => filterGroup(field))}</>;
 };
 
 export default ChangeRequestsFilter;

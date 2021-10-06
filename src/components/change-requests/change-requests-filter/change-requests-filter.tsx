@@ -24,15 +24,26 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   filterFields,
   setFilterFields
 }) => {
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, label: String) => {
-    console.log(label);
-    console.log(event.target.id);
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, label: string) => {
+    const index = filterFields.map(field => field.label as string).indexOf(label);
+    const checked = event.target.checked;
+    const id = event.target.id;
+    if (checked) {
+      filterFields[index].currentValue.push(Number(id));
+    }
+    else {
+      const indexOfId = filterFields[index].currentValue.indexOf(Number(id));
+      filterFields[index].currentValue.splice(indexOfId, 1);
+    }
     setFilterFields(filterFields);
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>, label: String) => {
-    console.log(label);
-    console.log(event.target.value);
+  const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>, label: string) => {
+    console.log(filterFields);
+    const index = filterFields.map(field => field.label as string).indexOf(label);
+    const value = event.target.value;
+    filterFields[index].currentValue.length = 0;
+    filterFields[index].currentValue.push(Number(value));
     setFilterFields(filterFields);
   };
 

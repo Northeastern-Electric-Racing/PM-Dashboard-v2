@@ -25,7 +25,6 @@ import {
   exampleProject1,
   exampleProject2,
   exampleProject3,
-  exampleProject4,
   exampleProject5
 } from '../../test-support/test-data/projects.stub';
 import {
@@ -38,7 +37,17 @@ import {
   exampleProjectManagerUser,
   exampleAllUsers
 } from '../../test-support/test-data/users.stub';
-import { exampleAllWbsNums } from '../../test-support/test-data/wbs-numbers.stub';
+import {
+  exampleAllWbsNums,
+  exampleWbs1,
+  exampleWbs2,
+  exampleWbs3,
+  exampleWbsProject1,
+  exampleWbsProject2,
+  exampleWbsWorkPackage1,
+  exampleWbsWorkPackage2
+} from '../../test-support/test-data/wbs-numbers.stub';
+import { WbsNumber } from 'utils';
 
 describe('Formatting lists tests', () => {
   test('Formatting Wbs Numbers', () => {
@@ -144,7 +153,7 @@ describe('Formatting Dollars Tests', () => {
   });
   test('with decimal', () => {
     expect(dollarsPipe(6.9)).toBe('$6.9');
-    expect(dollarsPipe(4.2)).toBe('$4.2');
+    expect(dollarsPipe(4.02)).toBe('$4.02');
   });
   test('with hexadecimal', () => {
     expect(dollarsPipe(0x37cf)).toBe('$14287');
@@ -165,6 +174,14 @@ describe('Formatting Booleans', () => {
 });
 
 describe('Formatting Empty Strings Without Dash', () => {
+  test('null string', () => {
+    // @ts-ignore
+    expect(emptyStringPipe(null)).toBe('');
+  });
+  test('undefined string', () => {
+    // @ts-ignore
+    expect(emptyStringPipe(undefined)).toBe('');
+  });
   test('empty string', () => {
     expect(emptyStringPipe('')).toBe('');
   });
@@ -183,6 +200,14 @@ describe('Formatting Empty Strings Without Dash', () => {
 });
 
 describe('Formatting Empty Strings With Dash', () => {
+  test('null string', () => {
+    // @ts-ignore
+    expect(emDashPipe(null)).toBe('—');
+  });
+  test('undefined string', () => {
+    // @ts-ignore
+    expect(emDashPipe(undefined)).toBe('—');
+  });
   test('empty string', () => {
     expect(emDashPipe('')).toBe('');
   });
@@ -210,7 +235,7 @@ describe('Formatting Dates', () => {
     expect(datePipe(new Date())).toBe(answer);
   });
   // This test fails on github but passes locally.
-  test.skip('milliseconds', () => {
+  test('milliseconds', () => {
     expect(datePipe(new Date(1000000000))).toBe('1/12/1970, 8:46:40 AM');
   });
   test('datestring', () => {
@@ -222,15 +247,22 @@ describe('Formatting Dates', () => {
 });
 
 describe('Formatting Wbs Numbers', () => {
-  test('with dummy data', () => {
-    expect(wbsPipe(exampleWorkPackage1.wbsNum)).toBe('1.1.1');
-    expect(wbsPipe(exampleWorkPackage2.wbsNum)).toBe('1.1.2');
-    expect(wbsPipe(exampleWorkPackage3.wbsNum)).toBe('2.7.3');
-    expect(wbsPipe(exampleProject1.wbsNum)).toBe('1.1.0');
-    expect(wbsPipe(exampleProject2.wbsNum)).toBe('1.2.0');
-    expect(wbsPipe(exampleProject3.wbsNum)).toBe('1.12.0');
-    expect(wbsPipe(exampleProject4.wbsNum)).toBe('2.5.0');
-    expect(wbsPipe(exampleProject5.wbsNum)).toBe('2.7.0');
+  test('with dummy wbsNums', () => {
+    expect(wbsPipe(exampleWbs1)).toBe('1.1.1');
+    expect(wbsPipe(exampleWbs2)).toBe('1.7.1');
+    expect(wbsPipe(exampleWbs3)).toBe('1.7.3');
+    expect(wbsPipe(exampleWbsProject1)).toBe('1.12.0');
+    expect(wbsPipe(exampleWbsProject2)).toBe('2.5.0');
+    expect(wbsPipe(exampleWbsWorkPackage1)).toBe('1.1.1');
+    expect(wbsPipe(exampleWbsWorkPackage2)).toBe('2.7.3');
+  });
+  test('with custom examples', () => {
+    const two_digit: WbsNumber = { car: 11, project: 22, workPackage: 33 };
+    const three_digit: WbsNumber = { car: 333, project: 666, workPackage: 999 };
+    const mixed: WbsNumber = { car: 420, project: 0, workPackage: 69 };
+    expect(wbsPipe(two_digit)).toBe('11.22.33');
+    expect(wbsPipe(three_digit)).toBe('333.666.999');
+    expect(wbsPipe(mixed)).toBe('420.0.69');
   });
 });
 

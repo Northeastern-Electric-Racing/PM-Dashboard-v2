@@ -11,7 +11,6 @@ import './settings.module.css';
 const Settings: React.FC = () => {
   const auth = useAuth();
   const pageBlockBody = <>User: {auth.user?.emailId}</>;
-  
   return (
     <>
       <PageTitle title="This is the Settings Page" />

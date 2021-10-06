@@ -30,5 +30,3 @@ describe('home component', () => {
     expect(screen.getByText(/Glossary Document/i)).toBeInTheDocument();
   });
 });
-
-

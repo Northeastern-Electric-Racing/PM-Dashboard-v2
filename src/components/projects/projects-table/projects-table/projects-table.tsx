@@ -11,6 +11,8 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next';
 import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
+//import { prisma } from '../../../../backend/prisma/seed-data/users';
+import { User } from '@prisma/client';
 
 export interface DisplayProject {
   wbsNum: string;
@@ -70,7 +72,8 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
         defaultSorted={defaultSort}
         rowEvents={rowEvents}
         noDataIndication="No Projects to Display"
-        rowStyle={{ cursor: 'pointer' }} />
+        rowStyle={{ cursor: 'pointer' }}
+      />
     </>
   );
 };

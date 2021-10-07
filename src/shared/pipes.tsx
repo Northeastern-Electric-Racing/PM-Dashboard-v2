@@ -50,16 +50,7 @@ export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string 
 export const endDatePipe = (startDate: Date, durWeeks: number): string => {
   const endDate = new Date(startDate);
   endDate.setDate(endDate.getDate() + durWeeks * 7);
-  let result = endDate.toLocaleDateString();
-  if (result.charAt(1) === '/') {
-    result = '0' + result;
-  }
-  if (result.charAt(3) === '/') {
-    result = result.slice(0, 2) + '0' + result.slice(2);
-  } else if (result.charAt(4) === '/') {
-    result = result.slice(0, 3) + '0' + result.slice(3);
-  }
-  return result;
+  return datePipe(endDate);
 };
 
 // Replaces an empty string with an EM dash.
@@ -72,15 +63,9 @@ export const emDashPipe = (str: string): string => {
  * with single digit numbers starting with a zero.
  */
 export const datePipe = (date: Date): string => {
-  const theDate = new Date(date);
-  let result = theDate.toLocaleString('en-US');
-  if (result.charAt(1) === '/') {
-    result = '0' + result;
-  }
-  if (result.charAt(3) === '/') {
-    result = result.slice(0, 2) + '0' + result.slice(2);
-  } else if (result.charAt(4) === '/') {
-    result = result.slice(0, 3) + '0' + result.slice(3);
-  }
-  return result;
+  return date.toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
 };

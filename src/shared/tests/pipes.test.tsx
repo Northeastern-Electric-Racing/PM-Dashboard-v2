@@ -209,16 +209,16 @@ describe('Formatting Dates', () => {
     expect(datePipe(new Date(99999999999999999999))).toBe('Invalid Date');
   });
   test('single digit month datestring', () => {
-    expect(datePipe(new Date('2021-10-5'))).toBe('10/05/2021, 12:00:00 AM');
+    expect(datePipe(new Date('2021-10-5'))).toBe('10/05/2021');
   });
   test('single digit day datestring', () => {
-    expect(datePipe(new Date('2021-1-15'))).toBe('01/15/2021, 12:00:00 AM');
+    expect(datePipe(new Date('2021-1-15'))).toBe('01/15/2021');
   });
   test('single digit day and month datestring', () => {
-    expect(datePipe(new Date('2021-1-5'))).toBe('01/05/2021, 12:00:00 AM');
+    expect(datePipe(new Date('2021-1-5'))).toBe('01/05/2021');
   });
   test('custom detailed', () => {
-    expect(datePipe(new Date(2021, 0o11, 0o5, 14, 3, 6, 9))).toBe('10/05/2021, 2:03:06 PM');
+    expect(datePipe(new Date(2021, 0o11, 0o5, 14, 3, 6, 9))).toBe('10/05/2021');
   });
 });
 

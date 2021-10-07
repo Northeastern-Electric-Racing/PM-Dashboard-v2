@@ -7,14 +7,18 @@ import { ReactElement } from 'react';
 import { User, WbsNumber } from 'utils';
 
 /**
- * Pipes
+ * Pipes:
  *
  * Data transformation functions designed to abstract view-based adjustments.
  * Pipe is a term / tool from Angular.
  */
 
 export const linkPipe = (description: string, link: string): ReactElement => {
-  return <a href={link}>{description}</a>;
+  return (
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      {description}
+    </a>
+  );
 };
 
 export const weeksPipe = (weeks: number): string => {
@@ -37,30 +41,46 @@ export const booleanPipe = (bool: boolean): string => {
   return bool ? 'YES' : 'NO';
 };
 
-// Formats an array of objects into a string that is a list
+// Formats an array of objects into a string that is a list.
 export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string => {
   return array.map(transform).join(', ');
 };
 
-// Formats the end date as a string
+// Formats the end date as a string.
 export const endDatePipe = (startDate: Date, durWeeks: number): string => {
-  var endDate = new Date(startDate);
+  const endDate = new Date(startDate);
   endDate.setDate(endDate.getDate() + durWeeks * 7);
-  return endDate.toLocaleDateString();
+  let result = endDate.toLocaleDateString();
+  if (result.charAt(1) === '/') {
+    result = '0' + result;
+  }
+  if (result.charAt(3) === '/') {
+    result = result.slice(0, 2) + '0' + result.slice(2);
+  } else if (result.charAt(4) === '/') {
+    result = result.slice(0, 3) + '0' + result.slice(3);
+  }
+  return result;
 };
 
-// Returns an empty string if a passed in string is empty, otherwise return the given string
-export const emptyStringPipe = (str: string): string => {
-  return (str === undefined || str === null) ? "" : str;
-};
-
-// Replace an empty string with an EM dash
+// Replaces an empty string with an EM dash.
 export const emDashPipe = (str: string): string => {
-  return (str === undefined || str === null) ? "—" : str;
+  return str.trim() === '' ? '—' : str;
 };
 
-// return a given data as a string in the local en-US format
+/**
+ * Return a given data as a string in the local en-US format,
+ * with single digit numbers starting with a zero.
+ */
 export const datePipe = (date: Date): string => {
-  var theDate = new Date(date);
-  return theDate.toLocaleString('en-US');
+  const theDate = new Date(date);
+  let result = theDate.toLocaleString('en-US');
+  if (result.charAt(1) === '/') {
+    result = '0' + result;
+  }
+  if (result.charAt(3) === '/') {
+    result = result.slice(0, 2) + '0' + result.slice(2);
+  } else if (result.charAt(4) === '/') {
+    result = result.slice(0, 3) + '0' + result.slice(3);
+  }
+  return result;
 };

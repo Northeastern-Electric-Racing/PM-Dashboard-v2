@@ -7,7 +7,6 @@ import {
   booleanPipe,
   dollarsPipe,
   emDashPipe,
-  emptyStringPipe,
   linkPipe,
   weeksPipe,
   datePipe,
@@ -86,33 +85,44 @@ describe('Formatting lists tests', () => {
 describe('Formatting End Date Tests', () => {
   test('with dummy data', () => {
     expect(endDatePipe(exampleWorkPackage1.startDate, exampleWorkPackage1.duration)).toBe(
-      '1/22/2021'
+      '01/22/2021'
     );
     expect(endDatePipe(exampleWorkPackage2.startDate, exampleWorkPackage2.duration)).toBe(
-      '2/26/2021'
+      '02/26/2021'
     );
     expect(endDatePipe(exampleWorkPackage3.startDate, exampleWorkPackage3.duration)).toBe(
-      '1/15/2021'
+      '01/15/2021'
     );
   });
 
   test('with edge dates', () => {
-    expect(endDatePipe(new Date('12/25/20'), 3)).toBe('1/15/2021');
-    expect(endDatePipe(new Date('1/3/21'), 3)).toBe('1/24/2021');
-    expect(endDatePipe(new Date('3/1/21'), 10)).toBe('5/10/2021');
+    expect(endDatePipe(new Date('12/25/20'), 3)).toBe('01/15/2021');
+    expect(endDatePipe(new Date('1/3/21'), 3)).toBe('01/24/2021');
+    expect(endDatePipe(new Date('3/1/21'), 10)).toBe('05/10/2021');
   });
 });
 
 describe('Formatting Links Tests', () => {
-  test('with known websites', () => {
-    expect(linkPipe('google', 'www.google.com')).toStrictEqual(
-      <a href={'www.google.com'}>{'google'}</a>
+  test('with common websites', () => {
+    expect(linkPipe('Google', 'https://www.google.com')).toStrictEqual(
+      <a href={'https://www.google.com'} target="_blank" rel="noopener noreferrer">
+        {'Google'}
+      </a>
     );
-    expect(linkPipe('facebook', 'www.facebook.com')).toStrictEqual(
-      <a href={'www.facebook.com'}>{'facebook'}</a>
+    expect(linkPipe('Instagram', 'https://www.instagram.com')).toStrictEqual(
+      <a href={'https://www.instagram.com'} target="_blank" rel="noopener noreferrer">
+        {'Instagram'}
+      </a>
     );
-    expect(linkPipe('github', 'www.github.com')).toStrictEqual(
-      <a href={'www.github.com'}>{'github'}</a>
+    expect(linkPipe('Github', 'https://github.com')).toStrictEqual(
+      <a href={'https://github.com'} target="_blank" rel="noopener noreferrer">
+        {'Github'}
+      </a>
+    );
+    expect(linkPipe('Northeastern', 'https://www.northeastern.edu')).toStrictEqual(
+      <a href={'https://www.northeastern.edu'} target="_blank" rel="noopener noreferrer">
+        {'Northeastern'}
+      </a>
     );
   });
 });
@@ -173,46 +183,15 @@ describe('Formatting Booleans', () => {
   });
 });
 
-describe('Formatting Empty Strings Without Dash', () => {
-  test('null string', () => {
-    // @ts-ignore
-    expect(emptyStringPipe(null)).toBe('');
-  });
-  test('undefined string', () => {
-    // @ts-ignore
-    expect(emptyStringPipe(undefined)).toBe('');
-  });
-  test('empty string', () => {
-    expect(emptyStringPipe('')).toBe('');
-  });
-  test('empty string with space', () => {
-    expect(emptyStringPipe(' ')).toBe(' ');
-  });
-  test('non-empty string', () => {
-    expect(emptyStringPipe('abcd')).toBe('abcd');
-  });
-  test('non-empty string with numbers', () => {
-    expect(emptyStringPipe('123')).toBe('123');
-  });
-  test('non-empty string with special characters', () => {
-    expect(emptyStringPipe('!@#$%^&*()}{:">?')).toBe('!@#$%^&*()}{:">?');
-  });
-});
-
 describe('Formatting Empty Strings With Dash', () => {
-  test('null string', () => {
-    // @ts-ignore
-    expect(emDashPipe(null)).toBe('—');
+  test('empty string with no space', () => {
+    expect(emDashPipe('')).toBe('—');
   });
-  test('undefined string', () => {
-    // @ts-ignore
-    expect(emDashPipe(undefined)).toBe('—');
+  test('empty string with one space', () => {
+    expect(emDashPipe(' ')).toBe('—');
   });
-  test('empty string', () => {
-    expect(emDashPipe('')).toBe('');
-  });
-  test('empty string with space', () => {
-    expect(emDashPipe(' ')).toBe(' ');
+  test('empty string with multiple spaces', () => {
+    expect(emDashPipe('                              ')).toBe('—');
   });
   test('non-empty string', () => {
     expect(emDashPipe('abcd')).toBe('abcd');
@@ -229,20 +208,17 @@ describe('Formatting Dates', () => {
   test('invalid test', () => {
     expect(datePipe(new Date(99999999999999999999))).toBe('Invalid Date');
   });
-  test('empty constructor/current time', () => {
-    let current_time = new Date();
-    let answer = current_time.toLocaleString('en-US');
-    expect(datePipe(new Date())).toBe(answer);
+  test('single digit month datestring', () => {
+    expect(datePipe(new Date('2021-10-5'))).toBe('10/05/2021, 12:00:00 AM');
   });
-  // This test fails on github but passes locally.
-  test('milliseconds', () => {
-    expect(datePipe(new Date(1000000000))).toBe('1/12/1970, 8:46:40 AM');
+  test('single digit day datestring', () => {
+    expect(datePipe(new Date('2021-1-15'))).toBe('01/15/2021, 12:00:00 AM');
   });
-  test('datestring', () => {
-    expect(datePipe(new Date('2021-10-5'))).toBe('10/5/2021, 12:00:00 AM');
+  test('single digit day and month datestring', () => {
+    expect(datePipe(new Date('2021-1-5'))).toBe('01/05/2021, 12:00:00 AM');
   });
   test('custom detailed', () => {
-    expect(datePipe(new Date(2021, 0o11, 0o5, 14, 3, 6, 9))).toBe('10/5/2021, 2:03:06 PM');
+    expect(datePipe(new Date(2021, 0o11, 0o5, 14, 3, 6, 9))).toBe('10/05/2021, 2:03:06 PM');
   });
 });
 

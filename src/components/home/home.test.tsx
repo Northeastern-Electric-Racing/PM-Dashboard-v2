@@ -24,9 +24,4 @@ describe('home component', () => {
     renderComponent();
     expect(screen.getByText(/Welcome/i)).toBeInTheDocument();
   });
-
-  it('renders glossary', () => {
-    renderComponent();
-    expect(screen.getByText(/Glossary Document/i)).toBeInTheDocument();
-  });
 });

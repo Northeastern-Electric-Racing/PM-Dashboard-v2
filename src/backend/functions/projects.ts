@@ -7,6 +7,7 @@ import { Handler } from '@netlify/functions';
 import {
   routeMatcher,
   ApiRoute,
+  apiRoutes,
   Project,
   WbsNumber,
   ApiRouteFunction,
@@ -23,8 +24,8 @@ const getAllProjects: ApiRouteFunction = () => {
 };
 
 // Fetch the project for the specified WBS number
-const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
-  const parseWbs: number[] = params.wbs.split('.').map((str) => parseInt(str));
+const getSingleProject: ApiRouteFunction = (params: { wbsNum: string }) => {
+  const parseWbs: number[] = params.wbsNum.split('.').map((str) => parseInt(str));
   const parsedWbs: WbsNumber = {
     car: parseWbs[0],
     project: parseWbs[1],
@@ -38,19 +39,19 @@ const getSingleProject: ApiRouteFunction = (params: { wbs: string }) => {
     );
   });
   if (requestedProject === undefined) {
-    return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
+    return buildNotFoundResponse('project', `WBS # ${params.wbsNum}`);
   }
   return buildSuccessResponse(requestedProject);
 };
 
 const routes: ApiRoute[] = [
   {
-    path: `${API_URL}/projects`,
+    path: API_URL + apiRoutes.PROJECTS,
     httpMethod: 'GET',
     func: getAllProjects
   },
   {
-    path: `${API_URL}/projects/:wbs`,
+    path: API_URL + apiRoutes.PROJECTS_BY_WBS,
     httpMethod: 'GET',
     func: getSingleProject
   }
@@ -60,7 +61,7 @@ const routes: ApiRoute[] = [
 const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     return buildServerFailureResponse(error.message);
   }

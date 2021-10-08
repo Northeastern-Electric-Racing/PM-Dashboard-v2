@@ -10,7 +10,7 @@ import { routes } from '../shared/routes';
 import AppContext from '../components/app/app-context/app-context';
 
 // Regular Expression to match WBS Numbers
-const wbsRegex: RegExp = /[1-2]\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
+const wbsRegex: RegExp = /([1-9]{1}([0-9]{1})?)\.([1-9]{1}([0-9]{1})?)\.[0-9]{1,2}/;
 
 // to allow configuring paths/routes within tests
 const routerWrapperBuilder = ({ path = routes.HOME, route = routes.HOME }) => {

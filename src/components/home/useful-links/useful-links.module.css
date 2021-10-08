@@ -3,14 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.page_not_found {
-  text-align: center;
-}
-
-.title {
-  color: black;
-}
-
-.subtitle {
-  color: gray;
+.linksContainer {
+  float: left;
+  padding-left: 0px !important;
 }

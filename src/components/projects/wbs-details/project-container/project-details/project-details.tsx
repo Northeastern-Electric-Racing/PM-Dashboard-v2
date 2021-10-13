@@ -10,6 +10,7 @@ import {
   fullNamePipe,
   linkPipe,
   wbsPipe,
+  listPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
@@ -30,7 +31,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
           <b>WBS #:</b> {wbsPipe(project.wbsNum)}
         </p>
         <p>
-          <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
+          <b>Project Lead:</b> {listPipe(project.projectLead, fullNamePipe)}
         </p>
         <p>
           <b>Project Manager:</b> {fullNamePipe(project.projectManager)}

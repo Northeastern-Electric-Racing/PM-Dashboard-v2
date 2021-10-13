@@ -39,7 +39,12 @@ export const booleanPipe = (bool: boolean): string => {
 
 // Formats an array of objects into a string that is a list
 export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string => {
-  return array.map(transform).join(', ');
+  try {
+    return array.map(transform).join(', ');
+  } catch (error) {
+    console.error(error);
+    return typeof array[0];
+  }
 };
 
 // Formats the end date as a string
@@ -51,12 +56,12 @@ export const endDatePipe = (startDate: Date, durWeeks: number): string => {
 
 // Returns an empty string if a passed in string is empty, otherwise return the given string
 export const emptyStringPipe = (str: string): string => {
-  return (str === undefined || str === null) ? "" : str;
+  return str === undefined || str === null ? '' : str;
 };
 
 // Replace an empty string with an EM dash
 export const emDashPipe = (str: string): string => {
-  return (str === undefined || str === null) ? "—" : str;
+  return str === undefined || str === null ? '—' : str;
 };
 
 // return a given data as a string in the local en-US format

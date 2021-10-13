@@ -5,7 +5,7 @@
 
 import { Project, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
+import { weeksPipe, fullNamePipe, wbsPipe, listPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';
 import PrjsTable from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
@@ -24,7 +24,7 @@ const ProjectsTable: React.FC = () => {
       return {
         wbsNum: wbsPipe(prj.wbsNum),
         name: prj.name,
-        projectLead: fullNamePipe(prj.projectLead),
+        projectLead: listPipe(prj.projectLead, fullNamePipe),
         projectManager: fullNamePipe(prj.projectManager),
         duration: weeksPipe(
           prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)

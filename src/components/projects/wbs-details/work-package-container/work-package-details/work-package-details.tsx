@@ -4,7 +4,13 @@
  */
 
 import { WorkPackage } from 'utils';
-import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
+import {
+  weeksPipe,
+  wbsPipe,
+  endDatePipe,
+  fullNamePipe,
+  listPipe
+} from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import styles from './work-package-details.module.css';
 
@@ -23,7 +29,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)}
         </p>
         <p>
-          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
+          <b>Project Lead:</b> {listPipe(workPackage.projectLead, fullNamePipe)}
         </p>
         <p>
           <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}

@@ -11,6 +11,7 @@ import PrjsTable from './projects-table/projects-table'; // Directly rename the 
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import './projects-table.module.css';
+import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 
 const ProjectsTable: React.FC = () => {
   const { isLoading, isError, data, error } = useAllProjects();
@@ -33,7 +34,17 @@ const ProjectsTable: React.FC = () => {
     }) as DisplayProject[];
   };
 
-  return <PrjsTable allProjects={transformToDisplayProjects(data!)} />;
+  return (
+    //TODO: Use React Bootstrap table to organize this properly.
+    <div>
+      <div style={{ float: 'left', padding: '20px' }}>
+        <ProjectsTableFilter />
+      </div>
+      <div style={{ float: 'right', padding: '20px' }}>
+        <PrjsTable allProjects={transformToDisplayProjects(data!)} />
+      </div>
+    </div>
+  );
 };
 
 export default ProjectsTable;

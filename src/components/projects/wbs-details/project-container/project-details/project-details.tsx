@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, WorkPackage } from 'utils';
+import { Project } from 'utils';
 import {
   dollarsPipe,
   endDatePipe,
@@ -35,38 +35,43 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
         </Col>
         <Col xs={6} md={4}>
           <div>
-            <b>Duration:</b>{' '}{weeksPipe(project.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0))} <br />
+            <b>Duration:</b>{' '}
+            {weeksPipe(project.workPackages.reduce((tot, cur) => tot + cur.duration, 0))} <br />
             <b>Start Date:</b>{' '}
             {project.workPackages.length > 0
               ? project.workPackages
-                .reduce(
-                  (min: Date, cur: WorkPackage) => (cur.startDate < min ? cur.startDate : min),
-                  project.workPackages[0].startDate
-                )
-                .toLocaleDateString()
-              : 'n/a'} <br />
+                  .reduce(
+                    (min, cur) => (cur.startDate < min ? cur.startDate : min),
+                    project.workPackages[0].startDate
+                  )
+                  .toLocaleDateString()
+              : 'n/a'}{' '}
+            <br />
             <b>End Date:</b>{' '}
-              {project.workPackages.length > 0
+            {project.workPackages.length > 0
               ? endDatePipe(
-                project.workPackages.reduce(
-                  (min: Date, cur: WorkPackage) => (cur.startDate < min ? cur.startDate : min),
-                  project.workPackages[0].startDate
-                ),
-                project.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
-              )
-              : 'n/a'} <br />
+                  project.workPackages.reduce(
+                    (min, cur) => (cur.startDate < min ? cur.startDate : min),
+                    project.workPackages[0].startDate
+                  ),
+                  project.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
+                )
+              : 'n/a'}{' '}
+            <br />
             <b>Expected Progress:</b> <br />
             <b>Timeline Status:</b>
           </div>
         </Col>
       </Row>
       <Row>
-        <Col><div className={styles.horizontal}>
-          <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
-          <li>{linkPipe('Task List', project.taskListLink)}</li>
-          <li>{linkPipe('BOM', project.bomLink)}</li>
-          <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
-        </div></Col>
+        <Col>
+          <div className={styles.horizontal}>
+            <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
+            <li>{linkPipe('Task List', project.taskListLink)}</li>
+            <li>{linkPipe('BOM', project.bomLink)}</li>
+            <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
+          </div>
+        </Col>
       </Row>
     </Container>
   );

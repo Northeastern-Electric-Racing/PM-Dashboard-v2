@@ -21,13 +21,15 @@ describe('project details component', () => {
 
   it('Renders WBS#', () => {
     render(<ProjectDetails project={exampleProject2} />);
-    const projectElement = screen.getByText(wbsPipe(exampleProject2.wbsNum), {exact: false});
+    const projectElement = screen.getByText(wbsPipe(exampleProject2.wbsNum), { exact: false });
     expect(projectElement).toBeInTheDocument();
   });
 
   it('Renders project lead', () => {
     render(<ProjectDetails project={exampleProject3} />);
-    const projectNameElement = screen.getByText(fullNamePipe(exampleProject3.projectLead), {exact: false});
+    const projectNameElement = screen.getByText(fullNamePipe(exampleProject3.projectLead), {
+      exact: false
+    });
     expect(projectNameElement).toBeInTheDocument();
   });
 

@@ -12,7 +12,6 @@ import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
-
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
 }
@@ -36,7 +35,9 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
           <Card.Body>
             <Container fluid>
               <Row>
-                <Col xs={12} md={6}><b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}</Col>
+                <Col xs={12} md={6}>
+                  <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
+                </Col>
                 <Col xs={6} md={4}>
                   <b>Start date:</b> {workPackage.startDate.toLocaleDateString()} <br />
                   <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}

@@ -30,10 +30,12 @@ describe('Rendering Work Package Summary Test', () => {
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
     expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
-    console.log(wp.startDate);
-    console.log(wp.startDate.toLocaleDateString() === `${wp.startDate.toLocaleDateString()}`);
-    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`, {exact: false})).toBeInTheDocument();
-    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(
+      screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+    ).toBeInTheDocument();
   });
 
   it('renders all the fields, example 2', () => {
@@ -43,8 +45,12 @@ describe('Rendering Work Package Summary Test', () => {
     expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
     expect(screen.getByText(`${listPipe(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`, {exact: false})).toBeInTheDocument();
-    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(
+      screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+    ).toBeInTheDocument();
   });
 
   it('renders all the fields, example 3', () => {
@@ -54,7 +60,11 @@ describe('Rendering Work Package Summary Test', () => {
     expect(screen.getByText(`${wbsPipe(wp.wbsNum)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.duration} weeks`)).toBeInTheDocument();
     expect(screen.getByText(`${listPipe(wp.dependencies, wbsPipe)}`)).toBeInTheDocument();
-    expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`, {exact: false})).toBeInTheDocument();
-    expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, {exact: false})).toBeInTheDocument();
+    expect(
+      screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+    ).toBeInTheDocument();
   });
 });

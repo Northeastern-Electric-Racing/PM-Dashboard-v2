@@ -51,12 +51,12 @@ export const endDatePipe = (startDate: Date, durWeeks: number): string => {
 
 // Returns an empty string if a passed in string is empty, otherwise return the given string
 export const emptyStringPipe = (str: string): string => {
-  return (str === undefined || str === null) ? "" : str;
+  return str === undefined || str === null ? '' : str;
 };
 
 // Replace an empty string with an EM dash
 export const emDashPipe = (str: string): string => {
-  return (str === undefined || str === null) ? "—" : str;
+  return str === undefined || str === null ? '—' : str;
 };
 
 // return a given data as a string in the local en-US format

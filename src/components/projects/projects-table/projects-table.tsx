@@ -12,6 +12,8 @@ import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import './projects-table.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
+import { Col, Container, Row } from 'react-bootstrap';
+import PageTitle from '../../shared/page-title/page-title';
 
 const ProjectsTable: React.FC = () => {
   const { isLoading, isError, data, error } = useAllProjects();
@@ -35,15 +37,20 @@ const ProjectsTable: React.FC = () => {
   };
 
   return (
+    <>
+      <PageTitle title={'Projects'} />
+      <Container>
+        <Row>
+          <Col className="row-cols-2">
+            <ProjectsTableFilter />
+          </Col>
+          <Col className="row-cols-1">
+            <PrjsTable allProjects={transformToDisplayProjects(data!)} />
+          </Col>
+        </Row>
+      </Container>
+    </>
     //TODO: Use React Bootstrap table to organize this properly.
-    <div>
-      <div style={{ float: 'left', padding: '20px' }}>
-        <ProjectsTableFilter />
-      </div>
-      <div style={{ float: 'right', padding: '20px' }}>
-        <PrjsTable allProjects={transformToDisplayProjects(data!)} />
-      </div>
-    </div>
   );
 };
 

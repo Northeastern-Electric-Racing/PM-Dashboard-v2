@@ -14,7 +14,7 @@ import {
   exampleAllProjects,
   Project
 } from 'utils';
-import { wbsPipe, fullNamePipe, weeksPipe } from '../../../../shared/pipes';
+import { wbsPipe, fullNamePipe, weeksPipe, listPipe } from '../../../../shared/pipes';
 import { wbsRegex } from '../../../../test-support/test-utils';
 
 // Sets up the component under test with the desired values and renders it.
@@ -23,7 +23,7 @@ const renderComponent = (prjs: Project[]) => {
     return {
       wbsNum: wbsPipe(prj.wbsNum),
       name: prj.name,
-      projectLead: fullNamePipe(prj.projectLead),
+      projectLead: listPipe(prj.projectLead, fullNamePipe),
       projectManager: fullNamePipe(prj.projectManager),
       duration: weeksPipe(prj.workPackages.reduce((tot, cur) => tot + cur.duration, 0))
     };

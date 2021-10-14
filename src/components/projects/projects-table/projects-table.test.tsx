@@ -6,7 +6,7 @@
 import { UseQueryResult } from 'react-query';
 import { WorkPackage, Project } from 'utils';
 import { wbsRegex, fireEvent, render, screen, waitFor } from '../../../test-support/test-utils';
-import { wbsPipe, fullNamePipe } from '../../../shared/pipes';
+import { wbsPipe, fullNamePipe, listPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
@@ -75,7 +75,7 @@ describe('projects table component', () => {
       )
     ).toBeInTheDocument();
     expect(
-      screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
+      screen.getAllByText(listPipe(exampleAllProjects[2].projectLead, fullNamePipe))[0]
     ).toBeInTheDocument();
     expect(
       screen.getByText(fullNamePipe(exampleAllProjects[3].projectManager))

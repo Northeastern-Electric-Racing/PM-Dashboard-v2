@@ -39,12 +39,7 @@ export const booleanPipe = (bool: boolean): string => {
 
 // Formats an array of objects into a string that is a list
 export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string => {
-  try {
-    return array.map(transform).join(', ');
-  } catch (error) {
-    console.error(error);
-    return typeof array[0];
-  }
+  return array.map(transform).join(', ');
 };
 
 // Formats the end date as a string

@@ -11,8 +11,6 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next';
 import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
-//import { prisma } from '../../../../backend/prisma/seed-data/users';
-import { User } from '@prisma/client';
 
 export interface DisplayProject {
   wbsNum: string;

@@ -5,7 +5,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { WorkPackage } from 'utils';
-import { endDatePipe, fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, weeksPipe, listPipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
@@ -20,9 +20,8 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.status}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
+    expect(screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`)).toBeInTheDocument();
     expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
-
     expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.startDate.toLocaleDateString()}`)).toBeInTheDocument();
     expect(screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`)).toBeInTheDocument();
@@ -35,7 +34,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.status}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
+    expect(screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`)).toBeInTheDocument();
     expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
 
     expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();
@@ -50,7 +49,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.status}`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`)).toBeInTheDocument();
-    expect(screen.getByText(`${fullNamePipe(wp.projectLead)}`)).toBeInTheDocument();
+    expect(screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`)).toBeInTheDocument();
     expect(screen.getByText(`${fullNamePipe(wp.projectManager)}`)).toBeInTheDocument();
 
     expect(screen.getByText(`${weeksPipe(wp.duration)}`)).toBeInTheDocument();

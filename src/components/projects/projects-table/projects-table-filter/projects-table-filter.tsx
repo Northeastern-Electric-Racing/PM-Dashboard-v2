@@ -21,6 +21,13 @@ interface FilterProps {
 const ProjectsTableFilter: React.FC = () => {
   return (
     <>
+      <style type="text/css">
+        {`
+        .btn-block:after {
+          float: right;
+        }
+      `}
+      </style>
       <Card style={{ width: '18rem' }}>
         <Card.Body>
           <Card.Title>Filters</Card.Title>

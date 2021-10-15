@@ -4,32 +4,9 @@
  */
 
 import axios from 'axios';
-import { ChangeRequest, ChangeRequestType } from 'utils';
+import { ChangeRequest } from 'utils';
 import { apiUrls } from '../shared/urls';
-
-/**
- * Transforms a change request to ensure deep field transformation of date objects.
- *
- * @param changeRequest Incoming change request object supplied by the HTTP response.
- * @returns Properly transformed change request object.
- */
-export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
-  const data: any = {
-    ...changeRequest,
-    dateSubmitted: new Date(changeRequest.dateSubmitted),
-    dateReviewed: changeRequest.dateReviewed
-      ? new Date(changeRequest.dateReviewed)
-      : changeRequest.dateReviewed,
-    dateImplemented: changeRequest.dateImplemented
-      ? new Date(changeRequest.dateImplemented)
-      : changeRequest.dateImplemented
-  };
-  if (changeRequest.type === ChangeRequestType.Activation) {
-    data.startDate = new Date(data.startDate);
-  }
-  const output: ChangeRequest = data;
-  return output;
-};
+import { changeRequestTransformer } from './transformers/transformers';
 
 /**
  * Fetches all change requests.

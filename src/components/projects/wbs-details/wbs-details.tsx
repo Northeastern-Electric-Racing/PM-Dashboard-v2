@@ -18,7 +18,7 @@ const WBSDetails: React.FC = () => {
   let wbsNumber;
   try {
     wbsNumber = validateWBS(wbsNum); // ensure the provided wbsNum is correctly formatted
-  } catch (error) {
+  } catch (error: any) {
     return <ErrorPage message={error.message} />;
   }
 

@@ -14,6 +14,7 @@ import './change-requests-table.module.css';
 import ChangeRequestsFilter from '../change-requests-filter/change-requests-filter';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import { ChangeRequestType, ChangeRequestReason } from '../../../utils/src/types/change-request-types';
 
 type FormFieldType = 'select' | 'checkbox';
 
@@ -24,32 +25,44 @@ interface FilterFormField {
   currentValue: number[];
 }
 
-const filterFieldsList: FilterFormField[] = [
-  {
-    label: 'Requester',
-    type: 'select',
-    values: ['a', 'b'],
-    currentValue: [0]
-  },
-  {
-    label: 'Project',
-    type: 'checkbox',
-    values: ['a', 'b'],
-    currentValue: [0]
-  },
-  {
-    label: 'Type',
-    type: 'select',
-    values: ['a'],
-    currentValue: [0]
-  },
-  {
-    label: 'Implemented',
-    type: 'select',
-    values: ['a'],
-    currentValue: [0]
-  }
-];
+  const filterFieldsList: FilterFormField[] = [
+    {
+      label: 'Requester',
+      type: 'select',
+      values: [],
+      currentValue: [0]
+    },
+    {
+      label: 'Type',
+      type: 'select',
+      values: [''].concat(Object.keys(ChangeRequestType).map(key => ChangeRequestType[key as typeof ChangeRequestType.Other])),
+      currentValue: [0]
+    },
+    {
+      label: 'Impact',
+      type: 'checkbox',
+      values: ['Scope', 'Budget', 'Impact'],
+      currentValue: [0]
+    },
+    {
+      label: 'Reason',
+      type: 'checkbox',
+      values: Object.keys(ChangeRequestReason).map(key => ChangeRequestReason[key as typeof ChangeRequestReason.Other]),
+      currentValue: [0]
+    },
+    {
+      label: 'State',
+      type: 'select',
+      values: ['', 'Not Reviewed', 'Accepted', 'Denied'],
+      currentValue: [0]
+    },
+    {
+      label: 'Implemented',
+      type: 'select',
+      values: ['', 'Yes', 'No'],
+      currentValue: [0]
+    }
+  ];
 
 const ChangeRequestsTable: React.FC = () => {
   const [filterFields, setFilterFields] = useState(filterFieldsList);
@@ -58,6 +71,9 @@ const ChangeRequestsTable: React.FC = () => {
   if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
+
+  filterFields[0].values = [... new Set(data!.map((cr: ChangeRequest) => fullNamePipe(cr.submitter)))];
+  filterFields[0].values.splice(0, 0, "");
 
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
     return changeRequests.map((cr: ChangeRequest) => {

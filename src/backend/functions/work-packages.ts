@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, WBS_Element, WBS_Element_Status } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -17,36 +17,93 @@ import {
   routeMatcher,
   WbsNumber,
   validateWBS,
-  isProject
+  isProject,
+  WorkPackage,
+  WbsElementStatus
 } from 'utils';
 
 const prisma = new PrismaClient();
 
+const manyRelationArgs = Prisma.validator<Prisma.Work_PackageArgs>()({
+  include: {
+    wbsElement: {
+      include: {
+        projectLead: true,
+        projectManager: true,
+        changes: { include: { implementer: true } }
+      }
+    },
+    expectedActivities: true,
+    deliverables: true,
+    dependencies: true
+  }
+});
+
+const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
+  include: {
+    workPackage: { include: { expectedActivities: true, deliverables: true, dependencies: true } },
+    projectLead: true,
+    projectManager: true,
+    changes: { include: { implementer: true } }
+  }
+});
+
+const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
+
+const wbsNumOf = (element: WBS_Element): WbsNumber => ({
+  car: element.carNumber,
+  project: element.projectNumber,
+  workPackage: element.workPackageNumber
+});
+
+const workPackageTransformer = (
+  payload:
+    | Prisma.Work_PackageGetPayload<typeof manyRelationArgs>
+    | Prisma.WBS_ElementGetPayload<typeof uniqueRelationArgs>
+): WorkPackage => {
+  if (payload === null) throw new TypeError('WBS_Element not found');
+  const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
+  const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
+  const endDate = new Date(workPackage.startDate);
+  endDate.setDate(workPackage.duration * 7);
+
+  const wbsNum = wbsNumOf(wbsElement);
+  return {
+    ...workPackage,
+    ...wbsElement,
+    id: workPackage.workPackageId,
+    expectedActivities: workPackage.expectedActivities.map((descBullet) => ({
+      ...descBullet,
+      id: descBullet.descriptionId,
+      dateDeleted: descBullet.dateDeleted ?? undefined
+    })),
+    deliverables: workPackage.expectedActivities.map((deliverable) => ({
+      ...deliverable,
+      id: deliverable.descriptionId,
+      dateDeleted: deliverable.dateDeleted ?? undefined
+    })),
+    changes: wbsElement.changes.map((change) => ({
+      ...change,
+      wbsNum
+    })),
+    dependencies: workPackage.dependencies.map(wbsNumOf),
+    projectManager: wbsElement.projectManager ?? undefined,
+    projectLead: wbsElement.projectLead ?? undefined,
+    status: convertStatus(wbsElement.status),
+    wbsNum,
+    endDate
+  };
+};
+
 // Fetch all work packages
 const getAllWorkPackages: ApiRouteFunction = async () => {
-  const workPackages = await prisma.work_Package.findMany({
-    include: {
-      wbsElement: { include: { projectLead: true, projectManager: true } },
-      expectedActivities: true,
-      deliverables: true
-    }
-  });
-  return buildSuccessResponse(
-    workPackages.map((val) => {
-      const endDate = new Date(val.startDate);
-      endDate.setDate(endDate.getDate() + val.duration * 7);
-      return {
-        ...val,
-        ...val.wbsElement,
-        endDate,
-        wbsNumber: {
-          car: val.wbsElement.carNumber,
-          project: val.wbsElement.projectNumber,
-          workPackage: val.wbsElement.workPackageNumber
-        }
-      };
-    })
-  );
+  const workPackages = await prisma.work_Package.findMany(manyRelationArgs);
+  return buildSuccessResponse(workPackages.map(workPackageTransformer));
 };
 
 // Fetch the work package for the specified WBS number
@@ -63,27 +120,12 @@ const getSingleWorkPackage: ApiRouteFunction = async (params: { wbs: string }) =
         workPackageNumber: parsedWbs.workPackage
       }
     },
-    include: {
-      workPackage: { include: { expectedActivities: true, deliverables: true } },
-      projectLead: true,
-      projectManager: true
-    }
+    ...uniqueRelationArgs
   });
   if (wbsEle === null) {
     return buildNotFoundResponse('work package', `WBS # ${params.wbs}`);
   }
-  const endDate = new Date(wbsEle!.workPackage!.startDate);
-  endDate.setDate(endDate.getDate() + wbsEle!.workPackage!.duration * 7);
-  return buildSuccessResponse({
-    ...wbsEle!,
-    ...wbsEle!.workPackage,
-    endDate,
-    wbsNumber: {
-      car: wbsEle!.carNumber,
-      project: wbsEle!.projectNumber,
-      workPackage: wbsEle!.workPackageNumber
-    }
-  });
+  return buildSuccessResponse(workPackageTransformer);
 };
 
 // Define all valid routes for the endpoint

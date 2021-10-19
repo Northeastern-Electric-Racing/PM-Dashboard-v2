@@ -11,6 +11,7 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next';
 import PageTitle from '../../../shared/page-title/page-title';
 import styles from './projects-table.module.css';
+import { validateWBS } from 'utils';
 
 export interface DisplayProject {
   wbsNum: string;
@@ -25,20 +26,85 @@ interface DisplayProjectProps {
 }
 
 /**
+ * Custom sorting order for wbsNums according to car, then project, then workPackage.
+ * @param a 1st wbsNum in string form
+ * @param b 2nd wbsNum in string form
+ * @param order Imported SortOrder values 'asc' or 'desc'
+ * @return number A number describing the value of a relative to b,
+ *                according to the specified SortOrder.
+ */
+export function wbsNumSort(a: string, b: string, order: SortOrder) {
+  const wbs_a = validateWBS(a);
+  const wbs_b = validateWBS(b);
+  if (wbs_a.car !== wbs_b.car) {
+    if (order === 'asc') {
+      return wbs_a.car - wbs_b.car;
+    } else {
+      return wbs_b.car - wbs_a.car;
+    }
+  }
+  if (wbs_a.project !== wbs_b.project) {
+    if (order === 'asc') {
+      return wbs_a.project - wbs_b.project;
+    } else {
+      return wbs_b.project - wbs_a.project;
+    }
+  }
+  if (wbs_a.workPackage !== wbs_b.workPackage) {
+    if (order === 'asc') {
+      return wbs_a.workPackage - wbs_b.workPackage;
+    } else {
+      return wbs_b.workPackage - wbs_a.workPackage;
+    }
+  } else {
+    return 0; // Both wbsNums are exactly equal.
+  }
+}
+
+/**
  * Interactive table for displaying all projects table data.
  */
 const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayProjectProps) => {
   const history = useHistory();
 
   // Configures display options for all data columns
-  // TODO: Sort by wbsNum means 1.1.0 > 1.12.0 > 1.2.0, but desired is 1.1.0 > 1.2.0 > 1.12.0
-  // TODO: Sort by duration means 12 > 2 > 4 > 5 > 9, but desired is 12 > 9 > 5 > 4 > 2
   const columns: ColumnDescription[] = [
-    { dataField: 'wbsNum', text: 'WBS #', align: 'center', sort: true },
-    { dataField: 'name', text: 'Name', align: 'left', sort: true },
-    { dataField: 'projectLead', text: 'Project Lead', align: 'left', sort: true },
-    { dataField: 'projectManager', text: 'Project Manager', align: 'left', sort: true },
-    { dataField: 'duration', text: 'Duration', align: 'center', sort: true }
+    {
+      headerAlign: 'center',
+      dataField: 'wbsNum',
+      text: 'WBS #',
+      align: 'center',
+      sort: true,
+      sortFunc: wbsNumSort
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'name',
+      text: 'Name',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'projectLead',
+      text: 'Project Lead',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'projectManager',
+      text: 'Project Manager',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'duration',
+      text: 'Duration',
+      align: 'center',
+      sort: true
+    }
   ];
 
   const defaultSort: [{ dataField: any; order: SortOrder }] = [
@@ -70,7 +136,8 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
         defaultSorted={defaultSort}
         rowEvents={rowEvents}
         noDataIndication="No Projects to Display"
-        rowStyle={{ cursor: 'pointer' }} />
+        rowStyle={{ cursor: 'pointer' }}
+      />
     </>
   );
 };

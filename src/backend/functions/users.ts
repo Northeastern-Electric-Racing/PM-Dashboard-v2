@@ -98,7 +98,7 @@ const routes: ApiRoute[] = [
 const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     return buildServerFailureResponse(error.message);
   }

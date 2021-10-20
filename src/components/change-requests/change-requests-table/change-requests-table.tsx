@@ -72,7 +72,7 @@ const ChangeRequestsTable: React.FC = () => {
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  filterFields[0].values = [... new Set(data!.map((cr: ChangeRequest) => fullNamePipe(cr.submitter)))];
+  filterFields[0].values = [...new Set(data!.map((cr: ChangeRequest) => fullNamePipe(cr.submitter)))];
   filterFields[0].values.splice(0, 0, "");
 
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
@@ -89,23 +89,73 @@ const ChangeRequestsTable: React.FC = () => {
     }) as DisplayChangeRequest[];
   };
 
-  const changeRequestsTable = <CRTable changeRequests={transformToDisplayChangeRequests(data!)} />;
+  const combineFilters:Function = (filterFields: FilterFormField[]) => {
+    return (cr: ChangeRequest) => {
+      let result = filterFields.every((filterField) => {
+        let val = filterField.values[filterField.currentValue[0]];
+        if (val === '') return true;
+        if (filterField.label === 'Type') {
+          return (cr.type === filterField.values[filterField.currentValue[0]])
+        }
+        if (filterField.label === 'Requester') {
+          console.log(filterField.values[filterField.currentValue[0]]);
+          return (`${cr.submitter.firstName} ${cr.submitter.lastName}` === 'Joe Shmoe');
+        }
+        else return true;
+      }
+      );
+      return result;
+    };
+  };
 
-  const changeRequestsContainer = (
-    <Container>
+  const filterChangeRequests = (changeRequests: ChangeRequest[], filterFields: FilterFormField[]) => {
+    console.log(changeRequests);
+    const filterFunction = combineFilters(filterFields);
+    let val = changeRequests.filter((cr: ChangeRequest) => {
+      console.log(filterFunction(cr));
+      return filterFunction(cr)
+      
+    }
+    );
+    console.log(val);
+    return val;
+  }
+
+  const changeRequestsTable = () => {
+    console.log("HELLO");
+    return <CRTable changeRequests={transformToDisplayChangeRequests(filterChangeRequests(data!, filterFields))} />;
+  }
+
+  const changeRequestsContainer = () => {
+    const toReturn = <Container fluid="xl">
+    <Row>
+      <Col xs={2}>
+        <ChangeRequestsFilter
+          filterFields={filterFields}
+          setFilterFields={setFilterFields}
+        ></ChangeRequestsFilter>
+      </Col>
+      <Col>{changeRequestsTable()}</Col>
+    </Row>
+  </Container>;
+  console.log(toReturn);
+    console.log("returning re-rendered");
+    return(<Container fluid="xl">
       <Row>
-        <Col>
+        <Col xs={3}>
           <ChangeRequestsFilter
             filterFields={filterFields}
             setFilterFields={setFilterFields}
           ></ChangeRequestsFilter>
         </Col>
-        <Col>{changeRequestsTable}</Col>
+        <Col>{
+         changeRequestsTable()}</Col>
       </Row>
-    </Container>
-  );
+    </Container>);
+  };
 
-  return changeRequestsContainer;
+  console.log('RE-RENDER');
+  return changeRequestsContainer();
 };
 
 export default ChangeRequestsTable;

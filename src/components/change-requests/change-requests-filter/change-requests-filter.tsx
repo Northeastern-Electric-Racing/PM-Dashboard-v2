@@ -35,6 +35,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
       const indexOfId = filterFields[index].currentValue.indexOf(Number(id));
       filterFields[index].currentValue.splice(indexOfId, 1);
     }
+    console.log("Changing state");
     setFilterFields(filterFields);
   };
 
@@ -44,6 +45,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
     const value = event.target.value;
     filterFields[index].currentValue.length = 0;
     filterFields[index].currentValue.push(Number(value));
+    console.log("Changing state");
     setFilterFields(filterFields);
   };
 

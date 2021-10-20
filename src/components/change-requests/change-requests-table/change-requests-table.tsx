@@ -14,7 +14,7 @@ import './change-requests-table.module.css';
 import ChangeRequestsFilter from '../change-requests-filter/change-requests-filter';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import { ChangeRequestType, ChangeRequestReason } from '../../../utils/src/types/change-request-types';
+import { ChangeRequestType, ChangeRequestReason, StandardChangeRequest, ActivationChangeRequest } from '../../../utils/src/types/change-request-types';
 
 type FormFieldType = 'select' | 'checkbox';
 
@@ -42,13 +42,13 @@ interface FilterFormField {
       label: 'Impact',
       type: 'checkbox',
       values: ['Scope', 'Budget', 'Impact'],
-      currentValue: [0]
+      currentValue: []
     },
     {
       label: 'Reason',
       type: 'checkbox',
-      values: Object.keys(ChangeRequestReason).map(key => ChangeRequestReason[key as typeof ChangeRequestReason.Other]),
-      currentValue: [0]
+      values: [''].concat(Object.keys(ChangeRequestReason).map(key => ChangeRequestReason[key as typeof ChangeRequestReason.Other])).slice(1),
+      currentValue: []
     },
     {
       label: 'State',
@@ -90,21 +90,41 @@ const ChangeRequestsTable: React.FC = () => {
   };
 
   const combineFilters:Function = (filterFields: FilterFormField[]) => {
-    return (cr: ChangeRequest) => {
-      let result = filterFields.every((filterField) => {
-        let val = filterField.values[filterField.currentValue[0]];
-        if (val === '') return true;
-        if (filterField.label === 'Type') {
-          return (cr.type === filterField.values[filterField.currentValue[0]])
+    return (cr: ChangeRequest) => { //check if pass each filter, then map result
+      let filterMap = filterFields.map((filterField) => {
+        if (filterField.type === 'checkbox') {
+          if (filterField.currentValue.length === 0) {
+            return true;
+          }
+          let filterVals = filterField.currentValue.map((index) => {
+            return (filterField.values[index]);
+          });
+          return(filterVals.map((value) => {
+            return true; //todo
+          }).every((element) => element));
         }
-        if (filterField.label === 'Requester') {
-          console.log(filterField.values[filterField.currentValue[0]]);
-          return (`${cr.submitter.firstName} ${cr.submitter.lastName}` === 'Joe Shmoe');
+        if (filterField.type === 'select') {
+          if (filterField.values[filterField.currentValue[0]] === '') {
+            return true;
+          }
+          else {
+            let selectValue = filterField.values[filterField.currentValue[0]];
+            if (filterField.label === 'Requester') {
+              return(`${cr.submitter.firstName} ${cr.submitter.lastName}` === selectValue);
+            }
+            if (filterField.label === 'Type') {
+              return(cr.type === selectValue);
+            }
+            if (filterField.label === 'Implemented') {
+              return((cr.dateImplemented != undefined && selectValue === 'Yes')
+              || cr.dateImplemented === undefined && selectValue === 'No');
+            }
+
+          }
         }
-        else return true;
-      }
-      );
-      return result;
+      });
+      console.log(filterMap);
+      return filterMap.every((element) => element);
     };
   };
 
@@ -114,7 +134,6 @@ const ChangeRequestsTable: React.FC = () => {
     let val = changeRequests.filter((cr: ChangeRequest) => {
       console.log(filterFunction(cr));
       return filterFunction(cr)
-      
     }
     );
     console.log(val);

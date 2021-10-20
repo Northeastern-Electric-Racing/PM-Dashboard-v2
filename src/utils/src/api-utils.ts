@@ -99,4 +99,3 @@ export const routeMatcher = (
   }
   return buildNotFoundResponse("route", event.path);
   };
-  

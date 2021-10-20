@@ -44,9 +44,9 @@ const ProjectsTable: React.FC = () => {
           <div className={styles.column}>
             <ProjectsTableFilter />
           </div>
-          <Col>
+          <div className={styles.column2}>
             <PrjsTable allProjects={transformToDisplayProjects(data!)} />
-          </Col>
+          </div>
         </Row>
       </div>
     </>

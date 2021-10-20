@@ -6,17 +6,17 @@
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
 
-export interface FilterButtons {
-  group: string;
-  status: string;
-  projectLead: string;
-  projectManager: string;
-  yearCreated: number;
-}
-
-interface FilterProps {
-  allFilterButtons: FilterButtons[];
-}
+// export interface FilterButtons {
+//   group: string;
+//   status: string;
+//   projectLead: string;
+//   projectManager: string;
+//   yearCreated: number;
+// }
+//
+// interface FilterProps {
+//   allFilterButtons: FilterButtons[];
+// }
 
 //TODO: Add appropriate logic.
 const ProjectsTableFilter: React.FC = () => {

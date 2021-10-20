@@ -19,3 +19,11 @@
   padding-left: 15px
 }
 
+.column2 {
+  display: flex;
+  max-width: 85%;
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px
+}
+

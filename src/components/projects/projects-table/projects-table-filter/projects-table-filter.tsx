@@ -4,6 +4,7 @@
  */
 
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
+import styles from './projects-table-filter.module.css';
 
 export interface FilterButtons {
   group: string;
@@ -21,14 +22,7 @@ interface FilterProps {
 const ProjectsTableFilter: React.FC = () => {
   return (
     <>
-      <style type="text/css">
-        {`
-        .btn-block:after {
-          float: right;
-        }
-      `}
-      </style>
-      <Card style={{ width: '18rem' }}>
+      <Card>
         <Card.Body>
           <Card.Title>Filters</Card.Title>
           <Form>
@@ -37,7 +31,7 @@ const ProjectsTableFilter: React.FC = () => {
               <Dropdown>
                 <Dropdown.Toggle
                   variant="light"
-                  className="btn-block"
+                  className={styles.dropdownToggle}
                   block={true}
                 ></Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block">
@@ -53,7 +47,7 @@ const ProjectsTableFilter: React.FC = () => {
               <Dropdown>
                 <Dropdown.Toggle
                   variant="light"
-                  className="btn-block"
+                  className={styles.dropdownToggle}
                   block={true}
                 ></Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block">
@@ -68,7 +62,7 @@ const ProjectsTableFilter: React.FC = () => {
               <Dropdown>
                 <Dropdown.Toggle
                   variant="light"
-                  className="btn-block"
+                  className={styles.dropdownToggle}
                   block={true}
                 ></Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block">
@@ -81,7 +75,7 @@ const ProjectsTableFilter: React.FC = () => {
               <Dropdown>
                 <Dropdown.Toggle
                   variant="light"
-                  className="btn-block"
+                  className={styles.dropdownToggle}
                   block={true}
                 ></Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block">
@@ -94,7 +88,7 @@ const ProjectsTableFilter: React.FC = () => {
               <Dropdown>
                 <Dropdown.Toggle
                   variant="light"
-                  className="btn-block"
+                  className={styles.dropdownToggle}
                   block={true}
                 ></Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block">

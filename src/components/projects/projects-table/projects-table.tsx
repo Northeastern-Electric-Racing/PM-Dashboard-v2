@@ -10,7 +10,7 @@ import { DisplayProject } from './projects-table/projects-table';
 import PrjsTable from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
-import './projects-table.module.css';
+import styles from './projects-table.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Col, Container, Row } from 'react-bootstrap';
 import PageTitle from '../../shared/page-title/page-title';
@@ -39,18 +39,17 @@ const ProjectsTable: React.FC = () => {
   return (
     <>
       <PageTitle title={'Projects'} />
-      <Container>
+      <div className={styles.container}>
         <Row>
-          <Col className="row-cols-2">
+          <div className={styles.column}>
             <ProjectsTableFilter />
-          </Col>
-          <Col className="row-cols-1">
+          </div>
+          <Col>
             <PrjsTable allProjects={transformToDisplayProjects(data!)} />
           </Col>
         </Row>
-      </Container>
+      </div>
     </>
-    //TODO: Use React Bootstrap table to organize this properly.
   );
 };
 

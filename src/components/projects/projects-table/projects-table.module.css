@@ -3,6 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.table {
-  padding: 0em 2em 0em 2em;
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-bottom: 15px;
 }
+
+.column {
+  display: flex;
+  position: relative;
+  padding-right: 15px;
+  padding-left: 15px
+}
+

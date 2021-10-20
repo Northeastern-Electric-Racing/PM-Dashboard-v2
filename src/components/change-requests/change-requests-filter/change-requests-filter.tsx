@@ -4,7 +4,8 @@
  */
 
 import React, { ReactElement } from 'react';
-import { Form, FormControlProps } from 'react-bootstrap';
+import { Card, Container, Form, FormControlProps } from 'react-bootstrap';
+import styles from './change-requests-filter.module.css';
 
 type FormFieldType = 'select' | 'checkbox';
 
@@ -25,27 +26,26 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   setFilterFields
 }) => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, label: string) => {
-    const index = filterFields.map(field => field.label as string).indexOf(label);
+    const index = filterFields.map((field) => field.label as string).indexOf(label);
     const checked = event.target.checked;
     const id = event.target.id;
     if (checked) {
       filterFields[index].currentValue.push(Number(id));
-    }
-    else {
+    } else {
       const indexOfId = filterFields[index].currentValue.indexOf(Number(id));
       filterFields[index].currentValue.splice(indexOfId, 1);
     }
-    console.log("Changing state");
+    console.log('Changing state');
     setFilterFields(filterFields);
   };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>, label: string) => {
     console.log(filterFields);
-    const index = filterFields.map(field => field.label as string).indexOf(label);
+    const index = filterFields.map((field) => field.label as string).indexOf(label);
     const value = event.target.value;
     filterFields[index].currentValue.length = 0;
     filterFields[index].currentValue.push(Number(value));
-    console.log("Changing state");
+    console.log('Changing state');
     setFilterFields(filterFields);
   };
 
@@ -92,7 +92,15 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
     );
   };
 
-  return <>{filterFields.map((field: FilterFormField) => filterGroup(field))}</>;
+  return (
+    <div className={styles.filter}>
+      <h3>Filters</h3>
+      <hr />
+      <div className={styles.filterFields}>
+        {filterFields.map((field: FilterFormField) => filterGroup(field))}
+      </div>
+    </div>
+  );
 };
 
 export default ChangeRequestsFilter;

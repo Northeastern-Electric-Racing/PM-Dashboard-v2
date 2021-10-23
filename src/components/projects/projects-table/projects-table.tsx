@@ -12,10 +12,19 @@ import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import styles from './projects-table.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import PageTitle from '../../shared/page-title/page-title';
+import React, { useState } from 'react';
 
+/**
+ * Parent component for the projects page housing the filter table and projects table.
+ */
 const ProjectsTable: React.FC = () => {
+  const [group, setGroup] = useState('');
+  const [status, setStatus] = useState('');
+  const [year, setYear] = useState('');
+  const [projectLead, setProjectLead] = useState('');
+  const [projectManager, setProjectManager] = useState('');
   const { isLoading, isError, data, error } = useAllProjects();
 
   if (isLoading) return <LoadingIndicator />;
@@ -36,16 +45,78 @@ const ProjectsTable: React.FC = () => {
     }) as DisplayProject[];
   };
 
+  /**
+   * Updates state with data from input parameters.
+   * @param group The group within the club that the project belongs to.
+   * @param status The status of the project.
+   * @param year The year the project was created.
+   * @param projectLead The project lead.
+   * @param projectManager The project manager.
+   */
+  const sendDataToParent = (
+    group: string,
+    status: string,
+    year: string,
+    projectLead: string,
+    projectManager: string
+  ) => {
+    setGroup(group);
+    setStatus(status);
+    setYear(year);
+    setProjectLead(projectLead);
+    setProjectManager(projectManager);
+  };
+
+  /**
+   * Returns a list of projects that has been filtered according to
+   * the current state of the filter parameters.
+   */
+  const filterProjects = (): Project[] => {
+    let projects = data!;
+    // TODO: Figure out which project field represents its group.
+    const groupCheck = (project: Project) => {};
+    const statusCheck = (project: Project) => {
+      return project.status === status;
+    };
+    const yearCheck = (project: Project) => {
+      return `${project.dateCreated.getUTCFullYear()}` === year;
+    };
+    const leadCheck = (project: Project) => {
+      return fullNamePipe(project.projectLead) === projectLead;
+    };
+    const managerCheck = (project: Project) => {
+      return fullNamePipe(project.projectManager) === projectManager;
+    };
+    if (group != '') {
+      projects = projects.filter(groupCheck);
+    }
+    if (status != '') {
+      projects = projects.filter(statusCheck);
+    }
+    if (year != '') {
+      projects = projects.filter(yearCheck);
+    }
+    if (projectLead != '') {
+      projects = projects.filter(leadCheck);
+    }
+    if (projectManager != '') {
+      projects = projects.filter(managerCheck);
+    }
+    return projects;
+  };
+
+  const filtered_data: Project[] = filterProjects();
+
   return (
     <>
       <PageTitle title={'Projects'} />
       <div className={styles.container}>
         <Row>
           <div className={styles.column}>
-            <ProjectsTableFilter />
+            <ProjectsTableFilter onClick={sendDataToParent} />
           </div>
           <div className={styles.column2}>
-            <PrjsTable allProjects={transformToDisplayProjects(data!)} />
+            <PrjsTable allProjects={transformToDisplayProjects(filtered_data)} />
           </div>
         </Row>
       </div>

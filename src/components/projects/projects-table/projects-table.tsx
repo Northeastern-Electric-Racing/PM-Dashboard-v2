@@ -20,7 +20,6 @@ import React, { useState } from 'react';
  * Parent component for the projects page housing the filter table and projects table.
  */
 const ProjectsTable: React.FC = () => {
-  const [group, setGroup] = useState('');
   const [status, setStatus] = useState('');
   const [year, setYear] = useState('');
   const [projectLead, setProjectLead] = useState('');
@@ -48,7 +47,6 @@ const ProjectsTable: React.FC = () => {
 
   /**
    * Updates state with data from input parameters.
-   * @param group The group within the club that the project belongs to.
    * @param status The status of the project.
    * @param year The year the project was created.
    * @param projectLead The project lead of the project.
@@ -56,14 +54,12 @@ const ProjectsTable: React.FC = () => {
    * @param carNumber The carNumber of the project.
    */
   const sendDataToParent = (
-    group: string,
     status: string,
     year: string,
     projectLead: string,
     projectManager: string,
     carNumber: string
   ) => {
-    setGroup(group);
     setStatus(status);
     setYear(year);
     setProjectLead(projectLead);
@@ -80,8 +76,6 @@ const ProjectsTable: React.FC = () => {
     const carNumCheck = (project: Project) => {
       return carNumber === project.wbsNum.car.toString();
     };
-    // TODO: Figure out which project field represents its group.
-    const groupCheck = (project: Project) => {};
     const statusCheck = (project: Project) => {
       return project.status === status;
     };
@@ -96,9 +90,6 @@ const ProjectsTable: React.FC = () => {
     };
     if (carNumber != '') {
       projects = projects.filter(carNumCheck);
-    }
-    if (group != '') {
-      projects = projects.filter(groupCheck);
     }
     if (status != '') {
       projects = projects.filter(statusCheck);

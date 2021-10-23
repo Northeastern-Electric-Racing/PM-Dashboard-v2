@@ -16,7 +16,6 @@ describe('projects table filter component', () => {
     renderComponent();
     expect(screen.getByText('Filters')).toBeInTheDocument();
     expect(screen.getByText('Car Number')).toBeInTheDocument();
-    expect(screen.getByText('Group')).toBeInTheDocument();
     expect(screen.getByText('Status')).toBeInTheDocument();
     expect(screen.getByText('Project Lead')).toBeInTheDocument();
     expect(screen.getByText('Project Manager')).toBeInTheDocument();

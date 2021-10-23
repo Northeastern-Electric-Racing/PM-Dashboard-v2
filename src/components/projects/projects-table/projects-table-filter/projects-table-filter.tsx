@@ -15,7 +15,6 @@ import React, { useState } from 'react';
  */
 interface FilterProps {
   onClick: (
-    group: string,
     status: string,
     year: string,
     projectLead: string,
@@ -28,10 +27,6 @@ interface FilterProps {
  * Props for car number input field.
  */
 interface InputProps {
-  type?: string;
-  name?: string;
-  value?: number;
-  className?: string;
   onChange?: (carNumber: string) => void;
 }
 
@@ -70,7 +65,6 @@ const NumbersOnlyTextBox: React.FC<InputProps> = ({ onChange }: InputProps) => {
  * @param onClick Determines what happens when the Apply button is clicked.
  */
 const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) => {
-  const [group, setGroup] = useState('');
   const [status, setStatus] = useState('');
   const [year, setYear] = useState('');
   const [projectLead, setProjectLead] = useState('');
@@ -152,21 +146,6 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
               </div>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Group</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle variant="light" className={styles.dropdownToggle} block={true}>
-                  {group}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="btn-block">
-                  <Dropdown.Item onClick={() => setGroup('')}>None</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setGroup('Mechanical')}>Mechanical</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setGroup('Electrical')}>Electrical</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setGroup('Business')}>Business</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setGroup('Software')}>Software</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group className="mb-3">
               <Form.Label>Status</Form.Label>
               <Dropdown>
                 <Dropdown.Toggle variant="light" className={styles.dropdownToggle} block={true}>
@@ -220,7 +199,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
               <Button
                 variant="danger"
                 onClick={() => {
-                  onClick(group, status, year, projectLead, projectManager, carNumber);
+                  onClick(status, year, projectLead, projectManager, carNumber);
                 }}
               >
                 Apply

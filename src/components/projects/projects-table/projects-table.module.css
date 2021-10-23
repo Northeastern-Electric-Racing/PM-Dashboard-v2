@@ -12,18 +12,17 @@
   padding-bottom: 15px;
 }
 
-.column {
+.filterTable {
   display: flex;
   position: relative;
   padding-right: 15px;
   padding-left: 15px
 }
 
-.column2 {
+.projectsTable {
+  margin-inline: auto;
   display: flex;
-  max-width: 85%;
+  max-width: 75%;
   position: relative;
-  padding-right: 15px;
-  padding-left: 15px
 }
 

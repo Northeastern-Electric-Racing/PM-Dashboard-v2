@@ -7,15 +7,10 @@
   line-height: 2em;
 }
 
-.btn-block.dropdown-menu.show {
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   margin: 0;
-  max-width: 75%;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.dropdown-item {
-  width: 75%;
-  padding-left: 0;
-  padding-right: 0;
 }

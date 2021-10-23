@@ -10,19 +10,64 @@ import { fullNamePipe } from '../../../../shared/pipes';
 import { Role, User } from 'utils';
 import React, { useState } from 'react';
 
+/**
+ * Variables to filter table with.
+ */
 interface FilterProps {
   onClick: (
     group: string,
     status: string,
     year: string,
     projectLead: string,
-    projectManager: string
+    projectManager: string,
+    carNumber: string
   ) => void;
 }
 
 /**
+ * Props for car number input field.
+ */
+interface InputProps {
+  type?: string;
+  name?: string;
+  value?: number;
+  className?: string;
+  onChange?: (carNumber: string) => void;
+}
+
+/**
+ * Interactive text box for car number that only accepts single digit number inputs.
+ * @param onChange Dictates what happens when a change event occurs.
+ */
+const NumbersOnlyTextBox: React.FC<InputProps> = ({ onChange }: InputProps) => {
+  return (
+    <input
+      onKeyPress={(event) => {
+        const nums: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        // Allows only number inputs.
+        if (!nums.includes(event.key)) {
+          event.preventDefault();
+        }
+      }}
+      // Prevents copy-pasting.
+      onPaste={(e) => {
+        e.preventDefault();
+        return false;
+      }}
+      onChange={(e) => {
+        // Replace non-digits with blank spaces.
+        const value = e.target.value.replace(/[^\d]/, '');
+        if (onChange != undefined) {
+          onChange(value);
+        }
+      }}
+    />
+  );
+};
+
+/**
  * Interactive table for setting filter parameters.
- * @param onClick Sends state data to parent.
+ * @param onClick Determines what happens when the Apply button is clicked.
  */
 const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) => {
   const [group, setGroup] = useState('');
@@ -30,6 +75,11 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
   const [year, setYear] = useState('');
   const [projectLead, setProjectLead] = useState('');
   const [projectManager, setProjectManager] = useState('');
+  const [carNumber, setCarNumber] = useState('');
+
+  const sendCarNumberToParent = (carNumber: string) => {
+    setCarNumber(carNumber);
+  };
 
   /**
    * Programmatically generates dropdown items for years menu.
@@ -40,7 +90,9 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
     let result: any[] = [];
     for (let i = 0; i < current_year - start + 1; i++) {
       result.push(
-        <Dropdown.Item onClick={() => setYear(`${start + i}`)}>{start + i}</Dropdown.Item>
+        <Dropdown.Item key={start + i} onClick={() => setYear(`${start + i}`)}>
+          {start + i}
+        </Dropdown.Item>
       );
     }
     return <div>{result}</div>;
@@ -93,6 +145,12 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
         <Card.Body>
           <Card.Title>Filters</Card.Title>
           <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Car Number</Form.Label>
+              <div>
+                <NumbersOnlyTextBox onChange={sendCarNumberToParent} />
+              </div>
+            </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Group</Form.Label>
               <Dropdown>
@@ -162,7 +220,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
               <Button
                 variant="danger"
                 onClick={() => {
-                  onClick(group, status, year, projectLead, projectManager);
+                  onClick(group, status, year, projectLead, projectManager, carNumber);
                 }}
               >
                 Apply

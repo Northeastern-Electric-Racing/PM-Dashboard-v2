@@ -26,6 +26,7 @@ const ProjectsTable: React.FC = () => {
   const [projectLead, setProjectLead] = useState('');
   const [projectManager, setProjectManager] = useState('');
   const { isLoading, isError, data, error } = useAllProjects();
+  const [carNumber, setCarNumber] = useState('');
 
   if (isLoading) return <LoadingIndicator />;
 
@@ -50,21 +51,24 @@ const ProjectsTable: React.FC = () => {
    * @param group The group within the club that the project belongs to.
    * @param status The status of the project.
    * @param year The year the project was created.
-   * @param projectLead The project lead.
-   * @param projectManager The project manager.
+   * @param projectLead The project lead of the project.
+   * @param projectManager The project manager of the project.
+   * @param carNumber The carNumber of the project.
    */
   const sendDataToParent = (
     group: string,
     status: string,
     year: string,
     projectLead: string,
-    projectManager: string
+    projectManager: string,
+    carNumber: string
   ) => {
     setGroup(group);
     setStatus(status);
     setYear(year);
     setProjectLead(projectLead);
     setProjectManager(projectManager);
+    setCarNumber(carNumber);
   };
 
   /**
@@ -73,6 +77,9 @@ const ProjectsTable: React.FC = () => {
    */
   const filterProjects = (): Project[] => {
     let projects = data!;
+    const carNumCheck = (project: Project) => {
+      return carNumber === project.wbsNum.car.toString();
+    };
     // TODO: Figure out which project field represents its group.
     const groupCheck = (project: Project) => {};
     const statusCheck = (project: Project) => {
@@ -87,6 +94,9 @@ const ProjectsTable: React.FC = () => {
     const managerCheck = (project: Project) => {
       return fullNamePipe(project.projectManager) === projectManager;
     };
+    if (carNumber != '') {
+      projects = projects.filter(carNumCheck);
+    }
     if (group != '') {
       projects = projects.filter(groupCheck);
     }
@@ -112,10 +122,10 @@ const ProjectsTable: React.FC = () => {
       <PageTitle title={'Projects'} />
       <div className={styles.container}>
         <Row>
-          <div className={styles.column}>
+          <div className={styles.filterTable}>
             <ProjectsTableFilter onClick={sendDataToParent} />
           </div>
-          <div className={styles.column2}>
+          <div className={styles.projectsTable}>
             <PrjsTable allProjects={transformToDisplayProjects(filtered_data)} />
           </div>
         </Row>

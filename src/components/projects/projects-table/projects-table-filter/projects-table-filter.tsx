@@ -134,7 +134,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group>
               <Form.Label>Project Lead</Form.Label>
               <Dropdown as={ButtonGroup} className={styles.dropdown}>
                 <Button variant="light" className={styles.button}>
@@ -147,7 +147,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group>
               <Form.Label>Project Manager</Form.Label>
               <Dropdown as={ButtonGroup} className={styles.dropdown}>
                 <Button variant="light" className={styles.button}>
@@ -160,7 +160,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group>
               <Form.Label>Year Created</Form.Label>
               <Dropdown as={ButtonGroup} className={styles.dropdown}>
                 <Button variant="light" className={styles.button}>
@@ -173,7 +173,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <div>
+            <div className={styles.applyButton}>
               <Button
                 variant="danger"
                 onClick={() => {

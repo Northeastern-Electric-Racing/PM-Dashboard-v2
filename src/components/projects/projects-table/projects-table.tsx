@@ -24,8 +24,8 @@ const ProjectsTable: React.FC = () => {
   const [year, setYear] = useState('');
   const [projectLead, setProjectLead] = useState('');
   const [projectManager, setProjectManager] = useState('');
-  const { isLoading, isError, data, error } = useAllProjects();
   const [carNumber, setCarNumber] = useState('');
+  const { isLoading, isError, data, error } = useAllProjects();
 
   if (isLoading) return <LoadingIndicator />;
 

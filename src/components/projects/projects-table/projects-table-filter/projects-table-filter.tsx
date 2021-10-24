@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Button, Card, Dropdown, Form } from 'react-bootstrap';
+import { Button, ButtonGroup, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { fullNamePipe } from '../../../../shared/pipes';
@@ -24,43 +24,6 @@ interface FilterProps {
 }
 
 /**
- * Props for car number input field.
- */
-interface InputProps {
-  onChange?: (carNumber: string) => void;
-}
-
-/**
- * Interactive text box for car number that only accepts single digit number inputs.
- * @param onChange Dictates what happens when a change event occurs.
- */
-const NumbersOnlyTextBox: React.FC<InputProps> = ({ onChange }: InputProps) => {
-  return (
-    <input
-      onKeyPress={(event) => {
-        const nums: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        // Allows only number inputs.
-        if (!nums.includes(event.key)) {
-          event.preventDefault();
-        }
-      }}
-      // Prevents copy-pasting.
-      onPaste={(e) => {
-        e.preventDefault();
-        return false;
-      }}
-      onChange={(e) => {
-        // Replace non-digits with blank spaces.
-        const value = e.target.value.replace(/[^\d]/, '');
-        if (onChange != undefined) {
-          onChange(value);
-        }
-      }}
-    />
-  );
-};
-
-/**
  * Interactive table for setting filter parameters.
  * @param onClick Determines what happens when the Apply button is clicked.
  */
@@ -70,10 +33,6 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
   const [projectLead, setProjectLead] = useState('');
   const [projectManager, setProjectManager] = useState('');
   const [carNumber, setCarNumber] = useState('');
-
-  const sendCarNumberToParent = (carNumber: string) => {
-    setCarNumber(carNumber);
-  };
 
   /**
    * Programmatically generates dropdown items for years menu.
@@ -91,6 +50,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
     }
     return <div>{result}</div>;
   };
+
   /**
    * Programmatically generates dropdown items for project leads dropdown menu.
    */
@@ -112,6 +72,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
     }
     return <div>{result}</div>;
   };
+
   /**
    * Programmatically generates dropdown items for project dropdown managers menu.
    */
@@ -133,24 +94,38 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
     }
     return <div>{result}</div>;
   };
+
+  const dropdownToggle = (
+    <Dropdown.Toggle split variant="light" id="dropdown-split-basic" block={true} />
+  );
+
   return (
     <>
-      <Card>
+      <Card style={{ width: '15rem' }}>
         <Card.Body>
           <Card.Title>Filters</Card.Title>
           <Form>
-            <Form.Group className="mb-3">
+            <Form.Group>
               <Form.Label>Car Number</Form.Label>
-              <div>
-                <NumbersOnlyTextBox onChange={sendCarNumberToParent} />
-              </div>
+              <Dropdown as={ButtonGroup} className={styles.dropdown}>
+                <Button variant="light" className={styles.button}>
+                  {carNumber}
+                </Button>
+                {dropdownToggle}
+                <Dropdown.Menu className="btn-block">
+                  <Dropdown.Item onClick={() => setCarNumber('')}>None</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCarNumber('1')}>1</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setCarNumber('2')}>2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group>
               <Form.Label>Status</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle variant="light" className={styles.dropdownToggle} block={true}>
+              <Dropdown as={ButtonGroup} className={styles.dropdown}>
+                <Button variant="light" className={styles.button}>
                   {status}
-                </Dropdown.Toggle>
+                </Button>
+                {dropdownToggle}
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setStatus('')}>None</Dropdown.Item>
                   <Dropdown.Item onClick={() => setStatus('Active')}>Active</Dropdown.Item>
@@ -161,10 +136,11 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Project Lead</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle variant="light" className={styles.dropdownToggle} block={true}>
+              <Dropdown as={ButtonGroup} className={styles.dropdown}>
+                <Button variant="light" className={styles.button}>
                   {projectLead}
-                </Dropdown.Toggle>
+                </Button>
+                {dropdownToggle}
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setProjectLead('')}>None</Dropdown.Item>
                   {ProjectLeads()}
@@ -173,10 +149,11 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Project Manager</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle variant="light" className={styles.dropdownToggle} block={true}>
+              <Dropdown as={ButtonGroup} className={styles.dropdown}>
+                <Button variant="light" className={styles.button}>
                   {projectManager}
-                </Dropdown.Toggle>
+                </Button>
+                {dropdownToggle}
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setProjectManager('')}>None</Dropdown.Item>
                   {ProjectManagers()}
@@ -185,17 +162,18 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Year Created</Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle variant="light" className={styles.dropdownToggle} block={true}>
+              <Dropdown as={ButtonGroup} className={styles.dropdown}>
+                <Button variant="light" className={styles.button}>
                   {year}
-                </Dropdown.Toggle>
+                </Button>
+                {dropdownToggle}
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setYear('')}>None</Dropdown.Item>
                   {Years()}
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <div className="col text-center">
+            <div>
               <Button
                 variant="danger"
                 onClick={() => {

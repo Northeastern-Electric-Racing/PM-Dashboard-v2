@@ -14,7 +14,7 @@ const dbSeedWorkPackage1: any = {
     dateCreated: new Date('11/15/20'),
     name: 'Bodywork Concept of Design',
     status: WBS_Element_Status.ACTIVE,
-    projectLeadId: 4,
+    projectLeadId: [4],
     projectManagerId: 5
   },
   workPackageFields: {
@@ -52,7 +52,7 @@ const dbSeedWorkPackage2: any = {
     dateCreated: new Date('10/02/20'),
     name: 'Adhesive Shear Strength Test',
     status: WBS_Element_Status.INACTIVE,
-    projectLeadId: 4,
+    projectLeadId: [4],
     projectManagerId: 5
   },
   workPackageFields: {
@@ -94,7 +94,7 @@ const dbSeedWorkPackage3: any = {
     dateCreated: new Date('09/27/20'),
     name: 'Manufacture Wiring Harness',
     status: WBS_Element_Status.COMPLETE,
-    projectLeadId: 4,
+    projectLeadId: [4],
     projectManagerId: 5
   },
   workPackageFields: {

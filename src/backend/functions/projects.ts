@@ -4,7 +4,13 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient } from '@prisma/client';
+import {
+  Description_Bullet,
+  Prisma,
+  PrismaClient,
+  WBS_Element,
+  WBS_Element_Status
+} from '@prisma/client';
 import {
   routeMatcher,
   ApiRoute,
@@ -16,37 +22,114 @@ import {
   buildServerFailureResponse,
   buildClientFailureResponse,
   validateWBS,
-  isProject
+  isProject,
+  Project,
+  WbsElementStatus,
+  DescriptionBullet
 } from 'utils';
 
 const prisma = new PrismaClient();
 
-// Fetch all projects
-const getAllProjects: ApiRouteFunction = async () => {
-  const projects = await prisma.project.findMany({
-    include: {
-      wbsElement: {
-        include: { projectLead: true, projectManager: true }
-      },
-      workPackages: {
-        select: { startDate: true, duration: true }
+const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
+  include: {
+    wbsElement: {
+      include: {
+        projectLead: true,
+        projectManager: true,
+        changes: { include: { implementer: true } }
       }
-    }
-  });
-  return buildSuccessResponse(
-    projects.map((prj) => {
+    },
+    goals: true,
+    features: true,
+    otherConstraints: true,
+    workPackages: { include: { wbsElement: true, dependencies: true } }
+  }
+});
+
+const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
+  include: {
+    project: {
+      include: {
+        goals: true,
+        features: true,
+        otherConstraints: true,
+        workPackages: { include: { wbsElement: true, dependencies: true } }
+      }
+    },
+    projectLead: true,
+    projectManager: true,
+    changes: { include: { implementer: true } }
+  }
+});
+
+const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
+
+const wbsNumOf = (element: WBS_Element): WbsNumber => ({
+  car: element.carNumber,
+  project: element.projectNumber,
+  workPackage: element.workPackageNumber
+});
+
+const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
+  ...descBullet,
+  id: descBullet.descriptionId,
+  dateDeleted: descBullet.dateDeleted ?? undefined
+});
+
+const projectTransformer = (
+  payload:
+    | Prisma.ProjectGetPayload<typeof manyRelationArgs>
+    | Prisma.WBS_ElementGetPayload<typeof uniqueRelationArgs>
+): Project => {
+  if (payload === null) throw new TypeError('WBS_Element not found');
+  const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
+  const project = 'project' in payload ? payload.project! : payload;
+  const wbsNum = wbsNumOf(wbsElement);
+
+  return {
+    ...project,
+    ...wbsElement,
+    id: project.projectId,
+    projectManager: wbsElement.projectManager ?? undefined,
+    projectLead: wbsElement.projectLead ?? undefined,
+    status: convertStatus(wbsElement.status),
+    changes: wbsElement.changes.map((change) => ({
+      ...change,
+      wbsNum
+    })),
+    wbsNum,
+    gDriveLink: project.googleDriveFolderLink ?? undefined,
+    slideDeckLink: project.slideDeckLink ?? undefined,
+    taskListLink: project.taskListLink ?? undefined,
+    bomLink: project.bomLink ?? undefined,
+    otherConstraints: project.otherConstraints.map(descBulletConverter),
+    features: project.features.map(descBulletConverter),
+    goals: project.goals.map(descBulletConverter),
+    workPackages: project.workPackages.map((workPackage) => {
+      const endDate = new Date(workPackage.startDate);
+      endDate.setDate(workPackage.duration * 7);
+
       return {
-        ...prj,
-        ...prj.wbsElement,
-        wbsNum: {
-          car: prj.wbsElement.carNumber,
-          project: prj.wbsElement.projectNumber,
-          workPackage: prj.wbsElement.workPackageNumber
-        },
-        duration: prj.workPackages.reduce((prev, curr) => prev + curr.duration, 0)
+        ...workPackage,
+        ...workPackage.wbsElement,
+        id: workPackage.workPackageId,
+        wbsNum: wbsNumOf(workPackage.wbsElement),
+        endDate,
+        dependencies: workPackage.dependencies.map(wbsNumOf)
       };
     })
-  );
+  };
+};
+
+// Fetch all projects
+const getAllProjects: ApiRouteFunction = async () => {
+  const projects = await prisma.project.findMany(manyRelationArgs);
+  return buildSuccessResponse(projects.map(projectTransformer));
 };
 
 // Fetch the project for the specified WBS number
@@ -63,35 +146,13 @@ const getSingleProject: ApiRouteFunction = async (params: { wbs: string }) => {
         workPackageNumber: parsedWbs.workPackage
       }
     },
-    include: {
-      project: {
-        include: { goals: true, features: true, otherConstraints: true, workPackages: true }
-      },
-      projectLead: true,
-      projectManager: true
-    }
+    ...uniqueRelationArgs
   });
   if (wbsEle === null) {
     return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
   }
-  let endDate = new Date(wbsEle!.project?.workPackages[0].startDate!);
-  for (const wp of wbsEle!.project?.workPackages!) {
-    const wpEnd = new Date(wp.startDate);
-    wpEnd.setDate(wpEnd.getDate() + wp.duration * 7);
-    if (wpEnd > endDate) {
-      endDate = wpEnd;
-    }
-  }
-  return buildSuccessResponse({
-    ...wbsEle!,
-    ...wbsEle!.project,
-    endDate,
-    wbsNumber: {
-      car: wbsEle!.carNumber,
-      project: wbsEle!.projectNumber,
-      workPackage: wbsEle!.workPackageNumber
-    }
-  });
+
+  return buildSuccessResponse(projectTransformer(wbsEle));
 };
 
 const routes: ApiRoute[] = [

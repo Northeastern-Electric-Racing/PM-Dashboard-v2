@@ -31,15 +31,25 @@ export enum WbsElementStatus {
 
 export interface Project extends WbsElement {
   budget: number;
-  gDriveLink: string;
-  taskListLink: string;
-  slideDeckLink: string;
-  bomLink: string;
+  gDriveLink?: string;
+  taskListLink?: string;
+  slideDeckLink?: string;
+  bomLink?: string;
   rules: string[];
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
-  workPackages: WorkPackage[];
+  workPackages: WorkPackageSummary[];
+}
+
+export interface WorkPackageSummary {
+  id: number;
+  wbsNum: WbsNumber;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  duration: number;
+  dependencies: WbsNumber[];
 }
 
 export interface WorkPackage extends WbsElement {

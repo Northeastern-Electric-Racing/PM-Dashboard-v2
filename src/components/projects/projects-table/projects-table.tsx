@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, WorkPackage } from 'utils';
+import { Project, User, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';
@@ -68,6 +68,36 @@ const ProjectsTable: React.FC = () => {
   };
 
   /**
+   * Returns an array of user names who are listed as a project's lead.
+   */
+  const getLeads = (): string[] => {
+    const projects = data!;
+    let leads: string[] = [];
+    for (let project of projects) {
+      let name = fullNamePipe(project.projectLead);
+      if (!leads.includes(name)) {
+        leads.push(name);
+      }
+    }
+    return leads;
+  };
+
+  /**
+   * Returns an array of user names who are listed as a project's managers.
+   */
+  const getManagers = (): string[] => {
+    const projects = data!;
+    let managers: string[] = [];
+    for (let project of projects) {
+      let name = fullNamePipe(project.projectManager);
+      if (!managers.includes(name)) {
+        managers.push(name);
+      }
+    }
+    return managers;
+  };
+
+  /**
    * Returns a list of projects that has been filtered according to
    * the current state of the filter parameters.
    */
@@ -107,6 +137,8 @@ const ProjectsTable: React.FC = () => {
   };
 
   const filtered_data: Project[] = filterProjects();
+  const projectLeads: string[] = getLeads();
+  const projectManagers: string[] = getManagers();
 
   return (
     <>
@@ -114,7 +146,11 @@ const ProjectsTable: React.FC = () => {
       <div className={styles.container}>
         <Row>
           <div className={styles.filterTable}>
-            <ProjectsTableFilter onClick={sendDataToParent} />
+            <ProjectsTableFilter
+              onClick={sendDataToParent}
+              leads={projectLeads}
+              managers={projectManagers}
+            />
           </div>
           <div className={styles.projectsTable}>
             <PrjsTable allProjects={transformToDisplayProjects(filtered_data)} />

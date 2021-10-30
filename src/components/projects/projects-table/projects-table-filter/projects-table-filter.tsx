@@ -5,15 +5,15 @@
 
 import { Button, ButtonGroup, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
-import { useAllUsers } from '../../../../services/users.hooks';
 import { fullNamePipe } from '../../../../shared/pipes';
-import { Role, User } from 'utils';
 import React, { useState } from 'react';
 
 /**
  * Variables to filter table with.
  */
 interface FilterProps {
+  leads: string[];
+  managers: string[];
   onClick: (
     status: string,
     year: string,
@@ -27,7 +27,7 @@ interface FilterProps {
  * Interactive table for setting filter parameters.
  * @param onClick Determines what happens when the Apply button is clicked.
  */
-const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) => {
+const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }: FilterProps) => {
   const [status, setStatus] = useState('');
   const [year, setYear] = useState('');
   const [projectLead, setProjectLead] = useState('');
@@ -55,49 +55,25 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
    * Programmatically generates dropdown items for project leads dropdown menu.
    */
   const ProjectLeads = () => {
-    const leadCheck = (user: User) => {
-      return user.role === Role.ProjectLead;
-    };
-    const data = useAllUsers();
     let result: any[] = [];
-    if (data.data != undefined) {
-      data.data = data.data.filter(leadCheck);
-      for (let i = 0; i < data.data.length; i++) {
-        result.push(
-          <Dropdown.Item onClick={() => setProjectLead(fullNamePipe(data.data[i]))}>
-            {fullNamePipe(data.data[i])}
-          </Dropdown.Item>
-        );
-      }
+    for (let lead of leads) {
+      result.push(<Dropdown.Item onClick={() => setProjectLead(lead)}>{lead}</Dropdown.Item>);
     }
     return <div>{result}</div>;
   };
 
   /**
-   * Programmatically generates dropdown items for project dropdown managers menu.
+   * Programmatically generates dropdown items for project managers dropdown menu.
    */
   const ProjectManagers = () => {
-    const data = useAllUsers();
-    const managerCheck = (user: User) => {
-      return user.role === Role.ProjectManager;
-    };
     let result: any[] = [];
-    if (data.data != undefined) {
-      data.data = data.data.filter(managerCheck);
-      for (let i = 0; i < data.data.length; i++) {
-        result.push(
-          <Dropdown.Item onClick={() => setProjectManager(fullNamePipe(data.data[i]))}>
-            {fullNamePipe(data.data[i])}
-          </Dropdown.Item>
-        );
-      }
+    for (let manager of managers) {
+      result.push(
+        <Dropdown.Item onClick={() => setProjectManager(manager)}>{manager}</Dropdown.Item>
+      );
     }
     return <div>{result}</div>;
   };
-
-  const dropdownToggle = (
-    <Dropdown.Toggle split variant="light" id="dropdown-split-basic" block={true} />
-  );
 
   return (
     <>
@@ -111,8 +87,14 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 <Button variant="light" className={styles.button}>
                   {carNumber}
                 </Button>
-                {dropdownToggle}
-                <Dropdown.Menu className="btn-block">
+                <Dropdown.Toggle
+                  data-testid="car-num-toggle"
+                  split
+                  variant="light"
+                  id="dropdown-split-basic"
+                  block={true}
+                />
+                <Dropdown.Menu data-testid="car-num-menu" className="btn-block">
                   <Dropdown.Item onClick={() => setCarNumber('')}>None</Dropdown.Item>
                   <Dropdown.Item onClick={() => setCarNumber('1')}>1</Dropdown.Item>
                   <Dropdown.Item onClick={() => setCarNumber('2')}>2</Dropdown.Item>
@@ -125,7 +107,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 <Button variant="light" className={styles.button}>
                   {status}
                 </Button>
-                {dropdownToggle}
+                <Dropdown.Toggle
+                  data-testid="status-toggle"
+                  split
+                  variant="light"
+                  id="dropdown-split-basic"
+                  block={true}
+                />
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setStatus('')}>None</Dropdown.Item>
                   <Dropdown.Item onClick={() => setStatus('Active')}>Active</Dropdown.Item>
@@ -140,7 +128,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 <Button variant="light" className={styles.button}>
                   {projectLead}
                 </Button>
-                {dropdownToggle}
+                <Dropdown.Toggle
+                  data-testid="lead-toggle"
+                  split
+                  variant="light"
+                  id="dropdown-split-basic"
+                  block={true}
+                />
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setProjectLead('')}>None</Dropdown.Item>
                   {ProjectLeads()}
@@ -153,7 +147,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 <Button variant="light" className={styles.button}>
                   {projectManager}
                 </Button>
-                {dropdownToggle}
+                <Dropdown.Toggle
+                  data-testid="manager-toggle"
+                  split
+                  variant="light"
+                  id="dropdown-split-basic"
+                  block={true}
+                />
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setProjectManager('')}>None</Dropdown.Item>
                   {ProjectManagers()}
@@ -166,7 +166,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
                 <Button variant="light" className={styles.button}>
                   {year}
                 </Button>
-                {dropdownToggle}
+                <Dropdown.Toggle
+                  data-testid="year-toggle"
+                  split
+                  variant="light"
+                  id="dropdown-split-basic"
+                  block={true}
+                />
                 <Dropdown.Menu className="btn-block">
                   <Dropdown.Item onClick={() => setYear('')}>None</Dropdown.Item>
                   {Years()}
@@ -176,6 +182,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick }: FilterProps) =>
             <div className={styles.applyButton}>
               <Button
                 variant="danger"
+                data-testid="apply-toggle"
                 onClick={() => {
                   onClick(status, year, projectLead, projectManager, carNumber);
                 }}

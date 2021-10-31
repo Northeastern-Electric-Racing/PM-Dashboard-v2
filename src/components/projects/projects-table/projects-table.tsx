@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, User, WorkPackage } from 'utils';
+import { Project, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { DisplayProject } from './projects-table/projects-table';
@@ -15,6 +15,57 @@ import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
 import PageTitle from '../../shared/page-title/page-title';
 import React, { useState } from 'react';
+
+/***
+ * Returns a list of projects that has been filtered according to the given params.
+ * @param projects The list of projects to filter.
+ * @param carNumber The car the project is focused on.
+ * @param status The status of the project.
+ * @param year The year the project was created in.
+ * @param projectLead The name of the user leading the project.
+ * @param projectManager The name of the user managing the project.
+ * @return The filtered list of projects.
+ */
+export function filterProjects(
+  projects: Project[],
+  carNumber: string,
+  status: string,
+  year: string,
+  projectLead: string,
+  projectManager: string
+): Project[] {
+  const carNumCheck = (project: Project) => {
+    return carNumber === project.wbsNum.car.toString();
+  };
+  const statusCheck = (project: Project) => {
+    return project.status === status;
+  };
+  const yearCheck = (project: Project) => {
+    return `${project.dateCreated.getUTCFullYear()}` === year;
+  };
+  const leadCheck = (project: Project) => {
+    return fullNamePipe(project.projectLead) === projectLead;
+  };
+  const managerCheck = (project: Project) => {
+    return fullNamePipe(project.projectManager) === projectManager;
+  };
+  if (carNumber != '') {
+    projects = projects.filter(carNumCheck);
+  }
+  if (status != '') {
+    projects = projects.filter(statusCheck);
+  }
+  if (year != '') {
+    projects = projects.filter(yearCheck);
+  }
+  if (projectLead != '') {
+    projects = projects.filter(leadCheck);
+  }
+  if (projectManager != '') {
+    projects = projects.filter(managerCheck);
+  }
+  return projects;
+}
 
 /**
  * Parent component for the projects page housing the filter table and projects table.
@@ -97,46 +148,14 @@ const ProjectsTable: React.FC = () => {
     return managers;
   };
 
-  /**
-   * Returns a list of projects that has been filtered according to
-   * the current state of the filter parameters.
-   */
-  const filterProjects = (): Project[] => {
-    let projects = data!;
-    const carNumCheck = (project: Project) => {
-      return carNumber === project.wbsNum.car.toString();
-    };
-    const statusCheck = (project: Project) => {
-      return project.status === status;
-    };
-    const yearCheck = (project: Project) => {
-      return `${project.dateCreated.getUTCFullYear()}` === year;
-    };
-    const leadCheck = (project: Project) => {
-      return fullNamePipe(project.projectLead) === projectLead;
-    };
-    const managerCheck = (project: Project) => {
-      return fullNamePipe(project.projectManager) === projectManager;
-    };
-    if (carNumber != '') {
-      projects = projects.filter(carNumCheck);
-    }
-    if (status != '') {
-      projects = projects.filter(statusCheck);
-    }
-    if (year != '') {
-      projects = projects.filter(yearCheck);
-    }
-    if (projectLead != '') {
-      projects = projects.filter(leadCheck);
-    }
-    if (projectManager != '') {
-      projects = projects.filter(managerCheck);
-    }
-    return projects;
-  };
-
-  const filtered_data: Project[] = filterProjects();
+  const filtered_data: Project[] = filterProjects(
+    data!,
+    carNumber,
+    status,
+    year,
+    projectLead,
+    projectManager
+  );
   const projectLeads: string[] = getLeads();
   const projectManagers: string[] = getManagers();
 

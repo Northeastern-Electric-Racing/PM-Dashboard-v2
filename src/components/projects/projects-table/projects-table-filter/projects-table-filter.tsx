@@ -44,7 +44,11 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
     let result: any[] = [];
     for (let i = 0; i < current_year - start + 1; i++) {
       result.push(
-        <Dropdown.Item key={start + i} onClick={() => setYear(`${start + i}`)}>
+        <Dropdown.Item
+          key={start + i}
+          data-testid={'year-' + (start + i).toString()}
+          onClick={() => setYear(`${start + i}`)}
+        >
           {start + i}
         </Dropdown.Item>
       );
@@ -58,7 +62,11 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   const ProjectLeads = () => {
     let result: any[] = [];
     for (let lead of leads) {
-      result.push(<Dropdown.Item onClick={() => setProjectLead(lead)}>{lead}</Dropdown.Item>);
+      result.push(
+        <Dropdown.Item key={lead} data-testid={'lead-' + lead} onClick={() => setProjectLead(lead)}>
+          {lead}
+        </Dropdown.Item>
+      );
     }
     return <div>{result}</div>;
   };
@@ -70,7 +78,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
     let result: any[] = [];
     for (let manager of managers) {
       result.push(
-        <Dropdown.Item onClick={() => setProjectManager(manager)}>{manager}</Dropdown.Item>
+        <Dropdown.Item
+          key={manager}
+          data-testid={'manager-' + manager}
+          onClick={() => setProjectManager(manager)}
+        >
+          {manager}
+        </Dropdown.Item>
       );
     }
     return <div>{result}</div>;
@@ -96,9 +110,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   block={true}
                 />
                 <Dropdown.Menu data-testid="car-num-menu" className="btn-block">
-                  <Dropdown.Item onClick={() => setCarNumber('')}>None</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setCarNumber('1')}>1</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setCarNumber('2')}>2</Dropdown.Item>
+                  <Dropdown.Item data-testid="car-num-none" onClick={() => setCarNumber('')}>
+                    None
+                  </Dropdown.Item>
+                  <Dropdown.Item data-testid="car-num-1" onClick={() => setCarNumber('1')}>
+                    1
+                  </Dropdown.Item>
+                  <Dropdown.Item data-testid="car-num-2" onClick={() => setCarNumber('2')}>
+                    2
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
@@ -116,10 +136,24 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   block={true}
                 />
                 <Dropdown.Menu data-testid="status-menu" className="btn-block">
-                  <Dropdown.Item onClick={() => setStatus('')}>None</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setStatus('Active')}>Active</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setStatus('Inactive')}>Inactive</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setStatus('Complete')}>Complete</Dropdown.Item>
+                  <Dropdown.Item data-testid="status-none" onClick={() => setStatus('')}>
+                    None
+                  </Dropdown.Item>
+                  <Dropdown.Item data-testid="status-active" onClick={() => setStatus('Active')}>
+                    Active
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    data-testid="status-inactive"
+                    onClick={() => setStatus('Inactive')}
+                  >
+                    Inactive
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    data-testid="status-complete"
+                    onClick={() => setStatus('Complete')}
+                  >
+                    Complete
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
@@ -137,7 +171,9 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   block={true}
                 />
                 <Dropdown.Menu data-testid="lead-menu" className="btn-block">
-                  <Dropdown.Item onClick={() => setProjectLead('')}>None</Dropdown.Item>
+                  <Dropdown.Item data-testid="lead-none" onClick={() => setProjectLead('')}>
+                    None
+                  </Dropdown.Item>
                   {ProjectLeads()}
                 </Dropdown.Menu>
               </Dropdown>
@@ -156,7 +192,9 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   block={true}
                 />
                 <Dropdown.Menu data-testid="manager-menu" className="btn-block">
-                  <Dropdown.Item onClick={() => setProjectManager('')}>None</Dropdown.Item>
+                  <Dropdown.Item data-testid="manager-none" onClick={() => setProjectManager('')}>
+                    None
+                  </Dropdown.Item>
                   {ProjectManagers()}
                 </Dropdown.Menu>
               </Dropdown>
@@ -175,7 +213,9 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   block={true}
                 />
                 <Dropdown.Menu data-testid="year-menu" className="btn-block">
-                  <Dropdown.Item onClick={() => setYear('')}>None</Dropdown.Item>
+                  <Dropdown.Item data-testid="year-none" onClick={() => setYear('')}>
+                    None
+                  </Dropdown.Item>
                   {Years()}
                 </Dropdown.Menu>
               </Dropdown>

@@ -13,7 +13,6 @@ import ErrorPage from '../../shared/error-page/error-page';
 import styles from './projects-table.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
-import PageTitle from '../../shared/page-title/page-title';
 import React, { useState } from 'react';
 
 /***
@@ -161,7 +160,9 @@ const ProjectsTable: React.FC = () => {
 
   return (
     <>
-      <PageTitle title={'Projects'} />
+      <div className={'mx-4 pt-1 pb-1'}>
+        <h3>Projects</h3>
+      </div>
       <div className={styles.container}>
         <Row>
           <div className={styles.filterTable}>

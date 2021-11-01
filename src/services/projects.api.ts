@@ -4,11 +4,10 @@
  */
 
 import axios from 'axios';
-import { DescriptionBullet, Project, ProjectSummary, WbsNumber } from 'utils';
+import { DescriptionBullet, Project, ProjectSummary, WbsNumber, WorkPackageSummary } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
 import { userTransformer } from './users.api';
-import { workPackageTransformer } from './work-packages.api';
 
 /**
  * Transforms a description bullet to ensure deep field transformation of date objects.
@@ -34,7 +33,7 @@ const projectTransformer = (project: Project) => {
   return {
     ...project,
     dateCreated: new Date(project.dateCreated),
-    workPackages: project.workPackages.map(workPackageTransformer),
+    workPackages: project.workPackages.map(workPackageSummaryTransformer),
     goals: project.goals.map(descriptionBulletTransformer),
     features: project.features.map(descriptionBulletTransformer),
     otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)
@@ -53,6 +52,14 @@ const projectSummaryTransformer = (projectSummary: ProjectSummary) => {
     projectLead: userTransformer(projectSummary.projectLead),
     projectManager: userTransformer(projectSummary.projectManager)
   } as ProjectSummary;
+};
+
+const workPackageSummaryTransformer = (workPackageSummary: WorkPackageSummary) => {
+  return {
+    ...workPackageSummary,
+    startDate: new Date(workPackageSummary.startDate),
+    endDate: new Date(workPackageSummary.endDate)
+  } as WorkPackageSummary;
 };
 
 /**

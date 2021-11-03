@@ -6,13 +6,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
-import { WorkPackageSummary as WorkPackageSum } from 'utils';
+import { WorkPackageSummary as WPSummary } from 'utils';
 import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 
 interface WorkPackageSummaryProps {
-  workPackage: WorkPackageSum;
+  workPackage: WPSummary;
 }
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) => {

@@ -28,7 +28,10 @@ describe('project details component', () => {
   it('Renders project lead', () => {
     render(<ProjectDetails project={exampleProject3} />);
     const projectNameElement = screen.getByText(
-      listPipe(exampleProject3.projectLead, fullNamePipe)
+      listPipe(exampleProject3.projectLead, fullNamePipe),
+      {
+        exact: false
+      }
     );
     expect(projectNameElement).toBeInTheDocument();
   });

@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from '@prisma/client';
 import { WorkPackage } from 'utils';
 import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
@@ -24,10 +23,10 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)}
         </p>
         <p>
-          <b>Project Lead:</b> {fullNamePipe((workPackage.projectLead as unknown) as User)}
+          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
         </p>
         <p>
-          <b>Project Manager:</b> {fullNamePipe((workPackage.projectManager as unknown) as User)}
+          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
         </p>
         <p>
           <b>Duration:</b> {weeksPipe(workPackage.duration)}

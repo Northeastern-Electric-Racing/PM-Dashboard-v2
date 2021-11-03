@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from '@prisma/client';
 import { ProjectSummary } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
@@ -25,8 +24,8 @@ const ProjectsTable: React.FC = () => {
       return {
         ...prj,
         wbsNum: wbsPipe(prj.wbsNum),
-        projectLead: fullNamePipe((prj.projectLead as unknown) as User),
-        projectManager: fullNamePipe((prj.projectManager as unknown) as User),
+        projectLead: fullNamePipe(prj.projectLead),
+        projectManager: fullNamePipe(prj.projectManager),
         duration: weeksPipe(prj.duration)
       };
     }) as DisplayProject[];

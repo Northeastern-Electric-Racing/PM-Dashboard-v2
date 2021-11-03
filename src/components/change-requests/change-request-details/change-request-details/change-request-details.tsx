@@ -4,7 +4,6 @@
  */
 
 import { ReactElement } from 'react';
-import { User } from '@prisma/client';
 import {
   ChangeRequest,
   StandardChangeRequest,
@@ -80,10 +79,10 @@ const buildActivationChangeRequestDetails = (cr: ActivationChangeRequest): React
       body={
         <dl className="row">
           <dt className="col-2">Project Lead</dt>
-          <dd className="col-3">{fullNamePipe((cr.projectLead as unknown) as User)}</dd>
+          <dd className="col-3">{fullNamePipe(cr.projectLead)}</dd>
           <div className="w-100"></div>
           <dt className="col-2">Project Manager</dt>
-          <dd className="col-3">{fullNamePipe((cr.projectManager as unknown) as User)}</dd>
+          <dd className="col-3">{fullNamePipe(cr.projectManager)}</dd>
           <div className="w-100"></div>
           <dt className="col-2">Start Date</dt>
           <dd className="col-3">{cr.startDate.toUTCString()}</dd>
@@ -140,7 +139,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         body={
           <dl className="row">
             <dt className="col-2">Submitted</dt>
-            <dd className="col-2">{fullNamePipe((changeRequest.submitter as unknown) as User)}</dd>
+            <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
             <dd className="col-3">{changeRequest.dateSubmitted.toUTCString()}</dd>
             <div className="w-100"></div>
             <dt className="col-2">Type</dt>

@@ -5,20 +5,17 @@
 
 import { render, screen, act, fireEvent } from '../../../../test-support/test-utils';
 import ProjectsTableFilter from './projects-table-filter';
-import React from 'react';
 
 let temp: string[] = [];
 
 const mockOnClick = (
   status: string,
-  year: string,
   projectLead: string,
   projectManager: string,
   carNumber: string
 ) => {
   temp = [];
   temp.push(status);
-  temp.push(year);
   temp.push(projectLead);
   temp.push(projectManager);
   temp.push(carNumber);
@@ -43,7 +40,6 @@ describe('projects table filter component', () => {
     expect(screen.getByText('Status')).toBeInTheDocument();
     expect(screen.getByText('Project Lead')).toBeInTheDocument();
     expect(screen.getByText('Project Manager')).toBeInTheDocument();
-    expect(screen.getByText('Year Created')).toBeInTheDocument();
   });
 
   it('checking if data in the car dropdown menu is correct', async () => {
@@ -83,16 +79,6 @@ describe('projects table filter component', () => {
     expect(screen.getByTestId('manager-menu')).toHaveTextContent('None');
   });
 
-  it('checking if data in the year dropdown menu is correct', async () => {
-    renderComponent();
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('year-toggle'));
-    });
-    expect(screen.getByTestId('year-menu')).toHaveTextContent('None');
-    expect(screen.getByTestId('year-menu')).toHaveTextContent('2020');
-    expect(screen.getByTestId('year-menu')).toHaveTextContent('2021');
-  });
-
   it('checking if text in the apply button is correct', async () => {
     renderComponent();
     await act(async () => {
@@ -106,7 +92,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[4]).toBe('');
+    expect(temp[3]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
@@ -116,7 +102,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[4]).toBe('1');
+    expect(temp[3]).toBe('1');
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
@@ -126,7 +112,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[4]).toBe('');
+    expect(temp[3]).toBe('');
   });
 
   it('checking if status dropdown sets filter setting correctly', async () => {
@@ -162,7 +148,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[2]).toBe('');
+    expect(temp[1]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
@@ -172,7 +158,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[2]).toBe('Amy Smith');
+    expect(temp[1]).toBe('Amy Smith');
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
@@ -182,7 +168,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[2]).toBe('');
+    expect(temp[1]).toBe('');
   });
 
   it('checking if project manager dropdown sets filter setting correctly', async () => {
@@ -190,7 +176,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[3]).toBe('');
+    expect(temp[2]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
@@ -200,7 +186,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[3]).toBe('Joe Blow');
+    expect(temp[2]).toBe('Joe Blow');
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
@@ -210,34 +196,6 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));
     });
-    expect(temp[3]).toBe('');
-  });
-
-  it('checking if year dropdown sets filter setting correctly', async () => {
-    renderComponent();
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
-    });
-    expect(temp[1]).toBe('');
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('year-toggle'));
-    });
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('year-2020'));
-    });
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
-    });
-    expect(temp[1]).toBe('2020');
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('year-toggle'));
-    });
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('year-none'));
-    });
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
-    });
-    expect(temp[1]).toBe('');
+    expect(temp[2]).toBe('');
   });
 });

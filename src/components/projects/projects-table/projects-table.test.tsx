@@ -131,37 +131,29 @@ describe('projects table component', () => {
     const answer_active: Project[] = [exampleProject1, exampleProject3];
     const answer_inactive: Project[] = [exampleProject2, exampleProject4];
     const answer_complete: Project[] = [exampleProject5];
-    expect(filterProjects(exampleAllProjects, '', 'Active', '', '', '')).toStrictEqual(
-      answer_active
-    );
-    expect(filterProjects(exampleAllProjects, '', 'Inactive', '', '', '')).toStrictEqual(
+    expect(filterProjects(exampleAllProjects, '', 'Active', '', '')).toStrictEqual(answer_active);
+    expect(filterProjects(exampleAllProjects, '', 'Inactive', '', '')).toStrictEqual(
       answer_inactive
     );
-    expect(filterProjects(exampleAllProjects, '', 'Complete', '', '', '')).toStrictEqual(
+    expect(filterProjects(exampleAllProjects, '', 'Complete', '', '')).toStrictEqual(
       answer_complete
     );
-  });
-  it('checking if project filtering with year works as expected', async () => {
-    expect(filterProjects(exampleAllProjects, '', '', '2020', '', '')).toStrictEqual(
-      exampleAllProjects
-    );
-    expect(filterProjects(exampleAllProjects, '', '', '2021', '', '')).toStrictEqual([]);
   });
 
   it('checking if project filtering with project lead works as expected', async () => {
     const answer1: Project[] = [exampleProject1, exampleProject2, exampleProject5];
     const answer2: Project[] = [exampleProject3, exampleProject4];
-    expect(filterProjects(exampleAllProjects, '', '', '', 'Amy Smith', '')).toStrictEqual(answer1);
-    expect(filterProjects(exampleAllProjects, '', '', '', 'Joe Blow', '')).toStrictEqual(answer2);
+    expect(filterProjects(exampleAllProjects, '', '', 'Amy Smith', '')).toStrictEqual(answer1);
+    expect(filterProjects(exampleAllProjects, '', '', 'Joe Blow', '')).toStrictEqual(answer2);
   });
   it('checking if project filtering with project manager works as expected', async () => {
     const answer1: Project[] = [exampleProject1];
     const answer2: Project[] = [exampleProject2, exampleProject3, exampleProject5];
     const answer3: Project[] = [exampleProject4];
-    expect(filterProjects(exampleAllProjects, '', '', '', '', 'Joe Blow')).toStrictEqual(answer1);
-    expect(filterProjects(exampleAllProjects, '', '', '', '', 'Rachel Barmatha')).toStrictEqual(
+    expect(filterProjects(exampleAllProjects, '', '', '', 'Joe Blow')).toStrictEqual(answer1);
+    expect(filterProjects(exampleAllProjects, '', '', '', 'Rachel Barmatha')).toStrictEqual(
       answer2
     );
-    expect(filterProjects(exampleAllProjects, '', '', '', '', 'Joe Shmoe')).toStrictEqual(answer3);
+    expect(filterProjects(exampleAllProjects, '', '', '', 'Joe Shmoe')).toStrictEqual(answer3);
   });
 });

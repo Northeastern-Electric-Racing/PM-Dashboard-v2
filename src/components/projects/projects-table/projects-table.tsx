@@ -13,14 +13,14 @@ import ErrorPage from '../../shared/error-page/error-page';
 import styles from './projects-table.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PageTitle from '../../shared/page-title/page-title';
 
 /***
  * Returns a list of projects that has been filtered according to the given params.
  * @param projects The list of projects to filter.
  * @param carNumber The car the project is focused on.
  * @param status The status of the project.
- * @param year The year the project was created in.
  * @param projectLead The name of the user leading the project.
  * @param projectManager The name of the user managing the project.
  * @return The filtered list of projects.
@@ -29,33 +29,26 @@ export function filterProjects(
   projects: Project[],
   carNumber: string,
   status: string,
-  year: string,
   projectLead: string,
   projectManager: string
 ): Project[] {
   const carNumCheck = (project: Project) => {
-    return carNumber === project.wbsNum.car.toString();
+    return carNumber == project.wbsNum.car.toString();
   };
   const statusCheck = (project: Project) => {
-    return project.status === status;
-  };
-  const yearCheck = (project: Project) => {
-    return `${project.dateCreated.getUTCFullYear()}` === year;
+    return project.status == status;
   };
   const leadCheck = (project: Project) => {
-    return fullNamePipe(project.projectLead) === projectLead;
+    return fullNamePipe(project.projectLead) == projectLead;
   };
   const managerCheck = (project: Project) => {
-    return fullNamePipe(project.projectManager) === projectManager;
+    return fullNamePipe(project.projectManager) == projectManager;
   };
   if (carNumber != '') {
     projects = projects.filter(carNumCheck);
   }
   if (status != '') {
     projects = projects.filter(statusCheck);
-  }
-  if (year != '') {
-    projects = projects.filter(yearCheck);
   }
   if (projectLead != '') {
     projects = projects.filter(leadCheck);
@@ -71,7 +64,6 @@ export function filterProjects(
  */
 const ProjectsTable: React.FC = () => {
   const [status, setStatus] = useState('');
-  const [year, setYear] = useState('');
   const [projectLead, setProjectLead] = useState('');
   const [projectManager, setProjectManager] = useState('');
   const [carNumber, setCarNumber] = useState('');
@@ -98,20 +90,17 @@ const ProjectsTable: React.FC = () => {
   /**
    * Updates state with data from input parameters.
    * @param status The status of the project.
-   * @param year The year the project was created.
    * @param projectLead The project lead of the project.
    * @param projectManager The project manager of the project.
    * @param carNumber The carNumber of the project.
    */
   const sendDataToParent = (
     status: string,
-    year: string,
     projectLead: string,
     projectManager: string,
     carNumber: string
   ) => {
     setStatus(status);
-    setYear(year);
     setProjectLead(projectLead);
     setProjectManager(projectManager);
     setCarNumber(carNumber);
@@ -124,6 +113,10 @@ const ProjectsTable: React.FC = () => {
     const projects = data!;
     let leads: string[] = [];
     for (let project of projects) {
+      /**
+       * This will have to be modified when the projectLead field is changed
+       * to an array of Users in the near future.
+       */
       let name = fullNamePipe(project.projectLead);
       if (!leads.includes(name)) {
         leads.push(name);
@@ -147,33 +140,24 @@ const ProjectsTable: React.FC = () => {
     return managers;
   };
 
-  const filtered_data: Project[] = filterProjects(
-    data!,
-    carNumber,
-    status,
-    year,
-    projectLead,
-    projectManager
-  );
-  const projectLeads: string[] = getLeads();
-  const projectManagers: string[] = getManagers();
-
   return (
     <>
-      <div className={'mx-4 pt-1 pb-1'}>
-        <h3>Projects</h3>
-      </div>
+      <PageTitle title={'Projects'} />
       <div className={styles.container}>
         <Row>
           <div className={styles.filterTable}>
             <ProjectsTableFilter
               onClick={sendDataToParent}
-              leads={projectLeads}
-              managers={projectManagers}
+              leads={getLeads()}
+              managers={getManagers()}
             />
           </div>
           <div className={styles.projectsTable}>
-            <PrjsTable allProjects={transformToDisplayProjects(filtered_data)} />
+            <PrjsTable
+              allProjects={transformToDisplayProjects(
+                filterProjects(data!, carNumber, status, projectLead, projectManager)
+              )}
+            />
           </div>
         </Row>
       </div>

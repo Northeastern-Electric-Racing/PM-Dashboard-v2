@@ -14,8 +14,8 @@ import { WbsNumber } from 'utils';
  * Pipe is a term / tool from Angular.
  */
 
-export const linkPipe = (description: string, link: string): ReactElement => {
-  return <a href={link}>{description}</a>;
+export const linkPipe = (description: string, link?: string): ReactElement => {
+  return link ? <a href={link}>{description}</a> : <>{description}</>;
 };
 
 export const weeksPipe = (weeks: number): string => {
@@ -30,8 +30,8 @@ export const wbsPipe = (wbsNum: WbsNumber): string => {
   return `${wbsNum.car}.${wbsNum.project}.${wbsNum.workPackage}`;
 };
 
-export const fullNamePipe = (user: User): string => {
-  return `${user.firstName} ${user.lastName}`;
+export const fullNamePipe = (user?: User): string => {
+  return user ? `${user.firstName} ${user.lastName}` : emDashPipe();
 };
 
 export const booleanPipe = (bool: boolean): string => {
@@ -51,13 +51,13 @@ export const endDatePipe = (startDate: Date, durWeeks: number): string => {
 };
 
 // Returns an empty string if a passed in string is empty, otherwise return the given string
-export const emptyStringPipe = (str: string): string => {
-  return str === undefined || str === null ? '' : str;
+export const emptyStringPipe = (str?: string): string => {
+  return str ?? '';
 };
 
 // Replace an empty string with an EM dash
-export const emDashPipe = (str: string): string => {
-  return str === undefined || str === null ? '—' : str;
+export const emDashPipe = (str?: string): string => {
+  return str ?? '—';
 };
 
 // return a given data as a string in the local en-US format

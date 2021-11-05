@@ -4,7 +4,6 @@
  */
 
 import { ChangeRequest, ChangeRequestType } from 'utils';
-export {};
 
 /**
  * Transforms a change request to ensure deep field transformation of date objects.

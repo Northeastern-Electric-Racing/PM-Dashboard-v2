@@ -110,6 +110,7 @@ const projectTransformer = (
     otherConstraints: project.otherConstraints.map(descBulletConverter),
     features: project.features.map(descBulletConverter),
     goals: project.goals.map(descBulletConverter),
+    duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = new Date(workPackage.startDate);
       endDate.setDate(workPackage.duration * 7);

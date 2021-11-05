@@ -4,10 +4,9 @@
  */
 
 import axios from 'axios';
-import { DescriptionBullet, Project, ProjectSummary, WbsNumber, WorkPackageSummary } from 'utils';
+import { DescriptionBullet, Project, WbsNumber, WorkPackageSummary } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
-import { userTransformer } from './users.api';
 
 /**
  * Transforms a description bullet to ensure deep field transformation of date objects.
@@ -40,20 +39,6 @@ const projectTransformer = (project: Project) => {
   };
 };
 
-/**
- * Transforms a project summary to ensure deep field transformation of date objects.
- *
- * @param projectSummary Incoming project object supplied by the HTTP response.
- * @returns Properly transformed project object.
- */
-const projectSummaryTransformer = (projectSummary: ProjectSummary) => {
-  return {
-    ...projectSummary,
-    projectLead: userTransformer(projectSummary.projectLead),
-    projectManager: userTransformer(projectSummary.projectManager)
-  } as ProjectSummary;
-};
-
 const workPackageSummaryTransformer = (workPackageSummary: WorkPackageSummary) => {
   return {
     ...workPackageSummary,
@@ -66,8 +51,8 @@ const workPackageSummaryTransformer = (workPackageSummary: WorkPackageSummary) =
  * Fetches all projects.
  */
 export const getAllProjects = () => {
-  return axios.get<ProjectSummary[]>(apiUrls.projects(), {
-    transformResponse: (data) => JSON.parse(data).map(projectSummaryTransformer)
+  return axios.get<Project[]>(apiUrls.projects(), {
+    transformResponse: (data) => JSON.parse(data).map(projectTransformer)
   });
 };
 

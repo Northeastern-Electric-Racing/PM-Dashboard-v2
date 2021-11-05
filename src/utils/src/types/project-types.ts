@@ -36,6 +36,7 @@ export interface Project extends WbsElement {
   slideDeckLink?: string;
   bomLink?: string;
   rules: string[];
+  duration: number;
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
@@ -68,13 +69,4 @@ export interface DescriptionBullet {
   detail: string;
   dateAdded: Date;
   dateDeleted?: Date;
-}
-
-export interface ProjectSummary {
-  wbsNum: WbsNumber;
-  name: string;
-  projectLead: User;
-  projectManager: User;
-  duration: number;
-  status: WbsElementStatus;
 }

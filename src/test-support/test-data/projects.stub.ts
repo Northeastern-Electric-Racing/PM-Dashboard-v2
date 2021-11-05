@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, ProjectSummary } from 'utils';
+import { Project } from 'utils';
 import { WbsElementStatus } from 'utils/src';
 import {
   exampleAdminUser,
@@ -62,6 +62,7 @@ export const exampleProject1: Project = {
       detail: 'Added goal for weight reduction'
     }
   ],
+  duration: 8,
   workPackages: [exampleWorkPackage1, exampleWorkPackage2]
 };
 
@@ -97,6 +98,7 @@ export const exampleProject2: Project = {
     { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
   ],
   changes: [],
+  duration: 0,
   workPackages: []
 };
 
@@ -136,6 +138,7 @@ export const exampleProject3: Project = {
     }
   ],
   changes: [],
+  duration: 3,
   workPackages: [exampleWorkPackage1]
 };
 
@@ -171,6 +174,7 @@ export const exampleProject4: Project = {
     { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
   ],
   changes: [],
+  duration: 5,
   workPackages: [exampleWorkPackage2]
 };
 
@@ -206,6 +210,7 @@ export const exampleProject5: Project = {
     { id: 14, detail: 'Utilizes 8020 frame construction', dateAdded: new Date('02/16/21') }
   ],
   changes: [],
+  duration: 2,
   workPackages: [exampleWorkPackage3]
 };
 
@@ -215,27 +220,4 @@ export const exampleAllProjects: Project[] = [
   exampleProject3,
   exampleProject4,
   exampleProject5
-];
-
-export const exampleProjectSummary1: ProjectSummary = {
-  wbsNum: exampleWbsProject1,
-  name: 'Project Summary 1',
-  projectLead: exampleAdminUser,
-  projectManager: exampleProjectManagerUser,
-  duration: 5,
-  status: WbsElementStatus.Active
-};
-
-export const exampleProjectSummary2: ProjectSummary = {
-  wbsNum: exampleWbsProject2,
-  name: 'Project Summary 2',
-  projectLead: exampleProjectLeadUser,
-  projectManager: exampleLeadershipUser,
-  duration: 17,
-  status: WbsElementStatus.Complete
-};
-
-export const exampleAllProjectSummaries: ProjectSummary[] = [
-  exampleProjectSummary1,
-  exampleProjectSummary2
 ];

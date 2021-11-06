@@ -38,6 +38,8 @@ export function filterProjects(
     return project.status === status;
   };
   const leadCheck = (project: Project) => {
+    // Change to check that array of names includes currently selected names, once that field
+    // becomes an array eventually.
     return fullNamePipe(project.projectLead) === projectLead;
   };
   const managerCheck = (project: Project) => {

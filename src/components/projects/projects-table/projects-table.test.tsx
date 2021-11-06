@@ -4,9 +4,9 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { WorkPackage, Project } from 'utils';
-import { wbsRegex, fireEvent, render, screen, waitFor } from '../../../test-support/test-utils';
-import { wbsPipe, fullNamePipe } from '../../../shared/pipes';
+import { Project, WorkPackage } from 'utils';
+import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
+import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import {
   exampleAllProjects,
@@ -115,16 +115,14 @@ describe('projects table component', () => {
   });
 
   it('checking if project filtering with no filters works as expected', async () => {
-    expect(filterProjects(exampleAllProjects, '', '', '', '', '')).toStrictEqual(
-      exampleAllProjects
-    );
+    expect(filterProjects(exampleAllProjects, '', '', '', '')).toStrictEqual(exampleAllProjects);
   });
 
   it('checking if project filtering with car num works as expected', async () => {
     const answer1: Project[] = [exampleProject1, exampleProject2, exampleProject3];
     const answer2: Project[] = [exampleProject4, exampleProject5];
-    expect(filterProjects(exampleAllProjects, '1', '', '', '', '')).toStrictEqual(answer1);
-    expect(filterProjects(exampleAllProjects, '2', '', '', '', '')).toStrictEqual(answer2);
+    expect(filterProjects(exampleAllProjects, '1', '', '', '')).toStrictEqual(answer1);
+    expect(filterProjects(exampleAllProjects, '2', '', '', '')).toStrictEqual(answer2);
   });
 
   it('checking if project filtering with status works as expected', async () => {

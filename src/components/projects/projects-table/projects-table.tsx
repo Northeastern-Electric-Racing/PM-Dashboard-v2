@@ -5,9 +5,8 @@
 
 import { Project, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { weeksPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
-import { DisplayProject } from './projects-table/projects-table';
-import PrjsTable from './projects-table/projects-table'; // Directly rename the default import
+import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
+import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
 import styles from './projects-table.module.css';
@@ -33,27 +32,27 @@ export function filterProjects(
   projectManager: string
 ): Project[] {
   const carNumCheck = (project: Project) => {
-    return carNumber == project.wbsNum.car.toString();
+    return carNumber === project.wbsNum.car.toString();
   };
   const statusCheck = (project: Project) => {
-    return project.status == status;
+    return project.status === status;
   };
   const leadCheck = (project: Project) => {
-    return fullNamePipe(project.projectLead) == projectLead;
+    return fullNamePipe(project.projectLead) === projectLead;
   };
   const managerCheck = (project: Project) => {
-    return fullNamePipe(project.projectManager) == projectManager;
+    return fullNamePipe(project.projectManager) === projectManager;
   };
-  if (carNumber != '') {
+  if (carNumber !== '') {
     projects = projects.filter(carNumCheck);
   }
-  if (status != '') {
+  if (status !== '') {
     projects = projects.filter(statusCheck);
   }
-  if (projectLead != '') {
+  if (projectLead !== '') {
     projects = projects.filter(leadCheck);
   }
-  if (projectManager != '') {
+  if (projectManager !== '') {
     projects = projects.filter(managerCheck);
   }
   return projects;

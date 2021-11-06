@@ -8,14 +8,14 @@
 }
 
 .dropdown {
-  display: flex !important;
-  flex-direction: row !important;
+  display: flex ;
+  flex-direction: row ;
+  position: relative;
+  vertical-align: middle;
 }
 
 .button {
-  display: block !important;
-  width: 500% !important;
-  text-align: left !important;
+  width: 500%;
 }
 
 .applyButton {

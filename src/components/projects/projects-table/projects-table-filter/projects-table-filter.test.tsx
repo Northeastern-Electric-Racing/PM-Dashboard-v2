@@ -125,7 +125,7 @@ describe('projects table filter component', () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('status-active'));
+      fireEvent.click(screen.getByTestId('status-Active'));
     });
     await act(async () => {
       fireEvent.click(screen.getByTestId('apply-button'));

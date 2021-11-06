@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Button, ButtonGroup, Card, Dropdown, Form } from 'react-bootstrap';
+import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
 import { useState } from 'react';
 
@@ -29,58 +29,31 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   const [car_number, setCar_number] = useState('');
 
   /**
-   * Programmatically generates dropdown items for project leads dropdown menu.
+   * Programmatically generates dropdown menu items.
+   * @param type The project property represented by each menu item in the list.
+   * @param values The list of menu item values.
+   * @param setter The setter function for the variable the component records.
+   * @return An array of dropdown menu items.
    */
-  const ProjectLeads = () => {
+  const genDropdownItems = (
+    type: string,
+    values: string[],
+    setter: React.Dispatch<React.SetStateAction<string>>
+  ) => {
     const none = (
-      <Dropdown.Item key={'None'} data-testid="lead-none" onClick={() => setProject_lead('')}>
+      <Dropdown.Item key={'None'} data-testid={type + '-none'} onClick={() => setter('')}>
         None
       </Dropdown.Item>
     );
     let result: any[] = [none];
-    for (let lead of leads) {
+    for (let value of values) {
       result.push(
-        <Dropdown.Item
-          key={lead}
-          data-testid={'lead-' + lead}
-          onClick={() => setProject_lead(lead)}
-        >
-          {lead}
+        <Dropdown.Item key={value} data-testid={type + '-' + value} onClick={() => setter(value)}>
+          {value}
         </Dropdown.Item>
       );
     }
     return <div>{result}</div>;
-  };
-
-  /**
-   * Programmatically generates dropdown items for project managers dropdown menu.
-   */
-  const ProjectManagers = () => {
-    const none = (
-      <Dropdown.Item key={'None'} data-testid="manager-none" onClick={() => setProject_manager('')}>
-        None
-      </Dropdown.Item>
-    );
-    let result: any[] = [none];
-    for (let manager of managers) {
-      result.push(
-        <Dropdown.Item
-          key={manager}
-          data-testid={'manager-' + manager}
-          onClick={() => setProject_manager(manager)}
-        >
-          {manager}
-        </Dropdown.Item>
-      );
-    }
-    return <div>{result}</div>;
-  };
-
-  const noneCheck = (val: string): string => {
-    if (val == 'None') {
-      return '';
-    }
-    return val;
   };
 
   return (
@@ -91,90 +64,82 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
           <Form>
             <Form.Group>
               <Form.Label>Car Number</Form.Label>
-              <Dropdown as={ButtonGroup} className={styles.dropdown}>
-                <Button variant="light" className={styles.button}>
-                  {car_number}
-                </Button>
-                <Dropdown.Toggle
-                  data-testid="car-num-toggle"
-                  split
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                />
-                <Dropdown.Menu data-testid="car-num-menu" className="btn-block">
-                  {['None', '1', '2'].map((val) => (
-                    <Dropdown.Item
-                      key={val}
-                      data-testid={'car-num-' + val.toLowerCase()}
-                      onClick={() => setCar_number(noneCheck(val))}
-                    >
-                      {val}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
+              <Dropdown>
+                <div className={styles.dropdown}>
+                  <Button variant="light" className={'text-left ' + styles.button}>
+                    {car_number}
+                  </Button>
+                  <Dropdown.Toggle
+                    data-testid="car-num-toggle"
+                    split
+                    variant="light"
+                    id="dropdown-split-basic"
+                    block={true}
+                  />
+                  <Dropdown.Menu data-testid="car-num-menu" className="btn-block">
+                    {genDropdownItems('car-num', ['1', '2'], setCar_number)}
+                  </Dropdown.Menu>
+                </div>
               </Dropdown>
             </Form.Group>
             <Form.Group>
               <Form.Label>Status</Form.Label>
-              <Dropdown as={ButtonGroup} className={styles.dropdown}>
-                <Button variant="light" className={styles.button}>
-                  {status}
-                </Button>
-                <Dropdown.Toggle
-                  data-testid="status-toggle"
-                  split
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                />
-                <Dropdown.Menu data-testid="status-menu" className="btn-block">
-                  {['None', 'Active', 'Inactive', 'Complete'].map((val) => (
-                    <Dropdown.Item
-                      key={val}
-                      data-testid={'status-' + val.toLowerCase()}
-                      onClick={() => setStatus(noneCheck(val))}
-                    >
-                      {val}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
+              <Dropdown>
+                <div className={styles.dropdown}>
+                  <Button variant="light" className={'text-left ' + styles.button}>
+                    {status}
+                  </Button>
+                  <Dropdown.Toggle
+                    data-testid="status-toggle"
+                    split
+                    variant="light"
+                    id="dropdown-split-basic"
+                    block={true}
+                  />
+                  <Dropdown.Menu data-testid="status-menu" className="btn-block">
+                    {genDropdownItems('status', ['Active', 'Inactive', 'Complete'], setStatus)}
+                  </Dropdown.Menu>
+                </div>
               </Dropdown>
             </Form.Group>
             <Form.Group>
               <Form.Label>Project Lead</Form.Label>
-              <Dropdown as={ButtonGroup} className={styles.dropdown}>
-                <Button variant="light" className={styles.button}>
-                  {project_lead}
-                </Button>
-                <Dropdown.Toggle
-                  data-testid="lead-toggle"
-                  split
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                />
-                <Dropdown.Menu data-testid="lead-menu" className="btn-block">
-                  {ProjectLeads()}
-                </Dropdown.Menu>
+              <Dropdown>
+                <div className={styles.dropdown}>
+                  <Button variant="light" className={'text-left ' + styles.button}>
+                    {project_lead}
+                  </Button>
+                  <Dropdown.Toggle
+                    data-testid="lead-toggle"
+                    split
+                    variant="light"
+                    id="dropdown-split-basic"
+                    block={true}
+                  />
+                  <Dropdown.Menu data-testid="lead-menu" className="btn-block">
+                    {genDropdownItems('lead', leads, setProject_lead)}
+                  </Dropdown.Menu>
+                </div>
               </Dropdown>
             </Form.Group>
             <Form.Group>
               <Form.Label>Project Manager</Form.Label>
-              <Dropdown as={ButtonGroup} className={styles.dropdown}>
-                <Button variant="light" className={styles.button}>
-                  {project_manager}
-                </Button>
-                <Dropdown.Toggle
-                  data-testid="manager-toggle"
-                  split
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                />
-                <Dropdown.Menu data-testid="manager-menu" className="btn-block">
-                  {ProjectManagers()}
-                </Dropdown.Menu>
+              <Dropdown>
+                <div className={styles.dropdown}>
+                  <Button variant="light" className={'text-left ' + styles.button}>
+                    {project_manager}
+                  </Button>
+                  <Dropdown.Toggle
+                    data-testid="manager-toggle"
+                    split
+                    variant="light"
+                    id="dropdown-split-basic"
+                    block={true}
+                  />
+                  <Dropdown.Menu data-testid="manager-menu" className="btn-block">
+                    {genDropdownItems('manager', managers, setProject_manager)}
+                  </Dropdown.Menu>
+                </div>
               </Dropdown>
             </Form.Group>
             <div className={styles.applyButton}>

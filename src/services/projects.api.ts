@@ -4,11 +4,9 @@
  */
 
 import axios from 'axios';
-import { DescriptionBullet, Project, ProjectSummary, WbsNumber } from 'utils';
+import { DescriptionBullet, Project, WbsNumber, WorkPackageSummary } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
-import { userTransformer } from './users.api';
-import { workPackageTransformer } from './work-packages.api';
 
 /**
  * Transforms a description bullet to ensure deep field transformation of date objects.
@@ -34,33 +32,27 @@ const projectTransformer = (project: Project) => {
   return {
     ...project,
     dateCreated: new Date(project.dateCreated),
-    workPackages: project.workPackages.map(workPackageTransformer),
+    workPackages: project.workPackages.map(workPackageSummaryTransformer),
     goals: project.goals.map(descriptionBulletTransformer),
     features: project.features.map(descriptionBulletTransformer),
     otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)
   };
 };
 
-/**
- * Transforms a project summary to ensure deep field transformation of date objects.
- *
- * @param projectSummary Incoming project object supplied by the HTTP response.
- * @returns Properly transformed project object.
- */
-const projectSummaryTransformer = (projectSummary: ProjectSummary) => {
+const workPackageSummaryTransformer = (workPackageSummary: WorkPackageSummary) => {
   return {
-    ...projectSummary,
-    projectLead: userTransformer(projectSummary.projectLead),
-    projectManager: userTransformer(projectSummary.projectManager)
-  } as ProjectSummary;
+    ...workPackageSummary,
+    startDate: new Date(workPackageSummary.startDate),
+    endDate: new Date(workPackageSummary.endDate)
+  } as WorkPackageSummary;
 };
 
 /**
  * Fetches all projects.
  */
 export const getAllProjects = () => {
-  return axios.get<ProjectSummary[]>(apiUrls.projects(), {
-    transformResponse: (data) => JSON.parse(data).map(projectSummaryTransformer)
+  return axios.get<Project[]>(apiUrls.projects(), {
+    transformResponse: (data) => JSON.parse(data).map(projectTransformer)
   });
 };
 

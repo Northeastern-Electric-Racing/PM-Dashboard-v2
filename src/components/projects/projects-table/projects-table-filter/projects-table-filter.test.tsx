@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, act, fireEvent } from '../../../../test-support/test-utils';
+import { act, fireEvent, render, screen } from '../../../../test-support/test-utils';
 import ProjectsTableFilter from './projects-table-filter';
 
 let temp: string[] = [];
@@ -44,73 +44,93 @@ describe('projects table filter component', () => {
 
   it('checking if data in the car dropdown menu is correct', async () => {
     renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('1')).not.toBeInTheDocument();
+    expect(screen.queryByText('2')).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
-    expect(screen.getByTestId('car-num-menu')).toHaveTextContent('None');
-    expect(screen.getByTestId('car-num-menu')).toHaveTextContent('1');
-    expect(screen.getByTestId('car-num-menu')).toHaveTextContent('2');
+    expect(screen.getByText('None')).toBeInTheDocument();
+    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(screen.getByText('2')).toBeInTheDocument();
   });
 
   it('checking if data in the status dropdown menu is correct', async () => {
     renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('Active')).not.toBeInTheDocument();
+    expect(screen.queryByText('Inactive')).not.toBeInTheDocument();
+    expect(screen.queryByText('Complete')).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
-    expect(screen.getByTestId('status-menu')).toHaveTextContent('None');
-    expect(screen.getByTestId('status-menu')).toHaveTextContent('Active');
-    expect(screen.getByTestId('status-menu')).toHaveTextContent('Inactive');
-    expect(screen.getByTestId('status-menu')).toHaveTextContent('Complete');
+    expect(screen.getByText('None')).toBeInTheDocument();
+    expect(screen.getByText('Active')).toBeInTheDocument();
+    expect(screen.getByText('Inactive')).toBeInTheDocument();
+    expect(screen.getByText('Complete')).toBeInTheDocument();
   });
 
   it('checking if data in the project lead dropdown menu is correct', async () => {
     renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('Amy Smith')).not.toBeInTheDocument();
+    expect(screen.queryByText('Joe Blow')).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
-    expect(screen.getByTestId('lead-menu')).toHaveTextContent('None');
+    expect(screen.getByText('None')).toBeInTheDocument();
+    expect(screen.getByText('Amy Smith')).toBeInTheDocument();
+    expect(screen.getByText('Joe Blow')).toBeInTheDocument();
   });
 
   it('checking if data in the project manager dropdown menu is correct', async () => {
     renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('Joe Blow')).not.toBeInTheDocument();
+    expect(screen.queryByText('Rachel Barmatha')).not.toBeInTheDocument();
+    expect(screen.queryByText('Joe Schmoe')).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
-    expect(screen.getByTestId('manager-menu')).toHaveTextContent('None');
+    expect(screen.getByText('None')).toBeInTheDocument();
+    expect(screen.getByText('Joe Blow')).toBeInTheDocument();
+    expect(screen.getByText('Rachel Barmatha')).toBeInTheDocument();
+    expect(screen.getByText('Joe Schmoe')).toBeInTheDocument();
   });
 
   it('checking if text in the apply button is correct', async () => {
     renderComponent();
+    expect(screen.getByText('Apply')).toBeInTheDocument();
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
-    });
-    expect(screen.getByTestId('apply-button')).toHaveTextContent('Apply');
+      fireEvent.click(screen.getByText('Apply'));
+    }); // Clicking it should do nothing to its visibility, not change the page, etc.
+    expect(screen.getByText('Apply')).toBeInTheDocument();
   });
 
   it('checking if car number dropdown sets filter setting correctly', async () => {
     renderComponent();
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[3]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('car-num-1'));
+      fireEvent.click(screen.getByText('1'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[3]).toBe('1');
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('car-num-none'));
+      fireEvent.click(screen.getByText('None'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[3]).toBe('');
   });
@@ -118,27 +138,27 @@ describe('projects table filter component', () => {
   it('checking if status dropdown sets filter setting correctly', async () => {
     renderComponent();
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[0]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('status-Active'));
+      fireEvent.click(screen.getByText('Active'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[0]).toBe('Active');
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('status-none'));
+      fireEvent.click(screen.getByText('None'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[0]).toBe('');
   });
@@ -146,27 +166,27 @@ describe('projects table filter component', () => {
   it('checking if project lead dropdown sets filter setting correctly', async () => {
     renderComponent();
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[1]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('lead-Amy Smith'));
+      fireEvent.click(screen.getByText('Amy Smith'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[1]).toBe('Amy Smith');
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('lead-none'));
+      fireEvent.click(screen.getByText('None'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[1]).toBe('');
   });
@@ -174,27 +194,27 @@ describe('projects table filter component', () => {
   it('checking if project manager dropdown sets filter setting correctly', async () => {
     renderComponent();
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[2]).toBe('');
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('manager-Joe Blow'));
+      fireEvent.click(screen.getByText('Joe Blow'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[2]).toBe('Joe Blow');
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('manager-none'));
+      fireEvent.click(screen.getByText('None'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByTestId('apply-button'));
+      fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[2]).toBe('');
   });

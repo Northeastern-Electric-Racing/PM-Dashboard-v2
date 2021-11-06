@@ -41,14 +41,14 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
     setter: React.Dispatch<React.SetStateAction<string>>
   ) => {
     const none = (
-      <Dropdown.Item key={'None'} data-testid={type + '-none'} onClick={() => setter('')}>
+      <Dropdown.Item key={'None'} onClick={() => setter('')}>
         None
       </Dropdown.Item>
     );
     let result: any[] = [none];
     for (let value of values) {
       result.push(
-        <Dropdown.Item key={value} data-testid={type + '-' + value} onClick={() => setter(value)}>
+        <Dropdown.Item key={value} onClick={() => setter(value)}>
           {value}
         </Dropdown.Item>
       );
@@ -76,7 +76,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                     id="dropdown-split-basic"
                     block={true}
                   />
-                  <Dropdown.Menu data-testid="car-num-menu" className="btn-block">
+                  <Dropdown.Menu className="btn-block">
                     {genDropdownItems('car-num', ['1', '2'], setCar_number)}
                   </Dropdown.Menu>
                 </div>
@@ -96,7 +96,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                     id="dropdown-split-basic"
                     block={true}
                   />
-                  <Dropdown.Menu data-testid="status-menu" className="btn-block">
+                  <Dropdown.Menu className="btn-block">
                     {genDropdownItems('status', ['Active', 'Inactive', 'Complete'], setStatus)}
                   </Dropdown.Menu>
                 </div>
@@ -116,7 +116,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                     id="dropdown-split-basic"
                     block={true}
                   />
-                  <Dropdown.Menu data-testid="lead-menu" className="btn-block">
+                  <Dropdown.Menu className="btn-block">
                     {genDropdownItems('lead', leads, setProject_lead)}
                   </Dropdown.Menu>
                 </div>
@@ -136,7 +136,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                     id="dropdown-split-basic"
                     block={true}
                   />
-                  <Dropdown.Menu data-testid="manager-menu" className="btn-block">
+                  <Dropdown.Menu className="btn-block">
                     {genDropdownItems('manager', managers, setProject_manager)}
                   </Dropdown.Menu>
                 </div>
@@ -145,7 +145,6 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
             <div className={styles.applyButton}>
               <Button
                 variant="danger"
-                data-testid="apply-button"
                 onClick={() => {
                   onClick(status, project_lead, project_manager, car_number);
                 }}

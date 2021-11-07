@@ -97,10 +97,5 @@ export const routeMatcher = (
       return singleRoute.func(matchResults.params, event, context);
     }
   }
-  return {
-    statusCode: 404,
-    body: JSON.stringify({
-      message: `Could not find a route matching the requested path [${event.path}].`
-    })
+  return buildNotFoundResponse("route", event.path);
   };
-};

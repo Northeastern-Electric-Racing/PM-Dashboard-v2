@@ -4,7 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
+import { fullNamePipe, wbsPipe, listPipe } from '../../../../../shared/pipes';
 import {
   exampleProject1,
   exampleProject2,
@@ -21,13 +21,18 @@ describe('project details component', () => {
 
   it('Renders WBS#', () => {
     render(<ProjectDetails project={exampleProject2} />);
-    const projectElement = screen.getByText(wbsPipe(exampleProject2.wbsNum));
+    const projectElement = screen.getByText(wbsPipe(exampleProject2.wbsNum), { exact: false });
     expect(projectElement).toBeInTheDocument();
   });
 
   it('Renders project lead', () => {
     render(<ProjectDetails project={exampleProject3} />);
-    const projectNameElement = screen.getByText(fullNamePipe(exampleProject3.projectLead));
+    const projectNameElement = screen.getByText(
+      listPipe(exampleProject3.projectLead, fullNamePipe),
+      {
+        exact: false
+      }
+    );
     expect(projectNameElement).toBeInTheDocument();
   });
 

@@ -141,8 +141,8 @@ model WBS_Element {
   workPackageNumber     Int
   name                  String
   status                WBS_Element_Status
-  projectLeadId         Int?
-  projectLead           User?              @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
+  projectLeadId         Int[]
+  projectLead           User[]              @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
   projectManagerId      Int?
   projectManager        User?              @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
   changeRequests        Change_Request[]

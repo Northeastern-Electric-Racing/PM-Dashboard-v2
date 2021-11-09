@@ -5,7 +5,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { WorkPackage } from 'utils';
-import { endDatePipe, fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, weeksPipe, listPipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
@@ -21,7 +21,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
     expect(
-      screen.getByText(`${fullNamePipe(wp.projectLead)}`, { exact: false })
+      screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`, { exact: false })
     ).toBeInTheDocument();
     expect(
       screen.getByText(`${fullNamePipe(wp.projectManager)}`, { exact: false })
@@ -44,7 +44,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
     expect(
-      screen.getByText(`${fullNamePipe(wp.projectLead)}`, { exact: false })
+      screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`, { exact: false })
     ).toBeInTheDocument();
     expect(
       screen.getByText(`${fullNamePipe(wp.projectManager)}`, { exact: false })
@@ -67,7 +67,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
     expect(
-      screen.getByText(`${fullNamePipe(wp.projectLead)}`, { exact: false })
+      screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`, { exact: false })
     ).toBeInTheDocument();
     expect(
       screen.getByText(`${fullNamePipe(wp.projectManager)}`, { exact: false })

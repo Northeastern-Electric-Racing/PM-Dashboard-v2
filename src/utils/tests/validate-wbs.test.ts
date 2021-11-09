@@ -13,7 +13,7 @@ import {
   exampleWbs2,
   exampleWbs3
 } from '../../test-support/test-data/wbs-numbers.stub';
-import { equalsWbsNumber } from '../lib';
+import { equalsWbsNumber } from 'utils/src';
 
 describe('validate wbs numbers', () => {
   it('does not throw on valid WBS nums', () => {

@@ -4,7 +4,7 @@
  */
 
 import { useQuery } from 'react-query';
-import { WorkPackage, WbsNumber } from 'utils';
+import { WorkPackage, WbsNumber } from 'utils/src';
 import { getAllWorkPackages, getSingleWorkPackage } from './work-packages.api';
 
 /**

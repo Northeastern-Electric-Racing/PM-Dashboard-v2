@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { DescriptionBullet } from 'utils';
+import { DescriptionBullet } from 'utils/src';
 import BulletList from '../bullet-list/bullet-list';
 import './description-list.module.css';
 

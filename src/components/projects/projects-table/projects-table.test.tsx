@@ -4,9 +4,9 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { Project, WorkPackage } from 'utils';
+import { Project, WorkPackage } from 'utils/src';
 import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
-import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
+import { fullNamePipe, wbsPipe, listPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import {
   exampleAllProjects,
@@ -82,7 +82,7 @@ describe('projects table component', () => {
       )
     ).toBeInTheDocument();
     expect(
-      screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
+      screen.getAllByText(listPipe(exampleAllProjects[2].projectLead, fullNamePipe))[0]
     ).toBeInTheDocument();
     expect(
       screen.getByText(fullNamePipe(exampleAllProjects[3].projectManager))

@@ -4,7 +4,7 @@
  */
 
 import { Link } from 'react-router-dom';
-import { WbsNumber } from 'utils';
+import { WbsNumber } from 'utils/src';
 import { routes } from '../../../../../shared/routes';
 import { wbsPipe } from '../../../../../shared/pipes';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WbsElementStatus, WorkPackage } from 'utils';
+import { WbsElementStatus, WorkPackage } from 'utils/src';
 import {
   exampleAdminUser,
   exampleAppAdminUser,

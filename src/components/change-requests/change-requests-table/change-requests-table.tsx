@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ChangeRequest } from 'utils';
+import { ChangeRequest } from 'utils/src';
 import { booleanPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';

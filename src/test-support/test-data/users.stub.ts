@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User, Role } from 'utils';
+import { Role, User } from 'utils/src';
 
 export const exampleAppAdminUser: User = {
   id: 1,

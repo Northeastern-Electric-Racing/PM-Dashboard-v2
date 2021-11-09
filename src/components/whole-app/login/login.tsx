@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Role } from 'utils';
+import { Role } from 'utils/src';
 import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
 import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';

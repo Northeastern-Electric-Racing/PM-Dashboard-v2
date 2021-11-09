@@ -5,9 +5,9 @@
 
 import { Form, Row } from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
-import { exampleAllUsers } from '../../../../../utils/lib/dummy-data';
+import { exampleAllUsers } from 'utils/src';
 import { fullNamePipe } from '../../../../../shared/pipes';
-import styles from './activation-form-fields.module.css'
+import styles from './activation-form-fields.module.css';
 
 const ActivationFormFields: React.FC = () => {
   return (
@@ -16,8 +16,7 @@ const ActivationFormFields: React.FC = () => {
         <div className={'px-4'}>
           <Form.Group controlId="newCR-project-lead">
             <Form.Label className={styles.label}>Project Lead</Form.Label>
-            <Form.Control as="select" custom
-              id="newCR-wbs-num">
+            <Form.Control as="select" custom id="newCR-wbs-num">
               {exampleAllUsers.map((p) => (
                 <option key={p.id}>{fullNamePipe(p)}</option>
               ))}
@@ -30,8 +29,7 @@ const ActivationFormFields: React.FC = () => {
 
         <div className={'px-4'}>
           <Form.Label className={styles.label}>Project Manager</Form.Label>
-          <Form.Control as="select" custom
-            id="newCR-project-manager">
+          <Form.Control as="select" custom id="newCR-project-manager">
             {exampleAllUsers.map((p) => (
               <option key={p.id}>{fullNamePipe(p)}</option>
             ))}
@@ -40,11 +38,7 @@ const ActivationFormFields: React.FC = () => {
           <Form.Group className={'px-4'} controlId="newCR-wp-details">
             {['Yes', 'No'].map((type) => (
               <Row key={type} className="mb-3">
-                <Form.Check
-                  type="radio"
-                  id={type}
-                  label={type}
-                />
+                <Form.Check type="radio" id={type} label={type} />
               </Row>
             ))}
           </Form.Group>
@@ -53,7 +47,5 @@ const ActivationFormFields: React.FC = () => {
     </Form>
   );
 };
-
-
 
 export default ActivationFormFields;

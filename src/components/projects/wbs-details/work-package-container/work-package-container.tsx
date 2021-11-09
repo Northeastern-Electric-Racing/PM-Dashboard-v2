@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WbsNumber } from 'utils';
+import { WbsNumber } from 'utils/src';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';

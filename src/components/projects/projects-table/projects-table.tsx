@@ -5,7 +5,7 @@
 
 import { Project, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
+import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
@@ -38,9 +38,7 @@ export function filterProjects(
     return project.status === status;
   };
   const leadCheck = (project: Project) => {
-    // Change to check that array of names includes currently selected names, once that field
-    // becomes an array eventually.
-    return fullNamePipe(project.projectLead) === projectLead;
+    return listPipe(project.projectLead, fullNamePipe).includes(projectLead);
   };
   const managerCheck = (project: Project) => {
     return fullNamePipe(project.projectManager) === projectManager;
@@ -79,7 +77,7 @@ const ProjectsTable: React.FC = () => {
       return {
         wbsNum: wbsPipe(prj.wbsNum),
         name: prj.name,
-        projectLead: fullNamePipe(prj.projectLead),
+        projectLead: listPipe(prj.projectLead, fullNamePipe),
         projectManager: fullNamePipe(prj.projectManager),
         duration: weeksPipe(
           prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
@@ -114,13 +112,11 @@ const ProjectsTable: React.FC = () => {
     const projects = data!;
     let leads: string[] = [];
     for (let project of projects) {
-      /**
-       * This will have to be modified when the projectLead field is changed
-       * to an array of Users in the near future.
-       */
-      let name = fullNamePipe(project.projectLead);
-      if (!leads.includes(name)) {
-        leads.push(name);
+      for (let user of project.projectLead) {
+        let name: string = fullNamePipe(user);
+        if (!leads.includes(name)) {
+          leads.push(name);
+        }
       }
     }
     return leads;

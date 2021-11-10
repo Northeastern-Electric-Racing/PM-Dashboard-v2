@@ -4,7 +4,7 @@
  */
 
 import { useQuery } from 'react-query';
-import { Project, WbsNumber } from 'utils/src';
+import { Project, WbsNumber } from 'utils';
 import { getAllProjects, getSingleProject } from './projects.api';
 
 /**

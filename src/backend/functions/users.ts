@@ -18,7 +18,7 @@ import {
   routeMatcher,
   User,
   Role
-} from 'utils/src';
+} from 'utils';
 
 // Fetch all users
 const getAllUsers: ApiRouteFunction = () => {

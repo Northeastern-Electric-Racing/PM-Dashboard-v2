@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, WorkPackage } from 'utils/src';
+import { Project, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import

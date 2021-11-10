@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from 'utils/src';
+import { User } from 'utils';
 
 export interface Auth {
   user: User | undefined;

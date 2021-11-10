@@ -10,7 +10,7 @@ import {
   ChangeRequestType,
   StageGateChangeRequest,
   StandardChangeRequest
-} from 'utils/src';
+} from 'utils';
 import { exampleAdminUser, exampleProjectLeadUser, exampleProjectManagerUser } from './users.stub';
 import { exampleWbsWorkPackage1 } from './wbs-numbers.stub';
 

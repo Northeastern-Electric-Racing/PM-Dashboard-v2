@@ -4,7 +4,7 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { Project, WorkPackage } from 'utils/src';
+import { Project, WorkPackage } from 'utils';
 import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
 import { fullNamePipe, wbsPipe, listPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';

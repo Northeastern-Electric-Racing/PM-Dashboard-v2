@@ -16,7 +16,7 @@ import {
   routeMatcher,
   WbsNumber,
   WorkPackage
-} from 'utils/src';
+} from 'utils';
 
 // Fetch all users
 const getAllWorkPackages: ApiRouteFunction = () => {

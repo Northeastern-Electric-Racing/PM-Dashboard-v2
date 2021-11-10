@@ -4,7 +4,7 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { isProject, validateWBS } from 'utils/src';
+import { isProject, validateWBS } from 'utils';
 import ProjectContainer from './project-container/project-container';
 import WorkPackageContainer from './work-package-container/work-package-container';
 import ErrorPage from '../../shared/error-page/error-page';

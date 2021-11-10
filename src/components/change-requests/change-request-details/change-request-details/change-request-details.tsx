@@ -11,7 +11,7 @@ import {
   StageGateChangeRequest,
   ChangeRequestType,
   ChangeRequestExplanation
-} from 'utils/src';
+} from 'utils';
 import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';

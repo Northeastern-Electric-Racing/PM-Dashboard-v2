@@ -4,7 +4,7 @@
  */
 
 import { useQuery } from 'react-query';
-import { ChangeRequest } from 'utils';
+import { ChangeRequest } from 'utils/src';
 import { getAllChangeRequests, getSingleChangeRequest } from './change-requests.api';
 
 /**

@@ -6,7 +6,7 @@
 import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
 import { UseQueryResult } from 'react-query';
-import { ApiRoute, API_URL, User } from 'utils';
+import { ApiRoute, API_URL, User } from 'utils/src';
 import { exampleAdminUser } from './users.stub';
 import { Auth } from '../../shared/types';
 

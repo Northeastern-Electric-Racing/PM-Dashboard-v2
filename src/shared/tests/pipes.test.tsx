@@ -46,7 +46,7 @@ import {
   exampleWbsWorkPackage1,
   exampleWbsWorkPackage2
 } from '../../test-support/test-data/wbs-numbers.stub';
-import { WbsNumber } from 'utils';
+import { WbsNumber } from 'utils/src';
 
 describe('Formatting lists tests', () => {
   test('Formatting Wbs Numbers', () => {

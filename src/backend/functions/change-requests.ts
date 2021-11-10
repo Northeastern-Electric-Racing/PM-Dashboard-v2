@@ -15,7 +15,7 @@ import {
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse
-} from 'utils/src';
+} from 'utils';
 
 const getAllChangeRequests: ApiRouteFunction = () => {
   return buildSuccessResponse(exampleAllChangeRequests);

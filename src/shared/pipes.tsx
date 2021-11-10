@@ -4,7 +4,7 @@
  */
 
 import { ReactElement } from 'react';
-import { User, WbsNumber } from 'utils/src';
+import { User, WbsNumber } from 'utils';
 
 /**
  * Pipes:

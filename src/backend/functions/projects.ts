@@ -16,7 +16,7 @@ import {
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse
-} from 'utils/src';
+} from 'utils';
 
 // Fetch all projects
 const getAllProjects: ApiRouteFunction = () => {

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WbsNumber } from 'utils/src';
+import { WbsNumber } from 'utils';
 
 export const exampleWbsWorkPackage1: WbsNumber = {
   car: 1,

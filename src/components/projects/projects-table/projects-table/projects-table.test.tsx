@@ -13,7 +13,7 @@ import {
   exampleProject5,
   exampleAllProjects,
   Project
-} from 'utils/src';
+} from 'utils';
 import { wbsPipe, fullNamePipe, weeksPipe, listPipe } from '../../../../shared/pipes';
 import { wbsRegex } from '../../../../test-support/test-utils';
 

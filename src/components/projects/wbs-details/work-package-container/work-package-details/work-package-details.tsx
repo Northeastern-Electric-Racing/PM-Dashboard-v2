@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage } from 'utils/src';
+import { WorkPackage } from 'utils';
 import {
   weeksPipe,
   wbsPipe,

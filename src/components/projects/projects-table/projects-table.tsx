@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, WorkPackage } from 'utils/src';
+import { Project, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
+import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
@@ -38,7 +38,9 @@ export function filterProjects(
     return project.status === status;
   };
   const leadCheck = (project: Project) => {
-    return listPipe(project.projectLead, fullNamePipe).includes(projectLead);
+    // Change to check that array of names includes currently selected names, once that field
+    // becomes an array eventually.
+    return fullNamePipe(project.projectLead) === projectLead;
   };
   const managerCheck = (project: Project) => {
     return fullNamePipe(project.projectManager) === projectManager;
@@ -77,7 +79,7 @@ const ProjectsTable: React.FC = () => {
       return {
         wbsNum: wbsPipe(prj.wbsNum),
         name: prj.name,
-        projectLead: listPipe(prj.projectLead, fullNamePipe),
+        projectLead: fullNamePipe(prj.projectLead),
         projectManager: fullNamePipe(prj.projectManager),
         duration: weeksPipe(
           prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
@@ -109,14 +111,16 @@ const ProjectsTable: React.FC = () => {
    * Returns an array of user names who are listed as a project's lead.
    */
   const getLeads = (): string[] => {
-    const projects: Project[] = data!;
+    const projects = data!;
     let leads: string[] = [];
     for (let project of projects) {
-      for (let user of project.projectLead) {
-        let name: string = fullNamePipe(user);
-        if (!leads.includes(name)) {
-          leads.push(name);
-        }
+      /**
+       * This will have to be modified when the projectLead field is changed
+       * to an array of Users in the near future.
+       */
+      let name = fullNamePipe(project.projectLead);
+      if (!leads.includes(name)) {
+        leads.push(name);
       }
     }
     return leads;
@@ -126,10 +130,10 @@ const ProjectsTable: React.FC = () => {
    * Returns an array of user names who are listed as a project's managers.
    */
   const getManagers = (): string[] => {
-    const projects: Project[] = data!;
+    const projects = data!;
     let managers: string[] = [];
     for (let project of projects) {
-      let name: string = fullNamePipe(project.projectManager);
+      let name = fullNamePipe(project.projectManager);
       if (!managers.includes(name)) {
         managers.push(name);
       }

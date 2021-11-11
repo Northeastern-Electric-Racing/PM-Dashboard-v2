@@ -3,11 +3,11 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import './custom.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AppMain from './components/app/app-main/app-main';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './index.css';
 

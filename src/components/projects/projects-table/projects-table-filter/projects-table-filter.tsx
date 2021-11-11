@@ -144,7 +144,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
             </Form.Group>
             <div className={styles.applyButton}>
               <Button
-                variant="danger"
+                variant="ner-red"
                 onClick={() => {
                   onClick(status, project_lead, project_manager, car_number);
                 }}

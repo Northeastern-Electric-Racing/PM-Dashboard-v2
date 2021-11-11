@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { OAuth2Client } from 'google-auth-library';
 import {
   ApiRoute,
@@ -15,15 +15,33 @@ import {
   buildServerFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
-  routeMatcher
+  routeMatcher,
+  User
 } from 'utils';
 
 const prisma = new PrismaClient();
 
+const usersTransformer = (user : Prisma.UserGetPayload<null>): User => {
+
+  if (user === null) throw new TypeError('User not found');
+
+  return {
+    ...user,
+    userId: user.userId ?? undefined,
+    firstName: user.firstName ?? undefined,
+    lastName: user.lastName ?? undefined,
+    googleAuthId: user.googleAuthId ?? undefined,
+    email: user.email ?? undefined,
+    emailId: user.emailId,
+    role: user.role ?? undefined
+  }
+};
+
+
 // Fetch all users
 const getAllUsers: ApiRouteFunction = async () => {
   const users = await prisma.user.findMany();
-  return buildSuccessResponse(users);
+  return buildSuccessResponse(users.map(usersTransformer));
 };
 
 // Fetch the user for the specified id
@@ -33,7 +51,7 @@ const getSingleUser: ApiRouteFunction = async (params: { id: string }) => {
   if (!requestedUser) {
     return buildNotFoundResponse('user', `#${params.id}`);
   }
-  return buildSuccessResponse(requestedUser);
+  return buildSuccessResponse(usersTransformer);
 };
 
 // Log the user in via their emailId
@@ -82,7 +100,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return buildSuccessResponse(user);
+  return buildSuccessResponse(usersTransformer(user));
 };
 
 // Define all valid routes for the endpoint

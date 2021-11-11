@@ -8,14 +8,22 @@
 }
 
 .dropdown {
-  display: flex ;
-  flex-direction: row ;
+  display: flex;
+  flex-direction: row;
   position: relative;
   vertical-align: middle;
 }
 
-.button {
-  width: 500%;
+.dropdownButton {
+  position: relative;
+}
+
+.dropdownButton::after {
+  margin-right: 5%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .applyButton {

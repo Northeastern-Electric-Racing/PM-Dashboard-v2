@@ -64,94 +64,73 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
           <Form>
             <Form.Group>
               <Form.Label>Car Number</Form.Label>
-              <Dropdown>
-                <div className={styles.dropdown}>
-                  <Button variant="light" className={'text-left ' + styles.button}>
-                    {car_number}
-                  </Button>
-                  <Dropdown.Toggle
-                    data-testid="car-num-toggle"
-                    split
-                    variant="light"
-                    id="dropdown-split-basic"
-                    block={true}
-                  />
-                  <Dropdown.Menu className="btn-block">
-                    {genDropdownItems('car-num', ['1', '2'], setCar_number)}
-                  </Dropdown.Menu>
-                </div>
+              <Dropdown className={styles.dropdown}>
+                <Dropdown.Toggle
+                  data-testid='car-num-toggle'
+                  variant='light'
+                  id='dropdown-split-basic'
+                  block={true}
+                  className={'text-left ' + styles.dropdownButton}
+                >{car_number}</Dropdown.Toggle>
+                <Dropdown.Menu className='btn-block' align='right'>
+                  {genDropdownItems('car-num', ['1', '2'], setCar_number)}
+                </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
             <Form.Group>
               <Form.Label>Status</Form.Label>
-              <Dropdown>
-                <div className={styles.dropdown}>
-                  <Button variant="light" className={'text-left ' + styles.button}>
-                    {status}
-                  </Button>
-                  <Dropdown.Toggle
-                    data-testid="status-toggle"
-                    split
-                    variant="light"
-                    id="dropdown-split-basic"
-                    block={true}
-                  />
-                  <Dropdown.Menu className="btn-block">
-                    {genDropdownItems('status', ['Active', 'Inactive', 'Complete'], setStatus)}
-                  </Dropdown.Menu>
-                </div>
+              <Dropdown className={styles.dropdown}>
+                <Dropdown.Toggle
+                  data-testid='status-toggle'
+                  variant='light'
+                  id='dropdown-split-basic'
+                  block={true}
+                  className={'text-left ' + styles.dropdownButton}
+                >{status}</Dropdown.Toggle>
+                <Dropdown.Menu className='btn-block' align='right'>
+                  {genDropdownItems('status', ['Active', 'Inactive', 'Complete'], setStatus)}
+                </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
             <Form.Group>
               <Form.Label>Project Lead</Form.Label>
-              <Dropdown>
-                <div className={styles.dropdown}>
-                  <Button variant="light" className={'text-left ' + styles.button}>
-                    {project_lead}
-                  </Button>
-                  <Dropdown.Toggle
-                    data-testid="lead-toggle"
-                    split
-                    variant="light"
-                    id="dropdown-split-basic"
-                    block={true}
-                  />
-                  <Dropdown.Menu className="btn-block">
-                    {genDropdownItems('lead', leads, setProject_lead)}
-                  </Dropdown.Menu>
-                </div>
+              <Dropdown className={styles.dropdown}>
+                <Dropdown.Toggle
+                  data-testid='lead-toggle'
+                  variant='light'
+                  id='dropdown-split-basic'
+                  block={true}
+                  className={'text-left ' + styles.dropdownButton}
+                >{project_lead}</Dropdown.Toggle>
+                <Dropdown.Menu className='btn-block' align='right'>
+                  {genDropdownItems('lead', leads, setProject_lead)}
+                </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
             <Form.Group>
               <Form.Label>Project Manager</Form.Label>
-              <Dropdown>
-                <div className={styles.dropdown}>
-                  <Button variant="light" className={'text-left ' + styles.button}>
-                    {project_manager}
-                  </Button>
-                  <Dropdown.Toggle
-                    data-testid="manager-toggle"
-                    split
-                    variant="light"
-                    id="dropdown-split-basic"
-                    block={true}
-                  />
-                  <Dropdown.Menu className="btn-block">
-                    {genDropdownItems('manager', managers, setProject_manager)}
-                  </Dropdown.Menu>
-                </div>
+              <Dropdown className={styles.dropdown}>
+                <Dropdown.Toggle
+                  data-testid='manager-toggle'
+                  variant='light'
+                  id='dropdown-split-basic'
+                  block={true}
+                  className={'text-left ' + styles.dropdownButton}
+                >{project_manager}</Dropdown.Toggle>
+                <Dropdown.Menu className='btn-block' align='right'>
+                  {genDropdownItems('manager', managers, setProject_manager)}
+                </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <div className={styles.applyButton}>
-              <Button
-                variant="ner-red"
-                onClick={() => {
-                  onClick(status, project_lead, project_manager, car_number);
-                }}
-              >
-                Apply
-              </Button>
-            </div>
+            <Button
+              variant='ner-red'
+              className={styles.applyButton}
+              onClick={() => {
+                onClick(status, project_lead, project_manager, car_number);
+              }}
+            >
+              Apply
+            </Button>
           </Form>
         </Card.Body>
       </Card>

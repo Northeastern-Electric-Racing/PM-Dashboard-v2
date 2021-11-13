@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
-import { useState } from 'react';
 
 /**
  * Variables to filter table with.
@@ -66,13 +66,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Car Number</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='car-num-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="car-num-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
-                >{car_number}</Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                >
+                  {car_number}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItems('car-num', ['1', '2'], setCar_number)}
                 </Dropdown.Menu>
               </Dropdown>
@@ -81,13 +83,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Status</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='status-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="status-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
-                >{status}</Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                >
+                  {status}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItems('status', ['Active', 'Inactive', 'Complete'], setStatus)}
                 </Dropdown.Menu>
               </Dropdown>
@@ -96,13 +100,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Project Lead</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='lead-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="lead-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
-                >{project_lead}</Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                >
+                  {project_lead}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItems('lead', leads, setProject_lead)}
                 </Dropdown.Menu>
               </Dropdown>
@@ -111,19 +117,21 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Project Manager</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='manager-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="manager-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
-                >{project_manager}</Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                >
+                  {project_manager}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItems('manager', managers, setProject_manager)}
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
             <Button
-              variant='ner-red'
+              variant="ner-red"
               className={styles.applyButton}
               onClick={() => {
                 onClick(status, project_lead, project_manager, car_number);

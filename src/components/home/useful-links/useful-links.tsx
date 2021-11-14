@@ -11,7 +11,7 @@ import styles from './useful-links.module.css';
 
 // React-bootstrap grid documentation: https://react-bootstrap.github.io/layout/grid/
 const UsefulLinks: React.FC = () => {
-  let financeLinks = [
+  const financeLinks = [
     linkPipe(
       'Personal purchasing guidelines',
       'https://docs.google.com/document/d/1M5Ldy9L1BifBo18tdKpv3CH-frRneyEK26hUXbtMg7Q/edit'
@@ -23,7 +23,7 @@ const UsefulLinks: React.FC = () => {
     )
   ];
 
-  let otherLinks = [
+  const otherLinks = [
     linkPipe(
       'Part numbering spreadsheet',
       'https://docs.google.com/spreadsheets/d/1av0ReONZF3r82kCvkUEGl3uue4jfQgbw-KQDZnsejPQ/edit'

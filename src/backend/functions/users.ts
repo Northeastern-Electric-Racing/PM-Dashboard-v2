@@ -51,7 +51,7 @@ const getSingleUser: ApiRouteFunction = async (params: { id: string }) => {
   if (!requestedUser) {
     return buildNotFoundResponse('user', `#${params.id}`);
   }
-  return buildSuccessResponse(usersTransformer);
+  return buildSuccessResponse(usersTransformer(requestedUser));
 };
 
 // Log the user in via their emailId

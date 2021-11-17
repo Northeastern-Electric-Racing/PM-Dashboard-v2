@@ -15,7 +15,12 @@ import { fullNamePipe } from '../../../../shared/pipes';
 interface FilterProps {
   leads: User[];
   managers: User[];
-  onClick: (status: string, projectLeadID: number, projectManagerID: number, carNumber: number) => void;
+  onClick: (
+    status: string,
+    projectLeadID: number,
+    projectManagerID: number,
+    carNumber: number
+  ) => void;
 }
 
 /**
@@ -97,10 +102,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
     nameSetter: React.Dispatch<React.SetStateAction<string>>
   ) => {
     const none = (
-      <Dropdown.Item key={'None'} onClick={() => {
-        idSetter(-1);
-        nameSetter('');
-      }}>
+      <Dropdown.Item
+        key={'None'}
+        onClick={() => {
+          idSetter(-1);
+          nameSetter('');
+        }}
+      >
         None
       </Dropdown.Item>
     );
@@ -109,10 +117,13 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
       const userName: string = fullNamePipe(user);
       const userID: number = user.id;
       result.push(
-        <Dropdown.Item key={userName} onClick={() => {
-          idSetter(userID);
-          nameSetter(userName);
-        }}>
+        <Dropdown.Item
+          key={userName}
+          onClick={() => {
+            idSetter(userID);
+            nameSetter(userName);
+          }}
+        >
           {userName}
         </Dropdown.Item>
       );
@@ -130,15 +141,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Car Number</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='car-num-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="car-num-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
                 >
                   {car_number === -1 ? '' : car_number}
                 </Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItemsNum([1, 2], setCar_number)}
                 </Dropdown.Menu>
               </Dropdown>
@@ -147,15 +158,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Status</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='status-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="status-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
                 >
                   {status}
                 </Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItemsString(['Active', 'Inactive', 'Complete'], setStatus)}
                 </Dropdown.Menu>
               </Dropdown>
@@ -164,15 +175,15 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Project Lead</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='lead-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="lead-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
                 >
                   {project_leadName}
                 </Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItemsUser(leads, setProject_leadID, setProject_leadName)}
                 </Dropdown.Menu>
               </Dropdown>
@@ -181,21 +192,21 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               <Form.Label>Project Manager</Form.Label>
               <Dropdown className={styles.dropdown}>
                 <Dropdown.Toggle
-                  data-testid='manager-toggle'
-                  variant='light'
-                  id='dropdown-split-basic'
+                  data-testid="manager-toggle"
+                  variant="light"
+                  id="dropdown-split-basic"
                   block={true}
                   className={'text-left ' + styles.dropdownButton}
                 >
                   {project_managerName}
                 </Dropdown.Toggle>
-                <Dropdown.Menu className='btn-block' align='right'>
+                <Dropdown.Menu className="btn-block" align="right">
                   {genDropdownItemsUser(managers, setProject_managerID, setProject_managerName)}
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
             <Button
-              variant='ner-red'
+              // variant='ner-red'
               className={styles.applyButton}
               onClick={() => {
                 onClick(status, project_leadID, project_managerID, car_number);

@@ -131,7 +131,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               </Dropdown>
             </Form.Group>
             <Button
-              // variant="ner-red" for later
+              variant="ner-red"
               className={styles.applyButton}
               onClick={() => {
                 onClick(status, project_lead, project_manager, car_number);

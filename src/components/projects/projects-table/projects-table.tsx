@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, WorkPackage } from 'utils';
+import { Project, User, WorkPackage } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
@@ -15,44 +15,57 @@ import { Row } from 'react-bootstrap';
 import { useState } from 'react';
 import PageTitle from '../../shared/page-title/page-title';
 
+/**
+ * Generate a list of User IDs from a list of Users.
+ * @param users The list of users passed in.
+ * @return A list of numbers representing the IDs of the users in the given list of users.
+ */
+const getUserIDs = (users: User[]) => {
+  const answer: number[] = [];
+  for (const user of users) {
+    answer.push(user.id);
+  }
+  return answer;
+};
+
 /***
  * Returns a list of projects that has been filtered according to the given params.
  * @param projects The list of projects to filter.
  * @param carNumber The car the project is focused on.
  * @param status The status of the project.
- * @param projectLead The name of the user leading the project.
- * @param projectManager The name of the user managing the project.
+ * @param projectLeadID The id of the user leading the project.
+ * @param projectManagerID The id of the user managing the project.
  * @return The filtered list of projects.
  */
 export function filterProjects(
   projects: Project[],
-  carNumber: string,
+  carNumber: number,
   status: string,
-  projectLead: string,
-  projectManager: string
+  projectLeadID: number,
+  projectManagerID: number
 ): Project[] {
   const carNumCheck = (project: Project) => {
-    return carNumber === project.wbsNum.car.toString();
+    return carNumber === project.wbsNum.car;
   };
   const statusCheck = (project: Project) => {
     return project.status === status;
   };
   const leadCheck = (project: Project) => {
-    return listPipe(project.projectLead, fullNamePipe).includes(projectLead);
+    return getUserIDs(project.projectLead).includes(projectLeadID);
   };
   const managerCheck = (project: Project) => {
-    return fullNamePipe(project.projectManager) === projectManager;
+    return project.projectManager.id === projectManagerID;
   };
-  if (carNumber !== '') {
+  if (carNumber !== -1) {
     projects = projects.filter(carNumCheck);
   }
   if (status !== '') {
     projects = projects.filter(statusCheck);
   }
-  if (projectLead !== '') {
+  if (projectLeadID !== -1) {
     projects = projects.filter(leadCheck);
   }
-  if (projectManager !== '') {
+  if (projectManagerID !== -1) {
     projects = projects.filter(managerCheck);
   }
   return projects;
@@ -63,9 +76,9 @@ export function filterProjects(
  */
 const ProjectsTable: React.FC = () => {
   const [status, setStatus] = useState('');
-  const [projectLead, setProjectLead] = useState('');
-  const [projectManager, setProjectManager] = useState('');
-  const [carNumber, setCarNumber] = useState('');
+  const [projectLeadID, setProjectLeadID] = useState(-1);
+  const [projectManagerID, setProjectManagerID] = useState(-1);
+  const [carNumber, setCarNumber] = useState(-1);
   const { isLoading, isError, data, error } = useAllProjects();
 
   if (isLoading) return <LoadingIndicator />;
@@ -89,33 +102,34 @@ const ProjectsTable: React.FC = () => {
   /**
    * Updates state with data from input parameters.
    * @param status The status of the project.
-   * @param projectLead The project lead of the project.
-   * @param projectManager The project manager of the project.
+   * @param projectLeadID The project lead of the project.
+   * @param projectManagerID The project manager of the project.
    * @param carNumber The carNumber of the project.
    */
   const sendDataToParent = (
     status: string,
-    projectLead: string,
-    projectManager: string,
-    carNumber: string
+    projectLeadID: number,
+    projectManagerID: number,
+    carNumber: number
   ) => {
     setStatus(status);
-    setProjectLead(projectLead);
-    setProjectManager(projectManager);
+    setProjectLeadID(projectLeadID);
+    setProjectManagerID(projectManagerID);
     setCarNumber(carNumber);
   };
 
   /**
-   * Returns an array of user names who are listed as a project's lead.
+   * Returns an array of Users who are listed as a project's lead.
    */
-  const getLeads = (): string[] => {
+  const getLeads = (): User[] => {
     const projects = data!;
-    const leads: string[] = [];
+    const leads: User[] = [];
+    const checklist: number[] = [];
     for (const project of projects) {
       for (const user of project.projectLead) {
-        const name: string = fullNamePipe(user);
-        if (!leads.includes(name)) {
-          leads.push(name);
+        if (!checklist.includes(user.id)) {
+          checklist.push(user.id);
+          leads.push(user);
         }
       }
     }
@@ -123,15 +137,16 @@ const ProjectsTable: React.FC = () => {
   };
 
   /**
-   * Returns an array of user names who are listed as a project's managers.
+   * Returns an array of Users who are listed as a project's managers.
    */
-  const getManagers = (): string[] => {
+  const getManagers = (): User[] => {
     const projects = data!;
-    const managers: string[] = [];
+    const managers: User[] = [];
+    const checklist: number[] = [];
     for (const project of projects) {
-      const name = fullNamePipe(project.projectManager);
-      if (!managers.includes(name)) {
-        managers.push(name);
+      if (!checklist.includes(project.projectManager.id)) {
+        checklist.push(project.projectManager.id);
+        managers.push(project.projectManager);
       }
     }
     return managers;
@@ -152,7 +167,7 @@ const ProjectsTable: React.FC = () => {
           <div className={styles.projectsTable}>
             <PrjsTable
               allProjects={transformToDisplayProjects(
-                filterProjects(data!, carNumber, status, projectLead, projectManager)
+                filterProjects(data!, carNumber, status, projectLeadID, projectManagerID)
               )}
             />
           </div>

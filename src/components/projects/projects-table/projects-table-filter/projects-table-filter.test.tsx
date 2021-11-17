@@ -5,14 +5,20 @@
 
 import { act, fireEvent, render, screen } from '../../../../test-support/test-utils';
 import ProjectsTableFilter from './projects-table-filter';
+import {
+  exampleAdminUser,
+  exampleLeadershipUser,
+  exampleProjectLeadUser,
+  exampleProjectManagerUser
+} from 'utils';
 
-let temp: string[] = [];
+let temp: any[] = [];
 
 const mockOnClick = (
   status: string,
-  projectLead: string,
-  projectManager: string,
-  carNumber: string
+  projectLead: number,
+  projectManager: number,
+  carNumber: number
 ) => {
   temp = [];
   temp.push(status);
@@ -26,8 +32,8 @@ const renderComponent = () => {
   render(
     <ProjectsTableFilter
       onClick={mockOnClick}
-      leads={['Amy Smith', 'Joe Blow']}
-      managers={['Joe Blow', 'Rachel Barmatha', 'Joe Schmoe']}
+      leads={[exampleProjectLeadUser, exampleLeadershipUser]}
+      managers={[exampleLeadershipUser, exampleProjectManagerUser, exampleAdminUser]}
     />
   );
 };
@@ -95,7 +101,7 @@ describe('projects table filter component', () => {
     expect(screen.getByText('None')).toBeInTheDocument();
     expect(screen.getByText('Joe Blow')).toBeInTheDocument();
     expect(screen.getByText('Rachel Barmatha')).toBeInTheDocument();
-    expect(screen.getByText('Joe Schmoe')).toBeInTheDocument();
+    expect(screen.getByText('Joe Shmoe')).toBeInTheDocument();
   });
 
   it('checking if text in the apply button is correct', async () => {
@@ -112,7 +118,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[3]).toBe('');
+    expect(temp[3]).toBe(-1);
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
@@ -122,7 +128,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[3]).toBe('1');
+    expect(temp[3]).toBe(1);
     await act(async () => {
       fireEvent.click(screen.getByTestId('car-num-toggle'));
     });
@@ -132,7 +138,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[3]).toBe('');
+    expect(temp[3]).toBe(-1);
   });
 
   it('checking if status dropdown sets filter setting correctly', async () => {
@@ -168,7 +174,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[1]).toBe('');
+    expect(temp[1]).toBe(-1);
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
@@ -178,7 +184,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[1]).toBe('Amy Smith');
+    expect(temp[1]).toBe(4);
     await act(async () => {
       fireEvent.click(screen.getByTestId('lead-toggle'));
     });
@@ -188,7 +194,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[1]).toBe('');
+    expect(temp[1]).toBe(-1);
   });
 
   it('checking if project manager dropdown sets filter setting correctly', async () => {
@@ -196,7 +202,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[2]).toBe('');
+    expect(temp[2]).toBe(-1);
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
@@ -206,7 +212,7 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[2]).toBe('Joe Blow');
+    expect(temp[2]).toBe(3);
     await act(async () => {
       fireEvent.click(screen.getByTestId('manager-toggle'));
     });
@@ -216,6 +222,6 @@ describe('projects table filter component', () => {
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[2]).toBe('');
+    expect(temp[2]).toBe(-1);
   });
 });

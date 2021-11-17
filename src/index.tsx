@@ -9,7 +9,7 @@ import AppMain from './components/app/app-main/app-main';
 import reportWebVitals from './reportWebVitals';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './index.css';
-// import './custom.scss'; for later
+import './custom.scss';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -121,7 +121,6 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
   };
 
   return (
-    <>
       <BootstrapTable
         striped
         hover
@@ -136,7 +135,6 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
         noDataIndication="No Projects to Display"
         rowStyle={{ cursor: 'pointer' }}
       />
-    </>
   );
 };
 

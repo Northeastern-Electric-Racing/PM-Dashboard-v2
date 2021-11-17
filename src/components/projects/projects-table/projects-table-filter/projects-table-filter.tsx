@@ -115,7 +115,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
     const result: any[] = [none];
     for (const user of users) {
       const userName: string = fullNamePipe(user);
-      const userID: number = user.id;
+      const { id: userID } = user;
       result.push(
         <Dropdown.Item
           key={userName}

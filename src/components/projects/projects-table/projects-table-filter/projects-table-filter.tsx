@@ -45,8 +45,8 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
         None
       </Dropdown.Item>
     );
-    let result: any[] = [none];
-    for (let value of values) {
+    const result: any[] = [none];
+    for (const value of values) {
       result.push(
         <Dropdown.Item key={value} onClick={() => setter(value)}>
           {value}

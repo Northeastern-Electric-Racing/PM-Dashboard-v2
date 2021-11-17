@@ -110,10 +110,10 @@ const ProjectsTable: React.FC = () => {
    */
   const getLeads = (): string[] => {
     const projects = data!;
-    let leads: string[] = [];
-    for (let project of projects) {
-      for (let user of project.projectLead) {
-        let name: string = fullNamePipe(user);
+    const leads: string[] = [];
+    for (const project of projects) {
+      for (const user of project.projectLead) {
+        const name: string = fullNamePipe(user);
         if (!leads.includes(name)) {
           leads.push(name);
         }
@@ -127,9 +127,9 @@ const ProjectsTable: React.FC = () => {
    */
   const getManagers = (): string[] => {
     const projects = data!;
-    let managers: string[] = [];
-    for (let project of projects) {
-      let name = fullNamePipe(project.projectManager);
+    const managers: string[] = [];
+    for (const project of projects) {
+      const name = fullNamePipe(project.projectManager);
       if (!managers.includes(name)) {
         managers.push(name);
       }

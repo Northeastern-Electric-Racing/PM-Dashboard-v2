@@ -125,7 +125,7 @@ const getSingleWorkPackage: ApiRouteFunction = async (params: { wbs: string }) =
   if (wbsEle === null) {
     return buildNotFoundResponse('work package', `WBS # ${params.wbs}`);
   }
-  return buildSuccessResponse(workPackageTransformer);
+  return buildSuccessResponse(workPackageTransformer(wbsEle));
 };
 
 // Define all valid routes for the endpoint

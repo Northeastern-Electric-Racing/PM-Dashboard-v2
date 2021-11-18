@@ -124,11 +124,11 @@ const ProjectsTable: React.FC = () => {
   const getLeads = (): User[] => {
     const projects = data!;
     const leads: User[] = [];
-    const checklist: number[] = [];
+    const seenList: number[] = [];
     for (const project of projects) {
       for (const user of project.projectLead) {
-        if (!checklist.includes(user.id)) {
-          checklist.push(user.id);
+        if (!seenList.includes(user.id)) {
+          seenList.push(user.id);
           leads.push(user);
         }
       }
@@ -142,10 +142,10 @@ const ProjectsTable: React.FC = () => {
   const getManagers = (): User[] => {
     const projects = data!;
     const managers: User[] = [];
-    const checklist: number[] = [];
+    const seenList: number[] = [];
     for (const project of projects) {
-      if (!checklist.includes(project.projectManager.id)) {
-        checklist.push(project.projectManager.id);
+      if (!seenList.includes(project.projectManager.id)) {
+        seenList.push(project.projectManager.id);
         managers.push(project.projectManager);
       }
     }

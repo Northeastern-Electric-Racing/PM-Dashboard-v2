@@ -1,0 +1,31 @@
+name: Bug Report
+description: For bugs
+body:
+  - type: textarea
+    id: observed-behavior
+    attributes:
+      label: Observed Behavior
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How could someone reproduce this bug?
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots (as needed)
+      description: Add screenshots of the bug if applicable
+    validations:
+      required: false

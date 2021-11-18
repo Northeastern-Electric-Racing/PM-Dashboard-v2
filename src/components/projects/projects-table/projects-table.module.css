@@ -3,6 +3,28 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.table {
-  padding: 0em 2em 0em 2em;
+.container {
+  width: 100%;
+  padding: 0 15px 15px 15px;
 }
+
+.filterTable {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-right: 0;
+  margin-left: 0;
+  padding-left: 15px;
+  padding-right: 5px;
+}
+
+.projectsTable {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  position: relative;
+  padding-right: 5px;
+}
+

@@ -1,5 +1,5 @@
 name: New Feature
-description: For creating a new feature
+description: For any issue related to creating a new feature
 body:
   - type: textarea
     id: current-features

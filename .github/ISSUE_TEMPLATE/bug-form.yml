@@ -22,7 +22,7 @@ body:
       multiple: true
       options:
         - Desktop
-        - IOS
+        - iOS
         - Android
         - Other (specify below)
   - type: dropdown

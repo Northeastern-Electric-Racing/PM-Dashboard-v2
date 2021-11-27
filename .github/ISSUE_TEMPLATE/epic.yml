@@ -1,5 +1,7 @@
 name: Epic
 description: A grouping of many issues
+title: "[Area] - Short Description"
+labels: [epic]
 body:
   - type: textarea
     id: user-stories
@@ -20,5 +22,6 @@ body:
     attributes:
       label: Tickets
       description: What tickets will be a part of this epic?
+      value: " - [ ] #\n - [ ] #"
     validations:
       required: true

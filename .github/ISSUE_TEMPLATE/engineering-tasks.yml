@@ -1,5 +1,6 @@
 name: Engineering Tasks
 description: For issues related to engineering tasks
+title: "[Area] - Short Description"
 body:
   - type: textarea
     id: description

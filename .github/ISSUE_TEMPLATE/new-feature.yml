@@ -1,5 +1,7 @@
 name: New Feature
 description: For any issue related to creating a new feature
+title: "[Area] - Short Description"
+labels: [new feature]
 body:
   - type: textarea
     id: current-features

@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient, Prisma, CR_Type } from '@prisma/client';
+import { PrismaClient, Prisma, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -15,7 +15,11 @@ import {
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse,
-  ChangeRequestType
+  ChangeRequestType,
+  ChangeRequestReason,
+  StandardChangeRequest,
+  ActivationChangeRequest,
+  StageGateChangeRequest
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -29,11 +33,21 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
         implementer: true
       }
     },
-    scopeChangeRequest: true,
+    scopeChangeRequest: { include: { why: true } },
     stageGateChangeRequest: true,
-    activationChangeRequest: true
+    activationChangeRequest: { include: { projectLead: true, projectManager: true } }
   }
 });
+
+const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason =>
+  ({
+    ESTIMATION: ChangeRequestReason.Estimation,
+    SCHOOL: ChangeRequestReason.School,
+    MANUFACTURING: ChangeRequestReason.Manufacturing,
+    RULES: ChangeRequestReason.Rules,
+    OTHER_PROJECT: ChangeRequestReason.OtherProject,
+    OTHER: ChangeRequestReason.Other
+  }[whyType]);
 
 const convertChangeRequestType = (type: CR_Type): ChangeRequestType =>
   ({
@@ -46,7 +60,7 @@ const convertChangeRequestType = (type: CR_Type): ChangeRequestType =>
 
 const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
-): ChangeRequest => {
+): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
   const wbsNum = {
     car: changeRequest.wbsElement.carNumber,
     project: changeRequest.wbsElement.projectNumber,
@@ -67,7 +81,14 @@ const changeRequestTransformer = (
       ...change,
       wbsNum
     })),
-    wbsNum
+    wbsNum,
+    ...changeRequest.scopeChangeRequest,
+    why: changeRequest.scopeChangeRequest?.why.map((why) => ({
+      ...why,
+      reason: convertCRScopeWhyType(why.type)
+    })),
+    ...changeRequest.activationChangeRequest,
+    ...changeRequest.stageGateChangeRequest
   };
 };
 

@@ -3,18 +3,33 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useSettings } from '../../services/settings.hooks';
 import { useAuth } from '../../services/auth.hooks';
 import PageTitle from '../shared/page-title/page-title';
 import PageBlock from '../shared/page-block/page-block';
 import './settings.module.css';
+import { Button } from 'react-bootstrap';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
-  const pageBlockBody = <>User: {auth.user?.emailId}</>;
+  const settings = useSettings();
   return (
     <>
       <PageTitle title="This is the Settings Page" />
-      <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
+      <PageBlock
+        title="User Settings"
+        headerRight={<></>}
+        body={
+          <>
+            User: {auth.user?.emailId}
+            <br />
+            Dark Mode: {settings.darkMode ? 'Enabled' : 'Disabled'}
+            <Button className={'mx-2'} size={'sm'} onClick={settings.toggleDarkMode}>
+              Toggle Dark Mode
+            </Button>
+          </>
+        }
+      />
     </>
   );
 };

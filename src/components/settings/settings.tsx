@@ -23,6 +23,12 @@ const Settings: React.FC = () => {
           <>
             User: {auth.user?.emailId}
             <br />
+            First Name: {auth.user?.firstName}
+            <br />
+            Last Name: {auth.user?.lastName}
+            <br />
+            Email: {auth.user?.emailId}
+            <br />
             Dark Mode: {settings.darkMode ? 'Enabled' : 'Disabled'}
             <Button className={'mx-2'} size={'sm'} onClick={settings.toggleDarkMode}>
               Toggle Dark Mode

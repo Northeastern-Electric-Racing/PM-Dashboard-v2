@@ -18,7 +18,7 @@ const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
   const settings = useSettings();
   return (
     <Card
-      className={'mx-4 my-3'}
+      className={'mx-4 my-3 ' + (settings.darkMode ? styles.lightText : '')}
       border={settings.darkMode ? 'light' : 'dark'}
       bg={settings.darkMode ? 'dark' : 'light'}
     >

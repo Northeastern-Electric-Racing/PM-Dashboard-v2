@@ -17,3 +17,7 @@
 .headerRight {
   float: right;
 }
+
+.lightText {
+  color: white;
+}

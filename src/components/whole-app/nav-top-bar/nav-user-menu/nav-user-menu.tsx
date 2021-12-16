@@ -19,7 +19,14 @@ const NavUserMenu: React.FC = () => {
   return (
     <NavDropdown
       className="m-auto"
-      title={<FontAwesomeIcon icon={faUserCircle} size="2x" />}
+      title={
+        <div className={'d-flex flex-row'}>
+          <div className={'my-auto pr-2'}>
+            {auth.user?.firstName} {auth.user?.lastName}
+          </div>
+          <FontAwesomeIcon icon={faUserCircle} size="2x" />
+        </div>
+      }
       id="user-dropdown"
       alignRight
     >

@@ -11,10 +11,10 @@ import styles from './sidebar.module.css';
 
 const Sidebar: React.FC = () => {
   return (
-    <Navbar className={styles.mainBackground} variant="light" expand="md" fixed="top">
+    <Navbar className={styles.mainBackground} variant="light" expand="md">
       <Navbar.Toggle aria-controls="sidebar-items" />
       <Navbar.Collapse id="sidebar-items">
-        <Nav className="ml-auto">
+        <Nav className="ml-auto flex-column">
           <SidebarLink link={routes.HOME} icon={faHome} label={'Home'} />
           <SidebarLink link={routes.PROJECTS} icon={faFolder} label={'Projects'} />
           <SidebarLink link={routes.CHANGE_REQUESTS} icon={faExchangeAlt} label={'Changes'} />

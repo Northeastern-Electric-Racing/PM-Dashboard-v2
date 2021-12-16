@@ -23,11 +23,4 @@ describe('navigation top bar tests', () => {
     renderComponent();
     expect(screen.getByText(/NER PM Dashboard/i)).toBeInTheDocument();
   });
-
-  it('renders navigation links', () => {
-    renderComponent();
-    expect(screen.getByText(/Home/i)).toBeInTheDocument();
-    expect(screen.getByText(/Projects/i)).toBeInTheDocument();
-    expect(screen.getByText(/Changes/i)).toBeInTheDocument();
-  });
 });

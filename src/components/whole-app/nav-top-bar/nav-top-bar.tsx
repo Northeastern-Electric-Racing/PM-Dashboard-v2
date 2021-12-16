@@ -7,7 +7,6 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../shared/routes';
 import NavUserMenu from './nav-user-menu/nav-user-menu';
-import NavPageLinks from './nav-page-links/nav-page-links';
 import NavNotificationsMenu from './nav-notifications-menu/nav-notifications-menu';
 import styles from './nav-top-bar.module.css';
 
@@ -28,7 +27,6 @@ const NavTopBar: React.FC = () => {
       <Navbar.Collapse id="nav-top-bar-items">
         <Nav className="ml-auto">
           <NavNotificationsMenu />
-          <NavPageLinks />
           <NavUserMenu />
         </Nav>
       </Navbar.Collapse>

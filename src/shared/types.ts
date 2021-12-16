@@ -11,3 +11,8 @@ export interface Auth {
   signin: (token: string) => Promise<User>;
   signout: () => void;
 }
+
+export interface Settings {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+}

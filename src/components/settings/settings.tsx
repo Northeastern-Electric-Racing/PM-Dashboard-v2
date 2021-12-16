@@ -17,7 +17,7 @@ const Settings: React.FC = () => {
     <>
       <PageTitle title="This is the Settings Page" />
       <PageBlock
-        title="User Settings"
+        title="User Details"
         headerRight={<></>}
         body={
           <>
@@ -28,7 +28,14 @@ const Settings: React.FC = () => {
             Last Name: {auth.user?.lastName}
             <br />
             Email: {auth.user?.emailId}
-            <br />
+          </>
+        }
+      />
+      <PageBlock
+        title="User Settings"
+        headerRight={<></>}
+        body={
+          <>
             Dark Mode: {settings.darkMode ? 'Enabled' : 'Disabled'}
             <Button className={'mx-2'} size={'sm'} onClick={settings.toggleDarkMode}>
               Toggle Dark Mode

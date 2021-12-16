@@ -11,12 +11,17 @@ import {
   exampleWorkPackage2,
   exampleWorkPackage3
 } from '../../../../../test-support/test-data/work-packages.stub';
+import AppContext from '../../../../app/app-context/app-context';
 import WorkPackageDetails from './work-package-details';
 
 describe('Rendering Work Packagae Details Component', () => {
   it('renders all the fields, example 1', () => {
     const wp: WorkPackage = exampleWorkPackage1;
-    render(<WorkPackageDetails workPackage={wp} />);
+    render(
+      <AppContext>
+        <WorkPackageDetails workPackage={wp} />
+      </AppContext>
+    );
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
@@ -39,7 +44,11 @@ describe('Rendering Work Packagae Details Component', () => {
 
   it('renders all the fields, example 2', () => {
     const wp: WorkPackage = exampleWorkPackage2;
-    render(<WorkPackageDetails workPackage={wp} />);
+    render(
+      <AppContext>
+        <WorkPackageDetails workPackage={wp} />
+      </AppContext>
+    );
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
@@ -62,7 +71,11 @@ describe('Rendering Work Packagae Details Component', () => {
 
   it('renders all the fields, example 3', () => {
     const wp: WorkPackage = exampleWorkPackage3;
-    render(<WorkPackageDetails workPackage={wp} />);
+    render(
+      <AppContext>
+        <WorkPackageDetails workPackage={wp} />
+      </AppContext>
+    );
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();

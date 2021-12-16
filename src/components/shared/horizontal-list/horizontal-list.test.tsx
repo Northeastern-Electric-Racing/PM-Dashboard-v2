@@ -4,17 +4,26 @@
  */
 
 import { render, screen } from '@testing-library/react';
+import AppContext from '../../app/app-context/app-context';
 import HorizontalList from './horizontal-list';
 
 describe('Horizontal List Component', () => {
   it('renders the title', () => {
-    render(<HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />);
+    render(
+      <AppContext>
+        <HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />
+      </AppContext>
+    );
 
     expect(screen.getByText('test')).toBeInTheDocument();
   });
 
   it('renders all the listed items', () => {
-    render(<HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />);
+    render(
+      <AppContext>
+        <HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />
+      </AppContext>
+    );
 
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();

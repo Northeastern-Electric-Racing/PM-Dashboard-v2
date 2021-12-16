@@ -4,10 +4,15 @@
  */
 
 import { render } from '@testing-library/react';
+import AppContext from '../../app/app-context/app-context';
 import PageBlock from './page-block';
 
 const renderComponent = () => {
-  return render(<PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />);
+  return render(
+    <AppContext>
+      <PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />
+    </AppContext>
+  );
 };
 
 describe('card component', () => {

@@ -5,17 +5,26 @@
 
 import { render, screen } from '@testing-library/react';
 import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
+import AppContext from '../../../../app/app-context/app-context';
 import RulesList from './rules-list';
 
 describe('Rendering Work Package Rules Component', () => {
   it('renders the component title', () => {
-    render(<RulesList rules={exampleProject1.rules} />);
+    render(
+      <AppContext>
+        <RulesList rules={exampleProject1.rules} />
+      </AppContext>
+    );
 
     expect(screen.getByText(`Rules`)).toBeInTheDocument();
   });
 
   it('renders all the listed rules', () => {
-    render(<RulesList rules={exampleProject1.rules} />);
+    render(
+      <AppContext>
+        <RulesList rules={exampleProject1.rules} />
+      </AppContext>
+    );
 
     expect(screen.getByText('EV3.5.2')).toBeInTheDocument();
   });

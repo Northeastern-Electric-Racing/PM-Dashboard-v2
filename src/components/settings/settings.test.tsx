@@ -25,8 +25,16 @@ describe('settings page component', () => {
     expect(screen.getByText('This is the Settings Page')).toBeInTheDocument();
   });
 
-  it('renders user', () => {
+  it('renders user details', () => {
     renderComponent();
-    expect(screen.getByText('User:')).toBeInTheDocument();
+    expect(screen.getByText(/User:/)).toBeInTheDocument();
+    expect(screen.getByText(/First Name:/)).toBeInTheDocument();
+    expect(screen.getByText(/Last Name:/)).toBeInTheDocument();
+    expect(screen.getByText(/Email:/)).toBeInTheDocument();
+  });
+
+  it('renders settings', () => {
+    renderComponent();
+    expect(screen.getByText(/Dark Mode:/)).toBeInTheDocument();
   });
 });

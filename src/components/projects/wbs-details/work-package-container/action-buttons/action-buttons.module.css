@@ -1,0 +1,12 @@
+.workPackageActionButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.workPackageActionButton {
+  background-color: #ef4345;
+  border-color: #ef4345;
+}
+

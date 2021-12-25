@@ -6,7 +6,6 @@
 }
 
 .workPackageActionButton {
-  background-color: #ef4345;
-  border-color: #ef4345;
+  background-color: #ef4345 !important;
+  border-color: #ef4345 !important;
 }
-

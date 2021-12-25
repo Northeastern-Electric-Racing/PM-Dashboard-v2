@@ -29,16 +29,18 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
       <Form>
         <Row>
           <Col xs={12} md={6}>
-            <WorkPackageDetail type="title" workPackage={workPackage}/>
-            <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
-            <b>Project Lead:</b> {listPipe(workPackage.projectLead, fullNamePipe)} <br />
-            <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
-            <b>Duration:</b> {weeksPipe(workPackage.duration)} <br />
+            <WorkPackageDetail type="title" workPackage={workPackage} />
+            <WorkPackageDetail type="wbs" workPackage={workPackage} />
+            <WorkPackageDetail type="project-lead" workPackage={workPackage} />
+            <WorkPackageDetail type="project-manager" workPackage={workPackage} />
+            <WorkPackageDetail type="duration" workPackage={workPackage} />
           </Col>
           <Col xs={6} md={4}>
-            <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()} <br />
-            <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)} <br />
-            <b>Progress:</b> {workPackage.progress}% <br />
+            <WorkPackageDetail type="start-date" workPackage={workPackage} />
+            <b>End Date: </b>
+            {endDatePipe(workPackage.startDate, workPackage.duration)}
+            <br />
+            <WorkPackageDetail type="progress" workPackage={workPackage} />
             <b>Expected Progress:</b> <br />
             <b>Timeline Status:</b> <br />
           </Col>

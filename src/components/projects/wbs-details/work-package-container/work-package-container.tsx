@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-// Idea: Implement context here.
 import { createContext, useState, useEffect } from 'react';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
@@ -33,8 +32,8 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    console.log(editMode);
-  }, [editMode]);
+    setEditMode(false);
+  }, [wbsNum]);
 
   if (isLoading) return <LoadingIndicator />;
 
@@ -50,7 +49,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
         <DescriptionList title={'Expected Activities'} items={data!.expectedActivities} />
         <DescriptionList title={'Deliverables'} items={data!.deliverables} />
         <ChangesList changes={data!.changes} />
-        {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ' '}
+        {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
       </div>
     </EditModeContext.Provider>
   );

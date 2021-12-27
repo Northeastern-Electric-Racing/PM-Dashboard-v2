@@ -1,0 +1,49 @@
+# Prisma Migration Tools
+
+## `npm prisma:seed`
+
+### What it does
+
+This command seeds the database, which means populating the database with initial data it requires to run. It can be dummy data, basic user accounts, a default language, etc.
+
+### Why to use it
+
+While developing the application, we need some data to be present. Running this command populates the database with the data it needs.
+
+For more detailed information about [prisma seed](https://www.prisma.io/docs/guides/database/seed-database), click the link.
+
+## `npm prisma:reset`
+
+### What it does
+
+This command drops the database if possible or performs a soft reset if the database cannot be deleted. If the database is dropped, it creates a new database with the same name and runs all migrations and seed scripts.
+
+### Why to use it
+
+If you need to undo manual changes or if there are migration history conflicts, you should run this command. This command is a development only tool and should not be used on the production database.
+
+For more detailed information about [prisma reset](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
+
+## `npm prisma:migrate`
+
+### What it does
+
+This command enables you to keep your database schema and prisma schema in sync with each other.
+
+### Why to use it
+
+After you make a change to the prisma schema, you should run this function to update the database schema and create a record of the changes you made (which are shown in the `migrations` folder). This command is a development only tool and should not be used on the production database.
+
+For more detailed information about [prisma migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
+
+## `npm prisma:generate`
+
+### What it does
+
+This command generates and initializes the prisma client. The prisma client is an auto-generated library that allows us to access data in our application.
+
+### Why to use it
+
+After changes are made to the prisma schema, you need to run this function to update the prisma client.
+
+For more detailed information about [prisma generate](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client), click the link.

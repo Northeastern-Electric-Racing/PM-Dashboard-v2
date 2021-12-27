@@ -33,6 +33,9 @@ Paste the following line into the `.env` file and replace `<USERNAME>` with your
 To test that things are working, run `npm run start` in the CLI and go to an example API route.
 Example: `localhost:3000/.netlify/functions/users`.
 
+If the above line in the `.env` file does not work, replace the line with the following and change `<PASSWORD>` to your `postgres` database password.
+`DATABASE_URL="postgresql://postgres:<PASSWORD>@localhost:5432/nerpm?schema=public"`
+
 ## IDE: VSCode
 
 Turn on `format on save` for Prettier.

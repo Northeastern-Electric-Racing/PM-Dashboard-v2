@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, User, WorkPackage } from 'utils';
+import { Project, User } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
@@ -54,7 +54,7 @@ export function filterProjects(
     return getUserIDs(project.projectLead).includes(projectLeadID);
   };
   const managerCheck = (project: Project) => {
-    return project.projectManager.userId === projectManagerID;
+    return project.projectManager?.userId === projectManagerID;
   };
   if (carNumber !== -1) {
     projects = projects.filter(carNumCheck);
@@ -143,9 +143,9 @@ const ProjectsTable: React.FC = () => {
     const managers: User[] = [];
     const seenList: number[] = [];
     for (const project of projects) {
-      if (!seenList.includes(project.projectManager.userId)) {
-        seenList.push(project.projectManager.userId);
-        managers.push(project.projectManager);
+      if (!seenList.includes(project.projectManager!.userId)) {
+        seenList.push(project.projectManager!.userId);
+        managers.push(project.projectManager!);
       }
     }
     return managers;

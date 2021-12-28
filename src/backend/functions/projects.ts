@@ -14,11 +14,7 @@ import {
 import {
   routeMatcher,
   ApiRoute,
-<<<<<<< HEAD
-=======
   apiRoutes,
-  Project,
->>>>>>> main
   WbsNumber,
   ApiRouteFunction,
   API_URL,
@@ -139,7 +135,6 @@ const getAllProjects: ApiRouteFunction = async () => {
 };
 
 // Fetch the project for the specified WBS number
-<<<<<<< HEAD
 const getSingleProject: ApiRouteFunction = async (params: { wbs: string }) => {
   const parsedWbs: WbsNumber = validateWBS(params.wbs);
   if (!isProject(parsedWbs)) {
@@ -157,24 +152,6 @@ const getSingleProject: ApiRouteFunction = async (params: { wbs: string }) => {
   });
   if (wbsEle === null) {
     return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
-=======
-const getSingleProject: ApiRouteFunction = (params: { wbsNum: string }) => {
-  const parseWbs: number[] = params.wbsNum.split('.').map((str) => parseInt(str));
-  const parsedWbs: WbsNumber = {
-    car: parseWbs[0],
-    project: parseWbs[1],
-    workPackage: parseWbs[2]
-  };
-  const requestedProject: Project | undefined = exampleAllProjects.find((prj: Project) => {
-    return (
-      prj.wbsNum.car === parsedWbs.car &&
-      prj.wbsNum.project === parsedWbs.project &&
-      prj.wbsNum.workPackage === parsedWbs.workPackage
-    );
-  });
-  if (requestedProject === undefined) {
-    return buildNotFoundResponse('project', `WBS # ${params.wbsNum}`);
->>>>>>> main
   }
 
   return buildSuccessResponse(projectTransformer(wbsEle));
@@ -196,15 +173,8 @@ const routes: ApiRoute[] = [
 // Handler for incoming requests
 const handler: Handler = async (event, context) => {
   try {
-<<<<<<< HEAD
-    const out = routeMatcher(routes, event, context);
-    await prisma.$disconnect();
-    return out;
-  } catch (error) {
-=======
     return routeMatcher(routes, event, context);
   } catch (error: any) {
->>>>>>> main
     console.error(error);
     return buildServerFailureResponse(error.message);
   }

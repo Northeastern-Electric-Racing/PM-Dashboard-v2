@@ -67,10 +67,10 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
       <Row>
         <Col>
           <div className={styles.horizontal}>
-            <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
-            <li>{linkPipe('Task List', project.taskListLink)}</li>
-            <li>{linkPipe('BOM', project.bomLink)}</li>
-            <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
+            <li>{linkPipe('Slide Deck', project.slideDeckLink!)}</li>
+            <li>{linkPipe('Task List', project.taskListLink!)}</li>
+            <li>{linkPipe('BOM', project.bomLink!)}</li>
+            <li>{linkPipe('Google Drive', project.gDriveLink!)}</li>
           </div>
         </Col>
       </Row>

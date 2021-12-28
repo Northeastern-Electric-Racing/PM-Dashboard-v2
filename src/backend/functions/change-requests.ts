@@ -101,7 +101,7 @@ const getAllChangeRequests: ApiRouteFunction = async () => {
 const getChangeRequestByID: ApiRouteFunction = async (params: { id: string }) => {
   const crId: number = parseInt(params.id);
   const requestedCR = await prisma.change_Request.findUnique({
-    where: { crId: crId },
+    where: { crId },
     ...relationArgs
   });
   if (requestedCR === null) {

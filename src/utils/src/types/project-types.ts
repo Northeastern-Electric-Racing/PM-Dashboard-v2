@@ -19,7 +19,7 @@ export interface WbsElement {
   name: string;
   status: WbsElementStatus;
   projectLead: User[];
-  projectManager: User;
+  projectManager?: User;
   changes: ImplementedChange[];
 }
 

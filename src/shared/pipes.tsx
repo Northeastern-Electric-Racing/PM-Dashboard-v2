@@ -35,7 +35,7 @@ export const wbsPipe = (wbsNum: WbsNumber): string => {
 };
 
 export const fullNamePipe = (user?: User): string => {
-  return user ? `${user.firstName} ${user.lastName}` : emDashPipe();
+  return user ? `${user.firstName} ${user.lastName}` : emDashPipe('');
 };
 
 export const booleanPipe = (bool: boolean): string => {

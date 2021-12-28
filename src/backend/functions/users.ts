@@ -21,8 +21,7 @@ import {
 
 const prisma = new PrismaClient();
 
-const usersTransformer = (user : Prisma.UserGetPayload<null>): User => {
-
+const usersTransformer = (user: Prisma.UserGetPayload<null>): User => {
   if (user === null) throw new TypeError('User not found');
 
   return {
@@ -34,9 +33,8 @@ const usersTransformer = (user : Prisma.UserGetPayload<null>): User => {
     email: user.email ?? undefined,
     emailId: user.emailId,
     role: user.role ?? undefined
-  }
+  };
 };
-
 
 // Fetch all users
 const getAllUsers: ApiRouteFunction = async () => {
@@ -47,7 +45,7 @@ const getAllUsers: ApiRouteFunction = async () => {
 // Fetch the user for the specified id
 const getSingleUser: ApiRouteFunction = async (params: { id: string }) => {
   const userId: number = parseInt(params.id);
-  const requestedUser = await prisma.user.findUnique({ where: { userId: userId } });
+  const requestedUser = await prisma.user.findUnique({ where: { userId } });
   if (!requestedUser) {
     return buildNotFoundResponse('user', `#${params.id}`);
   }
@@ -70,13 +68,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
   const payload = ticket.getPayload();
   if (!payload) throw new Error('Auth server response payload invalid');
-<<<<<<< HEAD
-  const userId = payload['sub']; // google user id
-
-=======
-  const { sub: userid } = payload; // google user id
-  console.log(userid);
->>>>>>> main
+  const { sub: userId } = payload; // google user id
   // check if user is already in the database via Google ID
   let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
 

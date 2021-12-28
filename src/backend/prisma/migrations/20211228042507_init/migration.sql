@@ -112,7 +112,7 @@ CREATE TABLE "WBS_Element" (
     "workPackageNumber" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "status" "WBS_Element_Status" NOT NULL,
-    "projectLeadId" INTEGER,
+    "projectLeadId" INTEGER[],
     "projectManagerId" INTEGER,
 
     PRIMARY KEY ("wbsElementId")
@@ -162,6 +162,12 @@ CREATE TABLE "Description_Bullet" (
 );
 
 -- CreateTable
+CREATE TABLE "_projectLead" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_dependencies" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -193,6 +199,12 @@ CREATE UNIQUE INDEX "Project_wbsElementId_unique" ON "Project"("wbsElementId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Work_Package_wbsElementId_unique" ON "Work_Package"("wbsElementId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_projectLead_AB_unique" ON "_projectLead"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_projectLead_B_index" ON "_projectLead"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_dependencies_AB_unique" ON "_dependencies"("A", "B");
@@ -265,6 +277,12 @@ ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("workPackageIdExpectedActiviti
 
 -- AddForeignKey
 ALTER TABLE "Description_Bullet" ADD FOREIGN KEY ("workPackageIdDeliverables") REFERENCES "Work_Package"("workPackageId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_projectLead" ADD FOREIGN KEY ("A") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_projectLead" ADD FOREIGN KEY ("B") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_dependencies" ADD FOREIGN KEY ("A") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;

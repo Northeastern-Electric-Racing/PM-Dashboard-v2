@@ -135,8 +135,8 @@ const getAllProjects: ApiRouteFunction = async () => {
 };
 
 // Fetch the project for the specified WBS number
-const getSingleProject: ApiRouteFunction = async (params: { wbs: string }) => {
-  const parsedWbs: WbsNumber = validateWBS(params.wbs);
+const getSingleProject: ApiRouteFunction = async (params: { wbsNum: string }) => {
+  const parsedWbs: WbsNumber = validateWBS(params.wbsNum);
   if (!isProject(parsedWbs)) {
     return buildClientFailureResponse('WBS Number is a Work Package WBS#, not a Project WBS#');
   }
@@ -151,7 +151,7 @@ const getSingleProject: ApiRouteFunction = async (params: { wbs: string }) => {
     ...uniqueRelationArgs
   });
   if (wbsEle === null) {
-    return buildNotFoundResponse('project', `WBS # ${params.wbs}`);
+    return buildNotFoundResponse('project', `WBS # ${params.wbsNum}`);
   }
 
   return buildSuccessResponse(projectTransformer(wbsEle));

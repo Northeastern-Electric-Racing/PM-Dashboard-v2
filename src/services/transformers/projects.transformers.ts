@@ -4,7 +4,7 @@
  */
 
 import { DescriptionBullet, Project } from 'utils';
-import { workPackageTransformer } from './work-packages.transformers';
+import { workPackageSummaryTransformer } from './work-packages.transformers';
 
 /**
  * Transforms a description bullet to ensure deep field transformation of date objects.
@@ -30,7 +30,7 @@ export const projectTransformer = (project: Project) => {
   return {
     ...project,
     dateCreated: new Date(project.dateCreated),
-    workPackages: project.workPackages.map(workPackageTransformer),
+    workPackages: project.workPackages.map(workPackageSummaryTransformer),
     goals: project.goals.map(descriptionBulletTransformer),
     features: project.features.map(descriptionBulletTransformer),
     otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)

@@ -33,8 +33,19 @@ Paste the following line into the `.env` file and replace `<USERNAME>` with your
 To test that things are working, run `npm run start` in the CLI and go to an example API route.
 Example: `localhost:3000/.netlify/functions/users`.
 
-If the above line in the `.env` file does not work, replace the line with the following and change `<PASSWORD>` to your `postgres` database password.
+If the application does not launch, you can replace the line in the `.env` file with the following.
 `DATABASE_URL="postgresql://postgres:<PASSWORD>@localhost:5432/nerpm?schema=public"`
+Change `<PASSWORD>` to your `postgres` database password.
+
+Test again to ensure that the application launches correctly.
+
+### Initial Database Migration
+
+In order to run the database for the first time, you will need to execute the following commands in the CLI.
+
+Run `npm prisma:migrate`, followed by `npm prisma:seed`, and then `npm prisma:generate`.
+
+Refer to [prisma migration tools](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/PrismaMigrationTools.md) for more information about this commands.
 
 ## IDE: VSCode
 

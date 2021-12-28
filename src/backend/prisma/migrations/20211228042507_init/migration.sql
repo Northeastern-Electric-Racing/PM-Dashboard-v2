@@ -249,7 +249,8 @@ ALTER TABLE "Change" ADD FOREIGN KEY ("implementerId") REFERENCES "User"("userId
 ALTER TABLE "Change" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectLeadId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;
+-- ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectLeadId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;
+-- This line of SQL has been manually commented out in order to allow the multiple users as project leads relation to work
 
 -- AddForeignKey
 ALTER TABLE "WBS_Element" ADD FOREIGN KEY ("projectManagerId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -6,18 +6,7 @@
 import axios from 'axios';
 import { User } from '@prisma/client';
 import { apiUrls } from '../shared/urls';
-
-/**
- * Transforms a user to ensure deep field transformation of date objects.
- *
- * @param user Incoming user object supplied by the HTTP response.
- * @returns Properly transformed user object.
- */
-export const userTransformer = (user: User) => {
-  return {
-    ...user
-  };
-};
+import { userTransformer } from './transformers/users.transformers';
 
 /**
  * Fetches all users.

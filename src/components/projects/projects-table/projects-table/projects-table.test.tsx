@@ -6,7 +6,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import ProjectsTable from './projects-table';
 import { Project } from 'utils';
-import { wbsPipe, fullNamePipe, weeksPipe } from '../../../../shared/pipes';
+import { wbsPipe, fullNamePipe, weeksPipe, listPipe } from '../../../../shared/pipes';
 import { wbsRegex } from '../../../../test-support/test-utils';
 import {
   exampleProject1,
@@ -23,7 +23,7 @@ const renderComponent = (prjs: Project[]) => {
     return {
       wbsNum: wbsPipe(prj.wbsNum),
       name: prj.name,
-      projectLead: fullNamePipe(prj.projectLead),
+      projectLead: listPipe(prj.projectLead, fullNamePipe),
       projectManager: fullNamePipe(prj.projectManager),
       duration: weeksPipe(prj.workPackages.reduce((tot, cur) => tot + cur.duration, 0))
     };
@@ -111,6 +111,27 @@ describe('projects table component', () => {
     fireEvent.click(screen.getByText(column));
     const wbsNumsDesc: HTMLElement[] = await screen.findAllByText(wbsRegex);
     expect(wbsNumsDesc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
+
+    fireEvent.click(screen.getByText(column));
+    const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
+    expect(wbsNumsAsc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder.reverse());
+  });
+
+  it('handles sorting and reverse sorting the table by wbsNum', async () => {
+    renderComponent(exampleAllProjects);
+
+    const column: string = 'WBS #';
+    const expectedWbsOrder: string[] = [
+      exampleProject5,
+      exampleProject4,
+      exampleProject3,
+      exampleProject2,
+      exampleProject1
+    ].map((prj: Project) => wbsPipe(prj.wbsNum));
+
+    fireEvent.click(screen.getByText(column));
+    const wbsNumsDesc: HTMLElement[] = await screen.findAllByText(wbsRegex);
+    expect(wbsNumsDesc.map((ele) => ele.innerHTML)).toEqual(expectedWbsOrder);
 
     fireEvent.click(screen.getByText(column));
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);

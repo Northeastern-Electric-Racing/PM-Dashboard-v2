@@ -8,14 +8,18 @@ import { User } from '@prisma/client';
 import { WbsNumber } from 'utils';
 
 /**
- * Pipes
+ * Pipes:
  *
  * Data transformation functions designed to abstract view-based adjustments.
  * Pipe is a term / tool from Angular.
  */
 
-export const linkPipe = (description: string, link?: string): ReactElement => {
-  return link ? <a href={link}>{description}</a> : <>{description}</>;
+export const linkPipe = (description: string, link: string): ReactElement => {
+  return (
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      {description}
+    </a>
+  );
 };
 
 export const weeksPipe = (weeks: number): string => {
@@ -38,30 +42,31 @@ export const booleanPipe = (bool: boolean): string => {
   return bool ? 'YES' : 'NO';
 };
 
-// Formats an array of objects into a string that is a list
+// Formats an array of objects into a string that is a list.
 export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string => {
   return array.map(transform).join(', ');
 };
 
-// Formats the end date as a string
+// Formats the end date as a string.
 export const endDatePipe = (startDate: Date, durWeeks: number): string => {
-  var endDate = new Date(startDate);
+  const endDate = new Date(startDate);
   endDate.setDate(endDate.getDate() + durWeeks * 7);
-  return endDate.toLocaleDateString();
+  return datePipe(endDate);
 };
 
-// Returns an empty string if a passed in string is empty, otherwise return the given string
-export const emptyStringPipe = (str?: string): string => {
-  return str ?? '';
+// Replaces an empty string with an EM dash.
+export const emDashPipe = (str: string): string => {
+  return str.trim() === '' ? '—' : str;
 };
 
-// Replace an empty string with an EM dash
-export const emDashPipe = (str?: string): string => {
-  return str ?? '—';
-};
-
-// return a given data as a string in the local en-US format
+/**
+ * Return a given data as a string in the local en-US format,
+ * with single digit numbers starting with a zero.
+ */
 export const datePipe = (date: Date): string => {
-  var theDate = new Date(date);
-  return theDate.toLocaleString('en-US');
+  return date.toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
 };

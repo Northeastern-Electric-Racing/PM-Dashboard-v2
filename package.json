@@ -49,6 +49,51 @@
       "react-app",
       "react-app/jest"
     ],
+    "rules": {
+      "guard-for-in": "error",
+      "prefer-arrow-callback": "error",
+      "no-unsafe-negation": [
+        "error",
+        {
+          "enforceForOrderingRelations": true
+        }
+      ],
+      "no-unsafe-optional-chaining": [
+        "error",
+        {
+          "disallowArithmeticOperators": true
+        }
+      ],
+      "eqeqeq": "error",
+      "no-else-return": "error",
+      "no-lonely-if": "error",
+      "no-throw-literal": "error",
+      "prefer-promise-reject-errors": "error",
+      "no-unneeded-ternary": "error",
+      "no-var": "error",
+      "object-shorthand": "error",
+      "prefer-const": "error",
+      "prefer-destructuring": [
+        "error",
+        {
+          "VariableDeclarator": {
+            "array": true,
+            "object": true
+          },
+          "AssignmentExpression": {
+            "array": true,
+            "object": true
+          }
+        },
+        {
+          "enforceForRenamedProperties": true
+        }
+      ],
+      "prefer-exponentiation-operator": "error",
+      "prefer-object-spread": "error",
+      "prefer-rest-params": "error",
+      "prefer-spread": "error"
+    },
     "ignorePatterns": [
       "**/.github/**",
       "build",

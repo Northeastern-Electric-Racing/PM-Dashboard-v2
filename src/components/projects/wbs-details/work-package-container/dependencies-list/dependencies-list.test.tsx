@@ -23,7 +23,7 @@ describe('Rendering Work Packagae Dependencies Component', () => {
     renderComponent();
     expect(screen.getByText(`Dependencies`)).toBeInTheDocument();
 
-    exampleWorkPackage2.dependencies.forEach(function (wbs) {
+    exampleWorkPackage2.dependencies.forEach((wbs) => {
       expect(screen.getByText(`${wbsPipe(wbs)}`)).toBeInTheDocument();
     });
   });

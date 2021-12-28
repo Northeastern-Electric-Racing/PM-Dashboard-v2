@@ -29,7 +29,7 @@ const Login: React.FC = () => {
   };
 
   const verifyLogin = async (response: any) => {
-    const id_token: string = response.getAuthResponse().id_token;
+    const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);
     history.push(routes.HOME);

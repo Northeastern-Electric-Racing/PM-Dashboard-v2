@@ -10,6 +10,7 @@ import { WorkPackageSummary as WPSummary } from 'utils';
 import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
+import { Col, Container, Row } from 'react-bootstrap';
 
 interface WorkPackageSummaryProps {
   workPackage: WPSummary;
@@ -32,19 +33,17 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
       <Collapse in={open}>
         <div>
           <Card.Body>
-            <div className={styles.halfDiv}>
-              <p>
-                <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
-              </p>
-            </div>
-            <div className={styles.halfDiv}>
-              <p>
-                <b>Start date:</b> {workPackage.startDate.toLocaleDateString()}
-              </p>
-              <p>
-                <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
-              </p>
-            </div>
+            <Container fluid>
+              <Row>
+                <Col xs={12} md={6}>
+                  <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
+                </Col>
+                <Col xs={6} md={4}>
+                  <b>Start date:</b> {workPackage.startDate.toLocaleDateString()} <br />
+                  <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
+                </Col>
+              </Row>
+            </Container>
           </Card.Body>
         </div>
       </Collapse>

@@ -4,9 +4,16 @@
  */
 
 import { WorkPackage } from 'utils';
-import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
+import {
+  weeksPipe,
+  wbsPipe,
+  endDatePipe,
+  fullNamePipe,
+  listPipe
+} from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
-import styles from './work-package-details.module.css';
+import { Col, Container, Row } from 'react-bootstrap';
+import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
@@ -14,42 +21,24 @@ interface WorkPackageDetailsProps {
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const detailsBody = (
-    <>
-      <div className={styles.halfDiv}>
-        <p>
-          <b>Work Package Name:</b> {workPackage.name}
-        </p>
-        <p>
-          <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)}
-        </p>
-        <p>
-          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
-        </p>
-        <p>
-          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
-        </p>
-        <p>
-          <b>Duration:</b> {weeksPipe(workPackage.duration)}
-        </p>
-      </div>
-      <div className={styles.halfDiv}>
-        <p>
-          <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()}
-        </p>
-        <p>
-          <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
-        </p>
-        <p>
-          <b>Progress:</b> {workPackage.progress}%
-        </p>
-        <p>
-          <b>Expected Progress:</b>
-        </p>
-        <p>
-          <b>Timeline Status:</b>
-        </p>
-      </div>
-    </>
+    <Container fluid>
+      <Row>
+        <Col xs={12} md={6}>
+          <b>Work Package Name:</b> {workPackage.name} <br />
+          <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
+          <b>Project Lead:</b> {listPipe(workPackage.projectLead, fullNamePipe)} <br />
+          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
+          <b>Duration:</b> {weeksPipe(workPackage.duration)} <br />
+        </Col>
+        <Col xs={6} md={4}>
+          <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()} <br />
+          <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)} <br />
+          <b>Progress:</b> {workPackage.progress}% <br />
+          <b>Expected Progress:</b> <br />
+          <b>Timeline Status:</b> <br />
+        </Col>
+      </Row>
+    </Container>
   );
 
   return (

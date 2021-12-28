@@ -4,40 +4,10 @@
  */
 
 import axios from 'axios';
-import { DescriptionBullet, Project, WbsNumber, WorkPackageSummary } from 'utils';
+import { Project, WbsNumber, WorkPackageSummary } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
-
-/**
- * Transforms a description bullet to ensure deep field transformation of date objects.
- *
- * @param bullet Incoming description bullet object supplied by the HTTP response.
- * @returns Properly transformed description bullet object.
- */
-export const descriptionBulletTransformer = (bullet: DescriptionBullet) => {
-  return {
-    ...bullet,
-    dateAdded: new Date(bullet.dateAdded),
-    dateDeleted: bullet.dateDeleted ? new Date(bullet.dateDeleted) : bullet.dateDeleted
-  };
-};
-
-/**
- * Transforms a project to ensure deep field transformation of date objects.
- *
- * @param project Incoming project object supplied by the HTTP response.
- * @returns Properly transformed project object.
- */
-const projectTransformer = (project: Project) => {
-  return {
-    ...project,
-    dateCreated: new Date(project.dateCreated),
-    workPackages: project.workPackages.map(workPackageSummaryTransformer),
-    goals: project.goals.map(descriptionBulletTransformer),
-    features: project.features.map(descriptionBulletTransformer),
-    otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)
-  };
-};
+import { projectTransformer } from './transformers/projects.transformers';
 
 const workPackageSummaryTransformer = (workPackageSummary: WorkPackageSummary) => {
   return {

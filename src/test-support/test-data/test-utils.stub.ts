@@ -87,11 +87,11 @@ export const mockUseQueryResult = <Return>(
   err?: Error
 ) => {
   return {
-    data: data || undefined,
-    error: err || null,
-    isError: isError,
+    data: data ?? undefined,
+    error: err ?? null,
+    isError,
     isIdle: true,
-    isLoading: isLoading,
+    isLoading,
     isLoadingError: false,
     isRefetchError: false,
     isSuccess: false,

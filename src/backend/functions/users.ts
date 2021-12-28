@@ -70,8 +70,13 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
   const payload = ticket.getPayload();
   if (!payload) throw new Error('Auth server response payload invalid');
+<<<<<<< HEAD
   const userId = payload['sub']; // google user id
 
+=======
+  const { sub: userid } = payload; // google user id
+  console.log(userid);
+>>>>>>> main
   // check if user is already in the database via Google ID
   let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
 
@@ -126,7 +131,7 @@ const routes: ApiRoute[] = [
 const handler: Handler = async (event, context) => {
   try {
     return routeMatcher(routes, event, context);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     return buildServerFailureResponse(error.message);
   }

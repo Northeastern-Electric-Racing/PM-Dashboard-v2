@@ -112,9 +112,9 @@ const ProjectsTable: React.FC = () => {
     const leads: User[] = [];
     const seenList: number[] = [];
     for (const project of projects) {
-      if (!seenList.includes(project.projectLead!.userId)) {
-        seenList.push(project.projectLead!.userId);
-        leads.push(project.projectLead!);
+      if (project.projectLead && !seenList.includes(project.projectLead.userId)) {
+        seenList.push(project.projectLead.userId);
+        leads.push(project.projectLead);
       }
     }
     return leads;
@@ -128,9 +128,9 @@ const ProjectsTable: React.FC = () => {
     const managers: User[] = [];
     const seenList: number[] = [];
     for (const project of projects) {
-      if (!seenList.includes(project.projectManager!.userId)) {
-        seenList.push(project.projectManager!.userId);
-        managers.push(project.projectManager!);
+      if (project.projectManager && !seenList.includes(project.projectManager.userId)) {
+        seenList.push(project.projectManager.userId);
+        managers.push(project.projectManager);
       }
     }
     return managers;

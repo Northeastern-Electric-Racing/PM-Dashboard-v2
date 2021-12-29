@@ -5,7 +5,7 @@
 
 import { Project, User } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
+import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
@@ -14,19 +14,6 @@ import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
 import { useState } from 'react';
 import PageTitle from '../../shared/page-title/page-title';
-
-/**
- * Generate a list of User IDs from a list of Users.
- * @param users The list of users passed in.
- * @return A list of numbers representing the IDs of the users in the given list of users.
- */
-const getUserIDs = (users: User[]) => {
-  const answer: number[] = [];
-  for (const user of users) {
-    answer.push(user.userId);
-  }
-  return answer;
-};
 
 /***
  * Returns a list of projects that has been filtered according to the given params.
@@ -51,7 +38,7 @@ export function filterProjects(
     return project.status === status;
   };
   const leadCheck = (project: Project) => {
-    return getUserIDs(project.projectLead).includes(projectLeadID);
+    return project.projectLead?.userId === projectLeadID;
   };
   const managerCheck = (project: Project) => {
     return project.projectManager?.userId === projectManagerID;
@@ -91,7 +78,7 @@ const ProjectsTable: React.FC = () => {
         ...prj,
         wbsNum: wbsPipe(prj.wbsNum),
         name: prj.name,
-        projectLead: listPipe(prj.projectLead, fullNamePipe),
+        projectLead: fullNamePipe(prj.projectLead),
         projectManager: fullNamePipe(prj.projectManager),
         duration: weeksPipe(prj.duration)
       };
@@ -125,11 +112,9 @@ const ProjectsTable: React.FC = () => {
     const leads: User[] = [];
     const seenList: number[] = [];
     for (const project of projects) {
-      for (const user of project.projectLead) {
-        if (!seenList.includes(user.userId)) {
-          seenList.push(user.userId);
-          leads.push(user);
-        }
+      if (!seenList.includes(project.projectLead!.userId)) {
+        seenList.push(project.projectLead!.userId);
+        leads.push(project.projectLead!);
       }
     }
     return leads;

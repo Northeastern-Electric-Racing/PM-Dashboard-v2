@@ -18,7 +18,7 @@ export interface WbsElement {
   dateCreated: Date;
   name: string;
   status: WbsElementStatus;
-  projectLead: User[];
+  projectLead?: User;
   projectManager?: User;
   changes: ImplementedChange[];
 }

@@ -85,7 +85,7 @@ model Change_Request {
 
 model Scope_CR {
   scopeCrId       Int            @id @default(autoincrement())
-  changeRequestId Int
+  changeRequestId Int            @unique
   changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
   what            String
   why             Scope_CR_Why[]
@@ -104,7 +104,7 @@ model Scope_CR_Why {
 
 model Stage_Gate_CR {
   stageGateCrId   Int            @id @default(autoincrement())
-  changeRequestId Int
+  changeRequestId Int            @unique
   changeRequest   Change_Request @relation(fields: [changeRequestId], references: [crId])
   leftoverBudget  Int
   confirmDone     Boolean
@@ -112,7 +112,7 @@ model Stage_Gate_CR {
 
 model Activation_CR {
   activationCrId   Int            @id @default(autoincrement())
-  changeRequestId  Int
+  changeRequestId  Int            @unique
   changeRequest    Change_Request @relation(fields: [changeRequestId], references: [crId])
   projectLeadId    Int
   projectLead      User           @relation(name: "markAsProjectLead", fields: [projectLeadId], references: [userId])
@@ -142,8 +142,8 @@ model WBS_Element {
   workPackageNumber     Int
   name                  String
   status                WBS_Element_Status
-  projectLeadId         Int[]
-  projectLead           User[]              @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
+  projectLeadId         Int?
+  projectLead           User?              @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
   projectManagerId      Int?
   projectManager        User?              @relation(name: "projectManager", fields: [projectManagerId], references: [userId])
   changeRequests        Change_Request[]
@@ -157,7 +157,7 @@ model WBS_Element {
 
 model Project {
   projectId             Int                  @id @default(autoincrement())
-  wbsElementId          Int
+  wbsElementId          Int                  @unique
   wbsElement            WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
   budget                Int                  @default(0)
   summary               String
@@ -174,7 +174,7 @@ model Project {
 
 model Work_Package {
   workPackageId      Int                  @id @default(autoincrement())
-  wbsElementId       Int
+  wbsElementId       Int                  @unique
   wbsElement         WBS_Element          @relation(fields: [wbsElementId], references: [wbsElementId])
   projectId          Int
   project            Project              @relation(fields: [projectId], references: [projectId])

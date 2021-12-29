@@ -6,7 +6,7 @@
 import { UseQueryResult } from 'react-query';
 import { Project } from 'utils';
 import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
-import { fullNamePipe, listPipe, wbsPipe } from '../../../shared/pipes';
+import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import {
   exampleAllProjects,
@@ -75,10 +75,10 @@ describe('projects table component', () => {
 
     expect(screen.getByText('5 weeks')).toBeInTheDocument();
     expect(
-      screen.getAllByText(listPipe(exampleAllProjects[1].projectLead, fullNamePipe))[0]
+      screen.getAllByText(fullNamePipe(exampleAllProjects[1].projectLead))[0]
     ).toBeInTheDocument();
     expect(
-      screen.getAllByText(listPipe(exampleAllProjects[2].projectLead, fullNamePipe))[0]
+      screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
     ).toBeInTheDocument();
     expect(
       screen.getByText(fullNamePipe(exampleAllProjects[3].projectManager))

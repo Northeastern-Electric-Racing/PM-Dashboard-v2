@@ -16,7 +16,7 @@ const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbsNum`;
 
 /**************** Work Packages Endpoint ****************/
 const WORK_PACKAGES: string = `/work-packages`;
-const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbs`;
+const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbsNum`;
 
 /**************** Change Requests Endpoint ****************/
 const CHANGE_REQUESTS: string = `/change-requests`;

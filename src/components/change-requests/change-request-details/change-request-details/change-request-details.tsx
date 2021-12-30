@@ -132,7 +132,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 }: ChangeRequestDetailsProps) => {
   return (
     <>
-      <PageTitle title={`Change Request #${changeRequest.id}`} />
+      <PageTitle title={`Change Request #${changeRequest.crId}`} />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}

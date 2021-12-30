@@ -10,7 +10,7 @@ import {
   exampleLeadershipUser,
   exampleProjectLeadUser,
   exampleProjectManagerUser
-} from 'utils';
+} from '../../../../test-support/test-data/users.stub';
 
 let temp: any[] = [];
 

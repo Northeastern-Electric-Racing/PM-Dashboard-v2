@@ -4,46 +4,128 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { Prisma, PrismaClient, WBS_Element, WBS_Element_Status } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
   apiRoutes,
   API_URL,
   buildServerFailureResponse,
+  buildClientFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
-  exampleAllWorkPackages,
   routeMatcher,
   WbsNumber,
-  WorkPackage
+  validateWBS,
+  isProject,
+  WorkPackage,
+  WbsElementStatus
 } from 'utils';
 
-// Fetch all users
-const getAllWorkPackages: ApiRouteFunction = () => {
-  return buildSuccessResponse(exampleAllWorkPackages);
+const prisma = new PrismaClient();
+
+const manyRelationArgs = Prisma.validator<Prisma.Work_PackageArgs>()({
+  include: {
+    wbsElement: {
+      include: {
+        projectLead: true,
+        projectManager: true,
+        changes: { include: { implementer: true } }
+      }
+    },
+    expectedActivities: true,
+    deliverables: true,
+    dependencies: true
+  }
+});
+
+const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
+  include: {
+    workPackage: { include: { expectedActivities: true, deliverables: true, dependencies: true } },
+    projectLead: true,
+    projectManager: true,
+    changes: { include: { implementer: true } }
+  }
+});
+
+const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
+
+const wbsNumOf = (element: WBS_Element): WbsNumber => ({
+  car: element.carNumber,
+  project: element.projectNumber,
+  workPackage: element.workPackageNumber
+});
+
+const workPackageTransformer = (
+  payload:
+    | Prisma.Work_PackageGetPayload<typeof manyRelationArgs>
+    | Prisma.WBS_ElementGetPayload<typeof uniqueRelationArgs>
+): WorkPackage => {
+  if (payload === null) throw new TypeError('WBS_Element not found');
+  const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
+  const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
+  const endDate = new Date(workPackage.startDate);
+  endDate.setDate(workPackage.duration * 7);
+
+  const wbsNum = wbsNumOf(wbsElement);
+  return {
+    ...workPackage,
+    ...wbsElement,
+    id: workPackage.workPackageId,
+    expectedActivities: workPackage.expectedActivities.map((descBullet) => ({
+      ...descBullet,
+      id: descBullet.descriptionId,
+      dateDeleted: descBullet.dateDeleted ?? undefined
+    })),
+    deliverables: workPackage.expectedActivities.map((deliverable) => ({
+      ...deliverable,
+      id: deliverable.descriptionId,
+      dateDeleted: deliverable.dateDeleted ?? undefined
+    })),
+    changes: wbsElement.changes.map((change) => ({
+      ...change,
+      wbsNum
+    })),
+    dependencies: workPackage.dependencies.map(wbsNumOf),
+    projectManager: wbsElement.projectManager ?? undefined,
+    projectLead: wbsElement.projectLead ?? undefined,
+    status: convertStatus(wbsElement.status),
+    wbsNum,
+    endDate
+  };
+};
+
+// Fetch all work packages
+const getAllWorkPackages: ApiRouteFunction = async () => {
+  const workPackages = await prisma.work_Package.findMany(manyRelationArgs);
+  return buildSuccessResponse(workPackages.map(workPackageTransformer));
 };
 
 // Fetch the work package for the specified WBS number
-const getSingleWorkPackage: ApiRouteFunction = (params: { wbs: string }) => {
-  const parseWbs: number[] = params.wbs.split('.').map((str) => parseInt(str));
-  const parsedWbs: WbsNumber = {
-    car: parseWbs[0],
-    project: parseWbs[1],
-    workPackage: parseWbs[2]
-  };
-  const requestedWorkPackage: WorkPackage | undefined = exampleAllWorkPackages.find(
-    (wp: WorkPackage) => {
-      return (
-        wp.wbsNum.car === parsedWbs.car &&
-        wp.wbsNum.project === parsedWbs.project &&
-        wp.wbsNum.workPackage === parsedWbs.workPackage
-      );
-    }
-  );
-  if (requestedWorkPackage === undefined) {
-    return buildNotFoundResponse('work package', `WBS # ${params.wbs}`);
+const getSingleWorkPackage: ApiRouteFunction = async (params: { wbsNum: string }) => {
+  const parsedWbs: WbsNumber = validateWBS(params.wbsNum);
+  if (isProject(parsedWbs)) {
+    return buildClientFailureResponse('WBS Number is a project WBS#, not a Work Package WBS#');
   }
-  return buildSuccessResponse(requestedWorkPackage);
+  const wbsEle = await prisma.wBS_Element.findUnique({
+    where: {
+      wbsNumber: {
+        carNumber: parsedWbs.car,
+        projectNumber: parsedWbs.project,
+        workPackageNumber: parsedWbs.workPackage
+      }
+    },
+    ...uniqueRelationArgs
+  });
+  if (wbsEle === null) {
+    return buildNotFoundResponse('work package', `WBS # ${params.wbsNum}`);
+  }
+  return buildSuccessResponse(workPackageTransformer(wbsEle));
 };
 
 // Define all valid routes for the endpoint

@@ -15,7 +15,7 @@ import { exampleAdminUser, exampleProjectLeadUser, exampleProjectManagerUser } f
 import { exampleWbsWorkPackage1 } from './wbs-numbers.stub';
 
 export const exampleStandardChangeRequest: StandardChangeRequest = {
-  id: 37,
+  crId: 37,
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
@@ -57,7 +57,7 @@ export const exampleStandardChangeRequest: StandardChangeRequest = {
 };
 
 export const exampleActivationChangeRequest: ActivationChangeRequest = {
-  id: 69,
+  crId: 69,
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),
@@ -69,7 +69,7 @@ export const exampleActivationChangeRequest: ActivationChangeRequest = {
 };
 
 export const exampleStageGateChangeRequest: StageGateChangeRequest = {
-  id: 93,
+  crId: 93,
   wbsNum: exampleWbsWorkPackage1,
   submitter: exampleAdminUser,
   dateSubmitted: new Date('02/25/21'),

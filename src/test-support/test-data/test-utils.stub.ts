@@ -6,7 +6,8 @@
 import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
 import { UseQueryResult } from 'react-query';
-import { ApiRoute, API_URL, User } from 'utils';
+import { User } from '@prisma/client';
+import { ApiRoute, API_URL } from 'utils';
 import { exampleAdminUser } from './users.stub';
 import { Auth } from '../../shared/types';
 

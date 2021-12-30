@@ -13,7 +13,7 @@ const dbSeedProject1: any = {
     dateCreated: new Date('08/01/20'),
     name: 'Impact Attenuator',
     status: WBS_Element_Status.ACTIVE,
-    projectLeadId: [4],
+    projectLeadId: 4,
     projectManagerId: 5
   },
   projectFields: {
@@ -52,7 +52,7 @@ const dbSeedProject2: any = {
     workPackageNumber: 0,
     name: 'Bodywork',
     status: WBS_Element_Status.INACTIVE,
-    projectLeadId: [3],
+    projectLeadId: 3,
     projectManagerId: 4
   },
   projectFields: {
@@ -92,7 +92,7 @@ const dbSeedProject3: any = {
     dateCreated: new Date('08/04/20'),
     name: 'Battery Box',
     status: WBS_Element_Status.ACTIVE,
-    projectLeadId: [2],
+    projectLeadId: 2,
     projectManagerId: 3
   },
   projectFields: {
@@ -132,7 +132,7 @@ const dbSeedProject4: any = {
     dateCreated: new Date('11/07/20'),
     name: 'Motor Controller Integration',
     status: WBS_Element_Status.INACTIVE,
-    projectLeadId: [4],
+    projectLeadId: 4,
     projectManagerId: 5
   },
   projectFields: {
@@ -172,7 +172,7 @@ const dbSeedProject5: any = {
     dateCreated: new Date('08/03/20'),
     name: 'Wiring Harness',
     status: WBS_Element_Status.COMPLETE,
-    projectLeadId: [4],
+    projectLeadId: 4,
     projectManagerId: 5
   },
   projectFields: {

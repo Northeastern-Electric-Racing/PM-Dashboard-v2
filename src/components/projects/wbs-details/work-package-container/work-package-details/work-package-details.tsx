@@ -4,13 +4,7 @@
  */
 
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  wbsPipe,
-  endDatePipe,
-  fullNamePipe,
-  listPipe
-} from '../../../../../shared/pipes';
+import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row } from 'react-bootstrap';
 import './work-package-details.module.css';
@@ -26,7 +20,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
         <Col xs={12} md={6}>
           <b>Work Package Name:</b> {workPackage.name} <br />
           <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
-          <b>Project Lead:</b> {listPipe(workPackage.projectLead, fullNamePipe)} <br />
+          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)} <br />
           <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
           <b>Duration:</b> {weeksPipe(workPackage.duration)} <br />
         </Col>

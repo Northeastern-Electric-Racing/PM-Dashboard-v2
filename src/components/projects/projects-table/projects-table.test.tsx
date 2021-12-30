@@ -4,9 +4,9 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { Project, WorkPackage } from 'utils';
+import { Project } from 'utils';
 import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
-import { fullNamePipe, listPipe, wbsPipe } from '../../../shared/pipes';
+import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import {
   exampleAllProjects,
@@ -73,16 +73,12 @@ describe('projects table component', () => {
     renderComponent();
     await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
+    expect(screen.getByText('5 weeks')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        exampleAllProjects[1].workPackages.reduce(
-          (tot: number, cur: WorkPackage) => tot + cur.duration,
-          0
-        ) + ' weeks'
-      )
+      screen.getAllByText(fullNamePipe(exampleAllProjects[1].projectLead))[0]
     ).toBeInTheDocument();
     expect(
-      screen.getAllByText(listPipe(exampleAllProjects[2].projectLead, fullNamePipe))[0]
+      screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
     ).toBeInTheDocument();
     expect(
       screen.getByText(fullNamePipe(exampleAllProjects[3].projectManager))
@@ -99,9 +95,7 @@ describe('projects table component', () => {
     await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     const column: string = 'WBS #';
-    const expectedWbsOrder: string[] = exampleAllProjects.map((prj: Project) =>
-      wbsPipe(prj.wbsNum)
-    );
+    const expectedWbsOrder: string[] = exampleAllProjects.map((prj) => wbsPipe(prj.wbsNum));
 
     // Default sort is wbs ascending
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
@@ -149,9 +143,7 @@ describe('projects table component', () => {
     const answer2: Project[] = [exampleProject2, exampleProject3, exampleProject5];
     const answer3: Project[] = [exampleProject4];
     expect(filterProjects(exampleAllProjects, -1, '', -1, 3)).toStrictEqual(answer1);
-    expect(filterProjects(exampleAllProjects, -1, '', -1, 5)).toStrictEqual(
-      answer2
-    );
+    expect(filterProjects(exampleAllProjects, -1, '', -1, 5)).toStrictEqual(answer2);
     expect(filterProjects(exampleAllProjects, -1, '', -1, 2)).toStrictEqual(answer3);
   });
 });

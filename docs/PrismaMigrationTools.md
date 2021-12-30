@@ -9,7 +9,8 @@ It can be dummy data, basic user accounts, a default language, etc.
 
 ### Why to use it
 
-While developing the application, we need some data to be present in order for something to appear on the front end to interact with. Running this command populates the database with a basic set of data for development purposes.
+While developing the application, we need some data to be present in order for something to appear on the front end to interact with.
+Running this command populates the database with a basic set of data for development purposes.
 
 For more detailed information about [prisma seed](https://www.prisma.io/docs/guides/database/seed-database), click the link.
 
@@ -19,13 +20,14 @@ For more detailed information about [prisma seed](https://www.prisma.io/docs/gui
 
 This command drops the database if possible or performs a soft reset if the database cannot be deleted.
 If the database is dropped, it creates a new database with the same name and runs all migrations and seed scripts.
-If `npm prisma:reset` runs without any errors, then the `npm prisma:seed` function is auto-invoked, meaning you do not need to run the `npm prisma:seed` command again.
+If `npm prisma:reset` runs without any errors, then the `npm prisma:seed` function is auto-invoked.
+This means you do not need to run the `npm prisma:seed` command again.
 
 ### Why to use it
 
-If you need to undo manual changes or if there are migration history conflicts, you should run this command.
+If you need to undo changes you made to the database schema or if there are migration history conflicts, you should run this command.
 
-You use this command to also restore the data to its original state if you sufficiently modified the data in the front end.
+You use this command to also restore the data to its original state if you sufficiently modified the data via the front end.
 
 For more detailed information about [prisma reset](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
 
@@ -38,7 +40,11 @@ This command enables you to keep your database schema in sync with the prisma sc
 ### Why to use it
 
 After you make a change to the prisma schema, you should run this function to update the database schema.
-Each time you run this command, it generates an SQL file that is added to the `migrations` folder.
+There will be a `name` field that the terminal will ask you to enter for the migration.
+Enter a concise and appropriate name that reflects the changes you made to the prisma schema.
+
+Each time you run this command, if there are new changes, a SQL file will be generated that is added to the `migrations` folder.
+Otherwise, `npm prisma:migrate` will run the existing SQL files in the database schema and not require a `name` field to be entered.
 
 For more detailed information about [prisma migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
 

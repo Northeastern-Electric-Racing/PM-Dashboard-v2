@@ -32,10 +32,8 @@ Paste the following line into the `.env` file and replace `<USERNAME>` with your
 
 ### Initial Database Migration
 
-In order to run the database for the first time, you will need to execute the following commands in the CLI.
-Run `npm prisma:migrate`.
-You will need to also input a name for the migration in the `name` field that is prompted.
-Then run `npm prisma:seed`.
+In order to run the database for the first time, you will need to execute the following command in the CLI.
+Run `npm prisma:reset`.
 
 Refer to [prisma migration tools](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/PrismaMigrationTools.md) for more information about these commands.
 

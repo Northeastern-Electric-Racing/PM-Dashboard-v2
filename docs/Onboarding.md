@@ -24,14 +24,30 @@ By default, PostgreSQL typically has a `postgres` database.
 You can use `psql` in the CLI to create a database by running this SQL statement: `CREATE DATABASE nerpm;`.
 Naming the new database `nerpm` will ensure it matches with the database URL specified in the project preparation section below.
 
-### Project Preparation
+### ENV Setup
 
 Add a `.env` file to the project root directory via `touch .env` in the CLI or creating a file in your IDE.
 Paste the following line into the `.env` file and replace `<USERNAME>` with your computer username.
 `DATABASE_URL="postgresql://<USERNAME>:@localhost:5432/nerpm?schema=public"`
 
+### Initial Database Migration
+
+In order to run the database for the first time, you will need to execute the following command in the CLI.
+Run `npm run prisma:reset`.
+This should apply all the existing database migrations to the database (create the required tables in the database, see `npm run prisma:migrate`) and populate the database with seed data (see `npm run prisma:seed`).
+
+Refer to [prisma migration tools](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/PrismaMigrationTools.md) for more information about these commands.
+
+### Run and Test
+
 To test that things are working, run `npm run start` in the CLI and go to an example API route.
 Example: `localhost:3000/.netlify/functions/users`.
+
+If the application does not launch, you can replace the line in the `.env` file with the following.
+`DATABASE_URL="postgresql://postgres:<PASSWORD>@localhost:5432/nerpm?schema=public"`
+Change `<PASSWORD>` to your `postgres` database password.
+
+Test again to ensure that the application launches correctly.
 
 ## IDE: VSCode
 

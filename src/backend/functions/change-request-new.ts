@@ -65,7 +65,6 @@ const baseHandler: Handler = async ({ body }, _context) => {
 };
 
 // validates the event parameter, so body must be explicitly stated
-// TODO: actually complete the schema
 // TODO: consider moving schemas (or parts of schemas) to utils package? consider using schema-to-ts?
 const inputSchema = {
   type: 'object',
@@ -119,6 +118,26 @@ const inputSchema = {
             }
           },
           required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why']
+        },
+        {
+          // stage gate change request fields
+          properties: {
+            type: { enum: [CR_Type.STAGE_GATE] },
+            projectLeadId: { type: 'integer', minimum: 0 },
+            projectManagerId: { type: 'integer', minimum: 0 },
+            startDate: { type: 'string', format: 'date' },
+            confirmDetails: { type: 'boolean' }
+          },
+          required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails']
+        },
+        {
+          // activation change request fields
+          properties: {
+            type: { enum: [CR_Type.ACTIVATION] },
+            leftoverBudget: { type: 'integer', minimum: 0 },
+            confirmDone: { type: 'boolean' }
+          },
+          required: ['leftoverBudget', 'confirmDone']
         }
       ]
     }

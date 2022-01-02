@@ -113,6 +113,9 @@ const baseHandler: Handler = async ({ body }, _context) => {
     return createStandardChangeRequest(submitterId, wbsElementId, type, body);
   }
   if (type === CR_Type.ACTIVATION) {
+    // TODO: is there a better way to convert this date string?
+    // I couldn't seem to figure out if middy can handle this, but this 1 additional line isn't the worst
+    body.startDate = new Date(body.startDate);
     return createActivationChangeRequest(submitterId, wbsElementId, type, body);
   }
   if (type === CR_Type.STAGE_GATE) {

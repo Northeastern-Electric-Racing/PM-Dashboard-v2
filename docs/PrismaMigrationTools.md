@@ -14,7 +14,7 @@ Running this command populates the database with a basic set of data for develop
 
 For more detailed information about [prisma seed](https://www.prisma.io/docs/guides/database/seed-database), click the link.
 
-## `npm prisma:reset`
+## `npm run prisma:reset`
 
 ### What it does
 

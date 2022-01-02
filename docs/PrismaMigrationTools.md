@@ -20,7 +20,7 @@ For more detailed information about [prisma seed](https://www.prisma.io/docs/gui
 
 This command drops the database if possible or performs a soft reset if the database cannot be deleted.
 If the database is dropped, it creates a new database with the same name and runs all migrations and seed scripts.
-If `npm prisma:reset` runs without any errors, then the `npm prisma:seed` function is auto-invoked.
+If `npm run prisma:reset` runs without any errors, then the `npm run prisma:seed` function is auto-invoked.
 This means you do not need to run the `npm run prisma:seed` command again.
 
 ### Why to use it

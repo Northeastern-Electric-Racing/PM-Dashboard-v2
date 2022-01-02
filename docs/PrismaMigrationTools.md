@@ -30,7 +30,7 @@ If you need to undo changes you made to the database schema or if there are migr
 
 For more detailed information about [prisma reset](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
 
-## `npm prisma:migrate`
+## `npm run prisma:migrate`
 
 ### What it does
 

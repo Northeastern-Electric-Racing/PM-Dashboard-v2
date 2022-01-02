@@ -49,7 +49,7 @@ Otherwise, `npm run prisma:migrate` will apply the existing migration SQL files 
 
 For more detailed information about [prisma migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
 
-## `npm prisma:generate`
+## `npm run prisma:generate`
 
 ### What it does
 

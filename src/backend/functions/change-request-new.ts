@@ -7,10 +7,10 @@ import middy from '@middy/core';
 import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
-import { Handler as NetlifyHandler } from '@netlify/functions';
+// import { Handler as NetlifyHandler } from '@netlify/functions'; // TODO: types from netlify vs aws?
 import { Handler } from 'aws-lambda';
-import { PrismaClient, Prisma, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
-import { buildSuccessResponse } from 'utils';
+import { PrismaClient, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
+import { buildClientFailureResponse, buildSuccessResponse } from 'utils';
 // TODO: clean up imports
 
 const prisma = new PrismaClient();
@@ -51,29 +51,17 @@ const createStandardChangeRequest = async (
 // TODO: add a comment to explain the function?
 const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type } = body;
-  let created;
-  switch (type) {
-    case CR_Type.ACTIVATION:
-      // TODO: create the function
-      break;
-    case CR_Type.STAGE_GATE:
-      // TODO: create the function
-      break;
-    case CR_Type.OTHER:
-      created = await createStandardChangeRequest(submitterId, wbsElementId, type, body);
-      break;
-    case CR_Type.ISSUE:
-      created = await createStandardChangeRequest(submitterId, wbsElementId, type, body);
-      break;
-    case CR_Type.DEFINITION_CHANGE:
-      created = await createStandardChangeRequest(submitterId, wbsElementId, type, body);
-      break;
-    default:
-      // TODO: create the else case fail
-      break;
+  if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
+    return createStandardChangeRequest(submitterId, wbsElementId, type, body);
+  }
+  if (type === CR_Type.ACTIVATION) {
+    // TODO: create the function
+  }
+  if (type === CR_Type.STAGE_GATE) {
+    // TODO: create the function
   }
   // TODO: change this return statement
-  return buildSuccessResponse(created || { result: 'success', message: 'cr created correctly' });
+  return buildClientFailureResponse('CR type not supported');
 };
 
 // validates the event parameter, so body must be explicitly stated

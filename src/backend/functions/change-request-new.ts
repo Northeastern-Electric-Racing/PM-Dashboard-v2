@@ -49,16 +49,74 @@ const createStandardChangeRequest = async (
 };
 
 // TODO: add a comment to explain the function?
+const createActivationChangeRequest = async (
+  submitterId: number,
+  wbsElementId: number,
+  type: CR_Type,
+  body: {
+    projectLeadId: number;
+    projectManagerId: number;
+    startDate: Date;
+    confirmDetails: boolean;
+  }
+) => {
+  const createdChangeRequest = await prisma.change_Request.create({
+    data: {
+      submitter: { connect: { userId: submitterId } },
+      wbsElement: { connect: { wbsElementId } },
+      type,
+      activationChangeRequest: {
+        create: {
+          projectLead: { connect: { userId: body.projectLeadId } },
+          projectManager: { connect: { userId: body.projectManagerId } },
+          startDate: body.startDate,
+          confirmDetails: body.confirmDetails
+        }
+      }
+    }
+  });
+  // TODO: figure out what is best to return
+  return buildSuccessResponse(createdChangeRequest);
+};
+
+// TODO: add a comment to explain the function?
+const createStageGateChangeRequest = async (
+  submitterId: number,
+  wbsElementId: number,
+  type: CR_Type,
+  body: {
+    leftoverBudget: number;
+    confirmDone: boolean;
+  }
+) => {
+  const createdChangeRequest = await prisma.change_Request.create({
+    data: {
+      submitter: { connect: { userId: submitterId } },
+      wbsElement: { connect: { wbsElementId } },
+      type,
+      stageGateChangeRequest: {
+        create: {
+          leftoverBudget: body.leftoverBudget,
+          confirmDone: body.confirmDone
+        }
+      }
+    }
+  });
+  // TODO: figure out what is best to return
+  return buildSuccessResponse(createdChangeRequest);
+};
+
+// TODO: add a comment to explain the function?
 const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type } = body;
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, body);
   }
   if (type === CR_Type.ACTIVATION) {
-    // TODO: create the function
+    return createActivationChangeRequest(submitterId, wbsElementId, type, body);
   }
   if (type === CR_Type.STAGE_GATE) {
-    // TODO: create the function
+    return createStageGateChangeRequest(submitterId, wbsElementId, type, body);
   }
   // TODO: change this return statement
   return buildClientFailureResponse('CR type not supported');
@@ -120,9 +178,9 @@ const inputSchema = {
           required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why']
         },
         {
-          // stage gate change request fields
+          // activation change request fields
           properties: {
-            type: { enum: [CR_Type.STAGE_GATE] },
+            type: { enum: [CR_Type.ACTIVATION] },
             projectLeadId: { type: 'integer', minimum: 0 },
             projectManagerId: { type: 'integer', minimum: 0 },
             startDate: { type: 'string', format: 'date' },
@@ -131,9 +189,9 @@ const inputSchema = {
           required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails']
         },
         {
-          // activation change request fields
+          // stage gate change request fields
           properties: {
-            type: { enum: [CR_Type.ACTIVATION] },
+            type: { enum: [CR_Type.STAGE_GATE] },
             leftoverBudget: { type: 'integer', minimum: 0 },
             confirmDone: { type: 'boolean' }
           },

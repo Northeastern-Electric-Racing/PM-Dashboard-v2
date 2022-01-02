@@ -45,7 +45,7 @@ There will be a `name` field that the terminal will ask you to enter for the mig
 Enter a concise and appropriate name that reflects the changes you made to the prisma schema.
 
 Each time you run this command, if there are new changes, a SQL file will be generated that is added to the `migrations` folder.
-Otherwise, `npm prisma:migrate` will run the existing SQL files in the database schema and not require a `name` field to be entered.
+Otherwise, `npm run prisma:migrate` will apply the existing migration SQL files onto the database and not require a `name` field to be entered.
 
 For more detailed information about [prisma migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate), click the link.
 

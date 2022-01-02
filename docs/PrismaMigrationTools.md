@@ -1,6 +1,6 @@
 # Prisma Migration Tools
 
-## `npm prisma:seed`
+## `npm run prisma:seed`
 
 ### What it does
 

@@ -56,7 +56,7 @@ For more detailed information about [prisma migrate](https://www.prisma.io/docs/
 This command generates and initializes the prisma client.
 The prisma client is an auto-generated library that allows us to access data in our application.
 
-Note: The command `npm install` will automatically run `npm prisma:generate`.
+Note: The command `npm install` will automatically run `npm run prisma:generate`.
 
 ### Why to use it
 

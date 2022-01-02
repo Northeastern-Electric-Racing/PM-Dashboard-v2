@@ -5,7 +5,7 @@
 ### What it does
 
 This command seeds the database, which means populating the database with initial data it requires to run.
-It can be dummy data, basic user accounts, a default language, etc.
+It can be dummy data, basic user accounts, a default language, example data in various states, etc.
 
 ### Why to use it
 

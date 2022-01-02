@@ -75,9 +75,52 @@ const inputSchema = {
       properties: {
         submitterId: { type: 'integer', minimum: 0 },
         wbsElementId: { type: 'integer', minimum: 0 },
-        type: { enum: [CR_Type.ACTIVATION, CR_Type.OTHER] }
+        type: {
+          enum: [
+            CR_Type.ACTIVATION,
+            CR_Type.STAGE_GATE,
+            CR_Type.OTHER,
+            CR_Type.ISSUE,
+            CR_Type.DEFINITION_CHANGE
+          ]
+        }
       },
-      required: ['submitterId', 'wbsElementId', 'type']
+      required: ['submitterId', 'wbsElementId', 'type'],
+      oneOf: [
+        {
+          // standard / scope change request fields
+          properties: {
+            type: { enum: [CR_Type.OTHER, CR_Type.ISSUE, CR_Type.DEFINITION_CHANGE] },
+            what: { type: 'string' },
+            scopeImpact: { type: 'string' },
+            timelineImpact: { type: 'integer', minimum: 0 },
+            budgetImpact: { type: 'integer', minimum: 0 },
+            why: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  explain: { type: 'string' },
+                  type: {
+                    enum: [
+                      Scope_CR_Why_Type.ESTIMATION,
+                      Scope_CR_Why_Type.MANUFACTURING,
+                      Scope_CR_Why_Type.OTHER,
+                      Scope_CR_Why_Type.OTHER_PROJECT,
+                      Scope_CR_Why_Type.RULES,
+                      Scope_CR_Why_Type.SCHOOL
+                    ]
+                  }
+                },
+                required: ['explain', 'type']
+              },
+              minItems: 1,
+              uniqueItems: true
+            }
+          },
+          required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why']
+        }
+      ]
     }
   }
 };

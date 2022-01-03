@@ -111,7 +111,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
           </Form.Group>
           <FormGroup>
             <Form.Label>Impact</Form.Label>
-            {genCheckboxes(['Scope', 'Budget', 'Impact'], impact, setImpact)}
+            {genCheckboxes(['Scope', 'Budget', 'Timeline'], impact, setImpact)}
           </FormGroup>
           <Form.Group>
             <Form.Label>Reason</Form.Label>

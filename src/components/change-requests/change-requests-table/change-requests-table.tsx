@@ -16,6 +16,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
 import { ChangeRequestReason } from 'utils/lib/types/change-request-types';
 import { ChangeRequestType } from 'utils/lib/types/change-request-types';
+import { ChangeRequestExplanation, StandardChangeRequest } from 'utils/src';
 
 type FormFieldType = 'select' | 'checkbox';
 
@@ -98,12 +99,27 @@ const ChangeRequestsTable: React.FC = () => {
       );
     }
 
-    // // Reason Filter
-    // if (reason !== '') {
-    //   changeRequests = changeRequests.filter(
-    //     (changeRequest: ChangeRequest) => changeRequest.reason === reason
-    //   );
-    // }
+    // Impact Filter
+    if (impact.length !== 0) {
+      changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
+        var filterBool = false;
+        const standard = changeRequest as StandardChangeRequest;
+        console.log(standard);
+        if (impact.indexOf(0) !== -1) {
+          filterBool =
+            filterBool || (standard.scopeImpact !== '' && standard.scopeImpact !== undefined);
+        }
+        if (impact.indexOf(1) !== -1) {
+          filterBool =
+            filterBool || (standard.budgetImpact !== 0 && standard.budgetImpact !== undefined);
+        }
+        if (impact.indexOf(2) !== -1) {
+          filterBool =
+            filterBool || (standard.timelineImpact !== 0 && standard.timelineImpact !== undefined);
+        }
+        return filterBool;
+      });
+    }
 
     // State filter
     if (state.length !== 0) {
@@ -119,6 +135,24 @@ const ChangeRequestsTable: React.FC = () => {
           filterBool = filterBool || changeRequest.accepted === false;
         }
         return filterBool;
+      });
+    }
+
+    // Reason filter
+    if (reason !== '') {
+      changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
+        const standard = changeRequest as StandardChangeRequest;
+        if (standard.why === undefined) {
+          return false;
+        }
+        return (
+          standard.why.filter((exp: ChangeRequestExplanation) => {
+            if (exp.reason === reason) {
+              return exp.explain !== '';
+            }
+            return false;
+          }).length !== 0
+        );
       });
     }
 

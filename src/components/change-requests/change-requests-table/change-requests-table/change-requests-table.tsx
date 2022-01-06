@@ -62,13 +62,8 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
     }
   };
 
-  const actionButton = (
-    <ActionButton link={routes.CHANGE_REQUESTS_NEW} icon={faPlus} text={'New Change Request'} />
-  );
-
   return (
     <>
-      <PageTitle title={'All Change Requests'} actionButton={actionButton} />
       <BootstrapTable
         striped
         hover

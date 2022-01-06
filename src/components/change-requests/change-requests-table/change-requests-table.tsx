@@ -14,61 +14,9 @@ import ErrorPage from '../../shared/error-page/error-page';
 import './change-requests-table.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import { ChangeRequestReason } from 'utils/lib/types/change-request-types';
-import { ChangeRequestType } from 'utils/lib/types/change-request-types';
 import { ChangeRequestExplanation, StandardChangeRequest } from 'utils/src';
-
-type FormFieldType = 'select' | 'checkbox';
-
-interface FilterFormField {
-  label: string;
-  type: FormFieldType;
-  values: string[];
-  currentValue: number[];
-}
-
-const filterFieldsList: FilterFormField[] = [
-  {
-    label: 'Type',
-    type: 'select',
-    values: [''].concat(
-      Object.keys(ChangeRequestType).map(
-        (key) => ChangeRequestType[key as typeof ChangeRequestType.Other]
-      )
-    ),
-    currentValue: [0]
-  },
-  {
-    label: 'Impact',
-    type: 'checkbox',
-    values: ['Scope', 'Budget', 'Impact'],
-    currentValue: []
-  },
-  {
-    label: 'Reason',
-    type: 'checkbox',
-    values: ['']
-      .concat(
-        Object.keys(ChangeRequestReason).map(
-          (key) => ChangeRequestReason[key as typeof ChangeRequestReason.Other]
-        )
-      )
-      .slice(1),
-    currentValue: []
-  },
-  {
-    label: 'State',
-    type: 'select',
-    values: ['', 'Not Reviewed', 'Accepted', 'Denied'],
-    currentValue: [0]
-  },
-  {
-    label: 'Implemented',
-    type: 'select',
-    values: ['', 'Yes', 'No'],
-    currentValue: [0]
-  }
-];
+import PageTitle from '../../shared/page-title/page-title';
+import styles from './change-requests-table.module.css';
 
 const ChangeRequestsTable: React.FC = () => {
   const [type, setType] = useState('');
@@ -207,14 +155,17 @@ const ChangeRequestsTable: React.FC = () => {
 
   const changeRequestsContainer = () => {
     return (
-      <Container fluid>
-        <Row>
-          <Col xs={3}>
-            <ChangeRequestsFilter update={sendDataToParent} />
-          </Col>
-          <Col md={9}>{changeRequestsTable()}</Col>
-        </Row>
-      </Container>
+      <>
+        <PageTitle title={'Change Requests'} />
+        <div className={styles.container}>
+          <Row>
+            <div className={styles.filterTable}>
+              <ChangeRequestsFilter update={sendDataToParent} />
+            </div>
+            <div className={styles.crTable}>{changeRequestsTable()}</div>
+          </Row>
+        </div>
+      </>
     );
   };
 

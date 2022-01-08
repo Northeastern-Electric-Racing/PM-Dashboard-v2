@@ -4,12 +4,22 @@
  */
 
 import { Form } from 'react-bootstrap';
+import { FormType } from '../new-change-request-page';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import './common-form-fields.module.css';
 
-const CommonFormFields: React.FC = () => {
+interface FormTypeProp {
+  setFormType: React.Dispatch<React.SetStateAction<FormType>>
+}
+
+const CommonFormFields: React.FC<FormTypeProp> = (props: FormTypeProp) => {
+
+  const handleFormType = (event: React.ChangeEvent<any>): void => {
+    props.setFormType(event.target.value);
+  }
+
   return (
     <div className={'row'}>
       <div className={'px-4'}>
@@ -33,9 +43,9 @@ const CommonFormFields: React.FC = () => {
         </Form.Control>
       </div>
       <div className={'px-4'}>
-        Type
-        <Form.Control as="select" custom>
-          {['New Function', 'Design Issue', 'Other', 'Initiation', 'Stage Gate'].map((t) => (
+        Form Type
+        <Form.Control as="select" custom onChange={handleFormType}>
+          {Object.values(FormType).map((t) => (
             <option>{t}</option>
           ))}
         </Form.Control>

@@ -3,11 +3,4 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-b {
-  font-weight: bold;
-}
 
-.btnsContainer {
-  display: flex;
-  gap: 1.5rem;
-}

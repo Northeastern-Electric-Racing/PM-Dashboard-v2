@@ -15,7 +15,9 @@ import {
 import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
-import './change-request-details.module.css';
+import styles from './change-request-details.module.css';
+import ActionButton from '../../../shared/action-button/action-button';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -130,9 +132,17 @@ interface ChangeRequestDetailsProps {
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   changeRequest
 }: ChangeRequestDetailsProps) => {
+  const reviewBtns = (
+    <div className={styles.btnsContainer}>
+      <ActionButton link={`/change-requests/${changeRequest.crId}/accept`} icon={faThumbsUp} text='Accept' />
+      <ActionButton link={`/change-requests/${changeRequest.crId}/deny`} icon={faThumbsDown} text='Deny' />
+    </div>
+  );
+
   return (
     <>
-      <PageTitle title={`Change Request #${changeRequest.crId}`} />
+      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={reviewBtns} />
+
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}

@@ -8,11 +8,18 @@ import { routes } from '../../shared/routes';
 import ChangeRequestsTable from './change-requests-table/change-requests-table';
 import ChangeRequestDetails from './change-request-details/change-request-details';
 import NewChangeRequest from './new-change-request/new-change-request';
+import ReviewChangeRequest from './review-change-request/review-change-request';
 import './change-requests.module.css';
 
 const ChangeRequests: React.FC = () => {
   return (
     <Switch>
+      <Route path={routes.CHANGE_REQUESTS_ACCEPT}>
+        <ReviewChangeRequest accepted={true} />
+      </Route>
+      <Route path={routes.CHANGE_REQUESTS_DENY}>
+        <ReviewChangeRequest accepted={false} />
+      </Route>
       <Route path={routes.CHANGE_REQUESTS_NEW} component={NewChangeRequest} />
       <Route path={routes.CHANGE_REQUESTS_BY_ID} component={ChangeRequestDetails} />
       <Route path={routes.CHANGE_REQUESTS} component={ChangeRequestsTable} />

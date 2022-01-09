@@ -7,15 +7,21 @@ import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
+import { Project, WorkPackage, WbsNumber } from 'utils';
 
-const StandardFormFields: React.FC = () => {
+interface IProp {
+  project: Project,
+  workPkg: WorkPackage,
+}
+
+const StandardFormFields: React.FC<IProp> = (props: IProp) => {
   return (
     <Form>
       <div className={`${'row'} ${styles.container}`}>
         <div className={'px-4'}>
           <Form.Group controlId="newCR-what">
             <Form.Label>What</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+            <Form.Control as="textarea" rows={3} value={props.project.summary}/>
           </Form.Group>
 
           <Form.Group controlId="newCR-scope-impact">
@@ -29,7 +35,7 @@ const StandardFormFields: React.FC = () => {
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl id="newCR-budget-impact" />
+                <FormControl id="newCR-budget-impact" value={props.project.budget} />
               </InputGroup>
             </Col>
             <Col xs="auto" >

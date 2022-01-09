@@ -5,7 +5,8 @@
 
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useSingleProject } from '../../../../services/projects.hooks';
+import { useSingleProject, useAllProjects } from '../../../../services/projects.hooks';
+import { useAllWorkPackages } from '../../../../services/work-packages.hooks';
 import { exampleAllProjects } from '../../../../test-support/test-data/projects.stub';
 import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -16,6 +17,8 @@ import StageGateFormFields from './stage-gate-form-fileds/stage-gate-form-fields
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import styles from './new-change-request-page.module.css';
+import { Project, WorkPackage, WbsNumber } from 'utils';
+import { wbsPipe } from '../../../../shared/pipes';
 
 export enum FormType {
   NewFunction = 'New Function', 
@@ -30,14 +33,19 @@ const NewChangeRequestPage: React.FC = () => {
     alert('submitted');
   };
 
-  // const { isLoading, isError, data, error } = useSingleProject();
-
-  // if (isLoading) return <LoadingIndicator />;
-  // if (isError) return <ErrorPage message={error?.message} />;
-
   const [formType, setFormType] = useState(FormType.NewFunction);
-  const [projectVersion, setProjectVersion] = useState();
+  const [projectIdx, setProjectIdx] = useState(0);
+  const [workPkgIdx, setWorkPkgIdx] = useState(0);
 
+  const projectRes = useAllProjects();
+  const workPkgsRes = useAllWorkPackages();
+
+  if (projectRes.isLoading || workPkgsRes.isLoading) return <LoadingIndicator />;
+
+  if (projectRes.isError || workPkgsRes.isError) {
+    const error = (projectRes.isError) ? projectRes.error : workPkgsRes.error;
+    return <ErrorPage message={error?.message} />;
+  }
 
   return (
     <>
@@ -47,10 +55,17 @@ const NewChangeRequestPage: React.FC = () => {
         headerRight={<></>}
         body={
           <>
-            <CommonFormFields setFormType={setFormType} />
-            {formType === FormType.StageGate && <StageGateFormFields />}
-            {formType !== FormType.StageGate && formType !== FormType.Initiation && <StandardFormFields />}
-            {formType === FormType.Initiation && <ActivationFormFields />}
+            <CommonFormFields setFormType={setFormType} projects={projectRes.data!} 
+              workPkgs={workPkgsRes.data!} setProjectIdx={setProjectIdx} setWorkPkgIdx={setWorkPkgIdx}/>
+
+            {formType === FormType.StageGate && 
+              <StageGateFormFields project={projectRes.data![projectIdx]} workPkg={workPkgsRes.data![workPkgIdx]}/>}
+
+            {formType !== FormType.StageGate && formType !== FormType.Initiation && 
+              <StandardFormFields project={projectRes.data![projectIdx]} workPkg={workPkgsRes.data![workPkgIdx]}/>}
+              
+            {formType === FormType.Initiation && 
+            <ActivationFormFields project={projectRes.data![projectIdx]} workPkg={workPkgsRes.data![workPkgIdx]}/>}
           </>
         }
       />

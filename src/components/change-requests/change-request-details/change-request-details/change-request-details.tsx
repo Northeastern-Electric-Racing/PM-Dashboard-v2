@@ -15,10 +15,11 @@ import {
 import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
-import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 import styles from './change-request-details.module.css';
 import ActionButton from '../../../shared/action-button/action-button';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import './change-request-details.module.css';
+import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -168,7 +169,11 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <ImplementedChangesList changes={changeRequest.implementedChanges!} />
+      <ImplementedChangesList
+        changes={
+          changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges
+        }
+      />
     </>
   );
 };

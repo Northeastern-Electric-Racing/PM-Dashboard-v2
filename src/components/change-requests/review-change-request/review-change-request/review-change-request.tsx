@@ -4,25 +4,17 @@
  */
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import {
-  ChangeRequest,
-  StandardChangeRequest,
-  ActivationChangeRequest,
-  StageGateChangeRequest,
-  ChangeRequestType,
-  ChangeRequestExplanation
-} from 'utils';
 import PageBlock from "../../../shared/page-block/page-block";
 import PageTitle from "../../../shared/page-title/page-title";
 
 interface ReviewChangeRequestViewProps {
   crId: number,
-  accepted: boolean
+  option: 'Accept' | 'Deny';
 }
 
 const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   crId,
-  accepted
+  option
 }: ReviewChangeRequestViewProps) => {
   const history = useHistory();
 
@@ -45,7 +37,7 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
         body={
           <div className={'row'}>
             <div className={'mx-auto mw-50'}>
-              <h2 className={'text-center mb-3'}>{accepted ? 'Accept' : 'Deny'} Change Request</h2>
+              <h2 className={'text-center mb-3'}>{option} Change Request</h2>
               <Form id={'formReview'}>
                 <div className={'row'}>
                   <Form.Group controlId='formReviewNotes'>

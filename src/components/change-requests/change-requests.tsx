@@ -15,10 +15,10 @@ const ChangeRequests: React.FC = () => {
   return (
     <Switch>
       <Route path={routes.CHANGE_REQUESTS_ACCEPT}>
-        <ReviewChangeRequest accepted={true} />
+        <ReviewChangeRequest option={'Accept'} />
       </Route>
       <Route path={routes.CHANGE_REQUESTS_DENY}>
-        <ReviewChangeRequest accepted={false} />
+        <ReviewChangeRequest option={'Deny'} />
       </Route>
       <Route path={routes.CHANGE_REQUESTS_NEW} component={NewChangeRequest} />
       <Route path={routes.CHANGE_REQUESTS_BY_ID} component={ChangeRequestDetails} />

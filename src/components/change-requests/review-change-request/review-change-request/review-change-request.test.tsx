@@ -4,43 +4,48 @@
  */
 
 import { exampleStandardChangeRequest } from "../../../../test-support/test-data/change-requests.stub";
-import { render, screen } from "@testing-library/react";
+import { render, screen, routerWrapperBuilder } from "../../../../test-support/test-utils";
 import ReviewChangeRequestsView from "./review-change-request";
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = (accepted: boolean) => {
-    return render(<ReviewChangeRequestsView crId={exampleStandardChangeRequest.crId} accepted={accepted} />);
+const renderComponent = (option: 'Accept' | 'Deny') => {
+    const RouterWrapper = routerWrapperBuilder({});
+    return render(
+        <RouterWrapper>
+            <ReviewChangeRequestsView crId={exampleStandardChangeRequest.crId} option={option} />
+        </RouterWrapper>
+    );
 };
 
 describe('review change request page', () => {
     it('renders accept title', () => {
-        renderComponent(true);
+        renderComponent('Accept');
 
         expect(screen.queryByText('Accept Change Request')).toBeInTheDocument();
     });
 
     it('renders deny title', () => {
-        renderComponent(false);
+        renderComponent('Deny');
 
         expect(screen.queryByText('Deny Change Request')).toBeInTheDocument();
     });
 
     it('renders label for textbox', () => {
-        renderComponent(true);
+        renderComponent('Accept');
 
         expect(screen.getByLabelText('Review Notes')).toBeInTheDocument();
     });
 
     it('renders textbox', () => {
-        renderComponent(true);
+        renderComponent('Accept');
 
         expect(screen.getByPlaceholderText('Notes...')).toBeInTheDocument();
     });
 
     it('renders buttons', () => {
-        renderComponent(true);
+        renderComponent('Accept');
 
         expect(screen.getByText('Cancel')).toBeInTheDocument();
         expect(screen.getByText('Confirm')).toBeInTheDocument();

@@ -7,18 +7,18 @@ import { useParams } from "react-router-dom";
 import ReviewChangeRequestsView from "./review-change-request/review-change-request";
 
 interface ReviewChangeRequestProps {
-    accepted: boolean
+    option: 'Accept' | 'Deny';
 }
 
 const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
-    accepted
+    option
 }: ReviewChangeRequestProps) => {
     interface ParamTypes {
         id: string;
     }
     const { id } = useParams<ParamTypes>();
 
-    return <ReviewChangeRequestsView crId={parseInt(id)} accepted={accepted} />;
+    return <ReviewChangeRequestsView crId={parseInt(id)} option={option} />;
 };
 
 export default ReviewChangeRequest;

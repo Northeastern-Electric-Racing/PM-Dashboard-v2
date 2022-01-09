@@ -8,7 +8,7 @@ import { render, screen, routerWrapperBuilder } from "../../../test-support/test
 import ReviewChangeRequest from "./review-change-request";
 
 const renderComponent = (option: 'Accept' | 'Deny', route: string) => {
-    const RouterWrapper = routerWrapperBuilder({ path: '/change-requests/:id', route: route });
+    const RouterWrapper = routerWrapperBuilder({ path: '/change-requests/:id', route });
     return render(
         <RouterWrapper>
             <ReviewChangeRequest option={option} />

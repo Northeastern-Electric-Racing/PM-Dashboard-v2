@@ -107,7 +107,7 @@ const createStageGateChangeRequest = async (
 };
 
 // TODO: add a comment to explain the function?
-const baseHandler: Handler = async ({ body }, _context) => {
+export const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type } = body;
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, body);

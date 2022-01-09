@@ -16,6 +16,7 @@ import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../../../s
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import './change-request-details.module.css';
+import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -149,7 +150,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <PageBlock title={'Implemented Changes'} headerRight={<></>} body={<>list of changes</>} />
+      <ImplementedChangesList changes={changeRequest.implementedChanges!} />
     </>
   );
 };

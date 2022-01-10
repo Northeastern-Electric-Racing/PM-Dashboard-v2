@@ -7,15 +7,13 @@ import middy from '@middy/core';
 import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
-// import { Handler as NetlifyHandler } from '@netlify/functions'; // TODO: types from netlify vs aws?
 import { Handler } from 'aws-lambda';
 import { PrismaClient, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
 import { buildClientFailureResponse, buildSuccessResponse } from 'utils';
-// TODO: clean up imports
 
 const prisma = new PrismaClient();
 
-// TODO: add a comment to explain the function?
+// Create a new standard scope change request
 const createStandardChangeRequest = async (
   submitterId: number,
   wbsElementId: number,
@@ -44,11 +42,11 @@ const createStandardChangeRequest = async (
       }
     }
   });
-  // TODO: figure out what is best to return
+  // TODO: check if this is the best thing to return
   return buildSuccessResponse(createdChangeRequest);
 };
 
-// TODO: add a comment to explain the function?
+// Create a new activation change request
 const createActivationChangeRequest = async (
   submitterId: number,
   wbsElementId: number,
@@ -75,11 +73,11 @@ const createActivationChangeRequest = async (
       }
     }
   });
-  // TODO: figure out what is best to return
+  // TODO: check if this is the best thing to return
   return buildSuccessResponse(createdChangeRequest);
 };
 
-// TODO: add a comment to explain the function?
+// Create a new stage gate change request
 const createStageGateChangeRequest = async (
   submitterId: number,
   wbsElementId: number,
@@ -102,11 +100,11 @@ const createStageGateChangeRequest = async (
       }
     }
   });
-  // TODO: figure out what is best to return
+  // TODO: check if this is the best thing to return
   return buildSuccessResponse(createdChangeRequest);
 };
 
-// TODO: add a comment to explain the function?
+// Create proper type of new change request
 export const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type } = body;
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {

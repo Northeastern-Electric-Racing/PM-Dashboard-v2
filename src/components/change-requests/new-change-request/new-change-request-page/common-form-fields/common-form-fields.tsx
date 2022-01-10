@@ -15,9 +15,9 @@ interface IProp {
   workPkgs: WorkPackage[],
 }
 
-const CommonFormFields: React.FC<IProp> = (props: IProp) => {
+const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType}) => {
   const handleFormType = (event: React.ChangeEvent<any>): void => {
-    props.setFormType(event.target.value);
+    setFormType(event.target.value);
   }
 
   return (
@@ -25,7 +25,7 @@ const CommonFormFields: React.FC<IProp> = (props: IProp) => {
       <div className={'px-4'}>
         Project
         <Form.Control as="select" custom>
-          {props.projects.map((p, index) => (
+          {projects.map((p, index) => (
             <option value={index}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
@@ -35,7 +35,7 @@ const CommonFormFields: React.FC<IProp> = (props: IProp) => {
       <div className={'px-4'}>
         Work Package
         <Form.Control as="select" custom>
-          {props.workPkgs.map((p, index) => (
+          {workPkgs.map((p, index) => (
             <option value={index}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>

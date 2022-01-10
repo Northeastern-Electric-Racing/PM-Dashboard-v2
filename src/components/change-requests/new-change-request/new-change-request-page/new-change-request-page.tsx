@@ -51,7 +51,7 @@ const NewChangeRequestPage: React.FC = () => {
       if (message && workPkgsRes.error) {
         message += "; " + workPkgsRes.error!.message;
       }
-      else {
+      else if (!message) {
         message = workPkgsRes.error?.message!;
       }
       

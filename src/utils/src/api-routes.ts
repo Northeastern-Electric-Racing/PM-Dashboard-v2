@@ -20,6 +20,7 @@ const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbsNum`;
 
 /**************** Change Requests Endpoint ****************/
 const CHANGE_REQUESTS: string = `/change-requests`;
+const CHANGE_REQUESTS_NEW: string = `${CHANGE_REQUESTS}-new`;
 const CHANGE_REQUESTS_BY_ID: string = `${CHANGE_REQUESTS}/:id`;
 const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS_BY_ID}/process\\:review`;
 
@@ -35,6 +36,7 @@ export const apiRoutes = {
   WORK_PACKAGES_BY_WBS,
 
   CHANGE_REQUESTS,
+  CHANGE_REQUESTS_NEW,
   CHANGE_REQUESTS_BY_ID,
   CHANGE_REQUESTS_REVIEW
 };

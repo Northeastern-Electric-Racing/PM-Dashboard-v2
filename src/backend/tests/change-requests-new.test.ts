@@ -4,9 +4,9 @@
  */
 
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
-import { baseHandler, handler } from '../functions/change-request-new';
+import { baseHandler, handler } from '../functions/change-requests-new';
 
-describe('change request new', () => {
+describe('change requests new', () => {
   describe('handler', () => {
     // TODO: these tests all work because validation catches and
     //       database access prisma code is never reached.

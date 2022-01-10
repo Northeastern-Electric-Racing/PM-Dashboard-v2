@@ -5,14 +5,8 @@
 
 import { Form, FormControl, InputGroup, Row } from 'react-bootstrap';
 import styles from './stage-gate-form-fields.module.css';
-import { Project, WorkPackage, WbsNumber } from 'utils';
 
-interface IProp {
-  project: Project,
-  workPkg: WorkPackage,
-}
-
-const StageGateFormFields: React.FC<IProp> = (props: IProp) => {
+const StageGateFormFields: React.FC = () => {
   return (
     <Form>
       <div className={styles.container}>

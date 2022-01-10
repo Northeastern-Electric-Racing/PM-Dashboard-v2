@@ -8,15 +8,8 @@ import DatePicker from 'react-date-picker';
 import { exampleAllUsers } from '../../../../../test-support/test-data/users.stub';
 import { fullNamePipe } from '../../../../../shared/pipes';
 import styles from './activation-form-fields.module.css';
-import { Project, WorkPackage, WbsNumber } from 'utils';
 
-interface IProp {
-  project: Project,
-  workPkg: WorkPackage,
-}
-
-
-const ActivationFormFields: React.FC<IProp> = (props: IProp) => {
+const ActivationFormFields: React.FC = () => {
   return (
     <Form>
       <div className={`row ${styles.container}`}>

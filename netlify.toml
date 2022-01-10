@@ -2,3 +2,5 @@
     command = "npm run build"
     functions = "lambda"
     publish = "build"
+[functions]
+  node_bundler = "esbuild"

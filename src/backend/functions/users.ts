@@ -18,6 +18,9 @@ import {
   routeMatcher,
   User
 } from 'utils';
+require('dotenv').config();
+
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -68,10 +71,16 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
   const payload = ticket.getPayload();
   if (!payload) throw new Error('Auth server response payload invalid');
+<<<<<<< Updated upstream
   const { sub: userId } = payload; // google user id
+=======
+  const userid = payload['sub']; // google user id
+  console.log(userid);
+>>>>>>> Stashed changes
   // check if user is already in the database via Google ID
   let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
 
+<<<<<<< Updated upstream
   // if not in database, create user in database
   if (user === null) {
     const emailId = payload['email']!.includes('@husky.neu.edu')
@@ -98,6 +107,25 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
 
   return buildSuccessResponse(usersTransformer(user));
+=======
+  const createdUser: User = {
+    id: 1,
+    firstName: payload['given_name']!,
+    lastName: payload['family_name']!,
+    emailId: payload['email']!,
+    firstLogin: new Date(),
+    lastLogin: new Date(),
+    role: Role.Guest
+  };
+  const accessToken = jwt.sign(createdUser, process.env.JWT_SECRET, { expiresIn: '20mins' });
+  // const userToLogIn: User | undefined = exampleAllUsers.find(
+  //   (usr: User) => usr.emailId === body.emailId
+  // );
+  // if (userToLogIn === undefined) {
+  //   return buildNotFoundResponse('user', `${body.emailId}`);
+  // }
+  return { ...buildSuccessResponse(createdUser), accessToken: accessToken };
+>>>>>>> Stashed changes
 };
 
 // Define all valid routes for the endpoint

@@ -7,6 +7,9 @@ import { HandlerEvent, HandlerContext, HandlerResponse } from '@netlify/function
 import { match } from 'path-to-regexp';
 import { API_URL } from './api-routes';
 import { ApiRoute } from './types/api-utils-types';
+import jwt from 'jsonwebtoken';
+
+require('dotenv').config();
 
 /**
  * Builds a standard API response object
@@ -98,4 +101,13 @@ export const routeMatcher = (
     }
   }
   return buildNotFoundResponse("route", event.path);
-  };
+};
+
+export const verifyToken = (
+  user: any,
+) => {
+  const token = user['acccessToken'];
+  return jwt.verify(token, process.env.JWT_SECRET, () => {
+
+  });
+}

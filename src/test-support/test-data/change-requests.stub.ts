@@ -75,7 +75,7 @@ export const exampleStageGateChangeRequest: StageGateChangeRequest = {
   dateSubmitted: new Date('02/25/21'),
   type: ChangeRequestType.StageGate,
   leftoverBudget: 26,
-  confirmCompleted: true
+  confirmDone: true
 };
 
 export const exampleAllChangeRequests: ChangeRequest[] = [

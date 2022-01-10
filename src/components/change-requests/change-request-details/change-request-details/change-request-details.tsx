@@ -105,7 +105,7 @@ const buildStageGateChangeRequestDetails = (cr: StageGateChangeRequest): ReactEl
       body={
         <dl className="row">
           <dt className="col-4">Confirm WP Completed</dt>
-          <dd className="col">{booleanPipe(cr.confirmCompleted)}</dd>
+          <dd className="col">{booleanPipe(cr.confirmDone)}</dd>
           <div className="w-100"></div>
           <dt className="col-4">Leftover Budget</dt>
           <dd className="col">{dollarsPipe(cr.leftoverBudget)}</dd>
@@ -134,8 +134,16 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 }: ChangeRequestDetailsProps) => {
   const reviewBtns = (
     <div className={styles.btnsContainer}>
-      <ActionButton link={`/change-requests/${changeRequest.crId}/accept`} icon={faThumbsUp} text='Accept' />
-      <ActionButton link={`/change-requests/${changeRequest.crId}/deny`} icon={faThumbsDown} text='Deny' />
+      <ActionButton
+        link={`/change-requests/${changeRequest.crId}/accept`}
+        icon={faThumbsUp}
+        text="Accept"
+      />
+      <ActionButton
+        link={`/change-requests/${changeRequest.crId}/deny`}
+        icon={faThumbsDown}
+        text="Deny"
+      />
     </div>
   );
 

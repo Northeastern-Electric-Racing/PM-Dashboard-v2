@@ -44,7 +44,7 @@ export interface ActivationChangeRequest extends ChangeRequest {
 
 export interface StageGateChangeRequest extends ChangeRequest {
   leftoverBudget: number;
-  confirmCompleted: boolean;
+  confirmDone: boolean;
 }
 
 export interface ChangeRequestExplanation {

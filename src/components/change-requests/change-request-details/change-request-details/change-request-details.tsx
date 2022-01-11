@@ -17,7 +17,6 @@ import PageBlock from '../../../shared/page-block/page-block';
 import styles from './change-request-details.module.css';
 import ActionButton from '../../../shared/action-button/action-button';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import ImplementedChanges from './implemented-changes/implemented-changes';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import StandardDetails from './type-specific-details/standard-details/standard-details';
@@ -87,7 +86,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <ImplementedChanges />
+      <PageBlock title={'Implemented Changes'} headerRight={<></>} body={<>list of changes</>} />
     </>
   );
 };

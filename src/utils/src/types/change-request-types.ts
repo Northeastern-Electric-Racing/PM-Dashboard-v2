@@ -20,11 +20,11 @@ export interface ChangeRequest {
 }
 
 export enum ChangeRequestType {
-  DesignIssue = 'Design Issue',
-  NewFunction = 'New Function',
-  Other = 'Other',
-  StageGate = 'Stage Gate',
-  Activation = 'Activation'
+  DesignIssue = 'DESIGN_ISSUE',
+  NewFunction = 'NEW_FUNCTION',
+  Other = 'OTHER',
+  StageGate = 'STAGE_GATE',
+  Activation = 'ACTIVATION'
 }
 
 export interface StandardChangeRequest extends ChangeRequest {
@@ -53,12 +53,12 @@ export interface ChangeRequestExplanation {
 }
 
 export enum ChangeRequestReason {
-  Estimation = 'Estimation Error',
-  School = 'School Work',
-  Manufacturing = 'Manufacturing Issues',
-  Rules = 'Rules Compliance',
-  OtherProject = 'Other Project',
-  Other = 'Other'
+  Estimation = 'ESTIMATION',
+  School = 'SCHOOL',
+  Manufacturing = 'MANUFACTURING',
+  Rules = 'RULES',
+  OtherProject = 'OTHER_PROJECT',
+  Other = 'OTHER'
 }
 
 export interface ImplementedChange {

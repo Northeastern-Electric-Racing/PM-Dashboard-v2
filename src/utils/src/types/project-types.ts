@@ -24,9 +24,9 @@ export interface WbsElement {
 }
 
 export enum WbsElementStatus {
-  Inactive = 'Inactive',
-  Active = 'Active',
-  Complete = 'Complete'
+  Inactive = 'INACTIVE',
+  Active = 'ACTIVE',
+  Complete = 'COMPLETE'
 }
 
 export interface Project extends WbsElement {

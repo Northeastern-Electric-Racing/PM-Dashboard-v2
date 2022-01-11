@@ -18,6 +18,7 @@ import PageBlock from '../../../shared/page-block/page-block';
 import styles from './change-request-details.module.css';
 import ActionButton from '../../../shared/action-button/action-button';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import ImplementedChanges from './implemented-changes/implemented-changes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -166,8 +167,9 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
           </dl>
         }
       />
+      // need to abstract out the details and changes list below from the comps
       {buildDetails(changeRequest)}
-      <PageBlock title={'Implemented Changes'} headerRight={<></>} body={<>list of changes</>} />
+      <ImplementedChanges />
     </>
   );
 };

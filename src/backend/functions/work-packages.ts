@@ -49,11 +49,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-  ({
-    INACTIVE: WbsElementStatus.Inactive,
-    ACTIVE: WbsElementStatus.Active,
-    COMPLETE: WbsElementStatus.Complete
-  }[status]);
+({
+  INACTIVE: WbsElementStatus.Inactive,
+  ACTIVE: WbsElementStatus.Active,
+  COMPLETE: WbsElementStatus.Complete
+}[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -82,7 +82,7 @@ const workPackageTransformer = (
       id: descBullet.descriptionId,
       dateDeleted: descBullet.dateDeleted ?? undefined
     })),
-    deliverables: workPackage.expectedActivities.map((deliverable) => ({
+    deliverables: workPackage.deliverables.map((deliverable) => ({
       ...deliverable,
       id: deliverable.descriptionId,
       dateDeleted: deliverable.dateDeleted ?? undefined

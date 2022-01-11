@@ -6,6 +6,9 @@
 import { render, screen } from "../../../../../test-support/test-utils"
 import ImplementedChanges from "./implemented-changes"
 
+/**
+ * Sets up the component under test with the desired values and renders it.
+ */
 const renderComponent = () => {
     return render(<ImplementedChanges />);
 }

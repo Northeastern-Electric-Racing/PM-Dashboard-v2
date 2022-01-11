@@ -19,6 +19,9 @@ import styles from './change-request-details.module.css';
 import ActionButton from '../../../shared/action-button/action-button';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import ImplementedChanges from './implemented-changes/implemented-changes';
+import ActivationDetails from './type-specific-details/activation-details/activation-details';
+import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
+import StandardDetails from './type-specific-details/standard-details/standard-details';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -117,13 +120,14 @@ const buildStageGateChangeRequestDetails = (cr: StageGateChangeRequest): ReactEl
 };
 
 const buildDetails = (cr: ChangeRequest): ReactElement => {
-  if (cr.type === ChangeRequestType.Activation) {
-    return buildActivationChangeRequestDetails(cr as ActivationChangeRequest);
+  switch (cr.type) {
+    case ChangeRequestType.Activation:
+      return <ActivationDetails cr={cr as ActivationChangeRequest} />;
+    case ChangeRequestType.StageGate:
+      return <StageGateDetails cr={cr as StageGateChangeRequest} />;
+    default:
+      return <StandardDetails cr={cr as StandardChangeRequest} />;
   }
-  if (cr.type === ChangeRequestType.StageGate) {
-    return buildStageGateChangeRequestDetails(cr as StageGateChangeRequest);
-  }
-  return buildChangeRequestDetails(cr as StandardChangeRequest);
 };
 
 interface ChangeRequestDetailsProps {
@@ -151,7 +155,6 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   return (
     <>
       <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={reviewBtns} />
-
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
@@ -167,7 +170,6 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
           </dl>
         }
       />
-      // need to abstract out the details and changes list below from the comps
       {buildDetails(changeRequest)}
       <ImplementedChanges />
     </>

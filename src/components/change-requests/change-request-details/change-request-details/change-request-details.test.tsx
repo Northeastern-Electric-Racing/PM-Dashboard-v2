@@ -4,19 +4,8 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import {
-  ChangeRequest,
-  StandardChangeRequest,
-  ActivationChangeRequest,
-  StageGateChangeRequest,
-  ChangeRequestExplanation
-} from 'utils';
-import {
-  exampleStandardChangeRequest,
-  exampleActivationChangeRequest,
-  exampleStageGateChangeRequest,
-  exampleAllChangeRequests
-} from '../../../../test-support/test-data/change-requests.stub';
+import { ChangeRequest } from 'utils';
+import { exampleAllChangeRequests } from '../../../../test-support/test-data/change-requests.stub';
 import { routerWrapperBuilder } from '../../../../test-support/test-utils';
 import ChangeRequestDetails from './change-request-details';
 

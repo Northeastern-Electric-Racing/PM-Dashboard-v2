@@ -10,9 +10,8 @@ import {
   ActivationChangeRequest,
   StageGateChangeRequest,
   ChangeRequestType,
-  ChangeRequestExplanation
 } from 'utils';
-import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../../../shared/pipes';
+import { fullNamePipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import styles from './change-request-details.module.css';
@@ -34,89 +33,6 @@ const convertStatus = (cr: ChangeRequest): string => {
     return 'Denied';
   }
   return 'Open';
-};
-
-const buildChangeRequestDetails = (cr: StandardChangeRequest): ReactElement => {
-  return (
-    <PageBlock
-      title={'Standard Change Request Details'}
-      headerRight={<></>}
-      body={
-        <dl className="row">
-          <dt className="col-2">What</dt>
-          <dd className="col-auto">{cr.what}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Why</dt>
-          <dd className="col">
-            <dl>
-              {cr.why.map((ele: ChangeRequestExplanation, idx: number) => (
-                <div key={idx} className="row w-100">
-                  <dt className="col-3">{ele.reason}</dt>
-                  <dd className="col">{ele.explain}</dd>
-                </div>
-              ))}
-            </dl>
-          </dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Impact</dt>
-          <dd className="col-auto">
-            <dl className="row">
-              <dt className="col-3">Scope Impact</dt>
-              <dd className="col-auto">{cr.scopeImpact}</dd>
-              <div className="w-100"></div>
-              <dt className="col-3">Timeline Impact</dt>
-              <dd className="col-auto">{weeksPipe(cr.timelineImpact)}</dd>
-              <div className="w-100"></div>
-              <dt className="col-3">Budget Impact</dt>
-              <dd className="col-auto">{dollarsPipe(cr.budgetImpact)}</dd>
-            </dl>
-          </dd>
-        </dl>
-      }
-    />
-  );
-};
-
-const buildActivationChangeRequestDetails = (cr: ActivationChangeRequest): ReactElement => {
-  return (
-    <PageBlock
-      title={'Activation Change Request Details'}
-      headerRight={<></>}
-      body={
-        <dl className="row">
-          <dt className="col-2">Project Lead</dt>
-          <dd className="col-3">{fullNamePipe(cr.projectLead)}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Project Manager</dt>
-          <dd className="col-3">{fullNamePipe(cr.projectManager)}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Start Date</dt>
-          <dd className="col-3">{cr.startDate.toUTCString()}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Confirm WP Details</dt>
-          <dd className="col-3">{booleanPipe(cr.confirmDetails)}</dd>
-        </dl>
-      }
-    />
-  );
-};
-
-const buildStageGateChangeRequestDetails = (cr: StageGateChangeRequest): ReactElement => {
-  return (
-    <PageBlock
-      title={'Stage Gate Change Request Details'}
-      headerRight={<></>}
-      body={
-        <dl className="row">
-          <dt className="col-4">Confirm WP Completed</dt>
-          <dd className="col">{booleanPipe(cr.confirmDone)}</dd>
-          <div className="w-100"></div>
-          <dt className="col-4">Leftover Budget</dt>
-          <dd className="col">{dollarsPipe(cr.leftoverBudget)}</dd>
-        </dl>
-      }
-    />
-  );
 };
 
 const buildDetails = (cr: ChangeRequest): ReactElement => {

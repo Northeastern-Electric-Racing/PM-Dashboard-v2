@@ -173,6 +173,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         changes={
           changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges
         }
+        dateImplemented={changeRequest.dateImplemented!}
       />
     </>
   );

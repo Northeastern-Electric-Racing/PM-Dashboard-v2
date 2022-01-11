@@ -3,26 +3,41 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ImplementedChange } from 'utils';
-import { wbsPipe } from '../../../../../shared/pipes';
+import { datePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import BulletList from '../../../../shared/bullet-list/bullet-list';
 import './implemented-changes-list.module.css';
 
 interface ImplementedChangesListProps {
   changes: ImplementedChange[];
+  dateImplemented: Date;
 }
 
-const ImplementedChangesList: React.FC<ImplementedChangesListProps> = ({ changes }) => {
+const ImplementedChangesList: React.FC<ImplementedChangesListProps> = ({
+  changes,
+  dateImplemented
+}) => {
   return (
     <BulletList
       title={'Implemented Changes'}
       headerRight={<></>}
       list={changes.map((ic) => (
         <>
-          [<Link to={`${routes.PROJECTS}/${wbsPipe(ic.wbsNum)}`}>{wbsPipe(ic.wbsNum)}</Link>]{' '}
-          {ic.detail}
+          [
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="tooltip">
+                {fullNamePipe(ic.implementer)} - {datePipe(dateImplemented)}
+              </Tooltip>
+            }
+          >
+            <Link to={`${routes.PROJECTS}/${wbsPipe(ic.wbsNum)}`}>{wbsPipe(ic.wbsNum)}</Link>
+          </OverlayTrigger>
+          ] {ic.detail}
         </>
       ))}
     />

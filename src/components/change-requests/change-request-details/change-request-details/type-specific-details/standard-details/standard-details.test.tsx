@@ -5,7 +5,7 @@
 
 import { render, screen } from "../../../../../../test-support/test-utils";
 import { ChangeRequestExplanation, StandardChangeRequest } from "utils";
-import { exampleStandardChangeRequest } from "../../../../../../test-support/test-data/change-requests.stub";
+import { exampleStandardChangeRequest as cr } from "../../../../../../test-support/test-data/change-requests.stub";
 import StandardDetails from "./standard-details";
 
 /**
@@ -17,22 +17,21 @@ const renderComponent = (cr: StandardChangeRequest) => {
 
 describe('Change request details standard cr display element tests', () => {
   it('Renders what section', () => {
-    renderComponent(exampleStandardChangeRequest);
+    renderComponent(cr);
     expect(screen.getByText(`What`)).toBeInTheDocument();
-    expect(screen.getByText(`${exampleStandardChangeRequest.what}`)).toBeInTheDocument();
+    expect(screen.getByText(`${cr.what}`)).toBeInTheDocument();
   });
 
   it('Renders why section', () => {
-    renderComponent(exampleStandardChangeRequest);
+    renderComponent(cr);
     expect(screen.getByText(`Why`)).toBeInTheDocument();
-    exampleStandardChangeRequest.why.forEach((explanation: ChangeRequestExplanation) => {
+    cr.why.forEach((explanation: ChangeRequestExplanation) => {
       expect(screen.getByText(`${explanation.reason}`)).toBeInTheDocument();
       expect(screen.getByText(`${explanation.explain}`)).toBeInTheDocument();
     });
   });
 
   it('Renders impact section', () => {
-    const cr: StandardChangeRequest = exampleStandardChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Impact`)).toBeInTheDocument();
     expect(screen.getByText(`Scope Impact`)).toBeInTheDocument();

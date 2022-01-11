@@ -16,15 +16,14 @@ const renderComponent = (cr: StageGateChangeRequest) => {
 }
 
 describe('Change request details stage gate cr display element tests', () => {
+  const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
   it('Renders confirm completed', () => {
-    const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Confirm WP Completed`)).toBeInTheDocument();
     expect(screen.getByText(`${cr.confirmDone ? 'YES' : 'NO'}`)).toBeInTheDocument();
   });
 
   it('Renders leftover budget', () => {
-    const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Leftover Budget`)).toBeInTheDocument();
     expect(screen.getByText(`$${cr.leftoverBudget}`)).toBeInTheDocument();

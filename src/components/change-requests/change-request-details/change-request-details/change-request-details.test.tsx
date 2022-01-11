@@ -4,8 +4,8 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { ChangeRequest } from 'utils';
-import { exampleAllChangeRequests } from '../../../../test-support/test-data/change-requests.stub';
+import { ActivationChangeRequest, ChangeRequest, ChangeRequestExplanation, StageGateChangeRequest, StandardChangeRequest } from 'utils';
+import { exampleActivationChangeRequest, exampleAllChangeRequests, exampleStageGateChangeRequest, exampleStandardChangeRequest } from '../../../../test-support/test-data/change-requests.stub';
 import { routerWrapperBuilder } from '../../../../test-support/test-utils';
 import ChangeRequestDetails from './change-request-details';
 
@@ -80,81 +80,58 @@ describe('Change request details common display element tests', () => {
   );
 });
 
-// describe('Change request details standard cr display element tests', () => {
-//   it('Renders what section', () => {
-//     renderComponent(exampleStandardChangeRequest);
-//     expect(screen.getByText(`What`)).toBeInTheDocument();
-//     expect(screen.getByText(`${exampleStandardChangeRequest.what}`)).toBeInTheDocument();
-//   });
+describe('Change request details standard cr display element tests', () => {
+  it('Renders what section', () => {
+    renderComponent(exampleStandardChangeRequest);
+    expect(screen.getByText(`What`)).toBeInTheDocument();
+  });
 
-//   it('Renders why section', () => {
-//     renderComponent(exampleStandardChangeRequest);
-//     expect(screen.getByText(`Why`)).toBeInTheDocument();
-//     exampleStandardChangeRequest.why.forEach((explanation: ChangeRequestExplanation) => {
-//       expect(screen.getByText(`${explanation.reason}`)).toBeInTheDocument();
-//       expect(screen.getByText(`${explanation.explain}`)).toBeInTheDocument();
-//     });
-//   });
+  it('Renders why section', () => {
+    renderComponent(exampleStandardChangeRequest);
+    expect(screen.getByText(`Why`)).toBeInTheDocument();
+  });
 
-//   it('Renders impact section', () => {
-//     const cr: StandardChangeRequest = exampleStandardChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Impact`)).toBeInTheDocument();
-//     expect(screen.getByText(`Scope Impact`)).toBeInTheDocument();
-//     expect(screen.getByText(`${cr.scopeImpact}`)).toBeInTheDocument();
-//     expect(screen.getByText(`Timeline Impact`)).toBeInTheDocument();
-//     expect(screen.getByText(`${cr.timelineImpact} weeks`)).toBeInTheDocument();
-//     expect(screen.getByText(`Budget Impact`)).toBeInTheDocument();
-//     expect(screen.getByText(`$${cr.budgetImpact}`)).toBeInTheDocument();
-//   });
-// });
+  it('Renders impact section', () => {
+    const cr: StandardChangeRequest = exampleStandardChangeRequest;
+    renderComponent(cr);
+    expect(screen.getByText(`Impact`)).toBeInTheDocument();
+  });
+});
 
-// describe('Change request details activation cr display element tests', () => {
-//   it('Renders project lead', () => {
-//     const cr: ActivationChangeRequest = exampleActivationChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Project Lead`)).toBeInTheDocument();
-//     expect(
-//       screen.getByText(`${cr.projectLead.firstName} ${cr.projectLead.lastName}`)
-//     ).toBeInTheDocument();
-//   });
+describe('Change request details activation cr display element tests', () => {
+  const cr: ActivationChangeRequest = exampleActivationChangeRequest;
 
-//   it('Renders project manager', () => {
-//     const cr: ActivationChangeRequest = exampleActivationChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Project Manager`)).toBeInTheDocument();
-//     expect(
-//       screen.getByText(`${cr.projectManager.firstName} ${cr.projectManager.lastName}`)
-//     ).toBeInTheDocument();
-//   });
+  it('Renders project lead', () => {
+    renderComponent(cr);
+    expect(screen.getByText(`Project Lead`)).toBeInTheDocument();
+  });
 
-//   it('Renders start date', () => {
-//     const cr: ActivationChangeRequest = exampleActivationChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Start Date`)).toBeInTheDocument();
-//     expect(screen.getByText(`${cr.dateSubmitted.toUTCString()}`)).toBeInTheDocument();
-//   });
+  it('Renders project manager', () => {
+    renderComponent(cr);
+    expect(screen.getByText(`Project Manager`)).toBeInTheDocument();
+  });
 
-//   it('Renders confirm details', () => {
-//     const cr: ActivationChangeRequest = exampleActivationChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Confirm WP Details`)).toBeInTheDocument();
-//     expect(screen.getByText(`${cr.confirmDetails ? 'YES' : 'NO'}`)).toBeInTheDocument();
-//   });
-// });
+  it('Renders start date', () => {
+    renderComponent(cr);
+    expect(screen.getByText(`Start Date`)).toBeInTheDocument();
+  });
 
-// describe('Change request details stage gate cr display element tests', () => {
-//   it('Renders confirm completed', () => {
-//     const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Confirm WP Completed`)).toBeInTheDocument();
-//     expect(screen.getByText(`${cr.confirmDone ? 'YES' : 'NO'}`)).toBeInTheDocument();
-//   });
+  it('Renders confirm details', () => {
+    renderComponent(cr);
+    expect(screen.getByText(`Confirm WP Details`)).toBeInTheDocument();
+  });
+});
 
-//   it('Renders leftover budget', () => {
-//     const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
-//     renderComponent(cr);
-//     expect(screen.getByText(`Leftover Budget`)).toBeInTheDocument();
-//     expect(screen.getByText(`$${cr.leftoverBudget}`)).toBeInTheDocument();
-//   });
-// });
+describe('Change request details stage gate cr display element tests', () => {
+  const cr: StageGateChangeRequest = exampleStageGateChangeRequest;
+
+  it('Renders confirm completed', () => {
+    renderComponent(cr);
+    expect(screen.getByText(`Confirm WP Completed`)).toBeInTheDocument();
+  });
+
+  it('Renders leftover budget', () => {
+    renderComponent(cr);
+    expect(screen.getByText(`Leftover Budget`)).toBeInTheDocument();
+  });
+});

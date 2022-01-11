@@ -16,8 +16,9 @@ const renderComponent = (cr: ActivationChangeRequest) => {
 };
 
 describe('Change request details activation cr display element tests', () => {
+  const cr: ActivationChangeRequest = exampleActivationChangeRequest;
+
   it('Renders project lead', () => {
-    const cr: ActivationChangeRequest = exampleActivationChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Project Lead`)).toBeInTheDocument();
     expect(
@@ -26,7 +27,6 @@ describe('Change request details activation cr display element tests', () => {
   });
 
   it('Renders project manager', () => {
-    const cr: ActivationChangeRequest = exampleActivationChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Project Manager`)).toBeInTheDocument();
     expect(
@@ -35,14 +35,12 @@ describe('Change request details activation cr display element tests', () => {
   });
 
   it('Renders start date', () => {
-    const cr: ActivationChangeRequest = exampleActivationChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Start Date`)).toBeInTheDocument();
     expect(screen.getByText(`${cr.startDate.toUTCString()}`)).toBeInTheDocument();
   });
 
   it('Renders confirm details', () => {
-    const cr: ActivationChangeRequest = exampleActivationChangeRequest;
     renderComponent(cr);
     expect(screen.getByText(`Confirm WP Details`)).toBeInTheDocument();
     expect(screen.getByText(`${cr.confirmDetails ? 'YES' : 'NO'}`)).toBeInTheDocument();

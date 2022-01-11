@@ -149,7 +149,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 
   return (
     <>
-      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={reviewBtns} />
+      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={changeRequest.accepted !== undefined ? <></> : reviewBtns} />
 
       <PageBlock
         title={'Change Request Details'}

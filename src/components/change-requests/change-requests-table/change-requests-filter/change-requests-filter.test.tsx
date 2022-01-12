@@ -3,10 +3,250 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '../../../../test-support/test-utils';
+import ChangeRequestsFilter from './change-requests-filter';
 
-describe("change requests table filter", () => {
-    it('renders the change requests table filter component'), () => {
+let temp: any[] = [];
 
-    };
+const mockUpdate = (
+  type: string,
+  impact: number[],
+  reason: string,
+  state: number[],
+  implemented: string
+) => {
+  temp = [];
+  temp.push(type);
+  temp.push(impact);
+  temp.push(reason);
+  temp.push(state);
+  temp.push(implemented);
+};
+
+// Sets up the component under test with the desired values and renders it.
+const renderComponent = () => {
+  render(<ChangeRequestsFilter update={mockUpdate} />);
+};
+
+describe('change requests table filter component', () => {
+  it('checking that title and labels are there', async () => {
+    renderComponent();
+    expect(screen.getByText('Filters')).toBeInTheDocument();
+    expect(screen.getByText('Type')).toBeInTheDocument();
+    expect(screen.getByText('Impact')).toBeInTheDocument();
+    expect(screen.getByText('Scope')).toBeInTheDocument();
+    expect(screen.getByText('Budget')).toBeInTheDocument();
+    expect(screen.getByText('Timeline')).toBeInTheDocument();
+    expect(screen.getByText('Reason')).toBeInTheDocument();
+    expect(screen.getByText('State')).toBeInTheDocument();
+    expect(screen.getByText('Not Reviewed')).toBeInTheDocument();
+    expect(screen.getByText('Accepted')).toBeInTheDocument();
+    expect(screen.getByText('Denied')).toBeInTheDocument();
+    expect(screen.getByText('Implemented')).toBeInTheDocument();
+    expect(screen.getByText('Apply')).toBeInTheDocument();
+  });
+
+  it('checking if data in the type menu is correct', async () => {
+    renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('Design Issue')).not.toBeInTheDocument();
+    expect(screen.queryByText('New Function')).not.toBeInTheDocument();
+    expect(screen.queryByText('Other')).not.toBeInTheDocument();
+    expect(screen.queryByText('Stage Gate')).not.toBeInTheDocument();
+    expect(screen.queryByText('Activation')).not.toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('type-toggle'));
+    });
+    expect(screen.queryByText('None')).toBeInTheDocument();
+    expect(screen.queryByText('Design Issue')).toBeInTheDocument();
+    expect(screen.queryByText('New Function')).toBeInTheDocument();
+    expect(screen.queryByText('Other')).toBeInTheDocument();
+    expect(screen.queryByText('Stage Gate')).toBeInTheDocument();
+    expect(screen.queryByText('Activation')).toBeInTheDocument();
+  });
+
+  it('checking if data in the reason dropdown menu is correct', async () => {
+    renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('Estimation Error')).not.toBeInTheDocument();
+    expect(screen.queryByText('School Work')).not.toBeInTheDocument();
+    expect(screen.queryByText('Manufacturing Issues')).not.toBeInTheDocument();
+    expect(screen.queryByText('Rules Compliance')).not.toBeInTheDocument();
+    expect(screen.queryByText('Other Project')).not.toBeInTheDocument();
+    expect(screen.queryByText('Other')).not.toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('reason-toggle'));
+    });
+    expect(screen.queryByText('None')).toBeInTheDocument();
+    expect(screen.queryByText('Estimation Error')).toBeInTheDocument();
+    expect(screen.queryByText('School Work')).toBeInTheDocument();
+    expect(screen.queryByText('Manufacturing Issues')).toBeInTheDocument();
+    expect(screen.queryByText('Rules Compliance')).toBeInTheDocument();
+    expect(screen.queryByText('Other Project')).toBeInTheDocument();
+    expect(screen.queryByText('Other')).toBeInTheDocument();
+  });
+
+  it('checking if data in the implemented dropdown menu is correct', async () => {
+    renderComponent();
+    expect(screen.queryByText('None')).not.toBeInTheDocument();
+    expect(screen.queryByText('Yes')).not.toBeInTheDocument();
+    expect(screen.queryByText('No')).not.toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('implemented-toggle'));
+    });
+    expect(screen.getByText('None')).toBeInTheDocument();
+    expect(screen.getByText('Yes')).toBeInTheDocument();
+    expect(screen.getByText('No')).toBeInTheDocument();
+  });
+
+  it('checking if text in the apply button is correct', async () => {
+    renderComponent();
+    expect(screen.getByText('Apply')).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    }); // Clicking it should do nothing to its visibility, not change the page, etc.
+    expect(screen.getByText('Apply')).toBeInTheDocument();
+  });
+
+  it('checking if type dropdown sets filter setting correctly', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[0]).toBe('');
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('type-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Other'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[0]).toBe('Other');
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('type-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('None'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[0]).toBe('');
+  });
+
+  it('checking if reason dropdown sets filter setting correctly', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[2]).toBe('');
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('reason-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('School Work'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[2]).toBe('School Work');
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('reason-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('None'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[2]).toBe('');
+  });
+
+  it('checking if implemented dropdown sets filter setting correctly', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[4]).toBe('');
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('implemented-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Yes'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[4]).toBe('Yes');
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('implemented-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('None'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[4]).toBe('');
+  });
+
+  it('checking if impact selector sets filter setting correctly', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[1]).toStrictEqual([]);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Scope'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[1]).toStrictEqual([0]);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Budget'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[1]).toStrictEqual([0, 1]);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Scope'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[1]).toStrictEqual([1]);
+  });
+
+  it('checking if state selector sets filter setting correctly', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[3]).toStrictEqual([]);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Not Reviewed'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[3]).toStrictEqual([0]);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Accepted'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[3]).toStrictEqual([0, 1]);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Not Reviewed'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[3]).toStrictEqual([1]);
+  });
 });

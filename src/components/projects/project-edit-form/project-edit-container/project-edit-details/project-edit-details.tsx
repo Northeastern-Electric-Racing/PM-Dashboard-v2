@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage } from 'utils';
+import { Project } from 'utils';
 import {
   weeksPipe,
   wbsPipe,
@@ -18,31 +18,49 @@ import { EditModeContext } from '../project-edit-container';
 import { useContext } from 'react';
 import ProjectFormDetail from './project-form-detail/project-form-detail';
 
-interface WorkPackageDetailsProps {
-    workPackage: WorkPackage;
+interface projectDetailsProps {
+    project: Project;
 }
 
-const ProjectEditDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
+const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
     const editMode = useContext(EditModeContext);
     const detailsBody = (
       <Container fluid>
         <Form>
           <Row>
-            <Col xs={12} md={6}>
-              <ProjectFormDetail type="title" workPackage={workPackage} />
-              <ProjectFormDetail type="wbs" workPackage={workPackage} />
-              <ProjectFormDetail type="project-lead" workPackage={workPackage} />
-              <ProjectFormDetail type="project-manager" workPackage={workPackage} />
-              <ProjectFormDetail type="duration" workPackage={workPackage} />
+            <b>Project Details</b>
+            <Form.Group>
+              <Form.Control>
+                placeholder={"status"}
+                option={"inactive"}
+                option={"active"}
+              </Form.Control>
+            </Form.Group>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}> 
+              <ProjectFormDetail type="title" isReadonly={false} details={project} />
+              <ProjectFormDetail type="wbs" isReadonly={false} details={project} />
+              <ProjectFormDetail type="project-lead"  isReadonly={false} details={project} />
+              <ProjectFormDetail type="project-manager" isReadonly={false} details={project} />
             </Col>
             <Col xs={6} md={4}>
-              <ProjectFormDetail type="start-date" workPackage={workPackage} />
-              <b>End Date: </b>
-              {endDatePipe(workPackage.startDate, workPackage.duration)}
+              <ProjectFormDetail type="duration" isReadonly={true} details={project} />
+              <ProjectFormDetail type="start-date" isReadonly={true} details={project} />
+              <ProjectFormDetail type="end-date" isReadonly={true} details={project} />
               <br />
-              <ProjectFormDetail type="progress" workPackage={workPackage} />
-              <b>Expected Progress:</b> <br />
+              <ProjectFormDetail type="progress" isReadonly={false} details={project} />
               <b>Timeline Status:</b> <br />
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <Row>
+            <Col>
+              <ProjectFormDetail type="slide-deck" isReadonly={false} details={project}/>
+              <ProjectFormDetail type="task-list" isReadonly={false} details={project}/>
+              <ProjectFormDetail type="bom" isReadonly={false} details={project}/>
+              <ProjectFormDetail type="google-drive" isReadonly={false} details={project}/>
             </Col>
           </Row>
         </Form>
@@ -52,7 +70,7 @@ const ProjectEditDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     return (
       <PageBlock
         title={'Work Package Details'}
-        headerRight={<b>{workPackage.status}</b>}
+        headerRight={<b>{project.status}</b>}
         body={detailsBody}
       />
     );

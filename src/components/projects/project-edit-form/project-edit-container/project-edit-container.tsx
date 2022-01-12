@@ -6,7 +6,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
-import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
+import { useSingleProject } from '../../../../services/projects.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import DescriptionList from '../../../shared/description-list/description-list';
 import ErrorPage from '../../../shared/error-page/error-page';
@@ -25,7 +25,7 @@ export interface EditModeProps {
 }
 
 const WorkPackageContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
-    const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
+    const { isLoading, isError, data, error } = useSingleProject(wbsNum);
     const [editMode, setEditMode] = useState(false);
   
     useEffect(() => {
@@ -40,7 +40,7 @@ const WorkPackageContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
       <EditModeContext.Provider value={editMode}>
         <div className="mb-5">
           <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-          <ProjectEditDetails workPackage={data!} />
+          <ProjectEditDetails project={data!} />
           <DescriptionList title={'Expected Activities'} items={data!.expectedActivities} />
           <DescriptionList title={'Deliverables'} items={data!.deliverables} />
           {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}

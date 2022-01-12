@@ -26,18 +26,17 @@ const ImplementedChangesList: React.FC<ImplementedChangesListProps> = ({
       headerRight={<></>}
       list={changes.map((ic) => (
         <>
-          [
+          [<Link to={`${routes.PROJECTS}/${wbsPipe(ic.wbsNum)}`}>{wbsPipe(ic.wbsNum)}</Link>]{' '}
           <OverlayTrigger
-            placement="bottom"
+            placement="right"
             overlay={
               <Tooltip id="tooltip">
                 {fullNamePipe(ic.implementer)} - {datePipe(dateImplemented)}
               </Tooltip>
             }
           >
-            <Link to={`${routes.PROJECTS}/${wbsPipe(ic.wbsNum)}`}>{wbsPipe(ic.wbsNum)}</Link>
+            <span>{ic.detail}</span>
           </OverlayTrigger>
-          ] {ic.detail}
         </>
       ))}
     />

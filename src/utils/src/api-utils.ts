@@ -106,8 +106,12 @@ export const routeMatcher = (
 export const verifyToken = (
   user: any,
 ) => {
-  const token = user['acccessToken'];
-  return jwt.verify(token, process.env.JWT_SECRET, () => {
-
+  const token = user['accessToken'];
+  return jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return err;
+    } else {
+      return user['id'];
+    }
   });
 }

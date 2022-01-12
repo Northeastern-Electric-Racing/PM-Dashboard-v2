@@ -71,43 +71,11 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
   const payload = ticket.getPayload();
   if (!payload) throw new Error('Auth server response payload invalid');
-<<<<<<< Updated upstream
-  const { sub: userId } = payload; // google user id
-=======
   const userid = payload['sub']; // google user id
   console.log(userid);
->>>>>>> Stashed changes
   // check if user is already in the database via Google ID
-  let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
+  let user = await prisma.user.findUnique({ where: { googleAuthId: userid } });
 
-<<<<<<< Updated upstream
-  // if not in database, create user in database
-  if (user === null) {
-    const emailId = payload['email']!.includes('@husky.neu.edu')
-      ? payload['email']!.split('@')[0]
-      : null;
-    const createdUser = await prisma.user.create({
-      data: {
-        firstName: payload['given_name']!,
-        lastName: payload['family_name']!,
-        googleAuthId: userId,
-        email: payload['email']!,
-        emailId
-      }
-    });
-    user = createdUser;
-  }
-
-  // register a login
-  await prisma.session.create({
-    data: {
-      userId: user.userId,
-      deviceInfo: event.headers['user-agent']
-    }
-  });
-
-  return buildSuccessResponse(usersTransformer(user));
-=======
   const createdUser: User = {
     id: 1,
     firstName: payload['given_name']!,
@@ -125,7 +93,6 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   //   return buildNotFoundResponse('user', `${body.emailId}`);
   // }
   return { ...buildSuccessResponse(createdUser), accessToken: accessToken };
->>>>>>> Stashed changes
 };
 
 // Define all valid routes for the endpoint

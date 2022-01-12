@@ -22,6 +22,7 @@ import ActivationDetails from './type-specific-details/activation-details/activa
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 import './change-request-details.module.css';
+import ReviewNotes from './review-notes/review-notes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -88,6 +89,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
+      <ReviewNotes reviewNotes={changeRequest.reviewNotes} />
       <ImplementedChangesList
         changes={
           changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges

@@ -134,3 +134,13 @@ describe('Change request details stage gate cr display element tests', () => {
     expect(screen.getByText(`Leftover Budget`)).toBeInTheDocument();
   });
 });
+
+describe('Change request review notes display elements test', () => {
+  const { reviewNotes } = exampleStandardChangeRequest;
+
+  it('Render review notes section complete', () => {
+    renderComponent(exampleStandardChangeRequest);
+    expect(screen.getByText('Review Notes')).toBeInTheDocument();
+    expect(screen.getByText(reviewNotes ? reviewNotes! : 'There are no review notes for this change request.')).toBeInTheDocument();
+  });
+});

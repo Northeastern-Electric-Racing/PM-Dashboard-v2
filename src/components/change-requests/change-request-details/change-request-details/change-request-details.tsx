@@ -17,9 +17,11 @@ import PageBlock from '../../../shared/page-block/page-block';
 import styles from './change-request-details.module.css';
 import ActionButton from '../../../shared/action-button/action-button';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
-import StandardDetails from './type-specific-details/standard-details/standard-details';
+import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
+import './change-request-details.module.css';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -86,7 +88,12 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <PageBlock title={'Implemented Changes'} headerRight={<></>} body={<>list of changes</>} />
+      <ImplementedChangesList
+        changes={
+          changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges
+        }
+        dateImplemented={changeRequest.dateImplemented!}
+      />
     </>
   );
 };

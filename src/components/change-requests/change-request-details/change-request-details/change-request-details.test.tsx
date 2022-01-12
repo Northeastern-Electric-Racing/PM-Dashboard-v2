@@ -75,7 +75,6 @@ describe('Change request details common display element tests', () => {
     (cr: ChangeRequest) => {
       renderComponent(cr);
       expect(screen.getByText(`Implemented Changes`)).toBeInTheDocument();
-      expect(screen.getByText(`list of changes`)).toBeInTheDocument();
     }
   );
 });

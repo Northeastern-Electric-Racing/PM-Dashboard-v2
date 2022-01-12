@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Dropdown, Form, FormGroup } from 'react-bootstrap';
 import { ChangeRequestType } from 'utils';
 import { ChangeRequestReason } from 'utils/src';

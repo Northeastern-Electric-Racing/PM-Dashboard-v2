@@ -11,12 +11,104 @@ import CRTable from './change-requests-table/change-requests-table'; // Directly
 import ChangeRequestsFilter from './change-requests-filter/change-requests-filter';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
-import './change-requests-table.module.css';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useState } from 'react';
 import { ChangeRequestExplanation, StandardChangeRequest } from 'utils/src';
 import PageTitle from '../../shared/page-title/page-title';
 import styles from './change-requests-table.module.css';
+
+/***
+ * Returns a list of change requests that has been filtered according to the given params.
+ * @param changeRequests The list of projects to filter.
+ * @param type The category under which the change request falls.
+ * @param impact The parts of the project the change will impact.
+ * @param reason The reason the change is needed.
+ * @param state The state of review of the CR.
+ * @param implemented Whether or not the CR has been implemented.
+ * @return The filtered list of change requests.
+ */
+export function filterCRs(
+  changeRequests: ChangeRequest[],
+  type: string,
+  impact: number[],
+  reason: string,
+  state: number[],
+  implemented: string
+): ChangeRequest[] {
+  // Type filter
+  if (type !== '') {
+    changeRequests = changeRequests.filter(
+      (changeRequest: ChangeRequest) => changeRequest.type === type
+    );
+  }
+
+  // Impact Filter
+  if (impact.length !== 0) {
+    changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
+      var filterBool = false;
+      const standard = changeRequest as StandardChangeRequest;
+      console.log(standard);
+      if (impact.indexOf(0) !== -1) {
+        filterBool =
+          filterBool || (standard.scopeImpact !== '' && standard.scopeImpact !== undefined);
+      }
+      if (impact.indexOf(1) !== -1) {
+        filterBool =
+          filterBool || (standard.budgetImpact !== 0 && standard.budgetImpact !== undefined);
+      }
+      if (impact.indexOf(2) !== -1) {
+        filterBool =
+          filterBool || (standard.timelineImpact !== 0 && standard.timelineImpact !== undefined);
+      }
+      return filterBool;
+    });
+  }
+
+  // State filter
+  if (state.length !== 0) {
+    changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
+      var filterBool = false;
+      if (state.indexOf(0) !== -1) {
+        filterBool = filterBool || changeRequest.dateReviewed === undefined;
+      }
+      if (state.indexOf(1) !== -1) {
+        filterBool = filterBool || changeRequest.accepted === true;
+      }
+      if (state.indexOf(2) !== -1) {
+        filterBool = filterBool || changeRequest.accepted === false;
+      }
+      return filterBool;
+    });
+  }
+
+  // Reason filter
+  if (reason !== '') {
+    changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
+      const standard = changeRequest as StandardChangeRequest;
+      if (standard.why === undefined) {
+        return false;
+      }
+      return (
+        standard.why.filter((exp: ChangeRequestExplanation) => {
+          if (exp.reason === reason) {
+            return exp.explain !== '';
+          }
+          return false;
+        }).length !== 0
+      );
+    });
+  }
+
+  // Implemented Filter
+  if (implemented !== '') {
+    changeRequests = changeRequests.filter(
+      (changeRequest: ChangeRequest) =>
+        (implemented === 'Yes') === (changeRequest.dateImplemented !== undefined)
+    );
+  }
+
+  return changeRequests;
+}
 
 const ChangeRequestsTable: React.FC = () => {
   const [type, setType] = useState('');
@@ -29,91 +121,6 @@ const ChangeRequestsTable: React.FC = () => {
   if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
-
-  console.log(type + impact + reason + state + implemented);
-
-  const filterCRs = (
-    changeRequests: ChangeRequest[],
-    type: string,
-    impact: number[],
-    reason: string,
-    state: number[],
-    implemented: string
-  ): ChangeRequest[] => {
-    // Type filter
-    if (type !== '') {
-      changeRequests = changeRequests.filter(
-        (changeRequest: ChangeRequest) => changeRequest.type === type
-      );
-    }
-
-    // Impact Filter
-    if (impact.length !== 0) {
-      changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
-        var filterBool = false;
-        const standard = changeRequest as StandardChangeRequest;
-        console.log(standard);
-        if (impact.indexOf(0) !== -1) {
-          filterBool =
-            filterBool || (standard.scopeImpact !== '' && standard.scopeImpact !== undefined);
-        }
-        if (impact.indexOf(1) !== -1) {
-          filterBool =
-            filterBool || (standard.budgetImpact !== 0 && standard.budgetImpact !== undefined);
-        }
-        if (impact.indexOf(2) !== -1) {
-          filterBool =
-            filterBool || (standard.timelineImpact !== 0 && standard.timelineImpact !== undefined);
-        }
-        return filterBool;
-      });
-    }
-
-    // State filter
-    if (state.length !== 0) {
-      changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
-        var filterBool = false;
-        if (state.indexOf(0) !== -1) {
-          filterBool = filterBool || changeRequest.dateReviewed === undefined;
-        }
-        if (state.indexOf(1) !== -1) {
-          filterBool = filterBool || changeRequest.accepted === true;
-        }
-        if (state.indexOf(2) !== -1) {
-          filterBool = filterBool || changeRequest.accepted === false;
-        }
-        return filterBool;
-      });
-    }
-
-    // Reason filter
-    if (reason !== '') {
-      changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
-        const standard = changeRequest as StandardChangeRequest;
-        if (standard.why === undefined) {
-          return false;
-        }
-        return (
-          standard.why.filter((exp: ChangeRequestExplanation) => {
-            if (exp.reason === reason) {
-              return exp.explain !== '';
-            }
-            return false;
-          }).length !== 0
-        );
-      });
-    }
-
-    // Implemented Filter
-    if (implemented !== '') {
-      changeRequests = changeRequests.filter(
-        (changeRequest: ChangeRequest) =>
-          (implemented === 'Yes') === (changeRequest.dateImplemented !== undefined)
-      );
-    }
-
-    return changeRequests;
-  };
 
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
     return changeRequests.map((cr: ChangeRequest) => {

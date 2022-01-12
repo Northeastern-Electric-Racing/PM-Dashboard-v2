@@ -6,12 +6,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
 import { ChangeRequest } from 'utils';
-import { exampleAllChangeRequests } from '../../../test-support/test-data/change-requests.stub';
+import {
+  exampleAllChangeRequests,
+  exampleActivationChangeRequest,
+  exampleStageGateChangeRequest,
+  exampleStandardChangeRequest
+} from '../../../test-support/test-data/change-requests.stub';
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { routerWrapperBuilder } from '../../../test-support/test-utils';
 import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
-import ChangeRequestsTable from './change-requests-table';
+import ChangeRequestsTable, { filterCRs } from './change-requests-table';
 
 jest.mock('../../../services/change-requests.hooks');
 
@@ -51,8 +56,8 @@ describe('change requests table container', () => {
     expect(screen.getByText(/ID/i)).toBeInTheDocument();
     expect(screen.getByText(/Submitter/i)).toBeInTheDocument();
     expect(screen.getByText(/WBS #/i)).toBeInTheDocument();
-    expect(screen.getByText(/Type/i)).toBeInTheDocument();
-    expect(screen.getByText(/Accepted/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Type/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/Accepted/i)[0]).toBeInTheDocument();
   });
 
   it('handles the api throwing an error', async () => {
@@ -83,5 +88,66 @@ describe('change requests table container', () => {
     expect(screen.getAllByText(wbsPipe(exampleAllChangeRequests[2].wbsNum))[0]).toBeInTheDocument();
 
     expect(screen.queryByText('No Change Requests to Display')).not.toBeInTheDocument();
+  });
+
+  it('checking if change request filtering with no filters works as expected', async () => {
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [], '')).toStrictEqual(
+      exampleAllChangeRequests
+    );
+  });
+
+  it('checking if change request filtering with type works as expected', async () => {
+    const answer1: ChangeRequest[] = [exampleStandardChangeRequest];
+    const answer2: ChangeRequest[] = [exampleActivationChangeRequest];
+    expect(filterCRs(exampleAllChangeRequests, 'Design Issue', [], '', [], '')).toStrictEqual(
+      answer1
+    );
+    expect(filterCRs(exampleAllChangeRequests, 'Activation', [], '', [], '')).toStrictEqual(
+      answer2
+    );
+    expect(filterCRs(exampleAllChangeRequests, 'Other', [], '', [], '')).toStrictEqual([]);
+  });
+
+  it('checking if change request filtering with impact works as expected', async () => {
+    const filtered: ChangeRequest[] = [exampleStandardChangeRequest];
+    expect(filterCRs(exampleAllChangeRequests, '', [0], '', [], '')).toStrictEqual(filtered);
+    expect(filterCRs(exampleAllChangeRequests, '', [0, 1], '', [], '')).toStrictEqual(filtered);
+  });
+
+  it('checking if change request filtering with reason works as expected', async () => {
+    const filtered: ChangeRequest[] = [exampleStandardChangeRequest];
+    expect(filterCRs(exampleAllChangeRequests, '', [], 'School Work', [], '')).toStrictEqual(
+      filtered
+    );
+    expect(filterCRs(exampleAllChangeRequests, '', [], 'Rules Compliance', [], '')).toStrictEqual(
+      filtered
+    );
+  });
+  it('checking if change request filtering with state works as expected', async () => {
+    const notReivewed: ChangeRequest[] = [
+      exampleActivationChangeRequest,
+      exampleStageGateChangeRequest
+    ];
+    const accepted: ChangeRequest[] = [exampleStandardChangeRequest];
+    const denied: ChangeRequest[] = [];
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [0], '')).toStrictEqual(notReivewed);
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [1], '')).toStrictEqual(accepted);
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [2], '')).toStrictEqual(denied);
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [0, 1], '')).toStrictEqual(
+      exampleAllChangeRequests
+    );
+  });
+
+  it('checking if change request filtering with implemented works as expected', async () => {
+    const no: ChangeRequest[] = [exampleActivationChangeRequest, exampleStageGateChangeRequest];
+    const yes: ChangeRequest[] = [exampleStandardChangeRequest];
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [], 'Yes')).toStrictEqual(yes);
+    expect(filterCRs(exampleAllChangeRequests, '', [], '', [], 'No')).toStrictEqual(no);
+  });
+
+  it('checking if change request filtering with multiple filters works as expected', async () => {
+    expect(
+      filterCRs(exampleAllChangeRequests, 'Design Issue', [0], 'School Work', [1], 'Yes')
+    ).toStrictEqual([exampleStandardChangeRequest]);
   });
 });

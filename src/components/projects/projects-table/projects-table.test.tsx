@@ -4,7 +4,7 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { Project } from 'utils';
+import { Project, WbsElementStatus } from 'utils';
 import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
 import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
@@ -123,11 +123,13 @@ describe('projects table component', () => {
     const answer_active: Project[] = [exampleProject1, exampleProject3];
     const answer_inactive: Project[] = [exampleProject2, exampleProject4];
     const answer_complete: Project[] = [exampleProject5];
-    expect(filterProjects(exampleAllProjects, -1, 'Active', -1, -1)).toStrictEqual(answer_active);
-    expect(filterProjects(exampleAllProjects, -1, 'Inactive', -1, -1)).toStrictEqual(
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Active, -1, -1)).toStrictEqual(
+      answer_active
+    );
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Inactive, -1, -1)).toStrictEqual(
       answer_inactive
     );
-    expect(filterProjects(exampleAllProjects, -1, 'Complete', -1, -1)).toStrictEqual(
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Complete, -1, -1)).toStrictEqual(
       answer_complete
     );
   });

@@ -9,11 +9,7 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { routes } from '../../../../shared/routes';
-import PageTitle from '../../../shared/page-title/page-title';
 import styles from './change-requests-table.module.css';
-import ActionButton from '../../../shared/action-button/action-button';
 
 export interface DisplayChangeRequest {
   id: number;

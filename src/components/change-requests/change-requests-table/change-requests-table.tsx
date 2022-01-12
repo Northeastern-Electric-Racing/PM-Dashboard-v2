@@ -45,7 +45,7 @@ export function filterCRs(
   // Impact Filter
   if (impact.length !== 0) {
     changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
-      var filterBool = false;
+      let filterBool = false;
       const standard = changeRequest as StandardChangeRequest;
       console.log(standard);
       if (impact.indexOf(0) !== -1) {
@@ -67,7 +67,7 @@ export function filterCRs(
   // State filter
   if (state.length !== 0) {
     changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
-      var filterBool = false;
+      let filterBool = false;
       if (state.indexOf(0) !== -1) {
         filterBool = filterBool || changeRequest.dateReviewed === undefined;
       }

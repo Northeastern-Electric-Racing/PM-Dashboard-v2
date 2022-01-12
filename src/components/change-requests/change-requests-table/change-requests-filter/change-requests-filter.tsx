@@ -57,7 +57,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
       const index = values.indexOf(currVal);
       const present = value.indexOf(index) !== -1;
 
-      var newVals = [...value];
+      let newVals = [...value];
       if (present) {
         newVals = newVals.filter((item) => item !== index);
       } else {

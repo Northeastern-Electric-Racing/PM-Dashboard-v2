@@ -60,20 +60,19 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
 
       setter(newVals);
     };
-
-    const result: any[] = [];
-    for (const val of values) {
-      result.push(
-        <Form.Check
-          key={val}
-          id={val}
-          type="checkbox"
-          onChange={() => toggleValue(val)}
-          label={val}
-        />
-      );
-    }
-    return <>{result}</>;
+    return (
+      <>
+        {values.map((val) => (
+          <Form.Check
+            key={val}
+            id={val}
+            type="checkbox"
+            onChange={() => toggleValue(val)}
+            label={val}
+          />
+        ))}
+      </>
+    );
   };
 
   return (

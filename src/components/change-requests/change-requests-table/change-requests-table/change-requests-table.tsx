@@ -9,11 +9,7 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { routes } from '../../../../shared/routes';
-import PageTitle from '../../../shared/page-title/page-title';
 import styles from './change-requests-table.module.css';
-import ActionButton from '../../../shared/action-button/action-button';
 
 export interface DisplayChangeRequest {
   id: number;
@@ -62,13 +58,8 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
     }
   };
 
-  const actionButton = (
-    <ActionButton link={routes.CHANGE_REQUESTS_NEW} icon={faPlus} text={'New Change Request'} />
-  );
-
   return (
     <>
-      <PageTitle title={'All Change Requests'} actionButton={actionButton} />
       <BootstrapTable
         striped
         hover

@@ -37,13 +37,6 @@ describe('new change request page', () => {
     expect(screen.getByText('Project')).toBeInTheDocument();
   });
 
-
-  it('renders the project form field', () => {
-    renderComponent(jest.fn());
-
-    expect(screen.getByText('Project')).toBeInTheDocument();
-  });
-
   it('renders the work package form field', () => {
     renderComponent(jest.fn());
 

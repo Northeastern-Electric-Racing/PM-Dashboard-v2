@@ -26,7 +26,7 @@ const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType}) =>
         Project
         <Form.Control as="select" custom>
           {projects.map((p, index) => (
-            <option value={index}>
+            <option>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
           ))}
@@ -36,7 +36,7 @@ const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType}) =>
         Work Package
         <Form.Control as="select" custom>
           {workPkgs.map((p, index) => (
-            <option value={index}>
+            <option>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
           ))}

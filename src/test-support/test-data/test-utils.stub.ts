@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { HandlerCallback, HandlerContext, HandlerEvent } from '@netlify/functions';
+import { HandlerCallback, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
 import { UseQueryResult } from 'react-query';
 import { User } from '@prisma/client';
@@ -42,7 +42,7 @@ export const exampleApiRoutes: ApiRoute[] = [
   }
 ];
 
-export const mockContext: HandlerContext = {
+export const mockContext = {
   functionName: '',
   functionVersion: '',
   invokedFunctionArn: '',

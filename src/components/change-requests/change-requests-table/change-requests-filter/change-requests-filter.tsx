@@ -3,10 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Card, Dropdown, Form, FormGroup } from 'react-bootstrap';
-import { ChangeRequestType } from 'utils';
-import { ChangeRequestReason } from 'utils/src';
+import { ChangeRequestType, ChangeRequestReason } from 'utils';
 import styles from './change-requests-filter.module.css';
 
 interface FilterFieldStateProps {

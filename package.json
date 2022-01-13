@@ -26,7 +26,7 @@
     "start": "run-p start:**",
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/backend/functions",
-    "build": "run-p build:**",
+    "build": "npm ci && run-p build:**",
     "build:app": "react-scripts build && echo '/*  /index.html  200' | cat >build/_redirects",
     "build:lambda": "netlify-lambda build src/backend/functions",
     "test": "react-scripts test",

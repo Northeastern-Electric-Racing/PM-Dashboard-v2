@@ -94,12 +94,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
                 {type}
               </Dropdown.Toggle>
               <Dropdown.Menu className="btn-block" align="right">
-                {genDropdownItems(
-                  Object.keys(ChangeRequestType).map(
-                    (key) => ChangeRequestType[key as typeof ChangeRequestType.Other]
-                  ),
-                  setType
-                )}
+                {genDropdownItems(Object.values(ChangeRequestType), setType)}
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
@@ -120,12 +115,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
                 {reason}
               </Dropdown.Toggle>
               <Dropdown.Menu className="btn-block" align="right">
-                {genDropdownItems(
-                  Object.keys(ChangeRequestReason).map(
-                    (key) => ChangeRequestReason[key as typeof ChangeRequestReason.Other]
-                  ),
-                  setReason
-                )}
+                {genDropdownItems(Object.values(ChangeRequestReason), setReason)}
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>

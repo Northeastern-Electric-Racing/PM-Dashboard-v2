@@ -4,21 +4,13 @@
  */
 
 export interface User {
-  id: number;
+  userId: number;
   firstName: string;
   lastName: string;
-  emailId: string;
-  firstLogin: Date;
-  lastLogin: Date;
+  googleAuthId: string;
+  email: string;
+  emailId: string | null;
   role: Role;
 }
 
-export enum Role {
-  AppAdmin = 'App Admin',
-  Admin = 'Admin',
-  Leadership = 'Leadership',
-  ProjectManager = 'Project Manager',
-  ProjectLead = 'Project Lead',
-  Member = 'Member',
-  Guest = 'Guest'
-}
+export type Role = 'APP_ADMIN' | 'ADMIN' | 'LEADERSHIP' | 'MEMBER' | 'GUEST';

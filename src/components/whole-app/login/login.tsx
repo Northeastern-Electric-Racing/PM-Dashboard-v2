@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Role } from 'utils';
+import { Role } from '@prisma/client';
 import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
 import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
@@ -16,7 +16,7 @@ import './login.module.css';
  * Page for unauthenticated users to do login.
  */
 const Login: React.FC = () => {
-  const [devUserRole, setDevUserRole] = useState<string>(Role.AppAdmin);
+  const [devUserRole, setDevUserRole] = useState<string>(Role.APP_ADMIN);
   const history = useHistory();
   const auth = useAuth();
 
@@ -29,7 +29,7 @@ const Login: React.FC = () => {
   };
 
   const verifyLogin = async (response: any) => {
-    const id_token: string = response.getAuthResponse().id_token;
+    const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);
     history.push(routes.HOME);

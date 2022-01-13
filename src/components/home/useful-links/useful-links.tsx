@@ -11,7 +11,7 @@ import styles from './useful-links.module.css';
 
 // React-bootstrap grid documentation: https://react-bootstrap.github.io/layout/grid/
 const UsefulLinks: React.FC = () => {
-  let financeLinks = [
+  const financeLinks = [
     linkPipe(
       'Personal purchasing guidelines',
       'https://docs.google.com/document/d/1M5Ldy9L1BifBo18tdKpv3CH-frRneyEK26hUXbtMg7Q/edit'
@@ -23,7 +23,7 @@ const UsefulLinks: React.FC = () => {
     )
   ];
 
-  let otherLinks = [
+  const otherLinks = [
     linkPipe(
       'Part numbering spreadsheet',
       'https://docs.google.com/spreadsheets/d/1av0ReONZF3r82kCvkUEGl3uue4jfQgbw-KQDZnsejPQ/edit'
@@ -33,7 +33,11 @@ const UsefulLinks: React.FC = () => {
       'https://docs.google.com/spreadsheets/d/1kqpnw8jZDx2GO5NFUtqefRXqT1XX46iMx5ZI4euPJgY/edit'
     ),
     linkPipe('Individual Member Goals Form', 'https://forms.gle/MAZJSFcMBjn44p3F6'),
-    linkPipe('Manufacturing Request Form', 'https://forms.gle/vJmTRt2xnzGa7akb8')
+    linkPipe('Manufacturing Request Form', 'https://forms.gle/vJmTRt2xnzGa7akb8'),
+    linkPipe(
+      'Glossary Document',
+      'https://docs.google.com/document/d/1_kr7PQxjYKvBTmZc8cxeSv5xx0lE88v0wVXkVg3Mez8/edit?usp=sharing'
+    )
   ];
 
   return (

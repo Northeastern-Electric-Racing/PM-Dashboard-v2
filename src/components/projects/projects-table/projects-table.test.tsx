@@ -4,13 +4,20 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { WorkPackage, Project } from 'utils';
-import { wbsRegex, fireEvent, render, screen, waitFor } from '../../../test-support/test-utils';
-import { wbsPipe, fullNamePipe } from '../../../shared/pipes';
+import { Project, WbsElementStatus } from 'utils';
+import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
+import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';
+import {
+  exampleAllProjects,
+  exampleProject1,
+  exampleProject2,
+  exampleProject3,
+  exampleProject4,
+  exampleProject5
+} from '../../../test-support/test-data/projects.stub';
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
-import ProjectsTable from './projects-table';
+import ProjectsTable, { filterProjects } from './projects-table';
 
 jest.mock('../../../services/projects.hooks');
 
@@ -32,7 +39,7 @@ describe('projects table component', () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('All Projects')).toBeInTheDocument();
+    expect(screen.getByText('Projects')).toBeInTheDocument();
   });
 
   it('renders the loading indicator', () => {
@@ -57,7 +64,7 @@ describe('projects table component', () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('All Projects')).toBeInTheDocument();
+    expect(screen.getByText('Projects')).toBeInTheDocument();
     expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
   });
 
@@ -66,13 +73,9 @@ describe('projects table component', () => {
     renderComponent();
     await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
+    expect(screen.getByText('5 weeks')).toBeInTheDocument();
     expect(
-      screen.getByText(
-        exampleAllProjects[1].workPackages.reduce(
-          (tot: number, cur: WorkPackage) => tot + cur.duration,
-          0
-        ) + ' weeks'
-      )
+      screen.getAllByText(fullNamePipe(exampleAllProjects[1].projectLead))[0]
     ).toBeInTheDocument();
     expect(
       screen.getAllByText(fullNamePipe(exampleAllProjects[2].projectLead))[0]
@@ -82,7 +85,7 @@ describe('projects table component', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(wbsPipe(exampleAllProjects[4].wbsNum))).toBeInTheDocument();
 
-    expect(screen.getByText('All Projects')).toBeInTheDocument();
+    expect(screen.getByText('Projects')).toBeInTheDocument();
     expect(screen.queryByText('No projects to display', { exact: false })).not.toBeInTheDocument();
   });
 
@@ -92,9 +95,7 @@ describe('projects table component', () => {
     await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     const column: string = 'WBS #';
-    const expectedWbsOrder: string[] = exampleAllProjects.map((prj: Project) =>
-      wbsPipe(prj.wbsNum)
-    );
+    const expectedWbsOrder: string[] = exampleAllProjects.map((prj) => wbsPipe(prj.wbsNum));
 
     // Default sort is wbs ascending
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
@@ -105,5 +106,46 @@ describe('projects table component', () => {
     expect(wbsNumsDesc.map((ele: HTMLElement) => ele.innerHTML)).toEqual(
       expectedWbsOrder.reverse()
     );
+  });
+
+  it('checking if project filtering with no filters works as expected', async () => {
+    expect(filterProjects(exampleAllProjects, -1, '', -1, -1)).toStrictEqual(exampleAllProjects);
+  });
+
+  it('checking if project filtering with car num works as expected', async () => {
+    const answer1: Project[] = [exampleProject1, exampleProject2, exampleProject3];
+    const answer2: Project[] = [exampleProject4, exampleProject5];
+    expect(filterProjects(exampleAllProjects, 1, '', -1, -1)).toStrictEqual(answer1);
+    expect(filterProjects(exampleAllProjects, 2, '', -1, -1)).toStrictEqual(answer2);
+  });
+
+  it('checking if project filtering with status works as expected', async () => {
+    const answer_active: Project[] = [exampleProject1, exampleProject3];
+    const answer_inactive: Project[] = [exampleProject2, exampleProject4];
+    const answer_complete: Project[] = [exampleProject5];
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Active, -1, -1)).toStrictEqual(
+      answer_active
+    );
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Inactive, -1, -1)).toStrictEqual(
+      answer_inactive
+    );
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Complete, -1, -1)).toStrictEqual(
+      answer_complete
+    );
+  });
+
+  it('checking if project filtering with project lead works as expected', async () => {
+    const answer1: Project[] = [exampleProject1, exampleProject2, exampleProject5];
+    const answer2: Project[] = [exampleProject3, exampleProject4];
+    expect(filterProjects(exampleAllProjects, -1, '', 4, -1)).toStrictEqual(answer1);
+    expect(filterProjects(exampleAllProjects, -1, '', 3, -1)).toStrictEqual(answer2);
+  });
+  it('checking if project filtering with project manager works as expected', async () => {
+    const answer1: Project[] = [exampleProject1];
+    const answer2: Project[] = [exampleProject2, exampleProject3, exampleProject5];
+    const answer3: Project[] = [exampleProject4];
+    expect(filterProjects(exampleAllProjects, -1, '', -1, 3)).toStrictEqual(answer1);
+    expect(filterProjects(exampleAllProjects, -1, '', -1, 5)).toStrictEqual(answer2);
+    expect(filterProjects(exampleAllProjects, -1, '', -1, 2)).toStrictEqual(answer3);
   });
 });

@@ -47,7 +47,7 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
   const defaultSort: [{ dataField: any; order: SortOrder }] = [
     {
       dataField: 'id',
-      order: 'asc'
+      order: 'desc'
     }
   ];
 

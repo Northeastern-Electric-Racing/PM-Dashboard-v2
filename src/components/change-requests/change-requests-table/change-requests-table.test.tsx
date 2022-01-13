@@ -79,12 +79,12 @@ describe('change requests table container', () => {
   it('handles the api returning a normal array of change requests', async () => {
     mockHook(false, false, exampleAllChangeRequests);
     renderComponent();
-    await waitFor(() => screen.getByText(exampleAllChangeRequests[0].id));
+    await waitFor(() => screen.getByText(exampleAllChangeRequests[0].crId));
 
     expect(
       screen.getAllByText(fullNamePipe(exampleAllChangeRequests[1].submitter))[0]
     ).toBeInTheDocument();
-    expect(screen.getByText(exampleAllChangeRequests[1].id)).toBeInTheDocument();
+    expect(screen.getByText(exampleAllChangeRequests[1].crId)).toBeInTheDocument();
     expect(screen.getAllByText(wbsPipe(exampleAllChangeRequests[2].wbsNum))[0]).toBeInTheDocument();
 
     expect(screen.queryByText('No Change Requests to Display')).not.toBeInTheDocument();

@@ -4,7 +4,7 @@
  */
 
 import { useQuery, useMutation } from 'react-query';
-import { User } from 'utils';
+import { User } from '@prisma/client';
 import { getAllUsers, getSingleUser, logUserIn } from './users.api';
 
 /**

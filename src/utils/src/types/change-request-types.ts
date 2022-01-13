@@ -7,7 +7,7 @@ import { User } from './user-types';
 import { WbsNumber } from './project-types';
 
 export interface ChangeRequest {
-  id: number;
+  crId: number;
   wbsNum: WbsNumber;
   submitter: User;
   dateSubmitted: Date;
@@ -20,11 +20,11 @@ export interface ChangeRequest {
 }
 
 export enum ChangeRequestType {
-  DesignIssue = 'Design Issue',
-  NewFunction = 'New Function',
-  Other = 'Other',
-  StageGate = 'Stage Gate',
-  Activation = 'Activation'
+  DesignIssue = 'DESIGN_ISSUE',
+  NewFunction = 'NEW_FUNCTION',
+  Other = 'OTHER',
+  StageGate = 'STAGE_GATE',
+  Activation = 'ACTIVATION'
 }
 
 export interface StandardChangeRequest extends ChangeRequest {
@@ -44,7 +44,7 @@ export interface ActivationChangeRequest extends ChangeRequest {
 
 export interface StageGateChangeRequest extends ChangeRequest {
   leftoverBudget: number;
-  confirmCompleted: boolean;
+  confirmDone: boolean;
 }
 
 export interface ChangeRequestExplanation {
@@ -53,17 +53,17 @@ export interface ChangeRequestExplanation {
 }
 
 export enum ChangeRequestReason {
-  Estimation = 'Estimation Error',
-  School = 'School Work',
-  Manufacturing = 'Manufacturing Issues',
-  Rules = 'Rules Compliance',
-  OtherProject = 'Other Project',
-  Other = 'Other'
+  Estimation = 'ESTIMATION',
+  School = 'SCHOOL',
+  Manufacturing = 'MANUFACTURING',
+  Rules = 'RULES',
+  OtherProject = 'OTHER_PROJECT',
+  Other = 'OTHER'
 }
 
 export interface ImplementedChange {
-  id: number;
-  crId: number;
+  changeId: number;
+  changeRequestId: number;
   wbsNum: WbsNumber;
   implementer: User;
   detail: string;

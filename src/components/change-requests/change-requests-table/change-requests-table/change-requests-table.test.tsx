@@ -16,7 +16,7 @@ const renderComponent: (changeRequests?: DisplayChangeRequest[]) => void = (crs)
   if (!crs) {
     crs = exampleAllChangeRequests.map((cr: ChangeRequest) => {
       return {
-        id: cr.id,
+        id: cr.crId,
         submitterName: fullNamePipe(cr.submitter),
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,

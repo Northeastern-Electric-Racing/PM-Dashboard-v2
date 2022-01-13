@@ -3,17 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ChangeRequest } from 'utils';
+import { useState } from 'react';
+import { Row } from 'react-bootstrap';
+import { ChangeRequest, ChangeRequestExplanation, StandardChangeRequest } from 'utils';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { routes } from '../../../shared/routes';
 import { booleanPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';
 import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
 import ChangeRequestsFilter from './change-requests-filter/change-requests-filter';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
+import ActionButton from '../../shared/action-button/action-button';
 import ErrorPage from '../../shared/error-page/error-page';
-import { Row } from 'react-bootstrap';
-import { useState } from 'react';
-import { ChangeRequestExplanation, StandardChangeRequest } from 'utils/src';
 import PageTitle from '../../shared/page-title/page-title';
 import styles from './change-requests-table.module.css';
 
@@ -160,23 +162,28 @@ const ChangeRequestsTable: React.FC = () => {
     );
   };
 
-  const changeRequestsContainer = () => {
-    return (
-      <>
-        <PageTitle title={'Change Requests'} />
-        <div className={styles.container}>
-          <Row>
-            <div className={styles.filterTable}>
-              <ChangeRequestsFilter update={sendDataToParent} />
-            </div>
-            <div className={styles.crTable}>{changeRequestsTable()}</div>
-          </Row>
-        </div>
-      </>
-    );
-  };
-
-  return changeRequestsContainer();
+  return (
+    <>
+      <PageTitle
+        title={'Change Requests'}
+        actionButton={
+          <ActionButton
+            link={routes.CHANGE_REQUESTS_NEW}
+            icon={faPlus}
+            text={'New Change Request'}
+          />
+        }
+      />
+      <div className={styles.container}>
+        <Row>
+          <div className={styles.filterTable}>
+            <ChangeRequestsFilter update={sendDataToParent} />
+          </div>
+          <div className={styles.crTable}>{changeRequestsTable()}</div>
+        </Row>
+      </div>
+    </>
+  );
 };
 
 export default ChangeRequestsTable;

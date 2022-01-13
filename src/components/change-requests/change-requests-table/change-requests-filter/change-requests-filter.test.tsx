@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ChangeRequestType, ChangeRequestReason } from 'utils';
 import { act, fireEvent, render, screen } from '../../../../test-support/test-utils';
 import ChangeRequestsFilter from './change-requests-filter';
 
@@ -49,41 +50,41 @@ describe('change requests table filter component', () => {
   it('checking if data in the type menu is correct', async () => {
     renderComponent();
     expect(screen.queryByText('None')).not.toBeInTheDocument();
-    expect(screen.queryByText('Design Issue')).not.toBeInTheDocument();
-    expect(screen.queryByText('New Function')).not.toBeInTheDocument();
-    expect(screen.queryByText('Other')).not.toBeInTheDocument();
-    expect(screen.queryByText('Stage Gate')).not.toBeInTheDocument();
-    expect(screen.queryByText('Activation')).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.DesignIssue)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.NewFunction)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Other)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.StageGate)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Activation)).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('type-toggle'));
     });
     expect(screen.queryByText('None')).toBeInTheDocument();
-    expect(screen.queryByText('Design Issue')).toBeInTheDocument();
-    expect(screen.queryByText('New Function')).toBeInTheDocument();
-    expect(screen.queryByText('Other')).toBeInTheDocument();
-    expect(screen.queryByText('Stage Gate')).toBeInTheDocument();
-    expect(screen.queryByText('Activation')).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.DesignIssue)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.NewFunction)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Other)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.StageGate)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Activation)).toBeInTheDocument();
   });
 
   it('checking if data in the reason dropdown menu is correct', async () => {
     renderComponent();
     expect(screen.queryByText('None')).not.toBeInTheDocument();
-    expect(screen.queryByText('Estimation Error')).not.toBeInTheDocument();
-    expect(screen.queryByText('School Work')).not.toBeInTheDocument();
-    expect(screen.queryByText('Manufacturing Issues')).not.toBeInTheDocument();
-    expect(screen.queryByText('Rules Compliance')).not.toBeInTheDocument();
-    expect(screen.queryByText('Other Project')).not.toBeInTheDocument();
-    expect(screen.queryByText('Other')).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Estimation)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.School)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Manufacturing)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Rules)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.OtherProject)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Other)).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('reason-toggle'));
     });
     expect(screen.queryByText('None')).toBeInTheDocument();
-    expect(screen.queryByText('Estimation Error')).toBeInTheDocument();
-    expect(screen.queryByText('School Work')).toBeInTheDocument();
-    expect(screen.queryByText('Manufacturing Issues')).toBeInTheDocument();
-    expect(screen.queryByText('Rules Compliance')).toBeInTheDocument();
-    expect(screen.queryByText('Other Project')).toBeInTheDocument();
-    expect(screen.queryByText('Other')).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Estimation)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.School)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Manufacturing)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Rules)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.OtherProject)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Other)).toBeInTheDocument();
   });
 
   it('checking if data in the implemented dropdown menu is correct', async () => {
@@ -118,12 +119,12 @@ describe('change requests table filter component', () => {
       fireEvent.click(screen.getByTestId('type-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByText('Other'));
+      fireEvent.click(screen.getByText(ChangeRequestType.Other));
     });
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[0]).toBe('Other');
+    expect(temp[0]).toBe(ChangeRequestType.Other);
     await act(async () => {
       fireEvent.click(screen.getByTestId('type-toggle'));
     });
@@ -146,12 +147,12 @@ describe('change requests table filter component', () => {
       fireEvent.click(screen.getByTestId('reason-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByText('School Work'));
+      fireEvent.click(screen.getByText(ChangeRequestReason.School));
     });
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[2]).toBe('School Work');
+    expect(temp[2]).toBe(ChangeRequestReason.School);
     await act(async () => {
       fireEvent.click(screen.getByTestId('reason-toggle'));
     });

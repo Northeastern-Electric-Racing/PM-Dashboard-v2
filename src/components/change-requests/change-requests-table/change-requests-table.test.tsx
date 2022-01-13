@@ -5,7 +5,7 @@
 
 import { render, screen, waitFor } from '@testing-library/react';
 import { UseQueryResult } from 'react-query';
-import { ChangeRequest } from 'utils';
+import { ChangeRequest, ChangeRequestType, ChangeRequestReason } from 'utils';
 import {
   exampleAllChangeRequests,
   exampleActivationChangeRequest,
@@ -41,6 +41,8 @@ const renderComponent = () => {
 };
 
 describe('change requests table container', () => {
+  const NoCRMessage = 'No Change Requests to Display';
+
   it('renders the loading indicator', () => {
     mockHook(true, false);
     renderComponent();
@@ -66,14 +68,13 @@ describe('change requests table container', () => {
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
-    // expect(screen.getByText(/No Change Requests to Display/i)).toBeInTheDocument();
   });
 
   it('handles the api returning an empty array', async () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('No Change Requests to Display')).toBeInTheDocument();
+    expect(screen.getByText(NoCRMessage)).toBeInTheDocument();
   });
 
   it('handles the api returning a normal array of change requests', async () => {
@@ -87,7 +88,7 @@ describe('change requests table container', () => {
     expect(screen.getByText(exampleAllChangeRequests[1].crId)).toBeInTheDocument();
     expect(screen.getAllByText(wbsPipe(exampleAllChangeRequests[2].wbsNum))[0]).toBeInTheDocument();
 
-    expect(screen.queryByText('No Change Requests to Display')).not.toBeInTheDocument();
+    expect(screen.queryByText(NoCRMessage)).not.toBeInTheDocument();
   });
 
   it('checking if change request filtering with no filters works as expected', async () => {
@@ -99,13 +100,15 @@ describe('change requests table container', () => {
   it('checking if change request filtering with type works as expected', async () => {
     const answer1: ChangeRequest[] = [exampleStandardChangeRequest];
     const answer2: ChangeRequest[] = [exampleActivationChangeRequest];
-    expect(filterCRs(exampleAllChangeRequests, 'Design Issue', [], '', [], '')).toStrictEqual(
-      answer1
-    );
-    expect(filterCRs(exampleAllChangeRequests, 'Activation', [], '', [], '')).toStrictEqual(
-      answer2
-    );
-    expect(filterCRs(exampleAllChangeRequests, 'Other', [], '', [], '')).toStrictEqual([]);
+    expect(
+      filterCRs(exampleAllChangeRequests, ChangeRequestType.DesignIssue, [], '', [], '')
+    ).toStrictEqual(answer1);
+    expect(
+      filterCRs(exampleAllChangeRequests, ChangeRequestType.Activation, [], '', [], '')
+    ).toStrictEqual(answer2);
+    expect(
+      filterCRs(exampleAllChangeRequests, ChangeRequestType.Other, [], '', [], '')
+    ).toStrictEqual([]);
   });
 
   it('checking if change request filtering with impact works as expected', async () => {
@@ -116,12 +119,12 @@ describe('change requests table container', () => {
 
   it('checking if change request filtering with reason works as expected', async () => {
     const filtered: ChangeRequest[] = [exampleStandardChangeRequest];
-    expect(filterCRs(exampleAllChangeRequests, '', [], 'School Work', [], '')).toStrictEqual(
-      filtered
-    );
-    expect(filterCRs(exampleAllChangeRequests, '', [], 'Rules Compliance', [], '')).toStrictEqual(
-      filtered
-    );
+    expect(
+      filterCRs(exampleAllChangeRequests, '', [], ChangeRequestReason.School, [], '')
+    ).toStrictEqual(filtered);
+    expect(
+      filterCRs(exampleAllChangeRequests, '', [], ChangeRequestReason.Rules, [], '')
+    ).toStrictEqual(filtered);
   });
   it('checking if change request filtering with state works as expected', async () => {
     const notReivewed: ChangeRequest[] = [
@@ -147,7 +150,14 @@ describe('change requests table container', () => {
 
   it('checking if change request filtering with multiple filters works as expected', async () => {
     expect(
-      filterCRs(exampleAllChangeRequests, 'Design Issue', [0], 'School Work', [1], 'Yes')
+      filterCRs(
+        exampleAllChangeRequests,
+        ChangeRequestType.DesignIssue,
+        [0],
+        ChangeRequestReason.School,
+        [1],
+        'Yes'
+      )
     ).toStrictEqual([exampleStandardChangeRequest]);
   });
 });

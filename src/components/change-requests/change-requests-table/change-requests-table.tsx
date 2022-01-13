@@ -49,7 +49,6 @@ export function filterCRs(
     changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
       let filterBool = false;
       const standard = changeRequest as StandardChangeRequest;
-      console.log(standard);
       if (impact.indexOf(0) !== -1) {
         filterBool =
           filterBool || (standard.scopeImpact !== '' && standard.scopeImpact !== undefined);
@@ -152,34 +151,27 @@ const ChangeRequestsTable: React.FC = () => {
     setImplemented(implemented);
   };
 
-  const changeRequestsTable = () => {
-    return (
-      <CRTable
-        changeRequests={transformToDisplayChangeRequests(
-          filterCRs(data!, type, impact, reason, state, implemented)
-        )}
-      />
-    );
-  };
+  const actionBtn = (
+    <ActionButton link={routes.CHANGE_REQUESTS_NEW} icon={faPlus} text={'New Change Request'} />
+  );
+
+  const crTable = (
+    <CRTable
+      changeRequests={transformToDisplayChangeRequests(
+        filterCRs(data!, type, impact, reason, state, implemented)
+      )}
+    />
+  );
 
   return (
     <>
-      <PageTitle
-        title={'Change Requests'}
-        actionButton={
-          <ActionButton
-            link={routes.CHANGE_REQUESTS_NEW}
-            icon={faPlus}
-            text={'New Change Request'}
-          />
-        }
-      />
+      <PageTitle title={'Change Requests'} actionButton={actionBtn} />
       <div className={styles.container}>
         <Row>
           <div className={styles.filterTable}>
             <ChangeRequestsFilter update={sendDataToParent} />
           </div>
-          <div className={styles.crTable}>{changeRequestsTable()}</div>
+          <div className={styles.crTable}>{crTable}</div>
         </Row>
       </div>
     </>

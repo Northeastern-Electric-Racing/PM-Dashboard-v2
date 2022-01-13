@@ -27,24 +27,19 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   const [state, setState] = useState<number[]>([]);
   const [implemented, setImplemented] = useState('');
 
+  // Build a list of dropdown options from the provided strings
   const genDropdownItems = (
     values: string[],
     setter: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    const none = (
-      <Dropdown.Item key={'None'} onClick={() => setter('')}>
-        None
+    const dropdownItemTemplate = (key: string, value: string) => (
+      <Dropdown.Item key={key} onClick={() => setter(value)}>
+        {key}
       </Dropdown.Item>
     );
-    const result: any[] = [none];
-    for (const value of values) {
-      result.push(
-        <Dropdown.Item key={value} onClick={() => setter(value)}>
-          {value}
-        </Dropdown.Item>
-      );
-    }
-    return <>{result}</>;
+    const dropdownItems = values.map((val) => dropdownItemTemplate(val, val));
+    dropdownItems.push(dropdownItemTemplate('None', ''));
+    return <>{dropdownItems}</>;
   };
 
   const genCheckboxes = (

@@ -14,35 +14,49 @@ import {
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
-import { EditModeContext } from '../work-package-container';
-import { useContext } from 'react';
-import WorkPackageDetail from './work-package-detail/work-package-detail';
+import EditableDetail from '../../../../shared/editable-detail/editable-detail';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
-  const editMode = useContext(EditModeContext);
   const detailsBody = (
     <Container fluid>
       <Form>
         <Row>
           <Col xs={12} md={6}>
-            <WorkPackageDetail type="title" workPackage={workPackage} />
-            <WorkPackageDetail type="wbs" workPackage={workPackage} />
-            <WorkPackageDetail type="project-lead" workPackage={workPackage} />
-            <WorkPackageDetail type="project-manager" workPackage={workPackage} />
-            <WorkPackageDetail type="duration" workPackage={workPackage} />
+            <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
+            <EditableDetail title="WBS #" value={wbsPipe(workPackage.wbsNum)} type="text" />
+            <EditableDetail
+              title="Project Lead"
+              value={listPipe(workPackage.projectLead, fullNamePipe)}
+              type="text"
+            />
+            <EditableDetail
+              title="Project Manager"
+              value={fullNamePipe(workPackage.projectManager)}
+              type="text"
+            />
+            <EditableDetail
+              title="Duration"
+              value={weeksPipe(workPackage.duration)}
+              type="number"
+            />
           </Col>
           <Col xs={6} md={4}>
-            <WorkPackageDetail type="start-date" workPackage={workPackage} />
-            <b>End Date: </b>
-            {endDatePipe(workPackage.startDate, workPackage.duration)}
-            <br />
-            <WorkPackageDetail type="progress" workPackage={workPackage} />
-            <b>Expected Progress:</b> <br />
-            <b>Timeline Status:</b> <br />
+            <EditableDetail
+              title="Start Date"
+              value={workPackage.startDate.toLocaleDateString()}
+              type="date"
+            />
+            <EditableDetail
+              title="End Date"
+              value={endDatePipe(workPackage.startDate, workPackage.duration)}
+              type="date"
+              readOnly={true}
+            />
+            <EditableDetail title="Progress" value={`${workPackage.progress}%`} type="number" />
           </Col>
         </Row>
       </Form>

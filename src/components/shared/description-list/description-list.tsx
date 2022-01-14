@@ -20,7 +20,7 @@ const DescriptionList: React.FC<DescriptionListProps> = ({ title, items, editMod
       title={title}
       headerRight={<></>}
       list={items.map((b) => (
-        <Fragment key={b.detail}>{b.detail}</Fragment>
+        <Fragment>{b.detail}</Fragment>
       ))}
       editMode={editMode}
     />

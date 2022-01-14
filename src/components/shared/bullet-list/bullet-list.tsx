@@ -16,7 +16,6 @@ interface BulletListProps {
 }
 
 const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, ordered, editMode }) => {
-  console.log(list[0].props.children);
   const addButton = (
     <InputGroup>
       <Form.Control type="text" placeholder="Input new bullet here" />

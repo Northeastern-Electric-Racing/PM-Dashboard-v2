@@ -19,6 +19,9 @@ import {
   User
 } from 'utils';
 
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
+
 const prisma = new PrismaClient();
 
 const usersTransformer = (user: Prisma.UserGetPayload<null>): User => {
@@ -89,6 +92,8 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     user = createdUser;
   }
 
+  const accessToken = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '20mins', algorithm: 'RS256' });
+
   // register a login
   await prisma.session.create({
     data: {
@@ -97,7 +102,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return buildSuccessResponse(usersTransformer(user));
+  return { ...buildSuccessResponse(usersTransformer(user)), accessToken: accessToken };
 };
 
 // Define all valid routes for the endpoint

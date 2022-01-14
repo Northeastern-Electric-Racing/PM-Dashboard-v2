@@ -141,7 +141,7 @@ model WBS_Element {
   projectNumber         Int
   workPackageNumber     Int
   name                  String
-  status                WBS_Element_Status
+  status                WBS_Element_Status @default(INACTIVE)
   projectLeadId         Int?
   projectLead           User?              @relation(name: "projectLead", fields: [projectLeadId], references: [userId])
   projectManagerId      Int?

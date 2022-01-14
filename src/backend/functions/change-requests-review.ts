@@ -14,7 +14,7 @@ import { buildNotFoundResponse, buildSuccessResponse } from 'utils';
 const prisma = new PrismaClient();
 
 // handle reviewing of change requests
-export const reveiwChangeRequest: Handler = async ({ body }, _context) => {
+export const reviewChangeRequest: Handler = async ({ body }, _context) => {
   // TODO: validate authorization
   const { crId, reviewNotes, dateReviewed, accepted } = body;
 
@@ -50,7 +50,7 @@ const inputSchema = {
   required: ['body']
 };
 
-const handler = middy(reveiwChangeRequest)
+const handler = middy(reviewChangeRequest)
   .use(jsonBodyParser())
   .use(validator({ inputSchema }))
   .use(httpErrorHandler());

@@ -92,7 +92,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     user = createdUser;
   }
 
-  const accessToken = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '20mins', algorithm: 'HS256' });
+  const accessToken = jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: '20mins', algorithm: 'HS256' });
 
   // register a login
   await prisma.session.create({

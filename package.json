@@ -167,7 +167,6 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "dotenv": "^10.0.0",
-    "dotenv-webpack": "^7.0.3",
     "google-auth-library": "^7.5.0",
     "jsonwebtoken": "^8.5.1",
     "react": "^17.0.1",

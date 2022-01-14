@@ -8,6 +8,7 @@ import { match } from 'path-to-regexp';
 import { API_URL } from './api-routes';
 import { ApiRoute } from './types/api-utils-types';
 import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 /**
  * Builds a standard API response object
@@ -108,7 +109,7 @@ export const routeMatcher = (
 export const verifyToken = (
   token: any,
 ) => {
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET as string, (err: any, decoded: any) => {
     if (decoded) {
       return decoded;
     } else {

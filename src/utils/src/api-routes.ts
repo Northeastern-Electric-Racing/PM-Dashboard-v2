@@ -22,7 +22,7 @@ const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbsNum`;
 const CHANGE_REQUESTS: string = `/change-requests`;
 const CHANGE_REQUESTS_NEW: string = `${CHANGE_REQUESTS}-new`;
 const CHANGE_REQUESTS_BY_ID: string = `${CHANGE_REQUESTS}/:id`;
-const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS_BY_ID}/process\\:review`;
+const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS}-review`;
 
 export const apiRoutes = {
   USERS,

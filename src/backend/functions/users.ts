@@ -102,7 +102,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return { ...buildSuccessResponse(usersTransformer(user)), accessToken: accessToken };
+  return { ...buildSuccessResponse(usersTransformer(user)), accessToken };
 };
 
 // Define all valid routes for the endpoint

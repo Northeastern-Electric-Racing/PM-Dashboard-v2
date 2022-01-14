@@ -16,7 +16,7 @@ const prisma = new PrismaClient();
 // handle reviewing of change requests
 export const reviewChangeRequest: Handler = async ({ body }, _context) => {
   // TODO: validate authorization
-  const { crId, reviewNotes, dateReviewed, accepted } = body;
+  const { crId, reviewNotes, accepted } = body;
 
   // ensure existence of change request
   const foundCR = prisma.change_Request.findUnique({ where: { crId } });
@@ -25,7 +25,7 @@ export const reviewChangeRequest: Handler = async ({ body }, _context) => {
   // update change request
   const update = prisma.change_Request.update({
     where: { crId },
-    data: { reviewNotes, accepted, dateReviewed: new Date(dateReviewed) }
+    data: { reviewNotes, accepted, dateReviewed: new Date() }
   });
 
   // TODO: consider transformer or other possible return body
@@ -41,10 +41,9 @@ const inputSchema = {
       properties: {
         crId: { type: 'number' },
         reviewNotes: { type: 'string' },
-        dateReviewed: { type: 'string', format: 'date' },
         accepted: { type: 'boolean' }
       },
-      required: ['crId', 'reviewNotes', 'dateReviewed', 'accepted']
+      required: ['crId', 'reviewNotes', 'accepted']
     }
   },
   required: ['body']

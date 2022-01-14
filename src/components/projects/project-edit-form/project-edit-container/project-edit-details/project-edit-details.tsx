@@ -18,6 +18,7 @@ import { EditModeContext } from '../project-edit-container';
 import { useContext } from 'react';
 import ProjectFormDetail from './project-form-detail/project-form-detail';
 
+// new parts added at the bottom
 interface projectDetailsProps {
     project: Project;
 }

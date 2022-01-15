@@ -39,7 +39,7 @@ const inputSchema = {
     body: {
       type: 'object',
       properties: {
-        crId: { type: 'number' },
+        crId: { type: 'number', minimum: 0 },
         reviewNotes: { type: 'string' },
         accepted: { type: 'boolean' }
       },

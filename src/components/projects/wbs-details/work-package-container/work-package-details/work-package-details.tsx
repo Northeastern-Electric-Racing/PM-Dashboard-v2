@@ -5,7 +5,6 @@
 
 import { WorkPackage } from 'utils';
 import {
-  weeksPipe,
   wbsPipe,
   endDatePipe,
   fullNamePipe,
@@ -40,8 +39,9 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             />
             <EditableDetail
               title="Duration"
-              value={weeksPipe(workPackage.duration)}
+              value={`${workPackage.duration}`}
               type="number"
+              suffix="weeks"
             />
           </Col>
           <Col xs={6} md={4}>
@@ -56,7 +56,12 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
               type="date"
               readOnly={true}
             />
-            <EditableDetail title="Progress" value={`${workPackage.progress}%`} type="number" />
+            <EditableDetail
+              title="Progress"
+              value={`${workPackage.progress}`}
+              suffix="%"
+              type="number"
+            />
           </Col>
         </Row>
       </Form>

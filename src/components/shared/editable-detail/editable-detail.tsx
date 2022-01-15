@@ -5,21 +5,39 @@
 
 import React, { useContext } from 'react';
 import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
-import { Form, FormControl } from 'react-bootstrap';
+import { Form, FormControl, InputGroup } from 'react-bootstrap';
 
 interface EditableDetailProps {
   title: string;
   type: string;
   value: string;
   readOnly?: Boolean;
+  suffix?: string;
 }
 
-const EditableDetail: React.FC<EditableDetailProps> = ({ title, type, value, readOnly }) => {
+const EditableDetail: React.FC<EditableDetailProps> = ({
+  title,
+  type,
+  value,
+  readOnly,
+  suffix
+}) => {
   const editMode = useContext(EditModeContext);
+  const detailInput = (
+    <InputGroup>
+      <FormControl type={type} placeholder={value} />
+      {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : ''}
+    </InputGroup>
+  );
+
+  if (suffix !== '%') {
+    suffix = ' ' + suffix;
+  }
+
   return (
     <Form.Group>
       <b>{`${title}: `}</b>
-      {editMode && !readOnly ? <FormControl type={type} placeholder={value} /> : value}
+      {editMode && !readOnly ? detailInput : `${value}${suffix ? `${suffix}` : ''}`}
       <br />
     </Form.Group>
   );

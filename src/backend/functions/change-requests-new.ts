@@ -200,7 +200,8 @@ const inputSchema = {
         }
       ]
     }
-  }
+  },
+  required: ['body']
 };
 
 const handler = middy(baseHandler)

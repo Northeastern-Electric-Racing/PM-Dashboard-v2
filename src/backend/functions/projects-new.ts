@@ -8,7 +8,7 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient, WBS_Element_Status } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { buildClientFailureResponse, buildNotFoundResponse, buildSuccessResponse } from 'utils';
 
 const prisma = new PrismaClient();
@@ -49,7 +49,7 @@ export const baseHandler: Handler = async ({ body }, _context) => {
 
   // check if the change request for the project was reviewed
   if (!crReviewed) {
-    return buildClientFailureResponse('Cannot implement an unreview change request');
+    return buildClientFailureResponse('Cannot implement an unreviewed change request');
   }
 
   // create the wbs element for the project and document the implemented change request
@@ -60,7 +60,6 @@ export const baseHandler: Handler = async ({ body }, _context) => {
       projectNumber: maxProjectNumber + 1,
       workPackageNumber: 0,
       name: body.name,
-      status: WBS_Element_Status.INACTIVE,
       project: {
         create: {
           summary: body.summary,
@@ -80,7 +79,15 @@ export const baseHandler: Handler = async ({ body }, _context) => {
     },
   });
 
-  return buildSuccessResponse(createdProject);
+  return buildSuccessResponse(
+    {
+      wbsNumber: {
+        car: createdProject.carNumber,
+        project: createdProject.projectNumber,
+        workPackage: createdProject.workPackageNumber,
+      }
+    }
+  );
 }
 
 const inputSchema = {

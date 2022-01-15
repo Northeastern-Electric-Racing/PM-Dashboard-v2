@@ -30,7 +30,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
     </InputGroup>
   );
 
-  if (suffix !== '%') {
+  if (suffix && suffix !== '%') {
     suffix = ' ' + suffix;
   }
 

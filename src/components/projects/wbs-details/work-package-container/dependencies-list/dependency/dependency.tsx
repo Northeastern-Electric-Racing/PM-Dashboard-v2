@@ -10,6 +10,7 @@ import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../../../shared/pipes';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../../../../../shared/routes';
+import styles from './dependency.module.css';
 
 interface DependencyProps {
   wbsNumber: WbsNumber;
@@ -37,7 +38,7 @@ const Dependency: React.FC<DependencyProps> = ({ wbsNumber }) => {
           </Button>
         </ButtonGroup>
       ) : (
-        <Button variant="primary" onClick={handleLinkClick}>
+        <Button variant="primary" className={styles.dependencyButton} onClick={handleLinkClick}>
           {wbsPipe(wbsNumber)}
         </Button>
       )}

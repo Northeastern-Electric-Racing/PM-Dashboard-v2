@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useAllProjects } from '../../../../services/projects.hooks';
 import { useAllWorkPackages } from '../../../../services/work-packages.hooks';
@@ -43,10 +43,11 @@ const NewChangeRequestPage: React.FC = () => {
     });
   }
 
+
   const [formData, updateFormData] = useState({
     projectWBS: 1,
     workPackageWBS: -1,
-    type: "",
+    type: "DEFINITION_CHANGE",
 
     what: "",
     scopeImpact: "",
@@ -69,6 +70,11 @@ const NewChangeRequestPage: React.FC = () => {
 
   const projectRes = useAllProjects();
   const workPkgsRes = useAllWorkPackages();
+
+  useEffect(() => {
+    if (projectRes.data) updateValue("projectWBS", projectRes.data![0].id);
+    if (workPkgsRes.data) updateValue("projectWBS", workPkgsRes.data![0].id);
+  }, [])
 
   if (projectRes.isLoading || workPkgsRes.isLoading) return <LoadingIndicator />;
 

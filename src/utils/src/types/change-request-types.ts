@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
 
@@ -68,3 +69,16 @@ export interface ImplementedChange {
   implementer: User;
   detail: string;
 }
+
+export const reviewChangeRequestPayloadSchema = {
+  type: 'object',
+  properties: {
+    crId: { type: 'number', minimum: 0 },
+    reviewNotes: { type: 'string' },
+    accepted: { type: 'boolean' }
+  },
+  required: ['crId', 'reviewNotes', 'accepted'],
+  additionalProperties: false
+} as const;
+
+export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;

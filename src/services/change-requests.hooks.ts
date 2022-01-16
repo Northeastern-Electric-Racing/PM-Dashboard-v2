@@ -3,9 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useQuery } from 'react-query';
-import { ChangeRequest } from 'utils';
-import { getAllChangeRequests, getSingleChangeRequest } from './change-requests.api';
+import { useMutation, useQuery } from 'react-query';
+import { ChangeRequest, ReviewChangeRequestPayload } from 'utils';
+import {
+  getAllChangeRequests,
+  getSingleChangeRequest,
+  reviewChangeRequest
+} from './change-requests.api';
 
 /**
  * Custom React Hook to supply all change requests.
@@ -27,4 +31,21 @@ export const useSingleChangeRequest = (id: number) => {
     const { data } = await getSingleChangeRequest(id);
     return data;
   });
+};
+
+/**
+ * Custom React Hook to review a change request.
+ */
+export const useReviewChangeRequest = () => {
+  return useMutation<{ message: string }, Error, ReviewChangeRequestPayload>(
+    ['reviewCR'],
+    async (reviewPayload: ReviewChangeRequestPayload) => {
+      const { data } = await reviewChangeRequest(
+        reviewPayload.crId,
+        reviewPayload.accepted,
+        reviewPayload.reviewNotes
+      );
+      return data;
+    }
+  );
 };

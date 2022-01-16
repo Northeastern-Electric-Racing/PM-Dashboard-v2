@@ -73,6 +73,7 @@ export interface ImplementedChange {
 export const reviewChangeRequestPayloadSchema = {
   type: 'object',
   properties: {
+    reviewerId: { type: 'number', minimum: 0 },
     crId: { type: 'number', minimum: 0 },
     reviewNotes: { type: 'string' },
     accepted: { type: 'boolean' }

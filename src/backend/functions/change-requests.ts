@@ -70,6 +70,7 @@ const changeRequestTransformer = (
   return {
     ...changeRequest,
     type: convertChangeRequestType(changeRequest.type),
+    reviewer: changeRequest.reviewer ?? undefined,
     dateReviewed: changeRequest.dateReviewed ?? undefined,
     accepted: changeRequest.accepted ?? undefined,
     reviewNotes: changeRequest.reviewNotes ?? undefined,

@@ -13,6 +13,7 @@ export interface ChangeRequest {
   submitter: User;
   dateSubmitted: Date;
   type: ChangeRequestType;
+  reviewer?: User;
   dateReviewed?: Date;
   accepted?: boolean;
   reviewNotes?: string;

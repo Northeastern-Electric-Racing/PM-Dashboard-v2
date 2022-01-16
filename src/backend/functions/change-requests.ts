@@ -28,6 +28,7 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
   include: {
     submitter: true,
     wbsElement: true,
+    reviewer: true,
     changes: {
       include: {
         implementer: true

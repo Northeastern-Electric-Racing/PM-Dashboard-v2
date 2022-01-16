@@ -11,7 +11,12 @@ import {
   StageGateChangeRequest,
   StandardChangeRequest
 } from 'utils';
-import { exampleAdminUser, exampleProjectLeadUser, exampleProjectManagerUser } from './users.stub';
+import {
+  exampleAdminUser,
+  exampleAppAdminUser,
+  exampleProjectLeadUser,
+  exampleProjectManagerUser
+} from './users.stub';
 import { exampleWbsWorkPackage1 } from './wbs-numbers.stub';
 
 export const exampleStandardChangeRequest: StandardChangeRequest = {
@@ -21,6 +26,7 @@ export const exampleStandardChangeRequest: StandardChangeRequest = {
   dateSubmitted: new Date('02/25/21'),
   type: ChangeRequestType.DesignIssue,
   dateReviewed: new Date('03/01/21'),
+  reviewer: exampleAppAdminUser,
   accepted: true,
   reviewNotes: 'Adjust description, increase budget to 200, and add 3 weeks',
   dateImplemented: new Date('03/04/21'),

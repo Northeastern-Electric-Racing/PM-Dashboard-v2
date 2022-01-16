@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage, WbsNumber } from 'utils';
+import { WbsNumber, WorkPackageSummary as WPSummary } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectDetails from './project-details/project-details';
@@ -43,7 +43,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         headerRight={<></>}
         body={
           <>
-            {data!.workPackages.map((ele: WorkPackage) => (
+            {data!.workPackages.map((ele: WPSummary) => (
               <div key={wbsPipe(ele.wbsNum)} className="mt-3">
                 <WorkPackageSummary workPackage={ele} />
               </div>

@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, User, WorkPackage } from 'utils';
+import { Project, User } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
-import { fullNamePipe, listPipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
+import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
@@ -14,19 +14,6 @@ import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
 import { useState } from 'react';
 import PageTitle from '../../shared/page-title/page-title';
-
-/**
- * Generate a list of User IDs from a list of Users.
- * @param users The list of users passed in.
- * @return A list of numbers representing the IDs of the users in the given list of users.
- */
-const getUserIDs = (users: User[]) => {
-  const answer: number[] = [];
-  for (const user of users) {
-    answer.push(user.id);
-  }
-  return answer;
-};
 
 /***
  * Returns a list of projects that has been filtered according to the given params.
@@ -51,10 +38,10 @@ export function filterProjects(
     return project.status === status;
   };
   const leadCheck = (project: Project) => {
-    return getUserIDs(project.projectLead).includes(projectLeadID);
+    return project.projectLead?.userId === projectLeadID;
   };
   const managerCheck = (project: Project) => {
-    return project.projectManager.id === projectManagerID;
+    return project.projectManager?.userId === projectManagerID;
   };
   if (carNumber !== -1) {
     projects = projects.filter(carNumCheck);
@@ -86,15 +73,14 @@ const ProjectsTable: React.FC = () => {
   if (isError) return <ErrorPage message={error?.message} />;
 
   const transformToDisplayProjects = (projects: Project[]) => {
-    return projects.map((prj: Project) => {
+    return projects.map((prj) => {
       return {
+        ...prj,
         wbsNum: wbsPipe(prj.wbsNum),
         name: prj.name,
-        projectLead: listPipe(prj.projectLead, fullNamePipe),
+        projectLead: fullNamePipe(prj.projectLead),
         projectManager: fullNamePipe(prj.projectManager),
-        duration: weeksPipe(
-          prj.workPackages.reduce((tot: number, cur: WorkPackage) => tot + cur.duration, 0)
-        )
+        duration: weeksPipe(prj.duration)
       };
     }) as DisplayProject[];
   };
@@ -126,11 +112,9 @@ const ProjectsTable: React.FC = () => {
     const leads: User[] = [];
     const seenList: number[] = [];
     for (const project of projects) {
-      for (const user of project.projectLead) {
-        if (!seenList.includes(user.id)) {
-          seenList.push(user.id);
-          leads.push(user);
-        }
+      if (project.projectLead && !seenList.includes(project.projectLead.userId)) {
+        seenList.push(project.projectLead.userId);
+        leads.push(project.projectLead);
       }
     }
     return leads;
@@ -144,8 +128,8 @@ const ProjectsTable: React.FC = () => {
     const managers: User[] = [];
     const seenList: number[] = [];
     for (const project of projects) {
-      if (!seenList.includes(project.projectManager.id)) {
-        seenList.push(project.projectManager.id);
+      if (project.projectManager && !seenList.includes(project.projectManager.userId)) {
+        seenList.push(project.projectManager.userId);
         managers.push(project.projectManager);
       }
     }

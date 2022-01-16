@@ -2,3 +2,28 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
+
+.container {
+  width: 100%;
+  padding: 0 15px 15px 15px;
+}
+
+.filterTable {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-right: 0;
+  margin-left: 0;
+  padding-left: 15px;
+  padding-right: 5px;
+}
+
+.crTable {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  position: relative;
+  padding-right: 5px;
+}

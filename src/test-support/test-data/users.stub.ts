@@ -3,76 +3,76 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User, Role } from 'utils';
+import { User, Role } from '@prisma/client';
 
 export const exampleAppAdminUser: User = {
-  id: 1,
+  userId: 1,
   firstName: 'Thomas',
   lastName: 'Emrax',
+  googleAuthId: '1',
+  email: 'emrax.t@husky.neu.edu',
   emailId: 'emrax.t',
-  firstLogin: new Date('02/01/21'),
-  lastLogin: new Date('03/04/21'),
-  role: Role.AppAdmin
+  role: Role.APP_ADMIN
 };
 
 export const exampleAdminUser: User = {
-  id: 2,
+  userId: 2,
   firstName: 'Joe',
   lastName: 'Shmoe',
+  googleAuthId: '2',
+  email: 'shmoe.j@husky.neu.edu',
   emailId: 'shmoe.j',
-  firstLogin: new Date('02/10/21'),
-  lastLogin: new Date('02/25/21'),
-  role: Role.Admin
+  role: Role.ADMIN
 };
 
 export const exampleLeadershipUser: User = {
-  id: 3,
+  userId: 3,
   firstName: 'Joe',
   lastName: 'Blow',
+  googleAuthId: '3',
+  email: 'blow.j@husky.neu.edu',
   emailId: 'blow.j',
-  firstLogin: new Date('02/25/21'),
-  lastLogin: new Date('02/28/21'),
-  role: Role.Leadership
+  role: Role.LEADERSHIP
 };
 
 export const exampleProjectLeadUser: User = {
-  id: 4,
+  userId: 4,
   firstName: 'Amy',
   lastName: 'Smith',
+  googleAuthId: '4',
+  email: 'smith.a@husky.neu.edu',
   emailId: 'smith.a',
-  firstLogin: new Date('02/19/21'),
-  lastLogin: new Date('03/12/21'),
-  role: Role.ProjectLead
+  role: Role.LEADERSHIP
 };
 
 export const exampleProjectManagerUser: User = {
-  id: 5,
+  userId: 5,
   firstName: 'Rachel',
   lastName: 'Barmatha',
+  googleAuthId: '5',
+  email: 'barmatha.r@husky.neu.edu',
   emailId: 'barmatha.r',
-  firstLogin: new Date('02/16/21'),
-  lastLogin: new Date('02/19/21'),
-  role: Role.ProjectManager
+  role: Role.MEMBER
 };
 
 export const exampleMemberUser: User = {
-  id: 6,
+  userId: 6,
   firstName: 'Emily',
   lastName: 'Bendara',
+  googleAuthId: '6',
+  email: 'bendara.e@husky.neu.edu',
   emailId: 'bendara.e',
-  firstLogin: new Date('02/28/21'),
-  lastLogin: new Date('03/03/21'),
-  role: Role.Member
+  role: Role.MEMBER
 };
 
 export const exampleGuestUser: User = {
-  id: 7,
+  userId: 7,
   firstName: 'Jackson',
   lastName: 'James',
+  googleAuthId: '7',
+  email: 'james.j@husky.neu.edu',
   emailId: 'james.j',
-  firstLogin: new Date('03/06/21'),
-  lastLogin: new Date('03/06/21'),
-  role: Role.Guest
+  role: Role.GUEST
 };
 
 export const exampleAllUsers: User[] = [

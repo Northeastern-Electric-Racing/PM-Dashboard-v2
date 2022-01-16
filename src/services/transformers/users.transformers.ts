@@ -13,8 +13,6 @@ import { User } from 'utils';
  */
 export const userTransformer = (user: User) => {
   return {
-    ...user,
-    firstLogin: new Date(user.firstLogin),
-    lastLogin: new Date(user.lastLogin)
+    ...user
   };
 };

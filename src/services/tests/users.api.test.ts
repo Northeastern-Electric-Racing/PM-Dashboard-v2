@@ -31,7 +31,7 @@ describe('user api methods', () => {
     const result = await getAllUsers();
     expect(result.data).toHaveProperty('length', 7);
     expect(result.data[0]).toHaveProperty('emailId');
-    expect(result.data[1]).toHaveProperty('firstLogin');
+    expect(result.data[1]).toHaveProperty('email');
   });
 
   it('handles getting a single user', async () => {
@@ -54,7 +54,7 @@ describe('user api methods', () => {
       })
     );
 
-    const result = await logUserIn(exampleAdminUser.emailId);
+    const result = await logUserIn(exampleAdminUser.email);
     expect(result.data).not.toHaveProperty('length');
     expect(result.data).toHaveProperty('firstName');
     expect(result.data).toHaveProperty('role');

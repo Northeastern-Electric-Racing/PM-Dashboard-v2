@@ -5,6 +5,7 @@
 
 import { User } from './user-types';
 import { ImplementedChange } from './change-request-types';
+import { FromSchema } from 'json-schema-to-ts';
 
 export interface WbsNumber {
   car: number;
@@ -18,35 +19,47 @@ export interface WbsElement {
   dateCreated: Date;
   name: string;
   status: WbsElementStatus;
-  projectLead: User[];
-  projectManager: User;
+  projectLead?: User;
+  projectManager?: User;
   changes: ImplementedChange[];
 }
 
 export enum WbsElementStatus {
-  Inactive = 'Inactive',
-  Active = 'Active',
-  Complete = 'Complete'
+  Inactive = 'INACTIVE',
+  Active = 'ACTIVE',
+  Complete = 'COMPLETE'
 }
 
 export interface Project extends WbsElement {
   summary: string;
   budget: number;
-  gDriveLink: string;
-  taskListLink: string;
-  slideDeckLink: string;
-  bomLink: string;
+  gDriveLink?: string;
+  taskListLink?: string;
+  slideDeckLink?: string;
+  bomLink?: string;
   rules: string[];
+  duration: number;
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
-  workPackages: WorkPackage[];
+  workPackages: WorkPackageSummary[];
+}
+
+export interface WorkPackageSummary {
+  id: number;
+  wbsNum: WbsNumber;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  duration: number;
+  dependencies: WbsNumber[];
 }
 
 export interface WorkPackage extends WbsElement {
-  order: number;
+  orderInProject: number;
   progress: number;
   startDate: Date;
+  endDate: Date;
   duration: number;
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];
@@ -59,3 +72,18 @@ export interface DescriptionBullet {
   dateAdded: Date;
   dateDeleted?: Date;
 }
+
+export const createProjectPayloadSchema = {
+  type: 'object',
+  properties: {
+    userId: { type: 'integer', minimum: 0 },
+    crId: { type: 'integer', minimum: 0 },
+    name: { type: 'string' },
+    carNumber: { type: 'integer', minimum: 0 },
+    summary: { type: 'string' }
+  },
+  required: ['userId', 'crId', 'name', 'carNumber', 'summary'],
+  additionalProperties: false
+} as const;
+
+export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;

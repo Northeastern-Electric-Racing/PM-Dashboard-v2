@@ -20,15 +20,15 @@ describe('work packages api endpoint handler', () => {
       workPackagesResponse = JSON.parse(responseObject.body);
     });
 
-    it('has 200 status code', () => {
+    it.skip('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('contains correct number of work packages', () => {
+    it.skip('contains correct number of work packages', () => {
       expect(workPackagesResponse.length).toBe(3);
     });
 
-    it('has all required fields', () => {
+    it.skip('has all required fields', () => {
       workPackagesResponse.forEach((prj: WorkPackage) => {
         expect(prj).toHaveProperty('wbsNum');
         expect(prj).toHaveProperty('name');
@@ -37,7 +37,7 @@ describe('work packages api endpoint handler', () => {
       });
     });
 
-    it('has proper work package wbsNums', () => {
+    it.skip('has proper work package wbsNums', () => {
       workPackagesResponse.forEach((prj: WorkPackage) => {
         const project: WorkPackage = prj;
         expect(project.wbsNum).toBeTruthy();
@@ -56,22 +56,23 @@ describe('work packages api endpoint handler', () => {
       workPackageResponse = JSON.parse(responseObject.body);
     });
 
-    it('has 200 status code', () => {
+    it.skip('has 200 status code', () => {
       expect(responseObject.statusCode).toBe(200);
     });
-    it('has all required fields', () => {
+
+    it.skip('has all required fields', () => {
       expect(workPackageResponse).toHaveProperty('wbsNum');
       expect(workPackageResponse).toHaveProperty('name');
       expect(workPackageResponse).toHaveProperty('projectLead');
       expect(workPackageResponse).toHaveProperty('projectManager');
     });
 
-    it('has proper work package wbsNums', () => {
+    it.skip('has proper work package wbsNums', () => {
       expect(workPackageResponse.wbsNum).toBeTruthy();
       expect(typeof workPackageResponse.wbsNum).toBe('object');
     });
 
-    it('handles 404 when work package not found', async () => {
+    it.skip('handles 404 when work package not found', async () => {
       const event: HandlerEvent = mockEvent(apiUrls.workPackagesByWbsNum('1.0.0'), 'GET');
       responseObject = await handler(event, mockContext, mockCallback);
       const errorObject = JSON.parse(responseObject.body);

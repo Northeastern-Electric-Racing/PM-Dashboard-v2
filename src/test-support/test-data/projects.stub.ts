@@ -24,7 +24,7 @@ export const exampleProject1: Project = {
   dateCreated: new Date('08/01/20'),
   name: 'Impact Attenuator',
   status: WbsElementStatus.Active,
-  projectLead: [exampleProjectLeadUser],
+  projectLead: exampleProjectLeadUser,
   projectManager: exampleLeadershipUser,
   gDriveLink: 'https://youtu.be/dQw4w9WgXcQ',
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -56,13 +56,14 @@ export const exampleProject1: Project = {
   ],
   changes: [
     {
-      id: 10,
-      crId: 37,
+      changeId: 10,
+      changeRequestId: 37,
       wbsNum: exampleWbsProject1,
       implementer: exampleAdminUser,
       detail: 'Added goal for weight reduction'
     }
   ],
+  duration: 8,
   workPackages: [exampleWorkPackage1, exampleWorkPackage2]
 };
 
@@ -72,7 +73,7 @@ export const exampleProject2: Project = {
   dateCreated: new Date('08/02/20'),
   name: 'Bodywork',
   status: WbsElementStatus.Inactive,
-  projectLead: [exampleProjectLeadUser],
+  projectLead: exampleProjectLeadUser,
   projectManager: exampleProjectManagerUser,
   gDriveLink: 'https://youtu.be/dQw4w9WgXcQ',
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -99,6 +100,7 @@ export const exampleProject2: Project = {
     { id: 11, detail: 'Compatible with a side-pod chassis design', dateAdded: new Date('06/12/21') }
   ],
   changes: [],
+  duration: 0,
   workPackages: []
 };
 
@@ -108,7 +110,7 @@ export const exampleProject3: Project = {
   dateCreated: new Date('08/04/20'),
   name: 'Battery Box',
   status: WbsElementStatus.Active,
-  projectLead: [exampleLeadershipUser],
+  projectLead: exampleLeadershipUser,
   projectManager: exampleProjectManagerUser,
   gDriveLink: 'https://youtu.be/dQw4w9WgXcQ',
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -139,6 +141,7 @@ export const exampleProject3: Project = {
     }
   ],
   changes: [],
+  duration: 3,
   workPackages: [exampleWorkPackage1]
 };
 
@@ -148,7 +151,7 @@ export const exampleProject4: Project = {
   dateCreated: new Date('11/07/20'),
   name: 'Motor Controller Integration',
   status: WbsElementStatus.Inactive,
-  projectLead: [exampleLeadershipUser],
+  projectLead: exampleLeadershipUser,
   projectManager: exampleAdminUser,
   gDriveLink: 'https://youtu.be/dQw4w9WgXcQ',
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -175,6 +178,7 @@ export const exampleProject4: Project = {
     { id: 13, detail: 'Must be compatible with chain drive', dateAdded: new Date('05/12/21') }
   ],
   changes: [],
+  duration: 5,
   workPackages: [exampleWorkPackage2]
 };
 
@@ -184,7 +188,7 @@ export const exampleProject5: Project = {
   dateCreated: new Date('08/03/20'),
   name: 'Wiring Harness',
   status: WbsElementStatus.Complete,
-  projectLead: [exampleProjectLeadUser],
+  projectLead: exampleProjectLeadUser,
   projectManager: exampleProjectManagerUser,
   gDriveLink: 'https://youtu.be/dQw4w9WgXcQ',
   taskListLink: 'https://youtu.be/dQw4w9WgXcQ',
@@ -211,6 +215,7 @@ export const exampleProject5: Project = {
     { id: 14, detail: 'Utilizes 8020 frame construction', dateAdded: new Date('02/16/21') }
   ],
   changes: [],
+  duration: 2,
   workPackages: [exampleWorkPackage3]
 };
 

@@ -10,7 +10,6 @@ import {
   fullNamePipe,
   linkPipe,
   wbsPipe,
-  listPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
@@ -29,7 +28,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
           <div>
             <b>Project Name:</b> {project.name} <br />
             <b>WBS #:</b> {wbsPipe(project.wbsNum)} <br />
-            <b>Project Lead:</b> {listPipe(project.projectLead, fullNamePipe)} <br />
+            <b>Project Lead:</b> {fullNamePipe(project.projectLead)} <br />
             <b>Project Manager:</b> {fullNamePipe(project.projectManager)} <br />
             <b>Budget:</b> {dollarsPipe(project.budget)}
           </div>
@@ -67,10 +66,10 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
       <Row>
         <Col>
           <div className={styles.horizontal}>
-            <li>{linkPipe('Slide Deck', project.slideDeckLink)}</li>
-            <li>{linkPipe('Task List', project.taskListLink)}</li>
-            <li>{linkPipe('BOM', project.bomLink)}</li>
-            <li>{linkPipe('Google Drive', project.gDriveLink)}</li>
+            <li>{linkPipe('Slide Deck', project.slideDeckLink!)}</li>
+            <li>{linkPipe('Task List', project.taskListLink!)}</li>
+            <li>{linkPipe('BOM', project.bomLink!)}</li>
+            <li>{linkPipe('Google Drive', project.gDriveLink!)}</li>
           </div>
         </Col>
       </Row>

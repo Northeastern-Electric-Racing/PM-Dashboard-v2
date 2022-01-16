@@ -27,3 +27,18 @@ export const getSingleChangeRequest = (id: number) => {
     transformResponse: (data) => changeRequestTransformer(JSON.parse(data))
   });
 };
+
+/**
+ * Review a change request.
+ *
+ * @param crId The ID of the change request being reviewed.
+ * @param accepted Is the change request being accepted?
+ * @param reviewNotes The notes attached to reviewing the change request.
+ */
+export const reviewChangeRequest = (crId: number, accepted: boolean, reviewNotes: string) => {
+  return axios.post<{ message: string }>(apiUrls.changeRequestsReview(), {
+    crId,
+    accepted,
+    reviewNotes
+  });
+};

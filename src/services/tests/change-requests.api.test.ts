@@ -47,7 +47,7 @@ describe('change request api methods', () => {
 
     const result = await getSingleChangeRequest(50);
     expect(result.data).not.toHaveProperty('length');
-    expect(result.data).toHaveProperty('confirmCompleted');
+    expect(result.data).toHaveProperty('confirmDone');
     expect(result.data).toHaveProperty('leftoverBudget');
     expect(result.data.dateSubmitted).toHaveProperty('toUTCString');
   });

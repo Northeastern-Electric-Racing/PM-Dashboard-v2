@@ -111,7 +111,7 @@ CREATE TABLE "WBS_Element" (
     "projectNumber" INTEGER NOT NULL,
     "workPackageNumber" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
-    "status" "WBS_Element_Status" NOT NULL,
+    "status" "WBS_Element_Status" NOT NULL DEFAULT E'INACTIVE',
     "projectLeadId" INTEGER,
     "projectManagerId" INTEGER,
 

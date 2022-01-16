@@ -1,0 +1,37 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+.card {
+  width: 15rem;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  vertical-align: middle;
+}
+
+.dropdownButton {
+  position: relative;
+}
+
+.dropdownButton::after {
+  margin-right: 5%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.applyButton {
+  float: right;
+  background-color: #ef4345 !important;
+  border-color: #ef4345 !important;
+}
+
+.applyButton:focus {
+  box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5) !important;
+}

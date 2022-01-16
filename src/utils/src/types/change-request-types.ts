@@ -79,7 +79,7 @@ export const reviewChangeRequestPayloadSchema = {
     reviewNotes: { type: 'string' },
     accepted: { type: 'boolean' }
   },
-  required: ['crId', 'reviewNotes', 'accepted'],
+  required: ['reviewerId', 'crId', 'reviewNotes', 'accepted'],
   additionalProperties: false
 } as const;
 

@@ -9,7 +9,7 @@ import {
   StandardChangeRequest,
   ActivationChangeRequest,
   StageGateChangeRequest,
-  ChangeRequestType,
+  ChangeRequestType
 } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -72,7 +72,10 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 
   return (
     <>
-      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={changeRequest.accepted !== undefined ? <></> : reviewBtns} />
+      <PageTitle
+        title={`Change Request #${changeRequest.crId}`}
+        actionButton={changeRequest.accepted !== undefined ? <></> : reviewBtns}
+      />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
@@ -89,7 +92,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <ReviewNotes reviewNotes={changeRequest.reviewNotes} />
+      <ReviewNotes reviewer={changeRequest.reviewer} reviewNotes={changeRequest.reviewNotes} />
       <ImplementedChangesList
         changes={
           changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges

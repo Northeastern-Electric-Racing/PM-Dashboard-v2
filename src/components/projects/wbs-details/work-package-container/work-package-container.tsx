@@ -42,12 +42,8 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
         <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
         <WorkPackageDetails workPackage={data!} />
         <DependenciesList dependencies={data!.dependencies} />
-        <DescriptionList
-          title={'Expected Activities'}
-          items={data!.expectedActivities}
-          editMode={editMode}
-        />
-        <DescriptionList title={'Deliverables'} items={data!.deliverables} editMode={editMode} />
+        <DescriptionList title={'Expected Activities'} items={data!.expectedActivities} />
+        <DescriptionList title={'Deliverables'} items={data!.deliverables} />
         <ChangesList changes={data!.changes} />
         {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
       </div>

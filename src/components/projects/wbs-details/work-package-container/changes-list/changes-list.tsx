@@ -23,6 +23,7 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
           [<Link to={`${routes.CHANGE_REQUESTS}/${ic.crId}`}>#{ic.crId}</Link>] {ic.detail}
         </>
       ))}
+      readOnly={true}
     />
   );
 };

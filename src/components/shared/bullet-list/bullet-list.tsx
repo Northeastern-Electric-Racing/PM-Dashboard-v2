@@ -6,16 +6,19 @@
 import PageBlock from '../page-block/page-block';
 import styles from './bullet-list.module.css';
 import { Form, Button, InputGroup } from 'react-bootstrap';
+import { useContext } from 'react';
+import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 
 interface BulletListProps {
   title: string;
   headerRight: JSX.Element;
   list: JSX.Element[];
   ordered?: boolean;
-  editMode?: boolean;
+  readOnly?: boolean;
 }
 
-const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, ordered, editMode }) => {
+const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, ordered, readOnly }) => {
+  const editMode = useContext(EditModeContext);
   const addButton = (
     <InputGroup>
       <Form.Control type="text" placeholder="Input new bullet here" />
@@ -23,7 +26,7 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
     </InputGroup>
   );
   let listPrepared = list.map((bullet, idx) =>
-    editMode ? (
+    editMode && !readOnly ? (
       <InputGroup>
         <Form.Control type="text" placeholder={bullet.props.children} key={`${idx}`} />
         <Button variant="danger">X</Button>
@@ -32,7 +35,7 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
       <li key={idx}>{bullet}</li>
     )
   );
-  if (editMode) {
+  if (editMode && !readOnly) {
     listPrepared = [...listPrepared, addButton];
   }
   let builtList = <ul className={styles.bulletList}>{listPrepared}</ul>;
@@ -46,5 +49,3 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
 };
 
 export default BulletList;
-
-//editMode ? <Form.Control type="text" placeholder={bullet.key ? bullet.key : ' '} key={`${idx}`} /> : <li key={idx}>{bullet}</li>

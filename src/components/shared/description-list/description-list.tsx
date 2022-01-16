@@ -11,10 +11,9 @@ import './description-list.module.css';
 interface DescriptionListProps {
   title: string;
   items: DescriptionBullet[];
-  editMode?: boolean;
 }
 
-const DescriptionList: React.FC<DescriptionListProps> = ({ title, items, editMode }) => {
+const DescriptionList: React.FC<DescriptionListProps> = ({ title, items }) => {
   return (
     <BulletList
       title={title}
@@ -22,7 +21,6 @@ const DescriptionList: React.FC<DescriptionListProps> = ({ title, items, editMod
       list={items.map((b) => (
         <Fragment>{b.detail}</Fragment>
       ))}
-      editMode={editMode}
     />
   );
 };

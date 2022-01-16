@@ -4,6 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
+import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 import BulletList from './bullet-list';
 
 describe('Bullet List Component', () => {
@@ -25,5 +26,34 @@ describe('Bullet List Component', () => {
 
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();
+  });
+
+  it('renders all bullets, in edit mode', () => {
+    render(
+      <EditModeContext.Provider value={true}>
+        <BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} />
+      </EditModeContext.Provider>
+    );
+    expect(screen.getByPlaceholderText('one')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('two')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Input new bullet here')).toBeInTheDocument();
+  });
+
+  it('renders all bullets, in edit mode and readOnly mode', () => {
+    render(
+      <EditModeContext.Provider value={true}>
+        <BulletList
+          title={'test'}
+          headerRight={<></>}
+          list={[<>one</>, <>two</>]}
+          readOnly={true}
+        />
+      </EditModeContext.Provider>
+    );
+    expect(screen.getByText('one')).toBeInTheDocument();
+    expect(screen.getByText('two')).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText('one')).not.toBeInTheDocument();
+    expect(screen.queryByPlaceholderText('two')).not.toBeInTheDocument();
+    expect(screen.queryByPlaceholderText('Input new bullet here')).not.toBeInTheDocument();
   });
 });

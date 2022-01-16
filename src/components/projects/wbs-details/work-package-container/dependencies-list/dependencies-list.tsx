@@ -18,7 +18,7 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
   const editMode = useContext(EditModeContext);
   const AddButton = (
     <InputGroup>
-      <Form.Control type="text" placeholder="WBS #"></Form.Control>
+      <Form.Control type="text" placeholder="New WBS #"></Form.Control>
       <Button variant="success">+</Button>
     </InputGroup>
   );

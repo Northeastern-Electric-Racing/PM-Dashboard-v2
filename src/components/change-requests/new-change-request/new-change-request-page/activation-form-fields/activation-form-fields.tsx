@@ -20,9 +20,9 @@ const ActivationFormFields: React.FC<IProp> = ({handleChange, handleStartDateCha
       <div className={'px-4'}>
         <Form.Group controlId="newCR-project-lead">
           <Form.Label className={styles.label}>Project Lead</Form.Label>
-          <Form.Control as="select" custom id="newCR-wbs-num" name="projectLeadId" onChange={handleChange}>
+          <Form.Control as="select" custom id="newCR-wbs-num" name="projectLeadId" onChange={handleChange} type="number">
             {exampleAllUsers.map((p) => (
-              <option key={p.userId}>{fullNamePipe(p)}</option>
+              <option key={p.userId} value={p.userId}>{fullNamePipe(p)}</option>
             ))}
           </Form.Control>
 
@@ -33,9 +33,9 @@ const ActivationFormFields: React.FC<IProp> = ({handleChange, handleStartDateCha
 
       <div className={'px-4'}>
         <Form.Label className={styles.label}>Project Manager</Form.Label>
-        <Form.Control as="select" custom id="newCR-project-manager" name="projectManagerId" onChange={handleChange}>
+        <Form.Control as="select" custom id="newCR-project-manager" name="projectManagerId" onChange={handleChange} type="number">
           {exampleAllUsers.map((p) => (
-            <option key={p.userId}>{fullNamePipe(p)}</option>
+            <option key={p.userId} value={p.userId}>{fullNamePipe(p)}</option>
           ))}
         </Form.Control>
         <Form.Label className={styles.label}>Are the WP details correct?</Form.Label>

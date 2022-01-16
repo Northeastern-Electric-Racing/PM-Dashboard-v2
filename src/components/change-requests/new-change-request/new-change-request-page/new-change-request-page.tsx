@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useAllProjects } from '../../../../services/projects.hooks';
 import { useAllWorkPackages } from '../../../../services/work-packages.hooks';
 import PageBlock from '../../../shared/page-block/page-block';
@@ -16,21 +16,56 @@ import StageGateFormFields from './stage-gate-form-fileds/stage-gate-form-fields
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import styles from './new-change-request-page.module.css';
+import { CR_Type } from '@prisma/client';
 
-export enum FormType {
-  NewFunction = 'New Function', 
-  DesignIssue = 'Design Issue', 
-  Other = 'Other', 
-  Initiation = 'Initiation', 
-  StageGate = 'Stage Gate'
-}
 
 const NewChangeRequestPage: React.FC = () => {
-  const submitHandler = () => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { type } = formData;
+    if (type === CR_Type.ACTIVATION) {
+
+    }
     alert('submitted');
   };
 
-  const [formType, setFormType] = useState(FormType.NewFunction);
+  const handleChange = (e: any) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim()
+    });
+  };
+
+  const updateValue = (name: string, value: any) => {
+    updateFormData({
+      ...formData,
+      [name]: value
+    });
+  }
+
+  const [formData, updateFormData] = useState({
+    projectWBS: 1,
+    workPackageWBS: -1,
+    type: "",
+
+    what: "",
+    scopeImpact: "",
+    timelineImpact: "",
+    budgetImpact: 0,
+    why: [],
+
+    projectLeadId: -1,
+    projectManagerId: -1,
+    startDate: "",
+    confirmDetails: false,
+
+    leftoverBudget: 0,
+    confirmDone: false
+  });
+
+  console.log(formData);
+
+  const [formType, setFormType] = useState<CR_Type>(CR_Type.DEFINITION_CHANGE);
 
   const projectRes = useAllProjects();
   const workPkgsRes = useAllWorkPackages();
@@ -38,11 +73,9 @@ const NewChangeRequestPage: React.FC = () => {
   if (projectRes.isLoading || workPkgsRes.isLoading) return <LoadingIndicator />;
 
   if (projectRes.isError || workPkgsRes.isError) {
-
     if (projectRes.isError !== workPkgsRes.isError) {
       const message = (projectRes.isError) ? projectRes.error?.message : workPkgsRes.error?.message;
       return <ErrorPage message={message} />;
-      
     }
 
     if (projectRes.isError && workPkgsRes.isError) {
@@ -59,6 +92,8 @@ const NewChangeRequestPage: React.FC = () => {
     }
   }
 
+  console.log(projectRes);
+
   return (
     <>
       <PageTitle title={'New Change Request'} />
@@ -66,25 +101,27 @@ const NewChangeRequestPage: React.FC = () => {
         title={''}
         headerRight={<></>}
         body={
-          <>
+          <Form id="createChange" onSubmit={submitHandler}>
             <CommonFormFields setFormType={setFormType} 
               projects={projectRes.data!} 
-              workPkgs={workPkgsRes.data!}/>
+              workPkgs={workPkgsRes.data!}
+              handleChange={handleChange}
+              updateValue={updateValue}/>
 
-            {formType === FormType.StageGate && 
-              <StageGateFormFields/>}
+            {formType === CR_Type.STAGE_GATE && 
+              <StageGateFormFields handleChange={handleChange} updateValue={updateValue}/>}
 
-            {formType !== FormType.StageGate && formType !== FormType.Initiation && 
-              <StandardFormFields/>}
+            {formType !== CR_Type.STAGE_GATE && formType !== CR_Type.ACTIVATION && 
+              <StandardFormFields handleChange={handleChange} updateValue={updateValue}/>}
               
-            {formType === FormType.Initiation && 
-            <ActivationFormFields/>}
-          </>
+            {formType === CR_Type.ACTIVATION && 
+            <ActivationFormFields handleChange={handleChange} updateValue={updateValue}/>}
+            <Button className={styles.submitButton} type="submit">
+              Submit
+            </Button>
+          </Form>
         }
       />
-      <Button className={styles.submitButton} onClick={(e) => submitHandler()}>
-        Submit
-      </Button>
     </>
   );
 };

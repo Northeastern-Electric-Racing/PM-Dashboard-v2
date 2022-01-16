@@ -8,19 +8,24 @@ import { exampleAllWorkPackages } from '../../../../../test-support/test-data/wo
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
 
-const StandardFormFields: React.FC = () => {
+interface IProp {
+  handleChange: (e: any) => void,
+  updateValue: (name: string, value: any) => void
+}
+
+const StandardFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
   return (
     <Form>
       <div className={`${'row'} ${styles.container}`}>
         <div className={'px-4'}>
           <Form.Group controlId="newCR-what">
             <Form.Label>What</Form.Label>
-            <Form.Control as="textarea" rows={3}/>
+            <Form.Control as="textarea" rows={3} name="what" onChange={handleChange}/>
           </Form.Group>
 
           <Form.Group controlId="newCR-scope-impact">
             <Form.Label>Scope Impact</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+            <Form.Control as="textarea" rows={3} name="scopeImpact" onChange={handleChange}/>
           </Form.Group>
           <Form.Row className="align-items-center">
             <Col xs="auto" >
@@ -29,13 +34,13 @@ const StandardFormFields: React.FC = () => {
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl id="newCR-budget-impact"/>
+                <FormControl id="newCR-budget-impact" name="budgetImpact" onChange={handleChange}/>
               </InputGroup>
             </Col>
             <Col xs="auto" >
               <Form.Label>Timeline Impact</Form.Label>
               <InputGroup>
-                <FormControl id="newCR-timeline-impact" />
+                <FormControl id="newCR-timeline-impact" name="timelineImpact" onChange={handleChange}/>
                 <InputGroup.Prepend>
                   <InputGroup.Text>weeks</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -53,6 +58,8 @@ const StandardFormFields: React.FC = () => {
                   type="checkbox"
                   id={type}
                   label={type}
+                  name="why"
+                  onChange={handleChange}
                 />
                 {(type === "Other Project/Work Package") &&
                   <Form.Control as="select" custom

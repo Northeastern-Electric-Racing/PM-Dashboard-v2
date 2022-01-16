@@ -26,6 +26,7 @@ const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 const changeRequests = () => `${API_URL}/change-requests`;
 const changeRequestsById = (id: string) => `${changeRequests()}/${id}`;
 const changeRequestsReview = () => `${changeRequests()}-review`;
+const changeRequestsCreate = () => `${changeRequests()}-new`;
 
 export const apiUrls = {
   users,
@@ -40,5 +41,6 @@ export const apiUrls = {
 
   changeRequests,
   changeRequestsById,
-  changeRequestsReview
+  changeRequestsReview,
+  changeRequestsCreate
 };

@@ -9,42 +9,45 @@ import { exampleAllUsers } from '../../../../../test-support/test-data/users.stu
 import { fullNamePipe } from '../../../../../shared/pipes';
 import styles from './activation-form-fields.module.css';
 
-const ActivationFormFields: React.FC = () => {
+interface IProp {
+  handleChange: (e: any) => void,
+  updateValue: (name: string, value: any) => void
+}
+
+const ActivationFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
   return (
-    <Form>
-      <div className={`row ${styles.container}`}>
-        <div className={'px-4'}>
-          <Form.Group controlId="newCR-project-lead">
-            <Form.Label className={styles.label}>Project Lead</Form.Label>
-            <Form.Control as="select" custom id="newCR-wbs-num">
-              {exampleAllUsers.map((p) => (
-                <option key={p.userId}>{fullNamePipe(p)}</option>
-              ))}
-            </Form.Control>
-
-            <Form.Label className={styles.label}>Start Date</Form.Label>
-            <DatePicker />
-          </Form.Group>
-        </div>
-
-        <div className={'px-4'}>
-          <Form.Label className={styles.label}>Project Manager</Form.Label>
-          <Form.Control as="select" custom id="newCR-project-manager">
+    <div className={`row ${styles.container}`}>
+      <div className={'px-4'}>
+        <Form.Group controlId="newCR-project-lead">
+          <Form.Label className={styles.label}>Project Lead</Form.Label>
+          <Form.Control as="select" custom id="newCR-wbs-num" name="projectLeadId" onChange={handleChange}>
             {exampleAllUsers.map((p) => (
               <option key={p.userId}>{fullNamePipe(p)}</option>
             ))}
           </Form.Control>
-          <Form.Label className={styles.label}>Are the WP details correct?</Form.Label>
-          <Form.Group className={'px-4'} controlId="newCR-wp-details">
-            {['Yes', 'No'].map((type) => (
-              <Row key={type} className="mb-3">
-                <Form.Check type="radio" id={type} label={type} />
-              </Row>
-            ))}
-          </Form.Group>
-        </div>
+
+          <Form.Label className={styles.label}>Start Date</Form.Label>
+          <DatePicker  name="startDate" />
+        </Form.Group>
       </div>
-    </Form>
+
+      <div className={'px-4'}>
+        <Form.Label className={styles.label}>Project Manager</Form.Label>
+        <Form.Control as="select" custom id="newCR-project-manager" name="projectManagerId" onChange={handleChange}>
+          {exampleAllUsers.map((p) => (
+            <option key={p.userId}>{fullNamePipe(p)}</option>
+          ))}
+        </Form.Control>
+        <Form.Label className={styles.label}>Are the WP details correct?</Form.Label>
+        <Form.Group className={'px-4'} controlId="newCR-wp-details">
+          {['Yes', 'No'].map((type) => (
+            <Row key={type} className="mb-3">
+              <Form.Check type="radio" id={type} label={type}  name="confirmDetails" onChange={handleChange}/>
+            </Row>
+          ))}
+        </Form.Group>
+      </div>
+    </div>
   );
 };
 

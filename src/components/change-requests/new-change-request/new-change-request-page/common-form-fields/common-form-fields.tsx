@@ -3,30 +3,42 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
-import { FormType } from '../new-change-request-page';
 import { wbsPipe } from '../../../../../shared/pipes';
 import { Project, WorkPackage } from 'utils';
 import './common-form-fields.module.css';
+import { CR_Type } from '@prisma/client';
 
 interface IProp {
-  setFormType: React.Dispatch<React.SetStateAction<FormType>>,
+  setFormType: React.Dispatch<React.SetStateAction<CR_Type>>,
   projects: Project[],
   workPkgs: WorkPackage[],
+  handleChange: (e: any) => void,
+  updateValue: (name: string, value: any) => void
 }
 
-const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType}) => {
+const crTypeDisplayName = {
+  [CR_Type.DEFINITION_CHANGE]: 'New Function',
+  [CR_Type.ISSUE]: 'Design Issue',
+  [CR_Type.OTHER]: 'Other',
+  [CR_Type.ACTIVATION]: 'Initiation',
+  [CR_Type.STAGE_GATE]: 'Stage Gate',
+}
+
+const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType, handleChange, updateValue}) => {
   const handleFormType = (event: React.ChangeEvent<any>): void => {
     setFormType(event.target.value);
+    handleChange(event);
   }
 
   return (
     <div className={'row'}>
       <div className={'px-4'}>
         Project
-        <Form.Control as="select" custom>
+        <Form.Control as="select" custom name="projectWBS" type="number" onChange={handleChange}>
           {projects.map((p, index) => (
-            <option>
+            <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
           ))}
@@ -34,9 +46,10 @@ const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType}) =>
       </div>
       <div className={'px-4'}>
         Work Package
-        <Form.Control as="select" custom>
+        <Form.Control as="select" custom name="workPackageWBS" type="number" onChange={handleChange}>
+          <option value="-1">No Work Package Selected</option>
           {workPkgs.map((p, index) => (
-            <option>
+            <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
           ))}
@@ -44,9 +57,9 @@ const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType}) =>
       </div>
       <div className={'px-4'}>
         Form Type
-        <Form.Control as="select" custom onChange={handleFormType} data-testid="formType">
-          {Object.values(FormType).map((t) => (
-            <option>{t}</option>
+        <Form.Control as="select" custom onChange={handleFormType} data-testid="formType" name="type">
+          {Object.values(CR_Type).map((t) => (
+            <option value={t}>{crTypeDisplayName[t]}</option>
           ))}
         </Form.Control>
       </div>

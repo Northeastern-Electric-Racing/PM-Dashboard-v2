@@ -6,49 +6,57 @@
 import { Form, FormControl, InputGroup, Row } from 'react-bootstrap';
 import styles from './stage-gate-form-fields.module.css';
 
-const StageGateFormFields: React.FC = () => {
+interface IProp {
+  handleChange: (e: any) => void,
+  updateValue: (name: string, value: any) => void
+}
+
+const StageGateFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
   return (
-    <Form>
-      <div className={styles.container}>
-        <div className={'px-4'}>
-          <Form.Group controlId="newCR-project-design-review">
-            <Form.Label className={styles.label}>Who is Required for Design Review?</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+    <div className={styles.container}>
+      <div className={'px-4'}>
+        <Form.Group controlId="newCR-project-design-review">
 
-            <Form.Label className={styles.label}>Leftover Budget</Form.Label>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>$</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl id="newCR-leftover-budget" />
-            </InputGroup>
-          </Form.Group>
-        </div>
+          {/* This is not part of the activation currently. TODO */}
 
-        <div className={'px-4'}>
-          <Form.Label className={styles.label}>Is everything done?</Form.Label>
-          <ul>
-            <li>Completed WP deliverable</li>
-            <li>Ensure rules compliance</li>
-            <li>Creating any outstanding change requests</li>
-            <li>Submitted all receipts to the procurement form</li>
-            <li>Updated slide deck & documentation</li>
-            <li>Completed all bullets and WP description</li>
-          </ul>
-          <Form.Group className={'px-4'} controlId="newCR-requirements">
-            {['Yes', 'No'].map((type) => (
-              <Row key={type} className="mb-3">
-                <Form.Check
-                  type="radio"
-                  id={type}
-                  label={type}
-                />
-              </Row>
-            ))}
-          </Form.Group>
-        </div>
+          <Form.Label className={styles.label}>Who is Required for Design Review?</Form.Label>
+          <Form.Control as="textarea" rows={3} name=""/>
+
+          <Form.Label className={styles.label}>Leftover Budget</Form.Label>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text>$</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl id="newCR-leftover-budget" name="leftoverBudget" type="number" onChange={handleChange}/>
+          </InputGroup>
+        </Form.Group>
       </div>
-    </Form>
+
+      <div className={'px-4'}>
+        <Form.Label className={styles.label}>Is everything done?</Form.Label>
+        <ul>
+          <li>Completed WP deliverable</li>
+          <li>Ensure rules compliance</li>
+          <li>Creating any outstanding change requests</li>
+          <li>Submitted all receipts to the procurement form</li>
+          <li>Updated slide deck & documentation</li>
+          <li>Completed all bullets and WP description</li>
+        </ul>
+        <Form.Group className={'px-4'} controlId="newCR-requirements">
+          {['Yes', 'No'].map((type) => (
+            <Row key={type} className="mb-3">
+              <Form.Check
+                type="radio"
+                id={type}
+                label={type}
+                name="confirmDone"
+                onChange={handleChange}
+              />
+            </Row>
+          ))}
+        </Form.Group>
+      </div>
+    </div>
   );
 };
 

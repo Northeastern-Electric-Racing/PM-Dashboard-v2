@@ -3,8 +3,11 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { CR_Type } from '@prisma/client';
 import axios from 'axios';
+import { NewStandardChangeRequestPayload } from 'utils';
 import { ChangeRequest } from 'utils';
+import { NewActivationChangeRequestPayload, NewStageRequestChangeRequestPayload } from 'utils/src';
 import { apiUrls } from '../shared/urls';
 import { changeRequestTransformer } from './transformers/change-requests.transformers';
 
@@ -40,5 +43,29 @@ export const reviewChangeRequest = (crId: number, accepted: boolean, reviewNotes
     crId,
     accepted,
     reviewNotes
+  });
+};
+
+
+/**
+ * Create a change request.
+ *
+ * @param submitterId The ID of the change request being reviewed.
+ * @param wbsElementId Is the change request being accepted?
+ * @param type The notes attached to reviewing the change request.
+ * @param payload
+ * 
+ * TODO
+ */
+ export const createChangeRequest = (
+    submitterId: number, 
+    wbsElementId: number, 
+    type: CR_Type,
+    payload: NewStandardChangeRequestPayload | NewActivationChangeRequestPayload | NewStageRequestChangeRequestPayload) => {
+  return axios.post<{ message: string }>(apiUrls.changeRequestsReview(), {
+    submitterId,
+    wbsElementId,
+    type,
+    payload
   });
 };

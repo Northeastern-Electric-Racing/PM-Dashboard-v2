@@ -6,6 +6,7 @@
 import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
+import { CR_Type, Scope_CR_Why_Type } from '@prisma/client';
 
 export interface ChangeRequest {
   crId: number;
@@ -81,4 +82,106 @@ export const reviewChangeRequestPayloadSchema = {
   additionalProperties: false
 } as const;
 
+
+export const newStandardChangeRequestPayloadSchema = {
+  type: 'object',
+  properties: {
+    type: { 
+      type: 'string', 
+      enum: [
+              CR_Type.OTHER, 
+              CR_Type.ISSUE, 
+              CR_Type.DEFINITION_CHANGE
+            ] },
+    what: { type: 'string' },
+    scopeImpact: { type: 'string' },
+    timelineImpact: { type: 'integer', minimum: 0 },
+    budgetImpact: { type: 'integer', minimum: 0 },
+    why: {
+      type: 'array',
+      items: {
+        additionalProperties: false,
+        type: 'object',
+        properties: {
+          explain: { type: 'string' },
+          type: {
+            type: 'string',
+            enum: [
+              Scope_CR_Why_Type.ESTIMATION,
+              Scope_CR_Why_Type.MANUFACTURING,
+              Scope_CR_Why_Type.OTHER,
+              Scope_CR_Why_Type.OTHER_PROJECT,
+              Scope_CR_Why_Type.RULES,
+              Scope_CR_Why_Type.SCHOOL
+            ]
+          }
+        },
+        required: ['explain', 'type']
+      },
+      minItems: 1,
+      uniqueItems: true
+    },
+  },
+  required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why'],
+  additionalProperties: false,
+} as const;
+
+export const newActivationChangeRequestPayloadSchema = {
+  type: 'object',
+  properties: {
+    type: { type: 'string', enum: [CR_Type.ACTIVATION] },
+    projectLeadId: { type: 'integer', minimum: 0 },
+    projectManagerId: { type: 'integer', minimum: 0 },
+    startDate: { type: 'string', format: 'date' },
+    confirmDetails: { type: 'boolean' }
+  },
+  required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails'],
+  additionalProperties: false,
+} as const;
+
+export const newStageChangeRequestPayloadSchema = {
+  type: 'object',
+  properties: {
+    type: { type: 'string', enum: [CR_Type.STAGE_GATE] },
+    leftoverBudget: { type: 'integer', minimum: 0 },
+    confirmDone: { type: 'boolean' }
+  },
+  required: ['leftoverBudget', 'confirmDone'],
+  additionalProperties: false,
+} as const;
+
+export const newChangeRequestPayloadSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    submitterId: { type: 'integer', minimum: 0 },
+    wbsElementId: { type: 'integer', minimum: 0 },
+    type: {
+      enum: [
+        CR_Type.ACTIVATION,
+        CR_Type.STAGE_GATE,
+        CR_Type.OTHER,
+        CR_Type.ISSUE,
+        CR_Type.DEFINITION_CHANGE
+      ]
+    },
+    payload: {
+      oneOf: [
+        newStandardChangeRequestPayloadSchema,
+        newActivationChangeRequestPayloadSchema,
+        newStageChangeRequestPayloadSchema
+      ]
+    }
+  },
+  required: ['submitterId', 'wbsElementId', 'type', 'payload'],
+} as const;
+
 export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;
+
+export type NewStandardChangeRequestPayload = FromSchema<typeof newStandardChangeRequestPayloadSchema>;
+
+export type NewActivationChangeRequestPayload = FromSchema<typeof newActivationChangeRequestPayloadSchema>;
+
+export type NewStageRequestChangeRequestPayload = FromSchema<typeof newStageChangeRequestPayloadSchema>;
+
+export type NewChangeRequestPayload = FromSchema<typeof newChangeRequestPayloadSchema>;

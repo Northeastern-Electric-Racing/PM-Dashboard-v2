@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
@@ -11,7 +11,7 @@ import LoadingIndicator from '../../../shared/loading-indicator/loading-indicato
 import DescriptionList from '../../../shared/description-list/description-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
-import ActionButtons from './action-buttons/action-buttons';
+import WorkPackageButtons from './work-package-buttons/work-package-buttons';
 import WorkPackageDetails from './work-package-details/work-package-details';
 import DependenciesList from './dependencies-list/dependencies-list';
 import ChangesList from './changes-list/changes-list';
@@ -31,10 +31,6 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
   const [editMode, setEditMode] = useState(false);
 
-  useEffect(() => {
-    setEditMode(false);
-  }, [wbsNum]);
-
   if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
@@ -43,7 +39,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
     <EditModeContext.Provider value={editMode}>
       <div className="mb-5">
         <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-        <ActionButtons changeEditMode={() => setEditMode(true)} />
+        <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
         <WorkPackageDetails workPackage={data!} />
         <DependenciesList dependencies={data!.dependencies} />
         <DescriptionList

@@ -13,7 +13,7 @@ import {
 } from '../../../../../test-support/test-data/work-packages.stub';
 import WorkPackageDetails from './work-package-details';
 
-describe('Rendering Work Packagae Details Component', () => {
+describe('Rendering Work Package Details Component', () => {
   it('renders all the fields, example 1', () => {
     const wp: WorkPackage = exampleWorkPackage1;
     render(<WorkPackageDetails workPackage={wp} />);

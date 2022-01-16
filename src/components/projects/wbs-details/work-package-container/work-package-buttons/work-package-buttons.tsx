@@ -1,15 +1,18 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { EditModeContext, EditModeProps } from '../work-package-container';
-import styles from './action-buttons.module.css';
+import styles from './work-package-buttons.module.css';
 
-const ActionButtons: React.FC<EditModeProps> = (props) => {
+const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
   const editMode = useContext(EditModeContext);
   return (
     <div className={`mx-4 my-3 ${styles.workPackageActionButtonsContainer}`}>
       <Button className={styles.workPackageActionButton}>New Change Request</Button>
-      <Button className={styles.workPackageActionButton}>Stage Gate</Button>
-      <Button className={styles.workPackageActionButton}>Update Progress</Button>
       <Button
         className={styles.workPackageActionButton}
         style={{ alignSelf: 'flex-end' }}
@@ -22,4 +25,4 @@ const ActionButtons: React.FC<EditModeProps> = (props) => {
   );
 };
 
-export default ActionButtons;
+export default WorkPackageButtons;

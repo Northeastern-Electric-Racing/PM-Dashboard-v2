@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useAuth } from '../../../services/auth.hooks';
 import { useReviewChangeRequest } from '../../../services/change-requests.hooks';
 import { routes } from '../../../shared/routes';
 import ErrorPage from '../../shared/error-page/error-page';
@@ -23,6 +24,7 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
   }
   const { id } = useParams<ParamTypes>();
   const crId = parseInt(id);
+  const auth = useAuth();
   const history = useHistory();
   const [reviewNotes, setReviewNotes] = useState('');
   const { isLoading, isError, error, mutateAsync } = useReviewChangeRequest();
@@ -31,7 +33,12 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
 
   const handleConfirm = async (e: any) => {
     e.preventDefault();
-    await mutateAsync({ crId, reviewNotes, accepted: option === 'Accept' });
+    await mutateAsync({
+      reviewerId: auth.user?.userId,
+      crId,
+      reviewNotes,
+      accepted: option === 'Accept'
+    });
     backToChangeRequestPage();
   };
 

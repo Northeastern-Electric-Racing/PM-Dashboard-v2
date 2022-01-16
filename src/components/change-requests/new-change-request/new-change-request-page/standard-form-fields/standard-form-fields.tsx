@@ -7,13 +7,31 @@ import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
+import { Scope_CR_Why_Type } from '@prisma/client';
 
 interface IProp {
   handleChange: (e: any) => void,
-  updateValue: (name: string, value: any) => void
 }
 
-const StandardFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
+const whyInputName = {
+  [Scope_CR_Why_Type.ESTIMATION]: 'estimation_error', 
+  [Scope_CR_Why_Type.SCHOOL]: 'school_work', 
+  [Scope_CR_Why_Type.MANUFACTURING]: 'manufacturing_issues', 
+  [Scope_CR_Why_Type.RULES]: 'rules_compliance', 
+  [Scope_CR_Why_Type.OTHER_PROJECT]: 'other_project', 
+  [Scope_CR_Why_Type.OTHER]: 'other'
+}
+
+const whyInputDisplay = {
+  [Scope_CR_Why_Type.ESTIMATION]: 'Estimation Error', 
+  [Scope_CR_Why_Type.SCHOOL]: 'School Work', 
+  [Scope_CR_Why_Type.MANUFACTURING]: 'Manufacturing Issues', 
+  [Scope_CR_Why_Type.RULES]: 'Rules Compliance', 
+  [Scope_CR_Why_Type.OTHER_PROJECT]: 'Other Project/Work Package', 
+  [Scope_CR_Why_Type.OTHER]: 'Other'
+}
+
+const StandardFormFields: React.FC<IProp> = ({handleChange}) => {
   return (
     <Form>
       <div className={`${'row'} ${styles.container}`}>
@@ -34,13 +52,13 @@ const StandardFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl id="newCR-budget-impact" name="budgetImpact" onChange={handleChange}/>
+                <FormControl id="newCR-budget-impact" name="budgetImpact" onChange={handleChange} type="number"/>
               </InputGroup>
             </Col>
             <Col xs="auto" >
               <Form.Label>Timeline Impact</Form.Label>
               <InputGroup>
-                <FormControl id="newCR-timeline-impact" name="timelineImpact" onChange={handleChange}/>
+                <FormControl id="newCR-timeline-impact" name="timelineImpact" onChange={handleChange} type="number"/>
                 <InputGroup.Prepend>
                   <InputGroup.Text>weeks</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -52,24 +70,25 @@ const StandardFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
         <div className={'px-4'}>
           <Form.Label>Why</Form.Label>
           <Form.Group className={'px-4'} controlId="newCR-type">
-            {['Estimation Error', 'School Work', 'Manufacturing Issues', 'Rules Compliance', 'Other Project/Work Package', 'Other'].map((type) => (
+            {Object.values(Scope_CR_Why_Type).map((type) => (
               <Row key={type} className="mb-3">
                 <Form.Check
                   type="checkbox"
-                  id={type}
-                  label={type}
-                  name="why"
+                  id={whyInputName[type] + '_id'}
+                  label={whyInputDisplay[type]}
+                  name={whyInputName[type]}
                   onChange={handleChange}
+                  data-checktype={type}
                 />
-                {(type === "Other Project/Work Package") &&
+                {(type === Scope_CR_Why_Type.OTHER_PROJECT) &&
                   <Form.Control as="select" custom
-                    id="newCR-wbs-num">
+                    id="newCR-wbs-num" name={whyInputName[type] + '_explain'} onChange={handleChange}>
                     {exampleAllWorkPackages.map((p) => (
                       <option key={p.id}>{wbsPipe(p.wbsNum)}</option>
                     ))}
                   </Form.Control>}
-                {(type === "Other") && <Form.Control type="text"
-                  id="newCR-other-type" />}
+                {(type === Scope_CR_Why_Type.OTHER) && <Form.Control type="text"
+                  id="newCR-other-type" name={whyInputName[type] + '_explain'} onChange={handleChange} />}
               </Row>
             ))}
           </Form.Group>

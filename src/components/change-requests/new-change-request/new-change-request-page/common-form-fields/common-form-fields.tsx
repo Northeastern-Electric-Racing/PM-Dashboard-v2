@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { wbsPipe } from '../../../../../shared/pipes';
 import { Project, WorkPackage } from 'utils';
@@ -15,7 +14,6 @@ interface IProp {
   projects: Project[],
   workPkgs: WorkPackage[],
   handleChange: (e: any) => void,
-  updateValue: (name: string, value: any) => void
 }
 
 const crTypeDisplayName = {
@@ -26,7 +24,7 @@ const crTypeDisplayName = {
   [CR_Type.STAGE_GATE]: 'Stage Gate',
 }
 
-const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType, handleChange, updateValue}) => {
+const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType, handleChange}) => {
   const handleFormType = (event: React.ChangeEvent<any>): void => {
     setFormType(event.target.value);
     handleChange(event);

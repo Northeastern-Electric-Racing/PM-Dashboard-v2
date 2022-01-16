@@ -11,10 +11,10 @@ import styles from './activation-form-fields.module.css';
 
 interface IProp {
   handleChange: (e: any) => void,
-  updateValue: (name: string, value: any) => void
+  handleStartDateChange: (d: Date) => void
 }
 
-const ActivationFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
+const ActivationFormFields: React.FC<IProp> = ({handleChange, handleStartDateChange}) => {
   return (
     <div className={`row ${styles.container}`}>
       <div className={'px-4'}>
@@ -27,7 +27,7 @@ const ActivationFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
           </Form.Control>
 
           <Form.Label className={styles.label}>Start Date</Form.Label>
-          <DatePicker  name="startDate" />
+          <DatePicker name="startDate" onChange={handleStartDateChange} />
         </Form.Group>
       </div>
 
@@ -42,7 +42,7 @@ const ActivationFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
         <Form.Group className={'px-4'} controlId="newCR-wp-details">
           {['Yes', 'No'].map((type) => (
             <Row key={type} className="mb-3">
-              <Form.Check type="radio" id={type} label={type}  name="confirmDetails" onChange={handleChange}/>
+              <Form.Check type="radio" id={type} label={type}  name="confirmDetails" onChange={handleChange} defaultChecked={type === 'No'}/>
             </Row>
           ))}
         </Form.Group>

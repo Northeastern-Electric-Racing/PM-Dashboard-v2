@@ -132,7 +132,7 @@ export const newActivationChangeRequestPayloadSchema = {
     type: { type: 'string', enum: [CR_Type.ACTIVATION] },
     projectLeadId: { type: 'integer', minimum: 0 },
     projectManagerId: { type: 'integer', minimum: 0 },
-    startDate: { type: 'string', format: 'date' },
+    startDate: { type: 'string' },
     confirmDetails: { type: 'boolean' }
   },
   required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails'],

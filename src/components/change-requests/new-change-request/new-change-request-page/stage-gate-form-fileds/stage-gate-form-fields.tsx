@@ -8,10 +8,9 @@ import styles from './stage-gate-form-fields.module.css';
 
 interface IProp {
   handleChange: (e: any) => void,
-  updateValue: (name: string, value: any) => void
 }
 
-const StageGateFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
+const StageGateFormFields: React.FC<IProp> = ({handleChange}) => {
   return (
     <div className={styles.container}>
       <div className={'px-4'}>
@@ -43,15 +42,10 @@ const StageGateFormFields: React.FC<IProp> = ({handleChange, updateValue}) => {
           <li>Completed all bullets and WP description</li>
         </ul>
         <Form.Group className={'px-4'} controlId="newCR-requirements">
-          {['Yes', 'No'].map((type) => (
+        {['Yes', 'No'].map((type) => (
             <Row key={type} className="mb-3">
-              <Form.Check
-                type="radio"
-                id={type}
-                label={type}
-                name="confirmDone"
-                onChange={handleChange}
-              />
+              <Form.Check type="radio" id={type} label={type}  
+              name="confirmDone" onChange={handleChange} value={(type === 'Yes') ? "true" : "false"} defaultChecked={type === 'No'}/>
             </Row>
           ))}
         </Form.Group>

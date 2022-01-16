@@ -12,10 +12,19 @@ import { projectTransformer } from './transformers/projects.transformers';
 /**
  * Fetches all projects.
  */
-export const getAllProjects = () => {
-  return axios.get<Project[]>(apiUrls.projects(), {
+export const getAllProjects = (onSuccess?: (value: any) => void) => {
+
+  const projects = axios.get<Project[]>(apiUrls.projects(), {
     transformResponse: (data) => JSON.parse(data).map(projectTransformer)
   });
+
+  if (onSuccess) {
+    projects.then(response => {
+      onSuccess!(response);
+    });
+  }
+
+  return projects;
 };
 
 /**

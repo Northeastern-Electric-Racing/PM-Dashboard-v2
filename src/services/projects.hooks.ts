@@ -10,8 +10,13 @@ import { getAllProjects, getSingleProject } from './projects.api';
 /**
  * Custom React Hook to supply all projects.
  */
-export const useAllProjects = () => {
+export const useAllProjects = (onSuccess?: (value: any) => void) => {
   return useQuery<Project[], Error>('projects', async () => {
+    if (onSuccess) {
+      const { data } = await getAllProjects(onSuccess);
+      return data;
+    }
+
     const { data } = await getAllProjects();
     return data;
   });

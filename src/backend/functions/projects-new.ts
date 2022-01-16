@@ -9,7 +9,12 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
-import { buildClientFailureResponse, buildNotFoundResponse, buildSuccessResponse } from 'utils';
+import {
+  buildClientFailureResponse,
+  buildNotFoundResponse,
+  buildSuccessResponse,
+  createProjectPayloadSchema
+} from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -93,18 +98,9 @@ export const baseHandler: Handler = async ({ body }, _context) => {
 const inputSchema = {
   type: 'object',
   properties: {
-    body: {
-      type: 'object',
-      properties: {
-        userId: { type: 'integer', minimum: 0 },
-        crId: { type: 'integer', minimum: 0 },
-        name: { type: 'string' },
-        carNumber: { type: 'integer', minimum: 0 },
-        summary: { type: 'string' }
-      },
-      required: ['userId', 'crId', 'name', 'carNumber', 'summary']
-    }
-  }
+    body: createProjectPayloadSchema
+  },
+  required: ['body']
 };
 
 const handler = middy(baseHandler)

@@ -4,16 +4,13 @@
  */
 
 import { WorkPackage } from 'utils';
-import {
-  wbsPipe,
-  endDatePipe,
-  fullNamePipe,
-  listPipe
-} from '../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, fullNamePipe, listPipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
 import EditableDetail from '../../../../shared/editable-detail/editable-detail';
+import { EditModeContext } from '../work-package-container';
+import { useContext } from 'react';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
@@ -68,10 +65,29 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     </Container>
   );
 
+  const editMode = useContext(EditModeContext);
+  const statuses = ['Inactive', 'Active', 'Complete'];
+  const index = statuses.indexOf(`${workPackage.status}`);
+  statuses.splice(index, 1);
+
   return (
     <PageBlock
       title={'Work Package Details'}
-      headerRight={<b>{workPackage.status}</b>}
+      headerRight={
+        editMode ? (
+          <div>
+            <label>Status</label>
+            <Form.Control as="select">
+              <option>{workPackage.status}</option>
+              {statuses.map((status) => (
+                <option>{status}</option>
+              ))}
+            </Form.Control>
+          </div>
+        ) : (
+          <b>{workPackage.status}</b>
+        )
+      }
       body={detailsBody}
     />
   );

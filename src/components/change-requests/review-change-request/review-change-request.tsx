@@ -33,6 +33,8 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
 
   const handleConfirm = async (e: any) => {
     e.preventDefault();
+    if (auth.user?.userId === undefined)
+      throw new Error('Cannot review change request without being logged in');
     await mutateAsync({
       reviewerId: auth.user?.userId,
       crId,

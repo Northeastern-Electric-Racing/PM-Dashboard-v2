@@ -20,7 +20,7 @@ const prisma = new PrismaClient();
 // handle reviewing of change requests
 export const reviewChangeRequest: Handler = async ({ body }, _context) => {
   // TODO: validate authorization
-  const { crId, reviewNotes, accepted } = body;
+  const { reviewerId, crId, reviewNotes, accepted } = body;
 
   // ensure existence of change request
   const foundCR = prisma.change_Request.findUnique({ where: { crId } });
@@ -29,10 +29,15 @@ export const reviewChangeRequest: Handler = async ({ body }, _context) => {
   // update change request
   const update = await prisma.change_Request.update({
     where: { crId },
-    data: { reviewNotes, accepted, dateReviewed: new Date() }
+    data: {
+      reviewer: { connect: { userId: reviewerId } },
+      reviewNotes,
+      accepted,
+      dateReviewed: new Date()
+    }
   });
 
-  // TODO: consider transformer or other possible return body
+  // TODO: handle errors
   return buildSuccessResponse({ message: `Change request #${update.crId} successfully reviewed.` });
 };
 

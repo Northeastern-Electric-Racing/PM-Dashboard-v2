@@ -3,19 +3,20 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import PageBlock from "../../../../shared/page-block/page-block";
+import { User } from 'utils';
+import { fullNamePipe } from '../../../../../shared/pipes';
+import PageBlock from '../../../../shared/page-block/page-block';
 
 interface ReviewNotesProps {
-  reviewNotes?: string
+  reviewer?: User;
+  reviewNotes?: string;
 }
 
-const ReviewNotes: React.FC<ReviewNotesProps> = ({
-  reviewNotes
-}: ReviewNotesProps) => {
+const ReviewNotes: React.FC<ReviewNotesProps> = ({ reviewer, reviewNotes }: ReviewNotesProps) => {
   return (
     <PageBlock
       title={'Review Notes'}
-      headerRight={<></>}
+      headerRight={<>{fullNamePipe(reviewer)}</>}
       body={
         <p>{reviewNotes ? reviewNotes : 'There are no review notes for this change request.'}</p>
       }

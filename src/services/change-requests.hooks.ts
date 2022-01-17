@@ -41,6 +41,7 @@ export const useReviewChangeRequest = () => {
     ['reviewCR'],
     async (reviewPayload: ReviewChangeRequestPayload) => {
       const { data } = await reviewChangeRequest(
+        reviewPayload.reviewerId,
         reviewPayload.crId,
         reviewPayload.accepted,
         reviewPayload.reviewNotes

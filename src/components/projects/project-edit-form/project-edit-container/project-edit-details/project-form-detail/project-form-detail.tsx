@@ -99,4 +99,3 @@ class Modifier {
   };
   
   export default ProjectFormDetail;
-  

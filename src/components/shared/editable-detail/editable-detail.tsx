@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
 

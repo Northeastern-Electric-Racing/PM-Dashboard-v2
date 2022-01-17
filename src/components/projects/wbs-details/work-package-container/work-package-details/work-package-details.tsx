@@ -4,13 +4,14 @@
  */
 
 import { WorkPackage } from 'utils';
-import { wbsPipe, endDatePipe, fullNamePipe, listPipe } from '../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
 import EditableDetail from '../../../../shared/editable-detail/editable-detail';
 import { EditModeContext } from '../work-package-container';
 import { useContext } from 'react';
+import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
@@ -26,7 +27,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             <EditableDetail title="WBS #" value={wbsPipe(workPackage.wbsNum)} type="text" />
             <EditableDetail
               title="Project Lead"
-              value={listPipe(workPackage.projectLead, fullNamePipe)}
+              value={fullNamePipe(workPackage.projectLead)}
               type="text"
             />
             <EditableDetail
@@ -66,8 +67,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   );
 
   const editMode = useContext(EditModeContext);
-  const statuses = ['Inactive', 'Active', 'Complete'];
-  const index = statuses.indexOf(`${workPackage.status}`);
+  const statuses = Object.values(WbsElementStatus);
+  const index = statuses.indexOf(workPackage.status);
   statuses.splice(index, 1);
 
   return (

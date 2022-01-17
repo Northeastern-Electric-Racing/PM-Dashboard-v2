@@ -5,14 +5,24 @@
 
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { EditModeContext, EditModeProps } from '../work-package-container';
 import styles from './work-package-buttons.module.css';
 
 const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
   const editMode = useContext(EditModeContext);
+  const history = useHistory();
+
   return (
     <div className={`mx-4 my-3 ${styles.workPackageActionButtonsContainer}`}>
-      <Button className={styles.workPackageActionButton}>New Change Request</Button>
+      <Button
+        className={styles.workPackageActionButton}
+        onClick={() => {
+          history.push('/change-requests/new');
+        }}
+      >
+        New Change Request
+      </Button>
       <Button
         className={styles.workPackageActionButton}
         style={{ alignSelf: 'flex-end' }}

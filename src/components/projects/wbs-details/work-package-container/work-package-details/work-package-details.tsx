@@ -24,7 +24,12 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
         <Row>
           <Col xs={12} md={6}>
             <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
-            <EditableDetail title="WBS #" value={wbsPipe(workPackage.wbsNum)} type="text" />
+            <EditableDetail
+              title="WBS #"
+              value={wbsPipe(workPackage.wbsNum)}
+              type="text"
+              readOnly={true}
+            />
             <EditableDetail
               title="Project Lead"
               value={fullNamePipe(workPackage.projectLead)}

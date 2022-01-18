@@ -25,7 +25,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   const editMode = useContext(EditModeContext);
   const detailInput = (
     <InputGroup>
-      <FormControl type={type} placeholder={value} />
+      <FormControl type={type} defaultValue={value} placeholder={value} />
       {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : ''}
     </InputGroup>
   );

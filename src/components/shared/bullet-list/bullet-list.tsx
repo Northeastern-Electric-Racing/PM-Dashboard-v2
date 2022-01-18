@@ -28,7 +28,7 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
   let listPrepared = list.map((bullet, idx) =>
     editMode && !readOnly ? (
       <InputGroup>
-        <Form.Control type="text" placeholder={bullet.props.children} key={`${idx}`} />
+        <Form.Control type="text" defaultValue={bullet.props.children} placeholder={bullet.props.children} key={idx} />
         <Button variant="danger">X</Button>
       </InputGroup>
     ) : (

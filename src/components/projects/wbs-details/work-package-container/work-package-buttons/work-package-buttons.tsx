@@ -4,7 +4,7 @@
  */
 
 import { useContext } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { EditModeContext, EditModeProps } from '../work-package-container';
 import styles from './work-package-buttons.module.css';
@@ -31,6 +31,11 @@ const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
       >
         Edit
       </Button>
+      {editMode ? (
+        <Form.Control className="w-25" type="number" placeholder="Change Request ID #" />
+      ) : (
+        ''
+      )}
     </div>
   );
 };

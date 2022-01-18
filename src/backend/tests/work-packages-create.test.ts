@@ -4,7 +4,7 @@
  */
 
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
-import { createWorkPackage, handler } from '../functions/work-packages-create';
+import { handler } from '../functions/work-packages-create';
 
 describe('work package create', () => {
   describe('handler', () => {
@@ -20,8 +20,8 @@ describe('work package create', () => {
         startDate: '2015-10-06',
         duration: 1,
         wbsElementIds: [1],
-        expectedActivities: [1],
-        deliverables: [1]
+        expectedActivities: ['abc'],
+        deliverables: ['def']
       };
 
       it('fails when empty body', async () => {
@@ -38,6 +38,12 @@ describe('work package create', () => {
 
       it('fails when wbsElementIds has non numbers', async () => {
         const res = await func({ body: { ...goodBody, wbsElementIds: ['abc', 'def'] } });
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toBe('Event object failed validation');
+      });
+
+      it('fails when duration is negative', async () => {
+        const res = await func({ body: { ...goodBody, duration: -1 } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });

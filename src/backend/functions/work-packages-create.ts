@@ -10,6 +10,7 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient, WBS_Element_Status } from '@prisma/client';
 import { buildSuccessResponse } from 'utils';
+import { workPackageInputSchemaBody } from 'utils/src/types/work-package-types';
 
 const prisma = new PrismaClient();
 
@@ -43,8 +44,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
           carNumber,
           projectNumber,
           workPackageNumber: workPackageNumber + 1,
-          name: body.name,
-          status: WBS_Element_Status.ACTIVE
+          name: body.name
         }
       },
       project: {
@@ -56,21 +56,18 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
       duration: body.duration,
       orderInProject: project.workPackages.length,
       dependencies: {
-        connect: body.wbsElementIds.map((ele: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          wbsElementId: ele;
+        connect: body.wbsElementIds.map((x: any) => {
+          return { wbsElementId: x };
         })
       },
       expectedActivities: {
         create: body.expectedActivities.map((x: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          detail: x;
+          return { detail: x };
         })
       },
       deliverables: {
         create: body.deliverables.map((x: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          detail: x;
+          return { detail: x };
         })
       }
     }
@@ -79,47 +76,11 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   return buildSuccessResponse(created);
 };
 
+// expected structure of json body
 const inputSchema = {
   type: 'object',
   properties: {
-    body: {
-      type: 'object',
-      properties: {
-        userId: { type: 'number', minimum: 0 },
-        name: { type: 'string' },
-        projectId: { type: 'number', minimum: 0 },
-        startDate: { type: 'string', format: 'date' },
-        duration: { type: 'number', minimum: 0 },
-        wbsElementIds: {
-          type: 'array',
-          items: {
-            type: 'number'
-          }
-        },
-        expectedActivities: {
-          type: 'array',
-          items: {
-            type: 'number'
-          }
-        },
-        deliverables: {
-          type: 'array',
-          items: {
-            type: 'number'
-          }
-        }
-      },
-      required: [
-        'userId',
-        'name',
-        'projectId',
-        'startDate',
-        'duration',
-        'wbsElementIds',
-        'expectedActivities',
-        'deliverables'
-      ]
-    }
+    body: workPackageInputSchemaBody
   }
 };
 

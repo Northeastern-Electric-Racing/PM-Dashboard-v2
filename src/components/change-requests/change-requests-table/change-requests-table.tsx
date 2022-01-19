@@ -124,6 +124,7 @@ const ChangeRequestsTable: React.FC = () => {
   if (isError) return <ErrorPage message={error?.message} />;
 
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
+    console.log(changeRequests);
     return changeRequests.map((cr: ChangeRequest) => {
       return {
         id: cr.crId,
@@ -131,7 +132,7 @@ const ChangeRequestsTable: React.FC = () => {
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,
         dateReviewed: cr.dateReviewed ? new Date(cr.dateReviewed).toLocaleDateString() : '',
-        accepted: cr.accepted ? booleanPipe(cr.accepted) : '',
+        accepted: cr.accepted !== undefined ? booleanPipe(cr.accepted) : '',
         dateImplemented: cr.dateImplemented ? new Date(cr.dateImplemented).toLocaleDateString() : ''
       };
     }) as DisplayChangeRequest[];

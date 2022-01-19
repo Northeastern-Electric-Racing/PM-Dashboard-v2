@@ -124,7 +124,6 @@ const ChangeRequestsTable: React.FC = () => {
   if (isError) return <ErrorPage message={error?.message} />;
 
   const transformToDisplayChangeRequests = (changeRequests: ChangeRequest[]) => {
-    console.log(changeRequests);
     return changeRequests.map((cr: ChangeRequest) => {
       return {
         id: cr.crId,

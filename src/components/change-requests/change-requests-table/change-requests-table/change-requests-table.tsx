@@ -10,6 +10,7 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import styles from './change-requests-table.module.css';
+import { routes } from '../../../../shared/routes';
 
 export interface DisplayChangeRequest {
   id: number;
@@ -54,7 +55,7 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
   // define what happens during various row events
   const rowEvents: RowEventHandlerProps = {
     onClick: (e, row, rowIndex) => {
-      history.push(`/change-requests/${row.id}`);
+      history.push(`${routes.CHANGE_REQUESTS}/${row.id}`);
     }
   };
 

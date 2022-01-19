@@ -126,6 +126,7 @@ const dbSeedChangeRequest3: any = {
   wbsElementId: 7,
   changeRequestFields: {
     type: CR_Type.OTHER,
+    dateReviewed: new Date('01/15/22'),
     accepted: false,
     reviewNotes: 'Instron preferrable for data, this is not a hurry. No action required.'
   },

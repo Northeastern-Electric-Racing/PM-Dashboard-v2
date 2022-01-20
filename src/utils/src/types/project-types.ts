@@ -45,16 +45,6 @@ export interface Project extends WbsElement {
   workPackages: WorkPackage[];
 }
 
-export interface WorkPackageSummary {
-  id: number;
-  wbsNum: WbsNumber;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  duration: number;
-  dependencies: WbsNumber[];
-}
-
 export interface WorkPackage extends WbsElement {
   orderInProject: number;
   progress: number;

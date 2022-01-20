@@ -36,10 +36,10 @@ describe('Rendering Work Package Summary Test', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    wp.expectedActivities.slice(0, 3).map((expectedActivity) => {
+    wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();
     });
-    wp.deliverables.slice(0, 3).map((deliverable) => {
+    wp.deliverables.slice(0, 3).forEach((deliverable) => {
       expect(screen.getByText(`${deliverable.detail}`)).toBeInTheDocument();
     });
   });
@@ -57,10 +57,10 @@ describe('Rendering Work Package Summary Test', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    wp.expectedActivities.slice(0, 3).map((expectedActivity) => {
+    wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();
     });
-    wp.deliverables.slice(0, 3).map((deliverable) => {
+    wp.deliverables.slice(0, 3).forEach((deliverable) => {
       expect(screen.getByText(`${deliverable.detail}`)).toBeInTheDocument();
     });
   });
@@ -78,10 +78,10 @@ describe('Rendering Work Package Summary Test', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    wp.expectedActivities.slice(0, 3).map((expectedActivity) => {
+    wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();
     });
-    wp.deliverables.slice(0, 3).map((deliverable) => {
+    wp.deliverables.slice(0, 3).forEach((deliverable) => {
       expect(screen.getByText(`${deliverable.detail}`)).toBeInTheDocument();
     });
   });

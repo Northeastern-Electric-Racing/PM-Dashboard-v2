@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage, WorkPackageSummary } from 'utils';
+import { WorkPackage } from 'utils';
 import { descriptionBulletTransformer } from './projects.transformers';
 
 /**
@@ -20,18 +20,4 @@ export const workPackageTransformer = (workPackage: WorkPackage) => {
     expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
     deliverables: workPackage.deliverables.map(descriptionBulletTransformer)
   };
-};
-
-/**
- * Transforms a work package summary to ensure deep field transformation of date objects.
- *
- * @param workPackageSummary Incoming work package summary object supplied by the HTTP response.
- * @returns Properly transformed work package summary object.
- */
-export const workPackageSummaryTransformer = (workPackageSummary: WorkPackageSummary) => {
-  return {
-    ...workPackageSummary,
-    startDate: new Date(workPackageSummary.startDate),
-    endDate: new Date(workPackageSummary.endDate)
-  } as WorkPackageSummary;
 };

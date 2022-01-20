@@ -2,6 +2,7 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
+ 
 import { useContext } from 'react';
 import { Project } from 'utils';
 import { EditModeContext } from '../../project-edit-container';

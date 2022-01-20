@@ -28,7 +28,6 @@ import {
   WbsElementStatus,
   DescriptionBullet
 } from 'utils';
-import { changeRequestTransformer } from '../../services/transformers/change-requests.transformers';
 
 const prisma = new PrismaClient();
 

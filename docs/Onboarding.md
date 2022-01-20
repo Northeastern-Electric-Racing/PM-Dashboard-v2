@@ -77,9 +77,3 @@ Only the starred ones are optional.
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) (`esbenp.prettier-vscode`)
 - [Babel\*](https://marketplace.visualstudio.com/items?itemName=mgmcdermott.vscode-language-babel) (`mgmcdermott.vscode-language-babel`)
 - [Material Icon Theme\*](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme) (`pkief.material-icon-theme`)
-
-### When to push package.json?
-
-`package.json` contains all the dependencies of the project. Thus, when dependencies are added 
-or removed from the project, or when the version of any dependency is changed, then `package.
-json` needs to be committed to the branch and pushed to the remote repository.

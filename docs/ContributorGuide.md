@@ -79,6 +79,12 @@ Use `npm run start` in order to boot up the React app and the back-end serverles
 Navigate to `localhost:3000` if your browser does not automatically.
 The API endpoint can be found at `localhost:3000/.netlify/functions/`.
 
+## When to push package.json?
+
+`package.json` contains all the dependencies of the project. 
+Thus, when dependencies are added or removed from the project, or when the version of any dependency is changed, then `package.json` needs to be committed to the branch and pushed to the remote repository.
+Unless there are changes to `package.json`, you should **_not_** commit and push any changes to `package-lock.json`.
+
 ## Creating a Pull Request
 
 Pull requests (aka PRs) allow for others to review your code before it gets merged together with the `main` branch.

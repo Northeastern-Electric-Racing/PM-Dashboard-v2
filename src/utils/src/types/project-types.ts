@@ -42,17 +42,7 @@ export interface Project extends WbsElement {
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
-  workPackages: WorkPackageSummary[];
-}
-
-export interface WorkPackageSummary {
-  id: number;
-  wbsNum: WbsNumber;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  duration: number;
-  dependencies: WbsNumber[];
+  workPackages: WorkPackage[];
 }
 
 export interface WorkPackage extends WbsElement {

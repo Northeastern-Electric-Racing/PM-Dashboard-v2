@@ -24,6 +24,7 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
           ] {ic.detail}
         </>
       ))}
+      readOnly={true}
     />
   );
 };

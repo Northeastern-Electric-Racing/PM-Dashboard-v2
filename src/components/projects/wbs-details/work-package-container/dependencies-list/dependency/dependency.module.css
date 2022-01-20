@@ -3,3 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+ .dependencyButton {
+  background-color: #ef4345 !important;
+  border-color: #ef4345 !important;
+}

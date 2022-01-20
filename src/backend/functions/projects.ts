@@ -28,6 +28,7 @@ import {
   WbsElementStatus,
   DescriptionBullet
 } from 'utils';
+import { changeRequestTransformer } from '../../services/transformers/change-requests.transformers';
 
 const prisma = new PrismaClient();
 
@@ -43,7 +44,14 @@ const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
     goals: true,
     features: true,
     otherConstraints: true,
-    workPackages: { include: { wbsElement: true, dependencies: true } }
+    workPackages: {
+      include: {
+        wbsElement: { include: { changes: { include: { implementer: true } } } },
+        dependencies: true,
+        expectedActivities: true,
+        deliverables: true
+      }
+    }
   }
 });
 
@@ -54,7 +62,14 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
         goals: true,
         features: true,
         otherConstraints: true,
-        workPackages: { include: { wbsElement: true, dependencies: true } }
+        workPackages: {
+          include: {
+            wbsElement: { include: { changes: { include: { implementer: true } } } },
+            dependencies: true,
+            expectedActivities: true,
+            deliverables: true,
+          }
+        }
       }
     },
     projectLead: true,
@@ -64,11 +79,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-  ({
-    INACTIVE: WbsElementStatus.Inactive,
-    ACTIVE: WbsElementStatus.Active,
-    COMPLETE: WbsElementStatus.Complete
-  }[status]);
+({
+  INACTIVE: WbsElementStatus.Inactive,
+  ACTIVE: WbsElementStatus.Active,
+  COMPLETE: WbsElementStatus.Complete
+}[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -121,8 +136,15 @@ const projectTransformer = (
         ...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
+        status: convertStatus(workPackage.wbsElement.status),
         endDate,
-        dependencies: workPackage.dependencies.map(wbsNumOf)
+        dependencies: workPackage.dependencies.map(wbsNumOf),
+        expectedActivities: workPackage.expectedActivities.map(descBulletConverter),
+        deliverables: workPackage.deliverables.map(descBulletConverter),
+        changes: workPackage.wbsElement.changes.map((change) => ({
+          ...change,
+          wbsNum: wbsNumOf(workPackage.wbsElement)
+        }))
       };
     })
   };

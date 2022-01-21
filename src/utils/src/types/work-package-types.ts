@@ -47,4 +47,4 @@ export const workPackageInputSchemaBody = {
   ]
 } as const;
 
-export type ReviewChangeRequestPayload = FromSchema<typeof workPackageInputSchemaBody>;
+export type CreateWorkPackagePayload = FromSchema<typeof workPackageInputSchemaBody>;

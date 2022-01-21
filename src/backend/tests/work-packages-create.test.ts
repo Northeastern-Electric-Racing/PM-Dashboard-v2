@@ -16,6 +16,7 @@ describe('work package create', () => {
       const goodBody = {
         userId: 1,
         name: 'name',
+        crId: 2,
         projectId: 1,
         startDate: '2015-10-06',
         duration: 1,
@@ -32,6 +33,18 @@ describe('work package create', () => {
 
       it('fails when invalid user id', async () => {
         const res = await func({ body: { ...goodBody, userId: -5 } });
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toBe('Event object failed validation');
+      });
+
+      it('fails when user id is a decimal', async () => {
+        const res = await func({ body: { ...goodBody, userId: 4.3 } });
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toBe('Event object failed validation');
+      });
+
+      it('fails when invalid crId', async () => {
+        const res = await func({ body: { ...goodBody, crId: -2 } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });

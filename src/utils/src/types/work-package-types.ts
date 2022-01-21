@@ -8,8 +8,9 @@ import { FromSchema } from 'json-schema-to-ts';
 export const workPackageInputSchemaBody = {
   type: 'object',
   properties: {
-    userId: { type: 'number', minimum: 0 },
+    userId: { type: 'integer', minimum: 0 },
     name: { type: 'string' },
+    crId: { type: 'integer', minimum: 0 },
     projectId: { type: 'number', minimum: 0 },
     startDate: { type: 'string', format: 'date' },
     duration: { type: 'number', minimum: 0 },
@@ -38,6 +39,7 @@ export const workPackageInputSchemaBody = {
   required: [
     'userId',
     'name',
+    'crId',
     'projectId',
     'startDate',
     'duration',

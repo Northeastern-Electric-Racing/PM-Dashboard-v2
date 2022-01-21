@@ -37,8 +37,8 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   // because the one we are making will need to be that + 1
   // eslint-disable-next-line prefer-destructuring
   const workPackageNumber = Math.max(
-    ...project.workPackages.map((x) => {
-      return x.wbsElement.workPackageNumber;
+    ...project.workPackages.map((ele) => {
+      return ele.wbsElement.workPackageNumber;
     })
   );
 
@@ -62,18 +62,18 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
       duration: body.duration,
       orderInProject: project.workPackages.length + 1,
       dependencies: {
-        connect: body.wbsElementIds.map((x: any) => {
-          return { wbsElementId: x };
+        connect: body.wbsElementIds.map((ele: any) => {
+          return { wbsElementId: ele };
         })
       },
       expectedActivities: {
-        create: body.expectedActivities.map((x: any) => {
-          return { detail: x };
+        create: body.expectedActivities.map((ele: any) => {
+          return { detail: ele };
         })
       },
       deliverables: {
-        create: body.deliverables.map((x: any) => {
-          return { detail: x };
+        create: body.deliverables.map((ele: any) => {
+          return { detail: ele };
         })
       }
     }

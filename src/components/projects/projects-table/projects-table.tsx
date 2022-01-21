@@ -35,7 +35,7 @@ export function filterProjects(
     return carNumber === project.wbsNum.car;
   };
   const statusCheck = (project: Project) => {
-    return project.status === status;
+    return project.status === status.toUpperCase();
   };
   const leadCheck = (project: Project) => {
     return project.projectLead?.userId === projectLeadID;

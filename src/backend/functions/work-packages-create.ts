@@ -8,9 +8,8 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient, WBS_Element_Status } from '@prisma/client';
-import { buildSuccessResponse } from 'utils';
-import { workPackageInputSchemaBody } from 'utils/src/types/work-package-types';
+import { PrismaClient } from '@prisma/client';
+import { buildSuccessResponse, workPackageInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -32,9 +31,16 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   if (project === null) throw new TypeError('Project Id not found!');
 
   // eslint-disable-next-line prefer-destructuring
-  const { carNumber, projectNumber, workPackageNumber } = project.workPackages[
-    project.workPackages.length - 1
-  ].wbsElement;
+  const { carNumber, projectNumber } = project.workPackages[0].wbsElement;
+
+  // what this does is get the highest current work package number that exists
+  // because the one we are making will need to be that + 1
+  // eslint-disable-next-line prefer-destructuring
+  const workPackageNumber = Math.max(
+    ...project.workPackages.map((x) => {
+      return x.wbsElement.workPackageNumber;
+    })
+  );
 
   // add to the database
   const created = await prisma.work_Package.create({
@@ -54,7 +60,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
       },
       startDate: new Date(body.startDate),
       duration: body.duration,
-      orderInProject: project.workPackages.length,
+      orderInProject: project.workPackages.length + 1,
       dependencies: {
         connect: body.wbsElementIds.map((x: any) => {
           return { wbsElementId: x };

@@ -40,6 +40,7 @@ CREATE TABLE "Change_Request" (
     "dateSubmitted" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "wbsElementId" INTEGER NOT NULL,
     "type" "CR_Type" NOT NULL,
+    "reviewerId" INTEGER,
     "dateReviewed" TIMESTAMP(3),
     "accepted" BOOLEAN,
     "reviewNotes" TEXT,
@@ -111,7 +112,7 @@ CREATE TABLE "WBS_Element" (
     "projectNumber" INTEGER NOT NULL,
     "workPackageNumber" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
-    "status" "WBS_Element_Status" NOT NULL,
+    "status" "WBS_Element_Status" NOT NULL DEFAULT E'INACTIVE',
     "projectLeadId" INTEGER,
     "projectManagerId" INTEGER,
 
@@ -208,6 +209,9 @@ ALTER TABLE "Change_Request" ADD FOREIGN KEY ("submitterId") REFERENCES "User"("
 
 -- AddForeignKey
 ALTER TABLE "Change_Request" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Change_Request" ADD FOREIGN KEY ("reviewerId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Scope_CR" ADD FOREIGN KEY ("changeRequestId") REFERENCES "Change_Request"("crId") ON DELETE CASCADE ON UPDATE CASCADE;

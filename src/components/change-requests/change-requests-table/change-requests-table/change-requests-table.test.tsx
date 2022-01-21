@@ -34,11 +34,6 @@ const renderComponent: (changeRequests?: DisplayChangeRequest[]) => void = (crs)
 };
 
 describe('change requests table view component', () => {
-  it('renders the page title', () => {
-    renderComponent([]);
-
-    expect(screen.getByText('All Change Requests')).toBeInTheDocument();
-  });
   it('renders the table headers', async () => {
     renderComponent([]);
 

@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
 
@@ -12,6 +13,7 @@ export interface ChangeRequest {
   submitter: User;
   dateSubmitted: Date;
   type: ChangeRequestType;
+  reviewer?: User;
   dateReviewed?: Date;
   accepted?: boolean;
   reviewNotes?: string;
@@ -20,11 +22,11 @@ export interface ChangeRequest {
 }
 
 export enum ChangeRequestType {
-  DesignIssue = 'Design Issue',
-  NewFunction = 'New Function',
-  Other = 'Other',
-  StageGate = 'Stage Gate',
-  Activation = 'Activation'
+  DesignIssue = 'DESIGN_ISSUE',
+  NewFunction = 'NEW_FUNCTION',
+  Other = 'OTHER',
+  StageGate = 'STAGE_GATE',
+  Activation = 'ACTIVATION'
 }
 
 export interface StandardChangeRequest extends ChangeRequest {
@@ -53,12 +55,12 @@ export interface ChangeRequestExplanation {
 }
 
 export enum ChangeRequestReason {
-  Estimation = 'Estimation Error',
-  School = 'School Work',
-  Manufacturing = 'Manufacturing Issues',
-  Rules = 'Rules Compliance',
-  OtherProject = 'Other Project',
-  Other = 'Other'
+  Estimation = 'ESTIMATION',
+  School = 'SCHOOL',
+  Manufacturing = 'MANUFACTURING',
+  Rules = 'RULES',
+  OtherProject = 'OTHER_PROJECT',
+  Other = 'OTHER'
 }
 
 export interface ImplementedChange {
@@ -68,3 +70,17 @@ export interface ImplementedChange {
   implementer: User;
   detail: string;
 }
+
+export const reviewChangeRequestPayloadSchema = {
+  type: 'object',
+  properties: {
+    reviewerId: { type: 'number', minimum: 0 },
+    crId: { type: 'number', minimum: 0 },
+    reviewNotes: { type: 'string' },
+    accepted: { type: 'boolean' }
+  },
+  required: ['reviewerId', 'crId', 'reviewNotes', 'accepted'],
+  additionalProperties: false
+} as const;
+
+export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;

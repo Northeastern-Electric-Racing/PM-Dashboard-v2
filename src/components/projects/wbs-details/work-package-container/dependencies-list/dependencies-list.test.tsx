@@ -7,18 +7,25 @@ import { render, screen, routerWrapperBuilder } from '../../../../../test-suppor
 import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import DependenciesList from './dependencies-list';
+import { EditModeContext } from '../work-package-container';
 
 // Sets up the component under test with the desired values and renders it
-const renderComponent = (path?: string, route?: string) => {
+const renderComponent = (editMode?: boolean, path?: string, route?: string) => {
   const RouterWrapper = routerWrapperBuilder({ path, route });
   return render(
     <RouterWrapper>
-      <DependenciesList dependencies={exampleWorkPackage2.dependencies} />
+      {editMode ? (
+        <EditModeContext.Provider value={editMode}>
+          <DependenciesList dependencies={exampleWorkPackage2.dependencies} />
+        </EditModeContext.Provider>
+      ) : (
+        <DependenciesList dependencies={exampleWorkPackage2.dependencies} />
+      )}
     </RouterWrapper>
   );
 };
 
-describe('Rendering Work Packagae Dependencies Component', () => {
+describe('Rendering Work Package Dependencies Component', () => {
   test('Rendering example 2', () => {
     renderComponent();
     expect(screen.getByText(`Dependencies`)).toBeInTheDocument();
@@ -26,5 +33,14 @@ describe('Rendering Work Packagae Dependencies Component', () => {
     exampleWorkPackage2.dependencies.forEach((wbs) => {
       expect(screen.getByText(`${wbsPipe(wbs)}`)).toBeInTheDocument();
     });
+  });
+  test('Rendering example 2, in edit mode', () => {
+    renderComponent(true);
+    expect(screen.getByText(`Dependencies`)).toBeInTheDocument();
+
+    exampleWorkPackage2.dependencies.forEach((wbs) => {
+      expect(screen.getByText(`${wbsPipe(wbs)}`)).toBeInTheDocument();
+    });
+    expect(screen.getByPlaceholderText('New WBS #')).toBeInTheDocument();
   });
 });

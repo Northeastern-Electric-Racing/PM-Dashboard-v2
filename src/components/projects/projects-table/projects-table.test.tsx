@@ -4,7 +4,7 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { Project } from 'utils';
+import { Project, WbsElementStatus } from 'utils';
 import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
 import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
@@ -56,8 +56,6 @@ describe('projects table component', () => {
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
-    // expect(screen.getByText('Projects Table container', { exact: false })).toBeInTheDocument();
-    // expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
   });
 
   it('handles the api returning an empty array', async () => {
@@ -95,7 +93,7 @@ describe('projects table component', () => {
     await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
 
     const column: string = 'WBS #';
-    const expectedWbsOrder: string[] = exampleAllProjects.map((prj) => wbsPipe(prj.wbsNum));
+    const expectedWbsOrder = exampleAllProjects.map((prj) => wbsPipe(prj.wbsNum));
 
     // Default sort is wbs ascending
     const wbsNumsAsc: HTMLElement[] = await screen.findAllByText(wbsRegex);
@@ -113,35 +111,37 @@ describe('projects table component', () => {
   });
 
   it('checking if project filtering with car num works as expected', async () => {
-    const answer1: Project[] = [exampleProject1, exampleProject2, exampleProject3];
-    const answer2: Project[] = [exampleProject4, exampleProject5];
+    const answer1 = [exampleProject1, exampleProject2, exampleProject3];
+    const answer2 = [exampleProject4, exampleProject5];
     expect(filterProjects(exampleAllProjects, 1, '', -1, -1)).toStrictEqual(answer1);
     expect(filterProjects(exampleAllProjects, 2, '', -1, -1)).toStrictEqual(answer2);
   });
 
   it('checking if project filtering with status works as expected', async () => {
-    const answer_active: Project[] = [exampleProject1, exampleProject3];
-    const answer_inactive: Project[] = [exampleProject2, exampleProject4];
-    const answer_complete: Project[] = [exampleProject5];
-    expect(filterProjects(exampleAllProjects, -1, 'Active', -1, -1)).toStrictEqual(answer_active);
-    expect(filterProjects(exampleAllProjects, -1, 'Inactive', -1, -1)).toStrictEqual(
+    const answer_active = [exampleProject1, exampleProject3];
+    const answer_inactive = [exampleProject2, exampleProject4];
+    const answer_complete = [exampleProject5];
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Active, -1, -1)).toStrictEqual(
+      answer_active
+    );
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Inactive, -1, -1)).toStrictEqual(
       answer_inactive
     );
-    expect(filterProjects(exampleAllProjects, -1, 'Complete', -1, -1)).toStrictEqual(
+    expect(filterProjects(exampleAllProjects, -1, WbsElementStatus.Complete, -1, -1)).toStrictEqual(
       answer_complete
     );
   });
 
   it('checking if project filtering with project lead works as expected', async () => {
-    const answer1: Project[] = [exampleProject1, exampleProject2, exampleProject5];
-    const answer2: Project[] = [exampleProject3, exampleProject4];
+    const answer1 = [exampleProject1, exampleProject2, exampleProject5];
+    const answer2 = [exampleProject3, exampleProject4];
     expect(filterProjects(exampleAllProjects, -1, '', 4, -1)).toStrictEqual(answer1);
     expect(filterProjects(exampleAllProjects, -1, '', 3, -1)).toStrictEqual(answer2);
   });
   it('checking if project filtering with project manager works as expected', async () => {
-    const answer1: Project[] = [exampleProject1];
-    const answer2: Project[] = [exampleProject2, exampleProject3, exampleProject5];
-    const answer3: Project[] = [exampleProject4];
+    const answer1 = [exampleProject1];
+    const answer2 = [exampleProject2, exampleProject3, exampleProject5];
+    const answer3 = [exampleProject4];
     expect(filterProjects(exampleAllProjects, -1, '', -1, 3)).toStrictEqual(answer1);
     expect(filterProjects(exampleAllProjects, -1, '', -1, 5)).toStrictEqual(answer2);
     expect(filterProjects(exampleAllProjects, -1, '', -1, 2)).toStrictEqual(answer3);

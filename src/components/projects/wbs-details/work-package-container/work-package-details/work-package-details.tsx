@@ -4,10 +4,14 @@
  */
 
 import { WorkPackage } from 'utils';
-import { weeksPipe, wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
+import EditableDetail from '../../../../shared/editable-detail/editable-detail';
+import { EditModeContext } from '../work-package-container';
+import { useContext } from 'react';
+import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;
@@ -16,29 +20,80 @@ interface WorkPackageDetailsProps {
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const detailsBody = (
     <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <b>Work Package Name:</b> {workPackage.name} <br />
-          <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
-          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)} <br />
-          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
-          <b>Duration:</b> {weeksPipe(workPackage.duration)} <br />
-        </Col>
-        <Col xs={6} md={4}>
-          <b>Start Date:</b> {workPackage.startDate.toLocaleDateString()} <br />
-          <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)} <br />
-          <b>Progress:</b> {workPackage.progress}% <br />
-          <b>Expected Progress:</b> <br />
-          <b>Timeline Status:</b> <br />
-        </Col>
-      </Row>
+      <Form>
+        <Row>
+          <Col xs={12} md={6}>
+            <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
+            <EditableDetail
+              title="WBS #"
+              value={wbsPipe(workPackage.wbsNum)}
+              type="text"
+              readOnly={true}
+            />
+            <EditableDetail
+              title="Project Lead"
+              value={fullNamePipe(workPackage.projectLead)}
+              type="text"
+            />
+            <EditableDetail
+              title="Project Manager"
+              value={fullNamePipe(workPackage.projectManager)}
+              type="text"
+            />
+            <EditableDetail
+              title="Duration"
+              value={`${workPackage.duration}`}
+              type="number"
+              suffix="weeks"
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <EditableDetail
+              title="Start Date"
+              value={workPackage.startDate.toLocaleDateString()}
+              type="date"
+            />
+            <EditableDetail
+              title="End Date"
+              value={endDatePipe(workPackage.startDate, workPackage.duration)}
+              type="date"
+              readOnly={true}
+            />
+            <EditableDetail
+              title="Progress"
+              value={`${workPackage.progress}`}
+              suffix="%"
+              type="number"
+            />
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
+
+  const editMode = useContext(EditModeContext);
+  const statuses = Object.values(WbsElementStatus);
+  const index = statuses.indexOf(workPackage.status);
+  statuses.splice(index, 1);
 
   return (
     <PageBlock
       title={'Work Package Details'}
-      headerRight={<b>{workPackage.status}</b>}
+      headerRight={
+        editMode ? (
+          <div>
+            <label>Status</label>
+            <Form.Control as="select">
+              <option>{workPackage.status}</option>
+              {statuses.map((status) => (
+                <option>{status}</option>
+              ))}
+            </Form.Control>
+          </div>
+        ) : (
+          <b>{workPackage.status}</b>
+        )
+      }
       body={detailsBody}
     />
   );

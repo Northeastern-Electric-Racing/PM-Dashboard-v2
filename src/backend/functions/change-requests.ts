@@ -28,6 +28,7 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
   include: {
     submitter: true,
     wbsElement: true,
+    reviewer: true,
     changes: {
       include: {
         implementer: true
@@ -69,6 +70,7 @@ const changeRequestTransformer = (
   return {
     ...changeRequest,
     type: convertChangeRequestType(changeRequest.type),
+    reviewer: changeRequest.reviewer ?? undefined,
     dateReviewed: changeRequest.dateReviewed ?? undefined,
     accepted: changeRequest.accepted ?? undefined,
     reviewNotes: changeRequest.reviewNotes ?? undefined,

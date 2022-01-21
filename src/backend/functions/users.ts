@@ -94,6 +94,8 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
 
   const accessToken = jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: '20mins', algorithm: 'HS256' });
 
+  event.headers["accessToken"] = accessToken;
+
   // register a login
   await prisma.session.create({
     data: {
@@ -102,7 +104,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return { ...buildSuccessResponse(usersTransformer(user)), accessToken };
+  return buildSuccessResponse(usersTransformer(user));
 };
 
 // Define all valid routes for the endpoint

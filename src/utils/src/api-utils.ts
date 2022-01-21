@@ -103,7 +103,7 @@ export const routeMatcher = (
 };
 
 /**
-* Verifys a token and returns the payload/user if successful, otherwise returns the error
+* Verifys a token and returns the payload/user if successful.
 * @param token The jwt token
 */
 export const verifyToken = (
@@ -114,7 +114,6 @@ export const verifyToken = (
       return decoded;
     } else {
       console.log(err);
-      return err;
     }
   });
 }

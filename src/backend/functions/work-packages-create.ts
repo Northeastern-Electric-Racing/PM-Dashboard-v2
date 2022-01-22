@@ -38,6 +38,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
       goals: true,
       features: true,
       otherConstraints: true,
+      wbsElement: true,
       workPackages: { include: { wbsElement: true, dependencies: true } }
     }
   });
@@ -45,9 +46,10 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   if (project === null) throw new TypeError('Project Id not found!');
 
   // eslint-disable-next-line prefer-destructuring
-  const { carNumber, projectNumber } = project.workPackages[0].wbsElement;
+  const { carNumber, projectNumber } = project.wbsElement;
 
-  const workPackageNumber = (await getHighestWorkPackageNumber(projectNumber)) + 1;
+  const workPackageNumber =
+    project.workPackages.length === 0 ? 1 : (await getHighestWorkPackageNumber(projectNumber)) + 1;
 
   // add to the database
   const created = await prisma.work_Package.create({

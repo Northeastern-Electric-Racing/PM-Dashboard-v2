@@ -49,7 +49,9 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   const { carNumber, projectNumber } = project.wbsElement;
 
   const workPackageNumber =
-    project.workPackages.length === 0 ? 1 : (await getHighestWorkPackageNumber(projectNumber)) + 1;
+    project.workPackages === undefined || project.workPackages.length === 0
+      ? 1
+      : (await getHighestWorkPackageNumber(projectNumber)) + 1;
 
   // add to the database
   const created = await prisma.work_Package.create({

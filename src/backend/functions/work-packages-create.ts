@@ -21,9 +21,6 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
       projectId: body.projectId
     },
     include: {
-      goals: true,
-      features: true,
-      otherConstraints: true,
       wbsElement: true,
       workPackages: { include: { wbsElement: true, dependencies: true } }
     }

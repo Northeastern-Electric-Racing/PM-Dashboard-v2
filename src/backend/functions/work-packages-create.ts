@@ -13,20 +13,6 @@ import { buildSuccessResponse, workPackageInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
-// get the current highest work package number for the given project
-const getHighestWorkPackageNumber = async (projectNumber: number) => {
-  const maxWorkPackageNumber = await prisma.wBS_Element.aggregate({
-    where: {
-      projectNumber
-    },
-    max: {
-      workPackageNumber: true
-    }
-  });
-
-  return maxWorkPackageNumber.max.workPackageNumber;
-};
-
 export const createWorkPackage: Handler = async ({ body }, _context) => {
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
@@ -48,10 +34,12 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   // eslint-disable-next-line prefer-destructuring
   const { carNumber, projectNumber } = project.wbsElement;
 
-  const workPackageNumber =
-    project.workPackages === undefined || project.workPackages.length === 0
-      ? 1
-      : (await getHighestWorkPackageNumber(projectNumber)) + 1;
+  const workPackageNumber: number =
+    project.workPackages
+      .map((element) => element.wbsElement.workPackageNumber)
+      .reduce((prev, curr) => {
+        return Math.max(prev, curr);
+      }, 0) + 1;
 
   // add to the database
   const created = await prisma.work_Package.create({

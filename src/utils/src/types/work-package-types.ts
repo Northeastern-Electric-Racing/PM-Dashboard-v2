@@ -5,7 +5,7 @@
 
 import { FromSchema } from 'json-schema-to-ts';
 
-export const workPackageInputSchemaBody = {
+export const workPackageCreateInputSchemaBody = {
   type: 'object',
   properties: {
     userId: { type: 'integer', minimum: 0 },
@@ -49,4 +49,52 @@ export const workPackageInputSchemaBody = {
   ]
 } as const;
 
-export type CreateWorkPackagePayload = FromSchema<typeof workPackageInputSchemaBody>;
+export type CreateWorkPackagePayload = FromSchema<typeof workPackageCreateInputSchemaBody>;
+
+export const workPackageEditInputSchemaBody = {
+  type: 'object',
+  properties: {
+    wbsElementId: { type: 'integer', minimum: 0 },
+    userId: { type: 'integer', minimum: 0 },
+    name: { type: 'string' },
+    crId: { type: 'integer', minimum: 0 },
+    projectId: { type: 'number', minimum: 0 },
+    startDate: { type: 'string', format: 'date' },
+    duration: { type: 'number', minimum: 0 },
+    wbsElementIds: {
+      type: 'array',
+      items: {
+        type: 'number',
+        minimum: 0
+      }
+    },
+    expectedActivities: {
+      type: 'array',
+      items: {
+        type: 'string',
+        minLength: 0
+      }
+    },
+    deliverables: {
+      type: 'array',
+      items: {
+        type: 'string',
+        minLength: 0
+      }
+    }
+  },
+  required: [
+    'wbsElementId',
+    'userId',
+    'name',
+    'crId',
+    'projectId',
+    'startDate',
+    'duration',
+    'wbsElementIds',
+    'expectedActivities',
+    'deliverables'
+  ]
+} as const;
+
+export type EditWorkPackagePayload = FromSchema<typeof workPackageEditInputSchemaBody>;

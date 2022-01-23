@@ -9,7 +9,7 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
-import { buildFailureResponse, buildSuccessResponse, workPackageInputSchemaBody } from 'utils';
+import { buildSuccessResponse, workPackageEditInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -34,7 +34,9 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     },
     include: {
       wbsElement: {},
-      dependencies: {}
+      dependencies: {},
+      expectedActivities,
+      deliverables
     }
   });
 
@@ -77,14 +79,35 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     userId,
     wbsElementId
   );
-  const dependenciesChangeJson = createDependenciesChangeJson(
-    wbsElementIds,
+  const dependenciesChangeJson = createListChangesJson(
     originalWorkPackage.dependencies.map((element) => {
       return element.wbsElementId;
     }),
+    wbsElementIds,
     crId,
     userId,
-    wbsElementId
+    wbsElementId,
+    'dependency'
+  );
+  const expectedActivitiesChangeJson = createListChangesJson(
+    originalWorkPackage.expectedActivities.map((element) => {
+      return element.detail;
+    }),
+    expectedActivities,
+    crId,
+    userId,
+    wbsElementId,
+    'expected activity'
+  );
+  const deliverablesChangeJson = createListChangesJson(
+    originalWorkPackage.deliverables.map((element) => {
+      return element.detail;
+    }),
+    deliverables,
+    crId,
+    userId,
+    wbsElementId,
+    'deliverable'
   );
 
   // add to changes if not undefined
@@ -101,7 +124,10 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     changes.push(durationChangeJson);
   }
 
-  changes = changes.concat(dependenciesChangeJson);
+  changes = changes
+    .concat(dependenciesChangeJson)
+    .concat(expectedActivitiesChangeJson)
+    .concat(deliverablesChangeJson);
 
   // update the work package with the input fields
   const updatedWorkPackage = await prisma.work_Package.update({
@@ -149,9 +175,9 @@ const createChangeJsonNonList = (
   nameOfField: string,
   oldValue: any,
   newValue: any,
-  crId: any,
-  implementerId: any,
-  wbsElementId: any
+  crId: number,
+  implementerId: number,
+  wbsElementId: number
 ) => {
   if (oldValue !== newValue) {
     return {
@@ -165,32 +191,34 @@ const createChangeJsonNonList = (
   return undefined;
 };
 
-const createDependenciesChangeJson = (
-  oldDependencies: any,
-  newDependencies: any,
-  crId: any,
-  implementerId: any,
-  wbsElementId: any
+// create a change json list for a given list (dependencies). Only works if the elements can only be added or deleted
+const createListChangesJson = <T>(
+  oldArray: T[],
+  newArray: T[],
+  crId: number,
+  implementerId: number,
+  wbsElementId: number,
+  nameOfField: string
 ) => {
-  const seenOld = new Set<number>();
-  const seenNew = new Set<number>();
-  oldDependencies.forEach((element: number) => {
+  const seenOld = new Set<T>();
+  const seenNew = new Set<T>();
+  oldArray.forEach((element: T) => {
     seenOld.add(element);
   });
 
-  newDependencies.forEach((element: number) => {
+  newArray.forEach((element: T) => {
     seenNew.add(element);
   });
 
-  const changes: { element: number; type: string }[] = [];
+  const changes: { element: T; type: string }[] = [];
 
-  oldDependencies.foreach((element: number) => {
+  oldArray.forEach((element: T) => {
     if (seenNew.has(element)) {
       changes.push({ element, type: 'Removed' });
     }
   });
 
-  newDependencies.foreach((element: number) => {
+  newArray.forEach((element: T) => {
     if (seenOld.has(element)) {
       changes.push({ element, type: 'Added new' });
     }
@@ -202,7 +230,7 @@ const createDependenciesChangeJson = (
       dateImplemented: new Date(),
       implementerId,
       wbsElementId,
-      detail: `${element.type} dependency ${element.element}`
+      detail: `${element.type} ${nameOfField}: ${element.element}`
     };
   });
 };
@@ -211,13 +239,13 @@ const createDependenciesChangeJson = (
 const inputSchema = {
   type: 'object',
   properties: {
-    body: workPackageInputSchemaBody
+    body: workPackageEditInputSchemaBody
   }
 };
 
 const handler = middy(editWorkPackage)
   .use(jsonBodyParser())
-  .use(validator({ inputSchema })) // TODO - EDIT INPUT SCHEMA TO INCLUDE THE WBS ELEMETN ID
+  .use(validator({ inputSchema }))
   .use(httpErrorHandler());
 
 export { handler };

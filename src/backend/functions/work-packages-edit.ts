@@ -7,9 +7,10 @@ import middy from '@middy/core';
 import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
+import { descBulletConverter } from './projects';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
-import { buildSuccessResponse, workPackageEditInputSchemaBody } from 'utils';
+import { buildSuccessResponse, DescriptionBullet, workPackageEditInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -33,10 +34,10 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
       wbsElementId
     },
     include: {
-      wbsElement: {},
-      dependencies: {},
-      expectedActivities,
-      deliverables
+      wbsElement: true,
+      dependencies: true,
+      expectedActivities: true,
+      deliverables: true
     }
   });
 
@@ -89,20 +90,16 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     wbsElementId,
     'dependency'
   );
-  const expectedActivitiesChangeJson = createListChangesJson(
-    originalWorkPackage.expectedActivities.map((element) => {
-      return element.detail;
-    }),
+  const expectedActivitiesChangeJson = createDescriptionBulletChangesJson(
+    originalWorkPackage.expectedActivities.map((element) => descBulletConverter(element)),
     expectedActivities,
     crId,
     userId,
     wbsElementId,
     'expected activity'
   );
-  const deliverablesChangeJson = createListChangesJson(
-    originalWorkPackage.deliverables.map((element) => {
-      return element.detail;
-    }),
+  const deliverablesChangeJson = createDescriptionBulletChangesJson(
+    originalWorkPackage.deliverables.map((element) => descBulletConverter(element)),
     deliverables,
     crId,
     userId,
@@ -124,10 +121,23 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     changes.push(durationChangeJson);
   }
 
+  // add the changes for each of dependencies, expected activities, and deliverables
   changes = changes
     .concat(dependenciesChangeJson)
-    .concat(expectedActivitiesChangeJson)
-    .concat(deliverablesChangeJson);
+    .concat(expectedActivitiesChangeJson.changes)
+    .concat(deliverablesChangeJson.changes);
+
+  // Update any deleted description bullets to have their date deleted as right now
+  await prisma.description_Bullet.updateMany({
+    where: {
+      descriptionId: {
+        in: expectedActivitiesChangeJson.deletedIds.concat(deliverablesChangeJson.deletedIds)
+      }
+    },
+    data: {
+      dateDeleted: new Date()
+    }
+  });
 
   // update the work package with the input fields
   const updatedWorkPackage = await prisma.work_Package.update({
@@ -171,7 +181,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
 };
 
 // create a change json if the old and new value are different, otherwise return undefined
-const createChangeJsonNonList = (
+export const createChangeJsonNonList = (
   nameOfField: string,
   oldValue: any,
   newValue: any,
@@ -185,14 +195,14 @@ const createChangeJsonNonList = (
       dateImplemented: new Date(),
       implementerId,
       wbsElementId,
-      detail: `Changed ${nameOfField} from ${oldValue} to ${newValue}`
+      detail: `Edited ${nameOfField} from "${oldValue}" to "${newValue}"`
     };
   }
   return undefined;
 };
 
-// create a change json list for a given list (dependencies). Only works if the elements can only be added or deleted
-const createListChangesJson = <T>(
+// create a change json list for a given list (dependencies). Only works if the elements themselves should be compared (numbers)
+export const createListChangesJson = <T>(
   oldArray: T[],
   newArray: T[],
   crId: number,
@@ -200,26 +210,19 @@ const createListChangesJson = <T>(
   wbsElementId: number,
   nameOfField: string
 ) => {
-  const seenOld = new Set<T>();
-  const seenNew = new Set<T>();
-  oldArray.forEach((element: T) => {
-    seenOld.add(element);
-  });
-
-  newArray.forEach((element: T) => {
-    seenNew.add(element);
-  });
+  const seenOld = new Set<T>(oldArray);
+  const seenNew = new Set<T>(newArray);
 
   const changes: { element: T; type: string }[] = [];
 
   oldArray.forEach((element: T) => {
-    if (seenNew.has(element)) {
+    if (!seenNew.has(element)) {
       changes.push({ element, type: 'Removed' });
     }
   });
 
   newArray.forEach((element: T) => {
-    if (seenOld.has(element)) {
+    if (!seenOld.has(element)) {
       changes.push({ element, type: 'Added new' });
     }
   });
@@ -230,9 +233,85 @@ const createListChangesJson = <T>(
       dateImplemented: new Date(),
       implementerId,
       wbsElementId,
-      detail: `${element.type} ${nameOfField}: ${element.element}`
+      detail: `${element.type} ${nameOfField} "${element.element}"`
     };
   });
+};
+
+// this method creates changes for description bullet inputs
+// it returns it as an object of {deletedIds[], changes[]} because the deletedIds are needed for the database
+export const createDescriptionBulletChangesJson = (
+  oldArray: DescriptionBullet[],
+  newArray: DescriptionBullet[],
+  crId: number,
+  implementerId: number,
+  wbsElementId: number,
+  nameOfField: string
+): {
+  deletedIds: number[];
+  changes: {
+    changeRequestId: number;
+    dateImplemented: Date;
+    implementerId: number;
+    wbsElementId: number;
+    detail: string;
+  }[];
+} => {
+  const seenOld = new Map<number, string>();
+  const seenNew = new Map<number, string>();
+  oldArray.forEach((element) => {
+    seenOld.set(element.id, element.detail);
+  });
+
+  newArray.forEach((element) => {
+    seenNew.set(element.id, element.detail);
+  });
+
+  const changes: { element: DescriptionBullet; type: string }[] = [];
+  const seenChanges = new Set<number>();
+
+  oldArray.forEach((element) => {
+    if (!seenNew.has(element.id)) {
+      changes.push({ element, type: 'Removed' });
+      seenChanges.add(element.id);
+    } else if (seenNew.get(element.id) !== element.detail) {
+      changes.push({ element, type: 'Edited' });
+      seenChanges.add(element.id);
+    }
+  });
+
+  newArray.forEach((element) => {
+    if (!seenOld.has(element.id)) {
+      changes.push({ element, type: 'Added new' });
+      seenChanges.add(element.id);
+    } else if (seenOld.get(element.id) !== element.detail && !seenChanges.has(element.id)) {
+      changes.push({ element, type: 'Edited' });
+      seenChanges.add(element.id);
+    }
+  });
+
+  return {
+    deletedIds: changes
+      .filter((element) => element.type === 'Removed')
+      .map((element) => {
+        return element.element.id;
+      }),
+    changes: changes.map((element) => {
+      const detail =
+        element.type === 'Edited'
+          ? `${element.type} ${nameOfField} from "${seenOld.get(
+              element.element.id
+            )}" to "${seenNew.get(element.element.id)}"`
+          : `${element.type} ${nameOfField} "${element.element.detail}"`;
+      return {
+        changeRequestId: crId,
+        dateImplemented: new Date(),
+        implementerId,
+        wbsElementId,
+        detail
+      };
+    })
+  };
 };
 
 // expected structure of json body

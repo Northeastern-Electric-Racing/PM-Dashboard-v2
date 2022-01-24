@@ -11,13 +11,13 @@ export const workPackageCreateInputSchemaBody = {
     userId: { type: 'integer', minimum: 0 },
     name: { type: 'string' },
     crId: { type: 'integer', minimum: 0 },
-    projectId: { type: 'number', minimum: 0 },
+    projectId: { type: 'integer', minimum: 0 },
     startDate: { type: 'string', format: 'date' },
     duration: { type: 'number', minimum: 0 },
     wbsElementIds: {
       type: 'array',
       items: {
-        type: 'number',
+        type: 'integer',
         minimum: 0
       }
     },
@@ -58,28 +58,36 @@ export const workPackageEditInputSchemaBody = {
     userId: { type: 'integer', minimum: 0 },
     name: { type: 'string' },
     crId: { type: 'integer', minimum: 0 },
-    projectId: { type: 'number', minimum: 0 },
+    projectId: { type: 'integer', minimum: 0 },
     startDate: { type: 'string', format: 'date' },
     duration: { type: 'number', minimum: 0 },
     wbsElementIds: {
       type: 'array',
       items: {
-        type: 'number',
+        type: 'integer',
         minimum: 0
       }
     },
     expectedActivities: {
       type: 'array',
       items: {
-        type: 'string',
-        minLength: 0
+        type: 'object',
+        properties: {
+          id: { type: 'integer', minimum: 0 },
+          detail: { type: 'string' }
+        },
+        required: ['id', 'detail']
       }
     },
     deliverables: {
       type: 'array',
       items: {
-        type: 'string',
-        minLength: 0
+        type: 'object',
+        properties: {
+          id: { type: 'integer', minimum: 0 },
+          detail: { type: 'string' }
+        },
+        required: ['id', 'detail']
       }
     }
   },

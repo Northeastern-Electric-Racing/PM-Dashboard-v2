@@ -6,8 +6,14 @@
 import { Project } from 'utils';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
-import ProjectFormDetail from './project-form-detail/project-form-detail';
-// import './work-package-details.module.css';
+import EditableDetail from '../../../../shared/editable-detail/editable-detail';
+import {
+  weeksPipe,
+  wbsPipe,
+  endDatePipe,
+  fullNamePipe,
+  listPipe
+} from '../../../../../shared/pipes';
 
 // new parts added at the bottom
 interface projectDetailsProps {
@@ -16,6 +22,9 @@ interface projectDetailsProps {
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
   // const editMode = useContext(EditModeContext);
+  function padLink(link: string) {
+    return link === '' ? 'Enter Link Here...' : link;
+  }
   const detailsBody = (
     <Container fluid>
       <Form>
@@ -31,28 +40,71 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <ProjectFormDetail type="title" isReadonly={false} details={project} />
-            <ProjectFormDetail type="wbs" isReadonly={false} details={project} />
-            <ProjectFormDetail type="project-lead" isReadonly={false} details={project} />
-            <ProjectFormDetail type="project-manager" isReadonly={false} details={project} />
+            <EditableDetail title="Project Title" type="title" value={project.name} />
+            <EditableDetail title="Project WBS#" type="wbs" value={wbsPipe(project.wbsNum)} />
+            <EditableDetail
+              title="Project Lead"
+              type="project-lead"
+              value={String(project.projectLead)}
+            />
+            <EditableDetail
+              title="Project Manager"
+              type="project-manager"
+              value={String(project.projectManager)}
+            />
+            <EditableDetail
+              title="Budget"
+              type="budget"
+              value={String(project.budget)}
+              suffix="$"
+            />
           </Col>
           <Col xs={6} md={4}>
-            <ProjectFormDetail type="duration" isReadonly={true} details={project} />
-            <ProjectFormDetail type="start-date" isReadonly={true} details={project} />
-            <ProjectFormDetail type="end-date" isReadonly={true} details={project} />
+            <EditableDetail
+              title="Duration"
+              type="duration"
+              value={String(0)}
+              readOnly={true}
+              suffix="weeks"
+            />
+            <EditableDetail
+              title="Start Date"
+              type="start-date"
+              value="mm/dd/yyyy"
+              readOnly={true}
+            />
+            <EditableDetail title="End Date" type="end-date" value="mm/dd/yyyy" readOnly={true} />
             <br />
-            <ProjectFormDetail type="progress" isReadonly={false} details={project} />
-            <b>Timeline Status:</b> <br />
+            <EditableDetail title="Expected Progress" type="progress" value="100" suffix="%" />
+            <EditableDetail title="Timeline Status" type="status" value={String(project.status)} />
           </Col>
         </Row>
         <br />
         <br />
         <Row>
           <Col>
-            <ProjectFormDetail type="slide-deck" isReadonly={false} details={project} />
-            <ProjectFormDetail type="task-list" isReadonly={false} details={project} />
-            <ProjectFormDetail type="bom" isReadonly={false} details={project} />
-            <ProjectFormDetail type="google-drive" isReadonly={false} details={project} />
+            <EditableDetail
+              title="Slide Deck"
+              type="slide-deck"
+              value={padLink(project.gDriveLink)}
+            />
+          </Col>
+          <Col>
+            <EditableDetail
+              title="Task List"
+              type="task-list"
+              value={padLink(project.taskListLink)}
+            />
+          </Col>
+          <Col>
+            <EditableDetail title="BOM" type="bom" value={padLink(project.bomLink)} />
+          </Col>
+          <Col>
+            <EditableDetail
+              title="Google Drive"
+              type="google-drive"
+              value={padLink(project.slideDeckLink)}
+            />
           </Col>
         </Row>
       </Form>

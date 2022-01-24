@@ -17,37 +17,36 @@ import EditModeOptions from './edit-mode-options/edit-mode-options';
 export const EditModeContext = createContext(false);
 
 interface EditFormContainerProps {
-    wbsNum: WbsNumber;
+  wbsNum: WbsNumber;
 }
-  
+
 export interface EditModeProps {
-    changeEditMode(arg: any): void;
+  changeEditMode(arg: any): void;
 }
 
 const WorkPackageContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
-    const { isLoading, isError, data, error } = useSingleProject(wbsNum);
-    const [editMode, setEditMode] = useState(false);
-  
-    useEffect(() => {
-      setEditMode(false);
-    }, [wbsNum]);
-  
-    if (isLoading) return <LoadingIndicator />;
-  
-    if (isError) return <ErrorPage message={error?.message} />;
-  
-    return (
-      <EditModeContext.Provider value={editMode}>
-        <div className="mb-5">
-          <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-          <ProjectEditDetails project={data!} />
-          <DescriptionList title={'Expected Activities'} items={data!.expectedActivities} />
-          <DescriptionList title={'Deliverables'} items={data!.deliverables} />
-          {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
-        </div>
-      </EditModeContext.Provider>
-    );
-  };
-  
-  export default WorkPackageContainer;
-  
+  const { isLoading, isError, data, error } = useSingleProject(wbsNum);
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    setEditMode(false);
+  }, [wbsNum]);
+
+  if (isLoading) return <LoadingIndicator />;
+
+  if (isError) return <ErrorPage message={error?.message} />;
+
+  return (
+    <EditModeContext.Provider value={editMode}>
+      <div className="mb-5">
+        <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
+        <ProjectEditDetails project={data!} />
+        <DescriptionList title={'Goals'} items={data!.goals} />
+        <DescriptionList title={'Features'} items={data!.features} />
+        {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
+      </div>
+    </EditModeContext.Provider>
+  );
+};
+
+export default WorkPackageContainer;

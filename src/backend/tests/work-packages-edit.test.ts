@@ -109,7 +109,6 @@ describe('work package edit', () => {
         userId: 1,
         name: 'name',
         crId: 2,
-        projectId: 1,
         startDate: '2015-10-06',
         duration: 1,
         wbsElementIds: [1],

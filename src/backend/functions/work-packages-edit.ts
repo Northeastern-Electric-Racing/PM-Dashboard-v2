@@ -20,7 +20,6 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     userId,
     name,
     crId,
-    projectId,
     startDate,
     duration,
     wbsElementIds,
@@ -52,14 +51,6 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     'name',
     name,
     originalWorkPackage.wbsElement.name,
-    crId,
-    userId,
-    wbsElementId
-  );
-  const projectIdChangeJson = createChangeJsonNonList(
-    'project id',
-    projectId,
-    originalWorkPackage.projectId,
     crId,
     userId,
     wbsElementId
@@ -111,9 +102,6 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   if (nameChangeJson !== undefined) {
     changes.push(nameChangeJson);
   }
-  if (projectIdChangeJson !== undefined) {
-    changes.push(projectIdChangeJson);
-  }
   if (startDateChangeJson !== undefined) {
     changes.push(startDateChangeJson);
   }
@@ -128,16 +116,21 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     .concat(deliverablesChangeJson.changes);
 
   // Update any deleted description bullets to have their date deleted as right now
-  await prisma.description_Bullet.updateMany({
-    where: {
-      descriptionId: {
-        in: expectedActivitiesChangeJson.deletedIds.concat(deliverablesChangeJson.deletedIds)
+  const deletedIds = expectedActivitiesChangeJson.deletedIds.concat(
+    deliverablesChangeJson.deletedIds
+  );
+  if (deletedIds.length > 0) {
+    await prisma.description_Bullet.updateMany({
+      where: {
+        descriptionId: {
+          in: deletedIds
+        }
+      },
+      data: {
+        dateDeleted: new Date()
       }
-    },
-    data: {
-      dateDeleted: new Date()
-    }
-  });
+    });
+  }
 
   // update the work package with the input fields
   const updatedWorkPackage = await prisma.work_Package.update({
@@ -145,7 +138,6 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
       wbsElementId
     },
     data: {
-      projectId,
       startDate,
       duration,
       wbsElement: {
@@ -154,22 +146,29 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
         }
       },
       dependencies: {
+        set: [], // remove all the connections then add all the given ones
         connect: wbsElementIds.map((ele: any) => {
           return { wbsElementId: ele };
-        })
-      },
-      expectedActivities: {
-        create: expectedActivities.map((ele: any) => {
-          return { detail: ele };
-        })
-      },
-      deliverables: {
-        create: deliverables.map((ele: any) => {
-          return { detail: ele };
         })
       }
     }
   });
+
+  addDescriptionBullets(
+    expectedActivitiesChangeJson.addedDetails,
+    updatedWorkPackage.workPackageId,
+    'workPackageIdExpectedActivities'
+  );
+  addDescriptionBullets(
+    deliverablesChangeJson.addedDetails,
+    updatedWorkPackage.workPackageId,
+    'workPackageIdDeliverables'
+  );
+  editDescriptionBullets(
+    expectedActivitiesChangeJson.editedIdsAndDetails.concat(
+      deliverablesChangeJson.editedIdsAndDetails
+    )
+  );
 
   // create the changes in prisma
   await prisma.change.createMany({
@@ -178,6 +177,44 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
 
   // return the updated work package
   return buildSuccessResponse(updatedWorkPackage);
+};
+
+// helper method to add the given description bullets into the database, linked to the given work package
+const addDescriptionBullets = async (
+  addedDetails: string[],
+  workPackageId: number,
+  descriptionBulletIdField: string
+) => {
+  // add the added bullets
+  if (addedDetails.length > 0) {
+    await prisma.description_Bullet.createMany({
+      data: addedDetails.map((element) => {
+        return {
+          detail: element,
+          [descriptionBulletIdField]: workPackageId
+        };
+      })
+    });
+  }
+};
+
+// edit descrption bullets in the db for each id and detail pair
+const editDescriptionBullets = async (editedIdsAndDetails: { id: number; detail: string }[]) => {
+  // edit the edited bullets if there are any to update
+  if (editedIdsAndDetails.length > 0) {
+    await prisma.$transaction(
+      editedIdsAndDetails.map((element) =>
+        prisma.description_Bullet.update({
+          where: {
+            descriptionId: element.id
+          },
+          data: {
+            detail: element.detail
+          }
+        })
+      )
+    );
+  }
 };
 
 // create a change json if the old and new value are different, otherwise return undefined
@@ -192,7 +229,6 @@ export const createChangeJsonNonList = (
   if (oldValue !== newValue) {
     return {
       changeRequestId: crId,
-      dateImplemented: new Date(),
       implementerId,
       wbsElementId,
       detail: `Edited ${nameOfField} from "${oldValue}" to "${newValue}"`
@@ -230,7 +266,6 @@ export const createListChangesJson = <T>(
   return changes.map((element) => {
     return {
       changeRequestId: crId,
-      dateImplemented: new Date(),
       implementerId,
       wbsElementId,
       detail: `${element.type} ${nameOfField} "${element.element}"`
@@ -239,7 +274,8 @@ export const createListChangesJson = <T>(
 };
 
 // this method creates changes for description bullet inputs
-// it returns it as an object of {deletedIds[], changes[]} because the deletedIds are needed for the database
+// it returns it as an object of {deletedIds[], addedDetails[] changes[]}
+// because the deletedIds are needed for the database and the addedDetails are needed to make new ones
 export const createDescriptionBulletChangesJson = (
   oldArray: DescriptionBullet[],
   newArray: DescriptionBullet[],
@@ -249,9 +285,10 @@ export const createDescriptionBulletChangesJson = (
   nameOfField: string
 ): {
   deletedIds: number[];
+  addedDetails: string[];
+  editedIdsAndDetails: { id: number; detail: string }[];
   changes: {
     changeRequestId: number;
-    dateImplemented: Date;
     implementerId: number;
     wbsElementId: number;
     detail: string;
@@ -296,6 +333,16 @@ export const createDescriptionBulletChangesJson = (
       .map((element) => {
         return element.element.id;
       }),
+    addedDetails: changes
+      .filter((element) => element.type === 'Added new')
+      .map((element) => {
+        return element.element.detail;
+      }),
+    editedIdsAndDetails: changes
+      .filter((element) => element.type === 'Edited')
+      .map((element) => {
+        return { id: element.element.id, detail: element.element.detail };
+      }),
     changes: changes.map((element) => {
       const detail =
         element.type === 'Edited'
@@ -305,7 +352,6 @@ export const createDescriptionBulletChangesJson = (
           : `${element.type} ${nameOfField} "${element.element.detail}"`;
       return {
         changeRequestId: crId,
-        dateImplemented: new Date(),
         implementerId,
         wbsElementId,
         detail

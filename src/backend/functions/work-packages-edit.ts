@@ -49,24 +49,24 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   // get the changes or undefined for each of the fields
   const nameChangeJson = createChangeJsonNonList(
     'name',
-    name,
     originalWorkPackage.wbsElement.name,
+    name,
     crId,
     userId,
     wbsElementId
   );
   const startDateChangeJson = createChangeJsonNonList(
     'start date',
-    startDate,
     originalWorkPackage.startDate,
+    startDate,
     crId,
     userId,
     wbsElementId
   );
   const durationChangeJson = createChangeJsonNonList(
     'duration',
-    duration,
     originalWorkPackage.duration,
+    duration,
     crId,
     userId,
     wbsElementId
@@ -115,6 +115,28 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     .concat(expectedActivitiesChangeJson.changes)
     .concat(deliverablesChangeJson.changes);
 
+  // update the work package with the input fields
+  const updatedWorkPackage = await prisma.work_Package.update({
+    where: {
+      wbsElementId
+    },
+    data: {
+      startDate: new Date(startDate),
+      duration,
+      wbsElement: {
+        update: {
+          name
+        }
+      },
+      dependencies: {
+        set: [], // remove all the connections then add all the given ones
+        connect: wbsElementIds.map((ele: any) => {
+          return { wbsElementId: ele };
+        })
+      }
+    }
+  });
+
   // Update any deleted description bullets to have their date deleted as right now
   const deletedIds = expectedActivitiesChangeJson.deletedIds.concat(
     deliverablesChangeJson.deletedIds
@@ -131,28 +153,6 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
       }
     });
   }
-
-  // update the work package with the input fields
-  const updatedWorkPackage = await prisma.work_Package.update({
-    where: {
-      wbsElementId
-    },
-    data: {
-      startDate,
-      duration,
-      wbsElement: {
-        update: {
-          name
-        }
-      },
-      dependencies: {
-        set: [], // remove all the connections then add all the given ones
-        connect: wbsElementIds.map((ele: any) => {
-          return { wbsElementId: ele };
-        })
-      }
-    }
-  });
 
   addDescriptionBullets(
     expectedActivitiesChangeJson.addedDetails,
@@ -305,25 +305,18 @@ export const createDescriptionBulletChangesJson = (
   });
 
   const changes: { element: DescriptionBullet; type: string }[] = [];
-  const seenChanges = new Set<number>();
 
   oldArray.forEach((element) => {
     if (!seenNew.has(element.id)) {
       changes.push({ element, type: 'Removed' });
-      seenChanges.add(element.id);
-    } else if (seenNew.get(element.id) !== element.detail) {
-      changes.push({ element, type: 'Edited' });
-      seenChanges.add(element.id);
     }
   });
 
   newArray.forEach((element) => {
     if (!seenOld.has(element.id)) {
       changes.push({ element, type: 'Added new' });
-      seenChanges.add(element.id);
-    } else if (seenOld.get(element.id) !== element.detail && !seenChanges.has(element.id)) {
+    } else if (seenOld.get(element.id) !== element.detail) {
       changes.push({ element, type: 'Edited' });
-      seenChanges.add(element.id);
     }
   });
 

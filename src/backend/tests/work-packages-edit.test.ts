@@ -89,11 +89,14 @@ describe('createDescriptionBulletChangesJson', () => {
     );
     expect(res.changes.length).toBe(4);
     expect(res.deletedIds.length).toBe(2);
+    expect(res.editedIdsAndDetails.length).toBe(1);
     expect(res.deletedIds).toEqual([3, 5]);
-    expect(res.changes[0].detail).toBe(`Edited test from "b" to "bb"`);
-    expect(res.changes[1].detail).toBe(`Removed test "c"`);
-    expect(res.changes[2].detail).toBe(`Removed test "e"`);
+    expect(res.changes[2].detail).toBe(`Edited test from "b" to "bb"`);
+    expect(res.changes[0].detail).toBe(`Removed test "c"`);
+    expect(res.changes[1].detail).toBe(`Removed test "e"`);
     expect(res.changes[3].detail).toBe(`Added new test "d"`);
+    expect(res.editedIdsAndDetails[0].id).toBe(2);
+    expect(res.editedIdsAndDetails[0].detail).toBe('bb');
   });
 });
 

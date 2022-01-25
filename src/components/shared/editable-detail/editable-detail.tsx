@@ -4,10 +4,7 @@
  */
 
 import { useContext } from 'react';
-// import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
-// commented out because this code was added in the last pull request made by @Zach Roth;
-// as such it does not exist in this branch
-import { EditModeContext } from '../../projects/project-edit-form/project-edit-container/project-edit-container';
+import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 import { Form, FormControl, InputGroup } from 'react-bootstrap';
 
 interface EditableDetailProps {

@@ -22,8 +22,8 @@ export interface ChangeRequest {
 }
 
 export enum ChangeRequestType {
-  DesignIssue = 'DESIGN_ISSUE',
-  NewFunction = 'NEW_FUNCTION',
+  Issue = 'ISSUE',
+  Redefinition = 'REDEFINITION',
   Other = 'OTHER',
   StageGate = 'STAGE_GATE',
   Activation = 'ACTIVATION'

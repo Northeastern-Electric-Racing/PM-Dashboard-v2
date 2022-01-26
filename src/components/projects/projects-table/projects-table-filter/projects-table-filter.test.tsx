@@ -64,16 +64,16 @@ describe('projects table filter component', () => {
   it('checking if data in the status dropdown menu is correct', async () => {
     renderComponent();
     expect(screen.queryByText('None')).not.toBeInTheDocument();
-    expect(screen.queryByText('Active')).not.toBeInTheDocument();
-    expect(screen.queryByText('Inactive')).not.toBeInTheDocument();
-    expect(screen.queryByText('Complete')).not.toBeInTheDocument();
+    expect(screen.queryByText('ACTIVE')).not.toBeInTheDocument();
+    expect(screen.queryByText('INACTIVE')).not.toBeInTheDocument();
+    expect(screen.queryByText('COMPLETE')).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     expect(screen.getByText('None')).toBeInTheDocument();
-    expect(screen.getByText('Active')).toBeInTheDocument();
-    expect(screen.getByText('Inactive')).toBeInTheDocument();
-    expect(screen.getByText('Complete')).toBeInTheDocument();
+    expect(screen.getByText('ACTIVE')).toBeInTheDocument();
+    expect(screen.getByText('INACTIVE')).toBeInTheDocument();
+    expect(screen.getByText('COMPLETE')).toBeInTheDocument();
   });
 
   it('checking if data in the project lead dropdown menu is correct', async () => {
@@ -151,12 +151,12 @@ describe('projects table filter component', () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByText('Active'));
+      fireEvent.click(screen.getByText('ACTIVE'));
     });
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[0]).toBe('Active');
+    expect(temp[0]).toBe('ACTIVE');
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });

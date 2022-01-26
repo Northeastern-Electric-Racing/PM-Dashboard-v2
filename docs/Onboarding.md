@@ -55,8 +55,8 @@ Turn on `format on save` for Prettier.
 Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac) (or `File > Preferences > Settings` for Windows).
 Search for `format on save` and make sure `Editor: Format On Save` is checked / yes.
 
-Open settings and search for `open settings json`.
-Click `Edit in settings.json` under the `[JSON] Configure settings to be overridden for [json] language` section.
+Open the Command Palette (`Ctrl/Cmd`+`Shift`+`P`) and search for `open settings json`.
+Select `Preferences: Open Settings (JSON)`.
 Paste this into `settings.json`:
 
 ```json

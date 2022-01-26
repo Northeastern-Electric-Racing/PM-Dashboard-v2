@@ -6,9 +6,8 @@
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
-import { User } from 'utils';
+import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
-import { WbsElementStatus } from '../../../../utils/src';
 
 /**
  * Variables to filter table with.

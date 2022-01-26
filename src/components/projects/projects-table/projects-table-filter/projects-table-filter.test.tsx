@@ -11,6 +11,7 @@ import {
   exampleProjectLeadUser,
   exampleProjectManagerUser
 } from '../../../../test-support/test-data/users.stub';
+import { WbsElementStatus } from 'utils';
 
 let temp: any[] = [];
 
@@ -64,16 +65,16 @@ describe('projects table filter component', () => {
   it('checking if data in the status dropdown menu is correct', async () => {
     renderComponent();
     expect(screen.queryByText('None')).not.toBeInTheDocument();
-    expect(screen.queryByText('ACTIVE')).not.toBeInTheDocument();
-    expect(screen.queryByText('INACTIVE')).not.toBeInTheDocument();
-    expect(screen.queryByText('COMPLETE')).not.toBeInTheDocument();
+    expect(screen.queryByText(WbsElementStatus.Active)).not.toBeInTheDocument();
+    expect(screen.queryByText(WbsElementStatus.Inactive)).not.toBeInTheDocument();
+    expect(screen.queryByText(WbsElementStatus.Complete)).not.toBeInTheDocument();
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     expect(screen.getByText('None')).toBeInTheDocument();
-    expect(screen.getByText('ACTIVE')).toBeInTheDocument();
-    expect(screen.getByText('INACTIVE')).toBeInTheDocument();
-    expect(screen.getByText('COMPLETE')).toBeInTheDocument();
+    expect(screen.getByText(WbsElementStatus.Active)).toBeInTheDocument();
+    expect(screen.getByText(WbsElementStatus.Inactive)).toBeInTheDocument();
+    expect(screen.getByText(WbsElementStatus.Complete)).toBeInTheDocument();
   });
 
   it('checking if data in the project lead dropdown menu is correct', async () => {
@@ -151,12 +152,12 @@ describe('projects table filter component', () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });
     await act(async () => {
-      fireEvent.click(screen.getByText('ACTIVE'));
+      fireEvent.click(screen.getByText(WbsElementStatus.Active));
     });
     await act(async () => {
       fireEvent.click(screen.getByText('Apply'));
     });
-    expect(temp[0]).toBe('ACTIVE');
+    expect(temp[0]).toBe(WbsElementStatus.Active);
     await act(async () => {
       fireEvent.click(screen.getByTestId('status-toggle'));
     });

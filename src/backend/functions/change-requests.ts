@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient, Prisma, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
+import { PrismaClient, Prisma, Scope_CR_Why_Type } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -15,7 +15,6 @@ import {
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse,
-  ChangeRequestType,
   ChangeRequestReason,
   StandardChangeRequest,
   ActivationChangeRequest,

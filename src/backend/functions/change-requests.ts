@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient, Prisma, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
+import { PrismaClient, Prisma, Scope_CR_Why_Type } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -15,7 +15,6 @@ import {
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse,
-  ChangeRequestType,
   ChangeRequestReason,
   StandardChangeRequest,
   ActivationChangeRequest,
@@ -50,15 +49,6 @@ const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason 
     OTHER: ChangeRequestReason.Other
   }[whyType]);
 
-const convertChangeRequestType = (type: CR_Type): ChangeRequestType =>
-  ({
-    ISSUE: ChangeRequestType.DesignIssue,
-    DEFINITION_CHANGE: ChangeRequestType.NewFunction,
-    OTHER: ChangeRequestType.Other,
-    STAGE_GATE: ChangeRequestType.StageGate,
-    ACTIVATION: ChangeRequestType.Activation
-  }[type]);
-
 const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
 ): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
@@ -69,7 +59,7 @@ const changeRequestTransformer = (
   };
   return {
     ...changeRequest,
-    type: convertChangeRequestType(changeRequest.type),
+    type: changeRequest.type,
     reviewer: changeRequest.reviewer ?? undefined,
     dateReviewed: changeRequest.dateReviewed ?? undefined,
     accepted: changeRequest.accepted ?? undefined,

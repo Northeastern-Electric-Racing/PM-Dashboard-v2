@@ -45,6 +45,7 @@ const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason 
     ESTIMATION: ChangeRequestReason.Estimation,
     SCHOOL: ChangeRequestReason.School,
     MANUFACTURING: ChangeRequestReason.Manufacturing,
+    DESIGN: ChangeRequestReason.Design,
     RULES: ChangeRequestReason.Rules,
     OTHER_PROJECT: ChangeRequestReason.OtherProject,
     OTHER: ChangeRequestReason.Other

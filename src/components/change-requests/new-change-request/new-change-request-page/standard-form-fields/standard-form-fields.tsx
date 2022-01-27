@@ -7,6 +7,7 @@ import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
+import { ChangeRequestReason } from 'utils/lib/types/change-request-types';
 
 const StandardFormFields: React.FC = () => {
   return (
@@ -47,25 +48,19 @@ const StandardFormFields: React.FC = () => {
         <div className={'px-4'}>
           <Form.Label>Why</Form.Label>
           <Form.Group className={'px-4'} controlId="newCR-type">
-            {[
-              'Estimation Error',
-              'School Work',
-              'Manufacturing Issues',
-              'Design Issues',
-              'Rules Compliance',
-              'Other Project/Work Package',
-              'Other'
-            ].map((type) => (
+            {Object.values(ChangeRequestReason).map((type) => (
               <Row key={type} className="mb-3">
                 <Form.Check type="checkbox" id={type} label={type} />
-                {type === 'Other Project/Work Package' && (
+                {type === ChangeRequestReason.OtherProject && (
                   <Form.Control as="select" custom id="newCR-wbs-num">
                     {exampleAllWorkPackages.map((p) => (
                       <option key={p.id}>{wbsPipe(p.wbsNum)}</option>
                     ))}
                   </Form.Control>
                 )}
-                {type === 'Other' && <Form.Control type="text" id="newCR-other-type" />}
+                {type === ChangeRequestReason.Other && (
+                  <Form.Control type="text" id="newCR-other-type" />
+                )}
               </Row>
             ))}
           </Form.Group>

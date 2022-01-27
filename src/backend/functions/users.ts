@@ -19,6 +19,8 @@ import {
   User
 } from 'utils';
 
+import { apiUrls } from '../../shared/urls';
+import axios from 'axios';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
@@ -94,7 +96,9 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
 
   const accessToken = jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: '20mins', algorithm: 'HS256' });
 
-  event.headers["accessToken"] = accessToken;
+  axios.post(apiUrls.usersLogin(),
+    { accessToken },
+  );
 
   // register a login
   await prisma.session.create({
@@ -105,6 +109,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   });
 
   return buildSuccessResponse(usersTransformer(user));
+
 };
 
 // Define all valid routes for the endpoint

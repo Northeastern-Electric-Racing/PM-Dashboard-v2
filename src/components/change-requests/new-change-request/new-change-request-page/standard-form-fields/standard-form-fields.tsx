@@ -7,7 +7,7 @@ import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
-import { ChangeRequestReason } from 'utils/lib/types/change-request-types';
+import { ChangeRequestReason } from 'utils';
 
 const StandardFormFields: React.FC = () => {
   return (

@@ -58,6 +58,7 @@ export enum ChangeRequestReason {
   Estimation = 'ESTIMATION',
   School = 'SCHOOL',
   Manufacturing = 'MANUFACTURING',
+  Design = 'DESIGN',
   Rules = 'RULES',
   OtherProject = 'OTHER_PROJECT',
   Other = 'OTHER'

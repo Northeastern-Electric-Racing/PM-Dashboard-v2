@@ -72,6 +72,7 @@ describe('change requests table filter component', () => {
     expect(screen.queryByText(ChangeRequestReason.Estimation)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.School)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Manufacturing)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Design)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Rules)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.OtherProject)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Other)).not.toBeInTheDocument();
@@ -82,6 +83,7 @@ describe('change requests table filter component', () => {
     expect(screen.queryByText(ChangeRequestReason.Estimation)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.School)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Manufacturing)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Design)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Rules)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.OtherProject)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Other)).toBeInTheDocument();

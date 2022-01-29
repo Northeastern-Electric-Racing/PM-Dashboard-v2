@@ -166,6 +166,7 @@ const inputSchema = {
                       Scope_CR_Why_Type.OTHER,
                       Scope_CR_Why_Type.OTHER_PROJECT,
                       Scope_CR_Why_Type.RULES,
+                      Scope_CR_Why_Type.DESIGN,
                       Scope_CR_Why_Type.SCHOOL
                     ]
                   }

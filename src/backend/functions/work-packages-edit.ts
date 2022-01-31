@@ -29,7 +29,9 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     duration,
     wbsElementIds,
     expectedActivities,
-    deliverables
+    deliverables,
+    wbsElementStatus,
+    progress
   } = body;
 
   // get the original work package so we can compare things
@@ -91,7 +93,23 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     userId,
     wbsElementId
   );
-  const dependenciesChangeJson = createDependenciesChangesJson(
+  const progressChangeJson = createChangeJsonNonList(
+    'progress',
+    originalWorkPackage.progress,
+    progress,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const wbsElementStatusChangeJson = createChangeJsonNonList(
+    'WBS element status',
+    originalWorkPackage.wbsElement.status,
+    wbsElementStatus,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const dependenciesChangeJson = await createDependenciesChangesJson(
     originalWorkPackage.dependencies.map((element) => {
       return element.wbsElementId;
     }),
@@ -128,6 +146,40 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   if (durationChangeJson !== undefined) {
     changes.push(durationChangeJson);
   }
+  if (progressChangeJson !== undefined) {
+    changes.push(progressChangeJson);
+  }
+  if (wbsElementStatusChangeJson !== undefined) {
+    changes.push(wbsElementStatusChangeJson);
+  }
+
+  if (body.hasOwnProperty('projectManager')) {
+    const projectManagerChangeJson = createChangeJsonNonList(
+      'project lead',
+      originalWorkPackage.wbsElement.projectManagerId,
+      body.projectManager,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (projectManagerChangeJson !== undefined) {
+      changes.push(projectManagerChangeJson);
+    }
+  }
+
+  if (body.hasOwnProperty('projectLead')) {
+    const projectLeadChangeJson = createChangeJsonNonList(
+      'project lead',
+      originalWorkPackage.wbsElement.projectLeadId,
+      body.projectLead,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (projectLeadChangeJson !== undefined) {
+      changes.push(projectLeadChangeJson);
+    }
+  }
 
   // add the changes for each of dependencies, expected activities, and deliverables
   changes = changes
@@ -143,9 +195,17 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     data: {
       startDate: new Date(startDate),
       duration,
+      progress,
       wbsElement: {
         update: {
-          name
+          name,
+          status: wbsElementStatus,
+          projectLeadId: body.hasOwnProperty('projectLead')
+            ? body.projectLead
+            : originalWorkPackage.wbsElement.projectLeadId,
+          projectManagerId: body.hasOwnProperty('projectManager')
+            ? body.projectManager
+            : originalWorkPackage.wbsElement.projectManagerId
         }
       },
       dependencies: {
@@ -199,6 +259,10 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   return buildSuccessResponse(updatedWorkPackage);
 };
 
+/**
+ * HELPER METHODS:
+ */
+
 // helper method to add the given description bullets into the database, linked to the given work package
 const addDescriptionBullets = async (
   addedDetails: string[],
@@ -244,7 +308,14 @@ export const createChangeJsonNonList = (
   implementerId: number,
   wbsElementId: number
 ) => {
-  if (oldValue !== newValue) {
+  if (oldValue == null) {
+    return {
+      changeRequestId: crId,
+      implementerId,
+      wbsElementId,
+      detail: `Added ${nameOfField} "${newValue}"`
+    };
+  } else if (oldValue !== newValue) {
     return {
       changeRequestId: crId,
       implementerId,
@@ -276,7 +347,7 @@ export const createChangeJsonDates = (
 };
 
 // create a change json list for a given list (dependencies). Only works if the elements themselves should be compared (numbers)
-export const createDependenciesChangesJson = (
+export const createDependenciesChangesJson = async (
   oldArray: number[],
   newArray: number[],
   crId: number,
@@ -302,23 +373,20 @@ export const createDependenciesChangesJson = (
   });
 
   // get the wbs number of each changing dependency for the change string
-  const wbsNumbers = new Map<number, string>();
-  changes.forEach(async (element) => {
-    const wbs = await prisma.wBS_Element.findUnique({
-      where: {
-        wbsElementId: element.element
+  const changedDependencies = await prisma.wBS_Element.findMany({
+    where: {
+      wbsElementId: {
+        in: changes.map((element) => element.element)
       }
-    });
-
-    if (wbs === null) {
-      throw new TypeError('Invalid dependency!');
     }
-
-    wbsNumbers.set(
-      element.element,
-      wbs.carNumber + '.' + wbs.projectNumber + '.' + wbs.workPackageNumber
-    );
   });
+
+  const wbsNumbers = new Map(
+    changedDependencies.map((element) => [
+      element.wbsElementId,
+      `${element.carNumber}.${element.projectNumber}.${element.workPackageNumber}`
+    ])
+  );
 
   return changes.map((element) => {
     return {

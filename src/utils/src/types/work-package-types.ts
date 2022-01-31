@@ -88,7 +88,14 @@ export const workPackageEditInputSchemaBody = {
         },
         required: ['id', 'detail']
       }
-    }
+    },
+    wbsElementStatus: {
+      type: 'string',
+      enum: ['INACTIVE', 'ACTIVE', 'COMPLETE']
+    },
+    progress: { type: 'integer', minimum: 0 },
+    projectLead: { type: 'integer', minimum: 0 },
+    projectManager: { type: 'integer', minimum: 0 }
   },
   required: [
     'wbsElementId',
@@ -99,7 +106,9 @@ export const workPackageEditInputSchemaBody = {
     'duration',
     'wbsElementIds',
     'expectedActivities',
-    'deliverables'
+    'deliverables',
+    'wbsElementStatus',
+    'progress'
   ]
 } as const;
 

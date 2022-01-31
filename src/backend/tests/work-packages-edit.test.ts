@@ -6,7 +6,6 @@
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
 import {
   handler,
-  createListChangesJson,
   createChangeJsonNonList,
   createDescriptionBulletChangesJson
 } from '../functions/work-packages-edit';
@@ -25,33 +24,6 @@ describe('createChangeJsonNonList', () => {
     }
 
     expect(res.detail).toBe(`Edited test from "abc" to "def"`);
-  });
-});
-
-describe('createListChangesJson', () => {
-  it('recognizes added and removed', async () => {
-    const oldArray = [1, 2, 3];
-    const newArray = [2, 3, 4];
-    const res = createListChangesJson(oldArray, newArray, 1, 2, 3, 'test name');
-    expect(res.length).toBe(2);
-    expect(res[0].detail).toBe('Removed test name "1"');
-    expect(res[1].detail).toBe('Added new test name "4"');
-  });
-
-  it('works with empty old array', async () => {
-    const newArray = [2, 3, 4];
-    const res = createListChangesJson([], newArray, 1, 2, 3, 'test name');
-    expect(res.length).toBe(3);
-    expect(res[0].detail).toBe('Added new test name "2"');
-    expect(res[1].detail).toBe('Added new test name "3"');
-  });
-
-  it('works with empty new array', async () => {
-    const oldArray = [2, 3, 4];
-    const res = createListChangesJson(oldArray, [], 1, 2, 3, 'test name');
-    expect(res.length).toBe(3);
-    expect(res[0].detail).toBe('Removed test name "2"');
-    expect(res[1].detail).toBe('Removed test name "3"');
   });
 });
 
@@ -112,6 +84,8 @@ describe('work package edit', () => {
         userId: 1,
         name: 'name',
         crId: 2,
+        wbsElementStatus: 'ACTIVE',
+        progress: 5,
         startDate: '2015-10-06',
         duration: 1,
         wbsElementIds: [1],
@@ -140,6 +114,12 @@ describe('work package edit', () => {
 
       it('fails when expectedActivities has no detail', async () => {
         const res = await func({ body: { ...goodBody, expectedActivities: { id: 1 } } });
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toBe('Event object failed validation');
+      });
+
+      it('fails when status is not in the enum', async () => {
+        const res = await func({ body: { ...goodBody, wbsElementStatus: 'aaahhhhh' } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });

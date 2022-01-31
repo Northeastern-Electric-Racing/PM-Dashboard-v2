@@ -13,7 +13,7 @@ export const workPackageCreateInputSchemaBody = {
     crId: { type: 'integer', minimum: 0 },
     projectId: { type: 'integer', minimum: 0 },
     startDate: { type: 'string', format: 'date' },
-    duration: { type: 'number', minimum: 0 },
+    duration: { type: 'integer', minimum: 0 },
     wbsElementIds: {
       type: 'array',
       items: {
@@ -59,7 +59,7 @@ export const workPackageEditInputSchemaBody = {
     name: { type: 'string' },
     crId: { type: 'integer', minimum: 0 },
     startDate: { type: 'string', format: 'date' },
-    duration: { type: 'number', minimum: 0 },
+    duration: { type: 'integer', minimum: 0 },
     wbsElementIds: {
       type: 'array',
       items: {

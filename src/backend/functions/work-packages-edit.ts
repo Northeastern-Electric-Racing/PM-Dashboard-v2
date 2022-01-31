@@ -7,12 +7,17 @@ import middy from '@middy/core';
 import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
-import { descBulletConverter } from './projects';
 import { Handler } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
+import { Description_Bullet, PrismaClient } from '@prisma/client';
 import { buildSuccessResponse, DescriptionBullet, workPackageEditInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
+
+export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
+  ...descBullet,
+  id: descBullet.descriptionId,
+  dateDeleted: descBullet.dateDeleted ?? undefined
+});
 
 export const editWorkPackage: Handler = async ({ body }, _context) => {
   const {
@@ -45,6 +50,21 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     throw new TypeError('Work Package with given wbsElementId does not exist!');
   }
 
+  // if the crId doesn't match a valid approved change request then we need to error
+  const changeRequest = await prisma.change_Request.findUnique({
+    where: {
+      crId
+    }
+  });
+
+  if (
+    changeRequest === null ||
+    changeRequest.accepted == null ||
+    changeRequest.accepted === false
+  ) {
+    throw new TypeError('Invalid Change Request!');
+  }
+
   let changes = [];
   // get the changes or undefined for each of the fields
   const nameChangeJson = createChangeJsonNonList(
@@ -55,10 +75,10 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     userId,
     wbsElementId
   );
-  const startDateChangeJson = createChangeJsonNonList(
+  const startDateChangeJson = createChangeJsonDates(
     'start date',
     originalWorkPackage.startDate,
-    startDate,
+    new Date(startDate),
     crId,
     userId,
     wbsElementId
@@ -71,7 +91,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     userId,
     wbsElementId
   );
-  const dependenciesChangeJson = createListChangesJson(
+  const dependenciesChangeJson = createDependenciesChangesJson(
     originalWorkPackage.dependencies.map((element) => {
       return element.wbsElementId;
     }),
@@ -202,17 +222,15 @@ const addDescriptionBullets = async (
 const editDescriptionBullets = async (editedIdsAndDetails: { id: number; detail: string }[]) => {
   // edit the edited bullets if there are any to update
   if (editedIdsAndDetails.length > 0) {
-    await prisma.$transaction(
-      editedIdsAndDetails.map((element) =>
-        prisma.description_Bullet.update({
-          where: {
-            descriptionId: element.id
-          },
-          data: {
-            detail: element.detail
-          }
-        })
-      )
+    editedIdsAndDetails.forEach((element) =>
+      prisma.description_Bullet.update({
+        where: {
+          descriptionId: element.id
+        },
+        data: {
+          detail: element.detail
+        }
+      })
     );
   }
 };
@@ -237,30 +255,69 @@ export const createChangeJsonNonList = (
   return undefined;
 };
 
+// create a change json if the old and new dates are different, otherwise return undefined
+export const createChangeJsonDates = (
+  nameOfField: string,
+  oldValue: Date,
+  newValue: Date,
+  crId: number,
+  implementerId: number,
+  wbsElementId: number
+) => {
+  if (oldValue.getTime() !== newValue.getTime()) {
+    return {
+      changeRequestId: crId,
+      implementerId,
+      wbsElementId,
+      detail: `Edited ${nameOfField} from "${oldValue.toDateString()}" to "${newValue.toDateString()}"`
+    };
+  }
+  return undefined;
+};
+
 // create a change json list for a given list (dependencies). Only works if the elements themselves should be compared (numbers)
-export const createListChangesJson = <T>(
-  oldArray: T[],
-  newArray: T[],
+export const createDependenciesChangesJson = (
+  oldArray: number[],
+  newArray: number[],
   crId: number,
   implementerId: number,
   wbsElementId: number,
   nameOfField: string
 ) => {
-  const seenOld = new Set<T>(oldArray);
-  const seenNew = new Set<T>(newArray);
+  const seenOld = new Set<number>(oldArray);
+  const seenNew = new Set<number>(newArray);
 
-  const changes: { element: T; type: string }[] = [];
+  const changes: { element: number; type: string }[] = [];
 
-  oldArray.forEach((element: T) => {
+  oldArray.forEach((element) => {
     if (!seenNew.has(element)) {
       changes.push({ element, type: 'Removed' });
     }
   });
 
-  newArray.forEach((element: T) => {
+  newArray.forEach((element) => {
     if (!seenOld.has(element)) {
       changes.push({ element, type: 'Added new' });
     }
+  });
+
+  // get the wbs number of each changing dependency for the change string
+  const wbsNumbers = new Map<number, string>();
+  changes.forEach(async (element) => {
+    const wbs = await prisma.wBS_Element.findUnique({
+      where: {
+        wbsElementId: element.element
+      }
+    });
+
+    if (wbs === null) {
+      throw new TypeError('Invalid dependency!');
+    }
+
+    wbsNumbers.set(
+      element.element,
+      wbs.carNumber + '.' + wbs.projectNumber + '.' + wbs.workPackageNumber
+    );
   });
 
   return changes.map((element) => {
@@ -268,7 +325,7 @@ export const createListChangesJson = <T>(
       changeRequestId: crId,
       implementerId,
       wbsElementId,
-      detail: `${element.type} ${nameOfField} "${element.element}"`
+      detail: `${element.type} ${nameOfField} "${wbsNumbers.get(element.element)}"`
     };
   });
 };
@@ -313,7 +370,7 @@ export const createDescriptionBulletChangesJson = (
   });
 
   newArray.forEach((element) => {
-    if (!seenOld.has(element.id)) {
+    if (element.id < 0 || !seenOld.has(element.id)) {
       changes.push({ element, type: 'Added new' });
     } else if (seenOld.get(element.id) !== element.detail) {
       changes.push({ element, type: 'Edited' });

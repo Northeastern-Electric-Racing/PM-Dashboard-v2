@@ -12,7 +12,7 @@ All questions can be directed to the project admins: `@kevinyu328` and `@jamescd
 ## Getting Started
 
 Start by understanding what the project is [all about](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/About.md).
-Then go through the [onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md) steps.
+Then go through either the [Mac onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md) or [Windows onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/OnboardingWindows.md) steps.
 And finally read through the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md).
 
 If you're curious, check out the [deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md) and the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ProductManagement.md) details too.

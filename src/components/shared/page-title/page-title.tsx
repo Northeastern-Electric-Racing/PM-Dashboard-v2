@@ -13,7 +13,7 @@ interface PageTitleProps {
 // Common component for all page titles
 const PageTitle: React.FC<PageTitleProps> = ({ title, actionButton }) => {
   return (
-    <div className={'mx-5 pt-3 pb-1 d-flex justify-content-between'}>
+    <div className={'mx-5 mb-4 pt-3 pb-1 d-flex justify-content-between'}>
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.actionButton}>{actionButton}</div>
     </div>

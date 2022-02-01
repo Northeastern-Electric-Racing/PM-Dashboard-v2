@@ -155,7 +155,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
 
   if (body.hasOwnProperty('projectManager')) {
     const projectManagerChangeJson = createChangeJsonNonList(
-      'project lead',
+      'project manager',
       originalWorkPackage.wbsElement.projectManagerId,
       body.projectManager,
       crId,

@@ -23,6 +23,8 @@ import StageGateDetails from './type-specific-details/stage-gate-details/stage-g
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 import './change-request-details.module.css';
 import ReviewNotes from './review-notes/review-notes';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -70,11 +72,17 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
     </div>
   );
 
+  const implementCrDropdown = (
+    <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
+      <Dropdown.Item as={Link} to="/projects/new">Create New Project</Dropdown.Item>
+    </DropdownButton>
+  );
+
   return (
     <>
       <PageTitle
         title={`Change Request #${changeRequest.crId}`}
-        actionButton={changeRequest.accepted !== undefined ? <></> : reviewBtns}
+        actionButton={changeRequest.accepted !== undefined ? (changeRequest.accepted! ? implementCrDropdown : <></>) : reviewBtns}
       />
       <PageBlock
         title={'Change Request Details'}

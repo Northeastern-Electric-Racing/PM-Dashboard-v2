@@ -4,9 +4,9 @@
  */
 
 import { Button, Col, Form, Row } from "react-bootstrap";
-import ActionButton from "../../../../shared/action-button/action-button";
-import PageBlock from "../../../../shared/page-block/page-block";
-import PageTitle from "../../../../shared/page-title/page-title";
+import ActionButton from "../../shared/action-button/action-button";
+import PageBlock from "../../shared/page-block/page-block";
+import PageTitle from "../../shared/page-title/page-title";
 
 const CreateProjectForm: React.FC = () => {
   return (

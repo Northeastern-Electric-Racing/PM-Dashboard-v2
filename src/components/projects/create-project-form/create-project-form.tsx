@@ -23,23 +23,26 @@ const CreateProjectForm: React.FC = () => {
               <Row>
                 <Col>
                   <Row>
-                    <Form.Group as={Col} aria-required>
+                    <Form.Group as={Col} controlId='project-name-group' aria-required>
                       <Form.Label htmlFor='project-name'>Project Name</Form.Label>
                       <Form.Control id='project-name' type='text' placeholder='Enter project name...' required />
+                      <Form.Control.Feedback type='invalid'>Please provide a project name.</Form.Control.Feedback>
                     </Form.Group>
                   </Row>
                   <Row>
-                    <Form.Group as={Col} aria-required>
+                    <Form.Group as={Col} controlId='car-number-group' aria-required>
                       <Form.Label htmlFor='car-number'>Car Number</Form.Label>
                       <Form.Control id='car-number' type='number' min={1} placeholder='Enter car number...' required />
+                      <Form.Control.Feedback type='invalid'>Please provide a valid car number.</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} aria-required>
+                    <Form.Group as={Col} controlId='cr-id-group' aria-required>
                       <Form.Label htmlFor='cr-id'>Change Request ID</Form.Label>
                       <Form.Control id='cr-id' type='number' min={1} placeholder='Enter change request ID...' required />
+                      <Form.Control.Feedback type='invalid'>Please provide a valid change request ID.</Form.Control.Feedback>
                     </Form.Group>
                   </Row>
                   <Row>
-                    <Form.Group as={Col} aria-required>
+                    <Form.Group as={Col} controlId='project-summary-group' aria-required>
                       <Form.Label htmlFor='project-summary'>Project Summary</Form.Label>
                       <Form.Control
                         id='project-summary'
@@ -49,6 +52,7 @@ const CreateProjectForm: React.FC = () => {
                         placeholder='Enter summary...'
                         required
                       />
+                      <Form.Control.Feedback type='invalid'>Please provide a project summary.</Form.Control.Feedback>
                     </Form.Group>
                   </Row>
                   <Row>

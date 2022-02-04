@@ -11,8 +11,6 @@ import PageTitle from "../../shared/page-title/page-title";
 const CreateProjectForm: React.FC = () => {
   const history = useHistory();
 
-  const goBack = () => history.goBack();
-
   return (
     <>
       <PageTitle title={'New Project'} />
@@ -58,7 +56,7 @@ const CreateProjectForm: React.FC = () => {
                       <Button className={'mr-3'} variant='primary' type='submit'>
                         Create
                       </Button>
-                      <Button variant='secondary' type='button' onClick={() => goBack()}>
+                      <Button variant='secondary' type='button' onClick={() => history.goBack()}>
                         Cancel
                       </Button>
                     </Col>

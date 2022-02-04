@@ -22,6 +22,7 @@ import './change-request-details.module.css';
 import ReviewNotes from './review-notes/review-notes';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { routes } from '../../../../shared/routes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -56,22 +57,26 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 }: ChangeRequestDetailsProps) => {
   const reviewDropdown = (
     <DropdownButton id="review-dropdown" title="Review">
-      <Dropdown.Item as={Link} to={`/change-requests/${changeRequest.crId}/accept`}>Accept</Dropdown.Item>
-      <Dropdown.Item as={Link} to={`/change-requests/${changeRequest.crId}/deny`}>Deny</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}>Accept</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}>Deny</Dropdown.Item>
     </DropdownButton>
   );
 
   const implementCrDropdown = (
     <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
-      <Dropdown.Item as={Link} to="/projects/new">Create New Project</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>Create New Project</Dropdown.Item>
     </DropdownButton>
   );
+
+  let actionDropdown = <></>;
+  if (changeRequest.accepted === undefined) actionDropdown = reviewDropdown;
+  if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
 
   return (
     <>
       <PageTitle
         title={`Change Request #${changeRequest.crId}`}
-        actionButton={changeRequest.accepted !== undefined ? (changeRequest.accepted! ? implementCrDropdown : <></>) : reviewDropdown}
+        actionButton={actionDropdown}
       />
       <PageBlock
         title={'Change Request Details'}

@@ -26,24 +26,25 @@ const CreateProjectForm: React.FC = () => {
                 <Col>
                   <Row>
                     <Form.Group as={Col} aria-required>
-                      <Form.Label>Project Name</Form.Label>
-                      <Form.Control type='text' placeholder='Enter project name...' required />
+                      <Form.Label htmlFor='project-name'>Project Name</Form.Label>
+                      <Form.Control id='project-name' type='text' placeholder='Enter project name...' required />
                     </Form.Group>
                   </Row>
                   <Row>
                     <Form.Group as={Col} aria-required>
-                      <Form.Label>Car Number</Form.Label>
-                      <Form.Control type='text' placeholder='Enter car number...' required />
+                      <Form.Label htmlFor='car-number'>Car Number</Form.Label>
+                      <Form.Control id='car-number' type='text' placeholder='Enter car number...' required />
                     </Form.Group>
                     <Form.Group as={Col} aria-required>
-                      <Form.Label>Change Request ID</Form.Label>
-                      <Form.Control type='text' placeholder='Enter change request ID...' required />
+                      <Form.Label htmlFor='cr-id'>Change Request ID</Form.Label>
+                      <Form.Control id='cr-id' type='text' placeholder='Enter change request ID...' required />
                     </Form.Group>
                   </Row>
                   <Row>
                     <Form.Group as={Col} aria-required>
-                      <Form.Label>Project Summary</Form.Label>
+                      <Form.Label htmlFor='project-summary'>Project Summary</Form.Label>
                       <Form.Control
+                        id='project-summary'
                         as='textarea'
                         rows={4}
                         cols={50}

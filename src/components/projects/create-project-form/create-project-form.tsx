@@ -31,11 +31,11 @@ const CreateProjectForm: React.FC = () => {
                   <Row>
                     <Form.Group as={Col} aria-required>
                       <Form.Label htmlFor='car-number'>Car Number</Form.Label>
-                      <Form.Control id='car-number' type='text' placeholder='Enter car number...' required />
+                      <Form.Control id='car-number' type='number' min={1} placeholder='Enter car number...' required />
                     </Form.Group>
                     <Form.Group as={Col} aria-required>
                       <Form.Label htmlFor='cr-id'>Change Request ID</Form.Label>
-                      <Form.Control id='cr-id' type='text' placeholder='Enter change request ID...' required />
+                      <Form.Control id='cr-id' type='number' min={1} placeholder='Enter change request ID...' required />
                     </Form.Group>
                   </Row>
                   <Row>

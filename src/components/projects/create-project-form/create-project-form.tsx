@@ -4,11 +4,15 @@
  */
 
 import { Button, Col, Form, Row } from "react-bootstrap";
-import ActionButton from "../../shared/action-button/action-button";
+import { useHistory } from "react-router-dom";
 import PageBlock from "../../shared/page-block/page-block";
 import PageTitle from "../../shared/page-title/page-title";
 
 const CreateProjectForm: React.FC = () => {
+  const history = useHistory();
+
+  const goBack = () => history.goBack();
+
   return (
     <>
       <PageTitle title={'New Project'} />
@@ -19,43 +23,46 @@ const CreateProjectForm: React.FC = () => {
           <div>
             <Form>
               <Row>
-                <Form.Group>
-                  <Form.Label>Project Name</Form.Label>
-                  <Form.Control type='text' placeholder='Enter project name...' />
-                </Form.Group>
-              </Row>
-              <Row>
                 <Col>
-                  <Form.Group>
-                    <Form.Label>Car Number</Form.Label>
-                    <Form.Control type='text' placeholder='Enter car number...' />
-                  </Form.Group>
+                  <Row>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label>Project Name</Form.Label>
+                      <Form.Control type='text' placeholder='Enter project name...' required />
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label>Car Number</Form.Label>
+                      <Form.Control type='text' placeholder='Enter car number...' required />
+                    </Form.Group>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label>Change Request ID</Form.Label>
+                      <Form.Control type='text' placeholder='Enter change request ID...' required />
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label>Project Summary</Form.Label>
+                      <Form.Control
+                        as='textarea'
+                        rows={4}
+                        cols={50}
+                        placeholder='Enter summary...'
+                        required
+                      />
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Col className={'d-flex'}>
+                      <Button className={'mr-3'} variant='primary' type='submit'>
+                        Create
+                      </Button>
+                      <Button variant='secondary' type='button' onClick={() => goBack()}>
+                        Cancel
+                      </Button>
+                    </Col>
+                  </Row>
                 </Col>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Change Request ID</Form.Label>
-                    <Form.Control type='text' placeholder='Enter change request ID...' />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Form.Group>
-                  <Form.Label>Project Summary</Form.Label>
-                  <Form.Control
-                    as='textarea'
-                    rows={4}
-                    cols={50}
-                    placeholder='Enter summary...'
-                  />
-                </Form.Group>
-              </Row>
-              <Row>
-                <Button variant='success' type='submit'>
-                  Create
-                </Button>
-                <Button variant='secondary' type='button' onClick={() => alert('replace with reroute back to cr details page for that specific change request')}>
-                  Cancel
-                </Button>
               </Row>
             </Form>
           </div>

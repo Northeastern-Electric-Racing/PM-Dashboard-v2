@@ -72,6 +72,13 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
     </div>
   );
 
+  const reviewDropdown = (
+    <DropdownButton id="review-dropdown" title="Review">
+      <Dropdown.Item as={Link} to={`/change-requests/${changeRequest.crId}/accept`}>Accept</Dropdown.Item>
+      <Dropdown.Item as={Link} to={`/change-requests/${changeRequest.crId}/deny`}>Deny</Dropdown.Item>
+    </DropdownButton>
+  );
+
   const implementCrDropdown = (
     <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
       <Dropdown.Item as={Link} to="/projects/new">Create New Project</Dropdown.Item>
@@ -82,7 +89,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
     <>
       <PageTitle
         title={`Change Request #${changeRequest.crId}`}
-        actionButton={changeRequest.accepted !== undefined ? (changeRequest.accepted! ? implementCrDropdown : <></>) : reviewBtns}
+        actionButton={changeRequest.accepted !== undefined ? (changeRequest.accepted! ? implementCrDropdown : <></>) : reviewDropdown}
       />
       <PageBlock
         title={'Change Request Details'}

@@ -14,9 +14,6 @@ import {
 import { fullNamePipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
-import styles from './change-request-details.module.css';
-import ActionButton from '../../../shared/action-button/action-button';
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
@@ -57,21 +54,6 @@ interface ChangeRequestDetailsProps {
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   changeRequest
 }: ChangeRequestDetailsProps) => {
-  const reviewBtns = (
-    <div className={styles.btnsContainer}>
-      <ActionButton
-        link={`/change-requests/${changeRequest.crId}/accept`}
-        icon={faThumbsUp}
-        text="Accept"
-      />
-      <ActionButton
-        link={`/change-requests/${changeRequest.crId}/deny`}
-        icon={faThumbsDown}
-        text="Deny"
-      />
-    </div>
-  );
-
   const reviewDropdown = (
     <DropdownButton id="review-dropdown" title="Review">
       <Dropdown.Item as={Link} to={`/change-requests/${changeRequest.crId}/accept`}>Accept</Dropdown.Item>

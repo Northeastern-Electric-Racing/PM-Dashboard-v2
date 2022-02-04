@@ -32,7 +32,7 @@ const CreateProjectForm: React.FC = () => {
                   <Row>
                     <Form.Group as={Col} controlId='car-number-group' aria-required>
                       <Form.Label htmlFor='car-number'>Car Number</Form.Label>
-                      <Form.Control id='car-number' type='number' min={1} placeholder='Enter car number...' required />
+                      <Form.Control id='car-number' type='number' min={0} placeholder='Enter car number...' required />
                       <Form.Control.Feedback type='invalid'>Please provide a valid car number.</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} controlId='cr-id-group' aria-required>

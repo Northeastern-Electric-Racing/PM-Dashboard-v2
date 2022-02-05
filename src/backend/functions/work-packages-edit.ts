@@ -200,12 +200,8 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
         update: {
           name,
           status: wbsElementStatus,
-          projectLeadId: body.hasOwnProperty('projectLead')
-            ? body.projectLead
-            : originalWorkPackage.wbsElement.projectLeadId,
-          projectManagerId: body.hasOwnProperty('projectManager')
-            ? body.projectManager
-            : originalWorkPackage.wbsElement.projectManagerId
+          projectLeadId: body.projectLead,
+          projectManagerId: body.projectManager
         }
       },
       dependencies: {
@@ -286,15 +282,17 @@ const addDescriptionBullets = async (
 const editDescriptionBullets = async (editedIdsAndDetails: { id: number; detail: string }[]) => {
   // edit the edited bullets if there are any to update
   if (editedIdsAndDetails.length > 0) {
-    editedIdsAndDetails.forEach((element) =>
-      prisma.description_Bullet.update({
-        where: {
-          descriptionId: element.id
-        },
-        data: {
-          detail: element.detail
-        }
-      })
+    await prisma.$transaction(
+      editedIdsAndDetails.map((element) =>
+        prisma.description_Bullet.update({
+          where: {
+            descriptionId: element.id
+          },
+          data: {
+            detail: element.detail
+          }
+        })
+      )
     );
   }
 };

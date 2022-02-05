@@ -23,6 +23,19 @@ export const dateType = { type: 'string', format: 'date' } as const;
 export const booleanType = { type: 'boolean' } as const;
 
 /**
+ * Create a basic array schema type
+ * @param itemType - The schema type of the elements
+ */
+export const arrayType = <Item>(itemType: Item) => ({ type: 'array', items: itemType } as const);
+
+/**
+ * Create an enum schema type
+ * provide as arguments all the possible enum values
+ */
+export const enumType = <Items extends Readonly<string[]>>(...items: Items) =>
+  ({ enum: items } as const);
+
+/**
  * Help create the schema for the event body, used for middy validation
  * @param bodySchema - The schema describing the body, likely from the bodySchema function
  */

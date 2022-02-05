@@ -9,11 +9,13 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
+import { FromSchema } from 'json-schema-to-ts';
 import {
   buildClientFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
-  createProjectPayloadSchema
+  createProjectPayloadSchema,
+  eventSchema
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -21,31 +23,23 @@ const prisma = new PrismaClient();
 // gets highest current project number
 const getHighestProjectNumber = async (carNumber: number) => {
   const maxProjectNumber = await prisma.wBS_Element.aggregate({
-    where: {
-      carNumber
-    },
-    max: {
-      projectNumber: true,
-    },
+    where: { carNumber },
+    max: { projectNumber: true }
   });
 
   return maxProjectNumber.max.projectNumber;
-}
+};
 
 // gets the associated change request for creating a project
 const getChangeRequestReviewState = async (crId: number) => {
-  const cr = await prisma.change_Request.findUnique({
-    where: {
-      crId
-    }
-  });
+  const cr = await prisma.change_Request.findUnique({ where: { crId } });
 
   // returns null if the change request doesn't exist
   // if it exists, return a boolean describing if the change request was reviewed
   return cr ? cr.dateReviewed !== null : cr;
-}
+};
 
-export const baseHandler: Handler = async ({ body }, _context) => {
+export const baseHandler: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
   // check if the change request exists
   const crReviewed = await getChangeRequestReviewState(body.crId);
   if (crReviewed === null) {
@@ -65,43 +59,28 @@ export const baseHandler: Handler = async ({ body }, _context) => {
       projectNumber: maxProjectNumber + 1,
       workPackageNumber: 0,
       name: body.name,
-      project: {
-        create: {
-          summary: body.summary,
-        },
-      },
+      project: { create: { summary: body.summary } },
       changes: {
         create: {
           changeRequestId: body.crId,
           implementerId: body.userId,
-          detail: 'New Project Created',
-        },
-      },
+          detail: 'New Project Created'
+        }
+      }
     },
-    include: {
-      project: true,
-      changes: true,
-    },
+    include: { project: true, changes: true }
   });
 
-  return buildSuccessResponse(
-    {
-      wbsNumber: {
-        car: createdProject.carNumber,
-        project: createdProject.projectNumber,
-        workPackage: createdProject.workPackageNumber,
-      }
+  return buildSuccessResponse({
+    wbsNumber: {
+      car: createdProject.carNumber,
+      project: createdProject.projectNumber,
+      workPackage: createdProject.workPackageNumber
     }
-  );
-}
-
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: createProjectPayloadSchema
-  },
-  required: ['body']
+  });
 };
+
+const inputSchema = eventSchema(createProjectPayloadSchema);
 
 const handler = middy(baseHandler)
   .use(jsonBodyParser())

@@ -9,7 +9,7 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
-import { buildSuccessResponse, workPackageInputSchemaBody } from 'utils';
+import { buildSuccessResponse, workPackageCreateInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -89,7 +89,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
 const inputSchema = {
   type: 'object',
   properties: {
-    body: workPackageInputSchemaBody
+    body: workPackageCreateInputSchemaBody
   }
 };
 

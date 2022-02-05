@@ -57,14 +57,26 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 }: ChangeRequestDetailsProps) => {
   const reviewDropdown = (
     <DropdownButton id="review-dropdown" title="Review">
-      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}>Accept</Dropdown.Item>
-      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}>Deny</Dropdown.Item>
+      <Dropdown.Item
+        as={Link}
+        to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}
+      >
+        Accept
+      </Dropdown.Item>
+      <Dropdown.Item
+        as={Link}
+        to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}
+      >
+        Deny
+      </Dropdown.Item>
     </DropdownButton>
   );
 
   const implementCrDropdown = (
     <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
-      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>Create New Project</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>
+        Create New Project
+      </Dropdown.Item>
     </DropdownButton>
   );
 
@@ -74,10 +86,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 
   return (
     <>
-      <PageTitle
-        title={`Change Request #${changeRequest.crId}`}
-        actionButton={actionDropdown}
-      />
+      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={actionDropdown} />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
@@ -94,7 +103,11 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <ReviewNotes reviewer={changeRequest.reviewer} reviewNotes={changeRequest.reviewNotes} />
+      <ReviewNotes
+        reviewer={changeRequest.reviewer}
+        reviewNotes={changeRequest.reviewNotes}
+        dateReviewed={changeRequest.dateReviewed!}
+      />
       <ImplementedChangesList
         changes={
           changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges

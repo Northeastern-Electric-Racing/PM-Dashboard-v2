@@ -17,42 +17,52 @@ export interface ApiRoute {
   func: ApiRouteFunction;
 }
 
-export const eventSchema = <Body extends Record<string, any>>(
-  bodySchema: Body,
-  methods?: string[]
-) =>
+export const intType = { type: 'integer', minimum: 0 } as const;
+export const stringType = { type: 'string' } as const;
+export const dateType = { type: 'string', format: 'date' } as const;
+export const booleanType = { type: 'boolean' } as const;
+
+/**
+ * Help create the schema for the event body, used for middy validation
+ * @param bodySchema - The schema describing the body, likely from the bodySchema function
+ */
+export const eventSchema = <Body extends Record<string, any>>(bodySchema: Body) =>
   ({
     type: 'object',
     properties: {
-      httpMethod: {
-        type: 'string',
-        enum: methods
-      },
       body: bodySchema,
       headers: {
         type: 'object',
         properties: {
-          'user-agent': { type: 'string' }
-          // Cookie: { type: 'string' }
+          'user-agent': stringType
+          // Cookie: stringType
         },
         required: ['user-agent']
       }
     },
-    required: ['body', 'headers', 'httpMethod']
+    required: ['body', 'headers']
   } as const);
 
-export const bodySchema = <Props extends Record<string, any>>(
+/**
+ * Help create the schema for a middy request body or object within the body
+ * @param properties - The object with the property names as keys and schema types as values
+ * @param optionalProps - An array of properties that should be marked as optional
+ * @param additionalProperties - If true, allows addtional properties not specified by the schema
+ */
+export const bodySchema = <
+  Props extends Record<string, any>,
+  Opts extends keyof Props = never,
+  Add extends boolean = false
+>(
   properties: Props,
-  optionalProps: (keyof Props)[] = [],
-  additionalProperties = false
+  optionalProps: Opts[] = [],
+  additionalProperties?: Add
 ) =>
   ({
     type: 'object',
     properties,
-    required: Object.keys(properties).filter((key: keyof Props) => !optionalProps.includes(key)),
-    additionalProperties
+    required: Object.keys(properties).filter(
+      (key: keyof Props) => !(optionalProps as (keyof Props)[]).includes(key)
+    ) as Exclude<keyof Props, Opts>[],
+    additionalProperties: !!additionalProperties as Add
   } as const);
-
-export const intType = { type: 'integer', minimum: 0 } as const;
-export const stringType = { type: 'string' } as const;
-export const dateType = { type: 'string', format: 'date' } as const;

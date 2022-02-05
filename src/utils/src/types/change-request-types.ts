@@ -6,6 +6,7 @@
 import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
+import { bodySchema, intType, stringType, booleanType } from './api-utils-types';
 
 export interface ChangeRequest {
   crId: number;
@@ -74,16 +75,11 @@ export interface ImplementedChange {
   detail: string;
 }
 
-export const reviewChangeRequestPayloadSchema = {
-  type: 'object',
-  properties: {
-    reviewerId: { type: 'number', minimum: 0 },
-    crId: { type: 'number', minimum: 0 },
-    reviewNotes: { type: 'string' },
-    accepted: { type: 'boolean' }
-  },
-  required: ['reviewerId', 'crId', 'reviewNotes', 'accepted'],
-  additionalProperties: false
-} as const;
+export const reviewChangeRequestPayloadSchema = bodySchema({
+  reviewerId: intType,
+  crId: intType,
+  reviewNotes: stringType,
+  accepted: booleanType
+});
 
 export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;

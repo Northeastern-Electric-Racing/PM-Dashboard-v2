@@ -9,16 +9,21 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
+import type { FromSchema } from 'json-schema-to-ts';
 import {
   buildNotFoundResponse,
   buildSuccessResponse,
+  eventSchema,
   reviewChangeRequestPayloadSchema
 } from 'utils';
 
 const prisma = new PrismaClient();
 
 // handle reviewing of change requests
-export const reviewChangeRequest: Handler = async ({ body }, _context) => {
+export const reviewChangeRequest: Handler<FromSchema<typeof inputSchema>> = async (
+  { body },
+  _context
+) => {
   // TODO: validate authorization
   const { reviewerId, crId, reviewNotes, accepted } = body;
 
@@ -42,13 +47,7 @@ export const reviewChangeRequest: Handler = async ({ body }, _context) => {
 };
 
 // expected structure of json body
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: reviewChangeRequestPayloadSchema
-  },
-  required: ['body']
-};
+const inputSchema = eventSchema(reviewChangeRequestPayloadSchema);
 
 const handler = middy(reviewChangeRequest)
   .use(jsonBodyParser())

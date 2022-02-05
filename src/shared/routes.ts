@@ -11,6 +11,7 @@ const SETTINGS = `/settings`;
 /**************** Projects Section ****************/
 const PROJECTS = `/projects`;
 const PROJECTS_BY_WBS = PROJECTS + `/:wbsNum`;
+const PROJECTS_NEW = PROJECTS + `/new`;
 
 /**************** Change Requests Section ****************/
 const CHANGE_REQUESTS = `/change-requests`;
@@ -26,6 +27,7 @@ export const routes = {
 
   PROJECTS,
   PROJECTS_BY_WBS,
+  PROJECTS_NEW,
 
   CHANGE_REQUESTS,
   CHANGE_REQUESTS_BY_ID,

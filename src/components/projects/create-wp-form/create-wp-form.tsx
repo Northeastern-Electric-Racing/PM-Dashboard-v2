@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CreateWPFormView from "./create-wp-form/create-wp-form";
 
@@ -14,10 +14,15 @@ const CreateWPForm: React.FC = () => {
   const [expectedActivities, setExpectedActivities] = useState([]);
   const [deliverables, setDeliverables] = useState([]);
 
+  useEffect(() => {
+    console.log(dependencies);
+  }, [dependencies]);
+
   return (
     <CreateWPFormView
       dependencies={dependencies}
-      expectedActivites={expectedActivities}
+      setDependencies={setDependencies}
+      expectedActivities={expectedActivities}
       deliverables={deliverables}
       onSubmit={() => alert('submitted')}
       onCancel={() => history.goBack()}

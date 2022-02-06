@@ -120,71 +120,84 @@ const createStageGateChangeRequest = async (
 export const baseHandler: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type } = body;
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
-    return createStandardChangeRequest(submitterId, wbsElementId, type, body);
+    return createStandardChangeRequest(
+      submitterId,
+      wbsElementId,
+      type,
+      body as FromSchema<typeof standardSchema>
+    );
   }
   if (type === CR_Type.ACTIVATION) {
     // TODO: is there a better way to convert this date string?
     // I couldn't seem to figure out if middy can handle this, but this 1 additional line isn't the worst
+    body = body as FromSchema<typeof activationSchema>;
     return createActivationChangeRequest(submitterId, wbsElementId, type, {
       ...body,
       startDate: new Date(body.startDate)
     });
   }
   if (type === CR_Type.STAGE_GATE) {
-    return createStageGateChangeRequest(submitterId, wbsElementId, type, body);
+    return createStageGateChangeRequest(
+      submitterId,
+      wbsElementId,
+      type,
+      body as FromSchema<typeof stageGateSchema>
+    );
   }
   // TODO: change this return statement
   return buildClientFailureResponse('CR type not supported');
 };
 
+// standard / scope change request fields
+const standardSchema = bodySchema({
+  type: enumType(CR_Type.OTHER, CR_Type.ISSUE, CR_Type.DEFINITION_CHANGE),
+  submitterId: intType,
+  wbsElementId: intType,
+  what: stringType,
+  scopeImpact: stringType,
+  timelineImpact: intType,
+  budgetImpact: intType,
+  why: arrayType(
+    bodySchema({
+      explain: stringType,
+      type: enumType(
+        Scope_CR_Why_Type.ESTIMATION,
+        Scope_CR_Why_Type.MANUFACTURING,
+        Scope_CR_Why_Type.OTHER,
+        Scope_CR_Why_Type.OTHER_PROJECT,
+        Scope_CR_Why_Type.RULES,
+        Scope_CR_Why_Type.DESIGN,
+        Scope_CR_Why_Type.SCHOOL
+      )
+    }),
+    1 // min 1 item
+  )
+});
+
+// activation change request fields
+const activationSchema = bodySchema({
+  type: enumType(CR_Type.ACTIVATION),
+  submitterId: intType,
+  wbsElementId: intType,
+  projectLeadId: intType,
+  projectManagerId: intType,
+  startDate: dateType,
+  confirmDetails: booleanType
+});
+
+// stage gate change request fields
+const stageGateSchema = bodySchema({
+  type: enumType(CR_Type.STAGE_GATE),
+  submitterId: intType,
+  wbsElementId: intType,
+  leftoverBudget: intType,
+  confirmDone: booleanType
+});
+
 // validates the event parameter, so body must be explicitly stated
 // TODO: consider moving schemas (or parts of schemas) to utils package? consider using schema-to-ts?
 const inputSchema = eventSchema({
-  oneOf: [
-    // standard / scope change request fields
-    bodySchema({
-      type: enumType(CR_Type.OTHER, CR_Type.ISSUE, CR_Type.DEFINITION_CHANGE),
-      submitterId: intType,
-      wbsElementId: intType,
-      what: stringType,
-      scopeImpact: stringType,
-      timelineImpact: intType,
-      budgetImpact: intType,
-      why: arrayType(
-        bodySchema({
-          explain: stringType,
-          type: enumType(
-            Scope_CR_Why_Type.ESTIMATION,
-            Scope_CR_Why_Type.MANUFACTURING,
-            Scope_CR_Why_Type.OTHER,
-            Scope_CR_Why_Type.OTHER_PROJECT,
-            Scope_CR_Why_Type.RULES,
-            Scope_CR_Why_Type.DESIGN,
-            Scope_CR_Why_Type.SCHOOL
-          )
-        }),
-        1 // min 1 item
-      )
-    }),
-    // activation change request fields
-    bodySchema({
-      type: enumType(CR_Type.ACTIVATION),
-      submitterId: intType,
-      wbsElementId: intType,
-      projectLeadId: intType,
-      projectManagerId: intType,
-      startDate: dateType,
-      confirmDetails: booleanType
-    }),
-    // stage gate change request fields
-    bodySchema({
-      type: enumType(CR_Type.STAGE_GATE),
-      submitterId: intType,
-      wbsElementId: intType,
-      leftoverBudget: intType,
-      confirmDone: booleanType
-    })
-  ]
+  oneOf: [standardSchema, activationSchema, stageGateSchema]
 } as const);
 
 const handler = middy(baseHandler)

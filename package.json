@@ -186,7 +186,7 @@
     "@babel/preset-typescript": "^7.12.13",
     "@testing-library/react-hooks": "^5.1.2",
     "@types/aws-lambda": "^8.10.89",
-    "@types/jsonwebtoken": "^8.5.7",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^12.19.16",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",

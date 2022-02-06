@@ -16,11 +16,9 @@ import {
   buildNotFoundResponse,
   buildSuccessResponse,
   routeMatcher,
-  User
+  User,
+  buildResponse
 } from 'utils';
-
-import { apiUrls } from '../../shared/urls';
-import axios from 'axios';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
@@ -94,12 +92,6 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     user = createdUser;
   }
 
-  const accessToken = jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: '20mins', algorithm: 'HS256' });
-
-  axios.post(apiUrls.usersLogin(),
-    { accessToken },
-  );
-
   // register a login
   await prisma.session.create({
     data: {
@@ -108,8 +100,12 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return buildSuccessResponse(usersTransformer(user));
+  const accessToken = jwt.sign(user, process.env.JWT_SECRET as string, {
+    expiresIn: '20mins',
+    algorithm: 'HS256'
+  });
 
+  return buildResponse(200, usersTransformer(user), { token: accessToken });
 };
 
 // Define all valid routes for the endpoint

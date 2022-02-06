@@ -25,8 +25,10 @@ export const booleanType = { type: 'boolean' } as const;
 /**
  * Create a basic array schema type
  * @param itemType - The schema type of the elements
+ * @param minItems - The minimum number of items in the array
  */
-export const arrayType = <Item>(itemType: Item) => ({ type: 'array', items: itemType } as const);
+export const arrayType = <Item>(itemType: Item, minItems: number = 0) =>
+  ({ type: 'array', items: itemType, minItems, uniqueItems: true } as const);
 
 /**
  * Create an enum schema type

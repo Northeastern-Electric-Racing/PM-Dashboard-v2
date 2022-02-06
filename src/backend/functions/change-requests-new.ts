@@ -9,7 +9,19 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
-import { buildClientFailureResponse, buildSuccessResponse } from 'utils';
+import { FromSchema } from 'json-schema-to-ts';
+import {
+  bodySchema,
+  booleanType,
+  buildClientFailureResponse,
+  buildSuccessResponse,
+  dateType,
+  enumType,
+  eventSchema,
+  intType,
+  stringType,
+  arrayType
+} from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -105,7 +117,7 @@ const createStageGateChangeRequest = async (
 };
 
 // Create proper type of new change request
-export const baseHandler: Handler = async ({ body }, _context) => {
+export const baseHandler: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type } = body;
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, body);
@@ -113,8 +125,10 @@ export const baseHandler: Handler = async ({ body }, _context) => {
   if (type === CR_Type.ACTIVATION) {
     // TODO: is there a better way to convert this date string?
     // I couldn't seem to figure out if middy can handle this, but this 1 additional line isn't the worst
-    body.startDate = new Date(body.startDate);
-    return createActivationChangeRequest(submitterId, wbsElementId, type, body);
+    return createActivationChangeRequest(submitterId, wbsElementId, type, {
+      ...body,
+      startDate: new Date(body.startDate)
+    });
   }
   if (type === CR_Type.STAGE_GATE) {
     return createStageGateChangeRequest(submitterId, wbsElementId, type, body);
@@ -125,85 +139,53 @@ export const baseHandler: Handler = async ({ body }, _context) => {
 
 // validates the event parameter, so body must be explicitly stated
 // TODO: consider moving schemas (or parts of schemas) to utils package? consider using schema-to-ts?
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: {
-      type: 'object',
-      properties: {
-        submitterId: { type: 'integer', minimum: 0 },
-        wbsElementId: { type: 'integer', minimum: 0 },
-        type: {
-          enum: [
-            CR_Type.ACTIVATION,
-            CR_Type.STAGE_GATE,
-            CR_Type.OTHER,
-            CR_Type.ISSUE,
-            CR_Type.DEFINITION_CHANGE
-          ]
-        }
-      },
-      required: ['submitterId', 'wbsElementId', 'type'],
-      oneOf: [
-        {
-          // standard / scope change request fields
-          properties: {
-            type: { enum: [CR_Type.OTHER, CR_Type.ISSUE, CR_Type.DEFINITION_CHANGE] },
-            what: { type: 'string' },
-            scopeImpact: { type: 'string' },
-            timelineImpact: { type: 'integer', minimum: 0 },
-            budgetImpact: { type: 'integer', minimum: 0 },
-            why: {
-              type: 'array',
-              items: {
-                type: 'object',
-                properties: {
-                  explain: { type: 'string' },
-                  type: {
-                    enum: [
-                      Scope_CR_Why_Type.ESTIMATION,
-                      Scope_CR_Why_Type.MANUFACTURING,
-                      Scope_CR_Why_Type.OTHER,
-                      Scope_CR_Why_Type.OTHER_PROJECT,
-                      Scope_CR_Why_Type.RULES,
-                      Scope_CR_Why_Type.DESIGN,
-                      Scope_CR_Why_Type.SCHOOL
-                    ]
-                  }
-                },
-                required: ['explain', 'type']
-              },
-              minItems: 1,
-              uniqueItems: true
-            }
-          },
-          required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why']
-        },
-        {
-          // activation change request fields
-          properties: {
-            type: { enum: [CR_Type.ACTIVATION] },
-            projectLeadId: { type: 'integer', minimum: 0 },
-            projectManagerId: { type: 'integer', minimum: 0 },
-            startDate: { type: 'string', format: 'date' },
-            confirmDetails: { type: 'boolean' }
-          },
-          required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails']
-        },
-        {
-          // stage gate change request fields
-          properties: {
-            type: { enum: [CR_Type.STAGE_GATE] },
-            leftoverBudget: { type: 'integer', minimum: 0 },
-            confirmDone: { type: 'boolean' }
-          },
-          required: ['leftoverBudget', 'confirmDone']
-        }
-      ]
-    }
-  },
-  required: ['body']
-};
+const inputSchema = eventSchema({
+  oneOf: [
+    // standard / scope change request fields
+    bodySchema({
+      type: enumType(CR_Type.OTHER, CR_Type.ISSUE, CR_Type.DEFINITION_CHANGE),
+      submitterId: intType,
+      wbsElementId: intType,
+      what: stringType,
+      scopeImpact: stringType,
+      timelineImpact: intType,
+      budgetImpact: intType,
+      why: arrayType(
+        bodySchema({
+          explain: stringType,
+          type: enumType(
+            Scope_CR_Why_Type.ESTIMATION,
+            Scope_CR_Why_Type.MANUFACTURING,
+            Scope_CR_Why_Type.OTHER,
+            Scope_CR_Why_Type.OTHER_PROJECT,
+            Scope_CR_Why_Type.RULES,
+            Scope_CR_Why_Type.DESIGN,
+            Scope_CR_Why_Type.SCHOOL
+          )
+        }),
+        1 // min 1 item
+      )
+    }),
+    // activation change request fields
+    bodySchema({
+      type: enumType(CR_Type.ACTIVATION),
+      submitterId: intType,
+      wbsElementId: intType,
+      projectLeadId: intType,
+      projectManagerId: intType,
+      startDate: dateType,
+      confirmDetails: booleanType
+    }),
+    // stage gate change request fields
+    bodySchema({
+      type: enumType(CR_Type.STAGE_GATE),
+      submitterId: intType,
+      wbsElementId: intType,
+      leftoverBudget: intType,
+      confirmDone: booleanType
+    })
+  ]
+} as const);
 
 const handler = middy(baseHandler)
   .use(jsonBodyParser())

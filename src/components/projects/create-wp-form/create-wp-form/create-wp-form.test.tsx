@@ -71,7 +71,7 @@ describe('create wp form view test suite', () => {
   it('render dependencies', async () => {
     renderComponent();
 
-    expect(screen.getByText('Dependencies'));
+    expect(screen.getByText('Dependencies')).toBeInTheDocument();
     const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
     expect(res.map(item => item.value)).toEqual(
       expect.arrayContaining(mockDependencies)
@@ -81,7 +81,7 @@ describe('create wp form view test suite', () => {
   it('render expected activities', async () => {
     renderComponent();
 
-    expect(screen.getByText('Expected Activities'));
+    expect(screen.getByText('Expected Activities')).toBeInTheDocument();
     const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
     expect(res.map(item => item.value)).toEqual(
       expect.arrayContaining(mockEA)
@@ -91,7 +91,7 @@ describe('create wp form view test suite', () => {
   it('render deliverables', async () => {
     renderComponent();
 
-    expect(screen.getByText('Deliverables'));
+    expect(screen.getByText('Deliverables')).toBeInTheDocument();
     const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
     expect(res.map(item => item.value)).toEqual(
       expect.arrayContaining(mockDeliverables)

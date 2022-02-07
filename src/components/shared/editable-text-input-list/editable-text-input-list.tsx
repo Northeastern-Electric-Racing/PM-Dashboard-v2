@@ -18,24 +18,24 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
   remove,
   update
 }) => {
-  const itemsList = items.map((item, index: number) => (
-    <div key={index} className={index === 0 ? 'mb-2' : 'mt-2'}>
-      <InputGroup>
-        <Form.Control type='text' value={item.toString()} onChange={(e) => {
-          update(index, e.target.value);
-        }} />
-        {
-          index === items.length - 1 ?
-            <Button type='button' variant='success' onClick={() => add('')}>+</Button> :
-            <Button type='button' variant='danger' onClick={() => remove(index)}>X</Button>
-        }
-      </InputGroup>
-    </div>
-  ));
-
   return (
     <>
-      {itemsList}
+      {
+        items.map((item, index: number) => (
+          <div key={index} className={index === 0 ? 'mb-2' : 'mt-2'}>
+            <InputGroup>
+              <Form.Control type='text' value={item.toString()} onChange={(e) => {
+                update(index, e.target.value);
+              }} />
+              {
+                index === items.length - 1 ?
+                  <Button type='button' variant='success' onClick={() => add('')}>+</Button> :
+                  <Button type='button' variant='danger' onClick={() => remove(index)}>X</Button>
+              }
+            </InputGroup>
+          </div>
+        ))
+      }
     </>
   );
 };

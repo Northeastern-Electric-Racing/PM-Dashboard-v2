@@ -16,8 +16,8 @@ interface CreateWPFormViewProps {
   eaUtils: EditableTextInputListUtils;
   deliverables: string[];
   delUtils: EditableTextInputListUtils;
-  onSubmit: (e: any) => any;
-  onCancel: (e: any) => any;
+  onSubmit: (e: any) => void;
+  onCancel: (e: any) => void;
 }
 
 const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({

@@ -17,6 +17,6 @@ describe('create project form test suite', () => {
   it('render view component', () => {
     renderComponent();
 
-    expect(screen.getByText('New Project')).toBeInTheDocument();
+    expect(screen.getByText('Create New Project')).toBeInTheDocument();
   })
 });

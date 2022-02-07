@@ -19,6 +19,6 @@ describe('create wp form test suite', () => {
   it('render view component', () => {
     renderComponent();
 
-    expect(screen.getByText('New Work Package')).toBeInTheDocument();
+    expect(screen.getByText('Create New Work Package')).toBeInTheDocument();
   });
 });

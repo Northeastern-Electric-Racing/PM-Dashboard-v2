@@ -32,7 +32,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
   return (
     <>
       <PageBlock
-        title={'New Work Package'}
+        title={'Create New Work Package'}
         headerRight={<></>}
         body={
           <Form onSubmit={onSubmit}>

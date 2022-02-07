@@ -13,7 +13,7 @@ const CreateProjectFormView: React.FC = () => {
   return (
     <>
       <PageBlock
-        title={'New Project'}
+        title={'Create New Project'}
         headerRight={<></>}
         body={
           <div>

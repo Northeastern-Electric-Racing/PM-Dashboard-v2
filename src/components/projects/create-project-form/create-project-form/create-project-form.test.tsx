@@ -17,7 +17,7 @@ describe('create project form view test suite', () => {
   it('renders title', () => {
     renderComponent();
 
-    expect(screen.queryByText('New Project')).toBeInTheDocument();
+    expect(screen.queryByText('Create New Project')).toBeInTheDocument();
   });
 
   it('renders project name form input', () => {

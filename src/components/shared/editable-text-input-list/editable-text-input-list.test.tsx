@@ -27,13 +27,13 @@ describe('editable text input list test suite', () => {
     it('render x buttons', () => {
       renderComponent(mockItems);
 
-      expect(screen.getAllByRole('button', { name: 'X' })).toHaveLength(3);
+      expect(screen.getAllByRole('button', { name: 'X' })).toHaveLength(4);
     });
 
-    it('render + button', () => {
+    it('render + add new bullet button', () => {
       renderComponent(mockItems);
 
-      expect(screen.getByRole('button', { name: '+' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: '+ Add New Bullet' })).toBeInTheDocument();
     });
 
     it('render content', async () => {
@@ -48,24 +48,22 @@ describe('editable text input list test suite', () => {
   });
 
   describe('no items', () => {
-    it('doesn\'t render x button', () => {
-      renderComponent(['']);
+    it('render x button', () => {
+      renderComponent([]);
 
       expect(screen.queryByText('X')).not.toBeInTheDocument();
     });
 
-    it('render + button', () => {
-      renderComponent(['']);
+    it('render + add new bullet button', () => {
+      renderComponent([]);
 
-      expect(screen.getByRole('button', { name: '+' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: '+ Add New Bullet' })).toBeInTheDocument();
     });
 
-    it('render no content', async () => {
-      renderComponent(['']);
+    it('no text boxes rendered', async () => {
+      renderComponent([]);
 
-      const res = await screen.findByRole('textbox') as HTMLInputElement;
-      expect(res.value).toEqual('');
-      expect((screen.getByRole('textbox') as HTMLInputElement).value).toEqual('');
+      expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
     })
   });
 });

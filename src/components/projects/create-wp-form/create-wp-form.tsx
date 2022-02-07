@@ -16,9 +16,9 @@ export interface EditableTextInputListUtils {
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
 
-  const [dependencies, setDependencies] = useState<string[]>(['']);
-  const [expectedActivities, setExpectedActivities] = useState<string[]>(['']);
-  const [deliverables, setDeliverables] = useState<string[]>(['']);
+  const [dependencies, setDependencies] = useState<string[]>([]);
+  const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
+  const [deliverables, setDeliverables] = useState<string[]>([]);
 
   const depUtils: EditableTextInputListUtils = {
     add: (val) => {

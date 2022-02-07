@@ -66,13 +66,15 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Col>
                     <Form.Group>
-                      <Form.Label>Dependencies</Form.Label>
-                      <EditableTextInputList
-                        items={dependencies}
-                        add={depUtils.add}
-                        remove={depUtils.remove}
-                        update={depUtils.update}
-                      />
+                      <Form.Label htmlFor='dependencies-text-input-list'>Dependencies</Form.Label>
+                      <Form.Group id='dependencies-text-input-list'>
+                        <EditableTextInputList
+                          items={dependencies}
+                          add={depUtils.add}
+                          remove={depUtils.remove}
+                          update={depUtils.update}
+                        />
+                      </Form.Group>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -80,25 +82,29 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                   <Col>
                     <Form.Group>
                       <Form.Label>Expected Activities</Form.Label>
-                      <EditableTextInputList
-                        items={expectedActivities}
-                        add={eaUtils.add}
-                        remove={eaUtils.remove}
-                        update={eaUtils.update}
-                      />
+                      <Form.Group id='ea-text-input-list'>
+                        <EditableTextInputList
+                          items={expectedActivities}
+                          add={eaUtils.add}
+                          remove={eaUtils.remove}
+                          update={eaUtils.update}
+                        />
+                      </Form.Group>
                     </Form.Group>
                   </Col>
                 </Row>
                 <Row>
                   <Col>
                     <Form.Group>
-                      <Form.Label>Deliverables</Form.Label>
-                      <EditableTextInputList
-                        items={deliverables}
-                        add={delUtils.add}
-                        remove={delUtils.remove}
-                        update={delUtils.update}
-                      />
+                      <Form.Label htmlFor='deliverables-text-input-list'>Deliverables</Form.Label>
+                      <Form.Group id='deliverables-text-input-list'>
+                        <EditableTextInputList
+                          items={deliverables}
+                          add={delUtils.add}
+                          remove={delUtils.remove}
+                          update={delUtils.update}
+                        />
+                      </Form.Group>
                     </Form.Group>
                   </Col>
                 </Row>

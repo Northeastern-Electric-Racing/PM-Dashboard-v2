@@ -7,7 +7,7 @@ import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import PageBlock from "../../../shared/page-block/page-block";
 import PageTitle from "../../../shared/page-title/page-title";
 import { EditableTextInputListUtils } from "../create-wp-form";
-import EditableTextInputList from "./editable-text-input-list/editable-text-input-list";
+import EditableTextInputList from "../../../shared/editable-text-input-list/editable-text-input-list";
 
 interface CreateWPFormViewProps {
   dependencies: string[];

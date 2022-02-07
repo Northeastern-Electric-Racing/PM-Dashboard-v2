@@ -65,6 +65,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   const implementCrDropdown = (
     <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
       <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>Create New Project</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>Create New Work Package</Dropdown.Item>
     </DropdownButton>
   );
 

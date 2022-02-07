@@ -4,19 +4,21 @@
  */
 
 import { render, screen } from "../../../test-support/test-utils";
-import CreateProjectFormView from "./create-project-form/create-project-form";
+import CreateWPForm from "./create-wp-form";
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  return render(<CreateProjectFormView />);
+  return render(
+    <CreateWPForm />
+  );
 };
 
-describe('create project form test suite', () => {
+describe('create wp form test suite', () => {
   it('render view component', () => {
     renderComponent();
 
-    expect(screen.getByText('Create New Project')).toBeInTheDocument();
-  })
+    expect(screen.getByText('Create New Work Package')).toBeInTheDocument();
+  });
 });

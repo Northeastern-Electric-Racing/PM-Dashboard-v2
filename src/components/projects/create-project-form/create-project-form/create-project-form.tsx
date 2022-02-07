@@ -6,16 +6,14 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PageBlock from "../../../shared/page-block/page-block";
-import PageTitle from "../../../shared/page-title/page-title";
 
 const CreateProjectFormView: React.FC = () => {
   const history = useHistory();
 
   return (
     <>
-      <PageTitle title={'New Project'} />
       <PageBlock
-        title={''}
+        title={'New Project'}
         headerRight={<></>}
         body={
           <div>

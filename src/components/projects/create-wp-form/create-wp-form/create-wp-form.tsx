@@ -5,7 +5,6 @@
 
 import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import PageBlock from "../../../shared/page-block/page-block";
-import PageTitle from "../../../shared/page-title/page-title";
 import { EditableTextInputListUtils } from "../create-wp-form";
 import EditableTextInputList from "../../../shared/editable-text-input-list/editable-text-input-list";
 
@@ -32,9 +31,8 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
 }) => {
   return (
     <>
-      <PageTitle title={'New Work Package'} />
       <PageBlock
-        title={''}
+        title={'New Work Package'}
         headerRight={<></>}
         body={
           <Form onSubmit={onSubmit}>

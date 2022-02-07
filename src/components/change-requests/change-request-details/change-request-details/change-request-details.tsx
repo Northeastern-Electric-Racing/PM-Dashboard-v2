@@ -106,7 +106,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
       <ReviewNotes
         reviewer={changeRequest.reviewer}
         reviewNotes={changeRequest.reviewNotes}
-        dateReviewed={changeRequest.dateReviewed!}
+        dateReviewed={changeRequest.dateReviewed}
       />
       <ImplementedChangesList
         changes={

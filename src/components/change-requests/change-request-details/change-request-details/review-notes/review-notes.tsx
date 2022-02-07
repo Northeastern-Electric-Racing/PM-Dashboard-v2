@@ -5,13 +5,13 @@
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { User } from 'utils';
-import { datePipe, fullNamePipe } from '../../../../../shared/pipes';
+import { datePipe, emDashPipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 
 interface ReviewNotesProps {
   reviewer?: User;
   reviewNotes?: string;
-  dateReviewed: Date;
+  dateReviewed?: Date;
 }
 
 const ReviewNotes: React.FC<ReviewNotesProps> = ({
@@ -27,7 +27,7 @@ const ReviewNotes: React.FC<ReviewNotesProps> = ({
           placement="left"
           overlay={
             <Tooltip id="tooltip">
-              {dateReviewed ? 'Reviewed on: ' + datePipe(dateReviewed) : 'Not reviewed'}
+              {'Reviewed on: ' + (dateReviewed ? datePipe(dateReviewed) : emDashPipe(''))}
             </Tooltip>
           }
         >

@@ -9,12 +9,12 @@ import { exampleAllUsers } from '../../../../../test-support/test-data/users.stu
 import { fullNamePipe } from '../../../../../shared/pipes';
 import styles from './activation-form-fields.module.css';
 
-interface IProp {
+interface ActivationFormFieldsProp {
   handleChange: (e: any) => void,
   handleStartDateChange: (d: Date) => void
 }
 
-const ActivationFormFields: React.FC<IProp> = ({handleChange, handleStartDateChange}) => {
+const ActivationFormFields: React.FC<ActivationFormFieldsProp> = ({handleChange, handleStartDateChange}) => {
   return (
     <div className={`row ${styles.container}`}>
       <div className={'px-4'}>

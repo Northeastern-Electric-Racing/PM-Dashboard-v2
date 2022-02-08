@@ -9,16 +9,24 @@ import { Project, WorkPackage } from 'utils';
 import './common-form-fields.module.css';
 import { CR_Type } from '@prisma/client';
 
-interface CommonFormFieldsProp {
-  setType: React.Dispatch<React.SetStateAction<CR_Type>>,
+interface IProp {
+  setFormType: React.Dispatch<React.SetStateAction<CR_Type>>,
   projects: Project[],
   workPkgs: WorkPackage[],
   handleChange: (e: any) => void,
 }
 
-const CommonFormFields: React.FC<CommonFormFieldsProp> = ({projects, workPkgs, setType, handleChange}) => {
-  const handleType = (event: React.ChangeEvent<any>): void => {
-    setType(event.target.value);
+const crTypeDisplayName = {
+  [CR_Type.DEFINITION_CHANGE]: 'New Function',
+  [CR_Type.ISSUE]: 'Design Issue',
+  [CR_Type.OTHER]: 'Other',
+  [CR_Type.ACTIVATION]: 'Initiation',
+  [CR_Type.STAGE_GATE]: 'Stage Gate',
+}
+
+const CommonFormFields: React.FC<IProp> = ({projects, workPkgs, setFormType, handleChange}) => {
+  const handleFormType = (event: React.ChangeEvent<any>): void => {
+    setFormType(event.target.value);
     handleChange(event);
   }
 
@@ -27,7 +35,7 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({projects, workPkgs, s
       <div className={'px-4'}>
         Project
         <Form.Control as="select" custom name="projectWBS" type="number" onChange={handleChange}>
-          {projects.map((p) => (
+          {projects.map((p, index) => (
             <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
@@ -38,7 +46,7 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({projects, workPkgs, s
         Work Package
         <Form.Control as="select" custom name="workPackageWBS" type="number" onChange={handleChange}>
           <option value="-1">No Work Package Selected</option>
-          {workPkgs.map((p) => (
+          {workPkgs.map((p, index) => (
             <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
@@ -47,9 +55,9 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({projects, workPkgs, s
       </div>
       <div className={'px-4'}>
         Form Type
-        <Form.Control as="select" custom onChange={handleType} data-testid="type" name="type">
+        <Form.Control as="select" custom onChange={handleFormType} data-testid="formType" name="type">
           {Object.values(CR_Type).map((t) => (
-            <option value={t}>{t}</option>
+            <option value={t}>{crTypeDisplayName[t]}</option>
           ))}
         </Form.Control>
       </div>

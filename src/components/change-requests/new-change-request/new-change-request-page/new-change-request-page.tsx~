@@ -180,7 +180,7 @@ const NewChangeRequestPage: React.FC = () => {
     confirmDone: false,
   });
 
-  const [formType, setType] = useState<CR_Type>(CR_Type.DEFINITION_CHANGE);
+  const [formType, setFormType] = useState<CR_Type>(CR_Type.DEFINITION_CHANGE);
 
   const projectRes = useAllProjects((value) => {updateValue("projectWBS", value.data![0].id)});
   const workPkgsRes = useAllWorkPackages();
@@ -215,7 +215,7 @@ const NewChangeRequestPage: React.FC = () => {
         headerRight={<></>}
         body={
           <Form id="createChange" onSubmit={submitHandler}>
-            <CommonFormFields setType={setType} 
+            <CommonFormFields setFormType={setFormType} 
               projects={projectRes.data!} 
               workPkgs={workPkgsRes.data!}
               handleChange={handleChange}

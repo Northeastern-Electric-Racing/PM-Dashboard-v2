@@ -8,6 +8,7 @@ import { exampleAllWorkPackages } from '../../../../../test-support/test-data/wo
 import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import CommonFormFields from './common-form-fields';
+import { CR_Type } from '@prisma/client';
 
 /**
  * Sets up the component under test with the desired values and renders it.
@@ -15,8 +16,9 @@ import CommonFormFields from './common-form-fields';
 
 
 
-const renderComponent = (setFormType: jest.Mock<any, any>) => {
-  return render(<CommonFormFields setFormType={setFormType} projects={exampleAllProjects} workPkgs={exampleAllWorkPackages} />);
+const renderComponent = (setType: jest.Mock<any, any>) => {
+  return render(<CommonFormFields setType={setType} projects={exampleAllProjects} workPkgs={exampleAllWorkPackages}
+      handleChange={() => { return null; }} />);
 };
 
 describe('new change request page', () => {
@@ -46,22 +48,22 @@ describe('new change request page', () => {
   it('renders the type form field', () => {
     renderComponent(jest.fn());
 
-    expect(screen.getByText('Form Type')).toBeInTheDocument();
+    expect(screen.getByText('Type')).toBeInTheDocument();
   });
 
-  it('checks if prop function is called when form type changes', () => {
-    const setFormType = jest.fn();
-    renderComponent(setFormType);
+  it('checks if prop function is called when type changes', () => {
+    const setType = jest.fn();
+    renderComponent(setType);
 
-    fireEvent.change(screen.getByTestId('formType'), { target: { value: "Stage Gate" } });
-    expect(setFormType).toBeCalledWith("Stage Gate");
+    fireEvent.change(screen.getByTestId('type'), { target: { value: CR_Type.STAGE_GATE } });
+    expect(setType).toBeCalledWith(CR_Type.STAGE_GATE);
 
-    fireEvent.change(screen.getByTestId('formType'), { target: { value: "New Function" } });
-    expect(setFormType).toBeCalledWith("New Function");
+    fireEvent.change(screen.getByTestId('type'), { target: { value: CR_Type.DEFINITION_CHANGE } });
+    expect(setType).toBeCalledWith(CR_Type.DEFINITION_CHANGE);
 
-    fireEvent.change(screen.getByTestId('formType'), { target: { value: "Initiation" } });
-    expect(setFormType).toBeCalledWith("Initiation");
+    fireEvent.change(screen.getByTestId('type'), { target: { value: CR_Type.ACTIVATION } });
+    expect(setType).toBeCalledWith(CR_Type.ACTIVATION);
 
-    expect(setFormType).toHaveBeenCalledTimes(3);
+    expect(setType).toHaveBeenCalledTimes(3);
   });
 });

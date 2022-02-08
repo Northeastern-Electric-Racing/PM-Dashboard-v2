@@ -11,18 +11,7 @@ import CreateWPFormView from "./create-wp-form/create-wp-form";
 const validate = (e: any) => {
   // start date should already be a valid date by using a date input
   console.log(e.target.startDate.value);
-  let wbsNum: WbsNumber;
-  try {
-    wbsNum = validateWBS(e.target.wbsNum.value.trim());
-  } catch {
-    alert('Please enter a WBS Number.');
-    return false;
-  }
 
-  if (!isProject(wbsNum!)) {
-    alert('Please enter a valid Project WBS Number.');
-    return false;
-  }
 
   return true;
 };
@@ -97,10 +86,13 @@ const CreateWPForm: React.FC = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // exits handleSubmit if form input invalid (temporary)
-    if (!validate(e)) return;
+    // exits handleSubmit if form input invalid (should be changed in wire up)
+    let wbsNum: WbsNumber = validateWBS(e.target.wbsNum.value.trim());
 
-    console.log('form input validated');
+    if (!isProject(wbsNum!)) {
+      alert('Please enter a valid Project WBS Number.');
+      return;
+    }
   }
 
   return (

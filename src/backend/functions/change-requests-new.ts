@@ -160,15 +160,7 @@ const standardSchema = bodySchema({
   why: arrayType(
     bodySchema({
       explain: stringType,
-      type: enumType(
-        Scope_CR_Why_Type.ESTIMATION,
-        Scope_CR_Why_Type.MANUFACTURING,
-        Scope_CR_Why_Type.OTHER,
-        Scope_CR_Why_Type.OTHER_PROJECT,
-        Scope_CR_Why_Type.RULES,
-        Scope_CR_Why_Type.DESIGN,
-        Scope_CR_Why_Type.SCHOOL
-      )
+      type: enumType(...Object.values(Scope_CR_Why_Type))
     }),
     1 // min 1 item
   )

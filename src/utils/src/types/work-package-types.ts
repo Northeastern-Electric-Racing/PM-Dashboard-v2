@@ -5,6 +5,7 @@
 
 import { FromSchema } from 'json-schema-to-ts';
 import { bodySchema, intType, stringType, dateType, arrayType, enumType } from './api-utils-types';
+import { WbsElementStatus } from './project-types';
 
 export const workPackageCreateInputSchemaBody = bodySchema({
   userId: intType,
@@ -31,7 +32,11 @@ export const workPackageEditInputSchemaBody = bodySchema(
     dependencies: arrayType(intType),
     expectedActivities: arrayType(bodySchema({ id: intType, detail: stringType })),
     deliverables: arrayType(bodySchema({ id: intType, detail: stringType })),
-    wbsElementStatus: enumType('INACTIVE', 'ACTIVE', 'COMPLETE'),
+    wbsElementStatus: enumType(
+      WbsElementStatus.Active,
+      WbsElementStatus.Inactive,
+      WbsElementStatus.Complete
+    ),
     progress: intType,
     projectLead: intType,
     projectManager: intType

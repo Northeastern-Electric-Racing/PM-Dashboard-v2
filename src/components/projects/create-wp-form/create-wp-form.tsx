@@ -5,7 +5,27 @@
 
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { isProject, validateWBS, WbsNumber } from "utils";
 import CreateWPFormView from "./create-wp-form/create-wp-form";
+
+const validate = (e: any) => {
+  // start date should already be a valid date by using a date input
+  console.log(e.target.startDate.value);
+  let wbsNum: WbsNumber;
+  try {
+    wbsNum = validateWBS(e.target.wbsNum.value.trim());
+  } catch {
+    alert('Please enter a WBS Number.');
+    return false;
+  }
+
+  if (!isProject(wbsNum!)) {
+    alert('Please enter a valid Project WBS Number.');
+    return false;
+  }
+
+  return true;
+};
 
 export interface EditableTextInputListUtils {
   add: (val: any) => void;
@@ -74,6 +94,15 @@ const CreateWPForm: React.FC = () => {
     }
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    // exits handleSubmit if form input invalid (temporary)
+    if (!validate(e)) return;
+
+    console.log('form input validated');
+  }
+
   return (
     <CreateWPFormView
       dependencies={dependencies}
@@ -82,7 +111,7 @@ const CreateWPForm: React.FC = () => {
       eaUtils={eaUtils}
       deliverables={deliverables}
       delUtils={delUtils}
-      onSubmit={() => alert('submitted')}
+      onSubmit={handleSubmit}
       onCancel={() => history.goBack()}
     />
   );

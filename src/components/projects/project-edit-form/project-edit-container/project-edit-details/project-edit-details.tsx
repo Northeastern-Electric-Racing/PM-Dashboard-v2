@@ -4,6 +4,7 @@
  */
 
 import { Project } from 'utils';
+import { useContext } from 'react';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
 import EditableDetail from '../../../../shared/editable-detail/editable-detail';
@@ -14,6 +15,8 @@ import {
   fullNamePipe,
   listPipe
 } from '../../../../../shared/pipes';
+import { FormContext } from '../project-edit-container';
+import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 // new parts added at the bottom
 interface projectDetailsProps {
@@ -111,10 +114,29 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
     </Container>
   );
 
+  const { editMode } = useContext(FormContext);
+  const statuses = Object.values(WbsElementStatus);
+  const index = statuses.indexOf(project.status);
+  statuses.splice(index, 1);
+
   return (
     <PageBlock
       title={'Project Edit Form Details'}
-      headerRight={<b>{project.status}</b>}
+      headerRight={
+        editMode ? (
+          <div>
+            <label>Status</label>
+            <Form.Control as="select">
+              <option>{project.status}</option>
+              {statuses.map((status) => (
+                <option>{status}</option>
+              ))}
+            </Form.Control>
+          </div>
+        ) : (
+          <b>{project.status}</b>
+        )
+      }
       body={detailsBody}
     />
   );

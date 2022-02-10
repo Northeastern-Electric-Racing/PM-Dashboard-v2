@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../../../../test-support/test-utils';
 import { WorkPackage } from 'utils';
-import { endDatePipe, fullNamePipe, weeksPipe, listPipe } from '../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
@@ -13,7 +13,7 @@ import {
 } from '../../../../../test-support/test-data/work-packages.stub';
 import WorkPackageDetails from './work-package-details';
 
-describe('Rendering Work Packagae Details Component', () => {
+describe('Rendering Work Package Details Component', () => {
   it('renders all the fields, example 1', () => {
     const wp: WorkPackage = exampleWorkPackage1;
     render(<WorkPackageDetails workPackage={wp} />);
@@ -21,7 +21,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
     expect(
-      screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`, { exact: false })
+      screen.getByText(`${fullNamePipe(wp.projectLead)}`, { exact: false })
     ).toBeInTheDocument();
     expect(
       screen.getByText(`${fullNamePipe(wp.projectManager)}`, { exact: false })
@@ -44,7 +44,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
     expect(
-      screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`, { exact: false })
+      screen.getByText(`${fullNamePipe(wp.projectLead)}`, { exact: false })
     ).toBeInTheDocument();
     expect(
       screen.getByText(`${fullNamePipe(wp.projectManager)}`, { exact: false })
@@ -67,7 +67,7 @@ describe('Rendering Work Packagae Details Component', () => {
     expect(screen.getByText(`${wp.status}`, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(`${wp.name}`, { exact: false })).toBeInTheDocument();
     expect(
-      screen.getByText(`${listPipe(wp.projectLead, fullNamePipe)}`, { exact: false })
+      screen.getByText(`${fullNamePipe(wp.projectLead)}`, { exact: false })
     ).toBeInTheDocument();
     expect(
       screen.getByText(`${fullNamePipe(wp.projectManager)}`, { exact: false })

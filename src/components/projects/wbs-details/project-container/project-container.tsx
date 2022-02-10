@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WorkPackage, WbsNumber } from 'utils';
+import { WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectDetails from './project-details/project-details';

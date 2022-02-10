@@ -9,13 +9,20 @@ import {
   StandardChangeRequest,
   ActivationChangeRequest,
   StageGateChangeRequest,
-  ChangeRequestType,
-  ChangeRequestExplanation
+  ChangeRequestType
 } from 'utils';
-import { weeksPipe, dollarsPipe, fullNamePipe, booleanPipe } from '../../../../shared/pipes';
+import { fullNamePipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
+import StandardDetails from './type-specific-details/standard-details/standard-details';
+import ActivationDetails from './type-specific-details/activation-details/activation-details';
+import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
+import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 import './change-request-details.module.css';
+import ReviewNotes from './review-notes/review-notes';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { routes } from '../../../../shared/routes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -30,97 +37,15 @@ const convertStatus = (cr: ChangeRequest): string => {
   return 'Open';
 };
 
-const buildChangeRequestDetails = (cr: StandardChangeRequest): ReactElement => {
-  return (
-    <PageBlock
-      title={'Standard Change Request Details'}
-      headerRight={<></>}
-      body={
-        <dl className="row">
-          <dt className="col-2">What</dt>
-          <dd className="col-auto">{cr.what}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Why</dt>
-          <dd className="col">
-            <dl>
-              {cr.why.map((ele: ChangeRequestExplanation, idx: number) => (
-                <div key={idx} className="row w-100">
-                  <dt className="col-3">{ele.reason}</dt>
-                  <dd className="col">{ele.explain}</dd>
-                </div>
-              ))}
-            </dl>
-          </dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Impact</dt>
-          <dd className="col-auto">
-            <dl className="row">
-              <dt className="col-3">Scope Impact</dt>
-              <dd className="col-auto">{cr.scopeImpact}</dd>
-              <div className="w-100"></div>
-              <dt className="col-3">Timeline Impact</dt>
-              <dd className="col-auto">{weeksPipe(cr.timelineImpact)}</dd>
-              <div className="w-100"></div>
-              <dt className="col-3">Budget Impact</dt>
-              <dd className="col-auto">{dollarsPipe(cr.budgetImpact)}</dd>
-            </dl>
-          </dd>
-        </dl>
-      }
-    />
-  );
-};
-
-const buildActivationChangeRequestDetails = (cr: ActivationChangeRequest): ReactElement => {
-  return (
-    <PageBlock
-      title={'Activation Change Request Details'}
-      headerRight={<></>}
-      body={
-        <dl className="row">
-          <dt className="col-2">Project Lead</dt>
-          <dd className="col-3">{fullNamePipe(cr.projectLead)}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Project Manager</dt>
-          <dd className="col-3">{fullNamePipe(cr.projectManager)}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Start Date</dt>
-          <dd className="col-3">{cr.startDate.toUTCString()}</dd>
-          <div className="w-100"></div>
-          <dt className="col-2">Confirm WP Details</dt>
-          <dd className="col-3">{booleanPipe(cr.confirmDetails)}</dd>
-        </dl>
-      }
-    />
-  );
-};
-
-const buildStageGateChangeRequestDetails = (cr: StageGateChangeRequest): ReactElement => {
-  return (
-    <PageBlock
-      title={'Stage Gate Change Request Details'}
-      headerRight={<></>}
-      body={
-        <dl className="row">
-          <dt className="col-4">Confirm WP Completed</dt>
-          <dd className="col">{booleanPipe(cr.confirmCompleted)}</dd>
-          <div className="w-100"></div>
-          <dt className="col-4">Leftover Budget</dt>
-          <dd className="col">{dollarsPipe(cr.leftoverBudget)}</dd>
-        </dl>
-      }
-    />
-  );
-};
-
 const buildDetails = (cr: ChangeRequest): ReactElement => {
-  if (cr.type === ChangeRequestType.Activation) {
-    return buildActivationChangeRequestDetails(cr as ActivationChangeRequest);
+  switch (cr.type) {
+    case ChangeRequestType.Activation:
+      return <ActivationDetails cr={cr as ActivationChangeRequest} />;
+    case ChangeRequestType.StageGate:
+      return <StageGateDetails cr={cr as StageGateChangeRequest} />;
+    default:
+      return <StandardDetails cr={cr as StandardChangeRequest} />;
   }
-  if (cr.type === ChangeRequestType.StageGate) {
-    return buildStageGateChangeRequestDetails(cr as StageGateChangeRequest);
-  }
-  return buildChangeRequestDetails(cr as StandardChangeRequest);
 };
 
 interface ChangeRequestDetailsProps {
@@ -130,9 +55,30 @@ interface ChangeRequestDetailsProps {
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   changeRequest
 }: ChangeRequestDetailsProps) => {
+  const reviewDropdown = (
+    <DropdownButton id="review-dropdown" title="Review">
+      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}>Accept</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}>Deny</Dropdown.Item>
+    </DropdownButton>
+  );
+
+  const implementCrDropdown = (
+    <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
+      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>Create New Project</Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>Create New Work Package</Dropdown.Item>
+    </DropdownButton>
+  );
+
+  let actionDropdown = <></>;
+  if (changeRequest.accepted === undefined) actionDropdown = reviewDropdown;
+  if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
+
   return (
     <>
-      <PageTitle title={`Change Request #${changeRequest.id}`} />
+      <PageTitle
+        title={`Change Request #${changeRequest.crId}`}
+        actionButton={actionDropdown}
+      />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
@@ -149,7 +95,13 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <PageBlock title={'Implemented Changes'} headerRight={<></>} body={<>list of changes</>} />
+      <ReviewNotes reviewer={changeRequest.reviewer} reviewNotes={changeRequest.reviewNotes} />
+      <ImplementedChangesList
+        changes={
+          changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges
+        }
+        dateImplemented={changeRequest.dateImplemented!}
+      />
     </>
   );
 };

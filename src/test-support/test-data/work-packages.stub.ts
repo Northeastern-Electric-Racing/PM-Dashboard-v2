@@ -25,11 +25,12 @@ export const exampleWorkPackage1: WorkPackage = {
   dateCreated: new Date('11/15/20'),
   name: 'Bodywork Concept of Design',
   status: WbsElementStatus.Active,
-  projectLead: [exampleAdminUser],
+  projectLead: exampleAdminUser,
   projectManager: exampleLeadershipUser,
-  order: 1,
+  orderInProject: 1,
   progress: 25,
   startDate: new Date('01/01/21'),
+  endDate: new Date('01/22/21'),
   duration: 3,
   dependencies: [],
   expectedActivities: [
@@ -55,8 +56,8 @@ export const exampleWorkPackage1: WorkPackage = {
   ],
   changes: [
     {
-      id: 1,
-      crId: 33,
+      changeId: 1,
+      changeRequestId: 33,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleGuestUser,
       detail: 'Increased funding by $500.'
@@ -74,11 +75,12 @@ export const exampleWorkPackage2: WorkPackage = {
   dateCreated: new Date('10/02/20'),
   name: 'Adhesive Shear Strength Test',
   status: WbsElementStatus.Inactive,
-  projectLead: [exampleProjectLeadUser],
+  projectLead: exampleProjectLeadUser,
   projectManager: exampleLeadershipUser,
-  order: 2,
+  orderInProject: 2,
   progress: 0,
   startDate: new Date('01/22/21'),
+  endDate: new Date('02/26/21'),
   duration: 5,
   dependencies: [exampleWbsWorkPackage1],
   expectedActivities: [
@@ -109,16 +111,16 @@ export const exampleWorkPackage2: WorkPackage = {
   ],
   changes: [
     {
-      id: 2,
-      crId: 1,
+      changeId: 2,
+      changeRequestId: 1,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleAppAdminUser,
       detail: 'Decreased duration from 10 weeks to 7 weeks.'
     },
 
     {
-      id: 13,
-      crId: 54,
+      changeId: 13,
+      changeRequestId: 54,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleProjectLeadUser,
       detail: 'Added "jet fuel burns hot" bullet.'
@@ -132,11 +134,12 @@ export const exampleWorkPackage3: WorkPackage = {
   dateCreated: new Date('09/27/20'),
   name: 'Manufacture Wiring Harness',
   status: WbsElementStatus.Complete,
-  projectLead: [exampleLeadershipUser],
+  projectLead: exampleLeadershipUser,
   projectManager: exampleProjectManagerUser,
-  order: 3,
+  orderInProject: 3,
   progress: 100,
   startDate: new Date('01/01/21'),
+  endDate: new Date('01/15/21'),
   duration: 2,
   dependencies: [exampleWbsProject1, exampleWbsProject2],
   expectedActivities: [
@@ -171,8 +174,8 @@ export const exampleWorkPackage3: WorkPackage = {
   ],
   changes: [
     {
-      id: 7,
-      crId: 14,
+      changeId: 7,
+      changeRequestId: 14,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleAdminUser,
       detail: 'Increased budget from $10 to $200.'

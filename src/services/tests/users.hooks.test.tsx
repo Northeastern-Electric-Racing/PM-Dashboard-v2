@@ -6,7 +6,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 import { AxiosResponse } from 'axios';
-import { User } from 'utils';
+import { User } from '@prisma/client';
 import wrapper from '../../components/app/app-context-query/app-context-query';
 import { mockPromiseAxiosResponse } from '../../test-support/test-data/test-utils.stub';
 import { exampleAllUsers, exampleAdminUser } from '../../test-support/test-data/users.stub';
@@ -42,7 +42,7 @@ describe('user hooks', () => {
       wrapper
     });
     act(() => {
-      result.current.mutate(exampleAdminUser.emailId);
+      result.current.mutate(exampleAdminUser.email);
     });
 
     await waitFor(() => result.current.isSuccess);

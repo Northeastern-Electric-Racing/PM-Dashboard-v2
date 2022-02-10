@@ -20,9 +20,11 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
       headerRight={<></>}
       list={changes.map((ic) => (
         <>
-          [<Link to={`${routes.CHANGE_REQUESTS}/${ic.crId}`}>#{ic.crId}</Link>] {ic.detail}
+          [<Link to={`${routes.CHANGE_REQUESTS}/${ic.changeRequestId}`}>#{ic.changeRequestId}</Link>
+          ] {ic.detail}
         </>
       ))}
+      readOnly={true}
     />
   );
 };

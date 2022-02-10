@@ -25,7 +25,7 @@ const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 /**************** Change Requests Endpoint ****************/
 const changeRequests = () => `${API_URL}/change-requests`;
 const changeRequestsById = (id: string) => `${changeRequests()}/${id}`;
-const changeRequestsReview = (id: string) => `${changeRequestsById(id)}/process:review`;
+const changeRequestsReview = () => `${changeRequests()}-review`;
 
 export const apiUrls = {
   users,

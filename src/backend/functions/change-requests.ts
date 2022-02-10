@@ -4,32 +4,103 @@
  */
 
 import { Handler } from '@netlify/functions';
+import { PrismaClient, Prisma, Scope_CR_Why_Type } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
   API_URL,
   apiRoutes,
-  ChangeRequest,
-  exampleAllChangeRequests,
   routeMatcher,
+  ChangeRequest,
   buildSuccessResponse,
   buildNotFoundResponse,
-  buildServerFailureResponse
+  buildServerFailureResponse,
+  ChangeRequestReason,
+  StandardChangeRequest,
+  ActivationChangeRequest,
+  StageGateChangeRequest
 } from 'utils';
 
-const getAllChangeRequests: ApiRouteFunction = () => {
-  return buildSuccessResponse(exampleAllChangeRequests);
+const prisma = new PrismaClient();
+
+const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
+  include: {
+    submitter: true,
+    wbsElement: true,
+    reviewer: true,
+    changes: {
+      include: {
+        implementer: true
+      }
+    },
+    scopeChangeRequest: { include: { why: true } },
+    stageGateChangeRequest: true,
+    activationChangeRequest: { include: { projectLead: true, projectManager: true } }
+  }
+});
+
+const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason =>
+  ({
+    ESTIMATION: ChangeRequestReason.Estimation,
+    SCHOOL: ChangeRequestReason.School,
+    MANUFACTURING: ChangeRequestReason.Manufacturing,
+    DESIGN: ChangeRequestReason.Design,
+    RULES: ChangeRequestReason.Rules,
+    OTHER_PROJECT: ChangeRequestReason.OtherProject,
+    OTHER: ChangeRequestReason.Other
+  }[whyType]);
+
+const changeRequestTransformer = (
+  changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
+): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
+  const wbsNum = {
+    car: changeRequest.wbsElement.carNumber,
+    project: changeRequest.wbsElement.projectNumber,
+    workPackage: changeRequest.wbsElement.workPackageNumber
+  };
+  return {
+    ...changeRequest,
+    type: changeRequest.type,
+    reviewer: changeRequest.reviewer ?? undefined,
+    dateReviewed: changeRequest.dateReviewed ?? undefined,
+    accepted: changeRequest.accepted ?? undefined,
+    reviewNotes: changeRequest.reviewNotes ?? undefined,
+    dateImplemented: changeRequest.changes.reduce(
+      (res: Date | undefined, change) =>
+        !res || change.dateImplemented.valueOf() > res.valueOf() ? change.dateImplemented : res,
+      undefined
+    ),
+    implementedChanges: changeRequest.changes.map((change) => ({
+      ...change,
+      wbsNum
+    })),
+    wbsNum,
+    ...changeRequest.scopeChangeRequest,
+    why: changeRequest.scopeChangeRequest?.why.map((why) => ({
+      ...why,
+      reason: convertCRScopeWhyType(why.type)
+    })),
+    ...changeRequest.activationChangeRequest,
+    ...changeRequest.stageGateChangeRequest
+  };
 };
 
-const getChangeRequestByID: ApiRouteFunction = (params: { id: string }) => {
+const getAllChangeRequests: ApiRouteFunction = async () => {
+  const changeRequests = await prisma.change_Request.findMany(relationArgs);
+  return buildSuccessResponse(changeRequests.map(changeRequestTransformer));
+};
+
+// Fetch the specific change request by its integer ID
+const getChangeRequestByID: ApiRouteFunction = async (params: { id: string }) => {
   const crId: number = parseInt(params.id);
-  const requestedCR: ChangeRequest | undefined = exampleAllChangeRequests.find(
-    (cr: ChangeRequest) => cr.id === crId
-  );
-  if (requestedCR === undefined) {
+  const requestedCR = await prisma.change_Request.findUnique({
+    where: { crId },
+    ...relationArgs
+  });
+  if (requestedCR === null) {
     return buildNotFoundResponse('change request', `#${crId}`);
   }
-  return buildSuccessResponse(requestedCR);
+  return buildSuccessResponse(changeRequestTransformer(requestedCR));
 };
 
 const routes: ApiRoute[] = [

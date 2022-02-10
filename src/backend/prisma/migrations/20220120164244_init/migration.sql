@@ -8,13 +8,14 @@ CREATE TYPE "WBS_Element_Status" AS ENUM ('INACTIVE', 'ACTIVE', 'COMPLETE');
 CREATE TYPE "Role" AS ENUM ('APP_ADMIN', 'ADMIN', 'LEADERSHIP', 'MEMBER', 'GUEST');
 
 -- CreateEnum
-CREATE TYPE "Scope_CR_Why_Type" AS ENUM ('ESTIMATION', 'SCHOOL', 'MANUFACTURING', 'RULES', 'OTHER_PROJECT', 'OTHER');
+CREATE TYPE "Scope_CR_Why_Type" AS ENUM ('ESTIMATION', 'SCHOOL', 'MANUFACTURING', 'DESIGN', 'RULES', 'OTHER_PROJECT', 'OTHER');
 
 -- CreateTable
 CREATE TABLE "User" (
     "userId" SERIAL NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
+    "googleAuthId" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "emailId" TEXT,
     "role" "Role" NOT NULL DEFAULT E'GUEST',
@@ -39,6 +40,7 @@ CREATE TABLE "Change_Request" (
     "dateSubmitted" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "wbsElementId" INTEGER NOT NULL,
     "type" "CR_Type" NOT NULL,
+    "reviewerId" INTEGER,
     "dateReviewed" TIMESTAMP(3),
     "accepted" BOOLEAN,
     "reviewNotes" TEXT,
@@ -95,7 +97,7 @@ CREATE TABLE "Change" (
     "changeId" SERIAL NOT NULL,
     "changeRequestId" INTEGER NOT NULL,
     "dateImplemented" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "implementorId" INTEGER NOT NULL,
+    "implementerId" INTEGER NOT NULL,
     "wbsElementId" INTEGER NOT NULL,
     "detail" TEXT NOT NULL,
 
@@ -110,7 +112,7 @@ CREATE TABLE "WBS_Element" (
     "projectNumber" INTEGER NOT NULL,
     "workPackageNumber" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
-    "status" "WBS_Element_Status" NOT NULL,
+    "status" "WBS_Element_Status" NOT NULL DEFAULT E'INACTIVE',
     "projectLeadId" INTEGER,
     "projectManagerId" INTEGER,
 
@@ -167,28 +169,31 @@ CREATE TABLE "_dependencies" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User.googleAuthId_unique" ON "User"("googleAuthId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.emailId_unique" ON "User"("emailId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Scope_CR_changeRequestId_unique" ON "Scope_CR"("changeRequestId");
+CREATE UNIQUE INDEX "Scope_CR.changeRequestId_unique" ON "Scope_CR"("changeRequestId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Stage_Gate_CR_changeRequestId_unique" ON "Stage_Gate_CR"("changeRequestId");
+CREATE UNIQUE INDEX "Stage_Gate_CR.changeRequestId_unique" ON "Stage_Gate_CR"("changeRequestId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Activation_CR_changeRequestId_unique" ON "Activation_CR"("changeRequestId");
+CREATE UNIQUE INDEX "Activation_CR.changeRequestId_unique" ON "Activation_CR"("changeRequestId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "wbsNumber" ON "WBS_Element"("carNumber", "projectNumber", "workPackageNumber");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Project_wbsElementId_unique" ON "Project"("wbsElementId");
+CREATE UNIQUE INDEX "Project.wbsElementId_unique" ON "Project"("wbsElementId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Work_Package_wbsElementId_unique" ON "Work_Package"("wbsElementId");
+CREATE UNIQUE INDEX "Work_Package.wbsElementId_unique" ON "Work_Package"("wbsElementId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_dependencies_AB_unique" ON "_dependencies"("A", "B");
@@ -204,6 +209,9 @@ ALTER TABLE "Change_Request" ADD FOREIGN KEY ("submitterId") REFERENCES "User"("
 
 -- AddForeignKey
 ALTER TABLE "Change_Request" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Change_Request" ADD FOREIGN KEY ("reviewerId") REFERENCES "User"("userId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Scope_CR" ADD FOREIGN KEY ("changeRequestId") REFERENCES "Change_Request"("crId") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -227,7 +235,7 @@ ALTER TABLE "Activation_CR" ADD FOREIGN KEY ("projectManagerId") REFERENCES "Use
 ALTER TABLE "Change" ADD FOREIGN KEY ("changeRequestId") REFERENCES "Change_Request"("crId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Change" ADD FOREIGN KEY ("implementorId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Change" ADD FOREIGN KEY ("implementerId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Change" ADD FOREIGN KEY ("wbsElementId") REFERENCES "WBS_Element"("wbsElementId") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -6,3 +6,8 @@
 b {
   font-weight: bold;
 }
+
+.btnsContainer {
+  display: flex;
+  gap: 1.5rem;
+}

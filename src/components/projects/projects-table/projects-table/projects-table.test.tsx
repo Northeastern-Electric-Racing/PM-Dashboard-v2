@@ -5,17 +5,17 @@
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import ProjectsTable from './projects-table';
+import { Project } from 'utils';
+import { wbsPipe, fullNamePipe, weeksPipe } from '../../../../shared/pipes';
+import { wbsRegex } from '../../../../test-support/test-utils';
 import {
   exampleProject1,
   exampleProject2,
   exampleProject3,
   exampleProject4,
   exampleProject5,
-  exampleAllProjects,
-  Project
-} from 'utils';
-import { wbsPipe, fullNamePipe, weeksPipe, listPipe } from '../../../../shared/pipes';
-import { wbsRegex } from '../../../../test-support/test-utils';
+  exampleAllProjects
+} from '../../../../test-support/test-data/projects.stub';
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = (prjs: Project[]) => {
@@ -23,7 +23,7 @@ const renderComponent = (prjs: Project[]) => {
     return {
       wbsNum: wbsPipe(prj.wbsNum),
       name: prj.name,
-      projectLead: listPipe(prj.projectLead, fullNamePipe),
+      projectLead: fullNamePipe(prj.projectLead),
       projectManager: fullNamePipe(prj.projectManager),
       duration: weeksPipe(prj.workPackages.reduce((tot, cur) => tot + cur.duration, 0))
     };

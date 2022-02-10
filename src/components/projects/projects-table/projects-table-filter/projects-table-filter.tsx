@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.css';
-import { User } from 'utils';
+import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
 
 /**
@@ -115,7 +115,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
     const result: any[] = [none];
     for (const user of users) {
       const userName: string = fullNamePipe(user);
-      const { id: userID } = user;
+      const { userId: userID } = user;
       result.push(
         <Dropdown.Item
           key={userName}
@@ -167,7 +167,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   {status}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsString(['Active', 'Inactive', 'Complete'], setStatus)}
+                  {genDropdownItemsString(Object.values(WbsElementStatus), setStatus)}
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>

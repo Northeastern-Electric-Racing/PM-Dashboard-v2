@@ -3,15 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
 
 export interface ChangeRequest {
-  id: number;
+  crId: number;
   wbsNum: WbsNumber;
   submitter: User;
   dateSubmitted: Date;
   type: ChangeRequestType;
+  reviewer?: User;
   dateReviewed?: Date;
   accepted?: boolean;
   reviewNotes?: string;
@@ -19,13 +21,15 @@ export interface ChangeRequest {
   implementedChanges?: ImplementedChange[];
 }
 
-export enum ChangeRequestType {
-  DesignIssue = 'Design Issue',
-  NewFunction = 'New Function',
-  Other = 'Other',
-  StageGate = 'Stage Gate',
-  Activation = 'Activation'
-}
+export const ChangeRequestType = {
+  Issue: 'ISSUE',
+  Redefinition: 'DEFINITION_CHANGE',
+  Other: 'OTHER',
+  StageGate: 'STAGE_GATE',
+  Activation: 'ACTIVATION'
+} as const;
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type ChangeRequestType = typeof ChangeRequestType[keyof typeof ChangeRequestType];
 
 export interface StandardChangeRequest extends ChangeRequest {
   what: string;
@@ -44,7 +48,7 @@ export interface ActivationChangeRequest extends ChangeRequest {
 
 export interface StageGateChangeRequest extends ChangeRequest {
   leftoverBudget: number;
-  confirmCompleted: boolean;
+  confirmDone: boolean;
 }
 
 export interface ChangeRequestExplanation {
@@ -53,18 +57,33 @@ export interface ChangeRequestExplanation {
 }
 
 export enum ChangeRequestReason {
-  Estimation = 'Estimation Error',
-  School = 'School Work',
-  Manufacturing = 'Manufacturing Issues',
-  Rules = 'Rules Compliance',
-  OtherProject = 'Other Project',
-  Other = 'Other'
+  Estimation = 'ESTIMATION',
+  School = 'SCHOOL',
+  Manufacturing = 'MANUFACTURING',
+  Design = 'DESIGN',
+  Rules = 'RULES',
+  OtherProject = 'OTHER_PROJECT',
+  Other = 'OTHER'
 }
 
 export interface ImplementedChange {
-  id: number;
-  crId: number;
+  changeId: number;
+  changeRequestId: number;
   wbsNum: WbsNumber;
   implementer: User;
   detail: string;
 }
+
+export const reviewChangeRequestPayloadSchema = {
+  type: 'object',
+  properties: {
+    reviewerId: { type: 'number', minimum: 0 },
+    crId: { type: 'number', minimum: 0 },
+    reviewNotes: { type: 'string' },
+    accepted: { type: 'boolean' }
+  },
+  required: ['reviewerId', 'crId', 'reviewNotes', 'accepted'],
+  additionalProperties: false
+} as const;
+
+export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;

@@ -4,7 +4,8 @@
  */
 
 import { ReactElement } from 'react';
-import { User, WbsNumber } from 'utils';
+import { User } from '@prisma/client';
+import { WbsNumber } from 'utils';
 
 /**
  * Pipes:
@@ -33,8 +34,8 @@ export const wbsPipe = (wbsNum: WbsNumber): string => {
   return `${wbsNum.car}.${wbsNum.project}.${wbsNum.workPackage}`;
 };
 
-export const fullNamePipe = (user: User): string => {
-  return `${user.firstName} ${user.lastName}`;
+export const fullNamePipe = (user?: User): string => {
+  return user ? `${user.firstName} ${user.lastName}` : emDashPipe('');
 };
 
 export const booleanPipe = (bool: boolean): string => {

@@ -55,8 +55,14 @@ Turn on `format on save` for Prettier.
 Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac) (or `File > Preferences > Settings` for Windows).
 Search for `format on save` and make sure `Editor: Format On Save` is checked / yes.
 
-Open settings and search for `open settings json`.
-Click `Edit in settings.json` under the `[JSON] Configure settings to be overridden for [json] language` section.
+Open the VSCode Command Palette (`Ctrl/Cmd`+`Shift`+`P`) and search for `open settings json`.
+Select `Preferences: Open Settings (JSON)`, which should open a file called `settings.json`.
+
+If `settings.json` doesn't open from the Command Palette, you can also navigate back to the settings and try searching for either of these:
+
+- `open settings json`: Then click `Edit in settings.json` under the `[JSON] Configure settings to be overridden for [json] language` section.
+- `json file schema`: Then click `Edit in settings.json` under the `JSON schemas` section.
+
 Paste this into `settings.json`:
 
 ```json

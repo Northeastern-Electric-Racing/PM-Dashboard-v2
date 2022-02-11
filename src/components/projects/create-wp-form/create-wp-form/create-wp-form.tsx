@@ -41,13 +41,17 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='wp-name'>Work Package Name</Form.Label>
-                    <Form.Control id='wp-name' name='wpName' type='text' required></Form.Control>
+                    <Form.Control id='wp-name' name='name' type='text' required></Form.Control>
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='project-wbs-num'>Project WBS Number</Form.Label>
                     <Form.Control id='project-wbs-num' name='wbsNum' type='text' required></Form.Control>
+                  </Form.Group>
+                  <Form.Group as={Col}>
+                    <Form.Label htmlFor='crId'>Change Request ID</Form.Label>
+                    <Form.Control id='crId' name='crId' type='number' min={1} required></Form.Control>
                   </Form.Group>
                 </Row>
                 <Row>

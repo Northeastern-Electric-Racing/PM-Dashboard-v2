@@ -20,6 +20,7 @@ export interface EditableTextInputListUtils {
 
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
+  const authContext = useContext(AuthContext);
 
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
@@ -83,18 +84,20 @@ const CreateWPForm: React.FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { name, wbsNum: projectWbsNum, crId, startDate, duration } = e.target;
+    const { target } = e;
+    const { name, wbsNum: projectWbsNum, crId, startDate, duration } = target;
 
     // exits handleSubmit if form input invalid (should be changed in wire up)
     const wbsNum: WbsNumber = validateWBS(projectWbsNum.value.trim());
 
     // this form can only be accessed if user is authenticated, so it is safe
     // to declare authContext and user is not undefinted
-    const authContext = useContext(AuthContext);
+
     const { userId } = authContext!.user!;
 
     // project id
-    const { id: projectId } = (await getSingleProject(wbsNum)).data;
+    const { data } = (await getSingleProject(wbsNum));
+    const { id: projectId } = data;
 
     if (!isProject(wbsNum!)) {
       alert('Please enter a valid Project WBS Number.');
@@ -123,6 +126,9 @@ const CreateWPForm: React.FC = () => {
         expectedActivities,
         deliverables
       });
+      console.log('success');
+    } else {
+      console.log('failed');
     }
 
     /**

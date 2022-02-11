@@ -28,3 +28,40 @@ export const getSingleWorkPackage = (wbsNum: WbsNumber) => {
     transformResponse: (data) => workPackageTransformer(JSON.parse(data))
   });
 };
+
+/**
+ * Create a single work package.
+ * 
+ * @param userId ID of the user
+ * @param name Work package name
+ * @param crId ID of change request that requires work package creation
+ * @param projectId ID of project that the work package will fall under
+ * @param startDate Date work package starts
+ * @param duration How long (in weeks) the work package will take
+ * @param wbsElementIds Dependencies of the work package
+ * @param expectedActivities Expected activities of the work package
+ * @param deliverables Deliverables of the work package
+ */
+export const createSingleWorkPackage = (
+  userId: number,
+  name: string,
+  crId: number,
+  projectId: number,
+  startDate: Date,
+  duration: number,
+  wbsElementIds: number[], // this is dependencies
+  expectedActivities: string[],
+  deliverables: string[]
+) => {
+  return axios.post<{ message: string }>(apiUrls.workPackages(), {
+    userId,
+    name,
+    crId,
+    projectId,
+    startDate,
+    duration,
+    wbsElementIds,
+    expectedActivities,
+    deliverables
+  });
+};

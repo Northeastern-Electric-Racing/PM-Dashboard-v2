@@ -3,9 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { isProject, validateWBS, WbsNumber } from "utils";
+import { getSingleProject } from "../../../services/projects.api";
+import { getSingleWorkPackage } from "../../../services/work-packages.api";
+import { useCreateSingleWorkPackage } from "../../../services/work-packages.hooks";
+import { AuthContext } from "../../app/app-context-auth/app-context-auth";
 import CreateWPFormView from "./create-wp-form/create-wp-form";
 
 export interface EditableTextInputListUtils {
@@ -20,6 +24,7 @@ const CreateWPForm: React.FC = () => {
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
   const [deliverables, setDeliverables] = useState<string[]>([]);
+  const { isLoading, isError, error, mutateAsync } = useCreateSingleWorkPackage();
 
   const depUtils: EditableTextInputListUtils = {
     add: (val) => {
@@ -75,16 +80,65 @@ const CreateWPForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
+    const { name, wbsNum: projectWbsNum, crId, startDate, duration } = e.target;
+
     // exits handleSubmit if form input invalid (should be changed in wire up)
-    const wbsNum: WbsNumber = validateWBS(e.target.wbsNum.value.trim());
+    const wbsNum: WbsNumber = validateWBS(projectWbsNum.value.trim());
+
+    // this form can only be accessed if user is authenticated, so it is safe
+    // to declare authContext and user is not undefinted
+    const authContext = useContext(AuthContext);
+    const { userId } = authContext!.user!;
+
+    // project id
+    const { id: projectId } = (await getSingleProject(wbsNum)).data;
 
     if (!isProject(wbsNum!)) {
       alert('Please enter a valid Project WBS Number.');
       return;
     }
+
+    const depWbsNums: WbsNumber[] = dependencies.map(dependency => {
+      return validateWBS(dependency.trim());
+    });
+
+    const wbsElementIds: number[] = await Promise.all(
+      depWbsNums.map(async (wbsNum) => {
+        return (await getSingleWorkPackage(wbsNum)).data.id;
+      })
+    ).then((res) => res).catch(err => { throw err });
+
+    if (wbsElementIds) {
+      await mutateAsync({
+        userId,
+        name: name.value.trim(),
+        crId: crId.value,
+        projectId,
+        startDate,
+        duration,
+        wbsElementIds,
+        expectedActivities,
+        deliverables
+      });
+    }
+
+    /**
+     * need to get 
+     *  userId, 
+     *  projectId, 
+     *  wbsElementIds of dependencies (should be in wbs num format)
+     * 
+     * need to pass down
+     *  name
+     *  crId
+     *  startDate
+     *  duration
+     *  ea
+     *  deliverables
+     */
   }
 
   return (

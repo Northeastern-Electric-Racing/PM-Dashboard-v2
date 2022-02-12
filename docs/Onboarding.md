@@ -66,12 +66,9 @@ If `settings.json` doesn't open from the Command Palette, you can also navigate 
 Paste this into `settings.json`:
 
 ```json
-"[typescriptreact]": {
+"[typescriptreact][typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
 },
-"[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-}
 ```
 
 Below are extensions for VSCode that might make your developer experience more enjoyable.

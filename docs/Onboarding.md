@@ -68,7 +68,7 @@ Paste this into `settings.json`:
 ```json
 "[typescriptreact][typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-},
+}
 ```
 
 Below are extensions for VSCode that might make your developer experience more enjoyable.

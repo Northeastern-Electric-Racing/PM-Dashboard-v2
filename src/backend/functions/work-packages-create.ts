@@ -18,7 +18,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   // and what number work package this should be
   const project = await prisma.project.findUnique({
     where: {
-      projectId: body.projectId
+      projectId: body.projectId // use single project as reference for breaking down wbsnum
     },
     include: {
       wbsElement: true,

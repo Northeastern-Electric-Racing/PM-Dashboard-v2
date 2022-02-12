@@ -42,7 +42,7 @@ export const getSingleWorkPackage = (wbsNum: WbsNumber) => {
  * @param expectedActivities Expected activities of the work package
  * @param deliverables Deliverables of the work package
  */
-export const createSingleWorkPackage = (
+export const createSingleWorkPackage = ( // use createwppayload schema instead
   userId: number,
   name: string,
   crId: number,
@@ -53,7 +53,8 @@ export const createSingleWorkPackage = (
   expectedActivities: string[],
   deliverables: string[]
 ) => {
-  return axios.post<{ message: string }>(apiUrls.workPackages(), {
+  console.log('in api');
+  return axios.post<{ message: string }>(apiUrls.test(), {
     userId,
     name,
     crId,

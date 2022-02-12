@@ -5,10 +5,11 @@
 
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { isProject, validateWBS, WbsNumber } from "utils";
+import { isProject, Project, validateWBS, WbsNumber } from "utils";
 import { getSingleProject } from "../../../services/projects.api";
 import { getSingleWorkPackage } from "../../../services/work-packages.api";
 import { useCreateSingleWorkPackage } from "../../../services/work-packages.hooks";
+import { routes } from "../../../shared/routes";
 import { AuthContext } from "../../app/app-context-auth/app-context-auth";
 import CreateWPFormView from "./create-wp-form/create-wp-form";
 
@@ -86,34 +87,49 @@ const CreateWPForm: React.FC = () => {
 
     const { target } = e;
     const { name, wbsNum: projectWbsNum, crId, startDate, duration } = target;
-
+    console.log('aaaaaaaaa');
     // exits handleSubmit if form input invalid (should be changed in wire up)
-    const wbsNum: WbsNumber = validateWBS(projectWbsNum.value.trim());
-
+    let wbsNum: WbsNumber;
+    try {
+      wbsNum = validateWBS(projectWbsNum.value.trim());
+    } catch (e) {
+      console.log(e);
+      console.log('wbs num not valid');
+    }
+    console.log('bbbbbb');
     // this form can only be accessed if user is authenticated, so it is safe
     // to declare authContext and user is not undefinted
 
     const { userId } = authContext!.user!;
 
+    console.log('cccc');
     // project id
-    const { data } = (await getSingleProject(wbsNum));
-    const { id: projectId } = data;
+    const data: Project | null = await getSingleProject(wbsNum!).
+      then(res => {
+        return res.data;
+      }).catch(e => {
+        console.log(e);
+        console.log('project id fetch failed');
+        return null;
+      });
+    console.log('ddddd');
+    const { id: projectId } = data!;
 
     if (!isProject(wbsNum!)) {
       alert('Please enter a valid Project WBS Number.');
       return;
     }
-
+    console.log('ee');
     const depWbsNums: WbsNumber[] = dependencies.map(dependency => {
       return validateWBS(dependency.trim());
     });
-
+    console.log('f');
     const wbsElementIds: number[] = await Promise.all(
       depWbsNums.map(async (wbsNum) => {
         return (await getSingleWorkPackage(wbsNum)).data.id;
       })
     ).then((res) => res).catch(err => { throw err });
-
+    console.log('g');
     if (wbsElementIds) {
       await mutateAsync({
         userId,
@@ -127,6 +143,7 @@ const CreateWPForm: React.FC = () => {
         deliverables
       });
       console.log('success');
+      history.push(`${routes.CHANGE_REQUESTS}`);
     } else {
       console.log('failed');
     }

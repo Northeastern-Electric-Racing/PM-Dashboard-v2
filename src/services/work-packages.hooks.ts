@@ -37,6 +37,7 @@ export const useCreateSingleWorkPackage = () => {
   return useMutation<{ message: string }, Error, CreateWorkPackagePayload>(
     ['createWP'],
     async (wpPayload: CreateWorkPackagePayload) => {
+      console.log('in hook');
       const { data } = await createSingleWorkPackage(
         wpPayload.userId,
         wpPayload.name,
@@ -48,7 +49,7 @@ export const useCreateSingleWorkPackage = () => {
         wpPayload.expectedActivities,
         wpPayload.deliverables
       );
-
+      console.log('got data');
       return data;
     }
   )

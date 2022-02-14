@@ -26,7 +26,7 @@ interface projectDetailsProps {
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
   // const editMode = useContext(EditModeContext);
   function padLink(link: string) {
-    return link === '' ? 'Enter Link Here...' : link;
+    return link === undefined ? 'Enter Link Here...' : link;
   }
   const detailsBody = (
     <Container fluid>

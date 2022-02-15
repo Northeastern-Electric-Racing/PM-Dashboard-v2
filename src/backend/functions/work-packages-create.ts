@@ -16,9 +16,24 @@ const prisma = new PrismaClient();
 export const createWorkPackage: Handler = async ({ body }, _context) => {
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
+  const { carNumber, projectNumber, workPackageNumber } = body.projectWbsNum;
+  console.log('wbs find unique');
+  const wbsElem = await prisma.wBS_Element.findUnique({
+    where: {
+      wbsNumber: {
+        carNumber: carNumber,
+        projectNumber: projectNumber,
+        workPackageNumber: workPackageNumber
+      }
+    }
+  });
+
+  if (wbsElem === null) throw new TypeError('No corresponding WBS Element for WBS Number.');
+  console.log('project find unique');
   const project = await prisma.project.findUnique({
     where: {
-      projectId: body.projectId // use single project as reference for breaking down wbsnum
+      wbsElementId: wbsElem!.wbsElementId
+      // use single project as reference for breaking down wbsnum
     },
     include: {
       wbsElement: true,
@@ -28,16 +43,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
 
   if (project === null) throw new TypeError('Project Id not found!');
 
-  // eslint-disable-next-line prefer-destructuring
-  const { carNumber, projectNumber } = project.wbsElement;
-
-  const workPackageNumber: number =
-    project.workPackages
-      .map((element) => element.wbsElement.workPackageNumber)
-      .reduce((prev, curr) => {
-        return Math.max(prev, curr);
-      }, 0) + 1;
-
+  console.log('creating');
   // add to the database
   const created = await prisma.work_Package.create({
     data: {
@@ -45,7 +51,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
         create: {
           carNumber,
           projectNumber,
-          workPackageNumber,
+          workPackageNumber: workPackageNumber + 1,
           name: body.name,
           changes: {
             create: {
@@ -82,6 +88,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
     }
   });
 
+  console.log('done');
   return buildSuccessResponse(created);
 };
 

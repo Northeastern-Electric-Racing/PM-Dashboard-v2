@@ -92,60 +92,45 @@ const CreateWPForm: React.FC = () => {
     let wbsNum: WbsNumber;
     try {
       wbsNum = validateWBS(projectWbsNum.value.trim());
+
+      const { userId } = authContext!.user!;
+
+      if (!isProject(wbsNum!)) {
+        alert('Please enter a valid Project WBS Number.');
+        return;
+      }
+      const depWbsNums = dependencies.map(dependency => {
+        const depWbsNum = validateWBS(dependency.trim());
+        return {
+          carNumber: depWbsNum.car,
+          projectNumber: depWbsNum.project,
+          workPackageNumber: depWbsNum.workPackage
+        }
+      });
+      if (depWbsNums) {
+        await mutateAsync({
+          userId,
+          name: name.value.trim(),
+          crId: crId.value,
+          projectWbsNum: {
+            carNumber: wbsNum.car,
+            projectNumber: wbsNum.project,
+            workPackageNumber: wbsNum.workPackage
+          },
+          startDate,
+          duration,
+          wbsElementIds: depWbsNums,
+          expectedActivities,
+          deliverables
+        });
+        console.log('success');
+        history.push(`${routes.CHANGE_REQUESTS}`);
+      } else {
+        console.log('failed');
+      }
     } catch (e) {
       console.log(e);
       console.log('wbs num not valid');
-    }
-    console.log('bbbbbb');
-    // this form can only be accessed if user is authenticated, so it is safe
-    // to declare authContext and user is not undefinted
-
-    const { userId } = authContext!.user!;
-
-    console.log('cccc');
-    // project id
-    const data: Project | null = await getSingleProject(wbsNum!).
-      then(res => {
-        return res.data;
-      }).catch(e => {
-        console.log(e);
-        console.log('project id fetch failed');
-        return null;
-      });
-    console.log('ddddd');
-    const { id: projectId } = data!;
-
-    if (!isProject(wbsNum!)) {
-      alert('Please enter a valid Project WBS Number.');
-      return;
-    }
-    console.log('ee');
-    const depWbsNums: WbsNumber[] = dependencies.map(dependency => {
-      return validateWBS(dependency.trim());
-    });
-    console.log('f');
-    const wbsElementIds: number[] = await Promise.all(
-      depWbsNums.map(async (wbsNum) => {
-        return (await getSingleWorkPackage(wbsNum)).data.id;
-      })
-    ).then((res) => res).catch(err => { throw err });
-    console.log('g');
-    if (wbsElementIds) {
-      await mutateAsync({
-        userId,
-        name: name.value.trim(),
-        crId: crId.value,
-        projectId,
-        startDate,
-        duration,
-        wbsElementIds,
-        expectedActivities,
-        deliverables
-      });
-      console.log('success');
-      history.push(`${routes.CHANGE_REQUESTS}`);
-    } else {
-      console.log('failed');
     }
 
     /**

@@ -11,15 +11,26 @@ export const workPackageCreateInputSchemaBody = {
     userId: { type: 'integer', minimum: 0 },
     name: { type: 'string' },
     crId: { type: 'integer', minimum: 0 },
-    projectId: { type: 'integer', minimum: 0 }, // convert this to wbs num 
+    projectWbsNum: {
+      type: 'object',
+      properties: {
+        carNumber: { type: 'integer', minimum: 0 },
+        projectNumber: { type: 'integer', minimum: 0 },
+        workPackageNumber: { type: 'integer', minimum: 0 },
+      }
+    }, // convert this to wbs num 
     // break down into the 3 stuff
     startDate: { type: 'string', format: 'date' },
     duration: { type: 'integer', minimum: 0 },
     wbsElementIds: {
       type: 'array',
       items: {
-        type: 'integer', // convert int to wbsnum
-        minimum: 0
+        type: 'object',
+        properties: {
+          carNumber: { type: 'integer', minimum: 0 },
+          projectNumber: { type: 'integer', minimum: 0 },
+          workPackageNumber: { type: 'integer', minimum: 0 },
+        }
       }
     },
     expectedActivities: {
@@ -41,7 +52,7 @@ export const workPackageCreateInputSchemaBody = {
     'userId',
     'name',
     'crId',
-    'projectId',
+    'projectWbsNum',
     'startDate',
     'duration',
     'wbsElementIds',

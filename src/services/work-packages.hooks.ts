@@ -38,17 +38,7 @@ export const useCreateSingleWorkPackage = () => {
     ['createWP'],
     async (wpPayload: CreateWorkPackagePayload) => {
       console.log('in hook');
-      const { data } = await createSingleWorkPackage(
-        wpPayload.userId,
-        wpPayload.name,
-        wpPayload.crId,
-        wpPayload.projectId,
-        new Date(wpPayload.startDate),
-        wpPayload.duration,
-        wpPayload.wbsElementIds,
-        wpPayload.expectedActivities,
-        wpPayload.deliverables
-      );
+      const { data } = await createSingleWorkPackage(wpPayload);
       console.log('got data');
       return data;
     }

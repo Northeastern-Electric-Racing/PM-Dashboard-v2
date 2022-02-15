@@ -30,6 +30,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
 
   if (wbsElem === null) throw new TypeError('No corresponding WBS Element for WBS Number.');
   console.log('project find unique');
+  console.log(`wbsElemId: ${wbsElem.wbsElementId}`);
   const project = await prisma.project.findUnique({
     where: {
       wbsElementId: wbsElem!.wbsElementId
@@ -43,6 +44,11 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
 
   if (project === null) throw new TypeError('Project Id not found!');
 
+  const newWorkPackageNumber: number =
+    project.workPackages
+      .map((element) => element.wbsElement.workPackageNumber)
+      .reduce((prev, curr) => Math.max(prev, curr), 0) + 1;
+
   console.log('creating');
   // add to the database
   const created = await prisma.work_Package.create({
@@ -51,7 +57,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
         create: {
           carNumber,
           projectNumber,
-          workPackageNumber: workPackageNumber + 1,
+          workPackageNumber: newWorkPackageNumber,
           name: body.name,
           changes: {
             create: {
@@ -64,7 +70,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
       },
       project: {
         connect: {
-          projectId: body.projectId
+          projectId: project.projectId
         }
       },
       startDate: new Date(body.startDate),

@@ -17,7 +17,9 @@ export const workPackageCreateInputSchemaBody = {
         carNumber: { type: 'integer', minimum: 0 },
         projectNumber: { type: 'integer', minimum: 0 },
         workPackageNumber: { type: 'integer', minimum: 0 },
-      }
+      },
+      required: ['carNumber', 'projectNumber', 'workPackageNumber']
+
     }, // convert this to wbs num 
     // break down into the 3 stuff
     startDate: { type: 'string', format: 'date' },
@@ -30,7 +32,8 @@ export const workPackageCreateInputSchemaBody = {
           carNumber: { type: 'integer', minimum: 0 },
           projectNumber: { type: 'integer', minimum: 0 },
           workPackageNumber: { type: 'integer', minimum: 0 },
-        }
+        },
+        required: ['carNumber', 'projectNumber', 'workPackageNumber']
       }
     },
     expectedActivities: {

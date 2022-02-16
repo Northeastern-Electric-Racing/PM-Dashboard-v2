@@ -37,9 +37,7 @@ export const useCreateSingleWorkPackage = () => {
   return useMutation<{ message: string }, Error, CreateWorkPackagePayload>(
     ['createWP'],
     async (wpPayload: CreateWorkPackagePayload) => {
-      console.log('in hook');
       const { data } = await createSingleWorkPackage(wpPayload);
-      console.log('got data');
       return data;
     }
   )

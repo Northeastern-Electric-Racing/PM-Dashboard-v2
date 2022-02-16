@@ -32,10 +32,10 @@ export const getSingleWorkPackage = (wbsNum: WbsNumber) => {
 /**
  * Create a single work package.
  * 
+ * @param payload Payload containing all the necessary data to create a work package.
  */
 export const createSingleWorkPackage = (payload: CreateWorkPackagePayload) => {
-  console.log('in api');
-  return axios.post<{ message: string }>(apiUrls.test(), {
+  return axios.post<{ message: string }>(apiUrls.workPackagesCreate(), {
     ...payload
   });
 };

@@ -8,9 +8,9 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, WBS_Element } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
-import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
+import { buildSuccessResponse, eventSchema, WbsNumber, workPackageCreateInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -65,6 +65,21 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
       .map((element) => element.wbsElement.workPackageNumber)
       .reduce((prev, curr) => Math.max(prev, curr), 0) + 1;
 
+  const dependenciesWBSElems = await Promise.all(
+    dependencies.map(async (ele) => {
+      return await prisma.wBS_Element.findUnique({
+        where: {
+          wbsNumber: {
+            carNumber: ele.carNumber,
+            projectNumber: ele.projectNumber,
+            workPackageNumber: ele.workPackageNumber
+          }
+        }
+      });
+    })).then(res => res).catch(err => { throw err }) as WBS_Element[];
+
+  const dependenciesIds = dependenciesWBSElems.map(ele => ele.wbsElementId);
+
   console.log('creating');
   // add to the database
   const created = await prisma.work_Package.create({
@@ -88,7 +103,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
       startDate: new Date(startDate),
       duration,
       orderInProject: project.workPackages.length + 1,
-      dependencies: { connect: dependencies.map((ele) => ({ wbsElementId: ele })) },
+      dependencies: { connect: dependenciesIds.map((ele) => ({ wbsElementId: ele })) },
       expectedActivities: { create: expectedActivities.map((ele) => ({ detail: ele })) },
       deliverables: { create: deliverables.map((ele) => ({ detail: ele })) }
     }

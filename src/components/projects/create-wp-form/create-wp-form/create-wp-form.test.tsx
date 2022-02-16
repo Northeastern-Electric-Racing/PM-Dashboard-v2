@@ -14,6 +14,17 @@ const mockUtils = {
   remove: () => null,
   update: () => null
 };
+const mockStateBundle = {
+  state: null,
+  setter: () => null
+};
+const mockStates = {
+  name: mockStateBundle,
+  wbsNum: mockStateBundle,
+  crId: mockStateBundle,
+  startDate: mockStateBundle,
+  duration: mockStateBundle
+};
 
 /**
  * Sets up the component under test with the desired values and renders it.
@@ -21,6 +32,7 @@ const mockUtils = {
 const renderComponent = () => {
   return render(
     <CreateWPFormView
+      states={mockStates}
       dependencies={mockDependencies}
       depUtils={mockUtils}
       expectedActivities={mockEA}

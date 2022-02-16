@@ -9,18 +9,28 @@ import { handler } from '../functions/work-packages-create';
 describe('work package create', () => {
   describe('handler', () => {
     const func = async (event: any) => {
-      return handler(event, mockContext, () => {});
+      return handler(event, mockContext, () => { });
     };
 
     describe('validate inputs', () => {
+      const mockWbsNum = {
+        carNumber: 1,
+        projectNumber: 1,
+        workPackageNumber: 0
+      };
+
       const goodBody = {
         userId: 1,
         name: 'name',
         crId: 2,
-        projectId: 1,
+        projectWbsNum: {
+          carNumber: 1,
+          projectNumber: 1,
+          workPackageNumber: 0
+        },
         startDate: '2015-10-06',
         duration: 1,
-        wbsElementIds: [1],
+        dependencies: [mockWbsNum],
         expectedActivities: ['abc'],
         deliverables: ['def']
       };

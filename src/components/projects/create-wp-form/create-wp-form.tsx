@@ -19,10 +19,28 @@ export interface EditableTextInputListUtils {
   update: (idx: number, val: any) => void;
 }
 
+export interface StateBundle {
+  state: any;
+  setter: (val: any) => void;
+}
+
+export interface FormStates {
+  name: StateBundle;
+  wbsNum: StateBundle;
+  crId: StateBundle;
+  startDate: StateBundle;
+  duration: StateBundle;
+}
+
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
   const authContext = useContext(AuthContext);
 
+  const [name, setName] = useState('');
+  const [projectWbsNum, setWbsNum] = useState('');
+  const [crId, setCrId] = useState(-1);
+  const [startDate, setStartDate] = useState('');
+  const [duration, setDuration] = useState(-1);
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
   const [deliverables, setDeliverables] = useState<string[]>([]);
@@ -82,16 +100,28 @@ const CreateWPForm: React.FC = () => {
     }
   };
 
+  const stateBundleBuilder = (state: any, setter: any) => {
+    return {
+      state,
+      setter
+    };
+  }
+
+  const states = {
+    name: stateBundleBuilder(name, setName),
+    wbsNum: stateBundleBuilder(projectWbsNum, setWbsNum),
+    crId: stateBundleBuilder(crId, setCrId),
+    startDate: stateBundleBuilder(startDate, setStartDate),
+    duration: stateBundleBuilder(duration, setDuration)
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const { target } = e;
-    const { name, wbsNum: projectWbsNum, crId, startDate, duration } = target;
-    console.log('aaaaaaaaa');
     // exits handleSubmit if form input invalid (should be changed in wire up)
     let wbsNum: WbsNumber;
     try {
-      wbsNum = validateWBS(projectWbsNum.value.trim());
+      wbsNum = validateWBS(projectWbsNum);
 
       const { userId } = authContext!.user!;
 
@@ -110,8 +140,8 @@ const CreateWPForm: React.FC = () => {
       if (depWbsNums) {
         await mutateAsync({
           userId,
-          name: name.value.trim(),
-          crId: crId.value,
+          name: name.trim(),
+          crId,
           projectWbsNum: {
             carNumber: wbsNum.car,
             projectNumber: wbsNum.project,
@@ -119,7 +149,7 @@ const CreateWPForm: React.FC = () => {
           },
           startDate,
           duration,
-          wbsElementIds: depWbsNums,
+          dependencies: depWbsNums,
           expectedActivities,
           deliverables
         });
@@ -151,6 +181,7 @@ const CreateWPForm: React.FC = () => {
 
   return (
     <CreateWPFormView
+      states={states}
       dependencies={dependencies}
       depUtils={depUtils}
       expectedActivities={expectedActivities}

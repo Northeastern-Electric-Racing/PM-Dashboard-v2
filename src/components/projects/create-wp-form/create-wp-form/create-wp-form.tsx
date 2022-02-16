@@ -5,10 +5,11 @@
 
 import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import PageBlock from "../../../shared/page-block/page-block";
-import { EditableTextInputListUtils } from "../create-wp-form";
+import { EditableTextInputListUtils, FormStates } from "../create-wp-form";
 import EditableTextInputList from "../../../shared/editable-text-input-list/editable-text-input-list";
 
 interface CreateWPFormViewProps {
+  states: FormStates;
   dependencies: string[];
   depUtils: EditableTextInputListUtils;
   expectedActivities: string[];
@@ -20,6 +21,7 @@ interface CreateWPFormViewProps {
 }
 
 const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
+  states,
   dependencies,
   depUtils,
   expectedActivities,
@@ -29,6 +31,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
   onSubmit,
   onCancel
 }) => {
+  const { name, wbsNum, crId, startDate, duration } = states;
   return (
     <>
       <PageBlock
@@ -41,28 +44,57 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='wp-name'>Work Package Name</Form.Label>
-                    <Form.Control id='wp-name' name='name' type='text' required></Form.Control>
+                    <Form.Control
+                      id='wp-name'
+                      name='name'
+                      type='text'
+                      onChange={(e: any) => name.setter(e.target.value)}
+                      required></Form.Control>
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='project-wbs-num'>Project WBS Number</Form.Label>
-                    <Form.Control id='project-wbs-num' name='wbsNum' type='text' required></Form.Control>
+                    <Form.Control
+                      id='project-wbs-num'
+                      name='wbsNum'
+                      type='text'
+                      onChange={(e: any) => wbsNum.setter(e.target.value)}
+                      required></Form.Control>
                   </Form.Group>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='crId'>Change Request ID</Form.Label>
-                    <Form.Control id='crId' name='crId' type='number' min={1} required></Form.Control>
+                    <Form.Control
+                      id='crId'
+                      name='crId'
+                      type='number'
+                      min={1}
+                      onChange={(e: any) => crId.setter(e.target.value)}
+                      required></Form.Control>
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='start-date'>Start Date</Form.Label>
-                    <Form.Control id='start-date' name='startDate' aria-label={'start date input'} type='date' required></Form.Control>
+                    <Form.Control
+                      id='start-date'
+                      name='startDate'
+                      aria-label={'start date input'}
+                      type='date'
+                      onChange={(e: any) => startDate.setter(e.target.value)}
+                      required></Form.Control>
                   </Form.Group>
                   <Form.Group as={Col}>
                     <Form.Label htmlFor='duration'>Duration</Form.Label>
                     <InputGroup>
-                      <Form.Control id='duration' name='duration' aria-label={'duration'} type='number' min={0} required></Form.Control>
+                      <Form.Control
+                        id='duration'
+                        name='duration'
+                        aria-label={'duration'}
+                        type='number'
+                        min={0}
+                        onChange={(e: any) => duration.setter(e.target.value)}
+                        required></Form.Control>
                       <InputGroup.Text>Weeks</InputGroup.Text>
                     </InputGroup>
                   </Form.Group>

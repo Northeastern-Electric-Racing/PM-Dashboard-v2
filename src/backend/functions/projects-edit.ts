@@ -9,8 +9,7 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { Description_Bullet, PrismaClient } from '@prisma/client';
-// --> Pointer
-import { buildSuccessResponse, DescriptionBullet, workPackageEditInputSchemaBody } from 'utils';
+import { buildSuccessResponse, DescriptionBullet, projectEditInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -20,7 +19,8 @@ export const descBulletConverter = (descBullet: Description_Bullet): Description
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
-export const editWorkPackage: Handler = async ({ body }, _context) => {
+// --> Pointer
+export const editProject: Handler = async ({ body }, _context) => {
   const {
     wbsElementId,
     userId,
@@ -481,7 +481,7 @@ export const createDescriptionBulletChangesJson = (
 const inputSchema = {
   type: 'object',
   properties: {
-    body: workPackageEditInputSchemaBody
+    body: projectEditInputSchemaBody
   }
 };
 

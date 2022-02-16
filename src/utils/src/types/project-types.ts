@@ -77,3 +77,18 @@ export const createProjectPayloadSchema = {
 } as const;
 
 export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;
+
+export const projectEditInputSchemaBody = {
+  type: 'object',
+  properties: {
+    userId: { type: 'integer', minimum: 0 },
+    crId: { type: 'integer', minimum: 0 },
+    name: { type: 'string' },
+    carNumber: { type: 'integer', minimum: 0 },
+    summary: { type: 'string' }
+  },
+  required: ['userId', 'crId', 'name', 'carNumber', 'summary'],
+  additionalProperties: false
+} as const;
+
+export type EditProjectPayload = FromSchema<typeof projectEditInputSchemaBody>;

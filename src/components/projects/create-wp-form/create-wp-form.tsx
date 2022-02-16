@@ -5,9 +5,7 @@
 
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { isProject, Project, validateWBS, WbsNumber } from "utils";
-import { getSingleProject } from "../../../services/projects.api";
-import { getSingleWorkPackage } from "../../../services/work-packages.api";
+import { isProject, validateWBS, WbsNumber } from "utils";
 import { useCreateSingleWorkPackage } from "../../../services/work-packages.hooks";
 import { routes } from "../../../shared/routes";
 import { AuthContext } from "../../app/app-context-auth/app-context-auth";
@@ -44,7 +42,7 @@ const CreateWPForm: React.FC = () => {
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
   const [deliverables, setDeliverables] = useState<string[]>([]);
-  const { isLoading, isError, error, mutateAsync } = useCreateSingleWorkPackage();
+  const { mutateAsync } = useCreateSingleWorkPackage();
 
   const depUtils: EditableTextInputListUtils = {
     add: (val) => {

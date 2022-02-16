@@ -10,7 +10,7 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient, WBS_Element } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
-import { buildSuccessResponse, eventSchema, WbsNumber, workPackageCreateInputSchemaBody } from 'utils';
+import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -36,9 +36,9 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   const wbsElem = await prisma.wBS_Element.findUnique({
     where: {
       wbsNumber: {
-        carNumber: carNumber,
-        projectNumber: projectNumber,
-        workPackageNumber: workPackageNumber
+        carNumber,
+        projectNumber,
+        workPackageNumber
       }
     }
   });

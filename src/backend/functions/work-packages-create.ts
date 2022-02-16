@@ -9,14 +9,29 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
-import { buildSuccessResponse, workPackageCreateInputSchemaBody } from 'utils';
+import { FromSchema } from 'json-schema-to-ts';
+import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
-export const createWorkPackage: Handler = async ({ body }, _context) => {
+export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
+  { body },
+  _context
+) => {
+  const {
+    projectWbsNum,
+    name,
+    crId,
+    userId,
+    startDate,
+    duration,
+    dependencies,
+    expectedActivities,
+    deliverables
+  } = body;
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
-  const { carNumber, projectNumber, workPackageNumber } = body.projectWbsNum;
+  const { carNumber, projectNumber, workPackageNumber } = projectWbsNum;
   console.log('wbs find unique');
   const wbsElem = await prisma.wBS_Element.findUnique({
     where: {
@@ -43,6 +58,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
   });
 
   if (project === null) throw new TypeError('Project Id not found!');
+  const { projectId } = project;
 
   const newWorkPackageNumber: number =
     project.workPackages
@@ -58,39 +74,23 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
           carNumber,
           projectNumber,
           workPackageNumber: newWorkPackageNumber,
-          name: body.name,
+          name,
           changes: {
             create: {
-              changeRequestId: body.crId,
-              implementerId: body.userId,
+              changeRequestId: crId,
+              implementerId: userId,
               detail: 'New Work Package Created'
             }
           }
         }
       },
-      project: {
-        connect: {
-          projectId: project.projectId
-        }
-      },
-      startDate: new Date(body.startDate),
-      duration: body.duration,
+      project: { connect: { projectId } },
+      startDate: new Date(startDate),
+      duration,
       orderInProject: project.workPackages.length + 1,
-      dependencies: {
-        connect: body.wbsElementIds.map((ele: any) => {
-          return { wbsElementId: ele };
-        })
-      },
-      expectedActivities: {
-        create: body.expectedActivities.map((ele: any) => {
-          return { detail: ele };
-        })
-      },
-      deliverables: {
-        create: body.deliverables.map((ele: any) => {
-          return { detail: ele };
-        })
-      }
+      dependencies: { connect: dependencies.map((ele) => ({ wbsElementId: ele })) },
+      expectedActivities: { create: expectedActivities.map((ele) => ({ detail: ele })) },
+      deliverables: { create: deliverables.map((ele) => ({ detail: ele })) }
     }
   });
 
@@ -99,12 +99,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
 };
 
 // expected structure of json body
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: workPackageCreateInputSchemaBody
-  }
-};
+const inputSchema = eventSchema(workPackageCreateInputSchemaBody);
 
 const handler = middy(createWorkPackage)
   .use(jsonBodyParser())

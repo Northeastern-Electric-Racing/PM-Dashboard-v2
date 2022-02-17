@@ -78,6 +78,7 @@ export const createProjectPayloadSchema = {
 
 export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;
 
+// NOT DONE TODO: Finish
 export const projectEditInputSchemaBody = {
   type: 'object',
   properties: {

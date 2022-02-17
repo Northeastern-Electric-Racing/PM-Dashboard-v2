@@ -21,15 +21,6 @@ export const intType = { type: 'integer', minimum: 0 } as const;
 export const stringType = { type: 'string' } as const;
 export const dateType = { type: 'string', format: 'date' } as const;
 export const booleanType = { type: 'boolean' } as const;
-export const wbsNumType = {
-  type: 'object',
-  properties: {
-    carNumber: { type: 'integer', minimum: 0 },
-    projectNumber: { type: 'integer', minimum: 0 },
-    workPackageNumber: { type: 'integer', minimum: 0 },
-  },
-  required: ['carNumber', 'projectNumber', 'workPackageNumber']
-} as const;
 
 /**
  * Create a basic array schema type
@@ -90,3 +81,9 @@ export const bodySchema = <
   ) as Exclude<keyof Props, Opts>[],
   additionalProperties: !!additionalProperties as Add
 } as const);
+
+export const wbsNumType = bodySchema({
+  carNumber: intType,
+  projectNumber: intType,
+  workPackageNumber: intType
+});

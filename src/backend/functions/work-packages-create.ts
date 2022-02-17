@@ -48,7 +48,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   console.log(`wbsElemId: ${wbsElem.wbsElementId}`);
   const project = await prisma.project.findUnique({
     where: {
-      wbsElementId: wbsElem!.wbsElementId
+      wbsElementId: wbsElem.wbsElementId
       // use single project as reference for breaking down wbsnum
     },
     include: {
@@ -76,9 +76,12 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
           }
         }
       });
-    })).then(res => res).catch(err => { throw err }) as WBS_Element[];
+    })
+  );
 
-  const dependenciesIds = dependenciesWBSElems.map(ele => ele.wbsElementId);
+  if (dependenciesWBSElems === null) throw new TypeError('One of the dependencies was not found.');
+
+  const dependenciesIds = (dependenciesWBSElems as WBS_Element[]).map((ele) => ele.wbsElementId);
 
   console.log('creating');
   // add to the database

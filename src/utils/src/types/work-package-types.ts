@@ -4,8 +4,15 @@
  */
 
 import { FromSchema } from 'json-schema-to-ts';
-import { wbsNumType } from '..';
-import { bodySchema, intType, stringType, dateType, arrayType, enumType } from './api-utils-types';
+import {
+  bodySchema,
+  intType,
+  stringType,
+  dateType,
+  arrayType,
+  enumType,
+  wbsNumType
+} from './api-utils-types';
 import { WbsElementStatus } from './project-types';
 
 export const workPackageCreateInputSchemaBody = bodySchema({

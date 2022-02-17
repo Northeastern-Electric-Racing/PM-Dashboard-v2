@@ -23,11 +23,7 @@ describe('work package create', () => {
         userId: 1,
         name: 'name',
         crId: 2,
-        projectWbsNum: {
-          carNumber: 1,
-          projectNumber: 1,
-          workPackageNumber: 0
-        },
+        projectWbsNum: mockWbsNum,
         startDate: '2015-10-06',
         duration: 1,
         dependencies: [mockWbsNum],

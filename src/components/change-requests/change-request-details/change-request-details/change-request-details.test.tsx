@@ -4,8 +4,19 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { ActivationChangeRequest, ChangeRequest, StageGateChangeRequest, StandardChangeRequest } from 'utils';
-import { exampleActivationChangeRequest, exampleAllChangeRequests, exampleStageGateChangeRequest, exampleStandardChangeRequest } from '../../../../test-support/test-data/change-requests.stub';
+import {
+  ActivationChangeRequest,
+  ChangeRequest,
+  StageGateChangeRequest,
+  StandardChangeRequest
+} from 'utils';
+import { datePipe } from '../../../../shared/pipes';
+import {
+  exampleActivationChangeRequest,
+  exampleAllChangeRequests,
+  exampleStageGateChangeRequest,
+  exampleStandardChangeRequest
+} from '../../../../test-support/test-data/change-requests.stub';
 import { routerWrapperBuilder } from '../../../../test-support/test-utils';
 import ChangeRequestDetails from './change-request-details';
 
@@ -38,7 +49,7 @@ describe('Change request details common display element tests', () => {
       expect(
         screen.getByText(`${cr.submitter.firstName} ${cr.submitter.lastName}`)
       ).toBeInTheDocument();
-      expect(screen.getByText(`${cr.dateSubmitted.toUTCString()}`)).toBeInTheDocument();
+      expect(screen.getByText(`${datePipe(cr.dateSubmitted)}`)).toBeInTheDocument();
     }
   );
 
@@ -141,6 +152,10 @@ describe('Change request review notes display elements test', () => {
   it('Render review notes section complete', () => {
     renderComponent(exampleStandardChangeRequest);
     expect(screen.getByText('Review Notes')).toBeInTheDocument();
-    expect(screen.getByText(reviewNotes ? reviewNotes! : 'There are no review notes for this change request.')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        reviewNotes ? reviewNotes! : 'There are no review notes for this change request.'
+      )
+    ).toBeInTheDocument();
   });
 });

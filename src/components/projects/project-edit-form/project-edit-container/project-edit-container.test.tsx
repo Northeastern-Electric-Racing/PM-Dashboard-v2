@@ -9,10 +9,10 @@ import ProjectEditContainer from './project-edit-container';
 
 jest.mock('../../../../services/projects.hooks');
 
-const mockedUseSingleWorkPackage = useSingleProject as jest.Mock<UseQueryResult<Project>>;
+const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 
 const mockHook = (isLoading: boolean, isError: boolean, data?: Project, error?: Error) => {
-  mockedUseSingleWorkPackage.mockReturnValue(
+  mockedUseSingleProject.mockReturnValue(
     mockUseQueryResult<Project>(isLoading, isError, data, error)
   );
 };
@@ -27,7 +27,7 @@ const renderComponent = () => {
   );
 };
 
-describe('project container', () => {
+describe('Rendering project container', () => {
   it('renders the loading indicator', () => {
     mockHook(true, false, exampleProject1);
     renderComponent();
@@ -42,7 +42,7 @@ describe('project container', () => {
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('1.12.0 - Bodywork Concept of Design')).toBeInTheDocument();
-    expect(screen.getByText('Work Package Details')).toBeInTheDocument();
+    expect(screen.getByText('Project Details')).toBeInTheDocument();
     expect(screen.getByText('Duration:')).toBeInTheDocument();
     expect(screen.getByText('Progress:')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeEnabled();
@@ -54,7 +54,7 @@ describe('project container', () => {
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
-    expect(screen.getByText('404 could not find the requested work package')).toBeInTheDocument();
+    expect(screen.getByText('404 could not find the requested project')).toBeInTheDocument();
   });
 
   it('handles the error with no message', () => {
@@ -62,7 +62,7 @@ describe('project container', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.queryByText('work package')).not.toBeInTheDocument();
+    expect(screen.queryByText('project')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
   });
 });

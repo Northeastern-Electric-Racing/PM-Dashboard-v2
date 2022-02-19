@@ -12,6 +12,7 @@ import LoadingIndicator from '../../../shared/loading-indicator/loading-indicato
 import DescriptionList from '../../../shared/description-list/description-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
+import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 
@@ -65,6 +66,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
           <ProjectEditDetails project={data!} />
           <DescriptionList title={'Goals'} items={data!.goals} />
           <DescriptionList title={'Features'} items={data!.features} />
+          <EditableTextInputList items=></EditableTextInputList>
           {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
         </Form>
       </div>

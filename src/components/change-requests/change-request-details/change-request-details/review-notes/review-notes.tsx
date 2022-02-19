@@ -27,7 +27,7 @@ const ReviewNotes: React.FC<ReviewNotesProps> = ({
           placement="left"
           overlay={
             <Tooltip id="tooltip">
-              {`Reviewed on: ${dateReviewed ? datePipe(dateReviewed) : emDashPipe('')}`}
+              {'Reviewed on: ' + (dateReviewed ? datePipe(dateReviewed) : emDashPipe(''))}
             </Tooltip>
           }
         >

@@ -66,8 +66,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
             <EditableDetail
               title="Duration"
               type="duration"
-              value={String(0)}
-              readOnly={true}
+              value={String(project.duration)}
               suffix="weeks"
             />
             <EditableDetail

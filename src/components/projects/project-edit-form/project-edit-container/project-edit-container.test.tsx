@@ -41,7 +41,7 @@ describe('Rendering project container', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.12.0 - Bodywork Concept of Design')).toBeInTheDocument();
+    expect(screen.getByText('Impact Attenuator')).toBeInTheDocument();
     expect(screen.getByText('Project Details')).toBeInTheDocument();
     expect(screen.getByText('Duration:')).toBeInTheDocument();
     expect(screen.getByText('Progress:')).toBeInTheDocument();

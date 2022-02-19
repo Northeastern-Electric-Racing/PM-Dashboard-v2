@@ -4,11 +4,6 @@
 
 .env
 
-#Stuff we shouldn't change
-/.vscode
-launch.json
-package-lock.json
-
 # dependencies
 /node_modules
 /.pnp

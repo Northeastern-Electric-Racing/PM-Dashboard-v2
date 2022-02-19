@@ -5,7 +5,11 @@
 
 import { useMutation, useQuery } from 'react-query';
 import { WorkPackage, WbsNumber, CreateWorkPackagePayload } from 'utils';
-import { createSingleWorkPackage, getAllWorkPackages, getSingleWorkPackage } from './work-packages.api';
+import {
+  createSingleWorkPackage,
+  getAllWorkPackages,
+  getSingleWorkPackage
+} from './work-packages.api';
 
 /**
  * Custom React Hook to supply all work packages.
@@ -31,7 +35,7 @@ export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
 
 /**
  * Custom React Hook to create a new work package.
- * 
+ *
  */
 export const useCreateSingleWorkPackage = () => {
   return useMutation<{ message: string }, Error, CreateWorkPackagePayload>(
@@ -40,5 +44,5 @@ export const useCreateSingleWorkPackage = () => {
       const { data } = await createSingleWorkPackage(wpPayload);
       return data;
     }
-  )
+  );
 };

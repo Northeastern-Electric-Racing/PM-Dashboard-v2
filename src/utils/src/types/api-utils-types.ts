@@ -42,21 +42,21 @@ export const enumType = <Items extends Readonly<string[]>>(...items: Items) =>
  * @param bodySchema - The schema describing the body, likely from the bodySchema function
  */
 export const eventSchema = <Body extends Record<string, any>>(bodySchema: Body) =>
-({
-  type: 'object',
-  properties: {
-    body: bodySchema,
-    headers: {
-      type: 'object',
-      properties: {
-        'user-agent': stringType
-        // Cookie: stringType
-      },
-      required: ['user-agent']
-    }
-  },
-  required: ['body', 'headers']
-} as const);
+  ({
+    type: 'object',
+    properties: {
+      body: bodySchema,
+      headers: {
+        type: 'object',
+        properties: {
+          'user-agent': stringType
+          // Cookie: stringType
+        },
+        required: ['user-agent']
+      }
+    },
+    required: ['body', 'headers']
+  } as const);
 
 /**
  * Help create the schema for a middy request body or object within the body
@@ -73,14 +73,14 @@ export const bodySchema = <
   optionalProps: Opts[] = [],
   additionalProperties?: Add
 ) =>
-({
-  type: 'object',
-  properties,
-  required: Object.keys(properties).filter(
-    (key: keyof Props) => !(optionalProps as (keyof Props)[]).includes(key)
-  ) as Exclude<keyof Props, Opts>[],
-  additionalProperties: !!additionalProperties as Add
-} as const);
+  ({
+    type: 'object',
+    properties,
+    required: Object.keys(properties).filter(
+      (key: keyof Props) => !(optionalProps as (keyof Props)[]).includes(key)
+    ) as Exclude<keyof Props, Opts>[],
+    additionalProperties: !!additionalProperties as Add
+  } as const);
 
 export const wbsNumType = bodySchema({
   carNumber: intType,

@@ -8,6 +8,7 @@ import { exampleAllWorkPackages } from '../../../../../test-support/test-data/wo
 import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import './common-form-fields.module.css';
+import {ChangeRequestType}  from 'utils';
 
 const CommonFormFields: React.FC = () => {
   return (
@@ -35,7 +36,7 @@ const CommonFormFields: React.FC = () => {
       <div className={'px-4'}>
         Type
         <Form.Control as="select" custom>
-          {['New Function', 'Design Issue', 'Other', 'Activation', 'Stage Gate'].map((t) => (       // change from intiation -> Activation
+          {Object.values(ChangeRequestType).map((t) => (       // change from intiation -> Activation
             <option>{t}</option>
           ))}
         </Form.Control>

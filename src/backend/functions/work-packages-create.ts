@@ -79,9 +79,10 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     })
   );
 
-  if (dependenciesWBSElems === null) throw new TypeError('One of the dependencies was not found.');
-
-  const dependenciesIds = (dependenciesWBSElems as WBS_Element[]).map((ele) => ele.wbsElementId);
+  const dependenciesIds = dependenciesWBSElems.map((elem) => {
+    if (elem === null) throw new TypeError('One of the dependencies was not found.');
+    return elem.wbsElementId;
+  });
 
   console.log('creating');
   // add to the database

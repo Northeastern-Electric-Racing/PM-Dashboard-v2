@@ -9,7 +9,7 @@ import { handler } from '../functions/work-packages-create';
 describe('work package create', () => {
   describe('handler', () => {
     const func = async (event: any) => {
-      return handler(event, mockContext, () => { });
+      return handler(event, mockContext, () => {});
     };
 
     describe('validate inputs', () => {

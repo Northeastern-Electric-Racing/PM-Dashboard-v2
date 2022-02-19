@@ -3,13 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { isProject, validateWBS, WbsNumber } from "utils";
-import { useCreateSingleWorkPackage } from "../../../services/work-packages.hooks";
-import { routes } from "../../../shared/routes";
-import { AuthContext } from "../../app/app-context-auth/app-context-auth";
-import CreateWPFormView from "./create-wp-form/create-wp-form";
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { isProject, validateWBS, WbsNumber } from 'utils';
+import { useAuth } from '../../../services/auth.hooks';
+import { useCreateSingleWorkPackage } from '../../../services/work-packages.hooks';
+import { routes } from '../../../shared/routes';
+import CreateWPFormView from './create-wp-form/create-wp-form';
 
 export interface EditableTextInputListUtils {
   add: (val: any) => void;
@@ -32,7 +32,6 @@ export interface FormStates {
 
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
-  const authContext = useContext(AuthContext);
 
   const [name, setName] = useState('');
   const [projectWbsNum, setWbsNum] = useState('');
@@ -103,7 +102,7 @@ const CreateWPForm: React.FC = () => {
       state,
       setter
     };
-  }
+  };
 
   const states = {
     name: stateBundleBuilder(name, setName),
@@ -121,52 +120,47 @@ const CreateWPForm: React.FC = () => {
     try {
       wbsNum = validateWBS(projectWbsNum);
 
-      const { userId } = authContext!.user!;
+      const { userId } = useAuth().user!;
 
       if (!isProject(wbsNum!)) {
         alert('Please enter a valid Project WBS Number.');
         return;
       }
-      const depWbsNums = dependencies.map(dependency => {
+      const depWbsNums = dependencies.map((dependency) => {
         const depWbsNum = validateWBS(dependency.trim());
         return {
           carNumber: depWbsNum.car,
           projectNumber: depWbsNum.project,
           workPackageNumber: depWbsNum.workPackage
-        }
+        };
       });
-      if (depWbsNums) {
-        await mutateAsync({
-          userId,
-          name: name.trim(),
-          crId,
-          projectWbsNum: {
-            carNumber: wbsNum.car,
-            projectNumber: wbsNum.project,
-            workPackageNumber: wbsNum.workPackage
-          },
-          startDate,
-          duration,
-          dependencies: depWbsNums,
-          expectedActivities,
-          deliverables
-        });
-        console.log('success');
-        history.push(`${routes.CHANGE_REQUESTS}`);
-      } else {
-        console.log('failed');
-      }
+      await mutateAsync({
+        userId,
+        name: name.trim(),
+        crId,
+        projectWbsNum: {
+          carNumber: wbsNum.car,
+          projectNumber: wbsNum.project,
+          workPackageNumber: wbsNum.workPackage
+        },
+        startDate,
+        duration,
+        dependencies: depWbsNums,
+        expectedActivities,
+        deliverables
+      });
+      history.push(`${routes.CHANGE_REQUESTS}`);
     } catch (e) {
       console.log(e);
       console.log('wbs num not valid');
     }
 
     /**
-     * need to get 
-     *  userId, 
-     *  projectId, 
+     * need to get
+     *  userId,
+     *  projectId,
      *  wbsElementIds of dependencies (should be in wbs num format)
-     * 
+     *
      * need to pass down
      *  name
      *  crId
@@ -175,7 +169,7 @@ const CreateWPForm: React.FC = () => {
      *  ea
      *  deliverables
      */
-  }
+  };
 
   return (
     <CreateWPFormView

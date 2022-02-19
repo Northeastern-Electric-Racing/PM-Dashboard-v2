@@ -99,21 +99,20 @@ export const routeMatcher = (
       return singleRoute.func(matchResults.params, event, context);
     }
   }
-  return buildNotFoundResponse("route", event.path);
+  return buildNotFoundResponse('route', event.path);
 };
 
 /**
-* Verifys a token and returns the payload/user if successful.
-* @param token The jwt token
-*/
-export const verifyToken = (
-  token: any,
-) => {
+ * Verifys a token and returns the payload/user if successful.
+ * @param token The jwt token
+ */
+export const verifyToken = (token: any) => {
+  const errorMsg: string = 'jwt token not verified';
   jwt.verify(token, process.env.JWT_SECRET as string, (err: any, decoded: any) => {
     if (decoded) {
       return decoded;
     } else {
-      console.log(err);
+      throw new Error(errorMsg);
     }
   });
-}
+};

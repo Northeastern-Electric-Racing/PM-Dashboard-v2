@@ -8,7 +8,7 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient, WBS_Element } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
 import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
 

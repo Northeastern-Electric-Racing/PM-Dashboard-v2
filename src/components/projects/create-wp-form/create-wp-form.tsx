@@ -32,6 +32,7 @@ export interface FormStates {
 
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
+  const auth = useAuth();
 
   const [name, setName] = useState('');
   const [projectWbsNum, setWbsNum] = useState('');
@@ -120,7 +121,7 @@ const CreateWPForm: React.FC = () => {
     try {
       wbsNum = validateWBS(projectWbsNum);
 
-      const { userId } = useAuth().user!;
+      const { userId } = auth.user!;
 
       if (!isProject(wbsNum!)) {
         alert('Please enter a valid Project WBS Number.');

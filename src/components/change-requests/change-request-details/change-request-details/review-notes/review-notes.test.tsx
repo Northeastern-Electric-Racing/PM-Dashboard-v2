@@ -4,8 +4,11 @@
  */
 
 import { ChangeRequest } from 'utils';
-import { fullNamePipe } from '../../../../../shared/pipes';
-import { exampleAllChangeRequests } from '../../../../../test-support/test-data/change-requests.stub';
+import { datePipe, fullNamePipe } from '../../../../../shared/pipes';
+import {
+  exampleAllChangeRequests,
+  exampleStandardChangeRequest
+} from '../../../../../test-support/test-data/change-requests.stub';
 import { exampleAppAdminUser } from '../../../../../test-support/test-data/users.stub';
 import { render, screen, fireEvent } from '../../../../../test-support/test-utils';
 import ReviewNotes from './review-notes';
@@ -59,6 +62,24 @@ describe('Change request review notes test', () => {
     renderComponent(cr[0]);
     fireEvent.mouseOver(screen.getByText(fullNamePipe(exampleAppAdminUser)));
 
-    expect(await screen.findByText('tooltip')).toBeInTheDocument();
+    expect(await screen.findByText(/Reviewed On: /i)).toBeInTheDocument();
+  });
+
+  it('renders no date tooltip on hover', async () => {
+    renderComponent(cr[2]);
+    fireEvent.mouseOver(screen.getByText(fullNamePipe(exampleAppAdminUser)));
+
+    expect(await screen.findByText('Reviewed On: —')).toBeInTheDocument();
+  });
+
+  it('renders review date tooltip on hover', async () => {
+    renderComponent(cr[0]);
+    fireEvent.mouseOver(screen.getByText(fullNamePipe(exampleAppAdminUser)));
+
+    expect(
+      await screen.findByText(
+        `Reviewed On: ${datePipe(exampleStandardChangeRequest.dateReviewed!)}`
+      )
+    ).toBeInTheDocument();
   });
 });

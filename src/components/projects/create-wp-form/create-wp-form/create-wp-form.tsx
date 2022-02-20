@@ -71,7 +71,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                       name="crId"
                       type="number"
                       min={1}
-                      onChange={(e) => crId(e.target.value)}
+                      onChange={(e) => crId(parseInt(e.target.value))}
                       required
                     ></Form.Control>
                   </Form.Group>
@@ -97,7 +97,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                         aria-label={'duration'}
                         type="number"
                         min={0}
-                        onChange={(e) => duration(e.target.value)}
+                        onChange={(e) => duration(parseInt(e.target.value))}
                         required
                       ></Form.Control>
                       <InputGroup.Text>Weeks</InputGroup.Text>

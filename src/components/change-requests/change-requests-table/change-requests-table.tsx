@@ -8,7 +8,7 @@ import { Row } from 'react-bootstrap';
 import { ChangeRequest, ChangeRequestExplanation, StandardChangeRequest } from 'utils';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { routes } from '../../../shared/routes';
-import { booleanPipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
+import { booleanPipe, datePipe, fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';
 import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
@@ -130,9 +130,9 @@ const ChangeRequestsTable: React.FC = () => {
         submitterName: fullNamePipe(cr.submitter),
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,
-        dateReviewed: cr.dateReviewed ? new Date(cr.dateReviewed).toLocaleDateString() : '',
+        dateReviewed: cr.dateReviewed ? datePipe(new Date(cr.dateReviewed)) : '',
         accepted: cr.accepted !== undefined ? booleanPipe(cr.accepted) : '',
-        dateImplemented: cr.dateImplemented ? new Date(cr.dateImplemented).toLocaleDateString() : ''
+        dateImplemented: cr.dateImplemented ? datePipe(new Date(cr.dateImplemented)) : ''
       };
     }) as DisplayChangeRequest[];
   };

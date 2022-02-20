@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { isProject, validateWBS, WbsNumber } from 'utils';
 import { useAuth } from '../../../services/auth.hooks';
@@ -17,17 +17,12 @@ export interface EditableTextInputListUtils {
   update: (idx: number, val: any) => void;
 }
 
-export interface StateBundle {
-  state: any;
-  setter: (val: any) => void;
-}
-
 export interface FormStates {
-  name: StateBundle;
-  wbsNum: StateBundle;
-  crId: StateBundle;
-  startDate: StateBundle;
-  duration: StateBundle;
+  name: Dispatch<SetStateAction<string>>;
+  wbsNum: Dispatch<SetStateAction<string>>;
+  crId: Dispatch<SetStateAction<number>>;
+  startDate: Dispatch<SetStateAction<string>>;
+  duration: Dispatch<SetStateAction<number>>;
 }
 
 const CreateWPForm: React.FC = () => {
@@ -98,19 +93,12 @@ const CreateWPForm: React.FC = () => {
     }
   };
 
-  const stateBundleBuilder = (state: any, setter: any) => {
-    return {
-      state,
-      setter
-    };
-  };
-
   const states = {
-    name: stateBundleBuilder(name, setName),
-    wbsNum: stateBundleBuilder(projectWbsNum, setWbsNum),
-    crId: stateBundleBuilder(crId, setCrId),
-    startDate: stateBundleBuilder(startDate, setStartDate),
-    duration: stateBundleBuilder(duration, setDuration)
+    name: setName,
+    wbsNum: setWbsNum,
+    crId: setCrId,
+    startDate: setStartDate,
+    duration: setDuration
   };
 
   const handleSubmit = async (e: any) => {
@@ -150,7 +138,7 @@ const CreateWPForm: React.FC = () => {
         expectedActivities,
         deliverables
       });
-      history.push(`${routes.CHANGE_REQUESTS}`);
+      history.push(routes.CHANGE_REQUESTS);
     } catch (e) {
       console.log(e);
       alert('wbs num not valid');

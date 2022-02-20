@@ -3,27 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { mockUtils } from '../../../../test-support/test-data/test-utils.stub';
 import { render, screen } from '../../../../test-support/test-utils';
 import CreateWPFormView from './create-wp-form';
 
 const mockDependencies = ['1.2.3', '1.2.1', '1.12.0'];
 const mockEA = ['yooooo', 'wassup', 'bruh', 'whoosh'];
 const mockDeliverables = ['go vroom'];
-const mockUtils = {
-  add: () => null,
-  remove: () => null,
-  update: () => null
-};
-const mockStateBundle = {
-  state: null,
-  setter: () => null
-};
 const mockStates = {
-  name: mockStateBundle,
-  wbsNum: mockStateBundle,
-  crId: mockStateBundle,
-  startDate: mockStateBundle,
-  duration: mockStateBundle
+  name: () => null,
+  wbsNum: () => null,
+  crId: () => null,
+  startDate: () => null,
+  duration: () => null
 };
 
 /**

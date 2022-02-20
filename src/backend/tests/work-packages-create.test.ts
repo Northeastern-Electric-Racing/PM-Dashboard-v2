@@ -4,6 +4,7 @@
  */
 
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
+import { exampleWbsProject1 } from '../../test-support/test-data/wbs-numbers.stub';
 import { handler } from '../functions/work-packages-create';
 
 describe('work package create', () => {
@@ -13,20 +14,14 @@ describe('work package create', () => {
     };
 
     describe('validate inputs', () => {
-      const mockWbsNum = {
-        carNumber: 1,
-        projectNumber: 1,
-        workPackageNumber: 0
-      };
-
       const goodBody = {
         userId: 1,
         name: 'name',
         crId: 2,
-        projectWbsNum: mockWbsNum,
+        projectWbsNum: exampleWbsProject1,
         startDate: '2015-10-06',
         duration: 1,
-        dependencies: [mockWbsNum],
+        dependencies: [exampleWbsProject1],
         expectedActivities: ['abc'],
         deliverables: ['def']
       };

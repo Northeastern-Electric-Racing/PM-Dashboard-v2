@@ -33,6 +33,8 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   // and what number work package this should be
   const { carNumber, projectNumber, workPackageNumber } = projectWbsNum;
 
+  if (workPackageNumber === 0) throw new TypeError('Given WBS Number is not for a project.');
+
   const wbsElem = await prisma.wBS_Element.findUnique({
     where: {
       wbsNumber: {

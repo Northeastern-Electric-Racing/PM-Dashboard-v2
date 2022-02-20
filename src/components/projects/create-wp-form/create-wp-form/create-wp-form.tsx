@@ -48,7 +48,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                       id="wp-name"
                       name="name"
                       type="text"
-                      onChange={(e) => name.setter(e.target.value)}
+                      onChange={(e) => name(e.target.value)}
                       required
                     ></Form.Control>
                   </Form.Group>
@@ -60,7 +60,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                       id="project-wbs-num"
                       name="wbsNum"
                       type="text"
-                      onChange={(e) => wbsNum.setter(e.target.value)}
+                      onChange={(e) => wbsNum(e.target.value)}
                       required
                     ></Form.Control>
                   </Form.Group>
@@ -71,7 +71,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                       name="crId"
                       type="number"
                       min={1}
-                      onChange={(e) => crId.setter(e.target.value)}
+                      onChange={(e) => crId(e.target.value)}
                       required
                     ></Form.Control>
                   </Form.Group>
@@ -84,7 +84,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                       name="startDate"
                       aria-label={'start date input'}
                       type="date"
-                      onChange={(e) => startDate.setter(e.target.value)}
+                      onChange={(e) => startDate(e.target.value)}
                       required
                     ></Form.Control>
                   </Form.Group>
@@ -97,7 +97,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                         aria-label={'duration'}
                         type="number"
                         min={0}
-                        onChange={(e) => duration.setter(e.target.value)}
+                        onChange={(e) => duration(e.target.value)}
                         required
                       ></Form.Control>
                       <InputGroup.Text>Weeks</InputGroup.Text>

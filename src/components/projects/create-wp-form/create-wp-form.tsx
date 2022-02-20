@@ -153,7 +153,7 @@ const CreateWPForm: React.FC = () => {
       history.push(`${routes.CHANGE_REQUESTS}`);
     } catch (e) {
       console.log(e);
-      console.log('wbs num not valid');
+      alert('wbs num not valid');
     }
 
     /**

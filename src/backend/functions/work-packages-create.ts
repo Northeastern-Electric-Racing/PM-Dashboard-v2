@@ -32,7 +32,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
   const { carNumber, projectNumber, workPackageNumber } = projectWbsNum;
-  console.log('wbs find unique');
+
   const wbsElem = await prisma.wBS_Element.findUnique({
     where: {
       wbsNumber: {
@@ -44,8 +44,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   });
 
   if (wbsElem === null) throw new TypeError('No corresponding WBS Element for WBS Number.');
-  console.log('project find unique');
-  console.log(`wbsElemId: ${wbsElem.wbsElementId}`);
+
   const project = await prisma.project.findUnique({
     where: {
       wbsElementId: wbsElem.wbsElementId
@@ -84,7 +83,6 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     return elem.wbsElementId;
   });
 
-  console.log('creating');
   // add to the database
   const created = await prisma.work_Package.create({
     data: {
@@ -113,7 +111,6 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     }
   });
 
-  console.log('done');
   return buildSuccessResponse(created);
 };
 

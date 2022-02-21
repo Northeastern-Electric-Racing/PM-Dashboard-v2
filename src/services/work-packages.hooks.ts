@@ -36,6 +36,7 @@ export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
 /**
  * Custom React Hook to create a new work package.
  *
+ * @param wpPayload Payload containing all information needed to create a work package.
  */
 export const useCreateSingleWorkPackage = () => {
   return useMutation<{ message: string }, Error, CreateWorkPackagePayload>(

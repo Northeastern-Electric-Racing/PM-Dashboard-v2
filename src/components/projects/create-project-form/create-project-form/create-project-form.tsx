@@ -3,12 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import PageBlock from "../../../shared/page-block/page-block";
+import { Button, Col, Form, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import PageBlock from '../../../shared/page-block/page-block';
+import { CreateProjectFormStates } from '../create-project-form';
 
-const CreateProjectFormView: React.FC = () => {
+interface CreateProjectFormViewProps {
+  states: CreateProjectFormStates;
+  onCancel: (e: any) => void;
+  onSubmit: (e: any) => void;
+}
+
+const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
+  states,
+  onCancel,
+  onSubmit
+}) => {
   const history = useHistory();
+  const { name, carNumber, crId, summary } = states;
 
   return (
     <>
@@ -17,48 +29,77 @@ const CreateProjectFormView: React.FC = () => {
         headerRight={<></>}
         body={
           <div>
-            <Form>
+            <Form onSubmit={onSubmit}>
               <Row>
                 <Col>
                   <Row>
                     <Form.Group as={Col} aria-required>
-                      <Form.Label htmlFor='project-name'>Project Name</Form.Label>
-                      <Form.Control id='project-name' type='text' placeholder='Enter project name...' required />
-                      <Form.Control.Feedback type='invalid'>Please provide a project name.</Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group as={Col} aria-required>
-                      <Form.Label htmlFor='car-number'>Car Number</Form.Label>
-                      <Form.Control id='car-number' type='number' min={0} placeholder='Enter car number...' required />
-                      <Form.Control.Feedback type='invalid'>Please provide a valid car number.</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} aria-required>
-                      <Form.Label htmlFor='cr-id'>Change Request ID</Form.Label>
-                      <Form.Control id='cr-id' type='number' min={1} placeholder='Enter change request ID...' required />
-                      <Form.Control.Feedback type='invalid'>Please provide a valid change request ID.</Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group as={Col} aria-required>
-                      <Form.Label htmlFor='project-summary'>Project Summary</Form.Label>
+                      <Form.Label htmlFor="project-name">Project Name</Form.Label>
                       <Form.Control
-                        id='project-summary'
-                        as='textarea'
-                        rows={4}
-                        cols={50}
-                        placeholder='Enter summary...'
+                        id="project-name"
+                        type="text"
+                        placeholder="Enter project name..."
+                        onChange={(e) => name(e.target.value)}
                         required
                       />
-                      <Form.Control.Feedback type='invalid'>Please provide a project summary.</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please provide a project name.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label htmlFor="car-number">Car Number</Form.Label>
+                      <Form.Control
+                        id="car-number"
+                        type="number"
+                        min={0}
+                        placeholder="Enter car number..."
+                        onChange={(e) => carNumber(parseInt(e.target.value))}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide a valid car number.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label htmlFor="cr-id">Change Request ID</Form.Label>
+                      <Form.Control
+                        id="cr-id"
+                        type="number"
+                        min={1}
+                        placeholder="Enter change request ID..."
+                        onChange={(e) => crId(parseInt(e.target.value))}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide a valid change request ID.
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Row>
+                  <Row>
+                    <Form.Group as={Col} aria-required>
+                      <Form.Label htmlFor="project-summary">Project Summary</Form.Label>
+                      <Form.Control
+                        id="project-summary"
+                        as="textarea"
+                        rows={4}
+                        cols={50}
+                        placeholder="Enter summary..."
+                        onChange={(e) => summary(e.target.value)}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide a project summary.
+                      </Form.Control.Feedback>
                     </Form.Group>
                   </Row>
                   <Row>
                     <Col className={'d-flex'}>
-                      <Button className={'mr-3'} variant='primary' type='submit'>
+                      <Button className={'mr-3'} variant="primary" type="submit">
                         Create
                       </Button>
-                      <Button variant='secondary' type='button' onClick={() => history.goBack()}>
+                      <Button variant="secondary" type="button" onClick={onCancel}>
                         Cancel
                       </Button>
                     </Col>

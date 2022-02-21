@@ -4,7 +4,6 @@
  */
 
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 import PageBlock from '../../../shared/page-block/page-block';
 import { CreateProjectFormStates } from '../create-project-form';
 
@@ -19,7 +18,6 @@ const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
   onCancel,
   onSubmit
 }) => {
-  const history = useHistory();
   const { name, carNumber, crId, summary } = states;
 
   return (

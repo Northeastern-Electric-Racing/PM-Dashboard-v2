@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
 import { useCreateSingleProject } from '../../../services/projects.hooks';
 import { routes } from '../../../shared/routes';
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import CreateProjectFormView from './create-project-form/create-project-form';
 
 export interface CreateProjectFormStates {
@@ -24,7 +25,9 @@ const CreateProjectForm: React.FC = () => {
   const [carNumber, setCarNumber] = useState(-1);
   const [crId, setCrId] = useState(-1);
   const [summary, setSummary] = useState('');
-  const { mutateAsync } = useCreateSingleProject();
+  const { isLoading, mutateAsync } = useCreateSingleProject();
+
+  if (isLoading) return <LoadingIndicator />;
 
   const states = {
     name: setName,

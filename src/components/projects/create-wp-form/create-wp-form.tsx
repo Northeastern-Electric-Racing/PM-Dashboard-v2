@@ -9,6 +9,7 @@ import { isProject, validateWBS, WbsNumber } from 'utils';
 import { useAuth } from '../../../services/auth.hooks';
 import { useCreateSingleWorkPackage } from '../../../services/work-packages.hooks';
 import { routes } from '../../../shared/routes';
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import CreateWPFormView from './create-wp-form/create-wp-form';
 
 export interface EditableTextInputListUtils {
@@ -37,7 +38,9 @@ const CreateWPForm: React.FC = () => {
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
   const [deliverables, setDeliverables] = useState<string[]>([]);
-  const { mutateAsync } = useCreateSingleWorkPackage();
+  const { isLoading, mutateAsync } = useCreateSingleWorkPackage();
+
+  if (isLoading) return <LoadingIndicator />;
 
   const depUtils: EditableTextInputListUtils = {
     add: (val) => {

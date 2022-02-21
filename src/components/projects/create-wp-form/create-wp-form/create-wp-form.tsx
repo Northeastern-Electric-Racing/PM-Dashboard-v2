@@ -78,7 +78,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 </Row>
                 <Row>
                   <Form.Group as={Col}>
-                    <Form.Label htmlFor="start-date">Start Date</Form.Label>
+                    <Form.Label htmlFor="start-date">Start Date (YYYY-MM-DD)</Form.Label>
                     <Form.Control
                       id="start-date"
                       name="startDate"

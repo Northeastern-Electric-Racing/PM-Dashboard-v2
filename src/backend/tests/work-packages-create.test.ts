@@ -4,6 +4,7 @@
  */
 
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
+import { exampleWbsProject1 } from '../../test-support/test-data/wbs-numbers.stub';
 import { handler } from '../functions/work-packages-create';
 
 describe('work package create', () => {
@@ -17,10 +18,10 @@ describe('work package create', () => {
         userId: 1,
         name: 'name',
         crId: 2,
-        projectId: 1,
+        projectWbsNum: exampleWbsProject1,
         startDate: '2015-10-06',
         duration: 1,
-        wbsElementIds: [1],
+        dependencies: [exampleWbsProject1],
         expectedActivities: ['abc'],
         deliverables: ['def']
       };

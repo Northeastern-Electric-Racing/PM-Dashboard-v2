@@ -66,7 +66,7 @@ describe('create wp form view test suite', () => {
   it('render start date', () => {
     renderComponent();
 
-    expect(screen.getByText('Start Date')).toBeInTheDocument();
+    expect(screen.getByText(/Start Date/i)).toBeInTheDocument();
     expect(screen.getByLabelText('start date input')).toBeInTheDocument();
   });
 

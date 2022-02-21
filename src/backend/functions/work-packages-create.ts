@@ -46,7 +46,6 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     include: {
       project: {
         include: {
-          wbsElement: true,
           workPackages: { include: { wbsElement: true, dependencies: true } }
         }
       }

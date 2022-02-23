@@ -50,8 +50,8 @@ describe('change requests table filter component', () => {
   it('checking if data in the type menu is correct', async () => {
     renderComponent();
     expect(screen.queryByText('None')).not.toBeInTheDocument();
-    expect(screen.queryByText(ChangeRequestType.DesignIssue)).not.toBeInTheDocument();
-    expect(screen.queryByText(ChangeRequestType.NewFunction)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Issue)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Redefinition)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestType.Other)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestType.StageGate)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestType.Activation)).not.toBeInTheDocument();
@@ -59,8 +59,8 @@ describe('change requests table filter component', () => {
       fireEvent.click(screen.getByTestId('type-toggle'));
     });
     expect(screen.queryByText('None')).toBeInTheDocument();
-    expect(screen.queryByText(ChangeRequestType.DesignIssue)).toBeInTheDocument();
-    expect(screen.queryByText(ChangeRequestType.NewFunction)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Issue)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestType.Redefinition)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestType.Other)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestType.StageGate)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestType.Activation)).toBeInTheDocument();
@@ -72,6 +72,7 @@ describe('change requests table filter component', () => {
     expect(screen.queryByText(ChangeRequestReason.Estimation)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.School)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Manufacturing)).not.toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Design)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Rules)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.OtherProject)).not.toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Other)).not.toBeInTheDocument();
@@ -82,6 +83,7 @@ describe('change requests table filter component', () => {
     expect(screen.queryByText(ChangeRequestReason.Estimation)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.School)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Manufacturing)).toBeInTheDocument();
+    expect(screen.queryByText(ChangeRequestReason.Design)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Rules)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.OtherProject)).toBeInTheDocument();
     expect(screen.queryByText(ChangeRequestReason.Other)).toBeInTheDocument();

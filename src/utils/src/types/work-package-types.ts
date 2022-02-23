@@ -4,49 +4,52 @@
  */
 
 import { FromSchema } from 'json-schema-to-ts';
+import {
+  bodySchema,
+  intType,
+  stringType,
+  dateType,
+  arrayType,
+  enumType,
+  wbsNumType
+} from './api-utils-types';
+import { WbsElementStatus } from './project-types';
 
-export const workPackageInputSchemaBody = {
-  type: 'object',
-  properties: {
-    userId: { type: 'integer', minimum: 0 },
-    name: { type: 'string' },
-    crId: { type: 'integer', minimum: 0 },
-    projectId: { type: 'number', minimum: 0 },
-    startDate: { type: 'string', format: 'date' },
-    duration: { type: 'number', minimum: 0 },
-    wbsElementIds: {
-      type: 'array',
-      items: {
-        type: 'number',
-        minimum: 0
-      }
-    },
-    expectedActivities: {
-      type: 'array',
-      items: {
-        type: 'string',
-        minLength: 0
-      }
-    },
-    deliverables: {
-      type: 'array',
-      items: {
-        type: 'string',
-        minLength: 0
-      }
-    }
+export const workPackageCreateInputSchemaBody = bodySchema({
+  userId: intType,
+  name: stringType,
+  crId: intType,
+  projectWbsNum: wbsNumType,
+  startDate: dateType,
+  duration: intType,
+  dependencies: arrayType(wbsNumType),
+  expectedActivities: arrayType(stringType),
+  deliverables: arrayType(stringType)
+});
+
+export type CreateWorkPackagePayload = FromSchema<typeof workPackageCreateInputSchemaBody>;
+
+export const workPackageEditInputSchemaBody = bodySchema(
+  {
+    wbsElementId: intType,
+    userId: intType,
+    name: stringType,
+    crId: intType,
+    startDate: dateType,
+    duration: intType,
+    dependencies: arrayType(intType),
+    expectedActivities: arrayType(bodySchema({ id: intType, detail: stringType })),
+    deliverables: arrayType(bodySchema({ id: intType, detail: stringType })),
+    wbsElementStatus: enumType(
+      WbsElementStatus.Active,
+      WbsElementStatus.Inactive,
+      WbsElementStatus.Complete
+    ),
+    progress: intType,
+    projectLead: intType,
+    projectManager: intType
   },
-  required: [
-    'userId',
-    'name',
-    'crId',
-    'projectId',
-    'startDate',
-    'duration',
-    'wbsElementIds',
-    'expectedActivities',
-    'deliverables'
-  ]
-} as const;
+  ['projectLead', 'projectManager']
+);
 
-export type CreateWorkPackagePayload = FromSchema<typeof workPackageInputSchemaBody>;
+export type EditWorkPackagePayload = FromSchema<typeof workPackageEditInputSchemaBody>;

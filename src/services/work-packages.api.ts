@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import { WbsNumber, WorkPackage } from 'utils';
+import { CreateWorkPackagePayload, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
 import { workPackageTransformer } from './transformers/work-packages.transformers';
@@ -26,5 +26,16 @@ export const getAllWorkPackages = () => {
 export const getSingleWorkPackage = (wbsNum: WbsNumber) => {
   return axios.get<WorkPackage>(apiUrls.workPackagesByWbsNum(wbsPipe(wbsNum)), {
     transformResponse: (data) => workPackageTransformer(JSON.parse(data))
+  });
+};
+
+/**
+ * Create a single work package.
+ *
+ * @param payload Payload containing all the necessary data to create a work package.
+ */
+export const createSingleWorkPackage = (payload: CreateWorkPackagePayload) => {
+  return axios.post<{ message: string }>(apiUrls.workPackagesCreate(), {
+    ...payload
   });
 };

@@ -90,7 +90,7 @@ const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   workPackage: element.workPackageNumber
 });
 
-const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
+export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
   ...descBullet,
   id: descBullet.descriptionId,
   dateDeleted: descBullet.dateDeleted ?? undefined

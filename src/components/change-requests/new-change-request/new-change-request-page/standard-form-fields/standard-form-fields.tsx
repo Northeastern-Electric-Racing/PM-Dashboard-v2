@@ -7,6 +7,7 @@ import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
+import { ChangeRequestReason } from 'utils';
 
 const StandardFormFields: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const StandardFormFields: React.FC = () => {
             <Form.Control as="textarea" rows={3} />
           </Form.Group>
           <Form.Row className="align-items-center">
-            <Col xs="auto" >
+            <Col xs="auto">
               <Form.Label>Budget Impact</Form.Label>
               <InputGroup>
                 <InputGroup.Prepend>
@@ -32,7 +33,7 @@ const StandardFormFields: React.FC = () => {
                 <FormControl id="newCR-budget-impact" />
               </InputGroup>
             </Col>
-            <Col xs="auto" >
+            <Col xs="auto">
               <Form.Label>Timeline Impact</Form.Label>
               <InputGroup>
                 <FormControl id="newCR-timeline-impact" />
@@ -47,22 +48,19 @@ const StandardFormFields: React.FC = () => {
         <div className={'px-4'}>
           <Form.Label>Why</Form.Label>
           <Form.Group className={'px-4'} controlId="newCR-type">
-            {['Estimation Error', 'School Work', 'Manufacturing Issues', 'Rules Compliance', 'Other Project/Work Package', 'Other'].map((type) => (
+            {Object.values(ChangeRequestReason).map((type) => (
               <Row key={type} className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  id={type}
-                  label={type}
-                />
-                {(type === "Other Project/Work Package") &&
-                  <Form.Control as="select" custom
-                    id="newCR-wbs-num">
+                <Form.Check type="checkbox" id={type} label={type} />
+                {type === ChangeRequestReason.OtherProject && (
+                  <Form.Control as="select" custom id="newCR-wbs-num">
                     {exampleAllWorkPackages.map((p) => (
                       <option key={p.id}>{wbsPipe(p.wbsNum)}</option>
                     ))}
-                  </Form.Control>}
-                {(type === "Other") && <Form.Control type="text"
-                  id="newCR-other-type" />}
+                  </Form.Control>
+                )}
+                {type === ChangeRequestReason.Other && (
+                  <Form.Control type="text" id="newCR-other-type" />
+                )}
               </Row>
             ))}
           </Form.Group>

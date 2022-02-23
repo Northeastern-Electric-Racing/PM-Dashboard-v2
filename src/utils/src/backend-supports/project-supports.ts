@@ -1,3 +1,6 @@
+import{
+  WorkPackage
+}from 'utils';
 /*
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
@@ -17,10 +20,10 @@ const calculateEndDate = (start: Date, weeks: number) => {
 
 /**
  * This symbol function calculates the duration 
- * @param wps an array of a project schedule
+ * @param wps an array of a npmproject schedule
  * @returns the duration of the project in weeks
  */
-const calculateDuration = (wps: any) => {
+const calculateDuration = (wps: Array<WorkPackage>) => {
   if (wps.length === 0) return 0;
   if (wps.length === 1) return wps[0].duration;
 
@@ -37,4 +40,4 @@ const calculateDuration = (wps: any) => {
   return Math.round(durationWeeks);
 };
 
-export { calculateDuration as projectDurationBuilder, calculateEndDate };
+export { calculateDuration, calculateEndDate };

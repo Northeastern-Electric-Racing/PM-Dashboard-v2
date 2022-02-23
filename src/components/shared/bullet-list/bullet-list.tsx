@@ -7,7 +7,7 @@ import PageBlock from '../page-block/page-block';
 import styles from './bullet-list.module.css';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { useContext } from 'react';
-import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 
 interface BulletListProps {
   title: string;
@@ -15,10 +15,18 @@ interface BulletListProps {
   list: JSX.Element[];
   ordered?: boolean;
   readOnly?: boolean;
+  fieldName?: string;
 }
 
-const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, ordered, readOnly }) => {
-  const editMode = useContext(EditModeContext);
+const BulletList: React.FC<BulletListProps> = ({
+  title,
+  headerRight,
+  list,
+  ordered,
+  readOnly,
+  fieldName
+}) => {
+  const { editMode, setField } = useContext(FormContext);
   const addButton = (
     <InputGroup>
       <Form.Control type="text" placeholder="Input new bullet here" />
@@ -27,8 +35,15 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
   );
   let listPrepared = list.map((bullet, idx) =>
     editMode && !readOnly ? (
-      <InputGroup>
-        <Form.Control type="text" defaultValue={bullet.props.children} placeholder={bullet.props.children} key={idx} />
+      <InputGroup aria-required>
+        <Form.Control
+          required
+          type="text"
+          defaultValue={bullet.props.children}
+          placeholder={bullet.props.children}
+          key={idx}
+          onChange={(e) => setField(`${fieldName}${idx}`, e.target.value)}
+        />
         <Button variant="danger">X</Button>
       </InputGroup>
     ) : (
@@ -41,9 +56,6 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
   let builtList = <ul className={styles.bulletList}>{listPrepared}</ul>;
   if (ordered) {
     builtList = <ol className={styles.bulletList}>{listPrepared}</ol>;
-  }
-  if (editMode) {
-    builtList = <Form>{listPrepared}</Form>;
   }
   return <PageBlock title={title} headerRight={headerRight} body={builtList} />;
 };

@@ -7,7 +7,7 @@ import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
 import { Button, InputGroup, Form } from 'react-bootstrap';
-import { EditModeContext } from '../work-package-container';
+import { FormContext } from '../work-package-container';
 import { useContext } from 'react';
 
 interface DependenciesListProps {
@@ -15,7 +15,7 @@ interface DependenciesListProps {
 }
 
 const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
-  const editMode = useContext(EditModeContext);
+  const { editMode } = useContext(FormContext);
   const AddButton = (
     <InputGroup>
       <Form.Control type="text" placeholder="New WBS #"></Form.Control>

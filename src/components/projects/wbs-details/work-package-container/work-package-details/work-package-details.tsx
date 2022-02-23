@@ -9,7 +9,7 @@ import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
 import EditableDetail from '../../../../shared/editable-detail/editable-detail';
-import { EditModeContext } from '../work-package-container';
+import { FormContext } from '../work-package-container';
 import { useContext } from 'react';
 import { WbsElementStatus } from 'utils/lib/types/project-types';
 
@@ -18,12 +18,19 @@ interface WorkPackageDetailsProps {
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
+
+  
+
   const detailsBody = (
     <Container fluid>
-      <Form>
         <Row>
           <Col xs={12} md={6}>
-            <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
+            <EditableDetail
+              title="Work Package Name"
+              value={workPackage.name}
+              type="text"
+              fieldName="name"
+            />
             <EditableDetail
               title="WBS #"
               value={wbsPipe(workPackage.wbsNum)}
@@ -34,17 +41,20 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
               title="Project Lead"
               value={fullNamePipe(workPackage.projectLead)}
               type="text"
+              fieldName="projectLead"
             />
             <EditableDetail
               title="Project Manager"
               value={fullNamePipe(workPackage.projectManager)}
               type="text"
+              fieldName="projectManager"
             />
             <EditableDetail
               title="Duration"
               value={`${workPackage.duration}`}
               type="number"
               suffix="weeks"
+              fieldName="duration"
             />
           </Col>
           <Col xs={6} md={4}>
@@ -52,26 +62,28 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
               title="Start Date"
               value={workPackage.startDate.toLocaleDateString()}
               type="date"
+              fieldName="startDate"
             />
             <EditableDetail
               title="End Date"
               value={endDatePipe(workPackage.startDate, workPackage.duration)}
               type="date"
               readOnly={true}
+              fieldName="endDate"
             />
             <EditableDetail
               title="Progress"
               value={`${workPackage.progress}`}
               suffix="%"
               type="number"
+              fieldName="progress"
             />
           </Col>
         </Row>
-      </Form>
     </Container>
   );
 
-  const editMode = useContext(EditModeContext);
+  const { editMode, setField } = useContext(FormContext);
   const statuses = Object.values(WbsElementStatus);
   const index = statuses.indexOf(workPackage.status);
   statuses.splice(index, 1);
@@ -83,7 +95,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
         editMode ? (
           <div>
             <label>Status</label>
-            <Form.Control as="select">
+            <Form.Control as="select" onChange={(e) => setField('status', e.target.value)}>
               <option>{workPackage.status}</option>
               {statuses.map((status) => (
                 <option>{status}</option>

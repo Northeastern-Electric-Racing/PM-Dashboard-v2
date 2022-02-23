@@ -4,13 +4,14 @@
  */
 
 import { useContext } from 'react';
-import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
-import { Form, FormControl, InputGroup } from 'react-bootstrap';
+import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { Form, InputGroup } from 'react-bootstrap';
 
 interface EditableDetailProps {
   title: string;
   type: string;
   value: string;
+  fieldName?: string;
   readOnly?: Boolean;
   suffix?: string;
 }
@@ -20,12 +21,20 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   type,
   value,
   readOnly,
-  suffix
+  suffix,
+  fieldName
 }) => {
-  const editMode = useContext(EditModeContext);
+  const { editMode, setField } = useContext(FormContext);
   const detailInput = (
-    <InputGroup>
-      <FormControl type={type} defaultValue={value} placeholder={value} />
+    <InputGroup aria-required>
+      <Form.Control
+        required
+        type={type}
+        defaultValue={value}
+        placeholder={value}
+        onChange={(e) => setField(fieldName!, e.target.value)}
+        min={0}
+      />
       {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : ''}
     </InputGroup>
   );
@@ -35,7 +44,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   }
 
   return (
-    <Form.Group>
+    <Form.Group aria-required>
       <b>{`${title}: `}</b>
       {editMode && !readOnly ? detailInput : `${value}${suffix ? `${suffix}` : ''}`}
       <br />

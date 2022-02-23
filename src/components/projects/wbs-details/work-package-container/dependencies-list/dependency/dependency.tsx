@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { EditModeContext } from '../../work-package-container';
+import { FormContext } from '../../work-package-container';
 import { useContext } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { WbsNumber } from 'utils';
@@ -17,7 +17,7 @@ interface DependencyProps {
 }
 
 const Dependency: React.FC<DependencyProps> = ({ wbsNumber }) => {
-  const editMode = useContext(EditModeContext);
+  const { editMode } = useContext(FormContext);
   const history = useHistory();
 
   function handleLinkClick() {

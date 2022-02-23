@@ -6,11 +6,11 @@
 import { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { EditModeContext, EditModeProps } from '../work-package-container';
+import { FormContext, EditModeProps } from '../work-package-container';
 import styles from './work-package-buttons.module.css';
 
 const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
-  const editMode = useContext(EditModeContext);
+  const { editMode, setField } = useContext(FormContext);
   const history = useHistory();
 
   return (
@@ -32,7 +32,14 @@ const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
         Edit
       </Button>
       {editMode ? (
-        <Form.Control className="w-25" type="number" placeholder="Change Request ID #" />
+        <Form.Control
+          required
+          className="w-25"
+          type="number"
+          placeholder="Change Request ID #"
+          onChange={(e) => setField('changeRequestID', e.target.value)}
+          min={0}
+        />
       ) : (
         ''
       )}

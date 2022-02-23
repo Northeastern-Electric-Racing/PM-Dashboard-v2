@@ -26,7 +26,8 @@ import {
   isProject,
   Project,
   WbsElementStatus,
-  DescriptionBullet
+  DescriptionBullet,
+  calculateEndDate
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -127,8 +128,7 @@ const projectTransformer = (
     goals: project.goals.map(descBulletConverter),
     duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
     workPackages: project.workPackages.map((workPackage) => {
-      const endDate = new Date(workPackage.startDate);
-      endDate.setDate(workPackage.duration * 7);
+      const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
 
       return {
         ...workPackage,

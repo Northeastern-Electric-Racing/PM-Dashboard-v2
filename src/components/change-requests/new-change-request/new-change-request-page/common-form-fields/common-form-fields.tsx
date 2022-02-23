@@ -35,7 +35,7 @@ const CommonFormFields: React.FC = () => {
       <div className={'px-4'}>
         Type
         <Form.Control as="select" custom>
-          {['New Function', 'Design Issue', 'Other', 'Activation', 'Stage Gate'].map((t) => (       // change from intiation -> Activation
+          {['New Function', 'Design Issue', 'Other', 'Initiation', 'Stage Gate'].map((t) => (
             <option>{t}</option>
           ))}
         </Form.Control>

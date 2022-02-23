@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { calculateEndDate, projectDurationBuilder } from '../src/backend-supports/projects-get-all';
+import { calculateEndDate, calculateDuration } from '../src/backend-supports/project-supports';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -24,20 +24,20 @@ describe('calculateEndDate', () => {
   });
 });
 
-describe('projectDurationBuilder', () => {
+describe('calculateDuration', () => {
   it('works with 0 work packages', () => {
-    expect(projectDurationBuilder([])).toEqual(0);
+    expect(calculateDuration([])).toEqual(0);
   });
 
   it('works with 1 work package', () => {
     const date = new Date('January 15, 2020');
-    expect(projectDurationBuilder([{ startDate: date, duration: 1 }])).toEqual(1);
+    expect(calculateDuration([{ startDate: date, duration: 1 }])).toEqual(1);
   });
 
   it('works with 2 work packages, same end date', () => {
     const date = new Date('January 15, 2020');
     expect(
-      projectDurationBuilder([
+      calculateDuration([
         { startDate: date, duration: 1 },
         { startDate: date, duration: 1 }
       ])
@@ -48,7 +48,7 @@ describe('projectDurationBuilder', () => {
     const date1 = new Date('January 15, 2020');
     const date2 = new Date('January 22, 2020');
     expect(
-      projectDurationBuilder([
+      calculateDuration([
         { startDate: date1, duration: 1 },
         { startDate: date2, duration: 2 }
       ])
@@ -59,7 +59,7 @@ describe('projectDurationBuilder', () => {
     const date1 = new Date('January 15, 2020');
     const date2 = new Date('January 22, 2020');
     expect(
-      projectDurationBuilder([
+      calculateDuration([
         { startDate: date1, duration: 2 },
         { startDate: date2, duration: 5 },
         { startDate: date2, duration: 2 }

@@ -20,10 +20,10 @@ const calculateEndDate = (start: Date, weeks: number) => {
 
 /**
  * This symbol function calculates the duration 
- * @param wps an array of a npmproject schedule
+ * @param wps an array of work packages
  * @returns the duration of the project in weeks
  */
-const calculateDuration = (wps: Array<WorkPackage>) => {
+const calculateDuration = (wps: any) => {
   if (wps.length === 0) return 0;
   if (wps.length === 1) return wps[0].duration;
 

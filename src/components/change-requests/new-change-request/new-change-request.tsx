@@ -8,7 +8,6 @@ import './new-change-request.module.css';
 
 const NewChangeRequest: React.FC = () => {
   // logic for submitting a change request
-  
   return <NewChangeRequestPage />;
 };
 

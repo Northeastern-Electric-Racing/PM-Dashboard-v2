@@ -14,20 +14,20 @@ const NavPageLinks: React.FC = () => {
     <>
       <Nav.Item className="m-auto">
         <Link className="nav-link d-flex flex-column" to="/">
-          <FontAwesomeIcon className="mx-auto" icon={faHome} size="lg" />
+          <FontAwesomeIcon className="mx-auto" icon={faHome} size="2x" />
           <p className="mx-auto mb-0">Home</p>
         </Link>
       </Nav.Item>
       <Nav.Item className="m-auto">
         <Link className="nav-link d-flex flex-column" to="/projects">
-          <FontAwesomeIcon className="mx-auto" icon={faFolder} size="lg" />
+          <FontAwesomeIcon className="mx-auto" icon={faFolder} size="2x" />
           <p className="mx-auto mb-0">Projects</p>
         </Link>
       </Nav.Item>
       <Nav.Item className="m-auto">
         <Link className="nav-link d-flex flex-column" to="/change-requests">
-          <FontAwesomeIcon className="mx-auto" icon={faExchangeAlt} size="lg" />
-          <p className="mx-auto mb-0">Changes</p>
+          <FontAwesomeIcon className="mx-auto" icon={faExchangeAlt} size="2x" />
+          <p className="mx-auto mb-0">Change Requests</p>
         </Link>
       </Nav.Item>
     </>

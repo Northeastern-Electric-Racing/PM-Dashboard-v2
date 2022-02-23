@@ -19,9 +19,9 @@ import {
   validateWBS,
   isProject,
   WorkPackage,
-  WbsElementStatus
+  WbsElementStatus, 
+  calculateEndDate
 } from 'utils';
-import { calculateEndDate, projectDurationBuilder } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -70,8 +70,6 @@ const workPackageTransformer = (
   if (payload === null) throw new TypeError('WBS_Element not found');
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
-  //const endDate = new Date(workPackage.startDate);
-  //endDate.setDate(workPackage.duration * 7);
   const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
   
 

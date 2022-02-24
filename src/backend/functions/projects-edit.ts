@@ -19,31 +19,35 @@ export const descBulletConverter = (descBullet: Description_Bullet): Description
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
-// --> Pointer
 export const editProject: Handler = async ({ body }, _context) => {
-  //   const {
-  //     wbsElementId,
-  //     userId,
-  //     name,
-  //     crId,
-  //     startDate,
-  //     duration,
-  //     wbsElementIds,
-  //     wbsElementStatus,
-  //     progress
-  //   } = body;
+  const {
+    wbsElementId,
+    budget,
+    summary,
+    googleDriveFolderLink,
+    slideDeckLink,
+    bomLink,
+    taskListLink,
+    rules,
+    goals,
+    features,
+    otherConstraints,
+    name,
+    status,
+    projectLeadId,
+    projectManagerId
+  } = body;
 
-  // TODO: Fix call
-  // get the original work package so we can compare things
+  // get the original project so we can compare things
   const originalProject = await prisma.project.findUnique({
     where: {
       wbsElementId
     },
     include: {
       wbsElement: true,
-      dependencies: true,
-      expectedActivities: true,
-      deliverables: true
+      goals: true,
+      features: true,
+      otherConstraints: true
     }
   });
 
@@ -52,22 +56,8 @@ export const editProject: Handler = async ({ body }, _context) => {
     throw new TypeError('Project with given wbsElementId does not exist!');
   }
 
-  //   // if the crId doesn't match a valid approved change request then we need to error
-  //   const changeRequest = await prisma.change_Request.findUnique({
-  //     where: {
-  //       crId
-  //     }
-  //   });
+  // --> Pointer
 
-  //   if (
-  //     changeRequest === null ||
-  //     changeRequest.accepted == null ||
-  //     changeRequest.accepted === false
-  //   ) {
-  //     throw new TypeError('Invalid Change Request!');
-  //   }
-
-  //   let changes = [];
   //   // get the changes or undefined for each of the fields
   //   const nameChangeJson = createChangeJsonNonList(
   //     'name',
@@ -152,7 +142,6 @@ export const editProject: Handler = async ({ body }, _context) => {
   //   if (wbsElementStatusChangeJson !== undefined) {
   //     changes.push(wbsElementStatusChangeJson);
   //   }
-
   //   if (body.hasOwnProperty('projectManager')) {
   //     const projectManagerChangeJson = createChangeJsonNonList(
   //       'project manager',
@@ -166,7 +155,6 @@ export const editProject: Handler = async ({ body }, _context) => {
   //       changes.push(projectManagerChangeJson);
   //     }
   //   }
-
   //   if (body.hasOwnProperty('projectLead')) {
   //     const projectLeadChangeJson = createChangeJsonNonList(
   //       'project lead',
@@ -180,13 +168,11 @@ export const editProject: Handler = async ({ body }, _context) => {
   //       changes.push(projectLeadChangeJson);
   //     }
   //   }
-
   //   // add the changes for each of dependencies, expected activities, and deliverables
   //   changes = changes
   //     .concat(dependenciesChangeJson)
   //     .concat(expectedActivitiesChangeJson.changes)
   //     .concat(deliverablesChangeJson.changes);
-
   //   // update the work package with the input fields
   //   const updatedWorkPackage = await prisma.work_Package.update({
   //     where: {
@@ -212,7 +198,6 @@ export const editProject: Handler = async ({ body }, _context) => {
   //       }
   //     }
   //   });
-
   //   // Update any deleted description bullets to have their date deleted as right now
   //   const deletedIds = expectedActivitiesChangeJson.deletedIds.concat(
   //     deliverablesChangeJson.deletedIds
@@ -229,7 +214,6 @@ export const editProject: Handler = async ({ body }, _context) => {
   //       }
   //     });
   //   }
-
   //   addDescriptionBullets(
   //     expectedActivitiesChangeJson.addedDetails,
   //     updatedWorkPackage.workPackageId,
@@ -245,12 +229,10 @@ export const editProject: Handler = async ({ body }, _context) => {
   //       deliverablesChangeJson.editedIdsAndDetails
   //     )
   //   );
-
   //   // create the changes in prisma
   //   await prisma.change.createMany({
   //     data: changes
   //   });
-
   //   // return the updated work package
   //   return buildSuccessResponse(updatedWorkPackage);
 };
@@ -490,5 +472,3 @@ export const editProject: Handler = async ({ body }, _context) => {
 //   .use(httpErrorHandler());
 
 // export { handler };
-
-export const a = {};

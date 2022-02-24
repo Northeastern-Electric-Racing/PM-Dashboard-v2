@@ -12,23 +12,26 @@ export interface EditableTextInputStateAndUtils {
   add: (val: any) => void;
   remove: (idx: number) => void;
   update: (idx: number, val: any) => void;
-  setDependencies: (state: string[]) => void;
-  setExpectedActivities: (state: string[]) => void;
-  setDeliverables: (state: string[]) => void;
+  dependencies: string[];
+  expectedActivities: string[];
+  deliverables: string[];
 }
 
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
 
   // const [dependencies, setDependencies] = useState<string[]>([]);
-  const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
-  const [deliverables, setDeliverables] = useState<string[]>([]);
+  // const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
+  // const [deliverables, setDeliverables] = useState<string[]>([]);
 
   const depUtils: EditableTextInputStateAndUtils = {
+    dependencies: [],
+    expectedActivities: [],
+    deliverables: [],
     add: (val) => {
       const clone = dependencies.slice();
       clone.push(val);
-      setDependencies(clone);
+      dependencies clone;
     },
     remove: (idx) => {
       const clone = dependencies.slice();
@@ -39,15 +42,6 @@ const CreateWPForm: React.FC = () => {
       const clone = dependencies.slice();
       clone[idx] = val;
       setDependencies(clone);
-    },
-    setDependencies: (state) => {
-const dependencies = state;
-    },
-    setExpectedActivities: (state) => {
-      
-    },
-    setDeliverables: (state) => {
-      
     },
   };
 

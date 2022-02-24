@@ -122,3 +122,9 @@ export const mockAuth = (user?: User) => {
     signout: () => {}
   } as Auth;
 };
+
+export const mockUtils = {
+  add: () => null,
+  remove: () => null,
+  update: () => null
+};

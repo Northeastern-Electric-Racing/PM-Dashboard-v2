@@ -3,16 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "../../../../test-support/test-utils"
-import CreateWPFormView from "./create-wp-form";
+import { wbsPipe } from '../../../../shared/pipes';
+import { mockUtils } from '../../../../test-support/test-data/test-utils.stub';
+import {
+  exampleWbsWorkPackage1,
+  exampleWbsWorkPackage2
+} from '../../../../test-support/test-data/wbs-numbers.stub';
+import { render, screen } from '../../../../test-support/test-utils';
+import CreateWPFormView from './create-wp-form';
 
-const mockDependencies = ["1.2.3", "1.2.1", "1.12.0"];
-const mockEA = ["yooooo", "wassup", "bruh", "whoosh"];
-const mockDeliverables = ["go vroom"];
-const mockUtils = {
-  add: () => null,
-  remove: () => null,
-  update: () => null
+const mockDependencies = [wbsPipe(exampleWbsWorkPackage2), wbsPipe(exampleWbsWorkPackage1)];
+const mockEA = ['yooooo', 'wassup', 'bruh', 'whoosh'];
+const mockDeliverables = ['go vroom'];
+const mockStates = {
+  name: () => null,
+  wbsNum: () => null,
+  crId: () => null,
+  startDate: () => null,
+  duration: () => null
 };
 
 /**
@@ -21,6 +29,7 @@ const mockUtils = {
 const renderComponent = () => {
   return render(
     <CreateWPFormView
+      states={mockStates}
       dependencies={mockDependencies}
       depUtils={mockUtils}
       expectedActivities={mockEA}
@@ -31,7 +40,7 @@ const renderComponent = () => {
       onCancel={() => null}
     />
   );
-}
+};
 
 describe('create wp form view test suite', () => {
   it('render title', () => {
@@ -57,7 +66,7 @@ describe('create wp form view test suite', () => {
   it('render start date', () => {
     renderComponent();
 
-    expect(screen.getByText('Start Date')).toBeInTheDocument();
+    expect(screen.getByText(/Start Date/i)).toBeInTheDocument();
     expect(screen.getByLabelText('start date input')).toBeInTheDocument();
   });
 
@@ -72,29 +81,23 @@ describe('create wp form view test suite', () => {
     renderComponent();
 
     expect(screen.getByText('Dependencies')).toBeInTheDocument();
-    const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
-    expect(res.map(item => item.value)).toEqual(
-      expect.arrayContaining(mockDependencies)
-    );
+    const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
+    expect(res.map((item) => item.value)).toEqual(expect.arrayContaining(mockDependencies));
   });
 
   it('render expected activities', async () => {
     renderComponent();
 
     expect(screen.getByText('Expected Activities')).toBeInTheDocument();
-    const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
-    expect(res.map(item => item.value)).toEqual(
-      expect.arrayContaining(mockEA)
-    );
+    const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
+    expect(res.map((item) => item.value)).toEqual(expect.arrayContaining(mockEA));
   });
 
   it('render deliverables', async () => {
     renderComponent();
 
     expect(screen.getByText('Deliverables')).toBeInTheDocument();
-    const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
-    expect(res.map(item => item.value)).toEqual(
-      expect.arrayContaining(mockDeliverables)
-    );
+    const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
+    expect(res.map((item) => item.value)).toEqual(expect.arrayContaining(mockDeliverables));
   });
 });

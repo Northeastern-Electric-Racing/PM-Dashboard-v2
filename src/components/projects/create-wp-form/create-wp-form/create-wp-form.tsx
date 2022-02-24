@@ -3,14 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Form, Row, Col, InputGroup, Button } from 'react-bootstrap';
 import PageBlock from '../../../shared/page-block/page-block';
-import { EditableTextInputListUtils } from '../create-wp-form';
-import EditableTextInputList
-  from '../../../shared/editable-text-input-list/editable-text-input-list';
+import { EditableTextInputListUtils, FormStates } from '../create-wp-form';
+import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import styles from './create-wp-form.module.css';
 
 interface CreateWPFormViewProps {
+  states: FormStates;
   dependencies: string[];
   depUtils: EditableTextInputListUtils;
   expectedActivities: string[];
@@ -22,15 +22,17 @@ interface CreateWPFormViewProps {
 }
 
 const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
-                                                             dependencies,
-                                                             depUtils,
-                                                             expectedActivities,
-                                                             eaUtils,
-                                                             deliverables,
-                                                             delUtils,
-                                                             onSubmit,
-                                                             onCancel
-                                                           }) => {
+  states,
+  dependencies,
+  depUtils,
+  expectedActivities,
+  eaUtils,
+  deliverables,
+  delUtils,
+  onSubmit,
+  onCancel
+}) => {
+  const { name, wbsNum, crId, startDate, duration } = states;
   return (
     <div className={styles.pageContainer}>
       <PageBlock
@@ -42,28 +44,63 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
               <Col>
                 <Row>
                   <Form.Group as={Col}>
-                    <Form.Label htmlFor='wp-name'>Work Package Name</Form.Label>
-                    <Form.Control id='wp-name' name='wpName' type='text' required></Form.Control>
+                    <Form.Label htmlFor="wp-name">Work Package Name</Form.Label>
+                    <Form.Control
+                      id="wp-name"
+                      name="name"
+                      type="text"
+                      onChange={(e) => name(e.target.value)}
+                      required
+                    ></Form.Control>
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col}>
-                    <Form.Label htmlFor='project-wbs-num'>Project WBS Number</Form.Label>
-                    <Form.Control id='project-wbs-num' name='wbsNum' type='text'
-                                  required></Form.Control>
+                    <Form.Label htmlFor="project-wbs-num">Project WBS Number</Form.Label>
+                    <Form.Control
+                      id="project-wbs-num"
+                      name="wbsNum"
+                      type="text"
+                      onChange={(e) => wbsNum(e.target.value)}
+                      required
+                    ></Form.Control>
+                  </Form.Group>
+                  <Form.Group as={Col}>
+                    <Form.Label htmlFor="crId">Change Request ID</Form.Label>
+                    <Form.Control
+                      id="crId"
+                      name="crId"
+                      type="number"
+                      min={1}
+                      onChange={(e) => crId(parseInt(e.target.value))}
+                      required
+                    ></Form.Control>
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col}>
-                    <Form.Label htmlFor='start-date'>Start Date</Form.Label>
-                    <Form.Control id='start-date' name='startDate' aria-label={'start date input'}
-                                  type='date' required></Form.Control>
+                    <Form.Label htmlFor="start-date">Start Date (YYYY-MM-DD)</Form.Label>
+                    <Form.Control
+                      id="start-date"
+                      name="startDate"
+                      aria-label={'start date input'}
+                      type="date"
+                      onChange={(e) => startDate(e.target.value)}
+                      required
+                    ></Form.Control>
                   </Form.Group>
                   <Form.Group as={Col}>
-                    <Form.Label htmlFor='duration'>Duration</Form.Label>
+                    <Form.Label htmlFor="duration">Duration</Form.Label>
                     <InputGroup>
-                      <Form.Control id='duration' name='duration' aria-label={'duration'}
-                                    type='number' min={0} required></Form.Control>
+                      <Form.Control
+                        id="duration"
+                        name="duration"
+                        aria-label={'duration'}
+                        type="number"
+                        min={0}
+                        onChange={(e) => duration(parseInt(e.target.value))}
+                        required
+                      ></Form.Control>
                       <InputGroup.Text>Weeks</InputGroup.Text>
                     </InputGroup>
                   </Form.Group>
@@ -71,8 +108,8 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Col>
                     <Form.Group>
-                      <Form.Label htmlFor='dependencies-text-input-list'>Dependencies</Form.Label>
-                      <Form.Group id='dependencies-text-input-list'>
+                      <Form.Label htmlFor="dependencies-text-input-list">Dependencies</Form.Label>
+                      <Form.Group id="dependencies-text-input-list">
                         <EditableTextInputList
                           items={dependencies}
                           add={depUtils.add}
@@ -87,7 +124,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                   <Col>
                     <Form.Group>
                       <Form.Label>Expected Activities</Form.Label>
-                      <Form.Group id='ea-text-input-list'>
+                      <Form.Group id="ea-text-input-list">
                         <EditableTextInputList
                           items={expectedActivities}
                           add={eaUtils.add}
@@ -101,8 +138,8 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Col>
                     <Form.Group>
-                      <Form.Label htmlFor='deliverables-text-input-list'>Deliverables</Form.Label>
-                      <Form.Group id='deliverables-text-input-list'>
+                      <Form.Label htmlFor="deliverables-text-input-list">Deliverables</Form.Label>
+                      <Form.Group id="deliverables-text-input-list">
                         <EditableTextInputList
                           items={deliverables}
                           add={delUtils.add}
@@ -115,10 +152,10 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 </Row>
                 <Row>
                   <Col>
-                    <Button className={'mr-3'} variant='primary' type='submit'>
+                    <Button className={'mr-3'} variant="primary" type="submit">
                       Create
                     </Button>
-                    <Button variant='secondary' type='button' onClick={onCancel}>
+                    <Button variant="secondary" type="button" onClick={onCancel}>
                       Cancel
                     </Button>
                   </Col>

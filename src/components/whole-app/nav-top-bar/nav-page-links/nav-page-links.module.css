@@ -14,3 +14,7 @@
 .iconAndTextContainer:hover {
   background-color: white;
 }
+
+.iconAndTextContainer:active {
+  box-shadow: 0 0 0 .2rem rgba(239, 67, 69, 0.5);
+}

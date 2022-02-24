@@ -8,20 +8,23 @@ import { useHistory } from "react-router-dom";
 import { isProject, validateWBS, WbsNumber } from "utils";
 import CreateWPFormView from "./create-wp-form/create-wp-form";
 
-export interface EditableTextInputListUtils {
+export interface EditableTextInputStateAndUtils {
   add: (val: any) => void;
   remove: (idx: number) => void;
   update: (idx: number, val: any) => void;
+  setDependencies: (state: string[]) => void;
+  setExpectedActivities: (state: string[]) => void;
+  setDeliverables: (state: string[]) => void;
 }
 
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
 
-  const [dependencies, setDependencies] = useState<string[]>([]);
+  // const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
   const [deliverables, setDeliverables] = useState<string[]>([]);
 
-  const depUtils: EditableTextInputListUtils = {
+  const depUtils: EditableTextInputStateAndUtils = {
     add: (val) => {
       const clone = dependencies.slice();
       clone.push(val);
@@ -36,10 +39,19 @@ const CreateWPForm: React.FC = () => {
       const clone = dependencies.slice();
       clone[idx] = val;
       setDependencies(clone);
-    }
+    },
+    setDependencies: (state) => {
+const dependencies = state;
+    },
+    setExpectedActivities: (state) => {
+      
+    },
+    setDeliverables: (state) => {
+      
+    },
   };
 
-  const eaUtils: EditableTextInputListUtils = {
+  const eaUtils: EditableTextInputStateAndUtils = {
     add: (val) => {
       const clone = expectedActivities.slice();
       clone.push(val);
@@ -54,10 +66,19 @@ const CreateWPForm: React.FC = () => {
       const clone = expectedActivities.slice();
       clone[idx] = val;
       setExpectedActivities(clone);
-    }
+    },
+    setDependencies: (state) => {
+      
+    },
+    setExpectedActivities: (state) => {
+      
+    },
+    setDeliverables: (state) => {
+      
+    },
   };
 
-  const delUtils: EditableTextInputListUtils = {
+  const delUtils: EditableTextInputStateAndUtils = {
     add: (val) => {
       const clone = deliverables.slice();
       clone.push(val);
@@ -72,7 +93,16 @@ const CreateWPForm: React.FC = () => {
       const clone = deliverables.slice();
       clone[idx] = val;
       setDeliverables(clone);
-    }
+    },
+    setDependencies: (state) => {
+      
+    },
+    setExpectedActivities: (state) => {
+      
+    },
+    setDeliverables: (state) => {
+      
+    },
   };
 
   const handleSubmit = (e: any) => {

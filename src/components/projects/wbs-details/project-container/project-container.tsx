@@ -15,7 +15,7 @@ import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
-import './project-container.module.css';
+import styles from './project-container.module.css';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -29,7 +29,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   if (isError) return <ErrorPage message={error?.message} />;
 
   return (
-    <div className="mb-5">
+    <div className={'mb-5 ' + styles.pageContainer}>
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
@@ -44,7 +44,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         body={
           <>
             {data!.workPackages.map((ele: WorkPackage) => (
-              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+              <div key={wbsPipe(ele.wbsNum)} className='mt-3'>
                 <WorkPackageSummary workPackage={ele} />
               </div>
             ))}

@@ -5,11 +5,11 @@
 
 import { ReactElement } from 'react';
 import {
-  ChangeRequest,
-  StandardChangeRequest,
   ActivationChangeRequest,
+  ChangeRequest,
+  ChangeRequestType,
   StageGateChangeRequest,
-  ChangeRequestType
+  StandardChangeRequest
 } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -18,11 +18,11 @@ import StandardDetails from './type-specific-details/standard-details/standard-d
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
-import './change-request-details.module.css';
 import ReviewNotes from './review-notes/review-notes';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../shared/routes';
+import styles from './change-request-details.module.css';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -53,17 +53,19 @@ interface ChangeRequestDetailsProps {
 }
 
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
-  changeRequest
-}: ChangeRequestDetailsProps) => {
+                                                                     changeRequest
+                                                                   }: ChangeRequestDetailsProps) => {
   const reviewDropdown = (
-    <DropdownButton id="review-dropdown" title="Review">
-      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}>Accept</Dropdown.Item>
-      <Dropdown.Item as={Link} to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}>Deny</Dropdown.Item>
+    <DropdownButton id='review-dropdown' title='Review'>
+      <Dropdown.Item as={Link}
+                     to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}>Accept</Dropdown.Item>
+      <Dropdown.Item as={Link}
+                     to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}>Deny</Dropdown.Item>
     </DropdownButton>
   );
 
   const implementCrDropdown = (
-    <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
+    <DropdownButton id='implement-cr-dropdown' title='Implement Change Request'>
       <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>Create New Project</Dropdown.Item>
       <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>Create New Work Package</Dropdown.Item>
     </DropdownButton>
@@ -74,7 +76,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
 
   return (
-    <>
+    <div className={styles.pageContainer}>
       <PageTitle
         title={`Change Request #${changeRequest.crId}`}
         actionButton={actionDropdown}
@@ -83,14 +85,14 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
         body={
-          <dl className="row">
-            <dt className="col-2">Submitted</dt>
-            <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
-            <dd className="col-3">{changeRequest.dateSubmitted.toUTCString()}</dd>
-            <div className="w-100"></div>
-            <dt className="col-2">Type</dt>
-            <dd className="col-auto">{changeRequest.type}</dd>
-            <div className="w-100"></div>
+          <dl className='row'>
+            <dt className='col-2'>Submitted</dt>
+            <dd className='col-2'>{fullNamePipe(changeRequest.submitter)}</dd>
+            <dd className='col-3'>{changeRequest.dateSubmitted.toUTCString()}</dd>
+            <div className='w-100'></div>
+            <dt className='col-2'>Type</dt>
+            <dd className='col-auto'>{changeRequest.type}</dd>
+            <div className='w-100'></div>
           </dl>
         }
       />
@@ -102,7 +104,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
         dateImplemented={changeRequest.dateImplemented!}
       />
-    </>
+    </div>
   );
 };
 

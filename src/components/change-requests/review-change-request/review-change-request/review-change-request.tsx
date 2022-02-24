@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
+import styles from './review-change-request.module.css';
 
 interface ReviewChangeRequestViewProps {
   crId: number;
@@ -23,7 +24,7 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   setReviewNotes
 }: ReviewChangeRequestViewProps) => {
   return (
-    <>
+    <div className={styles.pageContainer}>
       <PageTitle title={`Change Request #${crId}`} />
       <PageBlock
         title={''}
@@ -58,7 +59,7 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
           </div>
         }
       />
-    </>
+    </div>
   );
 };
 

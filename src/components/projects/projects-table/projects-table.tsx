@@ -137,10 +137,10 @@ const ProjectsTable: React.FC = () => {
   };
 
   return (
-    <>
+    <div className={styles.pageContainer}>
       <PageTitle title={'Projects'} />
       <div className={styles.container}>
-        <Row className={'mx-5'}>
+        <Row className={styles.row}>
           <div className={styles.filterTable}>
             <ProjectsTableFilter
               onClick={sendDataToParent}
@@ -157,7 +157,7 @@ const ProjectsTable: React.FC = () => {
           </div>
         </Row>
       </div>
-    </>
+    </div>
   );
 };
 

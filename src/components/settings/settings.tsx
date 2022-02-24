@@ -6,16 +6,16 @@
 import { useAuth } from '../../services/auth.hooks';
 import PageTitle from '../shared/page-title/page-title';
 import PageBlock from '../shared/page-block/page-block';
-import './settings.module.css';
+import styles from './settings.module.css';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
   const pageBlockBody = <>User: {auth.user?.emailId}</>;
   return (
-    <>
-      <PageTitle title="This is the Settings Page" />
-      <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
-    </>
+    <div className={styles.pageContainer}>
+      <PageTitle title='This is the Settings Page' />
+      <PageBlock title='User Settings' headerRight={<></>} body={pageBlockBody} />
+    </div>
   );
 };
 

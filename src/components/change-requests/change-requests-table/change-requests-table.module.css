@@ -3,6 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+.pageContainer {
+  margin-left: 3.5em;
+}
+
 .container {
   width: 100%;
 }

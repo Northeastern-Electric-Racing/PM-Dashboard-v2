@@ -18,6 +18,7 @@ import RulesList from './rules-list/rules-list';
 import './project-container.module.css';
 import { useState } from 'react';
 import ProjectEditButton from './project-edit-button/project-edit-button';
+import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -31,7 +32,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  return (
+  const readOnlyView = (
     <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
       {!editMode && <ProjectEditButton setEditMode={setEditMode} />}
@@ -57,6 +58,10 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       />
     </div>
   );
+
+  const editView = <ProjectEditContainer wbsNum={wbsNum} />;
+
+  return <>{editMode ? editView : readOnlyView}</>;
 };
 
 export default ProjectContainer;

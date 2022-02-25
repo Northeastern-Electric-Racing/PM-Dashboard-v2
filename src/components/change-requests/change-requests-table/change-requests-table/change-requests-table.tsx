@@ -16,6 +16,7 @@ export interface DisplayChangeRequest {
   id: number;
   submitterName: string;
   wbsNum: string;
+  projectName: string;
   type: string;
   dateReviewed: string;
   accepted: string;
@@ -39,6 +40,7 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
     { dataField: 'id', text: 'ID', align: 'center', sort: true },
     { dataField: 'submitterName', text: 'Submitter', align: 'left', sort: true },
     { dataField: 'wbsNum', text: 'WBS #', align: 'left', sort: true },
+    { dataField: 'projectName', text: 'Project Name', align: 'left', sort: true },
     { dataField: 'type', text: 'Type', align: 'left', sort: true },
     { dataField: 'dateReviewed', text: 'Reviewed', align: 'left', sort: true },
     { dataField: 'accepted', text: 'Accepted', align: 'center', sort: true },

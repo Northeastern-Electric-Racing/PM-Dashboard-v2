@@ -128,6 +128,7 @@ const ChangeRequestsTable: React.FC = () => {
       return {
         id: cr.crId,
         submitterName: fullNamePipe(cr.submitter),
+        projectName: cr.wbsElement.name,
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,
         dateReviewed: cr.dateReviewed ? new Date(cr.dateReviewed).toLocaleDateString() : '',

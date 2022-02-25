@@ -15,7 +15,7 @@ interface projectDetailsProps {
 }
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
-  const statuses = Object.values(WbsElementStatus);
+  const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
     project.workPackages.length > 0
       ? project.workPackages
@@ -71,10 +71,14 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
 
   const statusSelect = (
     <Form.Control as="select">
-      <option value={project.status}>{project.status}</option>
-      {statuses.map((status) => {
-        if (status !== project.status) return <option value={status}>{status}</option>;
-      })}
+      <option key={0} value={project.status}>
+        {project.status}
+      </option>
+      {statuses.map((status, index) => (
+        <option key={index + 1} value={status}>
+          {status}
+        </option>
+      ))}
     </Form.Control>
   );
 

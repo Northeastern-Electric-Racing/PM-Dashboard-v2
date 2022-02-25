@@ -1,81 +1,92 @@
 import { render, screen } from '../../../../../test-support/test-utils';
 import { Project } from 'utils';
-import { endDatePipe, fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, wbsPipe, weeksPipe } from '../../../../../shared/pipes';
 import {
   exampleProject1,
   exampleProject2,
   exampleProject3
 } from '../../../../../test-support/test-data/projects.stub';
 import ProjectEditDetails from './project-edit-details';
+import { scryRenderedDOMComponentsWithTag } from 'react-dom/test-utils';
+
+const projs = [exampleProject1, exampleProject2, exampleProject3];
 
 describe('Rendering Project Details Component', () => {
-  it('renders all the fields, example 1', () => {
-    const proj: Project = exampleProject1;
-    render(<ProjectEditDetails project={proj} />);
-    expect(screen.getByText(`Project Details`)).toBeInTheDocument();
-    expect(screen.getByText(`${proj.status}`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.name}`, { exact: false })).toBeInTheDocument();
-    expect(
-      screen.getByText(`${fullNamePipe(proj.projectLead)}`, { exact: false })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(`${fullNamePipe(proj.projectManager)}`, { exact: false })
-    ).toBeInTheDocument();
+  projs.forEach((proj, index) => {
+    const startDate =
+      proj.workPackages.length > 0
+        ? proj.workPackages
+            .reduce(
+              (min, cur) => (cur.startDate < min ? cur.startDate : min),
+              proj.workPackages[0].startDate
+            )
+            .toLocaleDateString()
+        : 'n/a';
+    const endDate =
+      proj.workPackages.length > 0
+        ? endDatePipe(
+            proj.workPackages.reduce(
+              (min, cur) => (cur.startDate < min ? cur.startDate : min),
+              proj.workPackages[0].startDate
+            ),
+            proj.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
+          )
+        : 'n/a';
 
-    expect(screen.getByText(`${weeksPipe(proj.duration)}`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText('01/01/21', { exact: false })).toBeInTheDocument();
-    expect(
-      screen.getByText(`${endDatePipe(new Date('01/01/21'), proj.duration)}`, { exact: false })
-    ).toBeInTheDocument();
-    expect(screen.getByText(`${proj.slideDeckLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.gDriveLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.bomLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.taskListLink}%`, { exact: false })).toBeInTheDocument();
-  });
+    it(`renders all fields for project ${index}`, async () => {
+      render(<ProjectEditDetails project={proj} />);
 
-  it('renders all the fields, example 2', () => {
-    const proj: Project = exampleProject2;
-    render(<ProjectEditDetails project={proj} />);
-    expect(screen.getByText(`Project Details`)).toBeInTheDocument();
-    expect(screen.getByText(`${proj.status}`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.name}`, { exact: false })).toBeInTheDocument();
-    expect(
-      screen.getByText(`${fullNamePipe(proj.projectLead)}`, { exact: false })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(`${fullNamePipe(proj.projectManager)}`, { exact: false })
-    ).toBeInTheDocument();
+      expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
+      //add test for status select
+      expect(screen.getByRole('option', { name: 'ACTIVE' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'INACTIVE' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'COMPLETE' })).toBeInTheDocument();
 
-    expect(screen.getByText(`${weeksPipe(proj.duration)}`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText('mm/dd/yyyy', { exact: false })).toBeInTheDocument();
-    expect(screen.getByText('mm/dd/yyyy', { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.slideDeckLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.gDriveLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.bomLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.taskListLink}%`, { exact: false })).toBeInTheDocument();
-  });
+      const textboxInputs = ((await screen.findAllByRole('textbox')) as HTMLInputElement[]).map(
+        (input) => input.value
+      );
+      const numberInputs = ((await screen.findAllByRole(
+        'spinbutton'
+      )) as HTMLInputElement[]).map((input) => parseInt(input.value));
 
-  it('renders all the fields, example 3', () => {
-    const proj: Project = exampleProject3;
-    render(<ProjectEditDetails project={proj} />);
-    expect(screen.getByText(`Project Details`)).toBeInTheDocument();
-    expect(screen.getByText(`${proj.status}`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.name}`, { exact: false })).toBeInTheDocument();
-    expect(
-      screen.getByText(`${fullNamePipe(proj.projectLead)}`, { exact: false })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(`${fullNamePipe(proj.projectManager)}`, { exact: false })
-    ).toBeInTheDocument();
+      // Left column of form
+      expect(screen.getByText('Project Name:')).toBeInTheDocument();
+      expect(textboxInputs).toContain(proj.name);
+      expect(screen.getByText('WBS #:')).toBeInTheDocument();
+      expect(textboxInputs).toContain(wbsPipe(proj.wbsNum));
+      expect(screen.getByText('Project Lead:')).toBeInTheDocument();
+      expect(textboxInputs).toContain(fullNamePipe(proj.projectLead));
+      expect(screen.getByText('Project Manager:')).toBeInTheDocument();
+      expect(textboxInputs).toContain(fullNamePipe(proj.projectManager));
+      expect(screen.getByText('Budget:')).toBeInTheDocument();
+      expect(numberInputs).toContain(proj.budget);
 
-    expect(screen.getByText(`${weeksPipe(proj.duration)}`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText('01/01/21', { exact: false })).toBeInTheDocument();
-    expect(
-      screen.getByText(`${endDatePipe(new Date('01/01/21'), proj.duration)}`, { exact: false })
-    ).toBeInTheDocument();
-    expect(screen.getByText(`${proj.slideDeckLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.gDriveLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.bomLink}%`, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(`${proj.taskListLink}%`, { exact: false })).toBeInTheDocument();
+      // Right column of form
+      expect(screen.getByText('Duration:')).toBeInTheDocument();
+      expect(numberInputs).toContain(proj.duration);
+      expect(screen.getByText('weeks')).toBeInTheDocument();
+      expect(screen.getByText('Start Date:')).toBeInTheDocument();
+      // have to do not length 0 in case both start and end date are both 'n/a'
+      startDate === 'n/a'
+        ? expect(screen.getAllByPlaceholderText('n/a')).not.toHaveLength(0)
+        : expect(screen.getByPlaceholderText(startDate)).toBeInTheDocument();
+      expect(screen.getByText('End Date:')).toBeInTheDocument();
+      endDate === 'n/a'
+        ? expect(screen.getAllByPlaceholderText('n/a')).not.toHaveLength(0)
+        : expect(screen.getByPlaceholderText(endDate)).toBeInTheDocument();
+      expect(screen.getByText('Expected Progress:')).toBeInTheDocument();
+      expect(screen.getByText('Timeline Status:')).toBeInTheDocument();
+      expect(screen.getAllByPlaceholderText('Not implemented yet')).toHaveLength(2);
+
+      // Links
+      expect(screen.getByText('Slide Deck')).toBeInTheDocument();
+      expect(textboxInputs).toContain(proj.slideDeckLink!);
+      expect(screen.getByText('Task List')).toBeInTheDocument();
+      expect(textboxInputs).toContain(proj.taskListLink!);
+      expect(screen.getByText('BOM')).toBeInTheDocument();
+      expect(textboxInputs).toContain(proj.bomLink!);
+      expect(screen.getByText('Google Drive')).toBeInTheDocument();
+      expect(textboxInputs).toContain(proj.gDriveLink!);
+    });
   });
 });

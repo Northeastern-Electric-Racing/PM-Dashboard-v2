@@ -7,8 +7,8 @@ import { render, screen } from '../../../../../test-support/test-utils';
 import EditModeOptions from './edit-mode-options';
 
 describe('Renders edit mode options', () => {
-  test('renders all of the buttons', () => {
-    render(<EditModeOptions changeEditMode={() => {}} />);
+  test('renders all of the buttons for edit mode', () => {
+    render(<EditModeOptions setEditMode={() => null} />);
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Save')).toBeInTheDocument();
   });

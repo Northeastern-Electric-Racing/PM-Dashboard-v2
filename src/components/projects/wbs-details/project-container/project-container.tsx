@@ -16,6 +16,8 @@ import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
 import './project-container.module.css';
+import { useState } from 'react';
+import ProjectEditButton from './project-edit-button/project-edit-button';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -23,6 +25,7 @@ interface ProjectContainerProps {
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
+  const [editMode, setEditMode] = useState(false);
 
   if (isLoading) return <LoadingIndicator />;
 
@@ -31,6 +34,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   return (
     <div className="mb-5">
       <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
+      {!editMode && <ProjectEditButton setEditMode={setEditMode} />}
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
       <DescriptionList title={'Goals'} items={data!.goals} />

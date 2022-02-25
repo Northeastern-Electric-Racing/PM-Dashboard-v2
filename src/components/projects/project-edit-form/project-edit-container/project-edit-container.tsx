@@ -163,6 +163,20 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
             </Form.Group>
           }
         />
+        <PageBlock
+          title={'Rules'}
+          headerRight={<></>}
+          body={
+            <Form.Group>
+              <EditableTextInputList
+                items={rules}
+                add={rulesUtil.add}
+                remove={rulesUtil.remove}
+                update={rulesUtil.update}
+              />
+            </Form.Group>
+          }
+        />
         {/* <Row>
             <Form.Group>
               <Form.Label htmlFor="goals-text-input-list">Goals</Form.Label>

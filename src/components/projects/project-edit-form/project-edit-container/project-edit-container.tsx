@@ -12,6 +12,7 @@ import EditableTextInputList from '../../../shared/editable-text-input-list/edit
 import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
 import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
+import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -108,6 +109,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data }
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
         <ProjectEditDetails project={data!} />
+        <ProjectEditSummary project={data!} />
         {/* <Row>
             <Form.Group>
               <Form.Label htmlFor="goals-text-input-list">Goals</Form.Label>

@@ -11,22 +11,27 @@ import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
+import PageBlock from '../../../../shared/page-block/page-block';
 
-interface ProjectSummaryProps {
+interface ProjectEditSummaryProps {
   project: Project;
 }
 
-const WorkPackageSummary: React.FC<ProjectSummaryProps> = ({ project }) => {
-  const [open, setOpen] = useState(false);
-
-  const {summary} = project;
+const ProjectEditSummary: React.FC<ProjectEditSummaryProps> = ({ project }) => {
+  const { summary } = project;
 
   return (
-    <Form.Group>
-      <b>Project Summary</b>
-      <textarea>{summary}</textarea>
-    </Form.Group>
+    <PageBlock
+      title={'Project Summary'}
+      headerRight={<></>}
+      body={
+        <Form.Group>
+          <b>Project Summary</b>
+          <Form.Control as="textarea" value={summary} rows={4} />
+        </Form.Group>
+      }
+    />
   );
 };
 
-export default WorkPackageSummary;
+export default ProjectEditSummary;

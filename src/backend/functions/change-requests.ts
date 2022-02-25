@@ -30,7 +30,8 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
     reviewer: true,
     changes: {
       include: {
-        implementer: true
+        implementer: true,
+        wbsElement: true
       }
     },
     scopeChangeRequest: { include: { why: true } },
@@ -72,7 +73,11 @@ const changeRequestTransformer = (
     ),
     implementedChanges: changeRequest.changes.map((change) => ({
       ...change,
-      wbsNum
+      wbsNum: {
+        car: change.wbsElement.carNumber,
+        project: change.wbsElement.projectNumber,
+        workPackage: change.wbsElement.workPackageNumber
+      }
     })),
     wbsNum,
     ...changeRequest.scopeChangeRequest,

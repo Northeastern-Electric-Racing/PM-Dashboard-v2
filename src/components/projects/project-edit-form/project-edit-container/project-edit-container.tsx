@@ -4,7 +4,7 @@
  */
 
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
-import { Project, WbsNumber } from 'utils';
+import { Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { Form } from 'react-bootstrap';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -18,6 +18,7 @@ import ChangesList from '../../wbs-details/work-package-container/changes-list/c
 import { useAllUsers } from '../../../../services/users.hooks';
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
+import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -180,6 +181,19 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           }
         />
         <ChangesList changes={proj!.changes} />
+        <PageBlock
+          title={'Work Packages'}
+          headerRight={<></>}
+          body={
+            <>
+              {proj!.workPackages.map((ele: WorkPackage) => (
+                <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+                  <WorkPackageSummary workPackage={ele} />
+                </div>
+              ))}
+            </>
+          }
+        />
         <EditModeOptions setEditMode={setEditMode} />
       </Form>
     </div>

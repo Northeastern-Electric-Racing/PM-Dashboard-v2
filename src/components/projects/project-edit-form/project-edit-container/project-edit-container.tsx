@@ -4,38 +4,25 @@
  */
 
 import { createContext, SyntheticEvent, useState, useEffect } from 'react';
-import { WbsNumber } from 'utils';
+import { Project, WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
-import { Form, Row } from 'react-bootstrap';
-import { useSingleProject } from '../../../../services/projects.hooks';
-import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
-import DescriptionList from '../../../shared/description-list/description-list';
-import ErrorPage from '../../../shared/error-page/error-page';
+import { Form } from 'react-bootstrap';
 import PageTitle from '../../../shared/page-title/page-title';
 import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
 import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 
-export const FormContext = createContext({
-  editMode: false,
-  setField: (field: string, value: any) => {}
-});
-
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
+  data: Project;
 }
 
 export interface EditModeProps {
   changeEditMode(arg: any): void;
 }
 
-const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
-  const { isLoading, isError, data, error } = useSingleProject(wbsNum);
-  const [editMode, setEditMode] = useState(false);
-  const [form, setForm] = useState({});
-  const [validated, setValidated] = useState(false);
-
+const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data }) => {
   const [goals, setGoals] = useState(data!.goals);
   const [features, setFeatures] = useState(data!.features);
   const [otherConstraints, setOther] = useState(data!.otherConstraints);
@@ -110,23 +97,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
     }
   };
 
-  const setField = (field: string, value: any) => {
-    setForm({
-      ...form,
-      [field]: value
-    });
-  };
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
-
-  const value = { editMode, setField };
-
-  if (isLoading) return <LoadingIndicator />;
-
-  if (isError) return <ErrorPage message={error?.message} />;
-
   const handleSubmit = (event: SyntheticEvent) => {
     //event.preventDefault();
     const { currentTarget } = event;
@@ -134,12 +104,11 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
   };
 
   return (
-    <FormContext.Provider value={value}>
-      <div className="mb-5">
-        <Form onSubmit={handleSubmit}>
-          <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-          <ProjectEditDetails project={data!} />
-          <Row>
+    <div className="mb-5">
+      <Form onSubmit={handleSubmit}>
+        <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
+        <ProjectEditDetails project={data!} />
+        {/* <Row>
             <Form.Group>
               <Form.Label htmlFor="goals-text-input-list">Goals</Form.Label>
               <Form.Group id="goals-text-input-list">
@@ -190,11 +159,9 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum }) => {
                 />
               </Form.Group>
             </Form.Group>
-          </Row>
-          {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
-        </Form>
-      </div>
-    </FormContext.Provider>
+          </Row> */}
+      </Form>
+    </div>
   );
 };
 

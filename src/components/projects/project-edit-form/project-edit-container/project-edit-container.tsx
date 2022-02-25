@@ -3,8 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
-import { Project, WbsNumber } from 'utils';
+import { SyntheticEvent, useState, SetStateAction, Dispatch, useLayoutEffect } from 'react';
+import { Project, User, WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { Form } from 'react-bootstrap';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -16,10 +16,12 @@ import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../shared/page-block/page-block';
 import ChangesList from '../../wbs-details/work-package-container/changes-list/changes-list';
 import ProjectEditWorkPackagesList from './project-edit-wp-list/project-edit-wp-list';
+import { useAllUsers } from '../../../../services/users.hooks';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
-  data: Project;
+  proj: Project;
+  users: User[];
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -27,13 +29,18 @@ export interface EditModeProps {
   changeEditMode(arg: any): void;
 }
 
-const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, setEditMode }) => {
-  const [goals, setGoals] = useState(data!.goals.map((goal) => goal.detail));
-  const [features, setFeatures] = useState(data!.features.map((feature) => feature.detail));
+const ProjectEditContainer: React.FC<EditFormContainerProps> = ({
+  wbsNum,
+  proj,
+  users,
+  setEditMode
+}) => {
+  const [goals, setGoals] = useState(proj!.goals.map((goal) => goal.detail));
+  const [features, setFeatures] = useState(proj!.features.map((feature) => feature.detail));
   const [otherConstraints, setOther] = useState(
-    data!.otherConstraints.map((constraint) => constraint.detail)
+    proj!.otherConstraints.map((constraint) => constraint.detail)
   );
-  const [rules, setRules] = useState(data!.rules);
+  const [rules, setRules] = useState(proj!.rules);
 
   const goalsUtil: EditableTextInputListUtils = {
     add: (val) => {
@@ -113,9 +120,9 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
   return (
     <div className="mb-5">
       <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-        <ProjectEditDetails project={data!} />
-        <ProjectEditSummary project={data!} />
+        <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
+        <ProjectEditDetails project={proj!} users={users} />
+        <ProjectEditSummary project={proj!} />
         <PageBlock
           title={'Goals'}
           headerRight={<></>}
@@ -172,8 +179,8 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
             </Form.Group>
           }
         />
-        <ChangesList changes={data!.changes} />
-        <ProjectEditWorkPackagesList workPackages={data!.workPackages} />
+        <ChangesList changes={proj!.changes} />
+        <ProjectEditWorkPackagesList workPackages={proj!.workPackages} />
         <EditModeOptions setEditMode={setEditMode} />
       </Form>
     </div>

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project } from 'utils';
+import { Project, User } from 'utils';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
@@ -12,9 +12,11 @@ import { WbsElementStatus } from 'utils/lib/types/project-types';
 // new parts added at the bottom
 interface projectDetailsProps {
   project: Project;
+  users: User[];
 }
 
-const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
+const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) => {
+  console.log(`users: ${users}`);
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
     project.workPackages.length > 0
@@ -82,18 +84,38 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
     </Form.Control>
   );
 
+  const buildUsersSelect = (title: string, defaultUser: User) => {
+    const otherUsers = users.filter((user) => {
+      console.log(`user: ${fullNamePipe(user)}, default: ${fullNamePipe(defaultUser)}`);
+      return fullNamePipe(user) !== fullNamePipe(defaultUser);
+    });
+    console.log(`otherUsers: ${otherUsers}`);
+    return (
+      <>
+        <b>{title}</b>
+        <Form.Control as="select">
+          <option key={0} value={fullNamePipe(defaultUser)}>
+            {fullNamePipe(defaultUser)}
+          </option>
+          {otherUsers.map((user, index) => (
+            <option key={index + 1} value={fullNamePipe(user)}>
+              {fullNamePipe(user)}
+            </option>
+          ))}
+        </Form.Control>
+        <br />
+      </>
+    );
+  };
+
   const detailsBody = (
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          {editDetailsInputBuilder('Project Name:', 'text', project.name)}
-          {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum))}
-          {editDetailsInputBuilder('Project Lead:', 'text', fullNamePipe(project.projectLead))}
-          {editDetailsInputBuilder(
-            'Project Manager:',
-            'text',
-            fullNamePipe(project.projectManager)
-          )}
+          {editDetailsInputBuilder('Project Name:', 'text', project.name, '', '', '', true)}
+          {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum), '', '', '', true)}
+          {buildUsersSelect('Project Lead:', project.projectLead!)}
+          {buildUsersSelect('Project Manager:', project.projectManager!)}
           {editDetailsInputBuilder('Budget:', 'number', project.budget, '$')}
         </Col>
         <Col xs={6} md={4}>

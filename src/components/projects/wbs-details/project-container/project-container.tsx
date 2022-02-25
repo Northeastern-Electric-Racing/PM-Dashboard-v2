@@ -19,6 +19,7 @@ import './project-container.module.css';
 import { useState } from 'react';
 import ProjectEditButton from './project-edit-button/project-edit-button';
 import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
+import { useAllUsers } from '../../../../services/users.hooks';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -26,11 +27,19 @@ interface ProjectContainerProps {
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
+  const {
+    isLoading: isLoadingUser,
+    isError: isErrorUser,
+    data: users,
+    error: errorUser
+  } = useAllUsers();
   const [editMode, setEditMode] = useState(false);
 
-  if (isLoading) return <LoadingIndicator />;
+  if (isLoading || isLoadingUser) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
+
+  if (isErrorUser) return <ErrorPage message={errorUser?.message} />;
 
   const readOnlyView = (
     <div className="mb-5">
@@ -61,7 +70,9 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     </div>
   );
 
-  const editView = <ProjectEditContainer wbsNum={wbsNum} data={data!} setEditMode={setEditMode} />;
+  const editView = (
+    <ProjectEditContainer wbsNum={wbsNum} proj={data!} users={users!} setEditMode={setEditMode} />
+  );
 
   return <>{editMode ? editView : readOnlyView}</>;
 };

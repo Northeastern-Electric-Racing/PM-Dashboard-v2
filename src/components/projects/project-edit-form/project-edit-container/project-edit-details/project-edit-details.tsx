@@ -53,7 +53,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
             type="project-manager"
             value={fullNamePipe(project.projectManager)}
           />
-          <EditableDetail title="Budget" type="number" value={project.budget} />
+          <EditableDetail title="Budget" type="number" value={project.budget} suffix="$" />
         </Col>
         <Col xs={6} md={4}>
           <EditableDetail

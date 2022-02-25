@@ -11,20 +11,18 @@ interface ProjectEditButtonProps {
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const ProjectEditButton: React.FC<ProjectEditButtonProps> = ({
-  setEditMode
-}) => {
+const ProjectEditButton: React.FC<ProjectEditButtonProps> = ({ setEditMode }) => {
   return (
-  <div className={`mx-4 my-3 ${styles.projectActionButtonsContainer}`}>
-  <Button
-    className={styles.projectActionButton}
-    style={{ alignSelf: 'flex-end' }}
-    onClick={() => setEditMode(true)}
-  >
-    Edit
-  </Button>
-</div>
-);
-}
+    <div className={`mx-4 my-3 ${styles.projectActionButtonsContainer}`}>
+      <Button
+        className={styles.projectActionButton}
+        style={{ alignSelf: 'flex-end' }}
+        onClick={() => setEditMode(true)}
+      >
+        Edit
+      </Button>
+    </div>
+  );
+};
 
 export default ProjectEditButton;

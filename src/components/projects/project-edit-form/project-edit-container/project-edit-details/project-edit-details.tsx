@@ -85,17 +85,17 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
 
   const buildUsersSelect = (title: string, defaultUser: User) => {
     const otherUsers = users.filter((user) => {
-      return fullNamePipe(user) !== fullNamePipe(defaultUser);
+      return user.userId !== defaultUser.userId;
     });
     return (
       <>
         <b>{title}</b>
         <Form.Control as="select">
-          <option key={0} value={fullNamePipe(defaultUser)}>
+          <option key={defaultUser.userId} value={fullNamePipe(defaultUser)}>
             {fullNamePipe(defaultUser)}
           </option>
           {otherUsers.map((user, index) => (
-            <option key={index + 1} value={fullNamePipe(user)}>
+            <option key={user.userId} value={fullNamePipe(user)}>
               {fullNamePipe(user)}
             </option>
           ))}

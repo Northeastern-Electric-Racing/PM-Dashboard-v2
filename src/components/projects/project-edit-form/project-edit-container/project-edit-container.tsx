@@ -122,6 +122,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     <div className="mb-5">
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
+        <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
         <ProjectEditDetails project={proj!} users={data!} />
         <ProjectEditSummary project={proj!} />
         <PageBlock

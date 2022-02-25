@@ -58,6 +58,13 @@ describe('test suite for ProjectEditContainer', () => {
       ).toBeInTheDocument();
     });
 
+    it('renders change request input', () => {
+      mockHook(false, false, users);
+      renderComponent();
+
+      expect(screen.getByPlaceholderText('Change Request ID #')).toBeInTheDocument();
+    });
+
     it('render title of ProjectEditDetails', () => {
       mockHook(false, false, users);
       renderComponent();

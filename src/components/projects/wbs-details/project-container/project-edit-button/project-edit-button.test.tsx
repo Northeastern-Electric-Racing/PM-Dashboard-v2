@@ -7,7 +7,7 @@ import { render, screen } from '../../../../../test-support/test-utils';
 import ProjectEditButton from './project-edit-button';
 
 describe('test suite for ProjectEditButton', () => {
-  it('render button', () => {
+  it('render edit button', () => {
     render(<ProjectEditButton setEditMode={() => null} />);
 
     expect(screen.getByText('Edit')).toBeInTheDocument();

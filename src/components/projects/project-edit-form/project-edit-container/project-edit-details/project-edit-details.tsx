@@ -16,7 +16,6 @@ interface projectDetailsProps {
 }
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) => {
-  console.log(`users: ${users}`);
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
     project.workPackages.length > 0
@@ -86,10 +85,8 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
 
   const buildUsersSelect = (title: string, defaultUser: User) => {
     const otherUsers = users.filter((user) => {
-      console.log(`user: ${fullNamePipe(user)}, default: ${fullNamePipe(defaultUser)}`);
       return fullNamePipe(user) !== fullNamePipe(defaultUser);
     });
-    console.log(`otherUsers: ${otherUsers}`);
     return (
       <>
         <b>{title}</b>

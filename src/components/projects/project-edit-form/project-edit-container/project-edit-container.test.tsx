@@ -3,6 +3,15 @@ import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbe
 import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
 import ProjectEditContainer from './project-edit-container';
 import { wbsPipe } from '../../../../shared/pipes';
+import { useAllUsers } from '../../../../services/users.hooks';
+import { UseQueryResult } from 'react-query';
+import { User } from 'utils';
+import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
+import {
+  exampleAdminUser,
+  exampleAppAdminUser,
+  exampleLeadershipUser
+} from '../../../../test-support/test-data/users.stub';
 
 // jest.mock('../../../../services/projects.hooks');
 
@@ -14,6 +23,16 @@ import { wbsPipe } from '../../../../shared/pipes';
 //   );
 // };
 
+jest.mock('../../../../services/users.hooks');
+
+const mockedUseAllUsers = useAllUsers as jest.Mock<UseQueryResult<User[]>>;
+
+const mockHook = (isLoading: boolean, isError: boolean, data?: User[], error?: Error) => {
+  mockedUseAllUsers.mockReturnValue(mockUseQueryResult<User[]>(isLoading, isError, data, error));
+};
+
+const users = [exampleAdminUser, exampleAppAdminUser, exampleLeadershipUser];
+
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
@@ -21,7 +40,7 @@ const renderComponent = () => {
     <RouterWrapper>
       <ProjectEditContainer
         wbsNum={exampleWbsProject1}
-        data={exampleProject1}
+        proj={exampleProject1}
         setEditMode={() => null}
       />
     </RouterWrapper>
@@ -31,6 +50,7 @@ const renderComponent = () => {
 describe('test suite for ProjectEditContainer', () => {
   describe('rendering subcomponents of ProjectEditContainer', () => {
     it('renders title', () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(
@@ -39,18 +59,21 @@ describe('test suite for ProjectEditContainer', () => {
     });
 
     it('render title of ProjectEditDetails', () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
     });
 
     it('render title of ProjectEditSummary', () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Project Summary')).toBeInTheDocument();
     });
 
     it('render goals list', async () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Goals')).toBeInTheDocument();
@@ -61,6 +84,7 @@ describe('test suite for ProjectEditContainer', () => {
     });
 
     it('render features list', async () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Features')).toBeInTheDocument();
@@ -71,6 +95,7 @@ describe('test suite for ProjectEditContainer', () => {
     });
 
     it('render other constraints list', async () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Other Constraints')).toBeInTheDocument();
@@ -81,6 +106,7 @@ describe('test suite for ProjectEditContainer', () => {
     });
 
     it('render rules list', async () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Goals')).toBeInTheDocument();
@@ -89,18 +115,21 @@ describe('test suite for ProjectEditContainer', () => {
     });
 
     it('render title of ChangesList', () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Changes')).toBeInTheDocument();
     });
 
     it('render title of ProjectEditWorkPackagesList', () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Work Packages')).toBeInTheDocument();
     });
 
     it('renders save and cancel buttons', () => {
+      mockHook(false, false, users);
       renderComponent();
 
       expect(screen.getByText('Cancel')).toBeInTheDocument();

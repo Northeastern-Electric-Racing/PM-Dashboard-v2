@@ -6,8 +6,14 @@ import {
   exampleProject3
 } from '../../../../../test-support/test-data/projects.stub';
 import ProjectEditDetails from './project-edit-details';
+import {
+  exampleAdminUser,
+  exampleAppAdminUser,
+  exampleLeadershipUser
+} from '../../../../../test-support/test-data/users.stub';
 
 const projs = [exampleProject1, exampleProject2, exampleProject3];
+const users = [exampleAdminUser, exampleAppAdminUser, exampleLeadershipUser];
 
 describe('Rendering Project Details Component', () => {
   projs.forEach((proj, index) => {
@@ -31,8 +37,8 @@ describe('Rendering Project Details Component', () => {
           )
         : 'n/a';
 
-    it(`renders all fields for project ${index}`, async () => {
-      render(<ProjectEditDetails project={proj} />);
+    it(`renders all fields for project ${index + 1}`, async () => {
+      render(<ProjectEditDetails project={proj} users={users} />);
 
       expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
       expect(screen.getByRole('option', { name: 'ACTIVE' })).toBeInTheDocument();
@@ -52,9 +58,11 @@ describe('Rendering Project Details Component', () => {
       expect(screen.getByText('WBS #:')).toBeInTheDocument();
       expect(textboxInputs).toContain(wbsPipe(proj.wbsNum));
       expect(screen.getByText('Project Lead:')).toBeInTheDocument();
-      expect(textboxInputs).toContain(fullNamePipe(proj.projectLead));
       expect(screen.getByText('Project Manager:')).toBeInTheDocument();
-      expect(textboxInputs).toContain(fullNamePipe(proj.projectManager));
+      // checks that the options for both dropdowns contain all the users
+      users.forEach((user) => {
+        expect(screen.getAllByRole('option', { name: fullNamePipe(user) })).toHaveLength(2);
+      });
       expect(screen.getByText('Budget:')).toBeInTheDocument();
       expect(numberInputs).toContain(proj.budget);
 

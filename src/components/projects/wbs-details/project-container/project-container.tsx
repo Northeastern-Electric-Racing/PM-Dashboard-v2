@@ -27,19 +27,11 @@ interface ProjectContainerProps {
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
-  const {
-    isLoading: isLoadingUser,
-    isError: isErrorUser,
-    data: users,
-    error: errorUser
-  } = useAllUsers();
   const [editMode, setEditMode] = useState(false);
 
-  if (isLoading || isLoadingUser) return <LoadingIndicator />;
+  if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
-
-  if (isErrorUser) return <ErrorPage message={errorUser?.message} />;
 
   const readOnlyView = (
     <div className="mb-5">
@@ -70,9 +62,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     </div>
   );
 
-  const editView = (
-    <ProjectEditContainer wbsNum={wbsNum} proj={data!} users={users!} setEditMode={setEditMode} />
-  );
+  const editView = <ProjectEditContainer wbsNum={wbsNum} proj={data!} setEditMode={setEditMode} />;
 
   return <>{editMode ? editView : readOnlyView}</>;
 };

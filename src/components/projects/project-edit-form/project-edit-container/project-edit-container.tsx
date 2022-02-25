@@ -17,11 +17,12 @@ import PageBlock from '../../../shared/page-block/page-block';
 import ChangesList from '../../wbs-details/work-package-container/changes-list/changes-list';
 import ProjectEditWorkPackagesList from './project-edit-wp-list/project-edit-wp-list';
 import { useAllUsers } from '../../../../services/users.hooks';
+import ErrorPage from '../../../shared/error-page/error-page';
+import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
   proj: Project;
-  users: User[];
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -29,18 +30,14 @@ export interface EditModeProps {
   changeEditMode(arg: any): void;
 }
 
-const ProjectEditContainer: React.FC<EditFormContainerProps> = ({
-  wbsNum,
-  proj,
-  users,
-  setEditMode
-}) => {
+const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
   const [goals, setGoals] = useState(proj!.goals.map((goal) => goal.detail));
   const [features, setFeatures] = useState(proj!.features.map((feature) => feature.detail));
   const [otherConstraints, setOther] = useState(
     proj!.otherConstraints.map((constraint) => constraint.detail)
   );
   const [rules, setRules] = useState(proj!.rules);
+  const { isLoading, isError, data, error } = useAllUsers();
 
   const goalsUtil: EditableTextInputListUtils = {
     add: (val) => {
@@ -117,11 +114,15 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({
     console.log(currentTarget);
   };
 
+  if (isLoading) return <LoadingIndicator />;
+
+  if (isError) return <ErrorPage message={error?.message} />;
+
   return (
     <div className="mb-5">
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
-        <ProjectEditDetails project={proj!} users={users} />
+        <ProjectEditDetails project={proj!} users={data!} />
         <ProjectEditSummary project={proj!} />
         <PageBlock
           title={'Goals'}

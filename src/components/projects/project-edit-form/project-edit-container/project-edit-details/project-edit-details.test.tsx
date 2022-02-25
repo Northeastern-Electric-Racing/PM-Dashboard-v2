@@ -1,5 +1,5 @@
 import { render, screen } from '../../../../../test-support/test-utils';
-import { endDatePipe, fullNamePipe, wbsPipe, weeksPipe } from '../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 import {
   exampleProject1,
   exampleProject2,
@@ -64,13 +64,9 @@ describe('Rendering Project Details Component', () => {
       expect(screen.getByText('weeks')).toBeInTheDocument();
       expect(screen.getByText('Start Date:')).toBeInTheDocument();
       // have to do not length 0 in case both start and end date are both 'n/a'
-      startDate === 'n/a'
-        ? expect(screen.getAllByPlaceholderText('n/a')).not.toHaveLength(0)
-        : expect(screen.getByPlaceholderText(startDate)).toBeInTheDocument();
+      expect(screen.getAllByPlaceholderText(startDate)).not.toHaveLength(0);
       expect(screen.getByText('End Date:')).toBeInTheDocument();
-      endDate === 'n/a'
-        ? expect(screen.getAllByPlaceholderText('n/a')).not.toHaveLength(0)
-        : expect(screen.getByPlaceholderText(endDate)).toBeInTheDocument();
+      expect(screen.getAllByPlaceholderText(endDate)).not.toHaveLength(0);
       expect(screen.getByText('Expected Progress:')).toBeInTheDocument();
       expect(screen.getByText('Timeline Status:')).toBeInTheDocument();
       expect(screen.getAllByPlaceholderText('Not implemented yet')).toHaveLength(2);

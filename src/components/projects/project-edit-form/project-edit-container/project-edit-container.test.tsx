@@ -1,16 +1,12 @@
-import { UseQueryResult } from 'react-query';
-import { Project } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
 import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
 import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
-import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectEditContainer from './project-edit-container';
 import { wbsPipe } from '../../../../shared/pipes';
 
 // jest.mock('../../../../services/projects.hooks');
 
-const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
+// const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 
 // const mockHook = (isLoading: boolean, isError: boolean, data?: Project, error?: Error) => {
 //   mockedUseSingleProject.mockReturnValue(

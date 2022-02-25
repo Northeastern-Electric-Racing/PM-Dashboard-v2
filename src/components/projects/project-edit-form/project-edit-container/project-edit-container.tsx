@@ -15,7 +15,6 @@ import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../shared/page-block/page-block';
 import ChangesList from '../../wbs-details/work-package-container/changes-list/changes-list';
-import ProjectEditWorkPackagesList from './project-edit-wp-list/project-edit-wp-list';
 import { useAllUsers } from '../../../../services/users.hooks';
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
@@ -181,7 +180,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           }
         />
         <ChangesList changes={proj!.changes} />
-        <ProjectEditWorkPackagesList workPackages={proj!.workPackages} />
         <EditModeOptions setEditMode={setEditMode} />
       </Form>
     </div>

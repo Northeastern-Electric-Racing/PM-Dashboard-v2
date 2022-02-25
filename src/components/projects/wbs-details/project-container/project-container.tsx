@@ -34,8 +34,10 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
 
   const readOnlyView = (
     <div className="mb-5">
-      <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
-      {!editMode && <ProjectEditButton setEditMode={setEditMode} />}
+      <PageTitle
+        title={`${wbsPipe(wbsNum)} - ${data!.name}`}
+        actionButton={editMode ? <></> : <ProjectEditButton setEditMode={setEditMode} />}
+      />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
       <DescriptionList title={'Goals'} items={data!.goals} />

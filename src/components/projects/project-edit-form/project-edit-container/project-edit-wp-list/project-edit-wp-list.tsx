@@ -22,8 +22,8 @@ const ProjectEditWorkPackagesList: React.FC<ProjectEditWorkPackagesListProps> = 
       headerRight={<></>}
       body={
         <Card className={styles.header}>
-          {workPackages.map((wp) => (
-            <Card.Header>
+          {workPackages.map((wp, index) => (
+            <Card.Header key={index}>
               <div>
                 <p className={styles.wbsNum}>{wbsPipe(wp.wbsNum)}</p>
                 <p className={styles.name}>{wp.name} </p>

@@ -1,5 +1,4 @@
 import { render, screen } from '../../../../../test-support/test-utils';
-import { Project } from 'utils';
 import { endDatePipe, fullNamePipe, wbsPipe, weeksPipe } from '../../../../../shared/pipes';
 import {
   exampleProject1,
@@ -7,7 +6,6 @@ import {
   exampleProject3
 } from '../../../../../test-support/test-data/projects.stub';
 import ProjectEditDetails from './project-edit-details';
-import { scryRenderedDOMComponentsWithTag } from 'react-dom/test-utils';
 
 const projs = [exampleProject1, exampleProject2, exampleProject3];
 
@@ -37,7 +35,6 @@ describe('Rendering Project Details Component', () => {
       render(<ProjectEditDetails project={proj} />);
 
       expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
-      //add test for status select
       expect(screen.getByRole('option', { name: 'ACTIVE' })).toBeInTheDocument();
       expect(screen.getByRole('option', { name: 'INACTIVE' })).toBeInTheDocument();
       expect(screen.getByRole('option', { name: 'COMPLETE' })).toBeInTheDocument();

@@ -19,7 +19,6 @@ import './project-container.module.css';
 import { useState } from 'react';
 import ProjectEditButton from './project-edit-button/project-edit-button';
 import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
-import { useAllUsers } from '../../../../services/users.hooks';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;

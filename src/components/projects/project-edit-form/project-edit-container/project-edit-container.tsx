@@ -3,8 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { SyntheticEvent, useState, SetStateAction, Dispatch, useLayoutEffect } from 'react';
-import { Project, User, WbsNumber } from 'utils';
+import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
+import { Project, WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { Form } from 'react-bootstrap';
 import PageTitle from '../../../shared/page-title/page-title';

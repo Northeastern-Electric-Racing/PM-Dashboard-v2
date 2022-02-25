@@ -4,16 +4,9 @@
  */
 
 import { Project } from 'utils';
-import { Col, Container, Row, Form } from 'react-bootstrap';
+import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
-import EditableDetail from '../../../../shared/editable-detail/editable-detail';
-import {
-  weeksPipe,
-  wbsPipe,
-  endDatePipe,
-  fullNamePipe,
-  listPipe
-} from '../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 // new parts added at the bottom
@@ -23,10 +16,60 @@ interface projectDetailsProps {
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
   const statuses = Object.values(WbsElementStatus);
+  const startDate =
+    project.workPackages.length > 0
+      ? project.workPackages
+          .reduce(
+            (min, cur) => (cur.startDate < min ? cur.startDate : min),
+            project.workPackages[0].startDate
+          )
+          .toLocaleDateString()
+      : 'n/a';
+  const endDate =
+    project.workPackages.length > 0
+      ? endDatePipe(
+          project.workPackages.reduce(
+            (min, cur) => (cur.startDate < min ? cur.startDate : min),
+            project.workPackages[0].startDate
+          ),
+          project.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
+        )
+      : 'n/a';
 
-  function padLink(link: string | undefined) {
-    return link === undefined ? 'Enter Link Here...' : link;
-  }
+  console.log(`startDate: ${startDate}, endDate: ${endDate}`);
+
+  const editDetailsInputBuilder = (
+    title: string,
+    type: string,
+    defaultValue: any,
+    prefix = '',
+    suffix = '',
+    placeholder = '',
+    readOnly = false
+  ) => {
+    const formInput = (
+      <Form.Group>
+        <InputGroup>
+          {prefix ? <InputGroup.Text>{prefix}</InputGroup.Text> : <></>}
+          <Form.Control
+            type={type}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            readOnly={readOnly}
+          />
+          {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : <></>}
+        </InputGroup>
+      </Form.Group>
+    );
+
+    return (
+      <>
+        <b>{title}</b>
+        {formInput}
+        <br />
+      </>
+    );
+  };
 
   const statusSelect = (
     <Form.Control as="select">
@@ -41,60 +84,70 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          <EditableDetail title="Project Title" type="title" value={project.name} />
-          <EditableDetail title="Project WBS#" type="wbs" value={wbsPipe(project.wbsNum)} />
-          <EditableDetail
-            title="Project Lead"
-            type="project-lead"
-            value={fullNamePipe(project.projectLead)}
-          />
-          <EditableDetail
-            title="Project Manager"
-            type="project-manager"
-            value={fullNamePipe(project.projectManager)}
-          />
-          <EditableDetail title="Budget" type="number" value={project.budget} suffix="$" />
+          {editDetailsInputBuilder('Project Name:', 'text', project.name)}
+          {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum))}
+          {editDetailsInputBuilder('Project Lead:', 'text', fullNamePipe(project.projectLead))}
+          {editDetailsInputBuilder(
+            'Project Manager:',
+            'text',
+            fullNamePipe(project.projectManager)
+          )}
+          {editDetailsInputBuilder('Budget:', 'number', project.budget, '$')}
         </Col>
         <Col xs={6} md={4}>
-          <EditableDetail
-            title="Duration"
-            type="duration"
-            value={String(project.duration)}
-            suffix="weeks"
-          />
-          <EditableDetail title="Start Date" type="start-date" value="mm/dd/yyyy" readOnly={true} />
-          <EditableDetail title="End Date" type="end-date" value="mm/dd/yyyy" readOnly={true} />
+          {editDetailsInputBuilder('Duration:', 'number', project.duration, '', 'weeks', '', true)}
+          {editDetailsInputBuilder('Start Date:', 'text', '', '', '', startDate, true)}
+          {editDetailsInputBuilder('End Date:', 'text', '', '', '', endDate, true)}
           <br />
-          <EditableDetail title="Expected Progress" type="progress" value="100" suffix="%" />
-          <EditableDetail title="Timeline Status" type="status" value={String(project.status)} />
+          {editDetailsInputBuilder(
+            'Expected Progress:',
+            'text',
+            '',
+            '',
+            '',
+            'Not implemented yet',
+            true
+          )}
+          {editDetailsInputBuilder(
+            'Timeline Status:',
+            'text',
+            '',
+            '',
+            '',
+            'Not implemented yet',
+            true
+          )}
         </Col>
       </Row>
       <br />
       <br />
       <Row>
         <Col>
-          <EditableDetail
-            title="Slide Deck"
-            type="slide-deck"
-            value={padLink(project.gDriveLink)}
-          />
-        </Col>
-        <Col>
-          <EditableDetail
-            title="Task List"
-            type="task-list"
-            value={padLink(project.taskListLink)}
-          />
-        </Col>
-        <Col>
-          <EditableDetail title="BOM" type="bom" value={padLink(project.bomLink)} />
-        </Col>
-        <Col>
-          <EditableDetail
-            title="Google Drive"
-            type="google-drive"
-            value={padLink(project.slideDeckLink)}
-          />
+          {editDetailsInputBuilder(
+            'Slide Deck',
+            'text',
+            project.slideDeckLink!,
+            '',
+            '',
+            'Slide deck link'
+          )}
+          {editDetailsInputBuilder(
+            'Task List',
+            'text',
+            project.taskListLink!,
+            '',
+            '',
+            'Task list link'
+          )}
+          {editDetailsInputBuilder('BOM', 'text', project.bomLink!, '', '', 'BOM link')}
+          {editDetailsInputBuilder(
+            'Google Drive',
+            'text',
+            project.gDriveLink!,
+            '',
+            '',
+            'Google drive link'
+          )}
         </Col>
       </Row>
     </Container>

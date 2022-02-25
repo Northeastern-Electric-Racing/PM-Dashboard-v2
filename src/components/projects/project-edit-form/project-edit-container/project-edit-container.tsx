@@ -3,7 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { createContext, SyntheticEvent, useState, useEffect } from 'react';
+import {
+  createContext,
+  SyntheticEvent,
+  useState,
+  useEffect,
+  SetStateAction,
+  Dispatch
+} from 'react';
 import { Project, WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { Form } from 'react-bootstrap';
@@ -17,13 +24,14 @@ import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
   data: Project;
+  setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface EditModeProps {
   changeEditMode(arg: any): void;
 }
 
-const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data }) => {
+const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, setEditMode }) => {
   const [goals, setGoals] = useState(data!.goals);
   const [features, setFeatures] = useState(data!.features);
   const [otherConstraints, setOther] = useState(data!.otherConstraints);
@@ -162,6 +170,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data }
               </Form.Group>
             </Form.Group>
           </Row> */}
+        <EditModeOptions setEditMode={setEditMode} />
       </Form>
     </div>
   );

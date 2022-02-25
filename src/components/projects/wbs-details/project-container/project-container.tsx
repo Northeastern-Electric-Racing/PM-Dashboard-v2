@@ -59,7 +59,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     </div>
   );
 
-  const editView = <ProjectEditContainer wbsNum={wbsNum} data={data!} />;
+  const editView = <ProjectEditContainer wbsNum={wbsNum} data={data!} setEditMode={setEditMode} />;
 
   return <>{editMode ? editView : readOnlyView}</>;
 };

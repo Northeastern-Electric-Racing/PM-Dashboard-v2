@@ -36,8 +36,6 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project }) => {
         )
       : 'n/a';
 
-  console.log(`startDate: ${startDate}, endDate: ${endDate}`);
-
   const editDetailsInputBuilder = (
     title: string,
     type: string,

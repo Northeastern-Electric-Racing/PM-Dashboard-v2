@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { EditModeProps } from '../project-edit-container';
 import { Button } from 'react-bootstrap';
 import styles from './edit-mode-options.module.css';
 import { Dispatch, SetStateAction } from 'react';

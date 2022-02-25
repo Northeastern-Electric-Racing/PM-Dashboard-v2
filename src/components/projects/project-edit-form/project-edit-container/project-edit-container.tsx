@@ -20,6 +20,7 @@ import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form'
 import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
+import PageBlock from '../../../shared/page-block/page-block';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -32,9 +33,11 @@ export interface EditModeProps {
 }
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, setEditMode }) => {
-  const [goals, setGoals] = useState(data!.goals);
-  const [features, setFeatures] = useState(data!.features);
-  const [otherConstraints, setOther] = useState(data!.otherConstraints);
+  const [goals, setGoals] = useState(data!.goals.map((goal) => goal.detail));
+  const [features, setFeatures] = useState(data!.features.map((feature) => feature.detail));
+  const [otherConstraints, setOther] = useState(
+    data!.otherConstraints.map((constraint) => constraint.detail)
+  );
   const [rules, setRules] = useState(data!.rules);
 
   const goalsUtil: EditableTextInputListUtils = {
@@ -71,7 +74,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
       setFeatures(clone);
     }
   };
-  const othCUtil: EditableTextInputListUtils = {
+  const ocUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = otherConstraints.slice();
       clone.push(val);
@@ -118,6 +121,48 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
         <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
         <ProjectEditDetails project={data!} />
         <ProjectEditSummary project={data!} />
+        <PageBlock
+          title={'Goals'}
+          headerRight={<></>}
+          body={
+            <Form.Group>
+              <EditableTextInputList
+                items={goals}
+                add={goalsUtil.add}
+                remove={goalsUtil.remove}
+                update={goalsUtil.update}
+              />
+            </Form.Group>
+          }
+        />
+        <PageBlock
+          title={'Features'}
+          headerRight={<></>}
+          body={
+            <Form.Group>
+              <EditableTextInputList
+                items={features}
+                add={featUtil.add}
+                remove={featUtil.remove}
+                update={featUtil.update}
+              />
+            </Form.Group>
+          }
+        />
+        <PageBlock
+          title={'Other Constraints'}
+          headerRight={<></>}
+          body={
+            <Form.Group>
+              <EditableTextInputList
+                items={otherConstraints}
+                add={ocUtil.add}
+                remove={ocUtil.remove}
+                update={ocUtil.update}
+              />
+            </Form.Group>
+          }
+        />
         {/* <Row>
             <Form.Group>
               <Form.Label htmlFor="goals-text-input-list">Goals</Form.Label>

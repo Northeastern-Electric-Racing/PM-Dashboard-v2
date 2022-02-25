@@ -22,6 +22,7 @@ import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../shared/page-block/page-block';
 import ChangesList from '../../wbs-details/work-package-container/changes-list/changes-list';
+import ProjectEditWorkPackagesList from './project-edit-wp-list/project-edit-wp-list';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -179,6 +180,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
           }
         />
         <ChangesList changes={data!.changes} />
+        <ProjectEditWorkPackagesList workPackages={data!.workPackages} />
         {/* <Row>
             <Form.Group>
               <Form.Label htmlFor="goals-text-input-list">Goals</Form.Label>

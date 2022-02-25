@@ -181,58 +181,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, data, 
         />
         <ChangesList changes={data!.changes} />
         <ProjectEditWorkPackagesList workPackages={data!.workPackages} />
-        {/* <Row>
-            <Form.Group>
-              <Form.Label htmlFor="goals-text-input-list">Goals</Form.Label>
-              <Form.Group id="goals-text-input-list">
-                <EditableTextInputList
-                  items={goals}
-                  add={goalsUtil.add}
-                  remove={goalsUtil.remove}
-                  update={goalsUtil.update}
-                />
-              </Form.Group>
-            </Form.Group>
-          </Row>
-          <Row>
-            <Form.Group>
-              <Form.Label htmlFor="features-text-input-list">Features</Form.Label>
-              <Form.Group id="features-text-input-list">
-                <EditableTextInputList
-                  items={features}
-                  add={featUtil.add}
-                  remove={featUtil.remove}
-                  update={featUtil.update}
-                />
-              </Form.Group>
-            </Form.Group>
-          </Row>
-          <Row>
-            <Form.Group>
-              <Form.Label htmlFor="other-text-input-list">Other Constraints</Form.Label>
-              <Form.Group id="other-text-input-list">
-                <EditableTextInputList
-                  items={otherConstraints}
-                  add={othCUtil.add}
-                  remove={othCUtil.remove}
-                  update={othCUtil.update}
-                />
-              </Form.Group>
-            </Form.Group>
-          </Row>
-          <Row>
-            <Form.Group>
-              <Form.Label htmlFor="rules-text-input-list">Rules</Form.Label>
-              <Form.Group id="rules-text-input-list">
-                <EditableTextInputList
-                  items={otherConstraints}
-                  add={othCUtil.add}
-                  remove={othCUtil.remove}
-                  update={othCUtil.update}
-                />
-              </Form.Group>
-            </Form.Group>
-          </Row> */}
         <EditModeOptions setEditMode={setEditMode} />
       </Form>
     </div>

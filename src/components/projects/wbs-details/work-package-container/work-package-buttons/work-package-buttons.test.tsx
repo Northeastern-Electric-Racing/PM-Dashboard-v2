@@ -4,15 +4,16 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { EditModeContext } from '../work-package-container';
+import { FormContext } from '../work-package-container';
 import WorkPackageButtons from './work-package-buttons';
 
 describe('Work package edit buttons', () => {
+  const setField = (field: string, value: any) => {};
   it('renders all of the buttons, with edit mode enabled', () => {
     render(
-      <EditModeContext.Provider value={false}>
+      <FormContext.Provider value={{editMode: false, setField}}>
         <WorkPackageButtons changeEditMode={() => {}} />
-      </EditModeContext.Provider>
+      </FormContext.Provider>
     );
     expect(screen.getByText('New Change Request')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeInTheDocument();
@@ -20,9 +21,9 @@ describe('Work package edit buttons', () => {
   });
   it('renders all of the buttons, with edit mode disabled', () => {
     render(
-      <EditModeContext.Provider value={true}>
+      <FormContext.Provider value={{editMode: true, setField}}>
         <WorkPackageButtons changeEditMode={() => {}} />
-      </EditModeContext.Provider>
+      </FormContext.Provider>
     );
     expect(screen.getByText('New Change Request')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeInTheDocument();

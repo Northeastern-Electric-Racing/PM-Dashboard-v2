@@ -7,17 +7,18 @@ import { render, screen, routerWrapperBuilder } from '../../../../../test-suppor
 import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import DependenciesList from './dependencies-list';
-import { EditModeContext } from '../work-package-container';
+import { FormContext } from '../work-package-container';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (editMode?: boolean, path?: string, route?: string) => {
   const RouterWrapper = routerWrapperBuilder({ path, route });
+  const setField = (field: string, value: any) => {}
   return render(
     <RouterWrapper>
       {editMode ? (
-        <EditModeContext.Provider value={editMode}>
+        <FormContext.Provider value={{editMode, setField}}>
           <DependenciesList dependencies={exampleWorkPackage2.dependencies} />
-        </EditModeContext.Provider>
+        </FormContext.Provider>
       ) : (
         <DependenciesList dependencies={exampleWorkPackage2.dependencies} />
       )}

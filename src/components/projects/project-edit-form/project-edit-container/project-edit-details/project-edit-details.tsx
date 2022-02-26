@@ -109,7 +109,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          {editDetailsInputBuilder('Project Name:', 'text', project.name, '', '', '', true)}
+          {editDetailsInputBuilder('Project Name:', 'text', project.name, '', '', '')}
           {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum), '', '', '', true)}
           {buildUsersSelect('Project Lead:', project.projectLead!)}
           {buildUsersSelect('Project Manager:', project.projectManager!)}

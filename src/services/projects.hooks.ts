@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useQuery } from 'react-query';
-import { Project, WbsNumber } from 'utils';
-import { getAllProjects, getSingleProject } from './projects.api';
+import { useMutation, useQuery } from 'react-query';
+import { CreateProjectPayload, Project, WbsNumber } from 'utils';
+import { createSingleProject, getAllProjects, getSingleProject } from './projects.api';
 
 /**
  * Custom React Hook to supply all projects.
@@ -27,4 +27,18 @@ export const useSingleProject = (wbsNum: WbsNumber) => {
     const { data } = await getSingleProject(wbsNum);
     return data;
   });
+};
+
+/**
+ * Custom React Hook to create a new project.
+ *
+ */
+export const useCreateSingleProject = () => {
+  return useMutation<{ message: string }, Error, CreateProjectPayload>(
+    ['createProject'],
+    async (projectPayload: CreateProjectPayload) => {
+      const { data } = await createSingleProject(projectPayload);
+      return data;
+    }
+  );
 };

@@ -6,6 +6,7 @@
 import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
+import { bodySchema, intType, stringType, booleanType } from './api-utils-types';
 
 export interface ChangeRequest {
   crId: number;
@@ -21,13 +22,15 @@ export interface ChangeRequest {
   implementedChanges?: ImplementedChange[];
 }
 
-export enum ChangeRequestType {
-  DesignIssue = 'DESIGN_ISSUE',
-  NewFunction = 'NEW_FUNCTION',
-  Other = 'OTHER',
-  StageGate = 'STAGE_GATE',
-  Activation = 'ACTIVATION'
-}
+export const ChangeRequestType = {
+  Issue: 'ISSUE',
+  Redefinition: 'DEFINITION_CHANGE',
+  Other: 'OTHER',
+  StageGate: 'STAGE_GATE',
+  Activation: 'ACTIVATION'
+} as const;
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type ChangeRequestType = typeof ChangeRequestType[keyof typeof ChangeRequestType];
 
 export interface StandardChangeRequest extends ChangeRequest {
   what: string;
@@ -58,6 +61,7 @@ export enum ChangeRequestReason {
   Estimation = 'ESTIMATION',
   School = 'SCHOOL',
   Manufacturing = 'MANUFACTURING',
+  Design = 'DESIGN',
   Rules = 'RULES',
   OtherProject = 'OTHER_PROJECT',
   Other = 'OTHER'
@@ -71,16 +75,11 @@ export interface ImplementedChange {
   detail: string;
 }
 
-export const reviewChangeRequestPayloadSchema = {
-  type: 'object',
-  properties: {
-    reviewerId: { type: 'number', minimum: 0 },
-    crId: { type: 'number', minimum: 0 },
-    reviewNotes: { type: 'string' },
-    accepted: { type: 'boolean' }
-  },
-  required: ['reviewerId', 'crId', 'reviewNotes', 'accepted'],
-  additionalProperties: false
-} as const;
+export const reviewChangeRequestPayloadSchema = bodySchema({
+  reviewerId: intType,
+  crId: intType,
+  reviewNotes: stringType,
+  accepted: booleanType
+});
 
 export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;

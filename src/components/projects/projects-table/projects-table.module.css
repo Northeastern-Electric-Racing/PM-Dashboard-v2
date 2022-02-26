@@ -5,7 +5,6 @@
 
 .container {
   width: 100%;
-  padding: 0 15px 15px 15px;
 }
 
 .filterTable {
@@ -15,8 +14,6 @@
   position: relative;
   margin-right: 0;
   margin-left: 0;
-  padding-left: 15px;
-  padding-right: 5px;
 }
 
 .projectsTable {
@@ -25,6 +22,5 @@
   flex-direction: row;
   width: 80%;
   position: relative;
-  padding-right: 5px;
 }
 

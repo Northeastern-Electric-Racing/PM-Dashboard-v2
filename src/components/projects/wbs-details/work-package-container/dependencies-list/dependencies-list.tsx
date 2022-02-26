@@ -15,10 +15,10 @@ interface DependenciesListProps {
 }
 
 const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
-  const { editMode } = useContext(FormContext);
+  const { editMode, setField } = useContext(FormContext);
   const AddButton = (
     <InputGroup>
-      <Form.Control type="text" placeholder="New WBS #"></Form.Control>
+      <Form.Control type="text" placeholder="New WBS #" onChange={(e) => setField("dependency",e.target.value)}></Form.Control>
       <Button variant="success">+</Button>
     </InputGroup>
   );

@@ -18,72 +18,80 @@ interface WorkPackageDetailsProps {
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
+  const { editMode, setField } = useContext(FormContext);
 
+  function formatDate(date: Date) {
+    const offset = date.getTimezoneOffset();
+    date = new Date(date.getTime() - offset * 60 * 1000);
+    return date.toISOString().split('T')[0];
+  }
   
-
   const detailsBody = (
     <Container fluid>
-        <Row>
-          <Col xs={12} md={6}>
-            <EditableDetail
-              title="Work Package Name"
-              value={workPackage.name}
-              type="text"
-              fieldName="name"
-            />
-            <EditableDetail
-              title="WBS #"
-              value={wbsPipe(workPackage.wbsNum)}
-              type="text"
-              readOnly={true}
-            />
-            <EditableDetail
-              title="Project Lead"
-              value={fullNamePipe(workPackage.projectLead)}
-              type="text"
-              fieldName="projectLead"
-            />
-            <EditableDetail
-              title="Project Manager"
-              value={fullNamePipe(workPackage.projectManager)}
-              type="text"
-              fieldName="projectManager"
-            />
-            <EditableDetail
-              title="Duration"
-              value={`${workPackage.duration}`}
-              type="number"
-              suffix="weeks"
-              fieldName="duration"
-            />
-          </Col>
-          <Col xs={6} md={4}>
-            <EditableDetail
-              title="Start Date"
-              value={workPackage.startDate.toLocaleDateString()}
-              type="date"
-              fieldName="startDate"
-            />
-            <EditableDetail
-              title="End Date"
-              value={endDatePipe(workPackage.startDate, workPackage.duration)}
-              type="date"
-              readOnly={true}
-              fieldName="endDate"
-            />
-            <EditableDetail
-              title="Progress"
-              value={`${workPackage.progress}`}
-              suffix="%"
-              type="number"
-              fieldName="progress"
-            />
-          </Col>
-        </Row>
+      <Row>
+        <Col xs={12} md={6}>
+          <EditableDetail
+            title="Work Package Name"
+            value={workPackage.name}
+            type="text"
+            fieldName="name"
+          />
+          <EditableDetail
+            title="WBS #"
+            value={wbsPipe(workPackage.wbsNum)}
+            type="text"
+            readOnly={true}
+          />
+          <EditableDetail
+            title="Project Lead"
+            value={fullNamePipe(workPackage.projectLead)}
+            type="text"
+            fieldName="projectLead"
+          />
+          <EditableDetail
+            title="Project Manager"
+            value={fullNamePipe(workPackage.projectManager)}
+            type="text"
+            fieldName="projectManager"
+          />
+          <EditableDetail
+            title="Duration"
+            value={`${workPackage.duration}`}
+            type="number"
+            suffix="weeks"
+            fieldName="duration"
+          />
+        </Col>
+        <Col xs={6} md={4}>
+          <EditableDetail
+            title="Start Date"
+            value={
+              editMode
+                ? formatDate(workPackage.startDate)
+                : workPackage.startDate.toLocaleDateString()
+            }
+            type="date"
+            fieldName="startDate"
+          />
+          <EditableDetail
+            title="End Date"
+            value={endDatePipe(workPackage.startDate, workPackage.duration)}
+            type="date"
+            readOnly={true}
+            fieldName="endDate"
+          />
+          <EditableDetail
+            title="Progress"
+            value={`${workPackage.progress}`}
+            suffix="%"
+            type="number"
+            fieldName="progress"
+          />
+        </Col>
+      </Row>
     </Container>
   );
 
-  const { editMode, setField } = useContext(FormContext);
   const statuses = Object.values(WbsElementStatus);
   const index = statuses.indexOf(workPackage.status);
   statuses.splice(index, 1);

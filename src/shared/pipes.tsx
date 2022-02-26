@@ -70,3 +70,8 @@ export const datePipe = (date: Date): string => {
     year: 'numeric'
   });
 };
+
+//returns a given number as a string with a percent sign
+export const percentPipe = (percent: number): string => {
+  return `${percent}%`;
+};

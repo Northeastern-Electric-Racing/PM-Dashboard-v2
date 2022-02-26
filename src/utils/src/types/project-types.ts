@@ -52,6 +52,7 @@ export interface WorkPackage extends WbsElement {
   startDate: Date;
   endDate: Date;
   duration: number;
+  expectedProgress: number;
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];
   deliverables: DescriptionBullet[];

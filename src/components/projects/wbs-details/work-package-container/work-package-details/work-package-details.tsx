@@ -4,7 +4,7 @@
  */
 
 import { WorkPackage } from 'utils';
-import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, fullNamePipe, percentPipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
@@ -63,6 +63,11 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
               title="Progress"
               value={`${workPackage.progress}`}
               suffix="%"
+              type="number"
+            />
+            <EditableDetail
+              title="Expected Progress"
+              value={percentPipe(workPackage.expectedProgress)}
               type="number"
             />
           </Col>

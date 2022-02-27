@@ -22,6 +22,8 @@ export const descBulletConverter = (descBullet: Description_Bullet): Description
 export const editProject: Handler = async ({ body }, _context) => {
   const {
     wbsElementId,
+    crId,
+    userId,
     budget,
     summary,
     googleDriveFolderLink,
@@ -56,123 +58,177 @@ export const editProject: Handler = async ({ body }, _context) => {
     throw new TypeError('Project with given wbsElementId does not exist!');
   }
 
+  let changes = [];
+  // get the changes or undefined for each non-optional fields and add it to changes
+  const nameChangeJson = createChangeJsonNonList(
+    'name',
+    originalProject.wbsElement.name,
+    name,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const budgetChangeJson = createChangeJsonNonList(
+    'budget',
+    originalProject.budget,
+    budget,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const summaryChangeJson = createChangeJsonNonList(
+    'summary',
+    originalProject.summary,
+    summary,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const statusChangeJson = createChangeJsonNonList(
+    'status',
+    originalProject.wbsElement.status,
+    status,
+    crId,
+    userId,
+    wbsElementId
+  );
+  // add to changes if not undefined
+  if (nameChangeJson !== undefined) {
+    changes.push(nameChangeJson);
+  }
+  if (budgetChangeJson !== undefined) {
+    changes.push(budgetChangeJson);
+  }
+  if (summaryChangeJson !== undefined) {
+    changes.push(summaryChangeJson);
+  }
+  if (statusChangeJson !== undefined) {
+    changes.push(statusChangeJson);
+  }
+
+  // Dealing with optional arguments
+  if (body.hasOwnProperty('googleDriveFolderLink')) {
+    const driveChangeJson = createChangeJsonNonList(
+      'google drive folder link',
+      originalProject.googleDriveFolderLink,
+      googleDriveFolderLink,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (driveChangeJson !== undefined) {
+      changes.push(driveChangeJson);
+    }
+  }
+  if (body.hasOwnProperty('slideDeckLink')) {
+    const slideChangeJson = createChangeJsonNonList(
+      'slide deck link',
+      originalProject.slideDeckLink,
+      slideDeckLink,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (slideChangeJson !== undefined) {
+      changes.push(slideChangeJson);
+    }
+  }
+  if (body.hasOwnProperty('bomLink')) {
+    const bomChangeJson = createChangeJsonNonList(
+      'bom link',
+      originalProject.bomLink,
+      bomLink,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (bomChangeJson !== undefined) {
+      changes.push(bomChangeJson);
+    }
+  }
+  if (body.hasOwnProperty('taskListLink')) {
+    const taskChangeJson = createChangeJsonNonList(
+      'task list link',
+      originalProject.taskListLink,
+      taskListLink,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (taskChangeJson !== undefined) {
+      changes.push(taskChangeJson);
+    }
+  }
+  if (body.hasOwnProperty('projectManager')) {
+    const projectManagerChangeJson = createChangeJsonNonList(
+      'project manager',
+      originalProject.wbsElement.projectManagerId,
+      body.projectManager,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (projectManagerChangeJson !== undefined) {
+      changes.push(projectManagerChangeJson);
+    }
+  }
+  if (body.hasOwnProperty('projectLead')) {
+    const projectLeadChangeJson = createChangeJsonNonList(
+      'project lead',
+      originalProject.wbsElement.projectLeadId,
+      body.projectLead,
+      crId,
+      userId,
+      wbsElementId
+    );
+    if (projectLeadChangeJson !== undefined) {
+      changes.push(projectLeadChangeJson);
+    }
+  }
+
   // --> Pointer
 
-  //   // get the changes or undefined for each of the fields
-  //   const nameChangeJson = createChangeJsonNonList(
-  //     'name',
-  //     originalWorkPackage.wbsElement.name,
-  //     name,
-  //     crId,
-  //     userId,
-  //     wbsElementId
-  //   );
-  //   const startDateChangeJson = createChangeJsonDates(
-  //     'start date',
-  //     originalWorkPackage.startDate,
-  //     new Date(startDate),
-  //     crId,
-  //     userId,
-  //     wbsElementId
-  //   );
-  //   const durationChangeJson = createChangeJsonNonList(
-  //     'duration',
-  //     originalWorkPackage.duration,
-  //     duration,
-  //     crId,
-  //     userId,
-  //     wbsElementId
-  //   );
-  //   const progressChangeJson = createChangeJsonNonList(
-  //     'progress',
-  //     originalWorkPackage.progress,
-  //     progress,
-  //     crId,
-  //     userId,
-  //     wbsElementId
-  //   );
-  //   const wbsElementStatusChangeJson = createChangeJsonNonList(
-  //     'WBS element status',
-  //     originalWorkPackage.wbsElement.status,
-  //     wbsElementStatus,
-  //     crId,
-  //     userId,
-  //     wbsElementId
-  //   );
-  //   const dependenciesChangeJson = await createDependenciesChangesJson(
-  //     originalWorkPackage.dependencies.map((element) => {
-  //       return element.wbsElementId;
-  //     }),
-  //     wbsElementIds,
-  //     crId,
-  //     userId,
-  //     wbsElementId,
-  //     'dependency'
-  //   );
-  //   const expectedActivitiesChangeJson = createDescriptionBulletChangesJson(
-  //     originalWorkPackage.expectedActivities.map((element) => descBulletConverter(element)),
-  //     expectedActivities,
-  //     crId,
-  //     userId,
-  //     wbsElementId,
-  //     'expected activity'
-  //   );
-  //   const deliverablesChangeJson = createDescriptionBulletChangesJson(
-  //     originalWorkPackage.deliverables.map((element) => descBulletConverter(element)),
-  //     deliverables,
-  //     crId,
-  //     userId,
-  //     wbsElementId,
-  //     'deliverable'
-  //   );
+  // Dealing with lists
+  // TODO: Fix this one
+  const rulesChangeJson = createRulesChangesJson(
+    originalProject.rules,
+    rules,
+    crId,
+    userId,
+    wbsElementId,
+    'rules'
+  );
+  const goalsChangeJson = createDescriptionBulletChangesJson(
+    originalProject.goals.map((element) => descBulletConverter(element)),
+    goals,
+    crId,
+    userId,
+    wbsElementId,
+    'goals'
+  );
+  const featuresChangeJson = createDescriptionBulletChangesJson(
+    originalProject.features.map((element) => descBulletConverter(element)),
+    features,
+    crId,
+    userId,
+    wbsElementId,
+    'features'
+  );
+  const otherConstraintsChangeJson = createDescriptionBulletChangesJson(
+    originalProject.otherConstraints.map((element) => descBulletConverter(element)),
+    otherConstraints,
+    crId,
+    userId,
+    wbsElementId,
+    'other constraints'
+  );
+  // add the changes for each of dependencies, expected activities, and deliverables
+  changes = changes
+    .concat(rulesChangeJson)
+    .concat(goalsChangeJson.changes)
+    .concat(featuresChangeJson.changes)
+    .concat(otherConstraintsChangeJson.changes);
 
-  //   // add to changes if not undefined
-  //   if (nameChangeJson !== undefined) {
-  //     changes.push(nameChangeJson);
-  //   }
-  //   if (startDateChangeJson !== undefined) {
-  //     changes.push(startDateChangeJson);
-  //   }
-  //   if (durationChangeJson !== undefined) {
-  //     changes.push(durationChangeJson);
-  //   }
-  //   if (progressChangeJson !== undefined) {
-  //     changes.push(progressChangeJson);
-  //   }
-  //   if (wbsElementStatusChangeJson !== undefined) {
-  //     changes.push(wbsElementStatusChangeJson);
-  //   }
-  //   if (body.hasOwnProperty('projectManager')) {
-  //     const projectManagerChangeJson = createChangeJsonNonList(
-  //       'project manager',
-  //       originalWorkPackage.wbsElement.projectManagerId,
-  //       body.projectManager,
-  //       crId,
-  //       userId,
-  //       wbsElementId
-  //     );
-  //     if (projectManagerChangeJson !== undefined) {
-  //       changes.push(projectManagerChangeJson);
-  //     }
-  //   }
-  //   if (body.hasOwnProperty('projectLead')) {
-  //     const projectLeadChangeJson = createChangeJsonNonList(
-  //       'project lead',
-  //       originalWorkPackage.wbsElement.projectLeadId,
-  //       body.projectLead,
-  //       crId,
-  //       userId,
-  //       wbsElementId
-  //     );
-  //     if (projectLeadChangeJson !== undefined) {
-  //       changes.push(projectLeadChangeJson);
-  //     }
-  //   }
-  //   // add the changes for each of dependencies, expected activities, and deliverables
-  //   changes = changes
-  //     .concat(dependenciesChangeJson)
-  //     .concat(expectedActivitiesChangeJson.changes)
-  //     .concat(deliverablesChangeJson.changes);
   //   // update the work package with the input fields
   //   const updatedWorkPackage = await prisma.work_Package.update({
   //     where: {
@@ -279,184 +335,184 @@ export const editProject: Handler = async ({ body }, _context) => {
 //   }
 // };
 
-// // create a change json if the old and new value are different, otherwise return undefined
-// export const createChangeJsonNonList = (
-//   nameOfField: string,
-//   oldValue: any,
-//   newValue: any,
-//   crId: number,
-//   implementerId: number,
-//   wbsElementId: number
-// ) => {
-//   if (oldValue == null) {
-//     return {
-//       changeRequestId: crId,
-//       implementerId,
-//       wbsElementId,
-//       detail: `Added ${nameOfField} "${newValue}"`
-//     };
-//   } else if (oldValue !== newValue) {
-//     return {
-//       changeRequestId: crId,
-//       implementerId,
-//       wbsElementId,
-//       detail: `Edited ${nameOfField} from "${oldValue}" to "${newValue}"`
-//     };
-//   }
-//   return undefined;
-// };
+// create a change json if the old and new value are different, otherwise return undefined
+export const createChangeJsonNonList = (
+  nameOfField: string,
+  oldValue: any,
+  newValue: any,
+  crId: number,
+  implementerId: number,
+  wbsElementId: number
+) => {
+  if (oldValue == null) {
+    return {
+      changeRequestId: crId,
+      implementerId,
+      wbsElementId,
+      detail: `Added ${nameOfField} "${newValue}"`
+    };
+  } else if (oldValue !== newValue) {
+    return {
+      changeRequestId: crId,
+      implementerId,
+      wbsElementId,
+      detail: `Edited ${nameOfField} from "${oldValue}" to "${newValue}"`
+    };
+  }
+  return undefined;
+};
 
-// // create a change json if the old and new dates are different, otherwise return undefined
-// export const createChangeJsonDates = (
-//   nameOfField: string,
-//   oldValue: Date,
-//   newValue: Date,
-//   crId: number,
-//   implementerId: number,
-//   wbsElementId: number
-// ) => {
-//   if (oldValue.getTime() !== newValue.getTime()) {
-//     return {
-//       changeRequestId: crId,
-//       implementerId,
-//       wbsElementId,
-//       detail: `Edited ${nameOfField} from "${oldValue.toDateString()}" to "${newValue.toDateString()}"`
-//     };
-//   }
-//   return undefined;
-// };
+// create a change json if the old and new dates are different, otherwise return undefined
+export const createChangeJsonDates = (
+  nameOfField: string,
+  oldValue: Date,
+  newValue: Date,
+  crId: number,
+  implementerId: number,
+  wbsElementId: number
+) => {
+  if (oldValue.getTime() !== newValue.getTime()) {
+    return {
+      changeRequestId: crId,
+      implementerId,
+      wbsElementId,
+      detail: `Edited ${nameOfField} from "${oldValue.toDateString()}" to "${newValue.toDateString()}"`
+    };
+  }
+  return undefined;
+};
 
-// // create a change json list for a given list (dependencies). Only works if the elements themselves should be compared (numbers)
-// export const createDependenciesChangesJson = async (
-//   oldArray: number[],
-//   newArray: number[],
-//   crId: number,
-//   implementerId: number,
-//   wbsElementId: number,
-//   nameOfField: string
-// ) => {
-//   const seenOld = new Set<number>(oldArray);
-//   const seenNew = new Set<number>(newArray);
+// create a change json list for a given list (rules). Only works if the elements themselves should be compared (strings)
+export const createRulesChangesJson = async (
+  oldArray: string[],
+  newArray: string[],
+  crId: number,
+  implementerId: number,
+  wbsElementId: number,
+  nameOfField: string
+) => {
+  const seenOld = new Set<string>(oldArray);
+  const seenNew = new Set<string>(newArray);
 
-//   const changes: { element: number; type: string }[] = [];
+  const changes: { element: string; type: string }[] = [];
 
-//   oldArray.forEach((element) => {
-//     if (!seenNew.has(element)) {
-//       changes.push({ element, type: 'Removed' });
-//     }
-//   });
+  oldArray.forEach((element) => {
+    if (!seenNew.has(element)) {
+      changes.push({ element, type: 'Removed' });
+    }
+  });
 
-//   newArray.forEach((element) => {
-//     if (!seenOld.has(element)) {
-//       changes.push({ element, type: 'Added new' });
-//     }
-//   });
+  newArray.forEach((element) => {
+    if (!seenOld.has(element)) {
+      changes.push({ element, type: 'Added new' });
+    }
+  });
 
-//   // get the wbs number of each changing dependency for the change string
-//   const changedDependencies = await prisma.wBS_Element.findMany({
-//     where: {
-//       wbsElementId: {
-//         in: changes.map((element) => element.element)
-//       }
-//     }
-//   });
+  // get the wbs number of each changing dependency for the change string
+  const changedDependencies = await prisma.wBS_Element.findMany({
+    where: {
+      wbsElementId: {
+        in: changes.map((element) => element.element)
+      }
+    }
+  });
 
-//   const wbsNumbers = new Map(
-//     changedDependencies.map((element) => [
-//       element.wbsElementId,
-//       `${element.carNumber}.${element.projectNumber}.${element.workPackageNumber}`
-//     ])
-//   );
+  const wbsNumbers = new Map(
+    changedDependencies.map((element) => [
+      element.wbsElementId,
+      `${element.carNumber}.${element.projectNumber}.${element.workPackageNumber}`
+    ])
+  );
 
-//   return changes.map((element) => {
-//     return {
-//       changeRequestId: crId,
-//       implementerId,
-//       wbsElementId,
-//       detail: `${element.type} ${nameOfField} "${wbsNumbers.get(element.element)}"`
-//     };
-//   });
-// };
+  return changes.map((element) => {
+    return {
+      changeRequestId: crId,
+      implementerId,
+      wbsElementId,
+      detail: `${element.type} ${nameOfField} "${wbsNumbers.get(element.element)}"`
+    };
+  });
+};
 
-// // this method creates changes for description bullet inputs
-// // it returns it as an object of {deletedIds[], addedDetails[] changes[]}
-// // because the deletedIds are needed for the database and the addedDetails are needed to make new ones
-// export const createDescriptionBulletChangesJson = (
-//   oldArray: DescriptionBullet[],
-//   newArray: DescriptionBullet[],
-//   crId: number,
-//   implementerId: number,
-//   wbsElementId: number,
-//   nameOfField: string
-// ): {
-//   deletedIds: number[];
-//   addedDetails: string[];
-//   editedIdsAndDetails: { id: number; detail: string }[];
-//   changes: {
-//     changeRequestId: number;
-//     implementerId: number;
-//     wbsElementId: number;
-//     detail: string;
-//   }[];
-// } => {
-//   const seenOld = new Map<number, string>();
-//   const seenNew = new Map<number, string>();
-//   oldArray.forEach((element) => {
-//     seenOld.set(element.id, element.detail);
-//   });
+// this method creates changes for description bullet inputs
+// it returns it as an object of {deletedIds[], addedDetails[] changes[]}
+// because the deletedIds are needed for the database and the addedDetails are needed to make new ones
+export const createDescriptionBulletChangesJson = (
+  oldArray: DescriptionBullet[],
+  newArray: DescriptionBullet[],
+  crId: number,
+  implementerId: number,
+  wbsElementId: number,
+  nameOfField: string
+): {
+  deletedIds: number[];
+  addedDetails: string[];
+  editedIdsAndDetails: { id: number; detail: string }[];
+  changes: {
+    changeRequestId: number;
+    implementerId: number;
+    wbsElementId: number;
+    detail: string;
+  }[];
+} => {
+  const seenOld = new Map<number, string>();
+  const seenNew = new Map<number, string>();
+  oldArray.forEach((element) => {
+    seenOld.set(element.id, element.detail);
+  });
 
-//   newArray.forEach((element) => {
-//     seenNew.set(element.id, element.detail);
-//   });
+  newArray.forEach((element) => {
+    seenNew.set(element.id, element.detail);
+  });
 
-//   const changes: { element: DescriptionBullet; type: string }[] = [];
+  const changes: { element: DescriptionBullet; type: string }[] = [];
 
-//   oldArray.forEach((element) => {
-//     if (!seenNew.has(element.id)) {
-//       changes.push({ element, type: 'Removed' });
-//     }
-//   });
+  oldArray.forEach((element) => {
+    if (!seenNew.has(element.id)) {
+      changes.push({ element, type: 'Removed' });
+    }
+  });
 
-//   newArray.forEach((element) => {
-//     if (element.id < 0 || !seenOld.has(element.id)) {
-//       changes.push({ element, type: 'Added new' });
-//     } else if (seenOld.get(element.id) !== element.detail) {
-//       changes.push({ element, type: 'Edited' });
-//     }
-//   });
+  newArray.forEach((element) => {
+    if (element.id < 0 || !seenOld.has(element.id)) {
+      changes.push({ element, type: 'Added new' });
+    } else if (seenOld.get(element.id) !== element.detail) {
+      changes.push({ element, type: 'Edited' });
+    }
+  });
 
-//   return {
-//     deletedIds: changes
-//       .filter((element) => element.type === 'Removed')
-//       .map((element) => {
-//         return element.element.id;
-//       }),
-//     addedDetails: changes
-//       .filter((element) => element.type === 'Added new')
-//       .map((element) => {
-//         return element.element.detail;
-//       }),
-//     editedIdsAndDetails: changes
-//       .filter((element) => element.type === 'Edited')
-//       .map((element) => {
-//         return { id: element.element.id, detail: element.element.detail };
-//       }),
-//     changes: changes.map((element) => {
-//       const detail =
-//         element.type === 'Edited'
-//           ? `${element.type} ${nameOfField} from "${seenOld.get(
-//               element.element.id
-//             )}" to "${seenNew.get(element.element.id)}"`
-//           : `${element.type} ${nameOfField} "${element.element.detail}"`;
-//       return {
-//         changeRequestId: crId,
-//         implementerId,
-//         wbsElementId,
-//         detail
-//       };
-//     })
-//   };
-// };
+  return {
+    deletedIds: changes
+      .filter((element) => element.type === 'Removed')
+      .map((element) => {
+        return element.element.id;
+      }),
+    addedDetails: changes
+      .filter((element) => element.type === 'Added new')
+      .map((element) => {
+        return element.element.detail;
+      }),
+    editedIdsAndDetails: changes
+      .filter((element) => element.type === 'Edited')
+      .map((element) => {
+        return { id: element.element.id, detail: element.element.detail };
+      }),
+    changes: changes.map((element) => {
+      const detail =
+        element.type === 'Edited'
+          ? `${element.type} ${nameOfField} from "${seenOld.get(
+              element.element.id
+            )}" to "${seenNew.get(element.element.id)}"`
+          : `${element.type} ${nameOfField} "${element.element.detail}"`;
+      return {
+        changeRequestId: crId,
+        implementerId,
+        wbsElementId,
+        detail
+      };
+    })
+  };
+};
 
 // // expected structure of json body
 // const inputSchema = {

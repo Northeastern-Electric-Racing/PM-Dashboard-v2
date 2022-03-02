@@ -82,14 +82,75 @@ export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>
 export const projectEditInputSchemaBody = {
   type: 'object',
   properties: {
-    userId: { type: 'integer', minimum: 0 },
+    wbsElementId: { type: 'integer', minimum: 0 },
     crId: { type: 'integer', minimum: 0 },
     name: { type: 'string' },
-    carNumber: { type: 'integer', minimum: 0 },
-    summary: { type: 'string' }
+    userId: { type: 'integer', minimum: 0 },
+    budget: { type: 'integer', minimum: 0 },
+    summary: { type: 'string' },
+    rules: {
+      type: 'array',
+      items: {
+        type: 'string'
+      }
+    },
+    goals: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'integer', minimum: 0 },
+          detail: { type: 'string' }
+        },
+        required: ['id', 'detail']
+      }
+    },
+    features: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'integer', minimum: 0 },
+          detail: { type: 'string' }
+        },
+        required: ['id', 'detail']
+      }
+    },
+    otherConstraints: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: { type: 'integer', minimum: 0 },
+          detail: { type: 'string' }
+        },
+        required: ['id', 'detail']
+      }
+    },
+    wbsElementStatus: {
+      type: 'string',
+      enum: ['INACTIVE', 'ACTIVE', 'COMPLETE']
+    },
+    googleDriveFolderLink: { type: 'string' },
+    slideDeckLink: { type: 'string' },
+    bomLink: { type: 'string' },
+    taskListLink: { type: 'string' },
+    projectLead: { type: 'integer', minimum: 0 },
+    projectManager: { type: 'integer', minimum: 0 }
   },
-  required: ['userId', 'crId', 'name', 'carNumber', 'summary'],
-  additionalProperties: false
+  required: [
+    'wbsElementId',
+    'crId',
+    'userId',
+    'budget',
+    'summary',
+    'rules',
+    'goals',
+    'features',
+    'otherConstraints',
+    'name',
+    'wbsElementStatus'
+  ]
 } as const;
 
 export type EditProjectPayload = FromSchema<typeof projectEditInputSchemaBody>;

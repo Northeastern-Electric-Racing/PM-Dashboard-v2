@@ -3,13 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-const calculateEndDate = (start: Date, weeks: number) => {
+/**
+ * This function calculates the end date.
+ * @param start the start date
+ * @param weeks number of weeks
+ * @returns the start date after the weeks have passed
+ */
+ const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);
   end.setDate(start.getDate() + weeks * 7);
   return end;
 };
 
-const projectDurationBuilder = (wps: any) => {
+/**
+ * This symbol function calculates the duration 
+ * @param wps an array of work packages
+ * @returns the duration of the project in weeks
+ */
+const calculateDuration = (wps: any) => {
   if (wps.length === 0) return 0;
   if (wps.length === 1) return wps[0].duration;
 
@@ -26,4 +37,4 @@ const projectDurationBuilder = (wps: any) => {
   return Math.round(durationWeeks);
 };
 
-export { projectDurationBuilder, calculateEndDate };
+export { calculateDuration, calculateEndDate };

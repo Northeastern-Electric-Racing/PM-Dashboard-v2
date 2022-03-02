@@ -24,8 +24,6 @@ const Dependency: React.FC<DependencyProps> = ({ wbsNumber }) => {
     history.push(`${routes.PROJECTS}/${wbsPipe(wbsNumber)}`);
   }
 
-  function handleDelete() {}
-
   return (
     <div>
       {editMode ? (
@@ -33,9 +31,7 @@ const Dependency: React.FC<DependencyProps> = ({ wbsNumber }) => {
           <Button variant="outline-primary" onClick={handleLinkClick}>
             {wbsPipe(wbsNumber)}
           </Button>
-          <Button variant="danger" onClick={handleDelete}>
-            X
-          </Button>
+          <Button variant="danger">X</Button>
         </ButtonGroup>
       ) : (
         <Button variant="primary" className={styles.dependencyButton} onClick={handleLinkClick}>

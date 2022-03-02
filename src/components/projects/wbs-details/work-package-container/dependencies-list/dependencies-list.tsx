@@ -8,21 +8,53 @@ import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import { FormContext } from '../work-package-container';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { validateWBS } from '../../../../../utils/src/validate-wbs';
 
 interface DependenciesListProps {
   dependencies: WbsNumber[];
 }
 
 const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
-  const { editMode, setField } = useContext(FormContext);
+  const { editMode } = useContext(FormContext);
+  const [dependenciesState, setDependenciesState] = useState(dependencies);
+  const [unvalidatedDependency, setUnvalidatedDependency] = useState('');
+
   const AddButton = (
     <InputGroup>
-      <Form.Control type="text" placeholder="New WBS #" onChange={(e) => setField("dependency",e.target.value)}></Form.Control>
-      <Button variant="success">+</Button>
+      <Form.Control
+        type="text"
+        placeholder="New WBS #"
+        onChange={(e) => setUnvalidatedDependency(e.target.value)}
+      ></Form.Control>
+      <Button variant="success" onClick={handleAdd}>
+        +
+      </Button>
     </InputGroup>
   );
-  const items = dependencies.map((ele) => <Dependency wbsNumber={ele} />);
+
+  function handleDelete(dependency: WbsNumber) {
+    const index = dependenciesState.indexOf(dependency);
+    if (index > -1) {
+      setDependenciesState(dependenciesState.splice(index, 1));
+    }
+  }
+
+  function handleAdd() {
+    let validatedDependency;
+
+    try {
+      validatedDependency = validateWBS(unvalidatedDependency);
+    } catch (error: any) {
+      alert(error.message);
+    }
+
+    if (validatedDependency) {
+      setDependenciesState([validatedDependency]);
+    }
+  }
+
+  const items = dependenciesState.map((e) => <Dependency wbsNumber={e} />);
 
   return (
     <HorizontalList

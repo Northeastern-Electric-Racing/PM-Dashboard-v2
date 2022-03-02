@@ -27,11 +27,12 @@ Please review the [contributor guide](https://github.com/Northeastern-Electric-R
 - [ ] Code sufficiently tested
 - [ ] Screenshots of UI changes (if applicable)
 - [ ] Remove any not-applicable sections
+- [ ] Assign the PR to yourself
+- [ ] PR is linked to the ticket
+- [ ] Request reviewers & ping on Slack
 
 Closes # (issue #)
 
 ## Screenshots (if applicable)
 
 _Any relevant screenshots go here_
-
-

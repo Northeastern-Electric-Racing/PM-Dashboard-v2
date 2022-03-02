@@ -14,9 +14,10 @@ import styles from './dependency.module.css';
 
 interface DependencyProps {
   wbsNumber: WbsNumber;
+  handleDelete: any;
 }
 
-const Dependency: React.FC<DependencyProps> = ({ wbsNumber }) => {
+const Dependency: React.FC<DependencyProps> = ({ wbsNumber, handleDelete }) => {
   const { editMode } = useContext(FormContext);
   const history = useHistory();
 
@@ -31,7 +32,9 @@ const Dependency: React.FC<DependencyProps> = ({ wbsNumber }) => {
           <Button variant="outline-primary" onClick={handleLinkClick}>
             {wbsPipe(wbsNumber)}
           </Button>
-          <Button variant="danger">X</Button>
+          <Button variant="danger" onClick={() => handleDelete(wbsNumber)}>
+            X
+          </Button>
         </ButtonGroup>
       ) : (
         <Button variant="primary" className={styles.dependencyButton} onClick={handleLinkClick}>

@@ -33,16 +33,17 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
     </InputGroup>
   );
 
-  function handleDelete(dependency: WbsNumber) {
-    const index = dependenciesState.indexOf(dependency);
-    if (index > -1) {
-      setDependenciesState(dependenciesState.splice(index, 1));
+  function handleDelete(dependencyToDelete: WbsNumber) {
+    const index = dependenciesState.indexOf(dependencyToDelete);
+    if (index !== -1) {
+      const half1 = dependenciesState.slice(0, index);
+      const half2 = dependenciesState.slice(index + 1);
+      setDependenciesState(half1.concat(half2));
     }
   }
 
   function handleAdd() {
     let validatedDependency;
-
     try {
       validatedDependency = validateWBS(unvalidatedDependency);
     } catch (error: any) {
@@ -50,11 +51,13 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
     }
 
     if (validatedDependency) {
-      setDependenciesState([validatedDependency]);
+      setDependenciesState([...dependenciesState, validatedDependency]);
     }
   }
 
-  const items = dependenciesState.map((e) => <Dependency wbsNumber={e} />);
+  const items = dependenciesState.map((e) => (
+    <Dependency wbsNumber={e} handleDelete={handleDelete} />
+  ));
 
   return (
     <HorizontalList

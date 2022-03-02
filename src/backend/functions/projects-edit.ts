@@ -415,6 +415,10 @@ export const createDescriptionBulletChangesJson = (
 } => {
   const seenOld = new Map<number, string>();
   const seenNew = new Map<number, string>();
+  const oldArrayFiltered = oldArray.filter((element) => {
+    return element.dateDeleted === undefined;
+  });
+
   oldArray.forEach((element) => {
     seenOld.set(element.id, element.detail);
   });
@@ -425,7 +429,7 @@ export const createDescriptionBulletChangesJson = (
 
   const changes: { element: DescriptionBullet; type: string }[] = [];
 
-  oldArray.forEach((element) => {
+  oldArrayFiltered.forEach((element) => {
     if (!seenNew.has(element.id)) {
       changes.push({ element, type: 'Removed' });
     }

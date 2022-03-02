@@ -86,7 +86,6 @@ describe('project edit', () => {
         name: 'name',
         crId: 2,
         wbsElementStatus: 'ACTIVE',
-        deliverables: [{ id: 2, detail: 'def' }],
         budget: 1,
         summary: 'Not done',
         rules: ['rule 1', 'rule 2'],

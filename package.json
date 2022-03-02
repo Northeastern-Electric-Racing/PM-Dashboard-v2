@@ -39,7 +39,8 @@
     "prisma:generate": "npx prisma generate",
     "ts-node": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"}",
     "postinstall": "npm run prisma:generate",
-    "preinstall": "npm run repack-utils-pkg"
+    "preinstall": "npm run repack-utils-pkg",
+    "light-install": "npm run preinstall && npm install utils && npm run postinstall"
   },
   "prisma": {
     "schema": "src/backend/prisma/schema.prisma"

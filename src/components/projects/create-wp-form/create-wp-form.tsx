@@ -3,10 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { isProject, validateWBS, WbsNumber } from "utils";
-import CreateWPFormView from "./create-wp-form/create-wp-form";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { isProject, validateWBS, WbsNumber } from 'utils';
+import { useAuth } from '../../../services/auth.hooks';
+import { useCreateSingleWorkPackage } from '../../../services/work-packages.hooks';
+import { routes } from '../../../shared/routes';
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
+import CreateWPFormView from './create-wp-form/create-wp-form';
 
 export interface EditableTextInputListUtils {
   add: (val: any) => void;
@@ -14,12 +18,29 @@ export interface EditableTextInputListUtils {
   update: (idx: number, val: any) => void;
 }
 
+export interface FormStates {
+  name: Dispatch<SetStateAction<string>>;
+  wbsNum: Dispatch<SetStateAction<string>>;
+  crId: Dispatch<SetStateAction<number>>;
+  startDate: Dispatch<SetStateAction<string>>;
+  duration: Dispatch<SetStateAction<number>>;
+}
+
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
+  const auth = useAuth();
 
+  const [name, setName] = useState('');
+  const [projectWbsNum, setWbsNum] = useState('');
+  const [crId, setCrId] = useState(-1);
+  const [startDate, setStartDate] = useState('');
+  const [duration, setDuration] = useState(-1);
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
   const [deliverables, setDeliverables] = useState<string[]>([]);
+  const { isLoading, mutateAsync } = useCreateSingleWorkPackage();
+
+  if (isLoading) return <LoadingIndicator />;
 
   const depUtils: EditableTextInputListUtils = {
     add: (val) => {
@@ -75,20 +96,76 @@ const CreateWPForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: any) => {
+  const states = {
+    name: setName,
+    wbsNum: setWbsNum,
+    crId: setCrId,
+    startDate: setStartDate,
+    duration: setDuration
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     // exits handleSubmit if form input invalid (should be changed in wire up)
-    const wbsNum: WbsNumber = validateWBS(e.target.wbsNum.value.trim());
+    let wbsNum: WbsNumber;
+    try {
+      wbsNum = validateWBS(projectWbsNum);
 
-    if (!isProject(wbsNum!)) {
-      alert('Please enter a valid Project WBS Number.');
-      return;
+      const { userId } = auth.user!;
+
+      if (!isProject(wbsNum!)) {
+        alert('Please enter a valid Project WBS Number.');
+        return;
+      }
+      const depWbsNums = dependencies.map((dependency) => {
+        const depWbsNum = validateWBS(dependency.trim());
+        return {
+          carNumber: depWbsNum.car,
+          projectNumber: depWbsNum.project,
+          workPackageNumber: depWbsNum.workPackage
+        };
+      });
+      await mutateAsync({
+        userId,
+        name: name.trim(),
+        crId,
+        projectWbsNum: {
+          carNumber: wbsNum.car,
+          projectNumber: wbsNum.project,
+          workPackageNumber: wbsNum.workPackage
+        },
+        startDate,
+        duration,
+        dependencies: depWbsNums,
+        expectedActivities,
+        deliverables
+      });
+      history.push(routes.CHANGE_REQUESTS);
+    } catch (e) {
+      console.log(e);
+      alert('something went wrong');
     }
-  }
+
+    /**
+     * need to get
+     *  userId,
+     *  projectId,
+     *  wbsElementIds of dependencies (should be in wbs num format)
+     *
+     * need to pass down
+     *  name
+     *  crId
+     *  startDate
+     *  duration
+     *  ea
+     *  deliverables
+     */
+  };
 
   return (
     <CreateWPFormView
+      states={states}
       dependencies={dependencies}
       depUtils={depUtils}
       expectedActivities={expectedActivities}

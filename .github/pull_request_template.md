@@ -6,6 +6,12 @@ _Explanation of changes goes here_
 
 _Any other notes go here_
 
+## Test Cases
+
+- Case A
+- Edge case
+- ...
+
 ## Screenshots (if applicable)
 
 _Any relevant screenshots go here_
@@ -29,7 +35,6 @@ Please request reviewers and ping on slack only after you've gone through this w
 - [ ] All code follows repository-configured prettier formatting
 - [ ] No merge conflicts
 - [ ] All checks passing
-- [ ] Code sufficiently tested
 - [ ] Screenshots of UI changes (if applicable)
 - [ ] Remove any not-applicable sections
 - [ ] Assign the PR to yourself

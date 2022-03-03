@@ -13,6 +13,10 @@ _Any remaining things that need to get done_
 - [ ] item 1
 - [ ] ...
 
+## Screenshots (if applicable)
+
+_Any relevant screenshots go here_
+
 ## Checklist
 
 It can be helpful to check the `Checks` and `Files changed` tabs.
@@ -34,7 +38,3 @@ Please request reviewers and ping on slack only after you've gone through this w
 - [ ] Request reviewers & ping on Slack
 
 Closes # (issue #)
-
-## Screenshots (if applicable)
-
-_Any relevant screenshots go here_

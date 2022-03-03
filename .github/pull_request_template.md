@@ -17,6 +17,7 @@ _Any remaining things that need to get done_
 
 It can be helpful to check the `Checks` and `Files changed` tabs.
 Please review the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md) and reach out to your squad if anything is unclear.
+Please request reviewers and ping on slack only after you've gone through this whole checklist.
 
 - [ ] All commits are tagged with the ticket number
 - [ ] No linting errors
@@ -29,6 +30,7 @@ Please review the [contributor guide](https://github.com/Northeastern-Electric-R
 - [ ] Remove any not-applicable sections
 - [ ] Assign the PR to yourself
 - [ ] PR is linked to the ticket
+- [ ] No `package-lock.json` changes (unless dependencies have changed)
 - [ ] Request reviewers & ping on Slack
 
 Closes # (issue #)

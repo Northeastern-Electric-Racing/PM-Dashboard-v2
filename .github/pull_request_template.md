@@ -6,16 +6,16 @@ _Explanation of changes goes here_
 
 _Any other notes go here_
 
+## Screenshots (if applicable)
+
+_Any relevant screenshots go here_
+
 ## To Do
 
 _Any remaining things that need to get done_
 
 - [ ] item 1
 - [ ] ...
-
-## Screenshots (if applicable)
-
-_Any relevant screenshots go here_
 
 ## Checklist
 

@@ -49,6 +49,7 @@ describe('work package container', () => {
     expect(screen.getByText('Work Package Details')).toBeInTheDocument();
     expect(screen.getByText('Duration:')).toBeInTheDocument();
     expect(screen.getByText('Progress:')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeEnabled();
   });
 
   it('handles the error with message', () => {

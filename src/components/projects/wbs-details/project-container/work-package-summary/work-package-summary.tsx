@@ -6,18 +6,29 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
-import { WorkPackageSummary as WPSummary } from 'utils';
+import { WorkPackage } from 'utils';
 import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 interface WorkPackageSummaryProps {
-  workPackage: WPSummary;
+  workPackage: WorkPackage;
 }
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) => {
   const [open, setOpen] = useState(false);
+  const expectedActivitiesList = (
+    <ul>
+      {workPackage.expectedActivities.slice(0, 3).map((item, idx) => <li key={idx}>{item.detail}</li>)}
+    </ul>
+  );
+  const deliverablesList = (
+    <ul>
+      {workPackage.deliverables.slice(0, 3).map((item, idx) => <li key={idx}>{item.detail}</li>)}
+    </ul>
+  );
+
   return (
     <Card>
       <Card.Header className={styles.header} onClick={() => setOpen(!open)} aria-expanded={open}>
@@ -41,6 +52,14 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
                 <Col xs={6} md={4}>
                   <b>Start date:</b> {workPackage.startDate.toLocaleDateString()} <br />
                   <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} md={6}>
+                  <b>Expected Activities:</b> {expectedActivitiesList}
+                </Col>
+                <Col xs={12} md={6}>
+                  <b>Deliverables:</b> {deliverablesList}
                 </Col>
               </Row>
             </Container>

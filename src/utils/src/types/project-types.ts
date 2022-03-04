@@ -5,6 +5,8 @@
 
 import { User } from './user-types';
 import { ImplementedChange } from './change-request-types';
+import { FromSchema } from 'json-schema-to-ts';
+import { bodySchema, intType, stringType } from './api-utils-types';
 
 export interface WbsNumber {
   car: number;
@@ -41,17 +43,7 @@ export interface Project extends WbsElement {
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
-  workPackages: WorkPackageSummary[];
-}
-
-export interface WorkPackageSummary {
-  id: number;
-  wbsNum: WbsNumber;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  duration: number;
-  dependencies: WbsNumber[];
+  workPackages: WorkPackage[];
 }
 
 export interface WorkPackage extends WbsElement {
@@ -71,3 +63,13 @@ export interface DescriptionBullet {
   dateAdded: Date;
   dateDeleted?: Date;
 }
+
+export const createProjectPayloadSchema = bodySchema({
+  userId: intType,
+  crId: intType,
+  name: stringType,
+  carNumber: intType,
+  summary: stringType
+});
+
+export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;

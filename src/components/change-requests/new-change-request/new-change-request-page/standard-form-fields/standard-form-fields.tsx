@@ -7,31 +7,33 @@ import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
-import { Scope_CR_Why_Type } from '@prisma/client';
+import { ChangeRequestReason } from 'utils';
 
-interface IProp {
+interface StandardFormFieldsProp {
   handleChange: (e: any) => void,
 }
 
 const whyInputName = {
-  [Scope_CR_Why_Type.ESTIMATION]: 'estimation_error', 
-  [Scope_CR_Why_Type.SCHOOL]: 'school_work', 
-  [Scope_CR_Why_Type.MANUFACTURING]: 'manufacturing_issues', 
-  [Scope_CR_Why_Type.RULES]: 'rules_compliance', 
-  [Scope_CR_Why_Type.OTHER_PROJECT]: 'other_project', 
-  [Scope_CR_Why_Type.OTHER]: 'other'
+  [ChangeRequestReason.Estimation]: 'estimation_error', 
+  [ChangeRequestReason.School]: 'school_work', 
+  [ChangeRequestReason.Manufacturing]: 'manufacturing_issues', 
+  [ChangeRequestReason.Rules]: 'rules_compliance', 
+  [ChangeRequestReason.OtherProject]: 'other_project', 
+  [ChangeRequestReason.Other]: 'other',
+  [ChangeRequestReason.Design]: 'design'
 }
 
 const whyInputDisplay = {
-  [Scope_CR_Why_Type.ESTIMATION]: 'Estimation Error', 
-  [Scope_CR_Why_Type.SCHOOL]: 'School Work', 
-  [Scope_CR_Why_Type.MANUFACTURING]: 'Manufacturing Issues', 
-  [Scope_CR_Why_Type.RULES]: 'Rules Compliance', 
-  [Scope_CR_Why_Type.OTHER_PROJECT]: 'Other Project/Work Package', 
-  [Scope_CR_Why_Type.OTHER]: 'Other'
+  [ChangeRequestReason.Estimation]: 'Estimation Error', 
+  [ChangeRequestReason.School]: 'School Work', 
+  [ChangeRequestReason.Manufacturing]: 'Manufacturing Issues', 
+  [ChangeRequestReason.Rules]: 'Rules Compliance', 
+  [ChangeRequestReason.OtherProject]: 'Other Project/Work Package', 
+  [ChangeRequestReason.Other]: 'Other',
+  [ChangeRequestReason.Design]: 'Design'
 }
 
-const StandardFormFields: React.FC<IProp> = ({handleChange}) => {
+const StandardFormFields: React.FC<StandardFormFieldsProp> = ({handleChange}) => {
   return (
     <Form>
       <div className={`${'row'} ${styles.container}`}>
@@ -46,7 +48,7 @@ const StandardFormFields: React.FC<IProp> = ({handleChange}) => {
             <Form.Control as="textarea" rows={3} name="scopeImpact" onChange={handleChange}/>
           </Form.Group>
           <Form.Row className="align-items-center">
-            <Col xs="auto" >
+            <Col xs="auto">
               <Form.Label>Budget Impact</Form.Label>
               <InputGroup>
                 <InputGroup.Prepend>
@@ -55,7 +57,7 @@ const StandardFormFields: React.FC<IProp> = ({handleChange}) => {
                 <FormControl id="newCR-budget-impact" name="budgetImpact" onChange={handleChange} type="number"/>
               </InputGroup>
             </Col>
-            <Col xs="auto" >
+            <Col xs="auto">
               <Form.Label>Timeline Impact</Form.Label>
               <InputGroup>
                 <FormControl id="newCR-timeline-impact" name="timelineImpact" onChange={handleChange} type="number"/>
@@ -70,7 +72,7 @@ const StandardFormFields: React.FC<IProp> = ({handleChange}) => {
         <div className={'px-4'}>
           <Form.Label>Why</Form.Label>
           <Form.Group className={'px-4'} controlId="newCR-type">
-            {Object.values(Scope_CR_Why_Type).map((type) => (
+            {Object.values(ChangeRequestReason).map((type: ChangeRequestReason) => (
               <Row key={type} className="mb-3">
                 <Form.Check
                   type="checkbox"
@@ -80,14 +82,14 @@ const StandardFormFields: React.FC<IProp> = ({handleChange}) => {
                   onChange={handleChange}
                   data-checktype={type}
                 />
-                {(type === Scope_CR_Why_Type.OTHER_PROJECT) &&
+                {(type === ChangeRequestReason.OtherProject) &&
                   <Form.Control as="select" custom
                     id="newCR-wbs-num" name={whyInputName[type] + '_explain'} onChange={handleChange}>
                     {exampleAllWorkPackages.map((p) => (
                       <option key={p.id}>{wbsPipe(p.wbsNum)}</option>
                     ))}
                   </Form.Control>}
-                {(type === Scope_CR_Why_Type.OTHER) && <Form.Control type="text"
+                {(type === ChangeRequestReason.Other) && <Form.Control type="text"
                   id="newCR-other-type" name={whyInputName[type] + '_explain'} onChange={handleChange} />}
               </Row>
             ))}

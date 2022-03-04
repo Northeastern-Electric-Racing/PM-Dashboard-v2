@@ -6,11 +6,11 @@
 import { Form, FormControl, InputGroup, Row } from 'react-bootstrap';
 import styles from './stage-gate-form-fields.module.css';
 
-interface IProp {
+interface StageGateProp {
   handleChange: (e: any) => void,
 }
 
-const StageGateFormFields: React.FC<IProp> = ({handleChange}) => {
+const StageGateFormFields: React.FC<StageGateProp> = ({handleChange}) => {
   return (
     <div className={styles.container}>
       <div className={'px-4'}>

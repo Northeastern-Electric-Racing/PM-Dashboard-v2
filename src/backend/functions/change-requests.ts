@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient, Prisma, CR_Type, Scope_CR_Why_Type } from '@prisma/client';
+import { PrismaClient, Prisma, Scope_CR_Why_Type, WBS_Element } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -15,11 +15,11 @@ import {
   buildSuccessResponse,
   buildNotFoundResponse,
   buildServerFailureResponse,
-  ChangeRequestType,
   ChangeRequestReason,
   StandardChangeRequest,
   ActivationChangeRequest,
-  StageGateChangeRequest
+  StageGateChangeRequest,
+  WbsNumber
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -28,9 +28,11 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
   include: {
     submitter: true,
     wbsElement: true,
+    reviewer: true,
     changes: {
       include: {
-        implementer: true
+        implementer: true,
+        wbsElement: true
       }
     },
     scopeChangeRequest: { include: { why: true } },
@@ -44,31 +46,25 @@ const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason 
     ESTIMATION: ChangeRequestReason.Estimation,
     SCHOOL: ChangeRequestReason.School,
     MANUFACTURING: ChangeRequestReason.Manufacturing,
+    DESIGN: ChangeRequestReason.Design,
     RULES: ChangeRequestReason.Rules,
     OTHER_PROJECT: ChangeRequestReason.OtherProject,
     OTHER: ChangeRequestReason.Other
   }[whyType]);
 
-const convertChangeRequestType = (type: CR_Type): ChangeRequestType =>
-  ({
-    ISSUE: ChangeRequestType.DesignIssue,
-    DEFINITION_CHANGE: ChangeRequestType.NewFunction,
-    OTHER: ChangeRequestType.Other,
-    STAGE_GATE: ChangeRequestType.StageGate,
-    ACTIVATION: ChangeRequestType.Activation
-  }[type]);
+const wbsNumOf = (element: WBS_Element): WbsNumber => ({
+  car: element.carNumber,
+  project: element.projectNumber,
+  workPackage: element.workPackageNumber
+});
 
 const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
 ): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
-  const wbsNum = {
-    car: changeRequest.wbsElement.carNumber,
-    project: changeRequest.wbsElement.projectNumber,
-    workPackage: changeRequest.wbsElement.workPackageNumber
-  };
   return {
     ...changeRequest,
-    type: convertChangeRequestType(changeRequest.type),
+    type: changeRequest.type,
+    reviewer: changeRequest.reviewer ?? undefined,
     dateReviewed: changeRequest.dateReviewed ?? undefined,
     accepted: changeRequest.accepted ?? undefined,
     reviewNotes: changeRequest.reviewNotes ?? undefined,
@@ -79,9 +75,9 @@ const changeRequestTransformer = (
     ),
     implementedChanges: changeRequest.changes.map((change) => ({
       ...change,
-      wbsNum
+      wbsNum: wbsNumOf(change.wbsElement)
     })),
-    wbsNum,
+    wbsNum: wbsNumOf(changeRequest.wbsElement),
     ...changeRequest.scopeChangeRequest,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({
       ...why,

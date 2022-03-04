@@ -20,17 +20,16 @@ import LoadingIndicator from '../../../shared/loading-indicator/loading-indicato
 import ErrorPage from '../../../shared/error-page/error-page';
 import styles from './new-change-request-page.module.css';
 import { wbsPipe } from '../../../../shared/pipes';
-import { CR_Type, Scope_CR_Why_Type } from '@prisma/client';
 import { useCreateChangeRequest } from '../../../../services/change-requests.hooks';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../../services/auth.hooks';
 import { NewActivationChangeRequestPayload, NewStageRequestChangeRequestPayload, NewStandardChangeRequestPayload } from 'utils';
-import { NewChangeRequestPayload } from 'utils/src';
+import { ChangeRequestType, ChangeRequestReason, NewChangeRequestPayload } from 'utils';
 
 interface FormData {
   projectWBS: number,
   workPackageWBS: number,
-  type: CR_Type,
+  type: ChangeRequestType,
 
   what: string,
   scopeImpact: string,
@@ -42,6 +41,7 @@ interface FormData {
   rules_compliance: boolean,
   other_project: boolean,
   other: boolean,
+  design: boolean,
   other_project_explain: string,
   other_explain: string,
 
@@ -55,8 +55,8 @@ interface FormData {
 }
 
 interface WhyResponse {
-  type: Scope_CR_Why_Type,
-  explain: string
+  type: ChangeRequestReason;
+  explain: string;
 }
 
 const NewChangeRequestPage: React.FC = () => {
@@ -75,7 +75,7 @@ const NewChangeRequestPage: React.FC = () => {
 
     let req: NewStandardChangeRequestPayload | NewStageRequestChangeRequestPayload | NewActivationChangeRequestPayload | undefined;
 
-    if (type === CR_Type.ACTIVATION) {
+    if (type === ChangeRequestType.Activation) {
       req = { 
         projectLeadId: formData.projectLeadId,
         projectManagerId: formData.projectManagerId,
@@ -83,7 +83,7 @@ const NewChangeRequestPage: React.FC = () => {
         confirmDetails: formData.confirmDetails
       };
     }
-    else if (type === CR_Type.STAGE_GATE) {
+    else if (type === ChangeRequestType.StageGate) {
       req = { leftoverBudget: formData.leftoverBudget, confirmDone: formData.confirmDone };
     }
     else {
@@ -94,17 +94,19 @@ const NewChangeRequestPage: React.FC = () => {
         other_project,
         other,
         other_project_explain,
-        other_explain
+        other_explain,
+        design
       } = formData;
 
       const whyOpts: WhyResponse[] = [];
 
-      if (estimation_error) whyOpts.push({'type': Scope_CR_Why_Type.ESTIMATION, explain: ""});
-      if (school_work) whyOpts.push({'type': Scope_CR_Why_Type.SCHOOL, explain: ""});
-      if (manufacturing_issues) whyOpts.push({'type': Scope_CR_Why_Type.MANUFACTURING, explain: ""});
-      if (rules_compliance) whyOpts.push({'type': Scope_CR_Why_Type.RULES, explain: ""});
-      if (other_project) whyOpts.push({'type': Scope_CR_Why_Type.OTHER_PROJECT, 'explain': other_project_explain});
-      if (other) whyOpts.push({'type': Scope_CR_Why_Type.OTHER, 'explain': other_explain});
+      if (estimation_error) whyOpts.push({'type': ChangeRequestReason.Estimation, explain: ""});
+      if (school_work) whyOpts.push({'type': ChangeRequestReason.School, explain: ""});
+      if (manufacturing_issues) whyOpts.push({'type': ChangeRequestReason.Manufacturing, explain: ""});
+      if (rules_compliance) whyOpts.push({'type': ChangeRequestReason.Rules, explain: ""});
+      if (other_project) whyOpts.push({'type': ChangeRequestReason.OtherProject, 'explain': other_project_explain});
+      if (other) whyOpts.push({'type': ChangeRequestReason.Other, 'explain': other_explain});
+      if (design) whyOpts.push({'type': ChangeRequestReason.Design, 'explain': ''});
 
       req = { 
         what: formData.what, 
@@ -168,6 +170,7 @@ const NewChangeRequestPage: React.FC = () => {
     rules_compliance: false,
     other_project: false,
     other: false,
+    design: false,
     other_project_explain: wbsPipe(exampleAllWorkPackages[0].wbsNum),
     other_explain: "",
 
@@ -180,7 +183,7 @@ const NewChangeRequestPage: React.FC = () => {
     confirmDone: false,
   });
 
-  const [formType, setType] = useState<CR_Type>(CR_Type.DEFINITION_CHANGE);
+  const [formType, setType] = useState<ChangeRequestType>(ChangeRequestType.Redefinition);
 
   const projectRes = useAllProjects((value) => {updateValue("projectWBS", value.data![0].id)});
   const workPkgsRes = useAllWorkPackages();
@@ -221,13 +224,13 @@ const NewChangeRequestPage: React.FC = () => {
               handleChange={handleChange}
             />
 
-            {formType === CR_Type.STAGE_GATE && 
+            {formType === ChangeRequestType.StageGate && 
               <StageGateFormFields handleChange={handleChange} />}
 
-            {formType !== CR_Type.STAGE_GATE && formType !== CR_Type.ACTIVATION && 
+            {formType !== ChangeRequestType.StageGate && formType !== ChangeRequestType.Activation && 
               <StandardFormFields handleChange={handleChange} />}
               
-            {formType === CR_Type.ACTIVATION && 
+            {formType === ChangeRequestType.Activation && 
             <ActivationFormFields handleChange={handleChange} handleStartDateChange={handleStartDateChange}/>}
 
             <Button className={styles.submitButton} type="submit">

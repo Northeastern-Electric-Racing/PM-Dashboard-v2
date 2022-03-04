@@ -20,6 +20,7 @@ import {
   NewActivationChangeRequestPayload,
   NewStageRequestChangeRequestPayload,
 } from 'utils';
+import { ChangeRequestType } from 'utils/src';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +28,7 @@ const prisma = new PrismaClient();
 const createStandardChangeRequest = async (
   submitterId: number,
   wbsElementId: number,
-  type: CR_Type,
+  type: ChangeRequestType,
   payload: NewStandardChangeRequestPayload
 ) => {
   const createdChangeRequest = await prisma.change_Request.create({

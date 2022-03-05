@@ -6,47 +6,55 @@
 import { render, screen } from '../../../../../test-support/test-utils';
 import StandardFormFields from './standard-form-fields';
 
+const whatStr = "What";
+const whyStr = "Why";
+const scopeImpactStr = "Scope Impact";
+const budgetImpactStr = "Budget Impact";
+const timelineImpactStr = 'Timeline Impact';
+const documentationStr = "Documentation Link";
+
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = () => {
-  return render(<StandardFormFields />);
+const renderComponent = (handleChange: jest.Mock<any, any>) => {
+  return render(<StandardFormFields handleChange={handleChange} />);
 };
+
 
 describe('new change request page', () => {
   it('renders the What form field', () => {
-    renderComponent();
+    renderComponent(jest.fn());
 
-    expect(screen.getByText('What')).toBeInTheDocument();
+    expect(screen.getByText(whatStr)).toBeInTheDocument();
   });
 
   it('renders the Scope Impact form field', () => {
-    renderComponent();
+    renderComponent(jest.fn());
 
-    expect(screen.getByText('Scope Impact')).toBeInTheDocument();
+    expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
   });
 
   it('renders the Budget Impact form field', () => {
-    renderComponent();
+    renderComponent(jest.fn());
 
-    expect(screen.getByText('Budget Impact')).toBeInTheDocument();
+    expect(screen.getByText(budgetImpactStr)).toBeInTheDocument();
   });
 
   it('renders the Timeline Impact form field', () => {
-    renderComponent();
+    renderComponent(jest.fn());
 
-    expect(screen.getByText('Timeline Impact')).toBeInTheDocument();
+    expect(screen.getByText(timelineImpactStr)).toBeInTheDocument();
   });
 
   it('renders the Why form field', () => {
-    renderComponent();
+    renderComponent(jest.fn());
 
-    expect(screen.getByText("Why")).toBeInTheDocument();
+    expect(screen.getByText(whyStr)).toBeInTheDocument();
   });
 
   it('renders the Documentation Link form field', () => {
-    renderComponent();
+    renderComponent(jest.fn());
 
-    expect(screen.getByText("Documentation Link")).toBeInTheDocument();
+    expect(screen.getByText(documentationStr)).toBeInTheDocument();
   });
 });

@@ -8,13 +8,16 @@ import { exampleAllWorkPackages } from '../../../../../test-support/test-data/wo
 import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import CommonFormFields from './common-form-fields';
-import { CR_Type } from '@prisma/client';
+import { ChangeRequestType } from 'utils';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 
-
+const typeStr = 'type';
+const capitalizedTypeStr = 'Type';
+const workPackageStr = 'Work Package';
+const projectStr = 'Project';
 
 const renderComponent = (setType: jest.Mock<any, any>) => {
   return render(<CommonFormFields setType={setType} projects={exampleAllProjects} workPkgs={exampleAllWorkPackages}
@@ -30,39 +33,39 @@ describe('new change request page', () => {
 
     expect(screen.getByText(projectText)).toBeInTheDocument();
     expect(screen.getByText(workPkgText)).toBeInTheDocument();
-    expect(screen.getByText('New Function')).toBeInTheDocument();
+    expect(screen.getByText(ChangeRequestType.Activation)).toBeInTheDocument();
   });
 
   it('renders the project form field', () => {
     renderComponent(jest.fn());
 
-    expect(screen.getByText('Project')).toBeInTheDocument();
+    expect(screen.getByText(projectStr)).toBeInTheDocument();
   });
 
   it('renders the work package form field', () => {
     renderComponent(jest.fn());
 
-    expect(screen.getByText('Work Package')).toBeInTheDocument();
+    expect(screen.getByText(workPackageStr)).toBeInTheDocument();
   });
 
   it('renders the type form field', () => {
     renderComponent(jest.fn());
 
-    expect(screen.getByText('Type')).toBeInTheDocument();
+    expect(screen.getByText(capitalizedTypeStr)).toBeInTheDocument();
   });
 
   it('checks if prop function is called when type changes', () => {
     const setType = jest.fn();
     renderComponent(setType);
 
-    fireEvent.change(screen.getByTestId('type'), { target: { value: CR_Type.STAGE_GATE } });
-    expect(setType).toBeCalledWith(CR_Type.STAGE_GATE);
+    fireEvent.change(screen.getByTestId(typeStr), { target: { value: ChangeRequestType.StageGate } });
+    expect(setType).toBeCalledWith(ChangeRequestType.StageGate);
 
-    fireEvent.change(screen.getByTestId('type'), { target: { value: CR_Type.DEFINITION_CHANGE } });
-    expect(setType).toBeCalledWith(CR_Type.DEFINITION_CHANGE);
+    fireEvent.change(screen.getByTestId(typeStr), { target: { value: ChangeRequestType.Redefinition } });
+    expect(setType).toBeCalledWith(ChangeRequestType.Redefinition);
 
-    fireEvent.change(screen.getByTestId('type'), { target: { value: CR_Type.ACTIVATION } });
-    expect(setType).toBeCalledWith(CR_Type.ACTIVATION);
+    fireEvent.change(screen.getByTestId(typeStr), { target: { value: ChangeRequestType.Activation } });
+    expect(setType).toBeCalledWith(ChangeRequestType.Activation);
 
     expect(setType).toHaveBeenCalledTimes(3);
   });

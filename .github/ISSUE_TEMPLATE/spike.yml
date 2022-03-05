@@ -25,14 +25,14 @@ body:
   - type: textarea
     id: purpose
     attributes:
-      label: Purpose
+      label: Reason for Spike
       description: Why is this spike ticket necessary?
     validations:
       required: true
   - type: textarea
     id: sidenotes
     attributes:
-      label: Sidenotes
-      description: Additional notes
+      label: Additional notes
+      description: Notes...
     validations:
       required: false

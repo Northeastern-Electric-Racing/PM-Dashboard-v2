@@ -33,6 +33,6 @@ body:
     id: sidenotes
     attributes:
       label: Additional notes
-      description: Notes...
+      description: Add any extra comments related to the spike.
     validations:
       required: false

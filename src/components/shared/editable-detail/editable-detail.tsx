@@ -10,7 +10,7 @@ import { Form, FormControl, InputGroup } from 'react-bootstrap';
 interface EditableDetailProps {
   title: string;
   type: string;
-  value: string;
+  value: any;
   readOnly?: Boolean;
   suffix?: string;
 }

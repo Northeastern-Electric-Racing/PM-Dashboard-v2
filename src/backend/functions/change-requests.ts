@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { PrismaClient, Prisma, Scope_CR_Why_Type } from '@prisma/client';
+import { PrismaClient, Prisma, Scope_CR_Why_Type, WBS_Element } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -18,7 +18,8 @@ import {
   ChangeRequestReason,
   StandardChangeRequest,
   ActivationChangeRequest,
-  StageGateChangeRequest
+  StageGateChangeRequest,
+  WbsNumber
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -30,7 +31,8 @@ const relationArgs = Prisma.validator<Prisma.Change_RequestArgs>()({
     reviewer: true,
     changes: {
       include: {
-        implementer: true
+        implementer: true,
+        wbsElement: true
       }
     },
     scopeChangeRequest: { include: { why: true } },
@@ -50,14 +52,15 @@ const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason 
     OTHER: ChangeRequestReason.Other
   }[whyType]);
 
+const wbsNumOf = (element: WBS_Element): WbsNumber => ({
+  car: element.carNumber,
+  project: element.projectNumber,
+  workPackage: element.workPackageNumber
+});
+
 const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
 ): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
-  const wbsNum = {
-    car: changeRequest.wbsElement.carNumber,
-    project: changeRequest.wbsElement.projectNumber,
-    workPackage: changeRequest.wbsElement.workPackageNumber
-  };
   return {
     ...changeRequest,
     type: changeRequest.type,
@@ -72,9 +75,9 @@ const changeRequestTransformer = (
     ),
     implementedChanges: changeRequest.changes.map((change) => ({
       ...change,
-      wbsNum
+      wbsNum: wbsNumOf(change.wbsElement)
     })),
-    wbsNum,
+    wbsNum: wbsNumOf(changeRequest.wbsElement),
     ...changeRequest.scopeChangeRequest,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({
       ...why,

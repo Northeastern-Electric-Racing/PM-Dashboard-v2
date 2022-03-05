@@ -97,5 +97,5 @@ export const routeMatcher = (
       return singleRoute.func(matchResults.params, event, context);
     }
   }
-  return buildNotFoundResponse("route", event.path);
-  };
+  return buildNotFoundResponse('route', event.path);
+};

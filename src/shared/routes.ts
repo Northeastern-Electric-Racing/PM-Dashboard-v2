@@ -12,6 +12,7 @@ const SETTINGS = `/settings`;
 const PROJECTS = `/projects`;
 const PROJECTS_BY_WBS = PROJECTS + `/:wbsNum`;
 const PROJECTS_NEW = PROJECTS + `/new`;
+const WORK_PACKAGE_NEW = PROJECTS + `/work-package/new`;
 
 /**************** Change Requests Section ****************/
 const CHANGE_REQUESTS = `/change-requests`;
@@ -28,6 +29,7 @@ export const routes = {
   PROJECTS,
   PROJECTS_BY_WBS,
   PROJECTS_NEW,
+  WORK_PACKAGE_NEW,
 
   CHANGE_REQUESTS,
   CHANGE_REQUESTS_BY_ID,

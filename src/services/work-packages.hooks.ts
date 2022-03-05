@@ -3,9 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useQuery } from 'react-query';
-import { WorkPackage, WbsNumber } from 'utils';
-import { getAllWorkPackages, getSingleWorkPackage } from './work-packages.api';
+import { useMutation, useQuery } from 'react-query';
+import { WorkPackage, WbsNumber, CreateWorkPackagePayload } from 'utils';
+import {
+  createSingleWorkPackage,
+  getAllWorkPackages,
+  getSingleWorkPackage
+} from './work-packages.api';
 
 /**
  * Custom React Hook to supply all work packages.
@@ -27,4 +31,19 @@ export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
     const { data } = await getSingleWorkPackage(wbsNum);
     return data;
   });
+};
+
+/**
+ * Custom React Hook to create a new work package.
+ *
+ * @param wpPayload Payload containing all information needed to create a work package.
+ */
+export const useCreateSingleWorkPackage = () => {
+  return useMutation<{ message: string }, Error, CreateWorkPackagePayload>(
+    ['createWP'],
+    async (wpPayload: CreateWorkPackagePayload) => {
+      const { data } = await createSingleWorkPackage(wpPayload);
+      return data;
+    }
+  );
 };

@@ -42,7 +42,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const goalsUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = goals.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone[clone.length - 1] !== "") clone.push(val);
       setGoals(clone);
     },
     remove: (idx) => {
@@ -52,14 +52,14 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = goals.slice();
-      clone[idx] = val;
+      if (val !== "") clone[idx] = val;
       setGoals(clone);
     }
   };
   const featUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = features.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone[clone.length - 1] !== "") clone.push(val);
       setFeatures(clone);
     },
     remove: (idx) => {
@@ -69,14 +69,14 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = features.slice();
-      clone[idx] = val;
+      if (val !== "") clone[idx] = val;
       setFeatures(clone);
     }
   };
   const ocUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = otherConstraints.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone[clone.length - 1] !== "") clone.push(val);
       setOther(clone);
     },
     remove: (idx) => {
@@ -86,14 +86,14 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = otherConstraints.slice();
-      clone[idx] = val;
+      if (val !== "") clone[idx] = val;
       setOther(clone);
     }
   };
   const rulesUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = rules.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone[clone.length - 1] !== "") clone.push(val);
       setRules(clone);
     },
     remove: (idx) => {
@@ -103,7 +103,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = rules.slice();
-      clone[idx] = val;
+      if (val !== "") clone[idx] = val;
       setRules(clone);
     }
   };

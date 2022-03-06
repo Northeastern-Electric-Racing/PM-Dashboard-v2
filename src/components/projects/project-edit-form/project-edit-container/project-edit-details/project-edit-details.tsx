@@ -160,7 +160,13 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             '',
             'Task list link'
           )}
-          {editDetailsInputBuilder('BOM', 'text', project.bomLink!, '', '', 'BOM link')}
+          {editDetailsInputBuilder(
+            'BOM', 
+            'text', 
+            project.bomLink!, 
+            '', 
+            '', 
+            'BOM link')}
           {editDetailsInputBuilder(
             'Google Drive',
             'text',

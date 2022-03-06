@@ -103,6 +103,11 @@ const NewChangeRequest: React.FC = () => {
       if (other) whyOpts.push({'type': ChangeRequestReason.Other, 'explain': other_explain});
       if (design) whyOpts.push({'type': ChangeRequestReason.Design, 'explain': ''});
 
+      if (whyOpts.length === 0) {
+        alert("Reason must be selected");
+        return;
+      }
+
       req = { 
         what: formData.what, 
         scopeImpact: formData.scopeImpact, 

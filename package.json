@@ -32,6 +32,8 @@
     "test": "react-scripts test",
     "coverage": "npm run test -- --coverage --watchAll",
     "lint": "npx eslint .",
+    "prettier:check": "prettier src/**/*.{ts,tsx} --check",
+    "prettier:write": "prettier src/**/*.{ts,tsx} --write",
     "repack-utils-pkg": "cd src/utils && npm i && npm run build",
     "prisma:seed": "npx prisma db seed --preview-feature",
     "prisma:reset": "npx prisma migrate reset",

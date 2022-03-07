@@ -61,14 +61,15 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             />
             <EditableDetail
               title="Progress"
-              value={`${workPackage.progress}`}
-              suffix="%"
+              value={percentPipe(workPackage.progress)}
               type="number"
+              data-testid="p"
             />
             <EditableDetail
               title="Expected Progress"
               value={percentPipe(workPackage.expectedProgress)}
               type="number"
+              data-testid="ep"
             />
           </Col>
         </Row>

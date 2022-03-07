@@ -29,7 +29,7 @@ const projectDurationBuilder = (wps: any) => {
 const calculatePercentExpectedProgress = (start: Date, weeks: number, status: String) => {
   if (status === 'INACTIVE') {
     return 0;
-  } else if (status === 'COMPLETED') {
+  } else if (status === 'COMPLETE') {
     return 100;
   } else {
     const currentDate = new Date();

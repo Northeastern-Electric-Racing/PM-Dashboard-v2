@@ -72,7 +72,6 @@ const workPackageTransformer = (
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
   const endDate = new Date(workPackage.startDate);
   endDate.setDate(workPackage.duration * 7);
-  console.log('hello');
   const expectedProgress = calculatePercentExpectedProgress(
     workPackage.startDate,
     workPackage.duration,

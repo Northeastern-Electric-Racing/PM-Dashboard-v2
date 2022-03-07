@@ -5,7 +5,7 @@
 
 import { render, screen } from '../../../../../test-support/test-utils';
 import { WorkPackage } from 'utils';
-import { endDatePipe, fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, weeksPipe, percentPipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
@@ -34,7 +34,15 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+    if (wp.progress === wp.expectedProgress) {
+      const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`);
+      expect(progresses.length).toBe(2);
+    } else {
+      expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+      expect(
+        screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
+      ).toBeInTheDocument();
+    }
   });
 
   it('renders all the fields, example 2', () => {
@@ -57,7 +65,15 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+    if (wp.progress === wp.expectedProgress) {
+      const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`);
+      expect(progresses.length).toBe(2);
+    } else {
+      expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+      expect(
+        screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
+      ).toBeInTheDocument();
+    }
   });
 
   it('renders all the fields, example 3', () => {
@@ -79,6 +95,14 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+    if (wp.progress === wp.expectedProgress) {
+      const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`);
+      expect(progresses.length).toBe(2);
+    } else {
+      expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+      expect(
+        screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
+      ).toBeInTheDocument();
+    }
   });
 });

@@ -34,15 +34,10 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    if (wp.progress === wp.expectedProgress) {
-      const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`);
-      expect(progresses.length).toBe(2);
-    } else {
-      expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
-      expect(
-        screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
-      ).toBeInTheDocument();
-    }
+    expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
+    expect(
+      screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
+    ).toBeInTheDocument();
   });
 
   it('renders all the fields, example 2', () => {
@@ -65,15 +60,8 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    if (wp.progress === wp.expectedProgress) {
-      const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`);
-      expect(progresses.length).toBe(2);
-    } else {
-      expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
-      expect(
-        screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
-      ).toBeInTheDocument();
-    }
+    const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`); // progress and expectedProgress should be equal and return 2 results
+    expect(progresses.length).toBe(2);
   });
 
   it('renders all the fields, example 3', () => {
@@ -95,14 +83,7 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    if (wp.progress === wp.expectedProgress) {
-      const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`);
-      expect(progresses.length).toBe(2);
-    } else {
-      expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
-      expect(
-        screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
-      ).toBeInTheDocument();
-    }
+    const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`); // progress and expectedProgress should be equal and return 2 results
+    expect(progresses.length).toBe(2);
   });
 });

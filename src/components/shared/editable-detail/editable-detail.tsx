@@ -14,6 +14,8 @@ interface EditableDetailProps {
   fieldName?: string;
   readOnly?: Boolean;
   suffix?: string;
+  min?: number;
+  max?: number;
 }
 
 const EditableDetail: React.FC<EditableDetailProps> = ({
@@ -22,7 +24,9 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   value,
   readOnly,
   suffix,
-  fieldName
+  fieldName,
+  min,
+  max
 }) => {
   const { editMode, setField } = useContext(FormContext);
   const detailInput = (
@@ -33,7 +37,8 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
         defaultValue={value}
         placeholder={value}
         onChange={(e) => setField(fieldName!, e.target.value)}
-        min={0}
+        min={min}
+        max={max}
       />
       {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : ''}
     </InputGroup>

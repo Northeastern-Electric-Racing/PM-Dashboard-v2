@@ -8,7 +8,7 @@ import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import { FormContext } from '../work-package-container';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { validateWBS } from '../../../../../utils/src/validate-wbs';
 
 interface DependenciesListProps {
@@ -20,6 +20,10 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
   const [dependenciesState, setDependenciesState] = useState(dependencies);
   const [unvalidatedDependency, setUnvalidatedDependency] = useState('');
 
+  useEffect(() => {
+    setDependenciesState(dependencies);
+  }, [editMode, dependencies])
+  
   const AddButton = (
     <InputGroup>
       <Form.Control
@@ -43,16 +47,12 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
   }
 
   function handleAdd() {
-    let validatedDependency;
     try {
-      validatedDependency = validateWBS(unvalidatedDependency);
+      setDependenciesState([...dependenciesState, validateWBS(unvalidatedDependency)]);
     } catch (error: any) {
       alert(error.message);
     }
-
-    if (validatedDependency) {
-      setDependenciesState([...dependenciesState, validatedDependency]);
-    }
+    setUnvalidatedDependency('');
   }
 
   const items = dependenciesState.map((e) => (

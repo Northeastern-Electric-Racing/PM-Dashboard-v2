@@ -60,6 +60,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             type="number"
             suffix="weeks"
             fieldName="duration"
+            min={0}
           />
         </Col>
         <Col xs={6} md={4}>
@@ -86,6 +87,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             suffix="%"
             type="number"
             fieldName="progress"
+            min={0}
+            max={100}
           />
         </Col>
       </Row>

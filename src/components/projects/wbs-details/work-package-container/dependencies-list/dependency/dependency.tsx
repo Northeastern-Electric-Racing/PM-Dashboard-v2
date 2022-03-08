@@ -29,7 +29,7 @@ const Dependency: React.FC<DependencyProps> = ({ wbsNumber, handleDelete }) => {
     <div>
       {editMode ? (
         <ButtonGroup>
-          <Button variant="outline-primary" onClick={handleLinkClick}>
+          <Button variant="outline-danger" onClick={handleLinkClick}>
             {wbsPipe(wbsNumber)}
           </Button>
           <Button variant="danger" onClick={() => handleDelete(wbsNumber)}>

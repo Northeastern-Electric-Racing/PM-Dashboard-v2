@@ -5,11 +5,13 @@
 
 import { Handler } from '@netlify/functions';
 import {
+  Change,
   Description_Bullet,
   Prisma,
   PrismaClient,
   WBS_Element,
-  WBS_Element_Status
+  WBS_Element_Status,
+  Work_Package
 } from '@prisma/client';
 import {
   routeMatcher,
@@ -26,7 +28,8 @@ import {
   isProject,
   Project,
   WbsElementStatus,
-  DescriptionBullet
+  DescriptionBullet,
+  User
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -66,7 +69,7 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
             wbsElement: { include: { changes: { include: { implementer: true } } } },
             dependencies: true,
             expectedActivities: true,
-            deliverables: true,
+            deliverables: true
           }
         }
       }
@@ -78,11 +81,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-({
-  INACTIVE: WbsElementStatus.Inactive,
-  ACTIVE: WbsElementStatus.Active,
-  COMPLETE: WbsElementStatus.Complete
-}[status]);
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -125,7 +128,8 @@ const projectTransformer = (
     otherConstraints: project.otherConstraints.map(descBulletConverter),
     features: project.features.map(descBulletConverter),
     goals: project.goals.map(descBulletConverter),
-    duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
+    //duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
+    duration: calculateDuration(project.workPackages),
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = new Date(workPackage.startDate);
       endDate.setDate(workPackage.duration * 7);
@@ -199,6 +203,43 @@ const handler: Handler = async (event, context) => {
     console.error(error);
     return buildServerFailureResponse(error.message);
   }
+};
+
+// calculates duration
+const calculateDuration = (
+  workPackages: (Work_Package & {
+    wbsElement: WBS_Element & {
+      changes: (Change & {
+        implementer: User;
+      })[];
+    };
+    dependencies: WBS_Element[];
+    expectedActivities: Description_Bullet[];
+    deliverables: Description_Bullet[];
+  })[]
+) => {
+  
+  const startDates = workPackages.map((workPackage) => workPackage.startDate.getTime());
+  
+  // since endDate is not yet assigned, calculate an array of end dates
+  // with information of start date and duration in each wp.
+  const endDates: number[] = workPackages.map((workPackage) => {
+    const endDate = new Date(workPackage.startDate);
+    endDate.setDate(workPackage.duration * 7);
+    return endDate.getTime();
+  });
+
+  const [earliestStartDate] = startDates.sort((prev, next) => prev - next);
+  const [latestEndDate] = endDates.sort((prev, next) => next - prev);
+
+  if (earliestStartDate == null) {
+    return 0;
+  }
+
+  const durationInDays = (latestEndDate - earliestStartDate) / (60 * 60 * 24 * 1000);
+  const duration = Math.round(durationInDays / 7);
+
+  return duration;
 };
 
 export { handler };

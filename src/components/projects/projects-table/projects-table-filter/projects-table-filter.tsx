@@ -214,6 +214,20 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
             >
               Apply
             </Button>
+            <Button
+              className={styles.clearButton}
+              onClick={() => {
+                onClick('', -1, -1, -1);
+                setCar_number(-1);
+                setProject_leadID(-1);
+                setProject_leadName('');
+                setStatus('');
+                setProject_managerID(-1);
+                setProject_managerName('');
+              }}
+            >
+              Clear
+            </Button>
           </Form>
         </Card.Body>
       </Card>

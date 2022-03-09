@@ -6,7 +6,7 @@
 import { Project } from 'utils';
 import {
   dollarsPipe,
-  endDatePipe,
+  //  endDatePipe,
   fullNamePipe,
   linkPipe,
   wbsPipe,
@@ -49,13 +49,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
             <br />
             <b>End Date:</b>{' '}
             {project.workPackages.length > 0
-              ? endDatePipe(
-                  project.workPackages.reduce(
-                    (min, cur) => (cur.startDate < min ? cur.startDate : min),
-                    project.workPackages[0].startDate
-                  ),
-                  project.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
-                )
+              ? project.workPackages[0].endDate.toLocaleDateString()
               : 'n/a'}{' '}
             <br />
             <b>Expected Progress:</b> <br />

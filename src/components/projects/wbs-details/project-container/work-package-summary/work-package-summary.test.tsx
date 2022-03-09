@@ -5,7 +5,7 @@
 
 import { WorkPackage } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
-import { wbsPipe, listPipe, endDatePipe } from '../../../../../shared/pipes';
+import { wbsPipe, listPipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
@@ -34,7 +34,7 @@ describe('Rendering Work Package Summary Test', () => {
       screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+      screen.getByText(`${wp.endDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();
@@ -55,7 +55,7 @@ describe('Rendering Work Package Summary Test', () => {
       screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+      screen.getByText(`${wp.endDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();
@@ -76,7 +76,7 @@ describe('Rendering Work Package Summary Test', () => {
       screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+      screen.getByText(`${wp.endDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();

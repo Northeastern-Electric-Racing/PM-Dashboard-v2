@@ -66,7 +66,7 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
             wbsElement: { include: { changes: { include: { implementer: true } } } },
             dependencies: true,
             expectedActivities: true,
-            deliverables: true,
+            deliverables: true
           }
         }
       }
@@ -78,11 +78,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-({
-  INACTIVE: WbsElementStatus.Inactive,
-  ACTIVE: WbsElementStatus.Active,
-  COMPLETE: WbsElementStatus.Complete
-}[status]);
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -128,8 +128,9 @@ const projectTransformer = (
     duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = new Date(workPackage.startDate);
-      endDate.setDate(workPackage.duration * 7);
-
+      endDate.setDate(
+        endDate.getDate() + project.workPackages.reduce((tot, cur) => tot + cur.duration, 0) * 7
+      );
       return {
         ...workPackage,
         ...workPackage.wbsElement,

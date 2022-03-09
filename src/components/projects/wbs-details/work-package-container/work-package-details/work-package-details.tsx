@@ -4,7 +4,7 @@
  */
 
 import { WorkPackage } from 'utils';
-import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
+import { wbsPipe, fullNamePipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
@@ -55,7 +55,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             />
             <EditableDetail
               title="End Date"
-              value={endDatePipe(workPackage.startDate, workPackage.duration)}
+              value={workPackage.endDate.toLocaleDateString()}
               type="date"
               readOnly={true}
             />

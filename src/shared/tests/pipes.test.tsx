@@ -10,7 +10,6 @@ import {
   linkPipe,
   weeksPipe,
   datePipe,
-  endDatePipe,
   listPipe,
   wbsPipe,
   fullNamePipe
@@ -84,21 +83,9 @@ describe('Formatting lists tests', () => {
 
 describe('Formatting End Date Tests', () => {
   test('with dummy data', () => {
-    expect(endDatePipe(exampleWorkPackage1.startDate, exampleWorkPackage1.duration)).toBe(
-      '01/22/2021'
-    );
-    expect(endDatePipe(exampleWorkPackage2.startDate, exampleWorkPackage2.duration)).toBe(
-      '02/26/2021'
-    );
-    expect(endDatePipe(exampleWorkPackage3.startDate, exampleWorkPackage3.duration)).toBe(
-      '01/15/2021'
-    );
-  });
-
-  test('with edge dates', () => {
-    expect(endDatePipe(new Date('12/25/20'), 3)).toBe('01/15/2021');
-    expect(endDatePipe(new Date('1/3/21'), 3)).toBe('01/24/2021');
-    expect(endDatePipe(new Date('3/1/21'), 10)).toBe('05/10/2021');
+    expect(exampleWorkPackage1.endDate.toLocaleDateString()).toBe('1/22/2021');
+    expect(exampleWorkPackage2.endDate.toLocaleDateString()).toBe('2/26/2021');
+    expect(exampleWorkPackage3.endDate.toLocaleDateString()).toBe('1/15/2021');
   });
 });
 

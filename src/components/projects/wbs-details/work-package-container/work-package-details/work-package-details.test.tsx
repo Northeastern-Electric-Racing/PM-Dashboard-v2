@@ -5,7 +5,7 @@
 
 import { render, screen } from '../../../../../test-support/test-utils';
 import { WorkPackage } from 'utils';
-import { endDatePipe, fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
+import { fullNamePipe, weeksPipe } from '../../../../../shared/pipes';
 import {
   exampleWorkPackage1,
   exampleWorkPackage2,
@@ -32,7 +32,7 @@ describe('Rendering Work Package Details Component', () => {
       screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+      screen.getByText(`${wp.endDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
   });
@@ -55,7 +55,7 @@ describe('Rendering Work Package Details Component', () => {
       screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+      screen.getByText(`${wp.endDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
   });
@@ -77,7 +77,7 @@ describe('Rendering Work Package Details Component', () => {
       screen.getByText(`${wp.startDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
+      screen.getByText(`${wp.endDate.toLocaleDateString()}`, { exact: false })
     ).toBeInTheDocument();
     expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
   });

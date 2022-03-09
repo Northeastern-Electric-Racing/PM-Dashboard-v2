@@ -17,6 +17,7 @@ export const workPackageTransformer = (workPackage: WorkPackage) => {
     ...workPackage,
     dateCreated: new Date(workPackage.dateCreated),
     startDate: new Date(workPackage.startDate),
+    endDate: new Date(workPackage.endDate),
     expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
     deliverables: workPackage.deliverables.map(descriptionBulletTransformer)
   };

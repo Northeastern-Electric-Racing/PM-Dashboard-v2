@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
+import { render, routerWrapperBuilder, screen } from '../../../../test-support/test-utils';
 import NavPageLinks from './nav-page-links';
 
 /**
@@ -18,19 +18,19 @@ const renderComponent = () => {
   );
 };
 
-describe('navigation page links tests', () => {
-  it('renders home page link', () => {
+describe('Navigation Page Links Tests', () => {
+  it('Renders Home Page Link', () => {
     renderComponent();
     expect(screen.getByText(/Home/i)).toBeInTheDocument();
   });
 
-  it('renders projects page link', () => {
+  it('Renders Projects Page Link', () => {
     renderComponent();
     expect(screen.getByText(/Projects/i)).toBeInTheDocument();
   });
 
-  it('renders change requests page link', () => {
+  it('Renders Change Requests Page Link', () => {
     renderComponent();
-    expect(screen.getByText(/Changes/i)).toBeInTheDocument();
+    expect(screen.getByText(/Change Requests/i)).toBeInTheDocument();
   });
 });

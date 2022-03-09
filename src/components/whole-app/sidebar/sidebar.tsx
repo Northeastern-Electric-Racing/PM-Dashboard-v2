@@ -5,7 +5,7 @@
 
 import { Nav } from 'react-bootstrap';
 import styles from './sidebar.module.css';
-import NavPageLinks from '../nav-top-bar/nav-page-links/nav-page-links';
+import NavPageLinks from './nav-page-links/nav-page-links';
 
 const Sidebar: React.FC = () => {
   return (

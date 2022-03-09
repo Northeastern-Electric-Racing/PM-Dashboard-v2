@@ -4,12 +4,11 @@
  */
 
 .pageContainer {
-  margin-left: 3.5rem;
+  margin-left: 8%;
 }
 
 .row {
-  padding-left: 4rem;
-  padding-right: 2rem;
+  padding: 10px;
 }
 
 .container {

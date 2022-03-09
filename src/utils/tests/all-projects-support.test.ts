@@ -7,7 +7,7 @@ import {
   projectDurationBuilder,
   calculatePercentExpectedProgress
 } from '../src/backend-supports/projects-get-all';
-import { WBS_Element_Status } from '@prisma/client';
+import { WbsElementStatus } from 'utils';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -75,24 +75,24 @@ describe('projectDurationBuilder', () => {
 describe('calculatePercentExpectedProgress', () => {
   it('works with INACTIVE status', () => {
     expect(
-      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WBS_Element_Status.INACTIVE)
+      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WbsElementStatus.Inactive)
     ).toEqual(0);
   });
 
   it('works with COMPLETE status', () => {
     expect(
-      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WBS_Element_Status.COMPLETE)
+      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WbsElementStatus.Complete)
     ).toEqual(100);
   });
 
   it('works with reasonable ACTIVE status', () => {
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    expect(calculatePercentExpectedProgress(weekAgo, 3, WBS_Element_Status.ACTIVE)).toEqual(33);
+    expect(calculatePercentExpectedProgress(weekAgo, 3, WbsElementStatus.Active)).toEqual(33);
   });
 
   it('works with overdue ACTIVE status', () => {
     expect(
-      calculatePercentExpectedProgress(new Date('March 20, 2020'), 3, WBS_Element_Status.ACTIVE)
+      calculatePercentExpectedProgress(new Date('March 20, 2020'), 3, WbsElementStatus.Active)
     ).toEqual(100);
   });
 });

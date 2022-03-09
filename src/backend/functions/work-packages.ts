@@ -19,7 +19,7 @@ import {
   validateWBS,
   isProject,
   WorkPackage,
-  WbsElementStatus, 
+  WbsElementStatus,
   calculateEndDate
 } from 'utils';
 
@@ -50,11 +50,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-({
-  INACTIVE: WbsElementStatus.Inactive,
-  ACTIVE: WbsElementStatus.Active,
-  COMPLETE: WbsElementStatus.Complete
-}[status]);
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -71,7 +71,6 @@ const workPackageTransformer = (
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
   const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
-  
 
   const wbsNum = wbsNumOf(wbsElement);
   return {

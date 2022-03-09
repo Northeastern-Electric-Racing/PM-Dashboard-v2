@@ -67,7 +67,7 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
             wbsElement: { include: { changes: { include: { implementer: true } } } },
             dependencies: true,
             expectedActivities: true,
-            deliverables: true,
+            deliverables: true
           }
         }
       }
@@ -79,11 +79,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-({
-  INACTIVE: WbsElementStatus.Inactive,
-  ACTIVE: WbsElementStatus.Active,
-  COMPLETE: WbsElementStatus.Complete
-}[status]);
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -128,15 +128,13 @@ const projectTransformer = (
     goals: project.goals.map(descBulletConverter),
     duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
     workPackages: project.workPackages.map((workPackage) => {
-      const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
-
       return {
         ...workPackage,
         ...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
         status: convertStatus(workPackage.wbsElement.status),
-        endDate,
+        endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
         dependencies: workPackage.dependencies.map(wbsNumOf),
         expectedActivities: workPackage.expectedActivities.map(descBulletConverter),
         deliverables: workPackage.deliverables.map(descBulletConverter),

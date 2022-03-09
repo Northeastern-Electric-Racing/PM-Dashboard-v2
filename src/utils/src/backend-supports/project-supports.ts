@@ -9,18 +9,18 @@
  * @param weeks number of weeks
  * @returns the start date after the weeks have passed
  */
- const calculateEndDate = (start: Date, weeks: number) => {
+const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);
   end.setDate(start.getDate() + weeks * 7);
   return end;
 };
 
 /**
- * This symbol function calculates the duration 
- * @param wps an array of work packages
+ * This symbol function calculates the duration
+ * @param wps an array of work packages, should contain property of startDate and number
  * @returns the duration of the project in weeks
  */
-const calculateDuration = (wps: any) => {
+const calculateDuration = (wps: { startDate: Date; duration: number }[]) => {
   if (wps.length === 0) return 0;
   if (wps.length === 1) return wps[0].duration;
 

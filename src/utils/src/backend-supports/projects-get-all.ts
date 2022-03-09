@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WBS_Element_Status } from '@prisma/client';
+import { WbsElementStatus } from 'utils';
 
 const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);
@@ -29,9 +29,9 @@ const projectDurationBuilder = (wps: any) => {
 };
 
 const calculatePercentExpectedProgress = (start: Date, weeks: number, status: String) => {
-  if (status === WBS_Element_Status.INACTIVE) {
+  if (status === WbsElementStatus.Inactive) {
     return 0;
-  } else if (status === WBS_Element_Status.COMPLETE) {
+  } else if (status === WbsElementStatus.Complete) {
     return 100;
   } else {
     const currentDate = new Date();

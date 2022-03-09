@@ -9,6 +9,27 @@ import { API_URL } from './api-routes';
 import { ApiRoute } from './types/api-utils-types';
 
 /**
+ * Interface representing a message response.
+ * @param message The content of the message represented as strings.
+ */
+interface msgResponse {
+  message: string;
+}
+
+/**
+ * Builds a new message response.
+ * @param responseCode The response code.
+ * @param responseMessage The response message content.
+ * @return a msgResponse object representing a new message response.
+ */
+export const responseBuilder = (responseCode: number, responseMessage: string) => {
+  const response: msgResponse = {
+    message: responseCode.toString().concat(' : ', responseMessage)
+  };
+  return response;
+};
+
+/**
  * Builds a standard API response object
  */
 export const buildResponse = (

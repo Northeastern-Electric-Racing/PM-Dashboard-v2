@@ -72,11 +72,6 @@ const workPackageTransformer = (
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
   const endDate = new Date(workPackage.startDate);
   endDate.setDate(workPackage.duration * 7);
-  const expectedProgress = calculatePercentExpectedProgress(
-    workPackage.startDate,
-    workPackage.duration,
-    wbsElement.status
-  );
 
   const wbsNum = wbsNumOf(wbsElement);
   return {
@@ -103,7 +98,11 @@ const workPackageTransformer = (
     status: convertStatus(wbsElement.status),
     wbsNum,
     endDate,
-    expectedProgress
+    expectedProgress: calculatePercentExpectedProgress(
+      workPackage.startDate,
+      workPackage.duration,
+      wbsElement.status
+    )
   };
 };
 

@@ -2,12 +2,12 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-import { WbsElementStatus } from '../lib/types/project-types';
 import {
   calculateEndDate,
   projectDurationBuilder,
   calculatePercentExpectedProgress
 } from '../src/backend-supports/projects-get-all';
+import { WBS_Element_Status } from '@prisma/client';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -75,25 +75,24 @@ describe('projectDurationBuilder', () => {
 describe('calculatePercentExpectedProgress', () => {
   it('works with INACTIVE status', () => {
     expect(
-      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WbsElementStatus.Inactive)
+      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WBS_Element_Status.INACTIVE)
     ).toEqual(0);
   });
 
   it('works with COMPLETE status', () => {
     expect(
-      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WbsElementStatus.Complete)
+      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WBS_Element_Status.COMPLETE)
     ).toEqual(100);
   });
 
   it('works with reasonable ACTIVE status', () => {
-    //
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    expect(calculatePercentExpectedProgress(weekAgo, 3, WbsElementStatus.Active)).toEqual(33);
+    expect(calculatePercentExpectedProgress(weekAgo, 3, WBS_Element_Status.ACTIVE)).toEqual(33);
   });
 
   it('works with overdue ACTIVE status', () => {
     expect(
-      calculatePercentExpectedProgress(new Date('March 20, 2020'), 3, WbsElementStatus.Active)
+      calculatePercentExpectedProgress(new Date('March 20, 2020'), 3, WBS_Element_Status.ACTIVE)
     ).toEqual(100);
   });
 });

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WbsElementStatus } from 'utils';
+import { WbsElementStatus } from '../types/project-types';
 
 const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);

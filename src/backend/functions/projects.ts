@@ -130,7 +130,7 @@ const projectTransformer = (
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = new Date(workPackage.startDate);
       endDate.setDate(workPackage.duration * 7);
-      
+
       return {
         ...workPackage,
         ...workPackage.wbsElement,

@@ -7,7 +7,7 @@ import {
   projectDurationBuilder,
   calculatePercentExpectedProgress
 } from '../src/backend-supports/projects-get-all';
-import { WbsElementStatus } from 'utils';
+import { WbsElementStatus } from '../src/types/project-types';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {

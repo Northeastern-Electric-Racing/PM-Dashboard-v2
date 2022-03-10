@@ -4,7 +4,8 @@
  */
 
 .pageContainer {
-  margin-left: 8%;
+  margin-left: 2%;
+  padding-left: 85px;
 }
 
 .row {

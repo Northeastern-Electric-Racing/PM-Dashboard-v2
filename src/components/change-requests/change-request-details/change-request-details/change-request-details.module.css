@@ -13,5 +13,6 @@ b {
 }
 
 .pageContainer {
-  margin-left: 5em;
+  margin-left: 1%;
+  padding-left: 75px;
 }

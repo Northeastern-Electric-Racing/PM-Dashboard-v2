@@ -3,6 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+body {
+  overflow-x: hidden;
+}
+
 .content {
-  margin-top: 5em;
+  margin-top: 4em;
 }

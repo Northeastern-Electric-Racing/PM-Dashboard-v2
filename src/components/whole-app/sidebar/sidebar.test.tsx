@@ -12,9 +12,9 @@ import Sidebar from './sidebar';
 const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
-    <RouterWrapper>
-      <Sidebar />
-    </RouterWrapper>
+      <RouterWrapper>
+        <Sidebar/>
+      </RouterWrapper>,
   );
 };
 

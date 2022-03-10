@@ -16,6 +16,7 @@ import WorkPackageDetails from './work-package-details/work-package-details';
 import DependenciesList from './dependencies-list/dependencies-list';
 import ChangesList from './changes-list/changes-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
+import styles from './work-package-container.module.css'
 
 export const EditModeContext = createContext(false);
 
@@ -37,7 +38,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
 
   return (
     <EditModeContext.Provider value={editMode}>
-      <div className="mb-5">
+      <div className={styles.pageContainer}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
         <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
         <WorkPackageDetails workPackage={data!} />

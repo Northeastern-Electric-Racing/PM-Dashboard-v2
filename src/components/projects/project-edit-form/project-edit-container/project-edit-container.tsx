@@ -19,6 +19,7 @@ import { useAllUsers } from '../../../../services/users.hooks';
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
+import styles from './project-edit-container.module.css'
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -119,7 +120,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   if (isError) return <ErrorPage message={error?.message} />;
 
   return (
-    <div className="mb-5">
+    <div className={styles.pageContainer}>
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
         <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />

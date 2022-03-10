@@ -74,15 +74,13 @@ describe('projectDurationBuilder', () => {
 
 describe('calculatePercentExpectedProgress', () => {
   it('works with INACTIVE status', () => {
-    expect(
-      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WbsElementStatus.Inactive)
-    ).toEqual(0);
+    const startDate = new Date('01/01/21');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Inactive)).toEqual(0);
   });
 
   it('works with COMPLETE status', () => {
-    expect(
-      calculatePercentExpectedProgress(new Date('01/01/21'), 3, WbsElementStatus.Complete)
-    ).toEqual(100);
+    const startDate = new Date('01/01/21');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Complete)).toEqual(100);
   });
 
   it('works with reasonable ACTIVE status', () => {
@@ -91,8 +89,7 @@ describe('calculatePercentExpectedProgress', () => {
   });
 
   it('works with overdue ACTIVE status', () => {
-    expect(
-      calculatePercentExpectedProgress(new Date('March 20, 2020'), 3, WbsElementStatus.Active)
-    ).toEqual(100);
+    const startDate = new Date('March 20, 2020');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Active)).toEqual(100);
   });
 });

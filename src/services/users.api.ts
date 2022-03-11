@@ -7,6 +7,7 @@ import axios from 'axios';
 import { User } from '@prisma/client';
 import { apiUrls } from '../shared/urls';
 import { userTransformer } from './transformers/users.transformers';
+import { verifyToken } from '../utils/src/api-utils';
 
 /**
  * Fetches all users.
@@ -34,9 +35,14 @@ export const getSingleUser = (id: number) => {
  * @param id_token The login token for the user.
  */
 export const logUserIn = (id_token: string) => {
-  return axios.post<User>(
-    apiUrls.usersLogin(),
-    { id_token },
-    { transformResponse: (data) => userTransformer(JSON.parse(data)) }
-  );
+  return axios
+    .post<User>(
+      apiUrls.usersLogin(),
+      { id_token },
+      { transformResponse: (data) => userTransformer(JSON.parse(data)) }
+    )
+    .then((response) => {
+      // retreived response header ...what do with it...
+      console.log(verifyToken(response.headers['token']));
+    });
 };

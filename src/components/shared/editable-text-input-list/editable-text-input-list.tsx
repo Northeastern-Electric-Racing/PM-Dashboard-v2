@@ -48,6 +48,17 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
   };
 
   /**
+   * On click function for the remove button
+   * @param index the index of the input being removed
+   */
+  const removeButtonOnClick = (index: number) => {
+    remove(index);
+    if (isLastElement(index)) {
+      setLastInput(items.length >= 2 ? items[index - 1] : '');
+    }
+  };
+
+  /**
    * Checks if the given index is the last element of items.
    * @param index the given index
    * @returns true if the index is the last element of items
@@ -74,7 +85,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
                 }
               }}
             />
-            <Button type="button" variant="danger" onClick={() => remove(index)}>
+            <Button type="button" variant="danger" onClick={() => removeButtonOnClick(index)}>
               X
             </Button>
           </InputGroup>

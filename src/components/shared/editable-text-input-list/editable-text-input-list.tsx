@@ -31,11 +31,13 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
    * @param index the index of the input being pressed within the items list
    */
   const handleKeyDown = (e: any, index: number) => {
-    if (e.key === 'Enter') {
-      if (lastInput) {
-        addButtonOnClick();
-      }
-      focusRef.current?.focus();
+    switch (e.key) {
+      case 'Enter':
+        if (lastInput) {
+          addButtonOnClick();
+        }
+        focusRef.current?.focus();
+        break;
     }
   };
 

@@ -9,13 +9,14 @@ import EditableTextInputList from './editable-text-input-list';
 const mockItems = ['tee hee', 'yahello', 'yeet', 'yoink'];
 
 const mockAdd = jest.fn();
+const mockRemove = jest.fn();
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = (items: any) => {
   return render(
-    <EditableTextInputList items={items} add={mockAdd} remove={() => null} update={() => null} />
+    <EditableTextInputList items={items} add={mockAdd} remove={mockRemove} update={() => null} />
   );
 };
 
@@ -88,6 +89,34 @@ describe('editable text input list test suite', () => {
         fireEvent.keyDown(screen.getAllByRole('textbox')[0], { key: 'Enter', code: 13 });
       });
       expect(mockAdd).toBeCalledTimes(0);
+    });
+
+    it('should create a new entry after removing the last empty entry and the new last one is full', async () => {
+      renderComponent(['bat', '']);
+      await act(async () => {
+        fireEvent.click(screen.getAllByText('X')[1]);
+      });
+      expect(mockAdd).toBeCalledTimes(0);
+      expect(mockRemove).toBeCalledTimes(1);
+      await act(async () => {
+        fireEvent.keyDown(screen.getAllByRole('textbox')[0], { key: 'Enter', code: 13 });
+      });
+      expect(mockAdd).toBeCalledTimes(1);
+      expect(mockRemove).toBeCalledTimes(1);
+    });
+
+    it('should not create a new entry after removing the last empty entry and the new last one is empty', async () => {
+      renderComponent(['', '']);
+      await act(async () => {
+        fireEvent.click(screen.getAllByText('X')[1]);
+      });
+      expect(mockAdd).toBeCalledTimes(0);
+      expect(mockRemove).toBeCalledTimes(1);
+      await act(async () => {
+        fireEvent.keyDown(screen.getAllByRole('textbox')[0], { key: 'Enter', code: 13 });
+      });
+      expect(mockAdd).toBeCalledTimes(0);
+      expect(mockRemove).toBeCalledTimes(1);
     });
   });
 });

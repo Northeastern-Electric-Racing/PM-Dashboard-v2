@@ -9,7 +9,7 @@ import NavPageLinks from './nav-page-links/nav-page-links';
 
 const Sidebar: React.FC = () => {
   return (
-      <Nav className={ `ml-auto ${ styles.sidebar }` }>
+      <Nav className={ styles.sidebar }>
         <NavPageLinks/>
       </Nav>
   );

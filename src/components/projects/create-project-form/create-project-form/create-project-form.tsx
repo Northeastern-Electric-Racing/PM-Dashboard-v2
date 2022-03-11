@@ -6,7 +6,6 @@
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import PageBlock from '../../../shared/page-block/page-block';
 import { CreateProjectFormStates } from '../create-project-form';
-import styles from './create-project-form.module.css';
 
 interface CreateProjectFormViewProps {
   states: CreateProjectFormStates;
@@ -22,7 +21,7 @@ const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
   const { name, carNumber, crId, summary } = states;
 
   return (
-    <div className={styles.pageContainer}>
+    <div>
       <PageBlock
         title={'Create New Project'}
         headerRight={<></>}

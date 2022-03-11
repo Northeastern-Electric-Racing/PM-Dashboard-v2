@@ -10,7 +10,7 @@ import styles from './home.module.css';
 const Home: React.FC = () => {
   const auth = useAuth();
   return (
-    <div className={styles.pageContainer}>
+    <div>
       <h1 className={styles.title}>Welcome, {auth.user?.emailId}!</h1>
       <UsefulLinks />
     </div>

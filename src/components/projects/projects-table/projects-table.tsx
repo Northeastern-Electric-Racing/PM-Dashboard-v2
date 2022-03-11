@@ -137,10 +137,10 @@ const ProjectsTable: React.FC = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
+    <div>
       <PageTitle title={'Projects'} />
       <div className={styles.container}>
-        <Row className={styles.row}>
+        <Row className='mx-3'>
           <div className={styles.filterTable}>
             <ProjectsTableFilter
               onClick={sendDataToParent}

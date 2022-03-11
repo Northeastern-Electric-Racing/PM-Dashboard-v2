@@ -18,7 +18,7 @@ const NewChangeRequestPage: React.FC = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
+    <div>
       <PageTitle title={'New Change Request'} />
       <PageBlock
         title={''}

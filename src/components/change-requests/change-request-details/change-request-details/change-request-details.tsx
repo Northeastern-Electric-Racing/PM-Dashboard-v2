@@ -22,7 +22,6 @@ import ReviewNotes from './review-notes/review-notes';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../shared/routes';
-import styles from './change-request-details.module.css';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -76,7 +75,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
 
   return (
-    <div className={styles.pageContainer}>
+    <div>
       <PageTitle
         title={`Change Request #${changeRequest.crId}`}
         actionButton={actionDropdown}

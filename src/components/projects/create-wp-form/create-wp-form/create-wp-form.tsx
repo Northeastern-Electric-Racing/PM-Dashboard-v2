@@ -7,7 +7,6 @@ import { Form, Row, Col, InputGroup, Button } from 'react-bootstrap';
 import PageBlock from '../../../shared/page-block/page-block';
 import { EditableTextInputListUtils, FormStates } from '../create-wp-form';
 import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
-import styles from './create-wp-form.module.css';
 
 interface CreateWPFormViewProps {
   states: FormStates;
@@ -34,7 +33,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
 }) => {
   const { name, wbsNum, crId, startDate, duration } = states;
   return (
-    <div className={styles.pageContainer}>
+    <div>
       <PageBlock
         title={'Create New Work Package'}
         headerRight={<></>}

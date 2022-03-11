@@ -11,8 +11,3 @@ b {
   display: flex;
   gap: 1.5rem;
 }
-
-.pageContainer {
-  margin-left: 1%;
-  padding-left: 75px;
-}

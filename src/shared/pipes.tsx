@@ -71,7 +71,7 @@ export const datePipe = (date: Date): string => {
   });
 };
 
-//returns a given number as a string with a percent sign
+// returns a given number as a string with a percent sign
 export const percentPipe = (percent: number): string => {
   return `${percent}%`;
 };

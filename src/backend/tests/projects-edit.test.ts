@@ -52,7 +52,7 @@ describe('createDescriptionBulletChangesJson', () => {
       [
         { id: 1, detail: 'a', dateAdded: new Date() },
         { id: 2, detail: 'bb', dateAdded: new Date() },
-        { id: 4, detail: 'd', dateAdded: new Date() }
+        { detail: 'd', dateAdded: new Date() }
       ],
       2,
       3,
@@ -63,10 +63,10 @@ describe('createDescriptionBulletChangesJson', () => {
     expect(res.deletedIds.length).toBe(2);
     expect(res.editedIdsAndDetails.length).toBe(1);
     expect(res.deletedIds).toEqual([3, 5]);
-    expect(res.changes[2].detail).toBe(`Edited test from "b" to "bb"`);
-    expect(res.changes[0].detail).toBe(`Removed test "c"`);
-    expect(res.changes[1].detail).toBe(`Removed test "e"`);
-    expect(res.changes[3].detail).toBe(`Added new test "d"`);
+    expect(res.changes[1].detail).toBe(`Edited test from "b" to "bb"`);
+    expect(res.changes[2].detail).toBe(`Removed test "c"`);
+    expect(res.changes[3].detail).toBe(`Removed test "e"`);
+    expect(res.changes[0].detail).toBe(`Added new test "d"`);
     expect(res.editedIdsAndDetails[0].id).toBe(2);
     expect(res.editedIdsAndDetails[0].detail).toBe('bb');
   });
@@ -78,7 +78,6 @@ describe('project edit', () => {
       return handler(event, mockContext, () => {});
     };
 
-    // Pointer ->
     describe('validate inputs', () => {
       const goodBody = {
         wbsElementId: 1,
@@ -106,12 +105,6 @@ describe('project edit', () => {
 
       it('fails when invalid wbsElementId', async () => {
         const res = await func({ body: { ...goodBody, wbsElementId: -5 } });
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toBe('Event object failed validation');
-      });
-
-      it('fails when goals has no id', async () => {
-        const res = await func({ body: { ...goodBody, goals: [{ detail: 'ab' }] } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });

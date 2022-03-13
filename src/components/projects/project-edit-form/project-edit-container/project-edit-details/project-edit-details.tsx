@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+// import { useState } from 'react';
 import { Project, User } from 'utils';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
@@ -13,9 +14,20 @@ import { WbsElementStatus } from 'utils/lib/types/project-types';
 interface projectDetailsProps {
   project: Project;
   users: User[];
+  updateSlideDeck: (val: string) => void;
+  updateTaskList: (val: string) => void;
+  updateBom: (val: string) => void;
+  updateGDrive: (val: string) => void;
 }
 
-const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) => {
+const ProjectEditDetails: React.FC<projectDetailsProps> = ({ 
+  project, 
+  users, 
+  updateSlideDeck, 
+  updateTaskList, 
+  updateBom, 
+  updateGDrive 
+}) => {
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
     project.workPackages.length > 0
@@ -41,10 +53,11 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
     title: string,
     type: string,
     defaultValue: any,
+    updateState: ((val: string) => void) | null,
     prefix = '',
     suffix = '',
     placeholder = '',
-    readOnly = false
+    readOnly = false,
   ) => {
     const formInput = (
       <Form.Group>
@@ -55,6 +68,11 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             defaultValue={defaultValue}
             placeholder={placeholder}
             readOnly={readOnly}
+            onChange={ (e) => { 
+              if (updateState !== null) { 
+                updateState(e.target.value)
+              } 
+            }}
           />
           {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : <></>}
         </InputGroup>
@@ -109,21 +127,22 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          {editDetailsInputBuilder('Project Name:', 'text', project.name, '', '', '')}
-          {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum), '', '', '', true)}
+          {editDetailsInputBuilder('Project Name:', 'text', project.name, null, '', '', '')}
+          {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum), null, '', '', '', true)}
           {buildUsersSelect('Project Lead:', project.projectLead!)}
           {buildUsersSelect('Project Manager:', project.projectManager!)}
-          {editDetailsInputBuilder('Budget:', 'number', project.budget, '$')}
+          {editDetailsInputBuilder('Budget:', 'number', project.budget, null, '$')}
         </Col>
         <Col xs={6} md={4}>
-          {editDetailsInputBuilder('Duration:', 'number', project.duration, '', 'weeks', '', true)}
-          {editDetailsInputBuilder('Start Date:', 'text', '', '', '', startDate, true)}
-          {editDetailsInputBuilder('End Date:', 'text', '', '', '', endDate, true)}
+          {editDetailsInputBuilder('Duration:', 'number', project.duration, null, '', 'weeks', '', true)}
+          {editDetailsInputBuilder('Start Date:', 'text', '', null, '', '', startDate, true)}
+          {editDetailsInputBuilder('End Date:', 'text', '', null, '', '', endDate, true)}
           <br />
           {editDetailsInputBuilder(
             'Expected Progress:',
             'text',
             '',
+            null,
             '',
             '',
             'Not implemented yet',
@@ -133,6 +152,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             'Timeline Status:',
             'text',
             '',
+            null,
             '',
             '',
             'Not implemented yet',
@@ -148,6 +168,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             'Slide Deck',
             'text',
             project.slideDeckLink!,
+            updateSlideDeck,
             '',
             '',
             'Slide deck link'
@@ -156,6 +177,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             'Task List',
             'text',
             project.taskListLink!,
+            updateTaskList,
             '',
             '',
             'Task list link'
@@ -164,6 +186,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             'BOM', 
             'text', 
             project.bomLink!, 
+            updateBom,
             '', 
             '', 
             'BOM link')}
@@ -171,6 +194,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({ project, users }) =
             'Google Drive',
             'text',
             project.gDriveLink!,
+            updateGDrive,
             '',
             '',
             'Google drive link'

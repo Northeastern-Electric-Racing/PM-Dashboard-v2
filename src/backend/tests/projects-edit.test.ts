@@ -97,13 +97,6 @@ describe('project edit', () => {
         ]
       };
 
-      it('succeeds with good body', async () => {
-        const res = await func({ body: goodBody });
-        expect(res.statusCode).toBe(200);
-        expect(res.body).toBe(
-          '{"projectId":1,"wbsElementId":1,"budget":1,"summary":"Not done","googleDriveFolderLink":"https://youtu.be/dQw4w9WgXcQ","slideDeckLink":"https://youtu.be/dQw4w9WgXcQ","bomLink":"https://youtu.be/dQw4w9WgXcQ","taskListLink":"https://youtu.be/dQw4w9WgXcQ","rules":["rule 1","rule 2"]}'
-        );
-      });
       it('fails when body doesnt have wbsElementId', async () => {
         const { wbsElementId, ...rest } = goodBody;
         const res = await func({ body: rest });

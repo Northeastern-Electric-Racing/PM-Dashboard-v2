@@ -15,7 +15,7 @@ const prisma = new PrismaClient();
 
 export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
   ...descBullet,
-  id: descBullet.descriptionId,
+  id: descBullet.descriptionId ?? undefined,
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
@@ -413,33 +413,69 @@ export const createDescriptionBulletChangesJson = (
     detail: string;
   }[];
 } => {
-  const seenOld = new Map<number, string>();
-  const seenNew = new Map<number, string>();
-  const oldArrayFiltered = oldArray.filter((element) => {
+  // const seenOld = new Map<number, string>();
+  // const seenNew = new Map<number, string>();
+  // const oldArrayFiltered = oldArray.filter((element) => {
+  //   return element.dateDeleted === undefined;
+  // });
+
+  // oldArray.forEach((element) => {
+  //   seenOld.set(element.id, element.detail);
+  // });
+
+  // newArray.forEach((element) => {
+  //   seenNew.set(element.id, element.detail);
+  // });
+
+  // const changes: { element: DescriptionBullet; type: string }[] = [];
+
+  // oldArrayFiltered.forEach((element) => {
+  //   if (!seenNew.has(element.id)) {
+  //     changes.push({ element, type: 'Removed' });
+  //   }
+  // });
+
+  // newArray.forEach((element) => {
+  //   if (element.id < 0 || !seenOld.has(element.id)) {
+  //     changes.push({ element, type: 'Added new' });
+  //   } else if (seenOld.get(element.id) !== element.detail) {
+  //     changes.push({ element, type: 'Edited' });
+  //   }
+  // });
+
+  // Changes
+  const changes: { element: DescriptionBullet; type: string }[] = [];
+
+  // Elements from database that have not been deleted
+  const oldArrayNotDeleted = oldArray.filter((element) => {
     return element.dateDeleted === undefined;
   });
 
-  oldArray.forEach((element) => {
-    seenOld.set(element.id, element.detail);
-  });
+  // All elements that were inputs but are not new
+  const existingElements = new Map<number, string>();
 
+  // Database version of edited elements
+  const originalElements = new Map<number, string>();
+
+  // Find new elements
   newArray.forEach((element) => {
-    seenNew.set(element.id, element.detail);
-  });
-
-  const changes: { element: DescriptionBullet; type: string }[] = [];
-
-  oldArrayFiltered.forEach((element) => {
-    if (!seenNew.has(element.id)) {
-      changes.push({ element, type: 'Removed' });
+    if (element.id === undefined) {
+      changes.push({ element, type: 'Added new' });
+    } else {
+      existingElements.set(element.id, element.detail);
     }
   });
 
-  newArray.forEach((element) => {
-    if (element.id < 0 || !seenOld.has(element.id)) {
-      changes.push({ element, type: 'Added new' });
-    } else if (seenOld.get(element.id) !== element.detail) {
-      changes.push({ element, type: 'Edited' });
+  // Find deleted and edited
+  oldArrayNotDeleted.forEach((element) => {
+    // Input version of old description element text
+    const inputElText = existingElements.get(element.id);
+
+    if (inputElText === undefined) {
+      changes.push({ element, type: 'Removed' });
+    } else if (inputElText !== element.detail) {
+      changes.push({ element: { ...element, detail: inputElText }, type: 'Edited' });
+      originalElements.set(element.id, element.detail);
     }
   });
 
@@ -462,9 +498,9 @@ export const createDescriptionBulletChangesJson = (
     changes: changes.map((element) => {
       const detail =
         element.type === 'Edited'
-          ? `${element.type} ${nameOfField} from "${seenOld.get(
+          ? `${element.type} ${nameOfField} from "${originalElements.get(
               element.element.id
-            )}" to "${seenNew.get(element.element.id)}"`
+            )}" to "${existingElements.get(element.element.id)}"`
           : `${element.type} ${nameOfField} "${element.element.detail}"`;
       return {
         changeRequestId: crId,

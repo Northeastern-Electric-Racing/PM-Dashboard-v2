@@ -78,7 +78,6 @@ export const createProjectPayloadSchema = {
 
 export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;
 
-// NOT DONE TODO: Finish
 export const projectEditInputSchemaBody = {
   type: 'object',
   properties: {
@@ -102,7 +101,7 @@ export const projectEditInputSchemaBody = {
           id: { type: 'integer', minimum: 0 },
           detail: { type: 'string' }
         },
-        required: ['id', 'detail']
+        required: ['detail']
       }
     },
     features: {
@@ -113,7 +112,7 @@ export const projectEditInputSchemaBody = {
           id: { type: 'integer', minimum: 0 },
           detail: { type: 'string' }
         },
-        required: ['id', 'detail']
+        required: ['detail']
       }
     },
     otherConstraints: {
@@ -124,7 +123,7 @@ export const projectEditInputSchemaBody = {
           id: { type: 'integer', minimum: 0 },
           detail: { type: 'string' }
         },
-        required: ['id', 'detail']
+        required: ['detail']
       }
     },
     wbsElementStatus: {

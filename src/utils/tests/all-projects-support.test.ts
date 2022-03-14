@@ -2,8 +2,12 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-
-import { calculateEndDate, projectDurationBuilder } from '../src/backend-supports/projects-get-all';
+import {
+  calculateEndDate,
+  projectDurationBuilder,
+  calculatePercentExpectedProgress
+} from '../src/backend-supports/projects-get-all';
+import { WbsElementStatus } from '../src/types/project-types';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -65,5 +69,27 @@ describe('projectDurationBuilder', () => {
         { startDate: date2, duration: 2 }
       ])
     ).toEqual(6);
+  });
+});
+
+describe('calculatePercentExpectedProgress', () => {
+  it('works with INACTIVE status', () => {
+    const startDate = new Date('01/01/21');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Inactive)).toEqual(0);
+  });
+
+  it('works with COMPLETE status', () => {
+    const startDate = new Date('01/01/21');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Complete)).toEqual(100);
+  });
+
+  it('works with reasonable ACTIVE status', () => {
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    expect(calculatePercentExpectedProgress(weekAgo, 3, WbsElementStatus.Active)).toEqual(33);
+  });
+
+  it('works with overdue ACTIVE status', () => {
+    const startDate = new Date('March 20, 2020');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Active)).toEqual(100);
   });
 });

@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { WbsElementStatus } from '../types/project-types';
+
 const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);
   end.setDate(start.getDate() + weeks * 7);
@@ -26,4 +28,18 @@ const projectDurationBuilder = (wps: any) => {
   return Math.round(durationWeeks);
 };
 
-export { projectDurationBuilder, calculateEndDate };
+const calculatePercentExpectedProgress = (start: Date, weeks: number, status: String) => {
+  if (status === WbsElementStatus.Inactive) {
+    return 0;
+  } else if (status === WbsElementStatus.Complete) {
+    return 100;
+  } else {
+    const currentDate = new Date();
+    const elapsedTime = currentDate.getTime() - start.getTime();
+    const elapsedDays = elapsedTime / (1000 * 60 * 60 * 24);
+    const percentProgress = (elapsedDays * 100) / (weeks * 7);
+    return Math.min(Math.round(percentProgress), 100);
+  }
+};
+
+export { projectDurationBuilder, calculateEndDate, calculatePercentExpectedProgress };

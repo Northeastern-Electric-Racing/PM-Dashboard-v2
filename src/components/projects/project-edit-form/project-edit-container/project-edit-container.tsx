@@ -125,61 +125,33 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
         <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
         <ProjectEditDetails project={proj!} users={data!} />
         <ProjectEditSummary project={proj!} />
-        <PageBlock
+        <EditableTextInputList
           title={'Goals'}
-          headerRight={<></>}
-          body={
-            <Form.Group>
-              <EditableTextInputList
-                items={goals}
-                add={goalsUtil.add}
-                remove={goalsUtil.remove}
-                update={goalsUtil.update}
-              />
-            </Form.Group>
-          }
+          items={goals}
+          add={goalsUtil.add}
+          remove={goalsUtil.remove}
+          update={goalsUtil.update}
         />
-        <PageBlock
+        <EditableTextInputList
           title={'Features'}
-          headerRight={<></>}
-          body={
-            <Form.Group>
-              <EditableTextInputList
-                items={features}
-                add={featUtil.add}
-                remove={featUtil.remove}
-                update={featUtil.update}
-              />
-            </Form.Group>
-          }
+          items={features}
+          add={featUtil.add}
+          remove={featUtil.remove}
+          update={featUtil.update}
         />
-        <PageBlock
+        <EditableTextInputList
           title={'Other Constraints'}
-          headerRight={<></>}
-          body={
-            <Form.Group>
-              <EditableTextInputList
-                items={otherConstraints}
-                add={ocUtil.add}
-                remove={ocUtil.remove}
-                update={ocUtil.update}
-              />
-            </Form.Group>
-          }
+          items={otherConstraints}
+          add={ocUtil.add}
+          remove={ocUtil.remove}
+          update={ocUtil.update}
         />
-        <PageBlock
+        <EditableTextInputList
           title={'Rules'}
-          headerRight={<></>}
-          body={
-            <Form.Group>
-              <EditableTextInputList
-                items={rules}
-                add={rulesUtil.add}
-                remove={rulesUtil.remove}
-                update={rulesUtil.update}
-              />
-            </Form.Group>
-          }
+          items={rules}
+          add={rulesUtil.add}
+          remove={rulesUtil.remove}
+          update={rulesUtil.update}
         />
         <ChangesList changes={proj!.changes} />
         <PageBlock

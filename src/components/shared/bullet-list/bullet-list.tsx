@@ -6,7 +6,7 @@
 import PageBlock from '../page-block/page-block';
 import styles from './bullet-list.module.css';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 
 interface BulletListProps {
@@ -27,13 +27,37 @@ const BulletList: React.FC<BulletListProps> = ({
   fieldName
 }) => {
   const { editMode, setField } = useContext(FormContext);
+  const [bullets, setBullets] = useState(list);
+  const [newBullet, setNewBullet] = useState('');
+
+  useEffect(() => {
+    setBullets(list);
+  }, [editMode, list]);
+
+  function handleAdd() {
+    setBullets([...bullets, <>{newBullet}</>]);
+  }
+
+  function handleDelete() {}
+
+  function handleChange(fieldName: string, s: string) {
+    setField(fieldName, s);
+  }
+
   const addButton = (
     <InputGroup>
-      <Form.Control type="text" placeholder="Input new bullet here" />
-      <Button variant="success">+</Button>
+      <Form.Control
+        type="text"
+        placeholder="Input new bullet here"
+        onChange={(e) => setNewBullet(e.target.value)}
+      />
+      <Button variant="success" onClick={handleAdd}>
+        +
+      </Button>
     </InputGroup>
   );
-  let listPrepared = list.map((bullet, idx) =>
+
+  let listPrepared = bullets.map((bullet, idx) =>
     editMode && !readOnly ? (
       <InputGroup aria-required>
         <Form.Control
@@ -42,9 +66,11 @@ const BulletList: React.FC<BulletListProps> = ({
           defaultValue={bullet.props.children}
           placeholder={bullet.props.children}
           key={idx}
-          onChange={(e) => setField(`${fieldName}${idx}`, e.target.value)}
+          onChange={(e) => handleChange(`${fieldName}${idx}`, e.target.value)}
         />
-        <Button variant="danger">X</Button>
+        <Button variant="danger" key={idx} onClick={handleDelete}>
+          X
+        </Button>
       </InputGroup>
     ) : (
       <li key={idx}>{bullet}</li>

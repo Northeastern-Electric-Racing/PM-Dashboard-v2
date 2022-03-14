@@ -35,9 +35,6 @@ describe('Rendering Work Package Details Component', () => {
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
     expect(screen.getByText(`${wp.progress}%`, { exact: false })).toBeInTheDocument();
-    expect(
-      screen.getByText(`${percentPipe(wp.expectedProgress)}`, { exact: false })
-    ).toBeInTheDocument();
   });
 
   it('renders all the fields, example 2', () => {
@@ -60,8 +57,8 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`); // progress and expectedProgress should be equal and return 2 results
-    expect(progresses.length).toBe(2);
+    const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`); // expected progress has been removed, so only 1 progress at the moment.
+    expect(progresses.length).toBe(1);
   });
 
   it('renders all the fields, example 3', () => {
@@ -83,7 +80,7 @@ describe('Rendering Work Package Details Component', () => {
     expect(
       screen.getByText(`${endDatePipe(wp.startDate, wp.duration)}`, { exact: false })
     ).toBeInTheDocument();
-    const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`); // progress and expectedProgress should be equal and return 2 results
-    expect(progresses.length).toBe(2);
+    const progresses = screen.getAllByText(`${percentPipe(wp.progress)}`); // expected progress has been removed, so only 1 progress at the moment.
+    expect(progresses.length).toBe(1);
   });
 });

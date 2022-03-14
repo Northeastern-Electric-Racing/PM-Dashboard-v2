@@ -78,12 +78,14 @@ Paste this into `settings.json`:
 }
 ```
 
-Below are extensions for VSCode that might make your developer experience more enjoyable.
-Only the starred ones are optional.
+### VSCode Extensions
 
 When you launch the project in VSCode, you should see a popup in the bottom right asking you to "install all recommendeded extensions".
 Click "install" to easily install all of the below extensions.
+
 If for some reason you don't see this popup you can install them manually using the extensions button on the left sidebar.
+Below are the recommended extensions that you should install.
+Only the starred ones are optional.
 
 - [Jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest) (`orta.vscode-jest`)
 - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma) (`prisma.prisma`)

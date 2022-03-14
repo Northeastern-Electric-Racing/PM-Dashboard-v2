@@ -42,7 +42,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
         </InputGroup>
       </div>
     ) : (
-      <li key={index}></li>
+      <li key={index}>{item}</li>
     )
   );
 

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { createContext, SyntheticEvent, useState } from 'react';
+import { createContext, SyntheticEvent, useState, useEffect } from 'react';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
@@ -37,12 +37,17 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({});
   const [expectedActivities, setExpectedActivities] = useState(['']);
-  // This // data!.expectedActivities.map((expectedActivity) => expectedActivity.detail)
   const [deliverables, setDeliverables] = useState(['']);
-  //   data!.deliverables.map((deliverable) => deliverable.detail)  And this are making issues.
 
-  console.log(data!.expectedActivities);
-  console.log(data!.deliverables);
+  // On render, data is undefined. This causes issues if trying to set the state to fields from it. Bug?
+  useEffect(() => { 
+    if (data) {
+      setExpectedActivities(
+        data!.expectedActivities.map((expectedActivity) => expectedActivity.detail)
+      );
+      setDeliverables(data!.deliverables.map((deliverable) => deliverable.detail));
+    }
+  }, [data]);
 
   // This might not be needed anymore. Will be looked into!
   const setField = (field: string, value: any) => {

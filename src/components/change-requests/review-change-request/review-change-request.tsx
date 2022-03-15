@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
 import { useReviewChangeRequest } from '../../../services/change-requests.hooks';
@@ -16,6 +17,10 @@ interface ReviewChangeRequestProps {
   option: 'Accept' | 'Deny';
 }
 
+export interface FormInput {
+  reviewNotes: string;
+}
+
 const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
   option
 }: ReviewChangeRequestProps) => {
@@ -26,13 +31,15 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
   const crId = parseInt(id);
   const auth = useAuth();
   const history = useHistory();
-  const [reviewNotes, setReviewNotes] = useState('');
   const { isLoading, isError, error, mutateAsync } = useReviewChangeRequest();
 
   const backToChangeRequestPage = () => history.push(`${routes.CHANGE_REQUESTS}/${crId}`);
 
-  const handleConfirm = async (e: any) => {
+  const handleConfirm = async (data: FormInput, e: any) => {
     e.preventDefault();
+
+    const { reviewNotes } = data;
+    console.log(reviewNotes);
     if (auth.user?.userId === undefined)
       throw new Error('Cannot review change request without being logged in');
     await mutateAsync({
@@ -52,7 +59,6 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
     <ReviewChangeRequestsView
       crId={crId}
       option={option}
-      setReviewNotes={setReviewNotes}
       onSubmit={handleConfirm}
       onCancel={backToChangeRequestPage}
     />

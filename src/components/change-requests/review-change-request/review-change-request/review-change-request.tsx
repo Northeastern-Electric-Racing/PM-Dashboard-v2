@@ -4,24 +4,25 @@
  */
 import { Dispatch, SetStateAction } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
+import { FormInput } from '../review-change-request';
 
 interface ReviewChangeRequestViewProps {
   crId: number;
   option: 'Accept' | 'Deny';
-  onSubmit: (e: any) => any;
+  onSubmit: (data: FormInput, e: any) => Promise<void>;
   onCancel: (e: any) => any;
-  setReviewNotes: Dispatch<SetStateAction<string>>;
 }
 
 const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   crId,
   option,
   onSubmit,
-  onCancel,
-  setReviewNotes
+  onCancel
 }: ReviewChangeRequestViewProps) => {
+  const { register, handleSubmit } = useForm<FormInput>();
   return (
     <>
       <PageTitle title={`Change Request #${crId}`} />
@@ -32,16 +33,16 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
           <div className={'row'}>
             <div className={'mx-auto mw-50'}>
               <h2 className={'text-center mb-3'}>{option} Change Request</h2>
-              <Form id={'formReview'} onSubmit={onSubmit}>
+              <Form id={'formReview'} onSubmit={handleSubmit(onSubmit)}>
                 <div className={'row'}>
                   <Form.Group controlId="formReviewNotes">
                     <Form.Label className={'font-weight-bold'}>Review Notes</Form.Label>
                     <Form.Control
+                      {...register('reviewNotes')}
                       as="textarea"
                       rows={4}
                       cols={50}
                       placeholder="Notes..."
-                      onChange={(e: any) => setReviewNotes(e.target.value)}
                     />
                   </Form.Group>
                 </div>

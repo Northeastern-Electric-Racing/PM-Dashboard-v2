@@ -9,7 +9,7 @@ import './dependencies-list.module.css';
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import { FormContext } from '../work-package-container';
 import { useContext, useEffect, useState } from 'react';
-import { validateWBS } from '../../../../../utils/src/validate-wbs';
+import { validateWBS } from 'utils';
 
 interface DependenciesListProps {
   dependencies: WbsNumber[];

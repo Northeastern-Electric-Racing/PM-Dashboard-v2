@@ -3,12 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { routes } from '../../../shared/routes';
 import { exampleStandardChangeRequest } from '../../../test-support/test-data/change-requests.stub';
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import ReviewChangeRequest from './review-change-request';
 
 const renderComponent = (option: 'Accept' | 'Deny', route: string) => {
-  const RouterWrapper = routerWrapperBuilder({ path: '/change-requests/:id', route });
+  const RouterWrapper = routerWrapperBuilder({ path: routes.CHANGE_REQUESTS_BY_ID, route });
   return render(
     <RouterWrapper>
       <ReviewChangeRequest option={option} />

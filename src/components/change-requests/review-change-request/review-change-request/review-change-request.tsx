@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
 import { FormInput } from '../review-change-request';
+import { reviewNotesSchema } from '../../../shared/form-validation-schemas/change-request-form-schemas';
 
 interface ReviewChangeRequestViewProps {
   crId: number;
@@ -17,10 +18,6 @@ interface ReviewChangeRequestViewProps {
   onCancel: (e: any) => any;
 }
 
-const schema = yup.object().shape({
-  reviewNotes: yup.string()
-});
-
 const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   crId,
   option,
@@ -28,7 +25,7 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   onCancel
 }: ReviewChangeRequestViewProps) => {
   const { register, handleSubmit } = useForm<FormInput>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(reviewNotesSchema)
   });
   return (
     <>

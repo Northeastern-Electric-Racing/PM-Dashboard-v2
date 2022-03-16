@@ -7,7 +7,13 @@ import { exampleStandardChangeRequest } from '../../../../test-support/test-data
 import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
 import ReviewChangeRequestsView from './review-change-request';
 
+/**
+ * Mock function for submitting the form, use if there is additional functionality added while submitting
+ */
 const mockHandleSubmit = jest.fn();
+/**
+ * Mock function for canceling the form, use if there is additional functionality added while canceling
+ */
 const mockHandleCancel = jest.fn();
 
 /**

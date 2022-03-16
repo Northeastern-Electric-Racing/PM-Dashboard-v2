@@ -2,9 +2,10 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-import { Dispatch, SetStateAction } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
 import { FormInput } from '../review-change-request';
@@ -16,13 +17,19 @@ interface ReviewChangeRequestViewProps {
   onCancel: (e: any) => any;
 }
 
+const schema = yup.object().shape({
+  reviewNotes: yup.string()
+});
+
 const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   crId,
   option,
   onSubmit,
   onCancel
 }: ReviewChangeRequestViewProps) => {
-  const { register, handleSubmit } = useForm<FormInput>();
+  const { register, handleSubmit } = useForm<FormInput>({
+    resolver: yupResolver(schema)
+  });
   return (
     <>
       <PageTitle title={`Change Request #${crId}`} />

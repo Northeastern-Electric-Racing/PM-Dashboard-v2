@@ -3,8 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from 'react';
-import { SubmitHandler } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
 import { useReviewChangeRequest } from '../../../services/change-requests.hooks';

@@ -5,7 +5,7 @@
 
 import { User } from './user-types';
 import { ImplementedChange } from './change-request-types';
-import { WorkPackageTimelineStatus } from './work-package-types';
+import { TimelineStatus } from './work-package-types';
 import { FromSchema } from 'json-schema-to-ts';
 import { bodySchema, intType, stringType } from './api-utils-types';
 
@@ -54,7 +54,7 @@ export interface WorkPackage extends WbsElement {
   endDate: Date;
   duration: number;
   expectedProgress: number;
-  timelineStatus: WorkPackageTimelineStatus;
+  timelineStatus: TimelineStatus;
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];
   deliverables: DescriptionBullet[];

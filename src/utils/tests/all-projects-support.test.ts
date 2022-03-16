@@ -9,7 +9,7 @@ import {
   calculateTimelineStatus
 } from '../src/backend-supports/projects-get-all';
 import { WbsElementStatus } from '../src/types/project-types';
-import { WorkPackageTimelineStatus } from '../src/types/work-package-types';
+import { TimelineStatus } from '../src/types/work-package-types';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -98,22 +98,22 @@ describe('calculatePercentExpectedProgress', () => {
 
 describe('calculateTimelineStatus', () => {
   it('works Ahead of schedule', () => {
-    expect(calculateTimelineStatus(75, 30)).toEqual(WorkPackageTimelineStatus.Ahead);
+    expect(calculateTimelineStatus(75, 30)).toEqual(TimelineStatus.Ahead);
   });
 
   it('works OnTrack', () => {
-    expect(calculateTimelineStatus(55, 30)).toEqual(WorkPackageTimelineStatus.OnTrack);
+    expect(calculateTimelineStatus(55, 30)).toEqual(TimelineStatus.OnTrack);
   });
 
   it('works when progress is the same as expected progress', () => {
-    expect(calculateTimelineStatus(50, 50)).toEqual(WorkPackageTimelineStatus.OnTrack);
+    expect(calculateTimelineStatus(50, 50)).toEqual(TimelineStatus.OnTrack);
   });
 
   it('works Behind schedule', () => {
-    expect(calculateTimelineStatus(25, 30)).toEqual(WorkPackageTimelineStatus.Behind);
+    expect(calculateTimelineStatus(25, 30)).toEqual(TimelineStatus.Behind);
   });
 
   it('works VeryBehind schedule', () => {
-    expect(calculateTimelineStatus(0, 100)).toEqual(WorkPackageTimelineStatus.VeryBehind);
+    expect(calculateTimelineStatus(0, 100)).toEqual(TimelineStatus.VeryBehind);
   });
 });

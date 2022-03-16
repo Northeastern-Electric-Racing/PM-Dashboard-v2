@@ -53,3 +53,10 @@ export const workPackageEditInputSchemaBody = bodySchema(
 );
 
 export type EditWorkPackagePayload = FromSchema<typeof workPackageEditInputSchemaBody>;
+
+export enum WorkPackageTimelineStatus {
+  Ahead = 'AHEAD',
+  OnTrack = 'ON_TRACK',
+  Behind = 'BEHIND',
+  VeryBehind = 'VERY_BEHIND'
+}

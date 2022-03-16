@@ -5,9 +5,11 @@
 import {
   calculateEndDate,
   projectDurationBuilder,
-  calculatePercentExpectedProgress
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
 } from '../src/backend-supports/projects-get-all';
 import { WbsElementStatus } from '../src/types/project-types';
+import { WorkPackageTimelineStatus } from '../src/types/work-package-types';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -91,5 +93,27 @@ describe('calculatePercentExpectedProgress', () => {
   it('works with overdue ACTIVE status', () => {
     const startDate = new Date('March 20, 2020');
     expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Active)).toEqual(100);
+  });
+});
+
+describe('calculateTimelineStatus', () => {
+  it('works Ahead of schedule', () => {
+    expect(calculateTimelineStatus(75, 30)).toEqual(WorkPackageTimelineStatus.Ahead);
+  });
+
+  it('works OnTrack', () => {
+    expect(calculateTimelineStatus(55, 30)).toEqual(WorkPackageTimelineStatus.OnTrack);
+  });
+
+  it('works when progress is the same as expected progress', () => {
+    expect(calculateTimelineStatus(50, 50)).toEqual(WorkPackageTimelineStatus.OnTrack);
+  });
+
+  it('works Behind schedule', () => {
+    expect(calculateTimelineStatus(25, 30)).toEqual(WorkPackageTimelineStatus.Behind);
+  });
+
+  it('works VeryBehind schedule', () => {
+    expect(calculateTimelineStatus(0, 100)).toEqual(WorkPackageTimelineStatus.VeryBehind);
   });
 });

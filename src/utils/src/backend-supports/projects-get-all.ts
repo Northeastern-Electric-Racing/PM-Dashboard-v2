@@ -4,6 +4,7 @@
  */
 
 import { WbsElementStatus } from '../types/project-types';
+import { WorkPackageTimelineStatus } from '../types/work-package-types';
 
 const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);
@@ -42,4 +43,25 @@ const calculatePercentExpectedProgress = (start: Date, weeks: number, status: St
   }
 };
 
-export { projectDurationBuilder, calculateEndDate, calculatePercentExpectedProgress };
+const calculateTimelineStatus = (
+  progress: number,
+  expectedProgress: number
+): WorkPackageTimelineStatus => {
+  const delta = progress - expectedProgress;
+  if (delta > 25) {
+    return WorkPackageTimelineStatus.Ahead;
+  } else if (delta >= 0) {
+    return WorkPackageTimelineStatus.OnTrack;
+  } else if (delta >= -25) {
+    return WorkPackageTimelineStatus.Behind;
+  } else {
+    return WorkPackageTimelineStatus.VeryBehind;
+  }
+};
+
+export {
+  projectDurationBuilder,
+  calculateEndDate,
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
+};

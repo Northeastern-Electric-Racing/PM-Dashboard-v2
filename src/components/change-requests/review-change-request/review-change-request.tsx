@@ -33,10 +33,7 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
 
   const backToChangeRequestPage = () => history.push(`${routes.CHANGE_REQUESTS}/${crId}`);
 
-  const handleConfirm = async (data: FormInput, e: any) => {
-    e.preventDefault();
-
-    const { reviewNotes } = data;
+  const handleConfirm = async ({ reviewNotes }: FormInput) => {
     if (auth.user?.userId === undefined)
       throw new Error('Cannot review change request without being logged in');
     await mutateAsync({

@@ -31,29 +31,36 @@ export interface EditModeProps {
 }
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
-  const [slideDeck, setSlideDeck] = useState("");
-  const [taskList, setTaskList] = useState("");
-  const [bom, setBom] = useState("");
-  const [gDrive, setGDrive] = useState("");
+  const [summary, setSummary] = useState(proj.summary);
+  
+  const [slideDeck, setSlideDeck] = useState(proj.slideDeckLink);
+  const [taskList, setTaskList] = useState(proj.taskListLink);
+  const [bom, setBom] = useState(proj.bomLink);
+  const [gDrive, setGDrive] = useState(proj.gDriveLink);
 
-  const updateSlideDeck = (url: string) => {
+  const updateSlideDeck = (url: string | undefined) => {
     // console.log(url);
     setSlideDeck(url);
   }
 
-  const updateTaskList = (url: string) => {
+  const updateTaskList = (url: string | undefined) => {
     // console.log(url);
     setTaskList(url);
   }
 
-  const updateBom = (url: string) => {
+  const updateBom = (url: string | undefined) => {
     // console.log(url);
     setBom(url);
   }
 
-  const updateGDrive = (url: string) => {
+  const updateGDrive = (url: string | undefined) => {
     // console.log(url);
     setGDrive(url);
+  }
+
+  const updateSummary = (val: string) => {
+    // console.log(summary);
+    setSummary(val);
   }
   
   // const [validated, setValidated] = useState(false);
@@ -139,17 +146,23 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     }
   };
 
-  const isValidURL = (url: string) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (_) {
-      return false;  
+  const isValidURL = (url: string | undefined) => {
+    if (url !== undefined) {
+      try {
+        new URL(url);
+        return true;
+      } catch (_) {
+        return false;  
+      }
+    } 
+    else {
+      return false;
     }
   }
 
   const checkValidity = () => {
-    return proj.budget >= 0 
+    return proj.budget >= 0
+      && summary !== ""
       && [slideDeck, taskList, bom, gDrive].every(isValidURL)
       && [goals, features, otherConstraints, rules].every(
         (bullets: string[]) => bullets.every(notEmptyVal));
@@ -186,7 +199,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           updateBom={updateBom} 
           updateGDrive={updateGDrive}
         />
-        <ProjectEditSummary project={proj!} />
+        <ProjectEditSummary project={proj!} updateSummary={updateSummary}/>
         <PageBlock
           title={'Goals'}
           headerRight={<></>}

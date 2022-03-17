@@ -43,6 +43,13 @@ const calculatePercentExpectedProgress = (start: Date, weeks: number, status: St
   }
 };
 
+/**
+ * Calculates a status of how current progress compares to expected progress.
+ *
+ * @param progress The reported progress, as a percentage.
+ * @param expectedProgress The expected progress, as a percentage.
+ * @returns The status of the progress compared to expectation.
+ */
 const calculateTimelineStatus = (progress: number, expectedProgress: number): TimelineStatus => {
   const delta = progress - expectedProgress;
   if (delta > 25) {

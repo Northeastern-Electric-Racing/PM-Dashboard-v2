@@ -27,7 +27,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
 }) => {
   let listPrepared = items.map((item, index: number) =>
     !readOnly ? (
-      <div key={index} className={'mb-2'}>
+      <li key={index} className={'mb-2'}>
         <InputGroup>
           <Form.Control
             type="text"
@@ -40,7 +40,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
             X
           </Button>
         </InputGroup>
-      </div>
+      </li>
     ) : (
       <li key={index}>{item}</li>
     )
@@ -52,12 +52,14 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
     </Button>
   );
 
+  const style = readOnly ? {} : { listStyleType: 'none', padding: 0 };
+
   if (!readOnly) {
     listPrepared = [...listPrepared, addButton];
   }
-  let builtList = <ul>{listPrepared}</ul>;
+  let builtList = <ul style={style}>{listPrepared}</ul>;
   if (ordered) {
-    builtList = <ol>{listPrepared}</ol>;
+    builtList = <ol style={style}>{listPrepared}</ol>;
   }
 
   return (

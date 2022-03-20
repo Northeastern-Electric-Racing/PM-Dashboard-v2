@@ -64,8 +64,6 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   if (isError) return <ErrorPage message={error?.message} />;
 
   const handleSubmit = (event: SyntheticEvent) => {
-    if (form.hasOwnProperty('')) {
-    }
     event.preventDefault();
   };
 

@@ -22,8 +22,26 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
 
   useEffect(() => {
     setDependenciesState(dependencies);
-  }, [editMode, dependencies])
-  
+  }, [editMode, dependencies]);
+
+  const handleDelete = (dependencyToDelete: WbsNumber) => {
+    const index = dependenciesState.indexOf(dependencyToDelete);
+    if (index !== -1) {
+      const half1 = dependenciesState.slice(0, index);
+      const half2 = dependenciesState.slice(index + 1);
+      setDependenciesState(half1.concat(half2));
+    }
+  };
+
+  const handleAdd = () => {
+    try {
+      setDependenciesState([...dependenciesState, validateWBS(unvalidatedDependency)]);
+    } catch (error: any) {
+      alert(error.message);
+    }
+    setUnvalidatedDependency('');
+  };
+
   const AddButton = (
     <InputGroup>
       <Form.Control
@@ -36,24 +54,6 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
       </Button>
     </InputGroup>
   );
-
-  function handleDelete(dependencyToDelete: WbsNumber) {
-    const index = dependenciesState.indexOf(dependencyToDelete);
-    if (index !== -1) {
-      const half1 = dependenciesState.slice(0, index);
-      const half2 = dependenciesState.slice(index + 1);
-      setDependenciesState(half1.concat(half2));
-    }
-  }
-
-  function handleAdd() {
-    try {
-      setDependenciesState([...dependenciesState, validateWBS(unvalidatedDependency)]);
-    } catch (error: any) {
-      alert(error.message);
-    }
-    setUnvalidatedDependency('');
-  }
 
   const items = dependenciesState.map((e) => (
     <Dependency wbsNumber={e} handleDelete={handleDelete} />

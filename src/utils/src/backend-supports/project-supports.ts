@@ -17,7 +17,7 @@ const calculateEndDate = (start: Date, weeks: number) => {
 
 /**
  * The function calculates the duration of a project.
- * @param wps an array of work packages, should contain property of startDate and number
+ * @param Array of objects with startDate and duration
  * @returns the duration of the project in weeks
  */
 const calculateDuration = (wps: { startDate: Date; duration: number }[]) => {

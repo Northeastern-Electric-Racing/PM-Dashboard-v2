@@ -10,7 +10,12 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
-import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
+import {
+  buildNotFoundResponse,
+  buildSuccessResponse,
+  eventSchema,
+  workPackageCreateInputSchemaBody
+} from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -39,7 +44,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     }
   });
 
-  if (project === null) throw new TypeError('Project Id not found!');
+  if (project === null) return buildNotFoundResponse('Project_ID', projectId.toString());
 
   // eslint-disable-next-line prefer-destructuring
   const { carNumber, projectNumber } = project.wbsElement;

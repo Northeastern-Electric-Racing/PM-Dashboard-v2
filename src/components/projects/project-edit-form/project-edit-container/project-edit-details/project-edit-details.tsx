@@ -18,6 +18,7 @@ interface projectDetailsProps {
   updateTaskList: (val: string) => void;
   updateBom: (val: string) => void;
   updateGDrive: (val: string) => void;
+  updateBudget: (val: string) => void;
 }
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({ 
@@ -26,7 +27,8 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   updateSlideDeck, 
   updateTaskList, 
   updateBom, 
-  updateGDrive 
+  updateGDrive,
+  updateBudget
 }) => {
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
@@ -131,7 +133,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
           {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum), null, '', '', '', true)}
           {buildUsersSelect('Project Lead:', project.projectLead!)}
           {buildUsersSelect('Project Manager:', project.projectManager!)}
-          {editDetailsInputBuilder('Budget:', 'number', project.budget, null, '$')}
+          {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
         </Col>
         <Col xs={6} md={4}>
           {editDetailsInputBuilder('Duration:', 'number', project.duration, null, '', 'weeks', '', true)}

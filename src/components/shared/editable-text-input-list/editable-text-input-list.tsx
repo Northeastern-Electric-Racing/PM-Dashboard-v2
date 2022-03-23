@@ -24,7 +24,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
         items.map((item, index: number) => (
           <div key={index} className={'mb-2'}>
             <InputGroup>
-              <Form.Control type='text' value={item.toString()} onChange={(e) => {
+              <Form.Control required type='text' value={item.toString()} onChange={(e) => {
                 update(index, e.target.value);
               }} />
               <Button type='button' variant='danger' onClick={() => remove(index)}>X</Button>

@@ -10,10 +10,9 @@ import PageBlock from '../../../../shared/page-block/page-block';
 
 interface ProjectEditSummaryProps {
   project: Project;
-  updateSummary: (val: string) => void;
 }
 
-const ProjectEditSummary: React.FC<ProjectEditSummaryProps> = ({ project, updateSummary }) => {
+const ProjectEditSummary: React.FC<ProjectEditSummaryProps> = ({ project }) => {
   return (
     <PageBlock
       title={'Project Summary'}
@@ -21,10 +20,10 @@ const ProjectEditSummary: React.FC<ProjectEditSummaryProps> = ({ project, update
       body={
         <Form.Group>
           <Form.Control 
+          required
           as="textarea" 
           defaultValue={project.summary} 
-          rows={4} 
-          onChange={(e) => updateSummary(e.target.value)}/>
+          rows={4} />
         </Form.Group>
       }
     />

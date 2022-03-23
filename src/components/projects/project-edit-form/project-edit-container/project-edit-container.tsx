@@ -31,37 +31,22 @@ export interface EditModeProps {
 }
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
-  const [summary, setSummary] = useState(proj.summary);
+  const [budget, setBudget] = useState(proj.budget);
   
   const [slideDeck, setSlideDeck] = useState(proj.slideDeckLink);
   const [taskList, setTaskList] = useState(proj.taskListLink);
   const [bom, setBom] = useState(proj.bomLink);
   const [gDrive, setGDrive] = useState(proj.gDriveLink);
 
-  const updateSlideDeck = (url: string | undefined) => {
-    // console.log(url);
-    setSlideDeck(url);
-  }
+  const updateSlideDeck = (url: string | undefined) => setSlideDeck(url);
 
-  const updateTaskList = (url: string | undefined) => {
-    // console.log(url);
-    setTaskList(url);
-  }
+  const updateTaskList = (url: string | undefined) => setTaskList(url);
 
-  const updateBom = (url: string | undefined) => {
-    // console.log(url);
-    setBom(url);
-  }
+  const updateBom = (url: string | undefined) => setBom(url);
 
-  const updateGDrive = (url: string | undefined) => {
-    // console.log(url);
-    setGDrive(url);
-  }
+  const updateGDrive = (url: string | undefined) => setGDrive(url);
 
-  const updateSummary = (val: string) => {
-    // console.log(summary);
-    setSummary(val);
-  }
+  const updateBudget = (val: string) => setBudget(+val);
   
   // const [validated, setValidated] = useState(false);
   const [goals, setGoals] = useState(proj!.goals.map((goal) => goal.detail));
@@ -72,12 +57,12 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const [rules, setRules] = useState(proj!.rules);
   const { isLoading, isError, data, error } = useAllUsers();
 
-  const notEmptyVal = (val: string) => val !== "";
+  const notEmptyString = (val: string) => val !== "";
   
   const goalsUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = goals.slice();
-      if (clone.length === 0 || clone.every(notEmptyVal)) clone.push(val);
+      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
       setGoals(clone);
     },
     remove: (idx) => {
@@ -95,7 +80,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const featUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = features.slice();
-      if (clone.length === 0 || clone.every(notEmptyVal)) clone.push(val);
+      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
       setFeatures(clone);
     },
     remove: (idx) => {
@@ -113,7 +98,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const ocUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = otherConstraints.slice();
-      if (clone.length === 0 || clone.every(notEmptyVal)) clone.push(val);
+      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
       setOther(clone);
     },
     remove: (idx) => {
@@ -131,7 +116,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const rulesUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = rules.slice();
-      if (clone.length === 0 || clone.every(notEmptyVal)) clone.push(val);
+      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
       setRules(clone);
     },
     remove: (idx) => {
@@ -152,32 +137,31 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
         new URL(url);
         return true;
       } catch (_) {
-        return false;  
+        alert("Invalid URL provided.");
       }
     } 
     else {
-      return false;
+      alert("URL not provided.");
     }
+    return false;
   }
 
   const checkValidity = () => {
-    return proj.budget >= 0
-      && summary !== ""
+    if (budget < 0) {
+      alert("Budget can't be negative.")
+    }
+
+    return budget >= 0
       && [slideDeck, taskList, bom, gDrive].every(isValidURL)
-      && [goals, features, otherConstraints, rules].every(
-        (bullets: string[]) => bullets.every(notEmptyVal));
   }
 
   const handleSubmit = (event: SyntheticEvent) => {
-    // event.preventDefault();
-    // const { currentTarget } = event;
-    // console.log(currentTarget);
-    // console.log(slideDeck, taskList, bom, gDrive)
+    event.preventDefault();
 
     const { currentTarget } = event;
     console.log(currentTarget);
+
     if (checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     }
   };
@@ -198,8 +182,9 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           updateTaskList={updateTaskList} 
           updateBom={updateBom} 
           updateGDrive={updateGDrive}
+          updateBudget={updateBudget}
         />
-        <ProjectEditSummary project={proj!} updateSummary={updateSummary}/>
+        <ProjectEditSummary project={proj!} />
         <PageBlock
           title={'Goals'}
           headerRight={<></>}

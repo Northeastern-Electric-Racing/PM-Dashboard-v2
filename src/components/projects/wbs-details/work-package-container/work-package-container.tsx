@@ -18,6 +18,7 @@ import ChangesList from './changes-list/changes-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
+import PageBlock from '../../../shared/page-block/page-block';
 
 export const FormContext = createContext({
   editMode: false,
@@ -40,7 +41,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   const [deliverables, setDeliverables] = useState(['']);
 
   // On render, data is undefined. This causes issues if trying to set the state to fields from it. Bug?
-  useEffect(() => { 
+  useEffect(() => {
     if (data) {
       setExpectedActivities(
         data!.expectedActivities.map((expectedActivity) => expectedActivity.detail)
@@ -111,21 +112,31 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
           <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
           <WorkPackageDetails workPackage={data!} />
           <DependenciesList dependencies={data!.dependencies} />
-          <EditableTextInputList
-            title={'Expected Activities'}
-            readOnly={!editMode}
-            items={expectedActivities}
-            add={expectedActivitiesUtil.add}
-            remove={expectedActivitiesUtil.remove}
-            update={expectedActivitiesUtil.update}
+          <PageBlock
+            title="Expected Activities"
+            headerRight={<></>}
+            body={
+              <EditableTextInputList
+                readOnly={!editMode}
+                items={expectedActivities}
+                add={expectedActivitiesUtil.add}
+                remove={expectedActivitiesUtil.remove}
+                update={expectedActivitiesUtil.update}
+              />
+            }
           />
-          <EditableTextInputList
-            title={'Deliverables'}
-            readOnly={!editMode}
-            items={deliverables}
-            add={deliverablesUtil.add}
-            remove={deliverablesUtil.remove}
-            update={deliverablesUtil.update}
+          <PageBlock
+            title={'Delieverables'}
+            headerRight={<></>}
+            body={
+              <EditableTextInputList
+                readOnly={!editMode}
+                items={deliverables}
+                add={deliverablesUtil.add}
+                remove={deliverablesUtil.remove}
+                update={deliverablesUtil.update}
+              />
+            }
           />
           <ChangesList changes={data!.changes} />
           {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}

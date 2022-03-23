@@ -4,10 +4,8 @@
  */
 
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import PageBlock from '../page-block/page-block';
 
 interface EditableTextInputListProps {
-  title: string;
   items: any[];
   readOnly?: boolean;
   ordered?: boolean;
@@ -17,7 +15,6 @@ interface EditableTextInputListProps {
 }
 
 const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
-  title,
   items,
   readOnly,
   ordered,
@@ -62,9 +59,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
     builtList = <ol style={style}>{listPrepared}</ol>;
   }
 
-  return (
-    <PageBlock title={title} headerRight={<></>} body={<Form.Group>{builtList}</Form.Group>} />
-  );
+  return <Form.Group>{builtList}</Form.Group>;
 };
 
 export default EditableTextInputList;

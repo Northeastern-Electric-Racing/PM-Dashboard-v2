@@ -125,33 +125,53 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
         <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
         <ProjectEditDetails project={proj!} users={data!} />
         <ProjectEditSummary project={proj!} />
-        <EditableTextInputList
+        <PageBlock
           title={'Goals'}
-          items={goals}
-          add={goalsUtil.add}
-          remove={goalsUtil.remove}
-          update={goalsUtil.update}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={goals}
+              add={goalsUtil.add}
+              remove={goalsUtil.remove}
+              update={goalsUtil.update}
+            />
+          }
         />
-        <EditableTextInputList
+        <PageBlock
           title={'Features'}
-          items={features}
-          add={featUtil.add}
-          remove={featUtil.remove}
-          update={featUtil.update}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={features}
+              add={featUtil.add}
+              remove={featUtil.remove}
+              update={featUtil.update}
+            />
+          }
         />
-        <EditableTextInputList
+        <PageBlock
           title={'Other Constraints'}
-          items={otherConstraints}
-          add={ocUtil.add}
-          remove={ocUtil.remove}
-          update={ocUtil.update}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={otherConstraints}
+              add={ocUtil.add}
+              remove={ocUtil.remove}
+              update={ocUtil.update}
+            />
+          }
         />
-        <EditableTextInputList
+        <PageBlock
           title={'Rules'}
-          items={rules}
-          add={rulesUtil.add}
-          remove={rulesUtil.remove}
-          update={rulesUtil.update}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={rules}
+              add={rulesUtil.add}
+              remove={rulesUtil.remove}
+              update={rulesUtil.update}
+            />
+          }
         />
         <ChangesList changes={proj!.changes} />
         <PageBlock

@@ -107,9 +107,9 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Col>
                     <Form.Group>
+                      <Form.Label htmlFor="dependencies-text-input-list">Dependencies</Form.Label>
                       <Form.Group id="dependencies-text-input-list">
                         <EditableTextInputList
-                          title={'Dependencies'}
                           items={dependencies}
                           add={depUtils.add}
                           remove={depUtils.remove}
@@ -122,9 +122,9 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Col>
                     <Form.Group>
+                      <Form.Label>Expected Activities</Form.Label>
                       <Form.Group id="ea-text-input-list">
                         <EditableTextInputList
-                          title={'Expected Activities'}
                           items={expectedActivities}
                           add={eaUtils.add}
                           remove={eaUtils.remove}
@@ -137,9 +137,9 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 <Row>
                   <Col>
                     <Form.Group>
+                      <Form.Label htmlFor="deliverables-text-input-list">Deliverables</Form.Label>
                       <Form.Group id="deliverables-text-input-list">
                         <EditableTextInputList
-                          title={'Deliverables'}
                           items={deliverables}
                           add={delUtils.add}
                           remove={delUtils.remove}

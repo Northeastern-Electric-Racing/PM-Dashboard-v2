@@ -70,6 +70,12 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
               type="number"
               readOnly={true}
             />
+            <EditableDetail
+              title="Timeline Status"
+              value={workPackage.timelineStatus}
+              type="text"
+              readOnly={true}
+            />
           </Col>
         </Row>
       </Form>

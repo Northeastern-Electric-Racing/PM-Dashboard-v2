@@ -20,18 +20,15 @@ export interface EditableTextInputStateAndUtils {
 const CreateWPForm: React.FC = () => {
   const history = useHistory();
 
-  // const [dependencies, setDependencies] = useState<string[]>([]);
-  // const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
-  // const [deliverables, setDeliverables] = useState<string[]>([]);
+  const [dependencies, setDependencies] = useState<string[]>([]);
+  const [expectedActivities, setExpectedActivities] = useState<string[]>([]);
+  const [deliverables, setDeliverables] = useState<string[]>([]);
 
   const depUtils: EditableTextInputStateAndUtils = {
-    dependencies: [],
-    expectedActivities: [],
-    deliverables: [],
     add: (val) => {
       const clone = dependencies.slice();
       clone.push(val);
-      dependencies clone;
+      setDependencies(clone);
     },
     remove: (idx) => {
       const clone = dependencies.slice();
@@ -43,6 +40,9 @@ const CreateWPForm: React.FC = () => {
       clone[idx] = val;
       setDependencies(clone);
     },
+    dependencies: dependencies,
+    expectedActivities: expectedActivities,
+    deliverables: deliverables
   };
 
   const eaUtils: EditableTextInputStateAndUtils = {
@@ -61,15 +61,9 @@ const CreateWPForm: React.FC = () => {
       clone[idx] = val;
       setExpectedActivities(clone);
     },
-    setDependencies: (state) => {
-      
-    },
-    setExpectedActivities: (state) => {
-      
-    },
-    setDeliverables: (state) => {
-      
-    },
+    dependencies: dependencies,
+    expectedActivities: expectedActivities,
+    deliverables: deliverables
   };
 
   const delUtils: EditableTextInputStateAndUtils = {
@@ -88,15 +82,9 @@ const CreateWPForm: React.FC = () => {
       clone[idx] = val;
       setDeliverables(clone);
     },
-    setDependencies: (state) => {
-      
-    },
-    setExpectedActivities: (state) => {
-      
-    },
-    setDeliverables: (state) => {
-      
-    },
+    dependencies: dependencies,
+    expectedActivities: expectedActivities,
+    deliverables: deliverables
   };
 
   const handleSubmit = (e: any) => {

@@ -5,16 +5,16 @@
 
 import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import PageBlock from "../../../shared/page-block/page-block";
-import { EditableTextInputListUtils } from "../create-wp-form";
+import { EditableTextInputStateAndUtils } from "../create-wp-form";
 import EditableTextInputList from "../../../shared/editable-text-input-list/editable-text-input-list";
 
 interface CreateWPFormViewProps {
   dependencies: string[];
-  depUtils: EditableTextInputListUtils;
+  depUtils: EditableTextInputStateAndUtils;
   expectedActivities: string[];
-  eaUtils: EditableTextInputListUtils;
+  eaUtils: EditableTextInputStateAndUtils;
   deliverables: string[];
-  delUtils: EditableTextInputListUtils;
+  delUtils: EditableTextInputStateAndUtils;
   onSubmit: (e: any) => void;
   onCancel: (e: any) => void;
 }

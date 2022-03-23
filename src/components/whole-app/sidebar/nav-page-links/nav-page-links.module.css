@@ -4,32 +4,32 @@
  */
 
 .navPageLinks {
-    height: auto;
-    padding-top: 2px;
-    width: 100%;
+  height: auto;
+  padding-top: 20px;
+  width: 100%;
 }
 
 .iconsAndText {
-    color: white;
+  color: white;
 }
 
 .row {
-    width: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .row:hover .iconsAndText {
-    color: red;
+  color: red;
 }
 
 .row:hover {
-    background-color: white;
+  background-color: white;
 }
 
 .row:active {
-    box-shadow: 0 0 0 .2rem rgba(239, 67, 69, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5);
 }

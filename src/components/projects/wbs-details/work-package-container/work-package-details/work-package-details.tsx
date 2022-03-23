@@ -28,70 +28,65 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
 
   const detailsBody = (
     <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <EditableDetail
-            title="Work Package Name"
-            value={workPackage.name}
-            type="text"
-            fieldName="name"
-          />
-          <EditableDetail
-            title="WBS #"
-            value={wbsPipe(workPackage.wbsNum)}
-            type="text"
-            readOnly={true}
-          />
-          <EditableDetail
-            title="Project Lead"
-            value={fullNamePipe(workPackage.projectLead)}
-            type="text"
-            fieldName="projectLead"
-          />
-          <EditableDetail
-            title="Project Manager"
-            value={fullNamePipe(workPackage.projectManager)}
-            type="text"
-            fieldName="projectManager"
-          />
-          <EditableDetail
-            title="Duration"
-            value={`${workPackage.duration}`}
-            type="number"
-            suffix="weeks"
-            fieldName="duration"
-            min={0}
-          />
-        </Col>
-        <Col xs={6} md={4}>
-          <EditableDetail
-            title="Start Date"
-            value={
-              editMode
-                ? formatDate(workPackage.startDate)
-                : workPackage.startDate.toLocaleDateString()
-            }
-            type="date"
-            fieldName="startDate"
-          />
-          <EditableDetail
-            title="End Date"
-            value={endDatePipe(workPackage.startDate, workPackage.duration)}
-            type="date"
-            readOnly={true}
-            fieldName="endDate"
-          />
-          <EditableDetail
-            title="Progress"
-            value={`${workPackage.progress}`}
-            suffix="%"
-            type="number"
-            fieldName="progress"
-            min={0}
-            max={100}
-          />
-        </Col>
-      </Row>
+      <Form>
+        <Row>
+          <Col xs={12} md={6}>
+            <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
+            <EditableDetail
+              title="WBS #"
+              value={wbsPipe(workPackage.wbsNum)}
+              type="text"
+              readOnly={true}
+            />
+            <EditableDetail
+              title="Project Lead"
+              value={fullNamePipe(workPackage.projectLead)}
+              type="text"
+            />
+            <EditableDetail
+              title="Project Manager"
+              value={fullNamePipe(workPackage.projectManager)}
+              type="text"
+            />
+            <EditableDetail
+              title="Duration"
+              value={`${workPackage.duration}`}
+              type="number"
+              suffix="weeks"
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <EditableDetail
+              title="Start Date"
+              value={workPackage.startDate.toLocaleDateString()}
+              type="date"
+            />
+            <EditableDetail
+              title="End Date"
+              value={endDatePipe(workPackage.startDate, workPackage.duration)}
+              type="date"
+              readOnly={true}
+            />
+            <EditableDetail
+              title="Progress"
+              value={percentPipe(workPackage.progress)}
+              type="number"
+            />
+            <EditableDetail
+              title="Expected Progress"
+              value={percentPipe(workPackage.expectedProgress)}
+              type="number"
+              readOnly={true}
+            />
+            <EditableDetail
+              title="Timeline Status"
+              value={workPackage.timelineStatus}
+              type="text"
+              readOnly={true}
+            />
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 

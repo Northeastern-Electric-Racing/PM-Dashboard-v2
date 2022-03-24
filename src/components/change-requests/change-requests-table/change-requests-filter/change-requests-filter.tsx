@@ -62,13 +62,14 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
     };
     return (
       <>
-        {values.map((val) => (
+        {values.map((val, index) => (
           <Form.Check
             key={val}
             id={val}
             type="checkbox"
             onChange={() => toggleValue(val)}
             label={val}
+            checked={value.includes(index)}
           />
         ))}
       </>
@@ -141,11 +142,22 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
           </Form.Group>
           <Button
             className={styles.applyButton}
-            onClick={() => {
-              update(type, impact, reason, state, implemented);
-            }}
+            onClick={() => update(type, impact, reason, state, implemented)}
           >
             Apply
+          </Button>
+          <Button
+            className={styles.clearButton}
+            onClick={() => {
+              setType('');
+              setImpact([]);
+              setReason('');
+              setState([]);
+              setImplemented('');
+              update('', [], '', [], '');
+            }}
+          >
+            Clear
           </Button>
         </Form>
       </Card.Body>

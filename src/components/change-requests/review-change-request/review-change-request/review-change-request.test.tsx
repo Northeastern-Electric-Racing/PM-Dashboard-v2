@@ -12,22 +12,22 @@ import ReviewChangeRequestsView from './review-change-request';
  */
 const mockHandleSubmit = jest.fn();
 /**
- * Mock function for canceling the form, use if there is additional functionality added while canceling
+ * Mock function for hiding the modal, use if there is additional functionality added while canceling
  */
-const mockHandleCancel = jest.fn();
+const mockHandleHide = jest.fn();
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = (option: 'Accept' | 'Deny') => {
+const renderComponent = (modalShow: boolean) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
       <ReviewChangeRequestsView
         crId={exampleStandardChangeRequest.crId}
-        option={option}
+        modalShow={modalShow}
+        onHide={mockHandleHide}
         onSubmit={mockHandleSubmit}
-        onCancel={mockHandleCancel}
       />
     </RouterWrapper>
   );
@@ -35,33 +35,37 @@ const renderComponent = (option: 'Accept' | 'Deny') => {
 
 describe('review change request page test suite', () => {
   it('renders accept title', () => {
-    renderComponent('Accept');
+    renderComponent(true);
 
-    expect(screen.queryByText('Accept Change Request')).toBeInTheDocument();
-  });
-
-  it('renders deny title', () => {
-    renderComponent('Deny');
-
-    expect(screen.queryByText('Deny Change Request')).toBeInTheDocument();
+    expect(
+      screen.queryByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+    ).toBeInTheDocument();
   });
 
   it('renders label for textbox', () => {
-    renderComponent('Accept');
+    renderComponent(true);
 
-    expect(screen.getByLabelText('Review Notes')).toBeInTheDocument();
+    expect(screen.getByLabelText('Additional Comments')).toBeInTheDocument();
   });
 
   it('renders textbox', () => {
-    renderComponent('Accept');
+    renderComponent(true);
 
-    expect(screen.getByPlaceholderText('Notes...')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('renders buttons', () => {
-    renderComponent('Accept');
+    renderComponent(true);
 
-    expect(screen.getByText('Cancel')).toBeInTheDocument();
-    expect(screen.getByText('Confirm')).toBeInTheDocument();
+    expect(screen.getByText('Accept')).toBeInTheDocument();
+    expect(screen.getByText('Deny')).toBeInTheDocument();
+  });
+
+  it("doesn't display modal", () => {
+    renderComponent(false);
+
+    expect(
+      screen.queryByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+    ).not.toBeInTheDocument();
   });
 });

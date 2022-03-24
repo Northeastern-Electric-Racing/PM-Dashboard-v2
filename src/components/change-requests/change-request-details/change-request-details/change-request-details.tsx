@@ -110,7 +110,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
         dateImplemented={changeRequest.dateImplemented!}
       />
-      <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />
+      {modalShow && <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />}
     </>
   );
 };

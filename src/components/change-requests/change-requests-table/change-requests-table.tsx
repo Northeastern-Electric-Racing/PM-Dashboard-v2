@@ -164,7 +164,7 @@ const ChangeRequestsTable: React.FC = () => {
   );
 
   return (
-    <div>
+    <>
       <PageTitle title={'Change Requests'} actionButton={actionBtn} />
       <div className={styles.container}>
         <Row className="mx-3">
@@ -174,7 +174,7 @@ const ChangeRequestsTable: React.FC = () => {
           <div className={styles.crTable}>{crTable}</div>
         </Row>
       </div>
-    </div>
+    </>
   );
 };
 

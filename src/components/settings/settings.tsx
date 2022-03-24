@@ -11,10 +11,10 @@ const Settings: React.FC = () => {
   const auth = useAuth();
   const pageBlockBody = <>User: {auth.user?.emailId}</>;
   return (
-    <div>
-      <PageTitle title='This is the Settings Page' />
-      <PageBlock title='User Settings' headerRight={<></>} body={pageBlockBody} />
-    </div>
+    <>
+      <PageTitle title="This is the Settings Page" />
+      <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
+    </>
   );
 };
 

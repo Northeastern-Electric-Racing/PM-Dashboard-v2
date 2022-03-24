@@ -23,7 +23,7 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   setReviewNotes
 }: ReviewChangeRequestViewProps) => {
   return (
-    <div>
+    <>
       <PageTitle title={`Change Request #${crId}`} />
       <PageBlock
         title={''}
@@ -58,7 +58,7 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
           </div>
         }
       />
-    </div>
+    </>
   );
 };
 

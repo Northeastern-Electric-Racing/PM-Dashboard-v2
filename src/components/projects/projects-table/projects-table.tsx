@@ -137,7 +137,7 @@ const ProjectsTable: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <PageTitle title={'Projects'} />
       <div className={styles.container}>
         <Row className="mx-3">
@@ -157,7 +157,7 @@ const ProjectsTable: React.FC = () => {
           </div>
         </Row>
       </div>
-    </div>
+    </>
   );
 };
 

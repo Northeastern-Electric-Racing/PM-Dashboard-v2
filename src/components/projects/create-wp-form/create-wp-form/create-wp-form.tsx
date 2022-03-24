@@ -33,7 +33,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
 }) => {
   const { name, wbsNum, crId, startDate, duration } = states;
   return (
-    <div>
+    <>
       <PageBlock
         title={'Create New Work Package'}
         headerRight={<></>}
@@ -164,7 +164,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
           </Form>
         }
       />
-    </div>
+    </>
   );
 };
 

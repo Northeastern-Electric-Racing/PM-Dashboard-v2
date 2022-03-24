@@ -87,7 +87,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
 
   return (
-    <div>
+    <>
       <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={actionDropdown} />
       <PageBlock
         title={'Change Request Details'}
@@ -112,7 +112,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
         dateImplemented={changeRequest.dateImplemented!}
       />
-    </div>
+    </>
   );
 };
 

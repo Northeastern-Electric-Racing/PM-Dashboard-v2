@@ -18,7 +18,7 @@ const NewChangeRequestPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <PageTitle title={'New Change Request'} />
       <PageBlock
         title={''}
@@ -35,7 +35,7 @@ const NewChangeRequestPage: React.FC = () => {
       <Button className={styles.submitButton} onClick={(e) => submitHandler()}>
         Submit
       </Button>
-    </div>
+    </>
   );
 };
 

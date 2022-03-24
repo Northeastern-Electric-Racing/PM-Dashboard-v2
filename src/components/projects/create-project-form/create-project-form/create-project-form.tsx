@@ -21,7 +21,7 @@ const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
   const { name, carNumber, crId, summary } = states;
 
   return (
-    <div>
+    <>
       <PageBlock
         title={'Create New Project'}
         headerRight={<></>}
@@ -108,7 +108,7 @@ const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
           </div>
         }
       />
-    </div>
+    </>
   );
 };
 

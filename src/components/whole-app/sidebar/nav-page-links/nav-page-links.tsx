@@ -11,27 +11,26 @@ import styles from './nav-page-links.module.css';
 
 const NavPageLinks: React.FC = () => {
   return (
-      <div className={ styles.navPageLinks }>
-        <Nav.Item className={ styles.row }>
-          <Link to="/">
-            <FontAwesomeIcon className={ styles.iconsAndText } icon={ faHome } size="2x"/>
-            <p className={ styles.iconsAndText }>Home</p>
-          </Link>
-        </Nav.Item>
-        <Nav.Item className={ styles.row }>
-          <Link to="/projects">
-            <FontAwesomeIcon className={ styles.iconsAndText } icon={ faFolder } size="2x"/>
-            <p className={ styles.iconsAndText }>Projects</p>
-          </Link>
-        </Nav.Item>
-        <Nav.Item className={ styles.row }>
-          <Link to="/change-requests">
-            <FontAwesomeIcon className={ styles.iconsAndText } icon={ faExchangeAlt }
-                             size="2x"/>
-            <p className={ styles.iconsAndText }>Change Requests</p>
-          </Link>
-        </Nav.Item>
-      </div>
+    <div className={styles.navPageLinks}>
+      <Nav.Item className={styles.row}>
+        <Link to="/" className={styles.container}>
+          <FontAwesomeIcon className={styles.iconsAndText} icon={faHome} size="2x" />
+          <p className={styles.iconsAndText}>Home</p>
+        </Link>
+      </Nav.Item>
+      <Nav.Item className={styles.row}>
+        <Link to="/projects" className={styles.container}>
+          <FontAwesomeIcon className={styles.iconsAndText} icon={faFolder} size="2x" />
+          <p className={styles.iconsAndText}>Projects</p>
+        </Link>
+      </Nav.Item>
+      <Nav.Item className={styles.row}>
+        <Link to="/change-requests" className={styles.container}>
+          <FontAwesomeIcon className={styles.iconsAndText} icon={faExchangeAlt} size="2x" />
+          <p className={styles.iconsAndText}>Change Requests</p>
+        </Link>
+      </Nav.Item>
+    </div>
   );
 };
 

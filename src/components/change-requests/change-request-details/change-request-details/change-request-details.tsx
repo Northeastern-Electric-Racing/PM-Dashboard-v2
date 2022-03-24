@@ -52,21 +52,33 @@ interface ChangeRequestDetailsProps {
 }
 
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
-                                                                     changeRequest
-                                                                   }: ChangeRequestDetailsProps) => {
+  changeRequest
+}: ChangeRequestDetailsProps) => {
   const reviewDropdown = (
-    <DropdownButton id='review-dropdown' title='Review'>
-      <Dropdown.Item as={Link}
-                     to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}>Accept</Dropdown.Item>
-      <Dropdown.Item as={Link}
-                     to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}>Deny</Dropdown.Item>
+    <DropdownButton id="review-dropdown" title="Review">
+      <Dropdown.Item
+        as={Link}
+        to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}
+      >
+        Accept
+      </Dropdown.Item>
+      <Dropdown.Item
+        as={Link}
+        to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}
+      >
+        Deny
+      </Dropdown.Item>
     </DropdownButton>
   );
 
   const implementCrDropdown = (
-    <DropdownButton id='implement-cr-dropdown' title='Implement Change Request'>
-      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>Create New Project</Dropdown.Item>
-      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>Create New Work Package</Dropdown.Item>
+    <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
+      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>
+        Create New Project
+      </Dropdown.Item>
+      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>
+        Create New Work Package
+      </Dropdown.Item>
     </DropdownButton>
   );
 
@@ -76,22 +88,19 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 
   return (
     <div>
-      <PageTitle
-        title={`Change Request #${changeRequest.crId}`}
-        actionButton={actionDropdown}
-      />
+      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={actionDropdown} />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
         body={
-          <dl className='row'>
-            <dt className='col-2'>Submitted</dt>
-            <dd className='col-2'>{fullNamePipe(changeRequest.submitter)}</dd>
-            <dd className='col-3'>{changeRequest.dateSubmitted.toUTCString()}</dd>
-            <div className='w-100'></div>
-            <dt className='col-2'>Type</dt>
-            <dd className='col-auto'>{changeRequest.type}</dd>
-            <div className='w-100'></div>
+          <dl className="row">
+            <dt className="col-2">Submitted</dt>
+            <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
+            <dd className="col-3">{changeRequest.dateSubmitted.toUTCString()}</dd>
+            <div className="w-100"></div>
+            <dt className="col-2">Type</dt>
+            <dd className="col-auto">{changeRequest.type}</dd>
+            <div className="w-100"></div>
           </dl>
         }
       />

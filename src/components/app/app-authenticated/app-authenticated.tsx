@@ -25,7 +25,7 @@ const AppAuthenticated: React.FC = () => {
           <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
           <Route path={routes.SETTINGS} component={Settings} />
           <Route exact path={routes.HOME} component={Home} />
-          <Route path='*' component={PageNotFound} />
+          <Route path="*" component={PageNotFound} />
         </Switch>
       </div>
     </>

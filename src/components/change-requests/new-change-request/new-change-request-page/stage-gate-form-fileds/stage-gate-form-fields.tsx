@@ -38,11 +38,7 @@ const StageGateFormFields: React.FC = () => {
           <Form.Group className={'px-4'} controlId="newCR-requirements">
             {['Yes', 'No'].map((type) => (
               <Row key={type} className="mb-3">
-                <Form.Check
-                  type="radio"
-                  id={type}
-                  label={type}
-                />
+                <Form.Check type="radio" id={type} label={type} />
               </Row>
             ))}
           </Form.Group>

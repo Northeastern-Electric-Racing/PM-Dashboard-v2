@@ -30,7 +30,7 @@ describe('review change request', () => {
     renderComponent(false, `/change-requests/${exampleStandardChangeRequest.crId}`);
 
     expect(
-      screen.getByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+      screen.queryByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
     ).not.toBeInTheDocument();
   });
 });

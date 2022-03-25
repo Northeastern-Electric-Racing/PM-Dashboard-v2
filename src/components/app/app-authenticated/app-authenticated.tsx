@@ -18,15 +18,17 @@ const AppAuthenticated: React.FC = () => {
   return (
     <>
       <NavTopBar />
-      <Sidebar />
-      <div className={styles.content}>
-        <Switch>
-          <Route path={routes.PROJECTS} component={Projects} />
-          <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
-          <Route path={routes.SETTINGS} component={Settings} />
-          <Route exact path={routes.HOME} component={Home} />
-          <Route path="*" component={PageNotFound} />
-        </Switch>
+      <div>
+        <Sidebar />
+        <div className={styles.content}>
+          <Switch>
+            <Route path={routes.PROJECTS} component={Projects} />
+            <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
+            <Route path={routes.SETTINGS} component={Settings} />
+            <Route exact path={routes.HOME} component={Home} />
+            <Route path="*" component={PageNotFound} />
+          </Switch>
+        </div>
       </div>
     </>
   );

@@ -6,7 +6,6 @@
 .navPageLinks {
   height: auto;
   width: 100%;
-  padding-top: 10px;
 }
 
 .iconsAndText {
@@ -17,7 +16,7 @@
 .row {
   border-radius: 5px;
   width: 80%;
-  margin: auto;
+  margin: 0.5rem auto 0.5rem auto;
   display: flex;
   flex-direction: row;
   justify-content: center;

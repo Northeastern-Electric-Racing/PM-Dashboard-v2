@@ -3,11 +3,11 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
-import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
-import { wbsPipe } from '../../../../../shared/pipes';
+import { render, screen, routerWrapperBuilder } from '../../../../../../test-support/test-utils';
+import { exampleWorkPackage2 } from '../../../../../../test-support/test-data/work-packages.stub';
+import { wbsPipe } from '../../../../../../shared/pipes';
 import DependenciesList from './dependencies-list';
-import { FormContext } from '../work-package-container';
+import { FormContext } from '../../work-package-container';
 
 // Sets up the component under test with the desired values and renders it
 const renderComponent = (editMode?: boolean, path?: string, route?: string) => {

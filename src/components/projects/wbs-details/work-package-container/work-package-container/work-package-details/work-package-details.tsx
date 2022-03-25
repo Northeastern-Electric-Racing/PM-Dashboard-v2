@@ -4,12 +4,12 @@
  */
 
 import { WorkPackage } from 'utils';
-import { wbsPipe, endDatePipe, fullNamePipe, percentPipe } from '../../../../../shared/pipes';
-import PageBlock from '../../../../shared/page-block/page-block';
+import { wbsPipe, endDatePipe, fullNamePipe, percentPipe } from '../../../../../../shared/pipes';
+import PageBlock from '../../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
-import EditableDetail from '../../../../shared/editable-detail/editable-detail';
-import { FormContext } from '../work-package-container';
+import EditableDetail from '../../../../../shared/editable-detail/editable-detail';
+import { FormContext } from '../../work-package-container';
 import { useContext } from 'react';
 import { WbsElementStatus } from 'utils/lib/types/project-types';
 
@@ -20,11 +20,11 @@ interface WorkPackageDetailsProps {
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const { editMode, setField } = useContext(FormContext);
 
-  function formatDate(date: Date) {
+  const formatDate = (date: Date) => {
     const offset = date.getTimezoneOffset();
     date = new Date(date.getTime() - offset * 60 * 1000);
     return date.toISOString().split('T')[0];
-  }
+  };
 
   const detailsBody = (
     <Container fluid>
@@ -58,7 +58,11 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <Col xs={6} md={4}>
             <EditableDetail
               title="Start Date"
-              value={workPackage.startDate.toLocaleDateString()}
+              value={
+                editMode
+                  ? formatDate(workPackage.startDate) // for a date input, format must be yyyy-mm-dd
+                  : workPackage.startDate.toLocaleDateString()
+              }
               type="date"
             />
             <EditableDetail

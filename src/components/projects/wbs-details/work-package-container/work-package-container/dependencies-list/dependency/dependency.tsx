@@ -3,13 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { FormContext } from '../../work-package-container';
+import { FormContext } from '../../../work-package-container';
 import { useContext } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { WbsNumber } from 'utils';
-import { wbsPipe } from '../../../../../../shared/pipes';
+import { wbsPipe } from '../../../../../../../shared/pipes';
 import { useHistory } from 'react-router-dom';
-import { routes } from '../../../../../../shared/routes';
+import { routes } from '../../../../../../../shared/routes';
 import styles from './dependency.module.css';
 
 interface DependencyProps {

@@ -10,7 +10,7 @@ import ProjectDetails from './project-details/project-details';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import DescriptionList from '../../../shared/description-list/description-list';
-import ChangesList from '../work-package-container/changes-list/changes-list';
+import ChangesList from '../work-package-container/work-package-container/changes-list/changes-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';

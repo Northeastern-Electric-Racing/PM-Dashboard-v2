@@ -32,6 +32,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
             onChange={(e) => {
               update(index, e.target.value);
             }}
+            placeholder={"Input new bullet here..."}
           />
           <Button type="button" variant="danger" onClick={() => remove(index)}>
             X

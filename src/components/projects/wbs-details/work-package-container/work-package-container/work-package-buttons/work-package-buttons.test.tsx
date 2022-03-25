@@ -4,7 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { FormContext } from '../work-package-container';
+import { FormContext } from '../../work-package-container';
 import WorkPackageButtons from './work-package-buttons';
 
 describe('Work package edit buttons', () => {

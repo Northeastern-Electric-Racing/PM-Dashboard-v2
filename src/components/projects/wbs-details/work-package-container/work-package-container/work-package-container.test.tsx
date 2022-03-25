@@ -4,14 +4,14 @@
  */
 import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
-import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
-import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
-import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
-import WorkPackageContainer from './work-package-container';
+import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
+import { mockUseQueryResult } from '../../../../../test-support/test-data/test-utils.stub';
+import { exampleWbsProject1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
+import { exampleWorkPackage1 } from '../../../../../test-support/test-data/work-packages.stub';
+import { useSingleWorkPackage } from '../../../../../services/work-packages.hooks';
+import WorkPackageContainer from '.././work-package-container';
 
-jest.mock('../../../../services/work-packages.hooks');
+jest.mock('../../../../../services/work-packages.hooks');
 
 const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<UseQueryResult<WorkPackage>>;
 

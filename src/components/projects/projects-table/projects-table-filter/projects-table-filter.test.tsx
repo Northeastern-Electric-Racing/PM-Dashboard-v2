@@ -225,4 +225,70 @@ describe('projects table filter component', () => {
     });
     expect(temp[2]).toBe(-1);
   });
+
+  it('should have the correct text in the Clear button', async () => {
+    renderComponent();
+    expect(screen.getByText('Clear')).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Clear'));
+    }); // Clicking it should do nothing to its visibility, not change the page, etc.
+    expect(screen.getByText('Clear')).toBeInTheDocument();
+  });
+
+  it('should set all the filter values back to default after pressing clear', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp[0]).toBe('');
+    expect(temp[1]).toBe(-1);
+    expect(temp[2]).toBe(-1);
+    expect(temp[3]).toBe(-1);
+    // manager
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('manager-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Joe Blow'));
+    });
+    // status
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('status-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText(WbsElementStatus.Active));
+    });
+    // lead
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('lead-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Amy Smith'));
+    });
+    // car number
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('car-num-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('1'));
+    });
+    // apply all these filters
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    // all filter values should have been set
+    expect(temp[0]).toBe(WbsElementStatus.Active);
+    expect(temp[1]).toBe(4);
+    expect(temp[2]).toBe(3);
+    expect(temp[3]).toBe(1);
+    // now clear
+    await act(async () => {
+      fireEvent.click(screen.getByText('Clear'));
+    });
+    // all filter values should now be back to defaults
+    expect(temp[0]).toBe('');
+    expect(temp[1]).toBe(-1);
+    expect(temp[2]).toBe(-1);
+    expect(temp[3]).toBe(-1);
+  });
 });

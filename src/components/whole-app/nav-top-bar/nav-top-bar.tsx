@@ -12,7 +12,7 @@ import styles from './nav-top-bar.module.css';
 
 const NavTopBar: React.FC = () => {
   return (
-    <Navbar className={styles.mainBackground} variant="dark" expand="md" fixed="top">
+    <Navbar className={styles.mainBackground} variant="light" expand="md" fixed="top">
       <Navbar.Brand as="div">
         <Link className="d-flex" to={routes.HOME} style={{ textDecoration: 'none' }}>
           <img

@@ -3,60 +3,55 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Nav } from 'react-bootstrap';
 import styles from './nav-page-links.module.css';
+import { useEffect } from 'react';
 
 const NavPageLinks: React.FC = () => {
-  const linkClick = (id: string) => {
-    const current = document.getElementById(id);
-    current!.style.backgroundColor = 'white';
-    const { children } = current!;
-    for (let i = 0; i < children.length; i++) {
-      const currentChild = children[i] as HTMLElement;
-      currentChild.style.color = 'red';
-    }
-  };
+  useEffect(() => {
+    const rows = document.getElementsByClassName(styles.row);
+    Array.from(rows).forEach((row) => {
+      const current = row as HTMLElement;
+      if (
+        Array.from(row.children).includes(
+          Array.from(document.getElementsByClassName(styles.active))[0]
+        ) ||
+        current.matches(':hover')
+      ) {
+        current.style.backgroundColor = 'white';
+      } else {
+        current.style.backgroundColor = 'transparent';
+      }
+    });
+  });
+
   return (
     <div className={styles.navPageLinks}>
-      <Nav.Item
-        id="home-link"
-        onClick={() => {
-          linkClick('home-link');
-        }}
-        className={styles.row}
-      >
-        <Link to="/" className={styles.container}>
+      <Nav.Item className={styles.row}>
+        <NavLink to="/" exact activeClassName={styles.active} className={styles.container}>
           <FontAwesomeIcon className={styles.iconsAndText} icon={faHome} size="2x" />
           <p className={styles.iconsAndText}>Home</p>
-        </Link>
+        </NavLink>
       </Nav.Item>
       <Nav.Item className={styles.row}>
-        <Link
-          to="/projects"
-          id="projects-link"
-          onClick={() => {
-            linkClick('projects-link');
-          }}
-          className={styles.container}
-        >
+        <NavLink to="/projects" exact activeClassName={styles.active} className={styles.container}>
           <FontAwesomeIcon className={styles.iconsAndText} icon={faFolder} size="2x" />
           <p className={styles.iconsAndText}>Projects</p>
-        </Link>
+        </NavLink>
       </Nav.Item>
-      <Nav.Item
-        id="changerequests-link"
-        onClick={() => {
-          linkClick('changerequests-link');
-        }}
-        className={styles.row}
-      >
-        <Link to="/change-requests" className={styles.container}>
+      <Nav.Item className={styles.row}>
+        <NavLink
+          to="/change-requests"
+          exact
+          activeClassName={styles.active}
+          className={styles.container}
+        >
           <FontAwesomeIcon className={styles.iconsAndText} icon={faExchangeAlt} size="2x" />
           <p className={styles.iconsAndText}>Change Requests</p>
-        </Link>
+        </NavLink>
       </Nav.Item>
     </div>
   );

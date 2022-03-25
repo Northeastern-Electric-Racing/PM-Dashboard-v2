@@ -6,6 +6,7 @@
 .navPageLinks {
   height: auto;
   width: 100%;
+  padding-top: 10px;
 }
 
 .iconsAndText {
@@ -14,24 +15,40 @@
 }
 
 .row {
-  width: 100%;
-  margin: 0.5rem 0 0.5rem 0;
+  border-radius: 5px;
+  width: 80%;
+  margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.row:hover .iconsAndText {
-  color: red;
-}
-
+/* Not working for some reason... */
 .row:hover {
   background-color: white;
 }
 
+.row:hover .iconsAndText {
+  color: #ef4345;
+  text-decoration: underline;
+  text-decoration-color: inherit;
+}
+
+.active .iconsAndText {
+  color: #ef4345;
+  text-decoration: underline;
+  text-decoration-color: white;
+}
+
 .row:active {
   box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5);
+}
+
+.row:active .iconsAndText {
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: inherit;
 }
 
 .container {

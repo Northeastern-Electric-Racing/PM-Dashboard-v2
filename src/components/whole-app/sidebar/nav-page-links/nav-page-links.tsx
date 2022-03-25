@@ -10,21 +10,49 @@ import { Nav } from 'react-bootstrap';
 import styles from './nav-page-links.module.css';
 
 const NavPageLinks: React.FC = () => {
+  const linkClick = (id: string) => {
+    const current = document.getElementById(id);
+    current!.style.backgroundColor = 'white';
+    const { children } = current!;
+    for (let i = 0; i < children.length; i++) {
+      const currentChild = children[i] as HTMLElement;
+      currentChild.style.color = 'red';
+    }
+  };
   return (
     <div className={styles.navPageLinks}>
-      <Nav.Item className={styles.row}>
+      <Nav.Item
+        id="home-link"
+        onClick={() => {
+          linkClick('home-link');
+        }}
+        className={styles.row}
+      >
         <Link to="/" className={styles.container}>
           <FontAwesomeIcon className={styles.iconsAndText} icon={faHome} size="2x" />
           <p className={styles.iconsAndText}>Home</p>
         </Link>
       </Nav.Item>
       <Nav.Item className={styles.row}>
-        <Link to="/projects" className={styles.container}>
+        <Link
+          to="/projects"
+          id="projects-link"
+          onClick={() => {
+            linkClick('projects-link');
+          }}
+          className={styles.container}
+        >
           <FontAwesomeIcon className={styles.iconsAndText} icon={faFolder} size="2x" />
           <p className={styles.iconsAndText}>Projects</p>
         </Link>
       </Nav.Item>
-      <Nav.Item className={styles.row}>
+      <Nav.Item
+        id="changerequests-link"
+        onClick={() => {
+          linkClick('changerequests-link');
+        }}
+        className={styles.row}
+      >
         <Link to="/change-requests" className={styles.container}>
           <FontAwesomeIcon className={styles.iconsAndText} icon={faExchangeAlt} size="2x" />
           <p className={styles.iconsAndText}>Change Requests</p>

@@ -6,13 +6,12 @@
 import { NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import './nav-notifications-menu.module.css';
 
 const NavNotificationsMenu: React.FC = () => {
   return (
     <NavDropdown
       className="m-auto"
-      title={<FontAwesomeIcon icon={faBell} />}
+      title={<FontAwesomeIcon icon={faBell} size="2x" inverse />}
       id="notifications-dropdown"
       alignRight
     >

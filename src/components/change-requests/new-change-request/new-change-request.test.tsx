@@ -26,13 +26,9 @@ const scopeImpactStr = 'Scope Impact';
 jest.mock('../../../services/projects.hooks');
 jest.mock('../../../services/work-packages.hooks');
 
-const mockedUseAllProjects = useAllProjects as jest.Mock<
-  UseQueryResult<Project[]>
->;
+const mockedUseAllProjects = useAllProjects as jest.Mock<UseQueryResult<Project[]>>;
 
-const mockedUseAllWorkPackages = useAllWorkPackages as jest.Mock<
-  UseQueryResult<WorkPackage[]>
->;
+const mockedUseAllWorkPackages = useAllWorkPackages as jest.Mock<UseQueryResult<WorkPackage[]>>;
 
 const mockProjectHook = (isLoading: boolean, isError: boolean, data?: Project[], error?: Error) => {
   mockedUseAllProjects.mockReturnValue(
@@ -40,7 +36,12 @@ const mockProjectHook = (isLoading: boolean, isError: boolean, data?: Project[],
   );
 };
 
-const mockWorkPkgHook = (isLoading: boolean, isError: boolean, data?: WorkPackage[], error?: Error) => {
+const mockWorkPkgHook = (
+  isLoading: boolean,
+  isError: boolean,
+  data?: WorkPackage[],
+  error?: Error
+) => {
   mockedUseAllWorkPackages.mockReturnValue(
     mockUseQueryResult<WorkPackage[]>(isLoading, isError, data, error)
   );
@@ -87,8 +88,9 @@ describe('change request page', () => {
     mockWorkPkgHook(false, false, exampleAllWorkPackages);
     renderComponent();
 
-    const projectText = wbsPipe(exampleAllProjects[0].wbsNum) +  " - " + exampleAllProjects[0].name;    
-    const workPkgText = wbsPipe(exampleAllWorkPackages[0].wbsNum) +  " - " + exampleAllWorkPackages[0].name;
+    const projectText = wbsPipe(exampleAllProjects[0].wbsNum) + ' - ' + exampleAllProjects[0].name;
+    const workPkgText =
+      wbsPipe(exampleAllWorkPackages[0].wbsNum) + ' - ' + exampleAllWorkPackages[0].name;
 
     expect(screen.getByText(projectText)).toBeInTheDocument();
     expect(screen.getByText(workPkgText)).toBeInTheDocument();
@@ -118,9 +120,8 @@ describe('change request page', () => {
     renderComponent();
 
     expect(screen.getByText(oopsSorry)).toBeInTheDocument();
-    expect(screen.getByText(error500 + "; " + workPkg404)).toBeInTheDocument();
+    expect(screen.getByText(error500 + '; ' + workPkg404)).toBeInTheDocument();
   });
-
 
   it('handles the error with no message', () => {
     mockProjectHook(false, true, undefined);
@@ -148,14 +149,18 @@ describe('change request page', () => {
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
 
-    fireEvent.change(screen.getByTestId('type'), { target: { value: ChangeRequestType.StageGate } });
-   
+    fireEvent.change(screen.getByTestId('type'), {
+      target: { value: ChangeRequestType.StageGate }
+    });
+
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(whoDesignInquiry)).toBeInTheDocument();
 
-    fireEvent.change(screen.getByTestId('type'), { target: { value: ChangeRequestType.Activation } });
-   
+    fireEvent.change(screen.getByTestId('type'), {
+      target: { value: ChangeRequestType.Activation }
+    });
+
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
     expect(screen.queryByText(whoDesignInquiry)).not.toBeInTheDocument();
     expect(screen.getByText(projectLeadStr)).toBeInTheDocument();

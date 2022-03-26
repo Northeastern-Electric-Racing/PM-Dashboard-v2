@@ -57,11 +57,10 @@ export const useReviewChangeRequest = () => {
   );
 };
 
-
 /**
  * Custom React Hook to create a change request.
  */
- export const useCreateChangeRequest = () => {
+export const useCreateChangeRequest = () => {
   return useMutation<{ message: string }, Error, NewChangeRequestPayload>(
     ['reviewCR'],
     async (reviewPayload: NewChangeRequestPayload) => {

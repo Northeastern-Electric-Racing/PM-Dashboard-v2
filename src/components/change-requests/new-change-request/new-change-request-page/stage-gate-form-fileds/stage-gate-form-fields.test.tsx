@@ -13,7 +13,7 @@ const doneInquiry = 'Is everything done?';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = (handleChange: jest.Mock<any, any>) => {
-  return render(<StageGateFormFields handleChange={handleChange}/>);
+  return render(<StageGateFormFields handleChange={handleChange} />);
 };
 
 describe('new stage gate form fields', () => {

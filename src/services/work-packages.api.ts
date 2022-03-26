@@ -18,7 +18,7 @@ export const getAllWorkPackages = (onSuccess?: (value: any) => void) => {
   });
 
   if (onSuccess) {
-    workPackages.then(response => {
+    workPackages.then((response) => {
       onSuccess!(response);
     });
   }

@@ -20,7 +20,7 @@ export const getAllChangeRequests = (onSuccess?: (value: any) => void) => {
   });
 
   if (onSuccess) {
-    changeRequests.then(response => {
+    changeRequests.then((response) => {
       onSuccess!(response);
     });
   }
@@ -61,7 +61,6 @@ export const reviewChangeRequest = (
   });
 };
 
-
 /**
  * Create a change request.
  *
@@ -69,14 +68,18 @@ export const reviewChangeRequest = (
  * @param wbsElementId Is the change request being accepted?
  * @param type The notes attached to reviewing the change request.
  * @param payload
- * 
+ *
  * TODO
  */
- export const createChangeRequest = (
-    submitterId: number, 
-    wbsElementId: number, 
-    type: CR_Type,
-    payload: NewStandardChangeRequestPayload | NewActivationChangeRequestPayload | NewStageRequestChangeRequestPayload) => {
+export const createChangeRequest = (
+  submitterId: number,
+  wbsElementId: number,
+  type: CR_Type,
+  payload:
+    | NewStandardChangeRequestPayload
+    | NewActivationChangeRequestPayload
+    | NewStageRequestChangeRequestPayload
+) => {
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreate(), {
     submitterId,
     wbsElementId,

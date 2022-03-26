@@ -20,16 +20,25 @@ const workPackageStr = 'Work Package';
 const projectStr = 'Project';
 
 const renderComponent = (setType: jest.Mock<any, any>) => {
-  return render(<CommonFormFields setType={setType} projects={exampleAllProjects} workPkgs={exampleAllWorkPackages}
-      handleChange={() => { return null; }} />);
+  return render(
+    <CommonFormFields
+      setType={setType}
+      projects={exampleAllProjects}
+      workPkgs={exampleAllWorkPackages}
+      handleChange={() => {
+        return null;
+      }}
+    />
+  );
 };
 
 describe('new change request page', () => {
   it('checks if the dropdown properly displays the options', () => {
     renderComponent(jest.fn());
-    
-    const projectText = wbsPipe(exampleAllProjects[0].wbsNum) +  " - " + exampleAllProjects[0].name;    
-    const workPkgText = wbsPipe(exampleAllWorkPackages[0].wbsNum) +  " - " + exampleAllWorkPackages[0].name;
+
+    const projectText = wbsPipe(exampleAllProjects[0].wbsNum) + ' - ' + exampleAllProjects[0].name;
+    const workPkgText =
+      wbsPipe(exampleAllWorkPackages[0].wbsNum) + ' - ' + exampleAllWorkPackages[0].name;
 
     expect(screen.getByText(projectText)).toBeInTheDocument();
     expect(screen.getByText(workPkgText)).toBeInTheDocument();
@@ -58,13 +67,19 @@ describe('new change request page', () => {
     const setType = jest.fn();
     renderComponent(setType);
 
-    fireEvent.change(screen.getByTestId(typeStr), { target: { value: ChangeRequestType.StageGate } });
+    fireEvent.change(screen.getByTestId(typeStr), {
+      target: { value: ChangeRequestType.StageGate }
+    });
     expect(setType).toBeCalledWith(ChangeRequestType.StageGate);
 
-    fireEvent.change(screen.getByTestId(typeStr), { target: { value: ChangeRequestType.Redefinition } });
+    fireEvent.change(screen.getByTestId(typeStr), {
+      target: { value: ChangeRequestType.Redefinition }
+    });
     expect(setType).toBeCalledWith(ChangeRequestType.Redefinition);
 
-    fireEvent.change(screen.getByTestId(typeStr), { target: { value: ChangeRequestType.Activation } });
+    fireEvent.change(screen.getByTestId(typeStr), {
+      target: { value: ChangeRequestType.Activation }
+    });
     expect(setType).toBeCalledWith(ChangeRequestType.Activation);
 
     expect(setType).toHaveBeenCalledTimes(3);

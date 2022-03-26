@@ -20,10 +20,15 @@ const renderComponent = (formType: ChangeRequestType) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <NewChangeRequestPage submitHandler={jest.fn()} setType={jest.fn()}
-        formType={formType} projectData={exampleAllProjects}
-        workPkgsData={exampleAllWorkPackages} handleChange={jest.fn()}
-        handleStartDateChange={jest.fn()} />
+      <NewChangeRequestPage
+        submitHandler={jest.fn()}
+        setType={jest.fn()}
+        formType={formType}
+        projectData={exampleAllProjects}
+        workPkgsData={exampleAllWorkPackages}
+        handleChange={jest.fn()}
+        handleStartDateChange={jest.fn()}
+      />
     </RouterWrapper>
   );
 };

@@ -72,7 +72,7 @@ const StandardFormFields: React.FC<StandardFormFieldsProp> = ({ handleChange }) 
             </Col>
             <Col xs="auto">
               <Form.Label>Timeline Impact</Form.Label>
-              <InputGroup>
+              <InputGroup aria-required>
                 <FormControl
                   id="newCR-timeline-impact"
                   name="timelineImpact"

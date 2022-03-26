@@ -3,15 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { mockContext } from "../../test-support/test-data/test-utils.stub";
-import { baseHandler, handler } from "../functions/projects-new";
-
+import { mockContext } from '../../test-support/test-data/test-utils.stub';
+import { baseHandler, handler } from '../functions/projects-new';
 
 describe('projects new', () => {
   describe('handler', () => {
     const func = async (event: any) => {
-      return await handler(event, mockContext, () => { });
-    }
+      return await handler(event, mockContext, () => {});
+    };
 
     const goodProjectBody = {
       userId: 1,
@@ -61,7 +60,7 @@ describe('projects new', () => {
 
     describe.skip('base handler', () => {
       const func = async (body: any) => {
-        return await baseHandler({ body }, mockContext, () => { });
+        return await baseHandler({ body }, mockContext, () => {});
       };
 
       it('returns failure when change request not reviewed', async () => {

@@ -51,12 +51,22 @@ Test again to ensure that the application launches correctly.
 
 ## IDE: VSCode
 
+**IMPORTANT NOTE:** We have a settings file in the project that will automatically configure all of these settings for you.
+If for some reason they don't work, come back here to do it manually.
+(the settings that should work are formatting on save and using prettier to format)
+
 Turn on `format on save` for Prettier.
 Go to `Code > Preferences > Settings` (or via `cmd ,` on Mac) (or `File > Preferences > Settings` for Windows).
 Search for `format on save` and make sure `Editor: Format On Save` is checked / yes.
 
-Open settings and search for `open settings json`.
-Click `Edit in settings.json` under the `[JSON] Configure settings to be overridden for [json] language` section.
+Open the VSCode Command Palette (`Ctrl/Cmd`+`Shift`+`P`) and search for `open settings json`.
+Select `Preferences: Open Settings (JSON)`, which should open a file called `settings.json`.
+
+If `settings.json` doesn't open from the Command Palette, you can also navigate back to the settings and try searching for either of these:
+
+- `open settings json`: Then click `Edit in settings.json` under the `[JSON] Configure settings to be overridden for [json] language` section.
+- `json file schema`: Then click `Edit in settings.json` under the `JSON schemas` section.
+
 Paste this into `settings.json`:
 
 ```json
@@ -68,7 +78,13 @@ Paste this into `settings.json`:
 }
 ```
 
-Below are extensions for VSCode that might make your developer experience more enjoyable.
+### VSCode Extensions
+
+When you launch the project in VSCode, you should see a popup in the bottom right asking you to "install all recommendeded extensions".
+Click "install" to easily install all of the below extensions.
+
+If for some reason you don't see this popup you can install them manually using the extensions button on the left sidebar.
+Below are the recommended extensions that you should install.
 Only the starred ones are optional.
 
 - [Jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest) (`orta.vscode-jest`)

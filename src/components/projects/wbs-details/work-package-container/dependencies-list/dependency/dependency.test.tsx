@@ -1,4 +1,4 @@
-import { render, screen } from '../../../../../../test-support/test-utils'
+import { render, screen } from '../../../../../../test-support/test-utils';
 import Dependency from './dependency';
 import { EditModeContext } from '../../work-package-container';
 import { exampleWbsWorkPackage1 } from '../../../../../../test-support/test-data/wbs-numbers.stub';

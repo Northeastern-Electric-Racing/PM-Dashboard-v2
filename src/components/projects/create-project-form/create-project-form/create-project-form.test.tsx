@@ -3,14 +3,23 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "../../../../test-support/test-utils";
-import CreateProjectFormView from "./create-project-form";
+import { render, screen } from '../../../../test-support/test-utils';
+import CreateProjectFormView from './create-project-form';
+
+const mockStates = {
+  name: () => null,
+  carNumber: () => null,
+  crId: () => null,
+  summary: () => null
+};
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  return render(<CreateProjectFormView />);
+  return render(
+    <CreateProjectFormView states={mockStates} onCancel={() => null} onSubmit={() => null} />
+  );
 };
 
 describe('create project form view test suite', () => {

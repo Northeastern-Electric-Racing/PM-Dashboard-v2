@@ -7,7 +7,7 @@ import { User } from './user-types';
 import { ImplementedChange } from './change-request-types';
 import { TimelineStatus } from './work-package-types';
 import { FromSchema } from 'json-schema-to-ts';
-import { bodySchema, intType, stringType } from './api-utils-types';
+import { arrayType, bodySchema, enumType, intType, stringType } from './api-utils-types';
 
 export interface WbsNumber {
   car: number;
@@ -77,78 +77,39 @@ export const createProjectPayloadSchema = bodySchema({
 
 export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;
 
-export const projectEditInputSchemaBody = {
-  type: 'object',
-  properties: {
-    wbsElementId: { type: 'integer', minimum: 0 },
-    crId: { type: 'integer', minimum: 0 },
-    name: { type: 'string' },
-    userId: { type: 'integer', minimum: 0 },
-    budget: { type: 'integer', minimum: 0 },
-    summary: { type: 'string' },
-    rules: {
-      type: 'array',
-      items: {
-        type: 'string'
-      }
-    },
-    goals: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'integer', minimum: 0 },
-          detail: { type: 'string' }
-        },
-        required: ['detail']
-      }
-    },
-    features: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'integer', minimum: 0 },
-          detail: { type: 'string' }
-        },
-        required: ['detail']
-      }
-    },
-    otherConstraints: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'integer', minimum: 0 },
-          detail: { type: 'string' }
-        },
-        required: ['detail']
-      }
-    },
-    wbsElementStatus: {
-      type: 'string',
-      enum: ['INACTIVE', 'ACTIVE', 'COMPLETE']
-    },
-    googleDriveFolderLink: { type: 'string' },
-    slideDeckLink: { type: 'string' },
-    bomLink: { type: 'string' },
-    taskListLink: { type: 'string' },
-    projectLead: { type: 'integer', minimum: 0 },
-    projectManager: { type: 'integer', minimum: 0 }
+export const projectEditInputSchemaBody = bodySchema(
+  {
+    wbsElementId: intType,
+    crId: intType,
+    name: stringType,
+    userId: intType,
+    budget: intType,
+    summary: stringType,
+    duration: intType,
+    rules: arrayType(stringType),
+    goals: arrayType(bodySchema({ id: intType, detail: stringType })),
+    features: arrayType(bodySchema({ id: intType, detail: stringType })),
+    otherConstraints: arrayType(bodySchema({ id: intType, detail: stringType })),
+    wbsElementStatus: enumType(
+      WbsElementStatus.Active,
+      WbsElementStatus.Inactive,
+      WbsElementStatus.Complete
+    ),
+    googleDriveFolderLink: stringType,
+    slideDeckLink: stringType,
+    bomLink: stringType,
+    taskListLink: stringType,
+    projectLead: intType,
+    projectManager: intType
   },
-  required: [
-    'wbsElementId',
-    'crId',
-    'userId',
-    'budget',
-    'summary',
-    'rules',
-    'goals',
-    'features',
-    'otherConstraints',
-    'name',
-    'wbsElementStatus'
+  [
+    'googleDriveFolderLink',
+    'slideDeckLink',
+    'bomLink',
+    'taskListLink',
+    'projectLead',
+    'projectManager'
   ]
-} as const;
+);
 
 export type EditProjectPayload = FromSchema<typeof projectEditInputSchemaBody>;

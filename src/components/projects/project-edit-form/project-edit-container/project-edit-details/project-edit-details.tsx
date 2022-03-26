@@ -21,12 +21,12 @@ interface projectDetailsProps {
   updateBudget: (val: string) => void;
 }
 
-const ProjectEditDetails: React.FC<projectDetailsProps> = ({ 
-  project, 
-  users, 
-  updateSlideDeck, 
-  updateTaskList, 
-  updateBom, 
+const ProjectEditDetails: React.FC<projectDetailsProps> = ({
+  project,
+  users,
+  updateSlideDeck,
+  updateTaskList,
+  updateBom,
   updateGDrive,
   updateBudget
 }) => {
@@ -59,21 +59,22 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     prefix = '',
     suffix = '',
     placeholder = '',
-    readOnly = false,
+    readOnly = false
   ) => {
     const formInput = (
       <Form.Group>
         <InputGroup>
           {prefix ? <InputGroup.Text>{prefix}</InputGroup.Text> : <></>}
           <Form.Control
+            required
             type={type}
             defaultValue={defaultValue}
             placeholder={placeholder}
             readOnly={readOnly}
-            onChange={ (e) => { 
-              if (updateState !== null) { 
-                updateState(e.target.value)
-              } 
+            onChange={(e) => {
+              if (updateState !== null) {
+                updateState(e.target.value);
+              }
             }}
           />
           {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : <></>}
@@ -130,13 +131,31 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
       <Row>
         <Col xs={12} md={6}>
           {editDetailsInputBuilder('Project Name:', 'text', project.name, null, '', '', '')}
-          {editDetailsInputBuilder('WBS #:', 'text', wbsPipe(project.wbsNum), null, '', '', '', true)}
+          {editDetailsInputBuilder(
+            'WBS #:',
+            'text',
+            wbsPipe(project.wbsNum),
+            null,
+            '',
+            '',
+            '',
+            true
+          )}
           {buildUsersSelect('Project Lead:', project.projectLead!)}
           {buildUsersSelect('Project Manager:', project.projectManager!)}
           {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
         </Col>
         <Col xs={6} md={4}>
-          {editDetailsInputBuilder('Duration:', 'number', project.duration, null, '', 'weeks', '', true)}
+          {editDetailsInputBuilder(
+            'Duration:',
+            'number',
+            project.duration,
+            null,
+            '',
+            'weeks',
+            '',
+            true
+          )}
           {editDetailsInputBuilder('Start Date:', 'text', '', null, '', '', startDate, true)}
           {editDetailsInputBuilder('End Date:', 'text', '', null, '', '', endDate, true)}
           <br />
@@ -184,14 +203,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
             '',
             'Task list link'
           )}
-          {editDetailsInputBuilder(
-            'BOM', 
-            'text', 
-            project.bomLink!, 
-            updateBom,
-            '', 
-            '', 
-            'BOM link')}
+          {editDetailsInputBuilder('BOM', 'text', project.bomLink!, updateBom, '', '', 'BOM link')}
           {editDetailsInputBuilder(
             'Google Drive',
             'text',

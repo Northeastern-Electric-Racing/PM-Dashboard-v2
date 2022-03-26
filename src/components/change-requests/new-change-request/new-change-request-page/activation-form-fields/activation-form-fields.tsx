@@ -4,7 +4,6 @@
  */
 
 import { Form, Row, Col } from 'react-bootstrap';
-import DatePicker from 'react-date-picker';
 import { exampleAllUsers } from '../../../../../test-support/test-data/users.stub';
 import { fullNamePipe } from '../../../../../shared/pipes';
 import styles from './activation-form-fields.module.css';

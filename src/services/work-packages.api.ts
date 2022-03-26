@@ -12,10 +12,18 @@ import { workPackageTransformer } from './transformers/work-packages.transformer
 /**
  * Fetch all work packages.
  */
-export const getAllWorkPackages = () => {
-  return axios.get<WorkPackage[]>(apiUrls.workPackages(), {
+export const getAllWorkPackages = (onSuccess?: (value: any) => void) => {
+  const workPackages = axios.get<WorkPackage[]>(apiUrls.workPackages(), {
     transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
   });
+
+  if (onSuccess) {
+    workPackages.then((response) => {
+      onSuccess!(response);
+    });
+  }
+
+  return workPackages;
 };
 
 /**

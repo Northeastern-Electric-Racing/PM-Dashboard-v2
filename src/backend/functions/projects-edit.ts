@@ -423,8 +423,6 @@ export const createDescriptionBulletChangesJson = (
 
   // Elements from database that have not been deleted
   const oldArrayNotDeleted = oldArray.filter((element) => element.dateDeleted === undefined);
-    return element.dateDeleted === undefined;
-  });
 
   // All elements that were inputs but are not new
   const existingElements = new Map<number, string>();

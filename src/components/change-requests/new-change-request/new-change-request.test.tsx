@@ -3,16 +3,16 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';
-import { exampleAllWorkPackages } from '../../../test-support/test-data/work-packages.stub';
-import { render, screen, routerWrapperBuilder, fireEvent } from '../../../test-support/test-utils';
-import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import { UseQueryResult } from 'react-query';
 import { ChangeRequestType, Project, WorkPackage } from 'utils';
-import { useAllProjects } from '../../../services/projects.hooks';
-import { useAllWorkPackages } from '../../../services/work-packages.hooks';
-import NewChangeRequest from './new-change-request';
 import { wbsPipe } from '../../../shared/pipes';
+import { render, screen, routerWrapperBuilder, fireEvent } from '../../../test-support/test-utils';
+import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';
+import { exampleAllWorkPackages } from '../../../test-support/test-data/work-packages.stub';
+import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
+import { useAllWorkPackages } from '../../../services/work-packages.hooks';
+import { useAllProjects } from '../../../services/projects.hooks';
+import NewChangeRequest from './new-change-request';
 
 const oopsSorry = 'Oops, sorry!';
 const project404 = '404 could not find the requested project request';
@@ -102,7 +102,7 @@ describe('change request page', () => {
     renderComponent();
 
     expect(screen.getByText(oopsSorry)).toBeInTheDocument();
-    expect(screen.getByText(project404)).toBeInTheDocument();
+    expect(screen.getByText(project404 + ' undefined undefined')).toBeInTheDocument();
   });
 
   it('handles the work project error with message', () => {
@@ -111,7 +111,7 @@ describe('change request page', () => {
     renderComponent();
 
     expect(screen.getByText(oopsSorry)).toBeInTheDocument();
-    expect(screen.getByText(workPkg404)).toBeInTheDocument();
+    expect(screen.getByText('undefined ' + workPkg404 + ' undefined')).toBeInTheDocument();
   });
 
   it('handles both errors with message', () => {
@@ -120,7 +120,7 @@ describe('change request page', () => {
     renderComponent();
 
     expect(screen.getByText(oopsSorry)).toBeInTheDocument();
-    expect(screen.getByText(error500 + '; ' + workPkg404)).toBeInTheDocument();
+    expect(screen.getByText(error500 + ' ' + workPkg404 + ' undefined')).toBeInTheDocument();
   });
 
   it('handles the error with no message', () => {

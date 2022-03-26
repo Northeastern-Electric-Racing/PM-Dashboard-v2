@@ -17,7 +17,13 @@ import ReviewNotes from './review-notes';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = (cr: ChangeRequest) => {
-  return render(<ReviewNotes reviewer={cr.reviewer} reviewNotes={cr.reviewNotes} />);
+  return render(
+    <ReviewNotes
+      reviewer={cr.reviewer}
+      reviewNotes={cr.reviewNotes}
+      dateReviewed={cr.dateReviewed}
+    />
+  );
 };
 
 describe('Change request review notes test', () => {
@@ -67,9 +73,9 @@ describe('Change request review notes test', () => {
 
   it('renders no date tooltip on hover', async () => {
     renderComponent(cr[2]);
-    fireEvent.mouseOver(screen.getByText(fullNamePipe(exampleAppAdminUser)));
+    fireEvent.mouseOver(screen.getByText('—'));
 
-    expect(await screen.findByText('Reviewed On: —')).toBeInTheDocument();
+    expect(await screen.findByText('Reviewed on: —')).toBeInTheDocument();
   });
 
   it('renders review date tooltip on hover', async () => {
@@ -78,7 +84,7 @@ describe('Change request review notes test', () => {
 
     expect(
       await screen.findByText(
-        `Reviewed On: ${datePipe(exampleStandardChangeRequest.dateReviewed!)}`
+        `Reviewed on: ${datePipe(exampleStandardChangeRequest.dateReviewed!)}`
       )
     ).toBeInTheDocument();
   });

@@ -60,7 +60,8 @@ export const exampleProject1: Project = {
       changeRequestId: 37,
       wbsNum: exampleWbsProject1,
       implementer: exampleAdminUser,
-      detail: 'Added goal for weight reduction'
+      detail: 'Added goal for weight reduction',
+      dateImplemented: new Date('02/25/21')
     }
   ],
   duration: 8,

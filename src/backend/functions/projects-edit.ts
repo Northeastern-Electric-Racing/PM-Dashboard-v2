@@ -447,7 +447,7 @@ export const createDescriptionBulletChangesJson = (
   const changes: { element: DescriptionBullet; type: string }[] = [];
 
   // Elements from database that have not been deleted
-  const oldArrayNotDeleted = oldArray.filter((element) => {
+  const oldArrayNotDeleted = oldArray.filter((element) => element.dateDeleted === undefined);
     return element.dateDeleted === undefined;
   });
 

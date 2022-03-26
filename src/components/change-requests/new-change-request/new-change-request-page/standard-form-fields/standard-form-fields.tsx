@@ -4,48 +4,54 @@
  */
 
 import { Row, Col, Form, InputGroup, FormControl } from 'react-bootstrap';
+import { ChangeRequestReason } from 'utils';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import styles from './standard-form-fields.module.css';
-import { ChangeRequestReason } from 'utils';
 
 interface StandardFormFieldsProp {
-  handleChange: (e: any) => void,
+  handleChange: (e: any) => void;
 }
 
 const whyInputName = {
-  [ChangeRequestReason.Estimation]: 'estimation_error', 
-  [ChangeRequestReason.School]: 'school_work', 
-  [ChangeRequestReason.Manufacturing]: 'manufacturing_issues', 
-  [ChangeRequestReason.Rules]: 'rules_compliance', 
-  [ChangeRequestReason.OtherProject]: 'other_project', 
+  [ChangeRequestReason.Estimation]: 'estimation_error',
+  [ChangeRequestReason.School]: 'school_work',
+  [ChangeRequestReason.Manufacturing]: 'manufacturing_issues',
+  [ChangeRequestReason.Rules]: 'rules_compliance',
+  [ChangeRequestReason.OtherProject]: 'other_project',
   [ChangeRequestReason.Other]: 'other',
   [ChangeRequestReason.Design]: 'design'
-}
+};
 
 const whyInputDisplay = {
-  [ChangeRequestReason.Estimation]: 'Estimation Error', 
-  [ChangeRequestReason.School]: 'School Work', 
-  [ChangeRequestReason.Manufacturing]: 'Manufacturing Issues', 
-  [ChangeRequestReason.Rules]: 'Rules Compliance', 
-  [ChangeRequestReason.OtherProject]: 'Other Project/Work Package', 
+  [ChangeRequestReason.Estimation]: 'Estimation Error',
+  [ChangeRequestReason.School]: 'School Work',
+  [ChangeRequestReason.Manufacturing]: 'Manufacturing Issues',
+  [ChangeRequestReason.Rules]: 'Rules Compliance',
+  [ChangeRequestReason.OtherProject]: 'Other Project/Work Package',
   [ChangeRequestReason.Other]: 'Other',
   [ChangeRequestReason.Design]: 'Design'
-}
+};
 
-const StandardFormFields: React.FC<StandardFormFieldsProp> = ({handleChange}) => {
+const StandardFormFields: React.FC<StandardFormFieldsProp> = ({ handleChange }) => {
   return (
     <Form>
       <div className={`${'row'} ${styles.container}`}>
         <div className={'px-4'}>
           <Form.Group controlId="newCR-what">
             <Form.Label>What</Form.Label>
-            <Form.Control as="textarea" rows={3} name="what" onChange={handleChange}/>
+            <Form.Control as="textarea" rows={3} name="what" onChange={handleChange} required />
           </Form.Group>
 
           <Form.Group controlId="newCR-scope-impact">
             <Form.Label>Scope Impact</Form.Label>
-            <Form.Control as="textarea" rows={3} name="scopeImpact" onChange={handleChange}/>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="scopeImpact"
+              onChange={handleChange}
+              required
+            />
           </Form.Group>
           <Form.Row className="align-items-center">
             <Col xs="auto">
@@ -54,13 +60,27 @@ const StandardFormFields: React.FC<StandardFormFieldsProp> = ({handleChange}) =>
                 <InputGroup.Prepend>
                   <InputGroup.Text>$</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl id="newCR-budget-impact" name="budgetImpact" onChange={handleChange} type="number"/>
+                <FormControl
+                  id="newCR-budget-impact"
+                  name="budgetImpact"
+                  onChange={handleChange}
+                  type="number"
+                  min={0}
+                  required
+                />
               </InputGroup>
             </Col>
             <Col xs="auto">
               <Form.Label>Timeline Impact</Form.Label>
               <InputGroup>
-                <FormControl id="newCR-timeline-impact" name="timelineImpact" onChange={handleChange} type="number"/>
+                <FormControl
+                  id="newCR-timeline-impact"
+                  name="timelineImpact"
+                  onChange={handleChange}
+                  type="number"
+                  min={0}
+                  required
+                />
                 <InputGroup.Prepend>
                   <InputGroup.Text>weeks</InputGroup.Text>
                 </InputGroup.Prepend>
@@ -82,15 +102,27 @@ const StandardFormFields: React.FC<StandardFormFieldsProp> = ({handleChange}) =>
                   onChange={handleChange}
                   data-checktype={type}
                 />
-                {(type === ChangeRequestReason.OtherProject) &&
-                  <Form.Control as="select" custom
-                    id="newCR-wbs-num" name={whyInputName[type] + '_explain'} onChange={handleChange}>
+                {type === ChangeRequestReason.OtherProject && (
+                  <Form.Control
+                    as="select"
+                    custom
+                    id="newCR-wbs-num"
+                    name={whyInputName[type] + '_explain'}
+                    onChange={handleChange}
+                  >
                     {exampleAllWorkPackages.map((p) => (
                       <option key={p.id}>{wbsPipe(p.wbsNum)}</option>
                     ))}
-                  </Form.Control>}
-                {(type === ChangeRequestReason.Other) && <Form.Control type="text"
-                  id="newCR-other-type" name={whyInputName[type] + '_explain'} onChange={handleChange} />}
+                  </Form.Control>
+                )}
+                {type === ChangeRequestReason.Other && (
+                  <Form.Control
+                    type="text"
+                    id="newCR-other-type"
+                    name={whyInputName[type] + '_explain'}
+                    onChange={handleChange}
+                  />
+                )}
               </Row>
             ))}
           </Form.Group>

@@ -30,7 +30,14 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({
     <div className={'row'}>
       <div className={'px-4'}>
         Project
-        <Form.Control as="select" custom name="projectWBS" type="number" onChange={handleChange}>
+        <Form.Control
+          as="select"
+          custom
+          name="projectWBS"
+          type="number"
+          onChange={handleChange}
+          required
+        >
           {projects.map((p) => (
             <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
@@ -46,6 +53,7 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({
           name="workPackageWBS"
           type="number"
           onChange={handleChange}
+          required
         >
           <option value="-1">No Work Package Selected</option>
           {workPkgs.map((p) => (
@@ -57,7 +65,14 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({
       </div>
       <div className={'px-4'}>
         Type
-        <Form.Control as="select" custom onChange={handleType} data-testid="type" name="type">
+        <Form.Control
+          as="select"
+          custom
+          onChange={handleType}
+          data-testid="type"
+          name="type"
+          required
+        >
           {Object.values(ChangeRequestType).map((t) => (
             <option value={t}>{t}</option>
           ))}

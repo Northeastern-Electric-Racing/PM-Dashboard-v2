@@ -9,7 +9,6 @@ import { exampleAllWorkPackages } from '../../../../test-support/test-data/work-
 import { exampleAllProjects } from '../../../../test-support/test-data/projects.stub';
 import NewChangeRequestPage from './new-change-request-page';
 
-const whoDesignInquiry = 'Who is Required for Design Review?';
 const projectLeadStr = 'Project Lead';
 const scopeImpactStr = 'Scope Impact';
 
@@ -36,14 +35,12 @@ const renderComponent = (formType: ChangeRequestType) => {
 describe('new change request page', () => {
   it('checks if page renders correctly with redefinition type', () => {
     renderComponent(ChangeRequestType.Redefinition);
-    expect(screen.queryByText(whoDesignInquiry)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
   });
 
   it('checks if page renders correctly with issue type', () => {
     renderComponent(ChangeRequestType.Issue);
-    expect(screen.queryByText(whoDesignInquiry)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
   });
@@ -52,13 +49,11 @@ describe('new change request page', () => {
     renderComponent(ChangeRequestType.StageGate);
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
-    expect(screen.getByText(whoDesignInquiry)).toBeInTheDocument();
   });
 
   it('checks if page renders correctly with activation type', () => {
     renderComponent(ChangeRequestType.Activation);
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
-    expect(screen.queryByText(whoDesignInquiry)).not.toBeInTheDocument();
     expect(screen.getByText(projectLeadStr)).toBeInTheDocument();
   });
 });

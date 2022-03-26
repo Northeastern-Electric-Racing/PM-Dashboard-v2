@@ -3,76 +3,62 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import PageBlock from "../../shared/page-block/page-block";
-import PageTitle from "../../shared/page-title/page-title";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../../services/auth.hooks';
+import { useCreateSingleProject } from '../../../services/projects.hooks';
+import { routes } from '../../../shared/routes';
+import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
+import CreateProjectFormView from './create-project-form/create-project-form';
+
+export interface CreateProjectFormStates {
+  name: Dispatch<SetStateAction<string>>;
+  carNumber: Dispatch<SetStateAction<number>>;
+  crId: Dispatch<SetStateAction<number>>;
+  summary: Dispatch<SetStateAction<string>>;
+}
 
 const CreateProjectForm: React.FC = () => {
+  const auth = useAuth();
   const history = useHistory();
+  const [name, setName] = useState('');
+  const [carNumber, setCarNumber] = useState(-1);
+  const [crId, setCrId] = useState(-1);
+  const [summary, setSummary] = useState('');
+  const { isLoading, mutateAsync } = useCreateSingleProject();
 
-  return (
-    <>
-      <PageTitle title={'New Project'} />
-      <PageBlock
-        title={''}
-        headerRight={<></>}
-        body={
-          <div>
-            <Form>
-              <Row>
-                <Col>
-                  <Row>
-                    <Form.Group as={Col} controlId='project-name-group' aria-required>
-                      <Form.Label htmlFor='project-name'>Project Name</Form.Label>
-                      <Form.Control id='project-name' type='text' placeholder='Enter project name...' required />
-                      <Form.Control.Feedback type='invalid'>Please provide a project name.</Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group as={Col} controlId='car-number-group' aria-required>
-                      <Form.Label htmlFor='car-number'>Car Number</Form.Label>
-                      <Form.Control id='car-number' type='number' min={0} placeholder='Enter car number...' required />
-                      <Form.Control.Feedback type='invalid'>Please provide a valid car number.</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId='cr-id-group' aria-required>
-                      <Form.Label htmlFor='cr-id'>Change Request ID</Form.Label>
-                      <Form.Control id='cr-id' type='number' min={1} placeholder='Enter change request ID...' required />
-                      <Form.Control.Feedback type='invalid'>Please provide a valid change request ID.</Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Form.Group as={Col} controlId='project-summary-group' aria-required>
-                      <Form.Label htmlFor='project-summary'>Project Summary</Form.Label>
-                      <Form.Control
-                        id='project-summary'
-                        as='textarea'
-                        rows={4}
-                        cols={50}
-                        placeholder='Enter summary...'
-                        required
-                      />
-                      <Form.Control.Feedback type='invalid'>Please provide a project summary.</Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-                  <Row>
-                    <Col className={'d-flex'}>
-                      <Button className={'mr-3'} variant='primary' type='submit'>
-                        Create
-                      </Button>
-                      <Button variant='secondary' type='button' onClick={() => history.goBack()}>
-                        Cancel
-                      </Button>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        }
-      />
-    </>
-  );
+  if (isLoading) return <LoadingIndicator />;
+
+  const states = {
+    name: setName,
+    carNumber: setCarNumber,
+    crId: setCrId,
+    summary: setSummary
+  };
+
+  const handleCancel = () => history.goBack();
+
+  const redirectToCrTable = () => history.push(routes.CHANGE_REQUESTS);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const { userId } = auth.user!;
+
+    const payload = {
+      userId,
+      crId,
+      name,
+      carNumber,
+      summary
+    };
+
+    await mutateAsync(payload);
+
+    redirectToCrTable();
+  };
+
+  return <CreateProjectFormView states={states} onCancel={handleCancel} onSubmit={handleSubmit} />;
 };
 
 export default CreateProjectForm;

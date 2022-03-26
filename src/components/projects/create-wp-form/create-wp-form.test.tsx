@@ -3,20 +3,22 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from '../../../test-support/test-utils';
-import CreateProjectForm from './create-project-form';
+import { render, screen } from "../../../test-support/test-utils";
+import CreateWPForm from "./create-wp-form";
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  return render(<CreateProjectForm />);
+  return render(
+    <CreateWPForm />
+  );
 };
 
-describe('create project form test suite', () => {
+describe('create wp form test suite', () => {
   it('render view component', () => {
     renderComponent();
 
-    expect(screen.getByText('Create New Project')).toBeInTheDocument();
+    expect(screen.getByText('Create New Work Package')).toBeInTheDocument();
   });
 });

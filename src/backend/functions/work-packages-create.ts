@@ -9,34 +9,79 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
-import { buildSuccessResponse, workPackageCreateInputSchemaBody } from 'utils';
+import { FromSchema } from 'json-schema-to-ts';
+import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
 
 const prisma = new PrismaClient();
 
-export const createWorkPackage: Handler = async ({ body }, _context) => {
+export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
+  { body },
+  _context
+) => {
+  const {
+    projectWbsNum,
+    name,
+    crId,
+    userId,
+    startDate,
+    duration,
+    dependencies,
+    expectedActivities,
+    deliverables
+  } = body;
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
-  const project = await prisma.project.findUnique({
+  const { carNumber, projectNumber, workPackageNumber } = projectWbsNum;
+
+  if (workPackageNumber !== 0) throw new TypeError('Given WBS Number is not for a project.');
+
+  const wbsElem = await prisma.wBS_Element.findUnique({
     where: {
-      projectId: body.projectId
+      wbsNumber: {
+        carNumber,
+        projectNumber,
+        workPackageNumber
+      }
     },
     include: {
-      wbsElement: true,
-      workPackages: { include: { wbsElement: true, dependencies: true } }
+      project: {
+        include: {
+          workPackages: { include: { wbsElement: true, dependencies: true } }
+        }
+      }
     }
   });
 
+  if (wbsElem === null) throw new TypeError('No corresponding WBS Element for WBS Number.');
+
+  const { project } = wbsElem;
+
   if (project === null) throw new TypeError('Project Id not found!');
+  const { projectId } = project;
 
-  // eslint-disable-next-line prefer-destructuring
-  const { carNumber, projectNumber } = project.wbsElement;
-
-  const workPackageNumber: number =
+  const newWorkPackageNumber: number =
     project.workPackages
       .map((element) => element.wbsElement.workPackageNumber)
-      .reduce((prev, curr) => {
-        return Math.max(prev, curr);
-      }, 0) + 1;
+      .reduce((prev, curr) => Math.max(prev, curr), 0) + 1;
+
+  const dependenciesWBSElems = await Promise.all(
+    dependencies.map(async (ele) => {
+      return await prisma.wBS_Element.findUnique({
+        where: {
+          wbsNumber: {
+            carNumber: ele.carNumber,
+            projectNumber: ele.projectNumber,
+            workPackageNumber: ele.workPackageNumber
+          }
+        }
+      });
+    })
+  );
+
+  const dependenciesIds = dependenciesWBSElems.map((elem) => {
+    if (elem === null) throw new TypeError('One of the dependencies was not found.');
+    return elem.wbsElementId;
+  });
 
   // add to the database
   const created = await prisma.work_Package.create({
@@ -45,40 +90,24 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
         create: {
           carNumber,
           projectNumber,
-          workPackageNumber,
-          name: body.name,
+          workPackageNumber: newWorkPackageNumber,
+          name,
           changes: {
             create: {
-              changeRequestId: body.crId,
-              implementerId: body.userId,
+              changeRequestId: crId,
+              implementerId: userId,
               detail: 'New Work Package Created'
             }
           }
         }
       },
-      project: {
-        connect: {
-          projectId: body.projectId
-        }
-      },
-      startDate: new Date(body.startDate),
-      duration: body.duration,
+      project: { connect: { projectId } },
+      startDate: new Date(startDate),
+      duration,
       orderInProject: project.workPackages.length + 1,
-      dependencies: {
-        connect: body.wbsElementIds.map((ele: any) => {
-          return { wbsElementId: ele };
-        })
-      },
-      expectedActivities: {
-        create: body.expectedActivities.map((ele: any) => {
-          return { detail: ele };
-        })
-      },
-      deliverables: {
-        create: body.deliverables.map((ele: any) => {
-          return { detail: ele };
-        })
-      }
+      dependencies: { connect: dependenciesIds.map((ele) => ({ wbsElementId: ele })) },
+      expectedActivities: { create: expectedActivities.map((ele) => ({ detail: ele })) },
+      deliverables: { create: deliverables.map((ele) => ({ detail: ele })) }
     }
   });
 
@@ -86,12 +115,7 @@ export const createWorkPackage: Handler = async ({ body }, _context) => {
 };
 
 // expected structure of json body
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: workPackageCreateInputSchemaBody
-  }
-};
+const inputSchema = eventSchema(workPackageCreateInputSchemaBody);
 
 const handler = middy(createWorkPackage)
   .use(jsonBodyParser())

@@ -9,7 +9,13 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { Description_Bullet, PrismaClient } from '@prisma/client';
-import { buildSuccessResponse, DescriptionBullet, workPackageEditInputSchemaBody } from 'utils';
+import {
+  buildSuccessResponse,
+  DescriptionBullet,
+  eventSchema,
+  workPackageEditInputSchemaBody
+} from 'utils';
+import { FromSchema } from 'json-schema-to-ts';
 
 const prisma = new PrismaClient();
 
@@ -19,7 +25,10 @@ export const descBulletConverter = (descBullet: Description_Bullet): Description
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
-export const editWorkPackage: Handler = async ({ body }, _context) => {
+export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
+  { body },
+  _context
+) => {
   const {
     wbsElementId,
     userId,
@@ -27,18 +36,18 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     crId,
     startDate,
     duration,
-    wbsElementIds,
+    dependencies,
     expectedActivities,
     deliverables,
     wbsElementStatus,
-    progress
+    progress,
+    projectLead,
+    projectManager
   } = body;
 
   // get the original work package so we can compare things
   const originalWorkPackage = await prisma.work_Package.findUnique({
-    where: {
-      wbsElementId
-    },
+    where: { wbsElementId },
     include: {
       wbsElement: true,
       dependencies: true,
@@ -53,17 +62,9 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   }
 
   // if the crId doesn't match a valid approved change request then we need to error
-  const changeRequest = await prisma.change_Request.findUnique({
-    where: {
-      crId
-    }
-  });
+  const changeRequest = await prisma.change_Request.findUnique({ where: { crId } });
 
-  if (
-    changeRequest === null ||
-    changeRequest.accepted == null ||
-    changeRequest.accepted === false
-  ) {
+  if (!changeRequest?.accepted) {
     throw new TypeError('Invalid Change Request!');
   }
 
@@ -110,10 +111,8 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
     wbsElementId
   );
   const dependenciesChangeJson = await createDependenciesChangesJson(
-    originalWorkPackage.dependencies.map((element) => {
-      return element.wbsElementId;
-    }),
-    wbsElementIds,
+    originalWorkPackage.dependencies.map((element) => element.wbsElementId),
+    dependencies,
     crId,
     userId,
     wbsElementId,
@@ -162,7 +161,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
       userId,
       wbsElementId
     );
-    if (projectManagerChangeJson !== undefined) {
+    if (projectManagerChangeJson) {
       changes.push(projectManagerChangeJson);
     }
   }
@@ -176,7 +175,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
       userId,
       wbsElementId
     );
-    if (projectLeadChangeJson !== undefined) {
+    if (projectLeadChangeJson) {
       changes.push(projectLeadChangeJson);
     }
   }
@@ -189,9 +188,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
 
   // update the work package with the input fields
   const updatedWorkPackage = await prisma.work_Package.update({
-    where: {
-      wbsElementId
-    },
+    where: { wbsElementId },
     data: {
       startDate: new Date(startDate),
       duration,
@@ -200,15 +197,13 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
         update: {
           name,
           status: wbsElementStatus,
-          projectLeadId: body.projectLead,
-          projectManagerId: body.projectManager
+          projectLeadId: projectLead,
+          projectManagerId: projectManager
         }
       },
       dependencies: {
         set: [], // remove all the connections then add all the given ones
-        connect: wbsElementIds.map((ele: any) => {
-          return { wbsElementId: ele };
-        })
+        connect: dependencies.map((ele) => ({ wbsElementId: ele }))
       }
     }
   });
@@ -219,14 +214,8 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   );
   if (deletedIds.length > 0) {
     await prisma.description_Bullet.updateMany({
-      where: {
-        descriptionId: {
-          in: deletedIds
-        }
-      },
-      data: {
-        dateDeleted: new Date()
-      }
+      where: { descriptionId: { in: deletedIds } },
+      data: { dateDeleted: new Date() }
     });
   }
 
@@ -247,9 +236,7 @@ export const editWorkPackage: Handler = async ({ body }, _context) => {
   );
 
   // create the changes in prisma
-  await prisma.change.createMany({
-    data: changes
-  });
+  await prisma.change.createMany({ data: changes });
 
   // return the updated work package
   return buildSuccessResponse(updatedWorkPackage);
@@ -265,36 +252,28 @@ const addDescriptionBullets = async (
   workPackageId: number,
   descriptionBulletIdField: string
 ) => {
+  if (addedDetails.length < 1) return;
   // add the added bullets
-  if (addedDetails.length > 0) {
-    await prisma.description_Bullet.createMany({
-      data: addedDetails.map((element) => {
-        return {
-          detail: element,
-          [descriptionBulletIdField]: workPackageId
-        };
-      })
-    });
-  }
+  await prisma.description_Bullet.createMany({
+    data: addedDetails.map((element) => ({
+      detail: element,
+      [descriptionBulletIdField]: workPackageId
+    }))
+  });
 };
 
 // edit descrption bullets in the db for each id and detail pair
 const editDescriptionBullets = async (editedIdsAndDetails: { id: number; detail: string }[]) => {
+  if (editedIdsAndDetails.length < 1) return;
   // edit the edited bullets if there are any to update
-  if (editedIdsAndDetails.length > 0) {
-    await prisma.$transaction(
-      editedIdsAndDetails.map((element) =>
-        prisma.description_Bullet.update({
-          where: {
-            descriptionId: element.id
-          },
-          data: {
-            detail: element.detail
-          }
-        })
-      )
-    );
-  }
+  await prisma.$transaction(
+    editedIdsAndDetails.map((element) =>
+      prisma.description_Bullet.update({
+        where: { descriptionId: element.id },
+        data: { detail: element.detail }
+      })
+    )
+  );
 };
 
 // create a change json if the old and new value are different, otherwise return undefined
@@ -372,11 +351,7 @@ export const createDependenciesChangesJson = async (
 
   // get the wbs number of each changing dependency for the change string
   const changedDependencies = await prisma.wBS_Element.findMany({
-    where: {
-      wbsElementId: {
-        in: changes.map((element) => element.element)
-      }
-    }
+    where: { wbsElementId: { in: changes.map((element) => element.element) } }
   });
 
   const wbsNumbers = new Map(
@@ -401,7 +376,7 @@ export const createDependenciesChangesJson = async (
 // because the deletedIds are needed for the database and the addedDetails are needed to make new ones
 export const createDescriptionBulletChangesJson = (
   oldArray: DescriptionBullet[],
-  newArray: DescriptionBullet[],
+  newArray: { id: number; detail: string }[],
   crId: number,
   implementerId: number,
   wbsElementId: number,
@@ -417,21 +392,14 @@ export const createDescriptionBulletChangesJson = (
     detail: string;
   }[];
 } => {
-  const seenOld = new Map<number, string>();
-  const seenNew = new Map<number, string>();
-  oldArray.forEach((element) => {
-    seenOld.set(element.id, element.detail);
-  });
+  const seenOld = new Map<number, string>(oldArray.map((ele) => [ele.id, ele.detail]));
+  const seenNew = new Map<number, string>(newArray.map((ele) => [ele.id, ele.detail]));
 
-  newArray.forEach((element) => {
-    seenNew.set(element.id, element.detail);
-  });
-
-  const changes: { element: DescriptionBullet; type: string }[] = [];
+  const changes: { element: { id: number; detail: string }; type: string }[] = [];
 
   oldArray.forEach((element) => {
     if (!seenNew.has(element.id)) {
-      changes.push({ element, type: 'Removed' });
+      changes.push({ element: { id: element.id, detail: element.detail }, type: 'Removed' });
     }
   });
 
@@ -446,19 +414,13 @@ export const createDescriptionBulletChangesJson = (
   return {
     deletedIds: changes
       .filter((element) => element.type === 'Removed')
-      .map((element) => {
-        return element.element.id;
-      }),
+      .map((element) => element.element.id),
     addedDetails: changes
       .filter((element) => element.type === 'Added new')
-      .map((element) => {
-        return element.element.detail;
-      }),
+      .map((element) => element.element.detail),
     editedIdsAndDetails: changes
       .filter((element) => element.type === 'Edited')
-      .map((element) => {
-        return { id: element.element.id, detail: element.element.detail };
-      }),
+      .map((element) => element.element),
     changes: changes.map((element) => {
       const detail =
         element.type === 'Edited'
@@ -466,23 +428,13 @@ export const createDescriptionBulletChangesJson = (
               element.element.id
             )}" to "${seenNew.get(element.element.id)}"`
           : `${element.type} ${nameOfField} "${element.element.detail}"`;
-      return {
-        changeRequestId: crId,
-        implementerId,
-        wbsElementId,
-        detail
-      };
+      return { changeRequestId: crId, implementerId, wbsElementId, detail };
     })
   };
 };
 
 // expected structure of json body
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: workPackageEditInputSchemaBody
-  }
-};
+const inputSchema = eventSchema(workPackageEditInputSchemaBody);
 
 const handler = middy(editWorkPackage)
   .use(jsonBodyParser())

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Form, Row } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
 import { exampleAllUsers } from '../../../../../test-support/test-data/users.stub';
 import { fullNamePipe } from '../../../../../shared/pipes';
@@ -38,9 +38,18 @@ const ActivationFormFields: React.FC<ActivationFormFieldsProp> = ({
               </option>
             ))}
           </Form.Control>
+        </Form.Group>
 
-          <Form.Label className={styles.label}>Start Date</Form.Label>
-          <DatePicker name="startDate" onChange={handleStartDateChange} required />
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="start-date">Start Date (YYYY-MM-DD)</Form.Label>
+          <Form.Control
+            id="start-date"
+            name="startDate"
+            aria-label={'start date input'}
+            type="date"
+            onChange={(e) => handleStartDateChange(new Date(e.target.value))}
+            required
+          ></Form.Control>
         </Form.Group>
       </div>
 

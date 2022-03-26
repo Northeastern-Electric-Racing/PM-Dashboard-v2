@@ -41,12 +41,12 @@ describe('new change request page', () => {
   it('renders the Why form field', () => {
     renderComponent();
 
-    expect(screen.getByText("Why")).toBeInTheDocument();
+    expect(screen.getByText('Why')).toBeInTheDocument();
   });
 
   it('renders the Documentation Link form field', () => {
     renderComponent();
 
-    expect(screen.getByText("Documentation Link")).toBeInTheDocument();
+    expect(screen.getByText('Documentation Link')).toBeInTheDocument();
   });
 });

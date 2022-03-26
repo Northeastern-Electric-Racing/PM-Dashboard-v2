@@ -17,6 +17,6 @@ describe('new change request page', () => {
   it('renders the new change requests page', () => {
     renderComponent();
 
-    expect(screen.getAllByText("New Change Request")[0]).toBeInTheDocument();
+    expect(screen.getAllByText('New Change Request')[0]).toBeInTheDocument();
   });
 });

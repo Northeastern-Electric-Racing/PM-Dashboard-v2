@@ -3,16 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "../../../test-support/test-utils";
-import CreateWPForm from "./create-wp-form";
+import { render, screen } from '../../../test-support/test-utils';
+import CreateWPForm from './create-wp-form';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  return render(
-    <CreateWPForm />
-  );
+  return render(<CreateWPForm />);
 };
 
 describe('create wp form test suite', () => {

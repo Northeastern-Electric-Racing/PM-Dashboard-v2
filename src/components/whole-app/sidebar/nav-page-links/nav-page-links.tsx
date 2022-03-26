@@ -5,12 +5,22 @@
 
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Nav } from 'react-bootstrap';
 import styles from './nav-page-links.module.css';
 import { useEffect } from 'react';
 
-const NavPageLinks: React.FC = () => {
+export interface LinkItem {
+  name: string;
+  icon: IconProp;
+  route: string;
+}
+
+interface NavPageLinkProps {
+  linkItems: LinkItem[];
+}
+
+const NavPageLinks: React.FC<NavPageLinkProps> = ({ linkItems }: NavPageLinkProps) => {
   useEffect(() => {
     const rows = document.getElementsByClassName(styles.row);
     Array.from(rows).forEach((row) => {
@@ -18,8 +28,7 @@ const NavPageLinks: React.FC = () => {
       if (
         Array.from(row.children).includes(
           Array.from(document.getElementsByClassName(styles.active))[0]
-        ) ||
-        current.matches(':hover')
+        )
       ) {
         current.style.backgroundColor = 'white';
       } else {
@@ -27,34 +36,24 @@ const NavPageLinks: React.FC = () => {
       }
     });
   });
-
-  return (
-    <div className={styles.navPageLinks}>
-      <Nav.Item className={styles.row}>
-        <NavLink to="/" exact activeClassName={styles.active} className={styles.container}>
-          <FontAwesomeIcon className={styles.iconsAndText} icon={faHome} size="2x" />
-          <p className={styles.iconsAndText}>Home</p>
-        </NavLink>
-      </Nav.Item>
-      <Nav.Item className={styles.row}>
-        <NavLink to="/projects" exact activeClassName={styles.active} className={styles.container}>
-          <FontAwesomeIcon className={styles.iconsAndText} icon={faFolder} size="2x" />
-          <p className={styles.iconsAndText}>Projects</p>
-        </NavLink>
-      </Nav.Item>
-      <Nav.Item className={styles.row}>
-        <NavLink
-          to="/change-requests"
-          exact
-          activeClassName={styles.active}
-          className={styles.container}
-        >
-          <FontAwesomeIcon className={styles.iconsAndText} icon={faExchangeAlt} size="2x" />
-          <p className={styles.iconsAndText}>Change Requests</p>
-        </NavLink>
-      </Nav.Item>
-    </div>
-  );
+  const genNavItems = (linkItems: LinkItem[]) => {
+    return linkItems.map((item) => {
+      return (
+        <Nav.Item key={item.name} className={styles.row}>
+          <NavLink
+            to={item.route}
+            className={styles.container}
+            activeClassName={styles.active}
+            exact
+          >
+            <FontAwesomeIcon icon={item.icon} size="2x" className={styles.iconsAndText} />
+            <p className={styles.iconsAndText}>{item.name}</p>
+          </NavLink>
+        </Nav.Item>
+      );
+    });
+  };
+  return <div className={styles.navPageLinks}>{genNavItems(linkItems)}</div>;
 };
 
 export default NavPageLinks;

@@ -5,12 +5,31 @@
 
 import { Nav } from 'react-bootstrap';
 import styles from './sidebar.module.css';
-import NavPageLinks from './nav-page-links/nav-page-links';
+import NavPageLinks, { LinkItem } from './nav-page-links/nav-page-links';
+import { routes } from '../../../shared/routes';
+import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar: React.FC = () => {
+  const linkItems: LinkItem[] = [
+    {
+      name: 'Home',
+      icon: faHome,
+      route: routes.HOME
+    },
+    {
+      name: 'Projects',
+      icon: faFolder,
+      route: routes.PROJECTS
+    },
+    {
+      name: 'Change Requests',
+      icon: faExchangeAlt,
+      route: routes.CHANGE_REQUESTS
+    }
+  ];
   return (
     <Nav className={styles.sidebar}>
-      <NavPageLinks />
+      <NavPageLinks linkItems={linkItems} />
     </Nav>
   );
 };

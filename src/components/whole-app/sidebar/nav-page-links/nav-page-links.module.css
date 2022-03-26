@@ -23,11 +23,6 @@
   align-items: center;
 }
 
-/* Not working for some reason... */
-.row:hover {
-  background-color: white;
-}
-
 .row:hover .iconsAndText {
   color: #ef4345;
   text-decoration: underline;

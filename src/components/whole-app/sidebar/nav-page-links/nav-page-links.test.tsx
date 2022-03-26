@@ -4,7 +4,27 @@
  */
 
 import { render, routerWrapperBuilder, screen } from '../../../../test-support/test-utils';
-import NavPageLinks from './nav-page-links';
+import NavPageLinks, { LinkItem } from './nav-page-links';
+import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
+import { routes } from '../../../../shared/routes';
+
+const linkItems: LinkItem[] = [
+  {
+    name: 'Home',
+    icon: faHome,
+    route: routes.HOME
+  },
+  {
+    name: 'Projects',
+    icon: faFolder,
+    route: routes.PROJECTS
+  },
+  {
+    name: 'Change Requests',
+    icon: faExchangeAlt,
+    route: routes.CHANGE_REQUESTS
+  }
+];
 
 /**
  * Sets up the component under test with the desired values and renders it.
@@ -13,7 +33,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <NavPageLinks />
+      <NavPageLinks linkItems={linkItems} />
     </RouterWrapper>
   );
 };

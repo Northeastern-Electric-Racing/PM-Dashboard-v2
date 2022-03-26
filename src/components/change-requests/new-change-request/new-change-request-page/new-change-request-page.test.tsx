@@ -3,10 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ChangeRequestType } from 'utils';
+import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
 import { exampleAllWorkPackages } from '../../../../test-support/test-data/work-packages.stub';
 import { exampleAllProjects } from '../../../../test-support/test-data/projects.stub';
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import { ChangeRequestType } from 'utils';
 import NewChangeRequestPage from './new-change-request-page';
 
 const whoDesignInquiry = 'Who is Required for Design Review?';

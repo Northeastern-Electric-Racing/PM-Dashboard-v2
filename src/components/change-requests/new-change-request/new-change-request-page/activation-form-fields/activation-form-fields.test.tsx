@@ -10,7 +10,7 @@ import ActivationFormFields from './activation-form-fields';
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  return render(<ActivationFormFields />);
+  return render(<ActivationFormFields handleChange={jest.fn} handleStartDateChange={jest.fn} />);
 };
 
 describe('new activation form fields', () => {
@@ -29,7 +29,7 @@ describe('new activation form fields', () => {
   it('renders the Start Date form field', () => {
     renderComponent();
 
-    expect(screen.getByText('Start Date')).toBeInTheDocument();
+    expect(screen.getByText('Start Date (YYYY-MM-DD)')).toBeInTheDocument();
   });
 
   it('renders the WP confirmation form field', () => {

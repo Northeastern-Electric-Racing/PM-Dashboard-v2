@@ -9,6 +9,7 @@ import StageGateFormFields from './stage-gate-form-fields';
 const requiredInquiry = 'Who is Required for Design Review?';
 const leftoverBudgetStr = 'Leftover Budget';
 const doneInquiry = 'Is everything done?';
+
 /**
  * Sets up the component under test with the desired values and renders it.
  */

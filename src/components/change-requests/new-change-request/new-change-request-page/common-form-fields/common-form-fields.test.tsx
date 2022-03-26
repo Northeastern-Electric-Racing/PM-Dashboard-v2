@@ -3,12 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ChangeRequestType } from 'utils';
 import { render, screen, fireEvent } from '../../../../../test-support/test-utils';
 import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
 import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
 import CommonFormFields from './common-form-fields';
-import { ChangeRequestType } from 'utils';
 
 /**
  * Sets up the component under test with the desired values and renders it.

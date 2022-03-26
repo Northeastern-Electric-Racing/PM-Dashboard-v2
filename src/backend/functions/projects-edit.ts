@@ -9,7 +9,12 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { Description_Bullet, PrismaClient } from '@prisma/client';
-import { buildSuccessResponse, DescriptionBullet, projectEditInputSchemaBody } from 'utils';
+import {
+  buildClientFailureResponse,
+  buildSuccessResponse,
+  DescriptionBullet,
+  projectEditInputSchemaBody
+} from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -49,7 +54,7 @@ export const editProject: Handler = async ({ body }, _context) => {
 
   // if it doesn't exist we error
   if (originalProject === null) {
-    throw new TypeError('Project with given wbsElementId does not exist!');
+    return buildClientFailureResponse('Project with given wbsElementId does not exist!');
   }
 
   let changes = [];
@@ -413,36 +418,6 @@ export const createDescriptionBulletChangesJson = (
     detail: string;
   }[];
 } => {
-  // const seenOld = new Map<number, string>();
-  // const seenNew = new Map<number, string>();
-  // const oldArrayFiltered = oldArray.filter((element) => {
-  //   return element.dateDeleted === undefined;
-  // });
-
-  // oldArray.forEach((element) => {
-  //   seenOld.set(element.id, element.detail);
-  // });
-
-  // newArray.forEach((element) => {
-  //   seenNew.set(element.id, element.detail);
-  // });
-
-  // const changes: { element: DescriptionBullet; type: string }[] = [];
-
-  // oldArrayFiltered.forEach((element) => {
-  //   if (!seenNew.has(element.id)) {
-  //     changes.push({ element, type: 'Removed' });
-  //   }
-  // });
-
-  // newArray.forEach((element) => {
-  //   if (element.id < 0 || !seenOld.has(element.id)) {
-  //     changes.push({ element, type: 'Added new' });
-  //   } else if (seenOld.get(element.id) !== element.detail) {
-  //     changes.push({ element, type: 'Edited' });
-  //   }
-  // });
-
   // Changes
   const changes: { element: DescriptionBullet; type: string }[] = [];
 

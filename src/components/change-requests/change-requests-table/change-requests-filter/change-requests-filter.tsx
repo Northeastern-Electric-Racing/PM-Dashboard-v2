@@ -140,25 +140,27 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <Button
-            className={styles.applyButton}
-            onClick={() => update(type, impact, reason, state, implemented)}
-          >
-            Apply
-          </Button>
-          <Button
-            className={styles.clearButton}
-            onClick={() => {
-              setType('');
-              setImpact([]);
-              setReason('');
-              setState([]);
-              setImplemented('');
-              update('', [], '', [], '');
-            }}
-          >
-            Clear
-          </Button>
+          <Form.Group className={styles.filterActions}>
+            <Button
+              className={styles.applyButton}
+              onClick={() => update(type, impact, reason, state, implemented)}
+            >
+              Apply
+            </Button>
+            <Button
+              className={styles.clearButton}
+              onClick={() => {
+                setType('');
+                setImpact([]);
+                setReason('');
+                setState([]);
+                setImplemented('');
+                update('', [], '', [], '');
+              }}
+            >
+              Clear
+            </Button>
+          </Form.Group>
         </Form>
       </Card.Body>
     </Card>

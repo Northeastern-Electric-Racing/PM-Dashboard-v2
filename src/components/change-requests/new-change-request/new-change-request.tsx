@@ -201,24 +201,10 @@ const NewChangeRequest: React.FC = () => {
   if (projectRes.isLoading || workPkgsRes.isLoading) return <LoadingIndicator />;
 
   if (projectRes.isError || workPkgsRes.isError) {
-    if (projectRes.isError !== workPkgsRes.isError) {
-      const message = projectRes.isError ? projectRes.error?.message : workPkgsRes.error?.message;
-      return <ErrorPage message={message} />;
-    }
-
-    if (projectRes.isError && workPkgsRes.isError) {
-      let message = projectRes.error?.message;
-
-      if (message && workPkgsRes.error) {
-        message += '; ' + workPkgsRes.error!.message;
-      } else if (!message) {
-        message = workPkgsRes.error?.message!;
-      }
-
-      return <ErrorPage message={message} />;
-    }
+    const msg = `${projectRes.error?.message} ${workPkgsRes.error?.message} ${createChangeRequest.error?.message}`;
+    return <ErrorPage message={msg} />;
   }
-  // logic for submitting a change request
+
   return (
     <NewChangeRequestPage
       submitHandler={submitHandler}

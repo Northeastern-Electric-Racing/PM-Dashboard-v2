@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Dropdown, Form, FormGroup } from 'react-bootstrap';
+import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
 import styles from './change-requests-filter.module.css';
 
@@ -98,10 +98,10 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <FormGroup>
+          <Form.Group>
             <Form.Label>Impact</Form.Label>
             {genCheckboxes(['Scope', 'Budget', 'Timeline'], impact, setImpact)}
-          </FormGroup>
+          </Form.Group>
           <Form.Group>
             <Form.Label>Reason</Form.Label>
             <Dropdown className={styles.dropdown}>
@@ -119,10 +119,10 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <FormGroup>
+          <Form.Group>
             <Form.Label>State</Form.Label>
             {genCheckboxes(['Not Reviewed', 'Accepted', 'Denied'], state, setState)}
-          </FormGroup>
+          </Form.Group>
           <Form.Group>
             <Form.Label>Implemented</Form.Label>
             <Dropdown className={styles.dropdown}>

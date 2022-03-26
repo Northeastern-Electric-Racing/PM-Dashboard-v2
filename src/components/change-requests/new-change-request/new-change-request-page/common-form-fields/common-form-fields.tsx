@@ -5,22 +5,26 @@
 
 import { Form } from 'react-bootstrap';
 import { wbsPipe } from '../../../../../shared/pipes';
-import { Project, WorkPackage } from 'utils';
+import { Project, WorkPackage, ChangeRequestType } from 'utils';
 import './common-form-fields.module.css';
-import { ChangeRequestType } from 'utils';
 
 interface CommonFormFieldsProp {
-  setType: React.Dispatch<React.SetStateAction<ChangeRequestType>>,
-  projects: Project[],
-  workPkgs: WorkPackage[],
-  handleChange: (e: any) => void,
+  setType: React.Dispatch<React.SetStateAction<ChangeRequestType>>;
+  projects: Project[];
+  workPkgs: WorkPackage[];
+  handleChange: (e: any) => void;
 }
 
-const CommonFormFields: React.FC<CommonFormFieldsProp> = ({projects, workPkgs, setType, handleChange}) => {
+const CommonFormFields: React.FC<CommonFormFieldsProp> = ({
+  projects,
+  workPkgs,
+  setType,
+  handleChange
+}) => {
   const handleType = (event: React.ChangeEvent<any>): void => {
     setType(event.target.value);
     handleChange(event);
-  }
+  };
 
   return (
     <div className={'row'}>
@@ -36,7 +40,13 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({projects, workPkgs, s
       </div>
       <div className={'px-4'}>
         Work Package
-        <Form.Control as="select" custom name="workPackageWBS" type="number" onChange={handleChange}>
+        <Form.Control
+          as="select"
+          custom
+          name="workPackageWBS"
+          type="number"
+          onChange={handleChange}
+        >
           <option value="-1">No Work Package Selected</option>
           {workPkgs.map((p) => (
             <option value={p.id}>

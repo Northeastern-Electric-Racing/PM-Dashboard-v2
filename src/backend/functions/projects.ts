@@ -29,8 +29,10 @@ import {
   Project,
   WbsElementStatus,
   DescriptionBullet,
-  User
+  User,
+  calculateDuration
 } from 'utils';
+import { calculateEndDate } from 'utils/src';
 
 const prisma = new PrismaClient();
 
@@ -128,19 +130,20 @@ const projectTransformer = (
     otherConstraints: project.otherConstraints.map(descBulletConverter),
     features: project.features.map(descBulletConverter),
     goals: project.goals.map(descBulletConverter),
-    //duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
-    duration: calculateDuration(project.workPackages),
+    duration: calculateDuration(project.workPackages.map((workPackage) => {
+        return {
+          startDate: workPackage.startDate,
+          duration: workPackage.duration,
+        };}
+    )),
     workPackages: project.workPackages.map((workPackage) => {
-      const endDate = new Date(workPackage.startDate);
-      endDate.setDate(workPackage.duration * 7);
-
       return {
         ...workPackage,
         ...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
         status: convertStatus(workPackage.wbsElement.status),
-        endDate,
+        endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
         dependencies: workPackage.dependencies.map(wbsNumOf),
         expectedActivities: workPackage.expectedActivities.map(descBulletConverter),
         deliverables: workPackage.deliverables.map(descBulletConverter),
@@ -203,43 +206,6 @@ const handler: Handler = async (event, context) => {
     console.error(error);
     return buildServerFailureResponse(error.message);
   }
-};
-
-// calculates duration
-const calculateDuration = (
-  workPackages: (Work_Package & {
-    wbsElement: WBS_Element & {
-      changes: (Change & {
-        implementer: User;
-      })[];
-    };
-    dependencies: WBS_Element[];
-    expectedActivities: Description_Bullet[];
-    deliverables: Description_Bullet[];
-  })[]
-) => {
-  
-  const startDates = workPackages.map((workPackage) => workPackage.startDate.getTime());
-  
-  // since endDate is not yet assigned, calculate an array of end dates
-  // with information of start date and duration in each wp.
-  const endDates: number[] = workPackages.map((workPackage) => {
-    const endDate = new Date(workPackage.startDate);
-    endDate.setDate(workPackage.duration * 7);
-    return endDate.getTime();
-  });
-
-  const [earliestStartDate] = startDates.sort((prev, next) => prev - next);
-  const [latestEndDate] = endDates.sort((prev, next) => next - prev);
-
-  if (earliestStartDate == null) {
-    return 0;
-  }
-
-  const durationInDays = (latestEndDate - earliestStartDate) / (60 * 60 * 24 * 1000);
-  const duration = Math.round(durationInDays / 7);
-
-  return duration;
 };
 
 export { handler };

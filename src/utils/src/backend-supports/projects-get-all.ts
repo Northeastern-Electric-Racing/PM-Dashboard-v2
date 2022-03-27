@@ -3,27 +3,32 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { WorkPackage } from "../types/project-types";
+
 const calculateEndDate = (start: Date, weeks: number) => {
   const end = new Date(start);
   end.setDate(start.getDate() + weeks * 7);
   return end;
 };
 
-const projectDurationBuilder = (wps: any) => {
-  if (wps.length === 0) return 0;
-  if (wps.length === 1) return wps[0].duration;
-
-  let firstStart = wps[0].startDate;
-  let lastEnd = calculateEndDate(firstStart, wps[0].duration);
-
-  for (const wp of wps) {
-    if (wp.startDate < firstStart) firstStart = wp.startDate;
-    const end = calculateEndDate(wp.startDate, wp.duration);
-    if (end > lastEnd) lastEnd = end;
+const calculateDuration = (startDuration : Pick<WorkPackage, "startDate" | "duration">[]) => {
+  if (startDuration.length < 1) {
+    return 0;
   }
-  const durationMilliseconds = lastEnd.getTime() - firstStart.getTime();
-  const durationWeeks = durationMilliseconds / (1000 * 60 * 60 * 24 * 7);
-  return Math.round(durationWeeks);
-};
+  
+  const endDates = startDuration.map((elt) => {    
+    return calculateEndDate(elt.startDate, elt.duration);
+  });
 
-export { projectDurationBuilder, calculateEndDate };
+  const earliestStartDate = startDuration.reduce((min, cur) => 
+    (cur.startDate < min ? cur.startDate : min), startDuration[0].startDate);
+
+    const latestEndDate = endDates.reduce((max, cur) => (cur > max ? cur : max), endDates[0]);
+
+  const durationInDays = (latestEndDate.getTime() - earliestStartDate.getTime()) / (60 * 60 * 24 * 1000);
+  const duration = Math.round(durationInDays / 7);
+
+  return duration;
+}
+
+export { calculateEndDate, calculateDuration };

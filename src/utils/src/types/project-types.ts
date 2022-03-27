@@ -23,6 +23,7 @@ export interface WbsElement {
   projectLead?: User;
   projectManager?: User;
   changes: ImplementedChange[];
+  duration: number;
 }
 
 export enum WbsElementStatus {
@@ -39,7 +40,6 @@ export interface Project extends WbsElement {
   slideDeckLink?: string;
   bomLink?: string;
   rules: string[];
-  duration: number;
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
@@ -51,7 +51,6 @@ export interface WorkPackage extends WbsElement {
   progress: number;
   startDate: Date;
   endDate: Date;
-  duration: number;
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];
   deliverables: DescriptionBullet[];

@@ -6,6 +6,7 @@
 import { ReactElement } from 'react';
 import { User } from '@prisma/client';
 import { WbsNumber } from 'utils';
+import { calculateEndDate } from '../utils/src/backend-supports/projects-get-all';
 
 /**
  * Pipes:
@@ -49,9 +50,7 @@ export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string 
 
 // Formats the end date as a string.
 export const endDatePipe = (startDate: Date, durWeeks: number): string => {
-  const endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + durWeeks * 7);
-  return datePipe(endDate);
+  return datePipe(calculateEndDate(startDate, durWeeks));
 };
 
 // Replaces an empty string with an EM dash.

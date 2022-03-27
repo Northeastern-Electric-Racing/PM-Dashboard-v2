@@ -60,16 +60,6 @@ describe('projects api endpoint handler', () => {
       expect(responseObject.statusCode).toBe(200);
     });
 
-    it('has correct duration', async () => {
-      // project 1.2.0
-      expect(projectResponse.duration).toBe(0);
-      // project 1.1.0
-      const event: HandlerEvent = mockEvent(apiUrls.projectsByWbsNum('1.1.0'), 'GET');
-      responseObject = await handler(event, mockContext, mockCallback);
-      const secondProject = JSON.parse(responseObject.body);
-      expect(secondProject.duration).toBe(5);
-    });
-
     it.skip('has all required fields', () => {
       expect(projectResponse.hasOwnProperty('wbsNum')).toBeTruthy();
       expect(projectResponse.hasOwnProperty('name')).toBeTruthy();

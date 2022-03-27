@@ -36,7 +36,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
         <Col xs={6} md={4}>
           <div>
             <b>Duration:</b>{' '}
-            {weeksPipe(project.workPackages.reduce((tot, cur) => tot + cur.duration, 0))} <br />
+            {weeksPipe(project.duration)} <br />
             <b>Start Date:</b>{' '}
             {project.workPackages.length > 0
               ? project.workPackages
@@ -54,7 +54,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
                     (min, cur) => (cur.startDate < min ? cur.startDate : min),
                     project.workPackages[0].startDate
                   ),
-                  project.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
+                  project.duration
                 )
               : 'n/a'}{' '}
             <br />

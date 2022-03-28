@@ -13,7 +13,8 @@ import {
   buildClientFailureResponse,
   buildSuccessResponse,
   DescriptionBullet,
-  projectEditInputSchemaBody
+  projectEditInputSchemaBody,
+  eventSchema
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -248,8 +249,6 @@ export const editProject: Handler = async ({ body }, _context) => {
       }
     }
   });
-
-  // --> Pointer
 
   // Update any deleted description bullets to have their date deleted as right now
   const deletedIds = goalsChangeJson.deletedIds
@@ -486,12 +485,7 @@ export const createDescriptionBulletChangesJson = (
 };
 
 // expected structure of json body
-const inputSchema = {
-  type: 'object',
-  properties: {
-    body: projectEditInputSchemaBody
-  }
-};
+const inputSchema = eventSchema(projectEditInputSchemaBody);
 
 const handler = middy(editProject)
   .use(jsonBodyParser())

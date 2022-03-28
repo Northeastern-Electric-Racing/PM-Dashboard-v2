@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import { Project, WbsNumber } from 'utils';
+import { CreateProjectPayload, Project, WbsNumber } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
 import { projectTransformer } from './transformers/projects.transformers';
@@ -12,10 +12,18 @@ import { projectTransformer } from './transformers/projects.transformers';
 /**
  * Fetches all projects.
  */
-export const getAllProjects = () => {
-  return axios.get<Project[]>(apiUrls.projects(), {
+export const getAllProjects = (onSuccess?: (value: any) => void) => {
+  const projects = axios.get<Project[]>(apiUrls.projects(), {
     transformResponse: (data) => JSON.parse(data).map(projectTransformer)
   });
+
+  if (onSuccess) {
+    projects.then((response) => {
+      onSuccess!(response);
+    });
+  }
+
+  return projects;
 };
 
 /**
@@ -26,5 +34,16 @@ export const getAllProjects = () => {
 export const getSingleProject = (wbsNum: WbsNumber) => {
   return axios.get<Project>(apiUrls.projectsByWbsNum(wbsPipe(wbsNum)), {
     transformResponse: (data) => projectTransformer(JSON.parse(data))
+  });
+};
+
+/**
+ * Create a single project.
+ *
+ * @param payload Payload containing all information needed to create a project.
+ */
+export const createSingleProject = (payload: CreateProjectPayload) => {
+  return axios.post<{ message: string }>(apiUrls.projectsCreate(), {
+    ...payload
   });
 };

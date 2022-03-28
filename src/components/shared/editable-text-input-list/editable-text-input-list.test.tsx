@@ -3,22 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "../../../test-support/test-utils";
-import EditableTextInputList from "./editable-text-input-list";
+import { render, screen } from '../../../test-support/test-utils';
+import EditableTextInputList from './editable-text-input-list';
 
-const mockItems = ["tee hee", "yahello", "yeet", "yoink"];
+const mockItems = ['tee hee', 'yahello', 'yeet', 'yoink'];
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = (items: any) => {
   return render(
-    <EditableTextInputList
-      items={items}
-      add={() => null}
-      remove={() => null}
-      update={() => null}
-    />
+    <EditableTextInputList items={items} add={() => null} remove={() => null} update={() => null} />
   );
 };
 
@@ -39,7 +34,7 @@ describe('editable text input list test suite', () => {
     it('render content', async () => {
       renderComponent(mockItems);
 
-      const res = await screen.findAllByRole('textbox') as HTMLInputElement[];
+      const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
       res.forEach((item, index) => {
         expect(item.value).toEqual(mockItems[index]);
       });
@@ -64,6 +59,6 @@ describe('editable text input list test suite', () => {
       renderComponent([]);
 
       expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-    })
+    });
   });
 });

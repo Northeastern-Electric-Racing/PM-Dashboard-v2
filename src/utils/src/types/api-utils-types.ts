@@ -81,3 +81,9 @@ export const bodySchema = <
     ) as Exclude<keyof Props, Opts>[],
     additionalProperties: !!additionalProperties as Add
   } as const);
+
+export const wbsNumType = bodySchema({
+  carNumber: intType,
+  projectNumber: intType,
+  workPackageNumber: intType
+});

@@ -6,7 +6,6 @@
 import { render, screen } from '../../../../../test-support/test-utils';
 import StageGateFormFields from './stage-gate-form-fields';
 
-const requiredInquiry = 'Who is Required for Design Review?';
 const leftoverBudgetStr = 'Leftover Budget';
 const doneInquiry = 'Is everything done?';
 
@@ -18,12 +17,6 @@ const renderComponent = (handleChange: jest.Mock<any, any>) => {
 };
 
 describe('new stage gate form fields', () => {
-  it('renders the design reviewer form field', () => {
-    renderComponent(jest.fn());
-
-    expect(screen.getByText(requiredInquiry)).toBeInTheDocument();
-  });
-
   it('renders the Leftover Budget form field', () => {
     renderComponent(jest.fn());
 

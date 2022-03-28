@@ -105,7 +105,11 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <ReviewNotes reviewer={changeRequest.reviewer} reviewNotes={changeRequest.reviewNotes} />
+      <ReviewNotes
+        reviewer={changeRequest.reviewer}
+        reviewNotes={changeRequest.reviewNotes}
+        dateReviewed={changeRequest.dateReviewed}
+      />
       <ImplementedChangesList
         changes={
           changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges

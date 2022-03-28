@@ -10,7 +10,12 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
-import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
+import {
+  buildNotFoundResponse,
+  buildSuccessResponse,
+  eventSchema,
+  workPackageCreateInputSchemaBody
+} from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -52,11 +57,10 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     }
   });
 
-  if (wbsElem === null) throw new TypeError('No corresponding WBS Element for WBS Number.');
-
+  if (wbsElem === null) return buildNotFoundResponse('Wbs_Element_ID', projectWbsNum.toString());
   const { project } = wbsElem;
 
-  if (project === null) throw new TypeError('Project Id not found!');
+  if (project === null) return buildNotFoundResponse('Project_ID', projectNumber.toString());
   const { projectId } = project;
 
   const newWorkPackageNumber: number =

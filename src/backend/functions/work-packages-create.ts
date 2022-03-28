@@ -57,7 +57,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     }
   });
 
-  if (wbsElem === null) return buildNotFoundResponse('Wbs_Element', projectWbsNum.toString());
+  if (wbsElem === null) return buildNotFoundResponse('Wbs_Element_ID', projectWbsNum.toString());
   const { project } = wbsElem;
 
   if (project === null) return buildNotFoundResponse('Project_ID', projectNumber.toString());

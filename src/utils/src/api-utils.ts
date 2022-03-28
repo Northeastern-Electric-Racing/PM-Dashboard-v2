@@ -79,14 +79,6 @@ export const buildNotFoundResponse = (type: string, item: string) => {
   return buildFailureResponse(404, `Could not find the requested ${type} [${item}].`);
 };
 
-/**
- * Builds an error failure API response object for when the requesting
- * method is not allowed.
- */
-export const buildMethodNotAllowedResponse = (msg: string) => {
-  return buildFailureResponse(405, msg);
-};
-
 // ---------------------------------
 
 /**

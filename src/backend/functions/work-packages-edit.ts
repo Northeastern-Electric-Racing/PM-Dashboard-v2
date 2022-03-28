@@ -17,7 +17,6 @@ import {
   workPackageEditInputSchemaBody
 } from 'utils';
 import { FromSchema } from 'json-schema-to-ts';
-import { buildMethodNotAllowedResponse } from 'utils/src';
 
 const prisma = new PrismaClient();
 
@@ -67,7 +66,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   const changeRequest = await prisma.change_Request.findUnique({ where: { crId } });
 
   if (!changeRequest?.accepted) {
-    return buildMethodNotAllowedResponse('Invalid Change Request.');
+    return buildNotFoundResponse('Valid_Change_Request', crId.toString());
   }
 
   let changes = [];

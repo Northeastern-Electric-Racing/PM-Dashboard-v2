@@ -28,7 +28,6 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
 
   const detailsBody = (
     <Container fluid>
-      <Form>
         <Row>
           <Col xs={12} md={6}>
             <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
@@ -90,7 +89,6 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             />
           </Col>
         </Row>
-      </Form>
     </Container>
   );
 

@@ -32,7 +32,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   const detailInput = (
     <InputGroup aria-required>
       <Form.Control
-        required
+        required={true}
         type={type}
         defaultValue={value}
         placeholder={value}

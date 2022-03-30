@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup } from 'react-bootstrap';
 
 interface EditableTextInputListProps {
   items: any[];
@@ -20,19 +20,26 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
 }) => {
   return (
     <>
-      {
-        items.map((item, index: number) => (
-          <div key={index} className={'mb-2'}>
-            <InputGroup>
-              <Form.Control type='text' value={item.toString()} onChange={(e) => {
+      {items.map((item, index: number) => (
+        <div key={index} className={'mb-2'}>
+          <InputGroup>
+            <Form.Control
+              required
+              type="text"
+              value={item.toString()}
+              onChange={(e) => {
                 update(index, e.target.value);
-              }} />
-              <Button type='button' variant='danger' onClick={() => remove(index)}>X</Button>
-            </InputGroup>
-          </div>
-        ))
-      }
-      <Button type='button' variant='success' onClick={() => add('')}>+ Add New Bullet</Button>
+              }}
+            />
+            <Button type="button" variant="danger" onClick={() => remove(index)}>
+              X
+            </Button>
+          </InputGroup>
+        </div>
+      ))}
+      <Button type="button" variant="success" onClick={() => add('')}>
+        + Add New Bullet
+      </Button>
     </>
   );
 };

@@ -11,6 +11,7 @@ import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
 import {
+  buildClientFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   eventSchema,
@@ -18,6 +19,15 @@ import {
 } from 'utils';
 
 const prisma = new PrismaClient();
+
+// gets the associated change request for creating a work package.
+const getChangeRequestReviewState = async (crId: number) => {
+  const cr = await prisma.change_Request.findUnique({ where: { crId } });
+
+  // returns null if the change request doesn't exist
+  // if it exists, return a boolean describing if the change request was reviewed
+  return cr ? cr.dateReviewed !== null : cr;
+};
 
 export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   { body },
@@ -34,6 +44,17 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     expectedActivities,
     deliverables
   } = body;
+
+  const crReviewed = await getChangeRequestReviewState(crId);
+  if (crReviewed === null) {
+    return buildNotFoundResponse('change request', `CR #${crId}`);
+  }
+
+  // check if the change request for the work package was reviewed
+  if (!crReviewed) {
+    return buildClientFailureResponse('Cannot implement an unreviewed change request');
+  }
+
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
   const { carNumber, projectNumber, workPackageNumber } = projectWbsNum;

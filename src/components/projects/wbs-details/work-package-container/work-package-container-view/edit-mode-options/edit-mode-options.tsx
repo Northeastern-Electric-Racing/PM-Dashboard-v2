@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { EditModeProps } from '../work-package-container';
+import { EditModeProps } from '../work-package-container-view';
 import { Button } from 'react-bootstrap';
 import styles from './edit-mode-options.module.css';
 

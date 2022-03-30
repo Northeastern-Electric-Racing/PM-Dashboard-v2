@@ -1,4 +1,4 @@
-import WorkPackageContainerView from './work-package-container/work-package-container';
+import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
 import { WbsNumber } from 'utils';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';

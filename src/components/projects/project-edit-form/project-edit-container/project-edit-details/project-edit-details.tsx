@@ -17,7 +17,6 @@ interface projectDetailsProps {
   updateTaskList: (val: string) => void;
   updateBom: (val: string) => void;
   updateGDrive: (val: string) => void;
-  updateBudget: (val: string) => void;
 }
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({
@@ -26,8 +25,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   updateSlideDeck,
   updateTaskList,
   updateBom,
-  updateGDrive,
-  updateBudget
+  updateGDrive
 }) => {
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
@@ -67,6 +65,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
           <Form.Control
             required
             type={type}
+            min={0}
             defaultValue={defaultValue}
             placeholder={placeholder}
             readOnly={readOnly}
@@ -142,7 +141,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
           )}
           {buildUsersSelect('Project Lead:', project.projectLead!)}
           {buildUsersSelect('Project Manager:', project.projectManager!)}
-          {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
+          {editDetailsInputBuilder('Budget:', 'number', project.budget, null, '$')}
         </Col>
         <Col xs={6} md={4}>
           {editDetailsInputBuilder(

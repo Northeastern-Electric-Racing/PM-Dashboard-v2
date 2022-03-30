@@ -31,8 +31,6 @@ export interface EditModeProps {
 }
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
-  const [budget, setBudget] = useState(proj.budget);
-
   const [slideDeck, setSlideDeck] = useState(proj.slideDeckLink);
   const [taskList, setTaskList] = useState(proj.taskListLink);
   const [bom, setBom] = useState(proj.bomLink);
@@ -42,7 +40,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const updateTaskList = (url: string | undefined) => setTaskList(url);
   const updateBom = (url: string | undefined) => setBom(url);
   const updateGDrive = (url: string | undefined) => setGDrive(url);
-  const updateBudget = (val: string) => setBudget(+val);
 
   const [goals, setGoals] = useState(proj!.goals.map((goal) => goal.detail));
   const [features, setFeatures] = useState(proj!.features.map((feature) => feature.detail));
@@ -141,11 +138,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   };
 
   const checkValidity = () => {
-    if (budget < 0) {
-      alert("Budget can't be negative.");
-    }
-
-    return budget >= 0 && [slideDeck, taskList, bom, gDrive].every(isValidURL);
+    return [slideDeck, taskList, bom, gDrive].every(isValidURL);
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
@@ -175,7 +168,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           updateTaskList={updateTaskList}
           updateBom={updateBom}
           updateGDrive={updateGDrive}
-          updateBudget={updateBudget}
         />
         <ProjectEditSummary project={proj!} />
         <PageBlock

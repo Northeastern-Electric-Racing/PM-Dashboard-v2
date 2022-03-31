@@ -45,6 +45,7 @@ describe('change requests table filter component', () => {
     expect(screen.getByText('Denied')).toBeInTheDocument();
     expect(screen.getByText('Implemented')).toBeInTheDocument();
     expect(screen.getByText('Apply')).toBeInTheDocument();
+    expect(screen.getByText('Clear')).toBeInTheDocument();
   });
 
   it('checking if data in the type menu is correct', async () => {
@@ -109,6 +110,15 @@ describe('change requests table filter component', () => {
       fireEvent.click(screen.getByText('Apply'));
     }); // Clicking it should do nothing to its visibility, not change the page, etc.
     expect(screen.getByText('Apply')).toBeInTheDocument();
+  });
+
+  it('checking if text in the clear button is correct', async () => {
+    renderComponent();
+    expect(screen.getByText('Clear')).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Clear'));
+    }); // Clicking it should do nothing to its visibility, not change the page, etc.
+    expect(screen.getByText('Clear')).toBeInTheDocument();
   });
 
   it('checking if type dropdown sets filter setting correctly', async () => {
@@ -251,5 +261,57 @@ describe('change requests table filter component', () => {
       fireEvent.click(screen.getByText('Apply'));
     });
     expect(temp[3]).toStrictEqual([1]);
+  });
+
+  it('clear button clears all settings', async () => {
+    renderComponent();
+    await act(async () => {
+      fireEvent.click(screen.getByText('Clear'));
+    });
+    expect(temp).toStrictEqual(['', [], '', [], '']);
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('type-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText(ChangeRequestType.Other));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Scope'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Budget'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Timeline'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('reason-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText(ChangeRequestReason.Manufacturing));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Not Reviewed'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Accepted'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Denied'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByTestId('implemented-toggle'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Yes'));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByText('Apply'));
+    });
+    expect(temp).not.toStrictEqual(['', [], '', [], '']);
+    await act(async () => {
+      fireEvent.click(screen.getByText('Clear'));
+    });
+    expect(temp).toStrictEqual(['', [], '', [], '']);
   });
 });

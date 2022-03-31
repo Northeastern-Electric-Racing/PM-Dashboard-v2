@@ -6,9 +6,7 @@
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Nav } from 'react-bootstrap';
 import styles from './nav-page-links.module.css';
-import { useEffect } from 'react';
 
 export interface LinkItem {
   name: string;
@@ -21,35 +19,23 @@ interface NavPageLinkProps {
 }
 
 const NavPageLinks: React.FC<NavPageLinkProps> = ({ linkItems }: NavPageLinkProps) => {
-  useEffect(() => {
-    const rows = document.getElementsByClassName(styles.row);
-    Array.from(rows).forEach((row) => {
-      const current = row as HTMLElement;
-      if (
-        Array.from(row.children).includes(
-          Array.from(document.getElementsByClassName(styles.active))[0]
-        )
-      ) {
-        current.style.backgroundColor = 'white';
-      } else {
-        current.style.backgroundColor = 'transparent';
-      }
-    });
-  });
   const genNavItems = (linkItems: LinkItem[]) => {
     return linkItems.map((item) => {
       return (
-        <Nav.Item key={item.name} className={styles.row}>
-          <NavLink
-            to={item.route}
-            className={styles.container}
-            activeClassName={styles.active}
-            exact
-          >
-            <FontAwesomeIcon icon={item.icon} size="2x" className={styles.iconsAndText} />
-            <p className={styles.iconsAndText}>{item.name}</p>
-          </NavLink>
-        </Nav.Item>
+        <NavLink
+          key={item.name}
+          to={item.route}
+          className={styles.row}
+          activeClassName={styles.activeLink}
+          exact
+        >
+          <FontAwesomeIcon
+            icon={item.icon}
+            size="2x"
+            className={styles.iconsAndText + ' ' + styles.icon}
+          />
+          <p className={styles.iconsAndText + ' ' + styles.text}>{item.name}</p>
+        </NavLink>
       );
     });
   };

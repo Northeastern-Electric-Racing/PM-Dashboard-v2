@@ -3,7 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.content {
-  margin-top: 4rem;
-  margin-left: 85px;
+.sidebar {
+  position: fixed;
+  height: 100%;
+  background-color: #292929;
+  width: 75px;
+  min-width: 75px;
+  text-align: center;
+  font-size: 14px;
 }

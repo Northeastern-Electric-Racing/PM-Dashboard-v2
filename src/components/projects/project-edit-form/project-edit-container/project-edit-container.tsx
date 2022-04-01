@@ -157,7 +157,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   if (isError) return <ErrorPage message={error?.message} />;
 
   return (
-    <div className="mb-5">
+    <>
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
         <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
@@ -242,7 +242,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
         />
         <EditModeOptions setEditMode={setEditMode} />
       </Form>
-    </div>
+    </>
   );
 };
 

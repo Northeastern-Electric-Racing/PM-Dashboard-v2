@@ -40,6 +40,15 @@ export const editProject: Handler = async ({ body }, _context) => {
     wbsElementStatus
   } = body;
 
+  // Create optional arg values
+  const googleDriveFolderLink =
+    body.googleDriveFolderLink === undefined ? null : body.googleDriveFolderLink;
+  const slideDeckLink = body.slideDeckLink === undefined ? null : body.slideDeckLink;
+  const bomLink = body.bomLink === undefined ? null : body.bomLink;
+  const taskListLink = body.taskListLink === undefined ? null : body.taskListLink;
+  const projectLead = body.projectLead === undefined ? null : body.projectLead;
+  const projectManager = body.projectManager === undefined ? null : body.projectManager;
+
   // get the original project so we can compare things
   const originalProject = await prisma.project.findUnique({
     where: {
@@ -59,7 +68,7 @@ export const editProject: Handler = async ({ body }, _context) => {
   }
 
   let changes = [];
-  // get the changes or undefined for each non-optional fields and add it to changes
+  // get the changes or undefined for each field and add it to changes
   const nameChangeJson = createChangeJsonNonList(
     'name',
     originalProject.wbsElement.name,
@@ -92,6 +101,54 @@ export const editProject: Handler = async ({ body }, _context) => {
     userId,
     wbsElementId
   );
+  const driveChangeJson = createChangeJsonNonList(
+    'google drive folder link',
+    originalProject.googleDriveFolderLink,
+    googleDriveFolderLink,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const slideChangeJson = createChangeJsonNonList(
+    'slide deck link',
+    originalProject.slideDeckLink,
+    slideDeckLink,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const bomChangeJson = createChangeJsonNonList(
+    'bom link',
+    originalProject.bomLink,
+    bomLink,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const taskChangeJson = createChangeJsonNonList(
+    'task list link',
+    originalProject.taskListLink,
+    taskListLink,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const projectManagerChangeJson = createChangeJsonNonList(
+    'project manager',
+    originalProject.wbsElement.projectManagerId,
+    projectManager,
+    crId,
+    userId,
+    wbsElementId
+  );
+  const projectLeadChangeJson = createChangeJsonNonList(
+    'project lead',
+    originalProject.wbsElement.projectLeadId,
+    projectLead,
+    crId,
+    userId,
+    wbsElementId
+  );
   // add to changes if not undefined
   if (nameChangeJson !== undefined) {
     changes.push(nameChangeJson);
@@ -105,85 +162,23 @@ export const editProject: Handler = async ({ body }, _context) => {
   if (statusChangeJson !== undefined) {
     changes.push(statusChangeJson);
   }
-
-  // Dealing with optional arguments
-  if (body.hasOwnProperty('googleDriveFolderLink')) {
-    const driveChangeJson = createChangeJsonNonList(
-      'google drive folder link',
-      originalProject.googleDriveFolderLink,
-      body.googleDriveFolderLink,
-      crId,
-      userId,
-      wbsElementId
-    );
-    if (driveChangeJson !== undefined) {
-      changes.push(driveChangeJson);
-    }
+  if (driveChangeJson !== undefined) {
+    changes.push(driveChangeJson);
   }
-  if (body.hasOwnProperty('slideDeckLink')) {
-    const slideChangeJson = createChangeJsonNonList(
-      'slide deck link',
-      originalProject.slideDeckLink,
-      body.slideDeckLink,
-      crId,
-      userId,
-      wbsElementId
-    );
-    if (slideChangeJson !== undefined) {
-      changes.push(slideChangeJson);
-    }
+  if (slideChangeJson !== undefined) {
+    changes.push(slideChangeJson);
   }
-  if (body.hasOwnProperty('bomLink')) {
-    const bomChangeJson = createChangeJsonNonList(
-      'bom link',
-      originalProject.bomLink,
-      body.bomLink,
-      crId,
-      userId,
-      wbsElementId
-    );
-    if (bomChangeJson !== undefined) {
-      changes.push(bomChangeJson);
-    }
+  if (bomChangeJson !== undefined) {
+    changes.push(bomChangeJson);
   }
-  if (body.hasOwnProperty('taskListLink')) {
-    const taskChangeJson = createChangeJsonNonList(
-      'task list link',
-      originalProject.taskListLink,
-      body.taskListLink,
-      crId,
-      userId,
-      wbsElementId
-    );
-    if (taskChangeJson !== undefined) {
-      changes.push(taskChangeJson);
-    }
+  if (taskChangeJson !== undefined) {
+    changes.push(taskChangeJson);
   }
-  if (body.hasOwnProperty('projectManager')) {
-    const projectManagerChangeJson = createChangeJsonNonList(
-      'project manager',
-      originalProject.wbsElement.projectManagerId,
-      body.projectManager,
-      crId,
-      userId,
-      wbsElementId
-    );
-    if (projectManagerChangeJson !== undefined) {
-      changes.push(projectManagerChangeJson);
-    }
+  if (projectManagerChangeJson !== undefined) {
+    changes.push(projectManagerChangeJson);
   }
-  if (body.hasOwnProperty('projectLead')) {
-    const projectLeadChangeJson = createChangeJsonNonList(
-      'project lead',
-      originalProject.wbsElement.projectLeadId,
-      body.projectLead,
-      crId,
-      userId,
-      wbsElementId
-    );
-    if (projectLeadChangeJson !== undefined) {
-      changes.push(projectLeadChangeJson);
-    }
+  if (projectLeadChangeJson !== undefined) {
+    changes.push(projectLeadChangeJson);
   }
 
   // Dealing with lists
@@ -234,17 +229,17 @@ export const editProject: Handler = async ({ body }, _context) => {
     data: {
       budget,
       summary,
-      googleDriveFolderLink: body.googleDriveFolderLink,
-      slideDeckLink: body.slideDeckLink,
-      bomLink: body.bomLink,
-      taskListLink: body.taskListLink,
+      googleDriveFolderLink,
+      slideDeckLink,
+      bomLink,
+      taskListLink,
       rules,
       wbsElement: {
         update: {
           name,
           status: wbsElementStatus,
-          projectLeadId: body.projectLead,
-          projectManagerId: body.projectManager
+          projectLeadId: projectLead,
+          projectManagerId: projectManager
         }
       }
     }
@@ -342,14 +337,15 @@ export const createChangeJsonNonList = (
   implementerId: number,
   wbsElementId: number
 ) => {
-  if (oldValue == null) {
-    return {
-      changeRequestId: crId,
-      implementerId,
-      wbsElementId,
-      detail: `Added ${nameOfField} "${newValue}"`
-    };
-  } else if (oldValue !== newValue) {
+  if (oldValue !== newValue) {
+    if (oldValue == null) {
+      return {
+        changeRequestId: crId,
+        implementerId,
+        wbsElementId,
+        detail: `Added ${nameOfField} "${newValue}"`
+      };
+    }
     return {
       changeRequestId: crId,
       implementerId,

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
 import NavTopBar from './nav-top-bar';
 
 /**
@@ -22,12 +22,5 @@ describe('navigation top bar tests', () => {
   it('renders site title', () => {
     renderComponent();
     expect(screen.getByText(/NER PM Dashboard/i)).toBeInTheDocument();
-  });
-
-  it('renders navigation links', () => {
-    renderComponent();
-    expect(screen.getByText(/Home/i)).toBeInTheDocument();
-    expect(screen.getByText(/Projects/i)).toBeInTheDocument();
-    expect(screen.getByText(/Changes/i)).toBeInTheDocument();
   });
 });

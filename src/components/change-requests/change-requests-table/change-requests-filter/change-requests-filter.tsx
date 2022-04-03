@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Dropdown, Form, FormGroup } from 'react-bootstrap';
+import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
 import styles from './change-requests-filter.module.css';
 
@@ -62,13 +62,14 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
     };
     return (
       <>
-        {values.map((val) => (
+        {values.map((val, index) => (
           <Form.Check
             key={val}
             id={val}
             type="checkbox"
             onChange={() => toggleValue(val)}
             label={val}
+            checked={value.includes(index)}
           />
         ))}
       </>
@@ -97,10 +98,10 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <FormGroup>
+          <Form.Group>
             <Form.Label>Impact</Form.Label>
             {genCheckboxes(['Scope', 'Budget', 'Timeline'], impact, setImpact)}
-          </FormGroup>
+          </Form.Group>
           <Form.Group>
             <Form.Label>Reason</Form.Label>
             <Dropdown className={styles.dropdown}>
@@ -118,10 +119,10 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <FormGroup>
+          <Form.Group>
             <Form.Label>State</Form.Label>
             {genCheckboxes(['Not Reviewed', 'Accepted', 'Denied'], state, setState)}
-          </FormGroup>
+          </Form.Group>
           <Form.Group>
             <Form.Label>Implemented</Form.Label>
             <Dropdown className={styles.dropdown}>
@@ -139,14 +140,27 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <Button
-            className={styles.applyButton}
-            onClick={() => {
-              update(type, impact, reason, state, implemented);
-            }}
-          >
-            Apply
-          </Button>
+          <Form.Group className={styles.filterActions}>
+            <Button
+              className={styles.applyButton}
+              onClick={() => update(type, impact, reason, state, implemented)}
+            >
+              Apply
+            </Button>
+            <Button
+              className={styles.clearButton}
+              onClick={() => {
+                setType('');
+                setImpact([]);
+                setReason('');
+                setState([]);
+                setImplemented('');
+                update('', [], '', [], '');
+              }}
+            >
+              Clear
+            </Button>
+          </Form.Group>
         </Form>
       </Card.Body>
     </Card>

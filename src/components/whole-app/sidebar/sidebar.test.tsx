@@ -3,8 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import NavPageLinks from './nav-page-links';
+import { render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
+import Sidebar from './sidebar';
 
 /**
  * Sets up the component under test with the desired values and renders it.
@@ -13,24 +13,16 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <NavPageLinks />
+      <Sidebar />
     </RouterWrapper>
   );
 };
 
-describe('navigation page links tests', () => {
-  it('renders home page link', () => {
+describe('Sidebar Tests', () => {
+  it('Renders Navigation Links', () => {
     renderComponent();
     expect(screen.getByText(/Home/i)).toBeInTheDocument();
-  });
-
-  it('renders projects page link', () => {
-    renderComponent();
     expect(screen.getByText(/Projects/i)).toBeInTheDocument();
-  });
-
-  it('renders change requests page link', () => {
-    renderComponent();
-    expect(screen.getByText(/Changes/i)).toBeInTheDocument();
+    expect(screen.getByText(/Change Requests/i)).toBeInTheDocument();
   });
 });

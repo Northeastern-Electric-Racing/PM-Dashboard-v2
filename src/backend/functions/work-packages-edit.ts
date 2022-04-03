@@ -10,6 +10,7 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { Description_Bullet, PrismaClient } from '@prisma/client';
 import {
+  buildNotFoundResponse,
   buildSuccessResponse,
   DescriptionBullet,
   eventSchema,
@@ -58,14 +59,14 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
 
   // if it doesn't exist we error
   if (originalWorkPackage === null) {
-    throw new TypeError('Work Package with given wbsElementId does not exist!');
+    return buildNotFoundResponse('Wbs_Element_ID', wbsElementId.toString());
   }
 
   // if the crId doesn't match a valid approved change request then we need to error
   const changeRequest = await prisma.change_Request.findUnique({ where: { crId } });
 
   if (!changeRequest?.accepted) {
-    throw new TypeError('Invalid Change Request!');
+    return buildNotFoundResponse('Valid_Change_Request', crId.toString());
   }
 
   let changes = [];

@@ -3,17 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "@testing-library/react";
-import { StageGateChangeRequest } from "utils";
-import { exampleStageGateChangeRequest } from "../../../../../../test-support/test-data/change-requests.stub";
-import StageGateDetails from "./stage-gate-details";
+import { render, screen } from '@testing-library/react';
+import { StageGateChangeRequest } from 'utils';
+import { exampleStageGateChangeRequest } from '../../../../../../test-support/test-data/change-requests.stub';
+import StageGateDetails from './stage-gate-details';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = (cr: StageGateChangeRequest) => {
   return render(<StageGateDetails cr={cr} />);
-}
+};
 
 describe('Change request details stage gate cr display element tests', () => {
   const cr: StageGateChangeRequest = exampleStageGateChangeRequest;

@@ -37,7 +37,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
 
   return (
     <EditModeContext.Provider value={editMode}>
-      <div className="mb-5">
+      <div>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
         <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
         <WorkPackageDetails workPackage={data!} />

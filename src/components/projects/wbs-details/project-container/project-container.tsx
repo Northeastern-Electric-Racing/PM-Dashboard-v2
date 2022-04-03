@@ -15,7 +15,9 @@ import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
-import './project-container.module.css';
+import { useState } from 'react';
+import ProjectEditButton from './project-edit-button/project-edit-button';
+import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
@@ -23,14 +25,18 @@ interface ProjectContainerProps {
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
+  const [editMode, setEditMode] = useState(false);
 
   if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  return (
-    <div className="mb-5">
-      <PageTitle title={`${wbsPipe(wbsNum)} - ${data!.name}`} />
+  const readOnlyView = (
+    <div className='mb-5'>
+      <PageTitle
+        title={`${wbsPipe(wbsNum)} - ${data!.name}`}
+        actionButton={editMode ? <></> : <ProjectEditButton setEditMode={setEditMode} />}
+      />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
       <DescriptionList title={'Goals'} items={data!.goals} />
@@ -44,7 +50,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         body={
           <>
             {data!.workPackages.map((ele: WorkPackage) => (
-              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+              <div key={wbsPipe(ele.wbsNum)} className='mt-3'>
                 <WorkPackageSummary workPackage={ele} />
               </div>
             ))}
@@ -53,6 +59,10 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       />
     </div>
   );
+
+  const editView = <ProjectEditContainer wbsNum={wbsNum} proj={data!} setEditMode={setEditMode} />;
+
+  return <>{editMode ? editView : readOnlyView}</>;
 };
 
 export default ProjectContainer;

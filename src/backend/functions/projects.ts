@@ -30,7 +30,9 @@ import {
   WbsElementStatus,
   DescriptionBullet,
   User,
-  calculateDuration
+  calculateDuration,
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
 } from 'utils';
 import { calculateEndDate } from 'utils/src';
 
@@ -130,20 +132,31 @@ const projectTransformer = (
     otherConstraints: project.otherConstraints.map(descBulletConverter),
     features: project.features.map(descBulletConverter),
     goals: project.goals.map(descBulletConverter),
-    duration: calculateDuration(project.workPackages.map((workPackage) => {
+    duration: calculateDuration(
+      project.workPackages.map((workPackage) => {
         return {
           startDate: workPackage.startDate,
-          duration: workPackage.duration,
-        };}
-    )),
+          duration: workPackage.duration
+        };
+      })
+    ),
     workPackages: project.workPackages.map((workPackage) => {
+      const endDate = new Date(workPackage.startDate);
+      endDate.setDate(workPackage.duration * 7);
+      const expectedProgress = calculatePercentExpectedProgress(
+        workPackage.startDate,
+        workPackage.duration,
+        wbsElement.status
+      );
       return {
         ...workPackage,
         ...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
         status: convertStatus(workPackage.wbsElement.status),
-        endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
+        endDate,
+        expectedProgress,
+        timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress),
         dependencies: workPackage.dependencies.map(wbsNumOf),
         expectedActivities: workPackage.expectedActivities.map(descBulletConverter),
         deliverables: workPackage.deliverables.map(descBulletConverter),

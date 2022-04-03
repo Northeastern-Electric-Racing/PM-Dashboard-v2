@@ -10,7 +10,12 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
-import { buildSuccessResponse, eventSchema, workPackageCreateInputSchemaBody } from 'utils';
+import {
+  buildNotFoundResponse,
+  buildSuccessResponse,
+  eventSchema,
+  workPackageCreateInputSchemaBody
+} from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -19,7 +24,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   _context
 ) => {
   const {
-    projectId,
+    projectWbsNum,
     name,
     crId,
     userId,
@@ -31,23 +36,56 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   } = body;
   // get the corresponding project so we can find the next wbs number
   // and what number work package this should be
-  const project = await prisma.project.findUnique({
-    where: { projectId },
+  const { carNumber, projectNumber, workPackageNumber } = projectWbsNum;
+
+  if (workPackageNumber !== 0) throw new TypeError('Given WBS Number is not for a project.');
+
+  const wbsElem = await prisma.wBS_Element.findUnique({
+    where: {
+      wbsNumber: {
+        carNumber,
+        projectNumber,
+        workPackageNumber
+      }
+    },
     include: {
-      wbsElement: true,
-      workPackages: { include: { wbsElement: true, dependencies: true } }
+      project: {
+        include: {
+          workPackages: { include: { wbsElement: true, dependencies: true } }
+        }
+      }
     }
   });
 
-  if (project === null) throw new TypeError('Project Id not found!');
+  if (wbsElem === null) return buildNotFoundResponse('Wbs_Element_ID', projectWbsNum.toString());
+  const { project } = wbsElem;
 
-  // eslint-disable-next-line prefer-destructuring
-  const { carNumber, projectNumber } = project.wbsElement;
+  if (project === null) return buildNotFoundResponse('Project_ID', projectNumber.toString());
+  const { projectId } = project;
 
-  const workPackageNumber: number =
+  const newWorkPackageNumber: number =
     project.workPackages
       .map((element) => element.wbsElement.workPackageNumber)
       .reduce((prev, curr) => Math.max(prev, curr), 0) + 1;
+
+  const dependenciesWBSElems = await Promise.all(
+    dependencies.map(async (ele) => {
+      return await prisma.wBS_Element.findUnique({
+        where: {
+          wbsNumber: {
+            carNumber: ele.carNumber,
+            projectNumber: ele.projectNumber,
+            workPackageNumber: ele.workPackageNumber
+          }
+        }
+      });
+    })
+  );
+
+  const dependenciesIds = dependenciesWBSElems.map((elem) => {
+    if (elem === null) throw new TypeError('One of the dependencies was not found.');
+    return elem.wbsElementId;
+  });
 
   // add to the database
   const created = await prisma.work_Package.create({
@@ -56,7 +94,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
         create: {
           carNumber,
           projectNumber,
-          workPackageNumber,
+          workPackageNumber: newWorkPackageNumber,
           name,
           changes: {
             create: {
@@ -71,7 +109,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
       startDate: new Date(startDate),
       duration,
       orderInProject: project.workPackages.length + 1,
-      dependencies: { connect: dependencies.map((ele) => ({ wbsElementId: ele })) },
+      dependencies: { connect: dependenciesIds.map((ele) => ({ wbsElementId: ele })) },
       expectedActivities: { create: expectedActivities.map((ele) => ({ detail: ele })) },
       deliverables: { create: deliverables.map((ele) => ({ detail: ele })) }
     }

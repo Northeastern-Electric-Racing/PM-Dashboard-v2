@@ -4,17 +4,25 @@
  */
 
 import { FromSchema } from 'json-schema-to-ts';
-import { bodySchema, intType, stringType, dateType, arrayType, enumType } from './api-utils-types';
+import {
+  bodySchema,
+  intType,
+  stringType,
+  dateType,
+  arrayType,
+  enumType,
+  wbsNumType
+} from './api-utils-types';
 import { WbsElementStatus } from './project-types';
 
 export const workPackageCreateInputSchemaBody = bodySchema({
   userId: intType,
   name: stringType,
   crId: intType,
-  projectId: intType,
+  projectWbsNum: wbsNumType,
   startDate: dateType,
   duration: intType,
-  dependencies: arrayType(intType),
+  dependencies: arrayType(wbsNumType),
   expectedActivities: arrayType(stringType),
   deliverables: arrayType(stringType)
 });
@@ -45,3 +53,10 @@ export const workPackageEditInputSchemaBody = bodySchema(
 );
 
 export type EditWorkPackagePayload = FromSchema<typeof workPackageEditInputSchemaBody>;
+
+export enum TimelineStatus {
+  Ahead = 'AHEAD',
+  OnTrack = 'ON_TRACK',
+  Behind = 'BEHIND',
+  VeryBehind = 'VERY_BEHIND'
+}

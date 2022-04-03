@@ -20,12 +20,16 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
   const [open, setOpen] = useState(false);
   const expectedActivitiesList = (
     <ul>
-      {workPackage.expectedActivities.slice(0, 3).map((item, idx) => <li key={idx}>{item.detail}</li>)}
+      {workPackage.expectedActivities.slice(0, 3).map((item, idx) => (
+        <li key={idx}>{item.detail}</li>
+      ))}
     </ul>
   );
   const deliverablesList = (
     <ul>
-      {workPackage.deliverables.slice(0, 3).map((item, idx) => <li key={idx}>{item.detail}</li>)}
+      {workPackage.deliverables.slice(0, 3).map((item, idx) => (
+        <li key={idx}>{item.detail}</li>
+      ))}
     </ul>
   );
 

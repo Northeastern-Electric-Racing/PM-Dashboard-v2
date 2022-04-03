@@ -1,0 +1,15 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+.halfDiv {
+  width: 50%;
+  float: left;
+  padding-right: 60px;
+  min-width: 200px;
+}
+
+b {
+  font-weight: bold;
+}

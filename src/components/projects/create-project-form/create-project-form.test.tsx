@@ -3,14 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "../../../test-support/test-utils";
-import CreateProjectFormView from "./create-project-form/create-project-form";
+import { render, screen } from '../../../test-support/test-utils';
+import CreateProjectForm from './create-project-form';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = () => {
-  return render(<CreateProjectFormView />);
+  return render(<CreateProjectForm />);
 };
 
 describe('create project form test suite', () => {
@@ -18,5 +18,5 @@ describe('create project form test suite', () => {
     renderComponent();
 
     expect(screen.getByText('Create New Project')).toBeInTheDocument();
-  })
+  });
 });

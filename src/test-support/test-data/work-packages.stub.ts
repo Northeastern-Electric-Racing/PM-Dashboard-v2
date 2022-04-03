@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WbsElementStatus, WorkPackage } from 'utils';
+import { WbsElementStatus, WorkPackage, TimelineStatus } from 'utils';
 import {
   exampleAdminUser,
   exampleAppAdminUser,
@@ -29,6 +29,8 @@ export const exampleWorkPackage1: WorkPackage = {
   projectManager: exampleLeadershipUser,
   orderInProject: 1,
   progress: 25,
+  expectedProgress: 50,
+  timelineStatus: TimelineStatus.OnTrack,
   startDate: new Date('01/01/21'),
   endDate: new Date('01/22/21'),
   duration: 3,
@@ -79,6 +81,8 @@ export const exampleWorkPackage2: WorkPackage = {
   projectManager: exampleLeadershipUser,
   orderInProject: 2,
   progress: 0,
+  expectedProgress: 0,
+  timelineStatus: TimelineStatus.OnTrack,
   startDate: new Date('01/22/21'),
   endDate: new Date('02/26/21'),
   duration: 5,
@@ -138,6 +142,8 @@ export const exampleWorkPackage3: WorkPackage = {
   projectManager: exampleProjectManagerUser,
   orderInProject: 3,
   progress: 100,
+  expectedProgress: 100,
+  timelineStatus: TimelineStatus.OnTrack,
   startDate: new Date('01/01/21'),
   endDate: new Date('01/15/21'),
   duration: 2,

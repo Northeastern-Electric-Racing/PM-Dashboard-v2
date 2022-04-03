@@ -5,7 +5,7 @@
 
 .header {
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
   margin-bottom: 1em;
 }
 

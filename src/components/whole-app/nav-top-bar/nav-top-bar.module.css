@@ -8,12 +8,17 @@
 }
 
 .logo {
-  height: 35px;
+  height: 40px;
   transform: scale(1.5);
 }
 
 .title {
   margin: auto 0 auto 10px;
-  color: black;
+  color: white;
   padding-left: 10px;
+}
+
+.username {
+  color: white;
+  margin: auto;
 }

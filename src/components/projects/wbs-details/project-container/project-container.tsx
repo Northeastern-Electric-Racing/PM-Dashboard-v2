@@ -15,7 +15,6 @@ import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
-import './project-container.module.css';
 import { useState } from 'react';
 import ProjectEditButton from './project-edit-button/project-edit-button';
 import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
@@ -33,7 +32,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   if (isError) return <ErrorPage message={error?.message} />;
 
   const readOnlyView = (
-    <div className="mb-5">
+    <div className='mb-5'>
       <PageTitle
         title={`${wbsPipe(wbsNum)} - ${data!.name}`}
         actionButton={editMode ? <></> : <ProjectEditButton setEditMode={setEditMode} />}
@@ -51,7 +50,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         body={
           <>
             {data!.workPackages.map((ele: WorkPackage) => (
-              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+              <div key={wbsPipe(ele.wbsNum)} className='mt-3'>
                 <WorkPackageSummary workPackage={ele} />
               </div>
             ))}

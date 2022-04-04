@@ -13,15 +13,13 @@ interface ProjectEditSummaryProps {
 }
 
 const ProjectEditSummary: React.FC<ProjectEditSummaryProps> = ({ project }) => {
-  const { summary } = project;
-
   return (
     <PageBlock
       title={'Project Summary'}
       headerRight={<></>}
       body={
         <Form.Group>
-          <Form.Control as="textarea" value={summary} rows={4} />
+          <Form.Control required as="textarea" defaultValue={project.summary} rows={4} />
         </Form.Group>
       }
     />

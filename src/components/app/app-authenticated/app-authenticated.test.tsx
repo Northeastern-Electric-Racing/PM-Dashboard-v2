@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { fireEvent, screen, render, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { fireEvent, render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
 jest.mock('../../projects/projects', () => {
@@ -30,7 +30,7 @@ describe('app authenticated section', () => {
     renderComponent();
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('Projects')).toBeInTheDocument();
-    expect(screen.getByText('Changes')).toBeInTheDocument();
+    expect(screen.getByText('Change Requests')).toBeInTheDocument();
   });
 
   it('can navigate to projects page', () => {

@@ -39,6 +39,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### 'npm run light-install'
+
+'light-install' is a lighter alternative to 'npm install' that avoids building unnecessary dependencies. This can be used for local development to cut down on development time. The script works by first running preinstall, which builds the packages in /utils. It then installs them into the global node_modules, ending by running postinstall to generate prisma.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

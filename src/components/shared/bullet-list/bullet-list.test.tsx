@@ -31,7 +31,7 @@ describe('Bullet List Component', () => {
 
   it('renders all bullets, in edit mode', () => {
     render(
-      <FormContext.Provider value={{editMode: true, setField}}>
+      <FormContext.Provider value={{ editMode: true, setField }}>
         <BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} />
       </FormContext.Provider>
     );
@@ -42,7 +42,7 @@ describe('Bullet List Component', () => {
 
   it('renders all bullets, in edit mode and readOnly mode', () => {
     render(
-      <FormContext.Provider value={{editMode: true, setField}}>
+      <FormContext.Provider value={{ editMode: true, setField }}>
         <BulletList
           title={'test'}
           headerRight={<></>}

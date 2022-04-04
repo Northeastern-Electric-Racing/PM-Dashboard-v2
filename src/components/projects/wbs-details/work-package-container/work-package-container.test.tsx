@@ -21,7 +21,6 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: WorkPackage, erro
   );
 };
 
-
 const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(

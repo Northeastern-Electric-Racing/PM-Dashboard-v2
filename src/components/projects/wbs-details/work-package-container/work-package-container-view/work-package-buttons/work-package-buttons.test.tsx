@@ -11,7 +11,7 @@ describe('Work package edit buttons', () => {
   const setField = (field: string, value: any) => {};
   it('renders all of the buttons, with edit mode enabled', () => {
     render(
-      <FormContext.Provider value={{editMode: false, setField}}>
+      <FormContext.Provider value={{ editMode: false, setField }}>
         <WorkPackageButtons changeEditMode={() => {}} />
       </FormContext.Provider>
     );
@@ -21,7 +21,7 @@ describe('Work package edit buttons', () => {
   });
   it('renders all of the buttons, with edit mode disabled', () => {
     render(
-      <FormContext.Provider value={{editMode: true, setField}}>
+      <FormContext.Provider value={{ editMode: true, setField }}>
         <WorkPackageButtons changeEditMode={() => {}} />
       </FormContext.Provider>
     );

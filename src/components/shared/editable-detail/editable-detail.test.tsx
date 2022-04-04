@@ -11,7 +11,7 @@ describe('Rendering Editable Detail Component', () => {
   const setField = (field: string, value: any) => {};
   const renderComponent = (editMode: boolean, readOnly?: boolean) => {
     return render(
-      <FormContext.Provider value={{editMode, setField}}>
+      <FormContext.Provider value={{ editMode, setField }}>
         <EditableDetail
           title="testTitle"
           value="testValue"

@@ -20,7 +20,9 @@ import {
   isProject,
   WorkPackage,
   WbsElementStatus,
-  calculateEndDate
+  calculateEndDate,
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -70,6 +72,14 @@ const workPackageTransformer = (
   if (payload === null) throw new TypeError('WBS_Element not found');
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
+  const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
+
+  const expectedProgress = calculatePercentExpectedProgress(
+    workPackage.startDate,
+    workPackage.duration,
+    wbsElement.status
+  );
+
   const wbsNum = wbsNumOf(wbsElement);
   return {
     ...workPackage,
@@ -93,8 +103,10 @@ const workPackageTransformer = (
     projectManager: wbsElement.projectManager ?? undefined,
     projectLead: wbsElement.projectLead ?? undefined,
     status: convertStatus(wbsElement.status),
-    endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
-    wbsNum
+    wbsNum,
+    endDate,
+    expectedProgress,
+    timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress)
   };
 };
 

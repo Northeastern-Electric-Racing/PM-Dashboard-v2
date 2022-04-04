@@ -2,8 +2,14 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-
-import { calculateEndDate, calculateDuration } from '../src/backend-supports/project-supports';
+import {
+  calculateEndDate,
+  calculateDuration,
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
+} from '../src/backend-supports/project-supports';
+import { WbsElementStatus } from '../src/types/project-types';
+import { TimelineStatus } from '../src/types/work-package-types';
 
 describe('calculateEndDate', () => {
   it('works with 0 weeks', () => {
@@ -24,7 +30,7 @@ describe('calculateEndDate', () => {
   });
 });
 
-describe('calculateDuration', () => {
+describe('projectDurationBuilder', () => {
   it('works with 0 work packages', () => {
     expect(calculateDuration([])).toEqual(0);
   });
@@ -65,5 +71,49 @@ describe('calculateDuration', () => {
         { startDate: date2, duration: 2 }
       ])
     ).toEqual(6);
+  });
+});
+
+describe('calculatePercentExpectedProgress', () => {
+  it('works with INACTIVE status', () => {
+    const startDate = new Date('01/01/21');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Inactive)).toEqual(0);
+  });
+
+  it('works with COMPLETE status', () => {
+    const startDate = new Date('01/01/21');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Complete)).toEqual(100);
+  });
+
+  it('works with reasonable ACTIVE status', () => {
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    expect(calculatePercentExpectedProgress(weekAgo, 3, WbsElementStatus.Active)).toEqual(33);
+  });
+
+  it('works with overdue ACTIVE status', () => {
+    const startDate = new Date('March 20, 2020');
+    expect(calculatePercentExpectedProgress(startDate, 3, WbsElementStatus.Active)).toEqual(100);
+  });
+});
+
+describe('calculateTimelineStatus', () => {
+  it('works Ahead of schedule', () => {
+    expect(calculateTimelineStatus(75, 30)).toEqual(TimelineStatus.Ahead);
+  });
+
+  it('works OnTrack', () => {
+    expect(calculateTimelineStatus(55, 30)).toEqual(TimelineStatus.OnTrack);
+  });
+
+  it('works when progress is the same as expected progress', () => {
+    expect(calculateTimelineStatus(50, 50)).toEqual(TimelineStatus.OnTrack);
+  });
+
+  it('works Behind schedule', () => {
+    expect(calculateTimelineStatus(25, 30)).toEqual(TimelineStatus.Behind);
+  });
+
+  it('works VeryBehind schedule', () => {
+    expect(calculateTimelineStatus(0, 100)).toEqual(TimelineStatus.VeryBehind);
   });
 });

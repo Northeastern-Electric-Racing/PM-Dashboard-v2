@@ -9,7 +9,7 @@ export * from './types/user-types';
 export * from './types/work-package-types';
 export * from './types/api-utils-types';
 
-export * from './backend-supports/project-supports';
+export * from './backend-supports/project-supports'';
 
 export * from './validate-wbs';
 export * from './api-utils';

@@ -1,9 +1,15 @@
-import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+import { createContext, SyntheticEvent, useState } from 'react';
 import { WbsNumber } from 'utils';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
-import { createContext, SyntheticEvent, useState } from 'react';
+import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
+
 interface WorkPackageContainerProps {
   wbsNum: WbsNumber;
 }

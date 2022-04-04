@@ -27,13 +27,13 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
       <li key={index} className={'mb-2'}>
         <InputGroup>
           <Form.Control
+            required
             type="text"
             value={item.toString()}
             onChange={(e) => {
               update(index, e.target.value);
             }}
             placeholder={'Input new bullet here...'}
-            required
           />
           <Button type="button" variant="danger" onClick={() => remove(index)}>
             X

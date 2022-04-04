@@ -51,6 +51,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             value={`${workPackage.duration}`}
             type="number"
             suffix="weeks"
+            min={1}
           />
         </Col>
         <Col xs={6} md={4}>

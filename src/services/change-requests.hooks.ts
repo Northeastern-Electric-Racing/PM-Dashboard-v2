@@ -4,8 +4,7 @@
  */
 
 import { useMutation, useQuery } from 'react-query';
-import { ChangeRequest, ReviewChangeRequestPayload } from 'utils';
-import { NewChangeRequestPayload } from 'utils/src';
+import { ChangeRequest, ReviewChangeRequestPayload, NewChangeRequestPayload } from 'utils';
 import {
   createChangeRequest,
   getAllChangeRequests,

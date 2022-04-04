@@ -4,18 +4,18 @@
  */
 
 import { useState, useEffect } from 'react';
-import { wbsPipe } from '../../../../../shared/pipes';
 import { Form } from 'react-bootstrap';
+import { WorkPackage } from 'utils';
+import { wbsPipe } from '../../../../../shared/pipes';
+import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
+import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
 import PageTitle from '../../../../shared/page-title/page-title';
 import WorkPackageButtons from './work-package-buttons/work-package-buttons';
 import WorkPackageDetails from './work-package-details/work-package-details';
 import DependenciesList from './dependencies-list/dependencies-list';
 import ChangesList from './changes-list/changes-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
-import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
-import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
 import PageBlock from '../../../../shared/page-block/page-block';
-import { WorkPackage } from 'utils';
 
 interface WorkPackageContainerProps {
   data: WorkPackage;
@@ -80,8 +80,6 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
       setDeliverables(clone);
     }
   };
-
-  console.log(editMode);
 
   return (
     <div className="mb-5">

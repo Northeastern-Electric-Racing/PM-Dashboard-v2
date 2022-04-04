@@ -4,9 +4,10 @@
  */
 
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
+import { Form } from 'react-bootstrap';
 import { Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
-import { Form } from 'react-bootstrap';
+import { useAllUsers } from '../../../../services/users.hooks';
 import PageTitle from '../../../shared/page-title/page-title';
 import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
@@ -15,7 +16,6 @@ import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../shared/page-block/page-block';
 import ChangesList from '../../wbs-details/work-package-container/work-package-container-view/changes-list/changes-list';
-import { useAllUsers } from '../../../../services/users.hooks';
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
@@ -143,10 +143,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-
-    const { currentTarget } = event;
-    console.log(currentTarget);
-
     if (checkValidity() === false) {
       event.stopPropagation();
     }

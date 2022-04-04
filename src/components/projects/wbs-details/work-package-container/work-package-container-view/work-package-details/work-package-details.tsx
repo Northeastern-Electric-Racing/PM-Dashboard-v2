@@ -73,6 +73,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             title="Progress"
             value={percentPipe(workPackage.progress)}
             type="number"
+            min={0}
+            max={100}
           />
           <EditableDetail
             title="Expected Progress"

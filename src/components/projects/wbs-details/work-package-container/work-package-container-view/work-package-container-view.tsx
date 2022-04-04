@@ -41,10 +41,9 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
 
   // Refreshes data to original data when edit mode is canceled.
   useEffect(() => {
-      setExpectedActivities(data.expectedActivities.map((ea) => ea.detail))
-      setDeliverables(data.deliverables.map((d) => d.detail));
-  }, [editMode, data])
-    
+    setExpectedActivities(data.expectedActivities.map((ea) => ea.detail));
+    setDeliverables(data.deliverables.map((d) => d.detail));
+  }, [editMode, data]);
 
   const expectedActivitiesUtil: EditableTextInputListUtils = {
     add: (val) => {

@@ -9,7 +9,7 @@ describe('rendering a dependency', () => {
   test('renders with edit mode disabled', () => {
     render(
       <FormContext.Provider value={{ editMode: false, setField }}>
-        <Dependency wbsNumber={exampleWbsWorkPackage1} handleDelete={() => {}}/>
+        <Dependency wbsNumber={exampleWbsWorkPackage1} handleDelete={() => {}} />
       </FormContext.Provider>
     );
     expect(screen.getByText(wbsPipe(exampleWbsWorkPackage1))).toBeInTheDocument();
@@ -17,7 +17,7 @@ describe('rendering a dependency', () => {
   test('renders with edit mode enabled', () => {
     render(
       <FormContext.Provider value={{ editMode: true, setField }}>
-        <Dependency wbsNumber={exampleWbsWorkPackage1} handleDelete={()=>{}}/>
+        <Dependency wbsNumber={exampleWbsWorkPackage1} handleDelete={() => {}} />
       </FormContext.Provider>
     );
     expect(screen.getByText(wbsPipe(exampleWbsWorkPackage1))).toBeInTheDocument();

@@ -38,9 +38,9 @@ jest.mock('./review-change-request/review-change-request', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>review-change-request</div>
+      return <div>review-change-request</div>;
     }
-  }
+  };
 });
 
 /**

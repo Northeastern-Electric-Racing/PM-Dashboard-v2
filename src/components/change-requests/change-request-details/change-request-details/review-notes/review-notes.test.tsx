@@ -4,17 +4,26 @@
  */
 
 import { ChangeRequest } from 'utils';
-import { fullNamePipe } from '../../../../../shared/pipes';
-import { exampleAllChangeRequests } from '../../../../../test-support/test-data/change-requests.stub';
+import { datePipe, fullNamePipe } from '../../../../../shared/pipes';
+import {
+  exampleAllChangeRequests,
+  exampleStandardChangeRequest
+} from '../../../../../test-support/test-data/change-requests.stub';
 import { exampleAppAdminUser } from '../../../../../test-support/test-data/users.stub';
-import { render, screen } from '../../../../../test-support/test-utils';
+import { render, screen, fireEvent } from '../../../../../test-support/test-utils';
 import ReviewNotes from './review-notes';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
 const renderComponent = (cr: ChangeRequest) => {
-  return render(<ReviewNotes reviewer={cr.reviewer} reviewNotes={cr.reviewNotes} />);
+  return render(
+    <ReviewNotes
+      reviewer={cr.reviewer}
+      reviewNotes={cr.reviewNotes}
+      dateReviewed={cr.dateReviewed}
+    />
+  );
 };
 
 describe('Change request review notes test', () => {
@@ -53,5 +62,30 @@ describe('Change request review notes test', () => {
   it('renders reviewer', () => {
     renderComponent(cr[0]);
     expect(screen.getByText(fullNamePipe(exampleAppAdminUser))).toBeInTheDocument();
+  });
+
+  it('renders tooltip on hover', async () => {
+    renderComponent(cr[0]);
+    fireEvent.mouseOver(screen.getByText(fullNamePipe(exampleAppAdminUser)));
+
+    expect(await screen.findByText(/Reviewed On: /i)).toBeInTheDocument();
+  });
+
+  it('renders no date tooltip on hover', async () => {
+    renderComponent(cr[2]);
+    fireEvent.mouseOver(screen.getByText('—'));
+
+    expect(await screen.findByText('Reviewed on: —')).toBeInTheDocument();
+  });
+
+  it('renders review date tooltip on hover', async () => {
+    renderComponent(cr[0]);
+    fireEvent.mouseOver(screen.getByText(fullNamePipe(exampleAppAdminUser)));
+
+    expect(
+      await screen.findByText(
+        `Reviewed on: ${datePipe(exampleStandardChangeRequest.dateReviewed!)}`
+      )
+    ).toBeInTheDocument();
   });
 });

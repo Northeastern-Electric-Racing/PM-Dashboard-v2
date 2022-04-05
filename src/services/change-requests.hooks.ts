@@ -5,7 +5,9 @@
 
 import { useMutation, useQuery } from 'react-query';
 import { ChangeRequest, ReviewChangeRequestPayload } from 'utils';
+import { NewChangeRequestPayload } from 'utils/src';
 import {
+  createChangeRequest,
   getAllChangeRequests,
   getSingleChangeRequest,
   reviewChangeRequest
@@ -14,8 +16,12 @@ import {
 /**
  * Custom React Hook to supply all change requests.
  */
-export const useAllChangeRequests = () => {
+export const useAllChangeRequests = (onSuccess?: (value: any) => void) => {
   return useQuery<ChangeRequest[], Error>('change requests', async () => {
+    if (onSuccess) {
+      const { data } = await getAllChangeRequests(onSuccess);
+      return data;
+    }
     const { data } = await getAllChangeRequests();
     return data;
   });
@@ -45,6 +51,25 @@ export const useReviewChangeRequest = () => {
         reviewPayload.crId,
         reviewPayload.accepted,
         reviewPayload.reviewNotes
+      );
+      return data;
+    }
+  );
+};
+
+/**
+ * Custom React Hook to create a change request.
+ */
+export const useCreateChangeRequest = () => {
+  return useMutation<{ message: string }, Error, NewChangeRequestPayload>(
+    ['reviewCR'],
+    async (reviewPayload: NewChangeRequestPayload) => {
+      console.log(reviewPayload);
+      const { data } = await createChangeRequest(
+        reviewPayload.submitterId,
+        reviewPayload.wbsElementId,
+        reviewPayload.type,
+        reviewPayload.payload
       );
       return data;
     }

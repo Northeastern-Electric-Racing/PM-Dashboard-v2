@@ -4,12 +4,12 @@
  */
 
 .halfDiv {
-    width: 50%;
-    float: left;
-    padding-right: 60px;
-    min-width: 200px;
+  width: 50%;
+  float: left;
+  padding-right: 60px;
+  min-width: 200px;
 }
 
 b {
-    font-weight: bold;
+  font-weight: bold;
 }

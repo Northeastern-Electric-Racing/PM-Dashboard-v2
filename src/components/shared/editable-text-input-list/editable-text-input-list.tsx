@@ -33,6 +33,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
   const handleKeyDown = (e: any, index: number) => {
     switch (e.key) {
       case 'Enter':
+        e.preventDefault();
         if (lastInput) {
           addButtonOnClick();
         }

@@ -23,7 +23,6 @@ import ReviewNotes from './review-notes/review-notes';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../shared/routes';
-import ActionButton from '../../../shared/action-button/action-button';
 import ReviewChangeRequest from '../../review-change-request/review-change-request';
 
 const convertStatus = (cr: ChangeRequest): string => {

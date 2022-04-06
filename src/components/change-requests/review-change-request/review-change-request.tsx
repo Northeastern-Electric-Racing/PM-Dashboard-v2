@@ -3,12 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Any } from 'json-schema-to-ts/lib/meta-types';
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
 import { useReviewChangeRequest } from '../../../services/change-requests.hooks';
-import { routes } from '../../../shared/routes';
 import ErrorPage from '../../shared/error-page/error-page';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ReviewChangeRequestsView from './review-change-request/review-change-request';

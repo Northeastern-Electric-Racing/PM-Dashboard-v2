@@ -81,6 +81,9 @@ describe('Rendering Work Package Summary Test', () => {
     wp.expectedActivities.slice(0, 3).forEach((expectedActivity) => {
       expect(screen.getByText(`${expectedActivity.detail}`)).toBeInTheDocument();
     });
+    expect(
+      screen.getByText(`Show ${wp.expectedActivities.length - 3} more...`, { exact: false })
+    ).toBeInTheDocument();
     wp.deliverables.slice(0, 3).forEach((deliverable) => {
       expect(screen.getByText(`${deliverable.detail}`)).toBeInTheDocument();
     });

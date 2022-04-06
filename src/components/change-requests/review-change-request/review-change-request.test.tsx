@@ -18,8 +18,9 @@ const renderComponent = (modalShow: boolean, route: string) => {
 };
 
 describe('review change request', () => {
+  const route = `/change-requests/${exampleStandardChangeRequest.crId}`;
   it('renders change request review modal', () => {
-    renderComponent(true, `/change-requests/${exampleStandardChangeRequest.crId}`);
+    renderComponent(true, route);
 
     expect(
       screen.getByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
@@ -27,7 +28,7 @@ describe('review change request', () => {
   });
 
   it("doesn't render change request review modal when not shown", () => {
-    renderComponent(false, `/change-requests/${exampleStandardChangeRequest.crId}`);
+    renderComponent(false, route);
 
     expect(
       screen.queryByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)

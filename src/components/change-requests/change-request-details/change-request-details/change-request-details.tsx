@@ -58,9 +58,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   changeRequest
 }: ChangeRequestDetailsProps) => {
   const [modalShow, setModalShow] = useState<boolean>(false);
-
   const handleClose = () => setModalShow(false);
-
   const handleOpen = () => setModalShow(true);
 
   const reviewBtn = (

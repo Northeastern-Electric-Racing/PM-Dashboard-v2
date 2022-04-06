@@ -75,6 +75,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
         <div key={index} className={'mb-2'}>
           <InputGroup>
             <Form.Control
+              required
               autoFocus={isLastElement(index)}
               type="text"
               ref={isLastElement(index) ? focusRef : null}

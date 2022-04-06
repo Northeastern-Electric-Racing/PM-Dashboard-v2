@@ -167,7 +167,7 @@ const ChangeRequestsTable: React.FC = () => {
     <>
       <PageTitle title={'Change Requests'} actionButton={actionBtn} />
       <div className={styles.container}>
-        <Row className={'mx-5'}>
+        <Row className="mx-3">
           <div className={styles.filterTable}>
             <ChangeRequestsFilter update={sendDataToParent} />
           </div>

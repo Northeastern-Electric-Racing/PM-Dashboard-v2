@@ -4,20 +4,42 @@
  */
 
 import { Form } from 'react-bootstrap';
-import { exampleAllWorkPackages } from '../../../../../test-support/test-data/work-packages.stub';
-import { exampleAllProjects } from '../../../../../test-support/test-data/projects.stub';
 import { wbsPipe } from '../../../../../shared/pipes';
+import { Project, WorkPackage, ChangeRequestType } from 'utils';
 import './common-form-fields.module.css';
-import { ChangeRequestType } from 'utils';
 
-const CommonFormFields: React.FC = () => {
+interface CommonFormFieldsProp {
+  setType: React.Dispatch<React.SetStateAction<ChangeRequestType>>;
+  projects: Project[];
+  workPkgs: WorkPackage[];
+  handleChange: (e: any) => void;
+}
+
+const CommonFormFields: React.FC<CommonFormFieldsProp> = ({
+  projects,
+  workPkgs,
+  setType,
+  handleChange
+}) => {
+  const handleType = (event: React.ChangeEvent<any>): void => {
+    setType(event.target.value);
+    handleChange(event);
+  };
+
   return (
     <div className={'row'}>
       <div className={'px-4'}>
         Project
-        <Form.Control as="select" custom>
-          {exampleAllProjects.map((p) => (
-            <option>
+        <Form.Control
+          as="select"
+          custom
+          name="projectWBS"
+          type="number"
+          onChange={handleChange}
+          required
+        >
+          {projects.map((p) => (
+            <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
           ))}
@@ -25,9 +47,17 @@ const CommonFormFields: React.FC = () => {
       </div>
       <div className={'px-4'}>
         Work Package
-        <Form.Control as="select" custom>
-          {exampleAllWorkPackages.map((p) => (
-            <option>
+        <Form.Control
+          as="select"
+          custom
+          name="workPackageWBS"
+          type="number"
+          onChange={handleChange}
+          required
+        >
+          <option value="-1">No Work Package Selected</option>
+          {workPkgs.map((p) => (
+            <option value={p.id}>
               {wbsPipe(p.wbsNum)} - {p.name}
             </option>
           ))}
@@ -35,9 +65,16 @@ const CommonFormFields: React.FC = () => {
       </div>
       <div className={'px-4'}>
         Type
-        <Form.Control as="select" custom>
+        <Form.Control
+          as="select"
+          custom
+          onChange={handleType}
+          data-testid="type"
+          name="type"
+          required
+        >
           {Object.values(ChangeRequestType).map((t) => (
-            <option>{t}</option>
+            <option value={t}>{t}</option>
           ))}
         </Form.Control>
       </div>

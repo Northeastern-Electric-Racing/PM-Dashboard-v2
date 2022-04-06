@@ -14,7 +14,9 @@ interface EditModeOptionsProps {
 const EditModeOptions: React.FC<EditModeOptionsProps> = ({ setEditMode }) => {
   return (
     <div className={styles.editModeOptionsContainer}>
-      <Button variant="success">Save</Button>
+      <Button type="submit" variant="success">
+        Save
+      </Button>
       <Button variant="danger" onClick={() => setEditMode(false)}>
         Cancel
       </Button>

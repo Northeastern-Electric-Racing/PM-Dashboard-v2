@@ -31,6 +31,17 @@
   min-width: 200px;
 }
 
+.showMoreLink {
+  color: #ef4345;
+  text-decoration: none;
+  float: right;
+}
+
+.showMoreLink:hover {
+  color: blue;
+  text-decoration: none;
+}
+
 b {
   font-weight: bold;
 }

@@ -14,7 +14,8 @@ import {
   buildSuccessResponse,
   DescriptionBullet,
   projectEditInputSchemaBody,
-  eventSchema
+  eventSchema,
+  buildNotFoundResponse
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -24,6 +25,15 @@ export const descBulletConverter = (descBullet: Description_Bullet): Description
   id: descBullet.descriptionId ?? undefined,
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
+
+// gets the associated change request for creating a project
+const getChangeRequestReviewState = async (crId: number) => {
+  const cr = await prisma.change_Request.findUnique({ where: { crId } });
+
+  // returns null if the change request doesn't exist
+  // if it exists, return a boolean describing if the change request was reviewed
+  return cr ? cr.dateReviewed !== null : cr;
+};
 
 export const editProject: Handler = async ({ body }, _context) => {
   const {
@@ -48,6 +58,17 @@ export const editProject: Handler = async ({ body }, _context) => {
   const taskListLink = body.taskListLink === undefined ? null : body.taskListLink;
   const projectLead = body.projectLead === undefined ? null : body.projectLead;
   const projectManager = body.projectManager === undefined ? null : body.projectManager;
+
+  // Verify valid change request
+  const crReviewed = await getChangeRequestReviewState(body.crId);
+  if (crReviewed === null) {
+    return buildNotFoundResponse('change request', `CR #${body.crId}`);
+  }
+
+  // check if the change request for the project was reviewed
+  if (!crReviewed) {
+    return buildClientFailureResponse('Cannot implement an unreviewed change request');
+  }
 
   // get the original project so we can compare things
   const originalProject = await prisma.project.findUnique({

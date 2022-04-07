@@ -18,7 +18,7 @@ const renderComponent = (modalShow: boolean, route: string) => {
 };
 
 describe('review change request', () => {
-  const route = `/change-requests/${exampleStandardChangeRequest.crId}`;
+  const route = `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`;
   it('renders change request review modal', () => {
     renderComponent(true, route);
 

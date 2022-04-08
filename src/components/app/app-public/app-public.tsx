@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
 import Login from '../../whole-app/login/login';
@@ -12,9 +12,12 @@ import './app-public.module.css';
 
 const AppPublic: React.FC = () => {
   const auth = useAuth();
+  const history = useHistory();
   return (
     <Switch>
-      <Route path={routes.LOGIN} component={Login} />
+      <Route path={routes.LOGIN}>
+        <Login postLoginRedirect={history.location.pathname} />
+      </Route>
       <Route
         path="*"
         render={({ location }) =>

@@ -16,6 +16,7 @@ interface EditableDetailProps {
   suffix?: string;
   min?: number;
   max?: number;
+  options?: string[];
 }
 
 const EditableDetail: React.FC<EditableDetailProps> = ({
@@ -26,10 +27,11 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   suffix,
   fieldName,
   min,
-  max
+  max,
+  options
 }) => {
   const { editMode, setField } = useContext(FormContext);
-  const detailInput = (
+  let detailInput = (
     <InputGroup aria-required>
       <Form.Control
         required={true}
@@ -39,10 +41,22 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
         onChange={(e) => setField(fieldName!, e.target.value)}
         min={min}
         max={max}
+        readOnly={!!readOnly}
       />
       {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : ''}
     </InputGroup>
   );
+
+  if (type === "select") {
+    detailInput = (
+      <InputGroup aria-required>
+        <Form.Control as="select">
+          <option>{value}</option>
+          {options?.map((option) => <option>{option}</option>)}
+        </Form.Control>
+      </InputGroup>
+    )
+  }
 
   if (suffix && suffix !== '%') {
     suffix = ' ' + suffix;
@@ -51,7 +65,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   return (
     <Form.Group aria-required>
       <b>{`${title}: `}</b>
-      {editMode && !readOnly ? detailInput : `${value}${suffix ? `${suffix}` : ''}`}
+      {editMode ? detailInput : `${value}${suffix ? `${suffix}` : ''}`}
       <br />
     </Form.Group>
   );

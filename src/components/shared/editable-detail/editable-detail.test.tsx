@@ -39,8 +39,7 @@ describe('Rendering Editable Detail Component', () => {
   });
   it('renders the content with edit mode enabled and readOnly mode enabled', () => {
     renderComponent(true, true);
-    expect(screen.getByText('testTitle:')).toBeInTheDocument();
-    expect(screen.getByText('testValue testSuffix')).toBeInTheDocument();
-    expect(screen.queryByPlaceholderText('testValue')).not.toBeInTheDocument();
+    expect(screen.getByText('testTitle:')).toBeInTheDocument()
+    expect(screen.queryByPlaceholderText('testValue')).toBeInTheDocument()
   });
 });

@@ -7,9 +7,13 @@ import { useContext } from 'react';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import { WorkPackage, WbsElementStatus } from 'utils';
 import { FormContext } from '../../work-package-container';
-import { wbsPipe, endDatePipe, fullNamePipe, percentPipe } from '../../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, percentPipe, fullNamePipe } from '../../../../../../shared/pipes';
 import PageBlock from '../../../../../shared/page-block/page-block';
 import EditableDetail from '../../../../../shared/editable-detail/editable-detail';
+import { useAllUsers } from '../../../../../../services/users.hooks';
+import LoadingIndicator from '../../../../../shared/loading-indicator/loading-indicator';
+import ErrorPage from '../../../../../shared/error-page/error-page';
+import { User } from 'utils';
 import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
@@ -18,11 +22,28 @@ interface WorkPackageDetailsProps {
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const { editMode, setField } = useContext(FormContext);
+  const { isLoading, isError, data, error } = useAllUsers();
 
   const formatDate = (date: Date) => {
     const offset = date.getTimezoneOffset();
     date = new Date(date.getTime() - offset * 60 * 1000);
     return date.toISOString().split('T')[0];
+  };
+
+  const endDateAsDatePipe = () => {
+    const endDate = new Date(workPackage.startDate);
+    endDate.setDate(endDate.getDate() + workPackage.duration * 7);
+    return endDate;
+  };
+
+  const usersWithoutAsStrings = (user: User) => {
+    if (data) {
+      const users = data;
+      const otherUsers = users.filter((otherUser) => {
+        return otherUser.userId !== user.userId;
+      });
+      return otherUsers.map((otherUser) => fullNamePipe(otherUser));
+    }
   };
 
   const detailsBody = (
@@ -39,12 +60,14 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <EditableDetail
             title="Project Lead"
             value={fullNamePipe(workPackage.projectLead)}
-            type="text"
+            type="select"
+            options={usersWithoutAsStrings(workPackage.projectLead!)}
           />
           <EditableDetail
             title="Project Manager"
             value={fullNamePipe(workPackage.projectManager)}
-            type="text"
+            type="select"
+            options={usersWithoutAsStrings(workPackage.projectManager!)}
           />
           <EditableDetail
             title="Duration"
@@ -66,7 +89,11 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           />
           <EditableDetail
             title="End Date"
-            value={endDatePipe(workPackage.startDate, workPackage.duration)}
+            value={
+              editMode
+                ? formatDate(endDateAsDatePipe())
+                : endDatePipe(workPackage.startDate, workPackage.duration)
+            }
             type="date"
             readOnly={true}
           />
@@ -97,6 +124,10 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   const statuses = Object.values(WbsElementStatus);
   const index = statuses.indexOf(workPackage.status);
   statuses.splice(index, 1);
+
+  if (isLoading) return <LoadingIndicator />;
+
+  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <PageBlock

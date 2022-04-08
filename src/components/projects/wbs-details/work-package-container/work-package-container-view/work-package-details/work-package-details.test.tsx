@@ -12,9 +12,29 @@ import {
   exampleWorkPackage3
 } from '../../../../../../test-support/test-data/work-packages.stub';
 import WorkPackageDetails from './work-package-details';
+import { useAllUsers } from '../../../../../../services/users.hooks';
+import { User } from 'utils';
+import { mockUseQueryResult } from '../../../../../../test-support/test-data/test-utils.stub';
+import { UseQueryResult } from 'react-query';
+import {
+  exampleAdminUser,
+  exampleAppAdminUser,
+  exampleLeadershipUser
+} from '../../../../../../test-support/test-data/users.stub';
+
+jest.mock('../../../../../../services/users.hooks');
+
+const mockedUseAllUsers = useAllUsers as jest.Mock<UseQueryResult<User[]>>;
+
+const mockHook = (isLoading: boolean, isError: boolean, data?: User[], error?: Error) => {
+  mockedUseAllUsers.mockReturnValue(mockUseQueryResult<User[]>(isLoading, isError, data, error));
+};
+
+const users = [exampleAdminUser, exampleAppAdminUser, exampleLeadershipUser];
 
 describe('Rendering Work Package Details Component', () => {
   it('renders all the fields, example 1', () => {
+    mockHook(false, false, users);
     const wp: WorkPackage = exampleWorkPackage1;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
@@ -42,6 +62,7 @@ describe('Rendering Work Package Details Component', () => {
   });
 
   it('renders all the fields, example 2', () => {
+    mockHook(false, false, users);
     const wp: WorkPackage = exampleWorkPackage2;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();
@@ -67,6 +88,7 @@ describe('Rendering Work Package Details Component', () => {
   });
 
   it('renders all the fields, example 3', () => {
+    mockHook(false, false, users);
     const wp: WorkPackage = exampleWorkPackage3;
     render(<WorkPackageDetails workPackage={wp} />);
     expect(screen.getByText(`Work Package Details`)).toBeInTheDocument();

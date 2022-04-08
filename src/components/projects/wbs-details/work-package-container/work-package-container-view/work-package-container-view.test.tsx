@@ -30,9 +30,9 @@ describe('work package container view', () => {
     renderComponent(false);
 
     expect(screen.getByText('1.1.2 - Adhesive Shear Strength Test')).toBeInTheDocument();
-    expect(screen.getByText('Work Package Details')).toBeInTheDocument();
-    expect(screen.getByText('Duration:')).toBeInTheDocument();
-    expect(screen.getByText('Progress:')).toBeInTheDocument();
+    expect(screen.getByText('Dependencies')).toBeInTheDocument();
+    expect(screen.getByText('Expected Activities')).toBeInTheDocument();
+    expect(screen.getByText('Delieverables')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeEnabled();
     expect(screen.queryByText('Save')).not.toBeInTheDocument();
   });
@@ -41,9 +41,9 @@ describe('work package container view', () => {
     renderComponent(true);
 
     expect(screen.getByText('1.1.2 - Adhesive Shear Strength Test')).toBeInTheDocument();
-    expect(screen.getByText('Work Package Details')).toBeInTheDocument();
-    expect(screen.getByText('Duration:')).toBeInTheDocument();
-    expect(screen.getByText('Progress:')).toBeInTheDocument();
+    expect(screen.getByText('Dependencies')).toBeInTheDocument();
+    expect(screen.getByText('Expected Activities')).toBeInTheDocument();
+    expect(screen.getByText('Delieverables')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeDisabled();
     expect(screen.getByText('Save')).toBeInTheDocument();
   });

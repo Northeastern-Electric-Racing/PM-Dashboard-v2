@@ -30,6 +30,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     return date.toISOString().split('T')[0];
   };
 
+  const percentages = ["25%", "50%", "75%", "100%"]
+
   const endDateAsDatePipe = () => {
     const endDate = new Date(workPackage.startDate);
     endDate.setDate(endDate.getDate() + workPackage.duration * 7);
@@ -100,9 +102,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <EditableDetail
             title="Progress"
             value={percentPipe(workPackage.progress)}
-            type="number"
-            min={0}
-            max={100}
+            type="select"
+            options={percentages}
           />
           <EditableDetail
             title="Expected Progress"

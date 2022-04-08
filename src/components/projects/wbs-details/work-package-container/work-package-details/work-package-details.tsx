@@ -4,7 +4,7 @@
  */
 
 import { WorkPackage } from 'utils';
-import { wbsPipe, endDatePipe, fullNamePipe, percentPipe } from '../../../../../shared/pipes';
+import { wbsPipe, datePipe, endDatePipe, fullNamePipe, percentPipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import './work-package-details.module.css';
@@ -50,7 +50,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
           <Col xs={6} md={4}>
             <EditableDetail
               title="Start Date"
-              value={workPackage.startDate.toLocaleDateString()}
+              value={datePipe(workPackage.startDate)}
               type="date"
             />
             <EditableDetail

@@ -10,6 +10,7 @@ import {
   StageGateChangeRequest,
   StandardChangeRequest
 } from 'utils';
+import { datePipe } from '../../../../shared/pipes';
 import {
   exampleActivationChangeRequest,
   exampleAllChangeRequests,
@@ -48,7 +49,7 @@ describe('Change request details common display element tests', () => {
       expect(
         screen.getByText(`${cr.submitter.firstName} ${cr.submitter.lastName}`)
       ).toBeInTheDocument();
-      expect(screen.getByText(`${cr.dateSubmitted.toUTCString()}`)).toBeInTheDocument();
+      expect(screen.getByText(`${datePipe(cr.dateSubmitted)}`)).toBeInTheDocument();
     }
   );
 

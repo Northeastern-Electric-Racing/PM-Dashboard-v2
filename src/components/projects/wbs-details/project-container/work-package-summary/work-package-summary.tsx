@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
+import { weeksPipe, wbsPipe, endDatePipe, listPipe, datePipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -56,7 +56,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
                   <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
                 </Col>
                 <Col xs={6} md={4}>
-                  <b>Start date:</b> {workPackage.startDate.toLocaleDateString()} <br />
+                  <b>Start date:</b> {datePipe(workPackage.startDate)} <br />
                   <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
                 </Col>
               </Row>

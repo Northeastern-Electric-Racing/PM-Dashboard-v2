@@ -4,10 +4,11 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 import BulletList from './bullet-list';
 
 describe('Bullet List Component', () => {
+  const setField = (field: string, value: any) => {};
   it('renders the component title', () => {
     render(<BulletList title={'test'} headerRight={<></>} list={[<></>]} />);
 
@@ -30,9 +31,9 @@ describe('Bullet List Component', () => {
 
   it('renders all bullets, in edit mode', () => {
     render(
-      <EditModeContext.Provider value={true}>
+      <FormContext.Provider value={{ editMode: true, setField }}>
         <BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} />
-      </EditModeContext.Provider>
+      </FormContext.Provider>
     );
     expect(screen.getByPlaceholderText('one')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('two')).toBeInTheDocument();
@@ -41,14 +42,14 @@ describe('Bullet List Component', () => {
 
   it('renders all bullets, in edit mode and readOnly mode', () => {
     render(
-      <EditModeContext.Provider value={true}>
+      <FormContext.Provider value={{ editMode: true, setField }}>
         <BulletList
           title={'test'}
           headerRight={<></>}
           list={[<>one</>, <>two</>]}
           readOnly={true}
         />
-      </EditModeContext.Provider>
+      </FormContext.Provider>
     );
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();

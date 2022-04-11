@@ -4,9 +4,10 @@
  */
 
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
+import { Form } from 'react-bootstrap';
 import { Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
-import { Form } from 'react-bootstrap';
+import { useAllUsers } from '../../../../services/users.hooks';
 import PageTitle from '../../../shared/page-title/page-title';
 import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
@@ -14,8 +15,7 @@ import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../shared/page-block/page-block';
-import ChangesList from '../../wbs-details/work-package-container/changes-list/changes-list';
-import { useAllUsers } from '../../../../services/users.hooks';
+import ChangesList from '../../wbs-details/work-package-container/work-package-container-view/changes-list/changes-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
@@ -171,56 +171,48 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           title={'Goals'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={goals}
-                add={goalsUtil.add}
-                remove={goalsUtil.remove}
-                update={goalsUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={goals}
+              add={goalsUtil.add}
+              remove={goalsUtil.remove}
+              update={goalsUtil.update}
+            />
           }
         />
         <PageBlock
           title={'Features'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={features}
-                add={featUtil.add}
-                remove={featUtil.remove}
-                update={featUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={features}
+              add={featUtil.add}
+              remove={featUtil.remove}
+              update={featUtil.update}
+            />
           }
         />
         <PageBlock
           title={'Other Constraints'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={otherConstraints}
-                add={ocUtil.add}
-                remove={ocUtil.remove}
-                update={ocUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={otherConstraints}
+              add={ocUtil.add}
+              remove={ocUtil.remove}
+              update={ocUtil.update}
+            />
           }
         />
         <PageBlock
           title={'Rules'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={rules}
-                add={rulesUtil.add}
-                remove={rulesUtil.remove}
-                update={rulesUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={rules}
+              add={rulesUtil.add}
+              remove={rulesUtil.remove}
+              update={rulesUtil.update}
+            />
           }
         />
         <ChangesList changes={proj!.changes} />

@@ -4,15 +4,19 @@
  */
 
 import { useContext } from 'react';
-import { EditModeContext } from '../../projects/wbs-details/work-package-container/work-package-container';
-import { Form, FormControl, InputGroup } from 'react-bootstrap';
+import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { Form, InputGroup } from 'react-bootstrap';
 
 interface EditableDetailProps {
   title: string;
   type: string;
-  value: any;
+  value: string;
+  fieldName?: string;
   readOnly?: Boolean;
   suffix?: string;
+  min?: number;
+  max?: number;
+  options?: string[];
 }
 
 const EditableDetail: React.FC<EditableDetailProps> = ({
@@ -20,24 +24,48 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   type,
   value,
   readOnly,
-  suffix
+  suffix,
+  fieldName,
+  min,
+  max,
+  options
 }) => {
-  const editMode = useContext(EditModeContext);
-  const detailInput = (
-    <InputGroup>
-      <FormControl type={type} defaultValue={value} placeholder={value} />
+  const { editMode, setField } = useContext(FormContext);
+  let detailInput = (
+    <InputGroup aria-required>
+      <Form.Control
+        required={true}
+        type={type}
+        defaultValue={value}
+        placeholder={value}
+        onChange={(e) => setField(fieldName!, e.target.value)}
+        min={min}
+        max={max}
+        readOnly={!!readOnly}
+      />
       {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : ''}
     </InputGroup>
   );
+
+  if (type === "select") {
+    detailInput = (
+      <InputGroup aria-required>
+        <Form.Control as="select">
+          <option>{value}</option>
+          {options?.map((option) => <option>{option}</option>)}
+        </Form.Control>
+      </InputGroup>
+    )
+  }
 
   if (suffix && suffix !== '%') {
     suffix = ' ' + suffix;
   }
 
   return (
-    <Form.Group>
+    <Form.Group aria-required>
       <b>{`${title}: `}</b>
-      {editMode && !readOnly ? detailInput : `${value}${suffix ? `${suffix}` : ''}`}
+      {editMode ? detailInput : `${value}${suffix ? `${suffix}` : ''}`}
       <br />
     </Form.Group>
   );

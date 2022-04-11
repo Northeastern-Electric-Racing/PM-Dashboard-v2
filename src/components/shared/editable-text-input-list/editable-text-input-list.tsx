@@ -9,6 +9,8 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 
 interface EditableTextInputListProps {
   items: any[];
+  readOnly?: boolean;
+  ordered?: boolean;
   add: (val: any) => any;
   remove: (idx: number) => any;
   update: (idx: number, val: any) => any;
@@ -16,6 +18,8 @@ interface EditableTextInputListProps {
 
 const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
   items,
+  readOnly,
+  ordered,
   add,
   remove,
   update
@@ -70,36 +74,52 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
     return index === items.length - 1;
   };
 
-  return (
-    <>
-      {items.map((item, index: number) => (
-        <div key={index} className={'mb-2'}>
-          <InputGroup>
-            <Form.Control
-              required
-              autoFocus={isLastElement(index)}
-              type="text"
-              ref={isLastElement(index) ? focusRef : null}
-              value={item.toString()}
-              onKeyDown={(e: any) => handleKeyDown(e, index)}
-              onChange={(e) => {
-                update(index, e.target.value);
-                if (isLastElement(index)) {
-                  setLastInput(e.target.value);
-                }
-              }}
-            />
-            <Button type="button" variant="danger" onClick={() => removeButtonOnClick(index)}>
-              X
-            </Button>
-          </InputGroup>
-        </div>
-      ))}
-      <Button type="button" variant="success" onClick={addButtonOnClick}>
-        + Add New Bullet
-      </Button>
-    </>
+  let listPrepared = items.map((item, index: number) =>
+    !readOnly ? (
+      <li key={index} className={'mb-2'}>
+        <InputGroup>
+          <Form.Control
+            required
+            autoFocus={isLastElement(index)}
+            type="text"
+            ref={isLastElement(index) ? focusRef : null}
+            value={item.toString()}
+            placeholder={'Input new bullet here...'}
+            onKeyDown={(e: any) => handleKeyDown(e, index)}
+            onChange={(e) => {
+              update(index, e.target.value);
+              if (isLastElement(index)) {
+                setLastInput(e.target.value);
+              }
+            }}
+          />
+          <Button type="button" variant="danger" onClick={() => removeButtonOnClick(index)}>
+            X
+          </Button>
+        </InputGroup>
+      </li>
+    ) : (
+      <li key={index}>{item}</li>
+    )
   );
+
+  const addButton = (
+    <Button type="button" variant="success" onClick={addButtonOnClick}>
+      + Add New Bullet
+    </Button>
+  );
+
+  const style = readOnly ? {} : { listStyleType: 'none', padding: 0 };
+
+  if (!readOnly) {
+    listPrepared = [...listPrepared, addButton];
+  }
+  let builtList = <ul style={style}>{listPrepared}</ul>;
+  if (ordered) {
+    builtList = <ol style={style}>{listPrepared}</ol>;
+  }
+
+  return <Form.Group>{builtList}</Form.Group>;
 };
 
 export default EditableTextInputList;

@@ -5,8 +5,8 @@
 
 import { Link } from 'react-router-dom';
 import { ImplementedChange } from 'utils';
-import { routes } from '../../../../../shared/routes';
-import BulletList from '../../../../shared/bullet-list/bullet-list';
+import { routes } from '../../../../../../shared/routes';
+import BulletList from '../../../../../shared/bullet-list/bullet-list';
 import './changes-list.module.css';
 
 interface ChangesListProps {

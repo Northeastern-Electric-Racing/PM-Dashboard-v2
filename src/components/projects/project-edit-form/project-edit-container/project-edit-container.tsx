@@ -143,6 +143,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
+
     if (checkValidity() === false) {
       event.stopPropagation();
     }

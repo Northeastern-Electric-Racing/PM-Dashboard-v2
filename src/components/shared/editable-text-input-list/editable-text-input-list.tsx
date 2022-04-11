@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import React from 'react';
+import { useState, useRef } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
 interface EditableTextInputListProps {
@@ -22,33 +24,90 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
   remove,
   update
 }) => {
-  let listPrepared = items.map((item, index: number) =>
+  const [lastInput, setLastInput] = useState(
+    items.length > 0 ? items[items.length - 1].toString() : ''
+  );
+  const focusRef = useRef<HTMLInputElement>(null);
+
+  /**
+   * Handles key presses in the form control.
+   * @param e the event of the key press
+   * @param index the index of the input being pressed within the items list
+   */
+  const handleKeyDown = (e: any, index: number) => {
+    switch (e.key) {
+      case 'Enter':
+        e.preventDefault();
+        if (lastInput) {
+          addButtonOnClick();
+        }
+        focusRef.current?.focus();
+        break;
+    }
+  };
+
+  /**
+   * On click function for the add button.
+   */
+  const addButtonOnClick = () => {
+    add('');
+    setLastInput('');
+  };
+
+  /**
+   * On click function for the remove button
+   * @param index the index of the input being removed
+   */
+  const removeButtonOnClick = (index: number) => {
+    remove(index);
+    if (isLastElement(index)) {
+      setLastInput(items.length >= 2 ? items[index - 1] : '');
+    }
+  };
+
+  /**
+   * Checks if the given index is the last element of items.
+   * @param index the given index
+   * @returns true if the index is the last element of items
+   */
+  const isLastElement = (index: number) => {
+    return index === items.length - 1;
+  };
+
+  let listPrepared = items.map((item, index: number) => 
     !readOnly ? (
-      <li key={index} className={'mb-2'}>
-        <InputGroup>
-          <Form.Control
-            required
-            type="text"
-            value={item.toString()}
-            onChange={(e) => {
-              update(index, e.target.value);
-            }}
-            placeholder={'Input new bullet here...'}
-          />
-          <Button type="button" variant="danger" onClick={() => remove(index)}>
-            X
-          </Button>
-        </InputGroup>
-      </li>
-    ) : (
+        <li key={index} className={'mb-2'}>
+          <InputGroup>
+            <Form.Control
+              required
+              autoFocus={isLastElement(index)}
+              type="text"
+              ref={isLastElement(index) ? focusRef : null}
+              value={item.toString()}
+              placeholder={'Input new bullet here...'}
+              onKeyDown={(e: any) => handleKeyDown(e, index)}
+              onChange={(e) => {
+                update(index, e.target.value);
+                if (isLastElement(index)) {
+                  setLastInput(e.target.value);
+                }
+              }}
+            />
+            <Button type="button" variant="danger" onClick={() => removeButtonOnClick(index)}>
+              X
+            </Button>
+          </InputGroup>
+        </li>
+      )
+    : (
       <li key={index}>{item}</li>
     )
   );
 
   const addButton = (
-    <Button type="button" variant="success" onClick={() => add('')}>
-      + Add New Bullet
-    </Button>
+    <Button type="button" variant="success" onClick={addButtonOnClick}>
+        + Add New Bullet
+      </Button>
   );
 
   const style = readOnly ? {} : { listStyleType: 'none', padding: 0 };

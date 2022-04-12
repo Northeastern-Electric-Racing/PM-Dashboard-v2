@@ -23,6 +23,7 @@ const projectsCreate = () => `${projects()}-new`;
 const workPackages = () => `${API_URL}/work-packages`;
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 const workPackagesCreate = () => `${workPackages()}-create`;
+const workPackagesEdit = () => `${workPackages()}-edit`;
 
 /**************** Change Requests Endpoint ****************/
 const changeRequests = () => `${API_URL}/change-requests`;
@@ -42,6 +43,7 @@ export const apiUrls = {
   workPackages,
   workPackagesByWbsNum,
   workPackagesCreate,
+  workPackagesEdit,
 
   changeRequests,
   changeRequestsById,

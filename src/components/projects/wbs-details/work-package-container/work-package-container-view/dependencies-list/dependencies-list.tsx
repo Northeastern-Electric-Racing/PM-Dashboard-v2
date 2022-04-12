@@ -16,13 +16,18 @@ interface DependenciesListProps {
 }
 
 const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
-  const { editMode } = useContext(FormContext);
+  const { editMode, setField } = useContext(FormContext);
   const [dependenciesState, setDependenciesState] = useState(dependencies);
   const [unvalidatedDependency, setUnvalidatedDependency] = useState('');
 
   useEffect(() => {
     setDependenciesState(dependencies);
   }, [editMode, dependencies]);
+
+  // set field for dependencies
+  useEffect(() => {
+    setField('dependencies', dependencies);
+  }, [dependencies, setField]);
 
   const handleDelete = (dependencyToDelete: WbsNumber) => {
     const index = dependenciesState.indexOf(dependencyToDelete);

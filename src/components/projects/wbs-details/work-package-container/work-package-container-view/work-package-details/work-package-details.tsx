@@ -30,7 +30,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     return date.toISOString().split('T')[0];
   };
 
-  const percentages = ["25%", "50%", "75%", "100%"]
+  const percentages = ['25%', '50%', '75%', '100%'];
 
   const endDateAsDatePipe = () => {
     const endDate = new Date(workPackage.startDate);
@@ -58,18 +58,21 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             value={wbsPipe(workPackage.wbsNum)}
             type="text"
             readOnly={true}
+            fieldName="wbsNumber"
           />
           <EditableDetail
             title="Project Lead"
             value={fullNamePipe(workPackage.projectLead)}
             type="select"
             options={usersWithoutAsStrings(workPackage.projectLead!)}
+            fieldName="projectLead"
           />
           <EditableDetail
             title="Project Manager"
             value={fullNamePipe(workPackage.projectManager)}
             type="select"
             options={usersWithoutAsStrings(workPackage.projectManager!)}
+            fieldName="projectManager"
           />
           <EditableDetail
             title="Duration"
@@ -77,6 +80,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             type="number"
             suffix="weeks"
             min={1}
+            fieldName="duration"
           />
         </Col>
         <Col xs={6} md={4}>
@@ -88,6 +92,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
                 : workPackage.startDate.toLocaleDateString()
             }
             type="date"
+            fieldName="startDate"
           />
           <EditableDetail
             title="End Date"
@@ -98,18 +103,21 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             }
             type="date"
             readOnly={true}
+            fieldName="endDate"
           />
           <EditableDetail
             title="Progress"
             value={percentPipe(workPackage.progress)}
             type="select"
             options={percentages}
+            fieldName="progress"
           />
           <EditableDetail
             title="Expected Progress"
             value={percentPipe(workPackage.expectedProgress)}
             type="number"
             readOnly={true}
+            fieldName=""
           />
           <EditableDetail
             title="Timeline Status"

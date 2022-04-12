@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
@@ -16,6 +16,7 @@ import DependenciesList from './dependencies-list/dependencies-list';
 import ChangesList from './changes-list/changes-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import PageBlock from '../../../../shared/page-block/page-block';
+import { FormContext } from '../work-package-container';
 
 interface WorkPackageContainerProps {
   data: WorkPackage;
@@ -38,12 +39,23 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
     data.expectedActivities.map((ea) => ea.detail)
   );
   const [deliverables, setDeliverables] = useState(data.deliverables.map((d) => d.detail));
+  const { setField } = useContext(FormContext);
 
   // Refreshes data to original data when edit mode is canceled.
   useEffect(() => {
     setExpectedActivities(data.expectedActivities.map((ea) => ea.detail));
     setDeliverables(data.deliverables.map((d) => d.detail));
   }, [editMode, data]);
+
+  // set field for expected activities
+  useEffect(() => {
+    setField('expectedActivities', expectedActivities);
+  }, [expectedActivities, setField]);
+
+  // set field for deliverables
+  useEffect(() => {
+    setField('deliverables', deliverables);
+  }, [deliverables, setField]);
 
   const expectedActivitiesUtil: EditableTextInputListUtils = {
     add: (val) => {

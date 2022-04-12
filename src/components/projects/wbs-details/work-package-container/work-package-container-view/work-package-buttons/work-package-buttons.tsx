@@ -37,7 +37,7 @@ const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
           className="w-25"
           type="number"
           placeholder="Change Request ID #"
-          onChange={(e) => setField('changeRequestID', e.target.value)}
+          onChange={(e) => setField('crId', e.target.value)}
           min={0}
         />
       ) : (

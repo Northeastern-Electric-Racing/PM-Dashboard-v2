@@ -26,7 +26,9 @@ import {
   isProject,
   Project,
   WbsElementStatus,
-  DescriptionBullet
+  DescriptionBullet,
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -43,7 +45,14 @@ const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
     goals: true,
     features: true,
     otherConstraints: true,
-    workPackages: { include: { wbsElement: true, dependencies: true } }
+    workPackages: {
+      include: {
+        wbsElement: { include: { changes: { include: { implementer: true } } } },
+        dependencies: true,
+        expectedActivities: true,
+        deliverables: true
+      }
+    }
   }
 });
 
@@ -54,7 +63,14 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
         goals: true,
         features: true,
         otherConstraints: true,
-        workPackages: { include: { wbsElement: true, dependencies: true } }
+        workPackages: {
+          include: {
+            wbsElement: { include: { changes: { include: { implementer: true } } } },
+            dependencies: true,
+            expectedActivities: true,
+            deliverables: true
+          }
+        }
       }
     },
     projectLead: true,
@@ -76,7 +92,7 @@ const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   workPackage: element.workPackageNumber
 });
 
-const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
+export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
   ...descBullet,
   id: descBullet.descriptionId,
   dateDeleted: descBullet.dateDeleted ?? undefined
@@ -115,14 +131,28 @@ const projectTransformer = (
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = new Date(workPackage.startDate);
       endDate.setDate(workPackage.duration * 7);
+      const expectedProgress = calculatePercentExpectedProgress(
+        workPackage.startDate,
+        workPackage.duration,
+        wbsElement.status
+      );
 
       return {
         ...workPackage,
         ...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
+        status: convertStatus(workPackage.wbsElement.status),
         endDate,
-        dependencies: workPackage.dependencies.map(wbsNumOf)
+        expectedProgress,
+        timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress),
+        dependencies: workPackage.dependencies.map(wbsNumOf),
+        expectedActivities: workPackage.expectedActivities.map(descBulletConverter),
+        deliverables: workPackage.deliverables.map(descBulletConverter),
+        changes: workPackage.wbsElement.changes.map((change) => ({
+          ...change,
+          wbsNum: wbsNumOf(workPackage.wbsElement)
+        }))
       };
     })
   };

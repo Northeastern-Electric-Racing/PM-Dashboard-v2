@@ -60,7 +60,7 @@ export const emDashPipe = (str: string): string => {
 };
 
 /**
- * Return a given data as a string in the local en-US format,
+ * Return a given date as a string in the local en-US format,
  * with single digit numbers starting with a zero.
  */
 export const datePipe = (date: Date): string => {
@@ -69,4 +69,9 @@ export const datePipe = (date: Date): string => {
     month: '2-digit',
     year: 'numeric'
   });
+};
+
+// returns a given number as a string with a percent sign
+export const percentPipe = (percent: number): string => {
+  return `${percent}%`;
 };

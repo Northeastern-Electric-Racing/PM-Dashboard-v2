@@ -21,7 +21,6 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: WorkPackage, erro
   );
 };
 
-// Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
@@ -45,10 +44,11 @@ describe('work package container', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.12.0 - Bodywork Concept of Design')).toBeInTheDocument();
-    expect(screen.getByText('Work Package Details')).toBeInTheDocument();
-    expect(screen.getByText('Duration:')).toBeInTheDocument();
-    expect(screen.getByText('Progress:')).toBeInTheDocument();
+    expect(screen.getByText('1.1.1 - Bodywork Concept of Design')).toBeInTheDocument();
+    expect(screen.getByText('Dependencies')).toBeInTheDocument();
+    expect(screen.getByText('Expected Activities')).toBeInTheDocument();
+    expect(screen.getByText('Delieverables')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeEnabled();
   });
 
   it('handles the error with message', () => {

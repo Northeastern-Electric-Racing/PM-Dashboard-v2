@@ -26,12 +26,19 @@
   transform: translateY(-50%);
 }
 
-.applyButton {
-  float: right;
+.applyButton,
+.clearButton {
   background-color: #ef4345 !important;
   border-color: #ef4345 !important;
 }
 
-.applyButton:focus {
+.applyButton:focus,
+.resetButton:focus {
   box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5) !important;
+}
+
+.filterActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

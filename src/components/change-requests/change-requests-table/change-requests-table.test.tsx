@@ -101,7 +101,7 @@ describe('change requests table container', () => {
     const answer1: ChangeRequest[] = [exampleStandardChangeRequest];
     const answer2: ChangeRequest[] = [exampleActivationChangeRequest];
     expect(
-      filterCRs(exampleAllChangeRequests, ChangeRequestType.DesignIssue, [], '', [], '')
+      filterCRs(exampleAllChangeRequests, ChangeRequestType.Issue, [], '', [], '')
     ).toStrictEqual(answer1);
     expect(
       filterCRs(exampleAllChangeRequests, ChangeRequestType.Activation, [], '', [], '')
@@ -152,7 +152,7 @@ describe('change requests table container', () => {
     expect(
       filterCRs(
         exampleAllChangeRequests,
-        ChangeRequestType.DesignIssue,
+        ChangeRequestType.Issue,
         [0],
         ChangeRequestReason.School,
         [1],

@@ -5,6 +5,9 @@
 
 import { User } from './user-types';
 import { ImplementedChange } from './change-request-types';
+import { TimelineStatus } from './work-package-types';
+import { FromSchema } from 'json-schema-to-ts';
+import { arrayType, bodySchema, enumType, intType, stringType } from './api-utils-types';
 
 export interface WbsNumber {
   car: number;
@@ -41,17 +44,7 @@ export interface Project extends WbsElement {
   goals: DescriptionBullet[];
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
-  workPackages: WorkPackageSummary[];
-}
-
-export interface WorkPackageSummary {
-  id: number;
-  wbsNum: WbsNumber;
-  name: string;
-  startDate: Date;
-  endDate: Date;
-  duration: number;
-  dependencies: WbsNumber[];
+  workPackages: WorkPackage[];
 }
 
 export interface WorkPackage extends WbsElement {
@@ -60,6 +53,8 @@ export interface WorkPackage extends WbsElement {
   startDate: Date;
   endDate: Date;
   duration: number;
+  expectedProgress: number;
+  timelineStatus: TimelineStatus;
   dependencies: WbsNumber[];
   expectedActivities: DescriptionBullet[];
   deliverables: DescriptionBullet[];
@@ -71,3 +66,49 @@ export interface DescriptionBullet {
   dateAdded: Date;
   dateDeleted?: Date;
 }
+
+export const createProjectPayloadSchema = bodySchema({
+  userId: intType,
+  crId: intType,
+  name: stringType,
+  carNumber: intType,
+  summary: stringType
+});
+
+export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>;
+
+export const projectEditInputSchemaBody = bodySchema(
+  {
+    wbsElementId: intType,
+    crId: intType,
+    name: stringType,
+    userId: intType,
+    budget: intType,
+    summary: stringType,
+    rules: arrayType(stringType),
+    goals: arrayType(bodySchema({ id: intType, detail: stringType }, ['id'])),
+    features: arrayType(bodySchema({ id: intType, detail: stringType }, ['id'])),
+    otherConstraints: arrayType(bodySchema({ id: intType, detail: stringType }, ['id'])),
+    wbsElementStatus: enumType(
+      WbsElementStatus.Active,
+      WbsElementStatus.Inactive,
+      WbsElementStatus.Complete
+    ),
+    googleDriveFolderLink: stringType,
+    slideDeckLink: stringType,
+    bomLink: stringType,
+    taskListLink: stringType,
+    projectLead: intType,
+    projectManager: intType
+  },
+  [
+    'googleDriveFolderLink',
+    'slideDeckLink',
+    'bomLink',
+    'taskListLink',
+    'projectLead',
+    'projectManager'
+  ]
+);
+
+export type EditProjectPayload = FromSchema<typeof projectEditInputSchemaBody>;

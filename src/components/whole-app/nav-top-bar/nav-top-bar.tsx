@@ -20,7 +20,7 @@ const NavTopBar: React.FC = () => {
         <Link className="d-flex" to={routes.HOME} style={{ textDecoration: 'none' }}>
           <img
             className={`d-inline-block align-top ${styles.logo}`}
-            src={'NER-Logo-App-Icon.png'}
+            src={'/NER-Logo-App-Icon.png'}
             alt="Northeastern Electric Racing Logo"
           />{' '}
           <h3 className={styles.title}>NER PM Dashboard</h3>

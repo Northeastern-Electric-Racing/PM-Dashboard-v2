@@ -204,8 +204,6 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
       projectManager
     };
 
-    alert(JSON.stringify(payload));
-
     await mutateAsync(payload);
 
     window.location.reload();

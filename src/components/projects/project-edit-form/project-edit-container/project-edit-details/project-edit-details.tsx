@@ -4,11 +4,10 @@
  */
 
 import { Project, User } from 'utils';
-import { Col, Container, Row, Form, InputGroup, Dropdown } from 'react-bootstrap';
+import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
 import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
 import { WbsElementStatus } from 'utils/lib/types/project-types';
-import styles from './project-edit-details.module.css';
 
 // new parts added at the bottom
 interface projectDetailsProps {

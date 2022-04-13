@@ -124,58 +124,12 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     return (
       <>
         <b>{title}</b>
-        {/* <Form>
-          <Form.Group>
-            <Dropdown className={styles.dropdown}>
-              <Dropdown.Toggle
-                variant="light"
-                block={true}
-                className={'text-left ' + styles.dropdownButton}
-              >
-                {fullNamePipe(defaultUser)}
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="btn-block" align="right">
-                <Dropdown.Item
-                  key={defaultUser.userId}
-                  onClick={() => updateUser(defaultUser.userId)}
-                >
-                  {fullNamePipe(defaultUser)}
-                </Dropdown.Item>
-                {otherUsers.map((user, index) => (
-                  <Dropdown.Item
-                    key={user.userId}
-                    onClick={() => updateUser(user.userId)}
-                    value={fullNamePipe(user)}
-                  >
-                    {fullNamePipe(user)}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Form.Group>
-        </Form> */}
-        <Form.Control as="select">
-          <option
-            onChange={(e) => updateUser(defaultUser.userId)}
-            onClick={(e) => updateUser(defaultUser.userId)}
-            onSelect={(e) => updateUser(defaultUser.userId)}
-            onInput={(e) => updateUser(defaultUser.userId)}
-            onFocus={(e) => updateUser(defaultUser.userId)}
-            key={defaultUser.userId}
-            value={fullNamePipe(defaultUser)}
-          >
+        <Form.Control as="select" onChange={(e) => updateUser(parseInt(e.target.value))}>
+          <option key={defaultUser.userId} value={defaultUser.userId}>
             {fullNamePipe(defaultUser)}
           </option>
           {otherUsers.map((user, index) => (
-            <option
-              key={user.userId}
-              onChange={(e) => updateUser(user.userId)}
-              onClick={(e) => updateUser(user.userId)}
-              onSelect={(e) => updateUser(user.userId)}
-              onInput={(e) => updateUser(user.userId)}
-              onFocus={(e) => updateUser(user.userId)}
-              value={fullNamePipe(user)}
-            >
+            <option key={user.userId} value={user.userId}>
               {fullNamePipe(user)}
             </option>
           ))}

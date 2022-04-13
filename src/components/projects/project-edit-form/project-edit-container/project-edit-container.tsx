@@ -147,6 +147,12 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     if (checkValidity() === false) {
       event.stopPropagation();
     }
+
+    const payload = {
+      wbsElementId: -1,
+      crId: -1,
+      budget: proj.budget
+    };
   };
 
   if (isLoading) return <LoadingIndicator />;

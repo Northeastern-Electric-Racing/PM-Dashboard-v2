@@ -19,6 +19,8 @@ import ChangesList from '../../wbs-details/work-package-container/work-package-c
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
+import { useAuth } from '../../../../services/auth.hooks';
+import { useEditSingleProject } from '../../../../services/projects.hooks';
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -31,6 +33,17 @@ export interface EditModeProps {
 }
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
+  const auth = useAuth();
+  const { mutateAsync } = useEditSingleProject();
+
+  const [crId, setCrId] = useState(-1);
+  const [name, setName] = useState(proj.name);
+  const [summary, setSummary] = useState(proj.summary);
+  const [budget, setBudget] = useState(proj.budget);
+  const [wbsElementStatus, setWbsElementStatus] = useState(proj.status);
+  const [projectLead, setProjectLead] = useState(proj.projectLead?.userId);
+  const [projectManager, setProjectManager] = useState(proj.projectManager?.userId);
+
   const [slideDeck, setSlideDeck] = useState(proj.slideDeckLink);
   const [taskList, setTaskList] = useState(proj.taskListLink);
   const [bom, setBom] = useState(proj.bomLink);
@@ -41,10 +54,20 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const updateBom = (url: string | undefined) => setBom(url);
   const updateGDrive = (url: string | undefined) => setGDrive(url);
 
-  const [goals, setGoals] = useState(proj!.goals.map((goal) => goal.detail));
-  const [features, setFeatures] = useState(proj!.features.map((feature) => feature.detail));
-  const [otherConstraints, setOther] = useState(
-    proj!.otherConstraints.map((constraint) => constraint.detail)
+  const [goals, setGoals] = useState<{ id?: number; detail: string }[]>(
+    proj!.goals.map((goal) => {
+      return { id: goal.id, detail: goal.detail };
+    })
+  );
+  const [features, setFeatures] = useState<{ id?: number; detail: string }[]>(
+    proj!.features.map((feature) => {
+      return { id: feature.id, detail: feature.detail };
+    })
+  );
+  const [otherConstraints, setOther] = useState<{ id?: number; detail: string }[]>(
+    proj!.otherConstraints.map((constraint) => {
+      return { id: constraint.id, detail: constraint.detail };
+    })
   );
   const [rules, setRules] = useState(proj!.rules);
   const { isLoading, isError, data, error } = useAllUsers();
@@ -54,7 +77,8 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const goalsUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = goals.slice();
-      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
+      if (clone.length === 0 || clone.map((c) => c.detail).every(notEmptyString))
+        clone.push({ detail: val });
       setGoals(clone);
     },
     remove: (idx) => {
@@ -64,7 +88,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = goals.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setGoals(clone);
     }
   };
@@ -72,7 +96,8 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const featUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = features.slice();
-      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
+      if (clone.length === 0 || clone.map((c) => c.detail).every(notEmptyString))
+        clone.push({ detail: val });
       setFeatures(clone);
     },
     remove: (idx) => {
@@ -82,7 +107,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = features.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setFeatures(clone);
     }
   };
@@ -90,7 +115,8 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const ocUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = otherConstraints.slice();
-      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
+      if (clone.length === 0 || clone.map((c) => c.detail).every(notEmptyString))
+        clone.push({ detail: val });
       setOther(clone);
     },
     remove: (idx) => {
@@ -100,7 +126,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = otherConstraints.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setOther(clone);
     }
   };
@@ -141,18 +167,40 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     return [slideDeck, taskList, bom, gDrive].every(isValidURL);
   };
 
-  const handleSubmit = (event: SyntheticEvent) => {
+  const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
     if (checkValidity() === false) {
       event.stopPropagation();
     }
 
+    const { userId } = auth.user!;
+
     const payload = {
-      wbsElementId: -1,
-      crId: -1,
-      budget: proj.budget
+      wbsElementId: proj.id,
+      crId,
+      name,
+      userId,
+      budget,
+      summary,
+      rules,
+      goals,
+      features,
+      otherConstraints,
+      wbsElementStatus,
+      googleDriveFolderLink: gDrive,
+      slideDeckLink: slideDeck,
+      bomLink: bom,
+      taskListLink: taskList,
+      projectLead,
+      projectManager
     };
+
+    alert(JSON.stringify(payload));
+
+    await mutateAsync(payload);
+
+    setEditMode(false);
   };
 
   if (isLoading) return <LoadingIndicator />;
@@ -163,7 +211,12 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     <>
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
-        <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
+        <Form.Control
+          className="m-4 w-25"
+          type="number"
+          placeholder="Change Request ID #"
+          onChange={(e) => setCrId(Number(e.target.value))}
+        />
         <ProjectEditDetails
           project={proj!}
           users={data!}
@@ -171,14 +224,19 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           updateTaskList={updateTaskList}
           updateBom={updateBom}
           updateGDrive={updateGDrive}
+          updateName={setName}
+          updateBudget={(val: string) => setBudget(Number(val))}
+          updateStatus={setWbsElementStatus}
+          updateProjectLead={setProjectLead}
+          updateProjectManager={setProjectManager}
         />
-        <ProjectEditSummary project={proj!} />
+        <ProjectEditSummary project={proj!} updateSummary={setSummary} />
         <PageBlock
           title={'Goals'}
           headerRight={<></>}
           body={
             <EditableTextInputList
-              items={goals}
+              items={goals.map((goal) => goal.detail)}
               add={goalsUtil.add}
               remove={goalsUtil.remove}
               update={goalsUtil.update}
@@ -190,7 +248,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           headerRight={<></>}
           body={
             <EditableTextInputList
-              items={features}
+              items={features.map((feature) => feature.detail)}
               add={featUtil.add}
               remove={featUtil.remove}
               update={featUtil.update}
@@ -202,7 +260,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           headerRight={<></>}
           body={
             <EditableTextInputList
-              items={otherConstraints}
+              items={otherConstraints.map((other) => other.detail)}
               add={ocUtil.add}
               remove={ocUtil.remove}
               update={ocUtil.update}

@@ -23,21 +23,15 @@ const calculateEndDate = (start: Date, weeks: number) => {
  * @param wps an array of work packages
  * @returns the duration of the project in weeks
  */
-const calculateDuration = (wps: any) => {
+const calculateDuration = (wps: { duration: number; startDate: Date }[]) => {
   if (wps.length === 0) return 0;
   if (wps.length === 1) return wps[0].duration;
-
-  let firstStart = wps[0].startDate;
-  let lastEnd = calculateEndDate(firstStart, wps[0].duration);
-
-  for (const wp of wps) {
-    if (wp.startDate < firstStart) firstStart = wp.startDate;
-    const end = calculateEndDate(wp.startDate, wp.duration);
-    if (end > lastEnd) lastEnd = end;
-  }
-  const durationMilliseconds = lastEnd.getTime() - firstStart.getTime();
-  const durationWeeks = durationMilliseconds / (1000 * 60 * 60 * 24 * 7);
-  return Math.round(durationWeeks);
+  const minStart = Math.min(...wps.map((wp) => wp.startDate.getTime()));
+  const maxEnd = Math.max(
+    ...wps.map((wp) => calculateEndDate(wp.startDate, wp.duration).getTime())
+  );
+  const durationWeeks = Math.round((maxEnd - minStart) / (1000 * 60 * 60 * 24 * 7));
+  return durationWeeks;
 };
 
 const calculatePercentExpectedProgress = (start: Date, weeks: number, status: String) => {

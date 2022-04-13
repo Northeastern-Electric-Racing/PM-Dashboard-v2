@@ -31,13 +31,13 @@ export type CreateWorkPackagePayload = FromSchema<typeof workPackageCreateInputS
 
 export const workPackageEditInputSchemaBody = bodySchema(
   {
-    wbsElementId: intType,
+    wbsElementId: wbsNumType,
     userId: intType,
     name: stringType,
     crId: intType,
     startDate: dateType,
     duration: intType,
-    dependencies: arrayType(intType),
+    dependencies: arrayType(wbsNumType),
     expectedActivities: arrayType(bodySchema({ id: intType, detail: stringType })),
     deliverables: arrayType(bodySchema({ id: intType, detail: stringType })),
     wbsElementStatus: enumType(

@@ -4,14 +4,15 @@
  */
 
 import { createContext, SyntheticEvent, useState } from 'react';
-import { WbsElementStatus, WbsNumber } from 'utils';
+import { validateWBS, WbsElementStatus, WbsNumber } from 'utils';
 import { useEditWorkPackage, useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
 import { useAuth } from '../../../../services/auth.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
-import { fullNamePipe } from '../../../../shared/pipes';
+import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
+import { useParams } from 'react-router-dom';
 
 interface WorkPackageContainerProps {
   wbsNum: WbsNumber;
@@ -21,6 +22,21 @@ export interface EditModeProps {
   changeEditMode(arg: any): void;
 }
 
+interface FormFields {
+  projectLead: string | undefined;
+  projectManager: string | undefined;
+  userId: number;
+  name: string;
+  crId: string;
+  startDate: string;
+  duration: string;
+  dependencies: string[];
+  expectedActivities: { id: number; detail: string }[];
+  deliverables: { id: number; detail: string }[];
+  status: WbsElementStatus;
+  progress: string;
+}
+
 // Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
 export const FormContext = createContext({
   editMode: false,
@@ -28,10 +44,27 @@ export const FormContext = createContext({
 });
 
 const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) => {
+  interface ParamTypes {
+    id: string;
+  }
+  const { id } = useParams<ParamTypes>();
   const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
   const [editMode, setEditMode] = useState(false);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState<FormFields>({
+    projectLead: undefined,
+    projectManager: undefined,
+    userId: 0,
+    name: '',
+    crId: '',
+    startDate: '',
+    duration: '',
+    dependencies: [],
+    expectedActivities: [],
+    deliverables: [],
+    status: WbsElementStatus.Inactive,
+    progress: ''
+  });
   const { mutateAsync } = useEditWorkPackage();
   const { data: userData } = useAllUsers();
 
@@ -39,7 +72,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
     setForm({ ...form, [field]: value });
   };
 
-  const transformUser = (user: string) => {
+  const transformUser = (user: string | undefined) => {
     if (userData) {
       const userId = userData.filter((rawUser) => fullNamePipe(rawUser) === user);
       return userId.length === 0 ? undefined : userId[0].userId;
@@ -47,15 +80,19 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
     return undefined;
   };
 
-  const transformStatus = (status: string) => {
+  const transformStatus = (status: string | undefined) => {
     switch (status) {
       case 'ACTIVE':
         return WbsElementStatus.Active;
       case 'INACTIVE':
         return WbsElementStatus.Inactive;
-      case 'COMPLETE':
+      default:
         return WbsElementStatus.Complete;
     }
+  };
+
+  const transformWbsElemId = (id: string) => {
+    return validateWBS(id);
   };
 
   const handleSubmit = async (event: SyntheticEvent) => {
@@ -83,17 +120,17 @@ name, expectedActivities, deliverables, wbsElementStatus, progress
     const payload = {
       projectLead: transformUser(form.projectLead),
       projectManager: transformUser(form.projectManager),
-      wbsElementId: 0,
+      wbsElementId: transformWbsElemId(id),
       userId,
-      name: 'asdf',
-      crId: 0,
-      startDate: 'asdf',
-      duration: 1,
-      dependencies: [1],
+      name: form.name.trim(),
+      crId: parseInt(form.crId.trim()),
+      startDate: form.startDate,
+      duration: parseInt(form.duration.trim()),
+      dependencies: form.dependencies.map((dep) => validateWBS(dep.trim())),
       expectedActivities: [{ id: 0, detail: 'asdf' }],
       deliverables: [{ id: 0, detail: 'asdf' }],
       wbsElementStatus: transformStatus(form.status),
-      progress: 1
+      progress: parseInt(form.progress)
     };
 
     await mutateAsync(payload);

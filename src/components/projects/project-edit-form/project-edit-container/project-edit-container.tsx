@@ -34,7 +34,6 @@ export interface EditModeProps {
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
   const auth = useAuth();
-  const { mutateAsync } = useEditSingleProject();
 
   const [crId, setCrId] = useState(-1);
   const [name, setName] = useState(proj.name);
@@ -54,20 +53,28 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const updateBom = (url: string | undefined) => setBom(url);
   const updateGDrive = (url: string | undefined) => setGDrive(url);
 
+  const { mutateAsync } = useEditSingleProject();
+
   const [goals, setGoals] = useState<{ id?: number; detail: string }[]>(
-    proj!.goals.map((goal) => {
-      return { id: goal.id, detail: goal.detail };
-    })
+    proj!.goals
+      .filter((goal) => !goal.dateDeleted)
+      .map((goal) => {
+        return { id: goal.id, detail: goal.detail };
+      })
   );
   const [features, setFeatures] = useState<{ id?: number; detail: string }[]>(
-    proj!.features.map((feature) => {
-      return { id: feature.id, detail: feature.detail };
-    })
+    proj!.features
+      .filter((feature) => !feature.dateDeleted)
+      .map((feature) => {
+        return { id: feature.id, detail: feature.detail };
+      })
   );
   const [otherConstraints, setOther] = useState<{ id?: number; detail: string }[]>(
-    proj!.otherConstraints.map((constraint) => {
-      return { id: constraint.id, detail: constraint.detail };
-    })
+    proj!.otherConstraints
+      .filter((constraint) => !constraint.dateDeleted)
+      .map((constraint) => {
+        return { id: constraint.id, detail: constraint.detail };
+      })
   );
   const [rules, setRules] = useState(proj!.rules);
   const { isLoading, isError, data, error } = useAllUsers();
@@ -172,6 +179,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
 
     if (checkValidity() === false) {
       event.stopPropagation();
+      return;
     }
 
     const { userId } = auth.user!;
@@ -200,7 +208,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
 
     await mutateAsync(payload);
 
-    setEditMode(false);
+    window.location.reload();
   };
 
   if (isLoading) return <LoadingIndicator />;
@@ -215,6 +223,8 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
           className="m-4 w-25"
           type="number"
           placeholder="Change Request ID #"
+          required
+          min={0}
           onChange={(e) => setCrId(Number(e.target.value))}
         />
         <ProjectEditDetails

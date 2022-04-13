@@ -32,16 +32,22 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   if (isError) return <ErrorPage message={error?.message} />;
 
   const readOnlyView = (
-    <div className='mb-5'>
+    <div className="mb-5">
       <PageTitle
         title={`${wbsPipe(wbsNum)} - ${data!.name}`}
         actionButton={editMode ? <></> : <ProjectEditButton setEditMode={setEditMode} />}
       />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
-      <DescriptionList title={'Goals'} items={data!.goals} />
-      <DescriptionList title={'Features'} items={data!.features} />
-      <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
+      <DescriptionList title={'Goals'} items={data!.goals.filter((goal) => !goal.dateDeleted)} />
+      <DescriptionList
+        title={'Features'}
+        items={data!.features.filter((feature) => !feature.dateDeleted)}
+      />
+      <DescriptionList
+        title={'Other Constraints'}
+        items={data!.otherConstraints.filter((constraint) => !constraint.dateDeleted)}
+      />
       <RulesList rules={data!.rules} />
       <ChangesList changes={data!.changes} />
       <PageBlock
@@ -50,7 +56,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
         body={
           <>
             {data!.workPackages.map((ele: WorkPackage) => (
-              <div key={wbsPipe(ele.wbsNum)} className='mt-3'>
+              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
                 <WorkPackageSummary workPackage={ele} />
               </div>
             ))}

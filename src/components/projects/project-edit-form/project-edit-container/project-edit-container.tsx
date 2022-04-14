@@ -5,7 +5,7 @@
 
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
 import { Form } from 'react-bootstrap';
-import { Project, WbsNumber, WorkPackage } from 'utils';
+import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useAllUsers } from '../../../../services/users.hooks';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -21,6 +21,16 @@ import LoadingIndicator from '../../../shared/loading-indicator/loading-indicato
 import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
 import { useAuth } from '../../../../services/auth.hooks';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
+
+/**
+ * Helper function to turn DescriptionBullets into a list of { id:number, detail:string }.
+ */
+const bulletsToObject = (bullets: DescriptionBullet[]) =>
+  bullets
+    .filter((bullet) => !bullet.dateDeleted)
+    .map((bullet) => {
+      return { id: bullet.id, detail: bullet.detail };
+    });
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -56,25 +66,13 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   const { mutateAsync } = useEditSingleProject();
 
   const [goals, setGoals] = useState<{ id?: number; detail: string }[]>(
-    proj!.goals
-      .filter((goal) => !goal.dateDeleted)
-      .map((goal) => {
-        return { id: goal.id, detail: goal.detail };
-      })
+    bulletsToObject(proj!.goals)
   );
   const [features, setFeatures] = useState<{ id?: number; detail: string }[]>(
-    proj!.features
-      .filter((feature) => !feature.dateDeleted)
-      .map((feature) => {
-        return { id: feature.id, detail: feature.detail };
-      })
+    bulletsToObject(proj!.features)
   );
   const [otherConstraints, setOther] = useState<{ id?: number; detail: string }[]>(
-    proj!.otherConstraints
-      .filter((constraint) => !constraint.dateDeleted)
-      .map((constraint) => {
-        return { id: constraint.id, detail: constraint.detail };
-      })
+    bulletsToObject(proj!.otherConstraints)
   );
   const [rules, setRules] = useState(proj!.rules);
   const { isLoading, isError, data, error } = useAllUsers();

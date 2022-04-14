@@ -35,16 +35,36 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
   setEditMode,
   handleSubmit
 }) => {
-  const [expectedActivities, setExpectedActivities] = useState(
-    data.expectedActivities.map((ea) => ea.detail)
+  const [expectedActivities, setExpectedActivities] = useState<
+    { id: number | undefined; detail: string }[]
+  >(
+    data.expectedActivities.map((ea) => ({
+      id: ea.id,
+      detail: ea.detail
+    }))
   );
-  const [deliverables, setDeliverables] = useState(data.deliverables.map((d) => d.detail));
+  const [deliverables, setDeliverables] = useState<{ id: number | undefined; detail: string }[]>(
+    data.deliverables.map((d) => ({
+      id: d.id,
+      detail: d.detail
+    }))
+  );
   const { setField } = useContext(FormContext);
 
   // Refreshes data to original data when edit mode is canceled.
   useEffect(() => {
-    setExpectedActivities(data.expectedActivities.map((ea) => ea.detail));
-    setDeliverables(data.deliverables.map((d) => d.detail));
+    setExpectedActivities(
+      data.expectedActivities.map((ea) => ({
+        id: ea.id,
+        detail: ea.detail
+      }))
+    );
+    setDeliverables(
+      data.deliverables.map((d) => ({
+        id: d.id,
+        detail: d.detail
+      }))
+    );
   }, [editMode, data]);
 
   // set field for expected activities
@@ -60,7 +80,10 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
   const expectedActivitiesUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = expectedActivities.slice();
-      clone.push(val);
+      clone.push({
+        id: undefined,
+        detail: val
+      });
       setExpectedActivities(clone);
     },
     remove: (idx) => {
@@ -70,7 +93,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
     },
     update: (idx, val) => {
       const clone = expectedActivities.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setExpectedActivities(clone);
     }
   };
@@ -78,7 +101,10 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
   const deliverablesUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = deliverables.slice();
-      clone.push(val);
+      clone.push({
+        id: undefined,
+        detail: val
+      });
       setDeliverables(clone);
     },
     remove: (idx) => {
@@ -88,7 +114,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
     },
     update: (idx, val) => {
       const clone = deliverables.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setDeliverables(clone);
     }
   };
@@ -106,7 +132,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
           body={
             <EditableTextInputList
               readOnly={!editMode}
-              items={expectedActivities}
+              items={expectedActivities.map((ea) => ea.detail)}
               add={expectedActivitiesUtil.add}
               remove={expectedActivitiesUtil.remove}
               update={expectedActivitiesUtil.update}
@@ -119,7 +145,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
           body={
             <EditableTextInputList
               readOnly={!editMode}
-              items={deliverables}
+              items={deliverables.map((d) => d.detail)}
               add={deliverablesUtil.add}
               remove={deliverablesUtil.remove}
               update={deliverablesUtil.update}

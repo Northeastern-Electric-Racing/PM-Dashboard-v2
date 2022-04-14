@@ -26,12 +26,29 @@ export const descBulletConverter = (descBullet: Description_Bullet): Description
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
+const getWbsElementId = async ({
+  carNumber,
+  projectNumber,
+  workPackageNumber
+}: {
+  carNumber: number;
+  projectNumber: number;
+  workPackageNumber: number;
+}) => {
+  const wbsElem = await prisma.wBS_Element.findUnique({
+    where: {
+      wbsNumber: { carNumber, projectNumber, workPackageNumber }
+    }
+  });
+  return wbsElem?.wbsElementId;
+};
+
 export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   { body },
   _context
 ) => {
   const {
-    wbsElementId,
+    wbsElementId: wbsNum,
     userId,
     name,
     crId,
@@ -46,6 +63,12 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     projectManager
   } = body;
 
+  const wbsElementId = await getWbsElementId(wbsNum);
+
+  if (wbsElementId === null) {
+    return buildNotFoundResponse('Wbs_Element_ID (Wbs_Num)', JSON.stringify(wbsNum));
+  }
+
   // get the original work package so we can compare things
   const originalWorkPackage = await prisma.work_Package.findUnique({
     where: { wbsElementId },
@@ -59,7 +82,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
 
   // if it doesn't exist we error
   if (originalWorkPackage === null) {
-    return buildNotFoundResponse('Wbs_Element_ID', wbsElementId.toString());
+    return buildNotFoundResponse('Wbs_Element_ID', wbsElementId!.toString());
   }
 
   // if the crId doesn't match a valid approved change request then we need to error
@@ -67,6 +90,12 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
 
   if (!changeRequest?.accepted) {
     return buildNotFoundResponse('Valid_Change_Request', crId.toString());
+  }
+
+  const depsIds = await Promise.all(dependencies.map(async (wbsNum) => getWbsElementId(wbsNum)));
+
+  if (depsIds.includes(undefined)) {
+    return buildNotFoundResponse('Dependency', depsIds.toString());
   }
 
   let changes = [];
@@ -77,7 +106,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     name,
     crId,
     userId,
-    wbsElementId
+    wbsElementId!
   );
   const startDateChangeJson = createChangeJsonDates(
     'start date',
@@ -85,7 +114,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     new Date(startDate),
     crId,
     userId,
-    wbsElementId
+    wbsElementId!
   );
   const durationChangeJson = createChangeJsonNonList(
     'duration',
@@ -93,7 +122,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     duration,
     crId,
     userId,
-    wbsElementId
+    wbsElementId!
   );
   const progressChangeJson = createChangeJsonNonList(
     'progress',
@@ -101,7 +130,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     progress,
     crId,
     userId,
-    wbsElementId
+    wbsElementId!
   );
   const wbsElementStatusChangeJson = createChangeJsonNonList(
     'WBS element status',
@@ -109,14 +138,14 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     wbsElementStatus,
     crId,
     userId,
-    wbsElementId
+    wbsElementId!
   );
   const dependenciesChangeJson = await createDependenciesChangesJson(
     originalWorkPackage.dependencies.map((element) => element.wbsElementId),
-    dependencies,
+    depsIds.map((elem) => elem as number),
     crId,
     userId,
-    wbsElementId,
+    wbsElementId!,
     'dependency'
   );
   const expectedActivitiesChangeJson = createDescriptionBulletChangesJson(
@@ -124,7 +153,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     expectedActivities,
     crId,
     userId,
-    wbsElementId,
+    wbsElementId!,
     'expected activity'
   );
   const deliverablesChangeJson = createDescriptionBulletChangesJson(
@@ -132,7 +161,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     deliverables,
     crId,
     userId,
-    wbsElementId,
+    wbsElementId!,
     'deliverable'
   );
 
@@ -160,7 +189,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
       body.projectManager,
       crId,
       userId,
-      wbsElementId
+      wbsElementId!
     );
     if (projectManagerChangeJson) {
       changes.push(projectManagerChangeJson);
@@ -174,7 +203,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
       body.projectLead,
       crId,
       userId,
-      wbsElementId
+      wbsElementId!
     );
     if (projectLeadChangeJson) {
       changes.push(projectLeadChangeJson);
@@ -204,7 +233,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
       },
       dependencies: {
         set: [], // remove all the connections then add all the given ones
-        connect: dependencies.map((ele) => ({ wbsElementId: ele }))
+        connect: depsIds.map((ele) => ({ wbsElementId: ele }))
       }
     }
   });

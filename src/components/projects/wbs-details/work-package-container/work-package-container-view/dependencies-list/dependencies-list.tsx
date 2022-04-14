@@ -22,12 +22,14 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
 
   useEffect(() => {
     setDependenciesState(dependencies);
-  }, [editMode, dependencies]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editMode]);
 
   // set field for dependencies
   useEffect(() => {
     setField('dependencies', dependencies);
-  }, [dependencies, setField]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dependenciesState]);
 
   const handleDelete = (dependencyToDelete: WbsNumber) => {
     const index = dependenciesState.indexOf(dependencyToDelete);

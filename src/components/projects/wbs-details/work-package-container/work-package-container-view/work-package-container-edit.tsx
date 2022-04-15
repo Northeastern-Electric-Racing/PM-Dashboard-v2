@@ -12,7 +12,17 @@ import WorkPackageContainerView from './work-package-container-view/work-package
 import { useAuth } from '../../../../services/auth.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import { useParams } from 'react-router-dom';
+import { features } from 'process';
+import { Form } from 'react-bootstrap';
+import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
+import PageBlock from '../../../shared/page-block/page-block';
+import PageTitle from '../../../shared/page-title/page-title';
+import ProjectEditDetails from '../../project-edit-form/project-edit-container/project-edit-details/project-edit-details';
+import ProjectEditSummary from '../../project-edit-form/project-edit-container/project-edit-summary/project-edit-summary';
+import WorkPackageSummary from '../project-container/work-package-summary/work-package-summary';
+import ChangesList from './work-package-container-view/changes-list/changes-list';
+import EditModeOptions from './work-package-container-view/edit-mode-options/edit-mode-options';
+import WorkPackageButtons from './work-package-container-view/work-package-buttons/work-package-buttons';
 
 interface WorkPackageContainerEditProps {
   wbsNum: WbsNumber;
@@ -46,24 +56,57 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   );
   const [wbsElementId, setWbsElementId] = useState<WbsNumber>(workPackage.wbsNum);
   const [name, setName] = useState<string>(workPackage.name);
-  const [crId, setCrId] = useState<number>();
-  const [startDate, setStartDate] = useState<string>(datePipe(workPackage.startDate));
+  const [crId, setCrId] = useState<number>(-1);
+  const [startDate, setStartDate] = useState<Date>(workPackage.startDate);
   const [duration, setDuration] = useState<number>(workPackage.duration);
-  const [dependencies] = useState<WbsNumber[]>(workPackage.dependencies);
-  const [expectedActivities, setExpectedActivities] = useState<
-    { id: number | undefined; detail: string }[]
-  >(
+  const [dependencies, setDependencies] = useState<WbsNumber[]>(workPackage.dependencies);
+  const [expectedActivities, setExpectedActivities] = useState<{ id: number; detail: string }[]>(
     workPackage.expectedActivities.map((ea) => ({
       id: ea.id,
       detail: ea.detail
     }))
   );
-  const [deliverables, setDeliverables] = useState<{ id: number | undefined; detail: string }[]>(
+  const [deliverables, setDeliverables] = useState<{ id: number; detail: string }[]>(
     workPackage.deliverables.map((d) => ({
       id: d.id,
       detail: d.detail
     }))
   );
+  const [status, setStatus] = useState<WbsElementStatus>(workPackage.status);
+  const [progress, setProgress] = useState<number>(workPackage.progress);
+
+  const data = {
+    projectLead,
+    projectManager,
+    wbsElementId,
+    name,
+    crId,
+    startDate,
+    duration,
+    dependencies,
+    expectedActivities,
+    deliverables,
+    status,
+    progress,
+    changes: workPackage.changes,
+    expectedProgress: workPackage.expectedProgress,
+    timelineStatus: workPackage.timelineStatus
+  };
+
+  const setters = {
+    setProjectLead,
+    setProjectManager,
+    setWbsElementId,
+    setName,
+    setCrId,
+    setStartDate,
+    setDuration,
+    setDependencies,
+    setExpectedActivities,
+    setDeliverables,
+    setStatus,
+    setProgress
+  };
 
   const setField = (field: string, value: any) => {
     setForm({ ...form, [field]: value });
@@ -75,17 +118,6 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
       return userId.length === 0 ? undefined : userId[0].userId;
     }
     return undefined;
-  };
-
-  const transformStatus = (status: string | undefined) => {
-    switch (status) {
-      case 'ACTIVE':
-        return WbsElementStatus.Active;
-      case 'INACTIVE':
-        return WbsElementStatus.Inactive;
-      default:
-        return WbsElementStatus.Complete;
-    }
   };
 
   const transformWbsNum = (wbsNum: WbsNumber) => {
@@ -101,28 +133,26 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
     const { userId } = auth.user!;
 
-    console.log(`${form.crId}, ${form.duration}, ${form.progress}`);
     const payload = {
-      projectLead: transformUser(form.projectLead),
-      projectManager: transformUser(form.projectManager),
+      projectLead: transformUser(projectLead),
+      projectManager: transformUser(projectManager),
       wbsElementId: transformWbsNum(wbsNum),
       userId,
-      name: form.name.trim(),
-      crId: parseInt(form.crId.trim()),
-      startDate: form.startDate,
-      duration: parseInt(form.duration.trim()),
-      dependencies: form.dependencies.map((dep) => {
-        const depWbsNum = validateWBS(dep.trim());
+      name: name.trim(),
+      crId,
+      startDate,
+      duration,
+      dependencies: dependencies.map((dep) => {
         return {
-          carNumber: depWbsNum.car,
-          projectNumber: depWbsNum.project,
-          workPackageNumber: depWbsNum.workPackage
+          carNumber: dep.car,
+          projectNumber: dep.project,
+          workPackageNumber: dep.workPackage
         };
       }),
-      expectedActivities: form.expectedActivities,
-      deliverables: form.deliverables,
-      wbsElementStatus: transformStatus(form.status),
-      progress: parseInt(form.progress)
+      expectedActivities,
+      deliverables,
+      wbsElementStatus: status,
+      progress
     };
 
     await mutateAsync(payload);
@@ -130,10 +160,6 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     // after edit is complete, switch off edit mode
     setEditMode(false);
   };
-
-  if (isLoading) return <LoadingIndicator />;
-
-  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <FormContext.Provider value={{ editMode, setField }}>
@@ -143,7 +169,9 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
         setEditMode={(mode: boolean) => setEditMode(mode)}
         handleSubmit={(event: SyntheticEvent) => handleSubmit(event)}
       />
-    </FormContext.Provider>
+        <WorkPackageButtons setEditMode={setEditMode} />
+      </Form>
+    </>
   );
 };
 

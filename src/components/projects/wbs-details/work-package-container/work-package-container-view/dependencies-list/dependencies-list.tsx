@@ -13,9 +13,10 @@ import { validateWBS } from 'utils';
 
 interface DependenciesListProps {
   dependencies: WbsNumber[];
+  setter: any;
 }
 
-const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
+const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies, setter }) => {
   const { editMode, setField } = useContext(FormContext);
   const [dependenciesState, setDependenciesState] = useState(dependencies);
   const [unvalidatedDependency, setUnvalidatedDependency] = useState('');
@@ -27,7 +28,7 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
 
   // set field for dependencies
   useEffect(() => {
-    setField('dependencies', dependencies);
+    setter(dependenciesState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dependenciesState]);
 

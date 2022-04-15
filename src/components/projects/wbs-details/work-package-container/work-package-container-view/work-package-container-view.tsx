@@ -19,7 +19,8 @@ import PageBlock from '../../../../shared/page-block/page-block';
 import { FormContext } from '../work-package-container';
 
 interface WorkPackageContainerProps {
-  data: WorkPackage;
+  data: any;
+  setters: any;
   editMode: boolean;
   setEditMode: any;
   handleSubmit: any;
@@ -31,108 +32,93 @@ export interface EditModeProps {
 
 const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
   data,
+  setters,
   editMode,
   setEditMode,
   handleSubmit
 }) => {
-  const [expectedActivities, setExpectedActivities] = useState<
-    { id: number | undefined; detail: string }[]
-  >(
-    data.expectedActivities.map((ea) => ({
-      id: ea.id,
-      detail: ea.detail
-    }))
+  const [ea, setEa] = useState<{ id: number | undefined; detail: string }[]>(
+    data.expectedActivities
   );
-  const [deliverables, setDeliverables] = useState<{ id: number | undefined; detail: string }[]>(
-    data.deliverables.map((d) => ({
-      id: d.id,
-      detail: d.detail
-    }))
-  );
+  const [d, setD] = useState<{ id: number | undefined; detail: string }[]>(data.deliverables);
   const { setField } = useContext(FormContext);
 
   // Refreshes data to original data when edit mode is canceled.
   useEffect(() => {
-    setExpectedActivities(
-      data.expectedActivities.map((ea) => ({
-        id: ea.id,
-        detail: ea.detail
-      }))
-    );
-    setDeliverables(
-      data.deliverables.map((d) => ({
-        id: d.id,
-        detail: d.detail
-      }))
-    );
+    setEa(data.expectedActivities);
+    setD(data.deliverables);
   }, [editMode, data]);
 
   // set field for expected activities
   useEffect(() => {
-    setField('expectedActivities', expectedActivities);
-  }, [expectedActivities, setField]);
+    setters.setExpectedActivities(d);
+  }, [ea]);
 
   // set field for deliverables
   useEffect(() => {
-    setField('deliverables', deliverables);
-  }, [deliverables, setField]);
+    setters.setDeliverables(d);
+  }, [d]);
 
   const expectedActivitiesUtil: EditableTextInputListUtils = {
     add: (val) => {
-      const clone = expectedActivities.slice();
+      const clone = ea.slice();
       clone.push({
         id: undefined,
         detail: val
       });
-      setExpectedActivities(clone);
+      setEa(clone);
     },
     remove: (idx) => {
-      const clone = expectedActivities.slice();
+      const clone = ea.slice();
       clone.splice(idx, 1);
-      setExpectedActivities(clone);
+      setEa(clone);
     },
     update: (idx, val) => {
-      const clone = expectedActivities.slice();
+      const clone = ea.slice();
       clone[idx].detail = val;
-      setExpectedActivities(clone);
+      setEa(clone);
     }
   };
 
   const deliverablesUtil: EditableTextInputListUtils = {
     add: (val) => {
-      const clone = deliverables.slice();
+      const clone = d.slice();
       clone.push({
         id: undefined,
         detail: val
       });
-      setDeliverables(clone);
+      setD(clone);
     },
     remove: (idx) => {
-      const clone = deliverables.slice();
+      const clone = d.slice();
       clone.splice(idx, 1);
-      setDeliverables(clone);
+      setD(clone);
     },
     update: (idx, val) => {
-      const clone = deliverables.slice();
+      const clone = d.slice();
       clone[idx].detail = val;
-      setDeliverables(clone);
+      setD(clone);
     }
+  };
+
+  const details = {
+    ...data
   };
 
   return (
     <div className="mb-5">
       <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(data.wbsNum)} - ${data!.name}`} />
+        <PageTitle title={`${wbsPipe(data.wbsElementId)} - ${data.name}`} />
         <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
-        <WorkPackageDetails workPackage={data!} />
-        <DependenciesList dependencies={data!.dependencies} />
+        <WorkPackageDetails details={details} setters={setters} />
+        <DependenciesList dependencies={data.dependencies} setter={setters.setDependencies} />
         <PageBlock
           title="Expected Activities"
           headerRight={<></>}
           body={
             <EditableTextInputList
               readOnly={!editMode}
-              items={expectedActivities.map((ea) => ea.detail)}
+              items={ea.map((ea) => ea.detail)}
               add={expectedActivitiesUtil.add}
               remove={expectedActivitiesUtil.remove}
               update={expectedActivitiesUtil.update}
@@ -145,14 +131,14 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
           body={
             <EditableTextInputList
               readOnly={!editMode}
-              items={deliverables.map((d) => d.detail)}
+              items={d.map((d) => d.detail)}
               add={deliverablesUtil.add}
               remove={deliverablesUtil.remove}
               update={deliverablesUtil.update}
             />
           }
         />
-        <ChangesList changes={data!.changes} />
+        <ChangesList changes={data.changes} />
         {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
       </Form>
     </div>

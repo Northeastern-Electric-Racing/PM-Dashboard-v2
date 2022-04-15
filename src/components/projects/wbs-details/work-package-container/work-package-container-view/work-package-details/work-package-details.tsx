@@ -17,10 +17,11 @@ import { User } from 'utils';
 import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
-  workPackage: WorkPackage;
+  details: any;
+  setters: any;
 }
 
-const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
+const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ details, setters }) => {
   const { editMode, setField } = useContext(FormContext);
   const { isLoading, isError, data, error } = useAllUsers();
 
@@ -33,8 +34,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   const percentages = ['25%', '50%', '75%', '100%'];
 
   const endDateAsDatePipe = () => {
-    const endDate = new Date(workPackage.startDate);
-    endDate.setDate(endDate.getDate() + workPackage.duration * 7);
+    const endDate = new Date(details.startDate);
+    endDate.setDate(endDate.getDate() + details.duration * 7);
     return endDate;
   };
 
@@ -52,35 +53,35 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
+          <EditableDetail title="Work Package Name" value={details.name} type="text" />
           <EditableDetail
             title="WBS #"
-            value={wbsPipe(workPackage.wbsNum)}
+            value={wbsPipe(details.wbsElementId)}
             type="text"
             readOnly={true}
-            fieldName="wbsNumber"
+            setter={setters.setWbsElementId}
           />
           <EditableDetail
             title="Project Lead"
-            value={fullNamePipe(workPackage.projectLead)}
+            value={fullNamePipe(details.projectLead)}
             type="select"
-            options={usersWithoutAsStrings(workPackage.projectLead!)}
-            fieldName="projectLead"
+            options={usersWithoutAsStrings(details.projectLead!)}
+            setter={setters.setProjectLead}
           />
           <EditableDetail
             title="Project Manager"
-            value={fullNamePipe(workPackage.projectManager)}
+            value={fullNamePipe(details.projectManager)}
             type="select"
-            options={usersWithoutAsStrings(workPackage.projectManager!)}
-            fieldName="projectManager"
+            options={usersWithoutAsStrings(details.projectManager!)}
+            setter={setters.setProjectManager}
           />
           <EditableDetail
             title="Duration"
-            value={`${workPackage.duration}`}
+            value={`${details.duration}`}
             type="number"
             suffix="weeks"
             min={1}
-            fieldName="duration"
+            setter={(e: string) => setters.setDuration(parseInt(e))}
           />
         </Col>
         <Col xs={6} md={4}>
@@ -88,40 +89,38 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
             title="Start Date"
             value={
               editMode
-                ? formatDate(workPackage.startDate) // for a date input, format must be yyyy-mm-dd
-                : workPackage.startDate.toLocaleDateString()
+                ? formatDate(details.startDate) // for a date input, format must be yyyy-mm-dd
+                : details.startDate.toLocaleDateString()
             }
             type="date"
-            fieldName="startDate"
+            setter={setters.setStartDate}
           />
           <EditableDetail
             title="End Date"
             value={
               editMode
                 ? formatDate(endDateAsDatePipe())
-                : endDatePipe(workPackage.startDate, workPackage.duration)
+                : endDatePipe(details.startDate, details.duration)
             }
             type="date"
             readOnly={true}
-            fieldName="endDate"
           />
           <EditableDetail
             title="Progress"
-            value={percentPipe(workPackage.progress)}
+            value={percentPipe(details.progress)}
             type="select"
             options={percentages}
-            fieldName="progress"
+            setter={(e: string) => setters.setProgress(parseInt(e))}
           />
           <EditableDetail
             title="Expected Progress"
-            value={percentPipe(workPackage.expectedProgress)}
+            value={percentPipe(details.expectedProgress)}
             type="number"
             readOnly={true}
-            fieldName=""
           />
           <EditableDetail
             title="Timeline Status"
-            value={workPackage.timelineStatus}
+            value={details.timelineStatus}
             type="text"
             readOnly={true}
           />
@@ -131,8 +130,19 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   );
 
   const statuses = Object.values(WbsElementStatus);
-  const index = statuses.indexOf(workPackage.status);
+  const index = statuses.indexOf(details.status);
   statuses.splice(index, 1);
+
+  const transformStatus = (status: string | undefined) => {
+    switch (status) {
+      case 'ACTIVE':
+        return WbsElementStatus.Active;
+      case 'INACTIVE':
+        return WbsElementStatus.Inactive;
+      default:
+        return WbsElementStatus.Complete;
+    }
+  };
 
   if (isLoading) return <LoadingIndicator />;
 
@@ -145,15 +155,18 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
         editMode ? (
           <div>
             <label>Status</label>
-            <Form.Control as="select" onChange={(e) => setField('status', e.target.value)}>
-              <option>{workPackage.status}</option>
+            <Form.Control
+              as="select"
+              onChange={(e) => setters.setStatus(transformStatus(e.target.value))}
+            >
+              <option>{details.status}</option>
               {statuses.map((status) => (
                 <option>{status}</option>
               ))}
             </Form.Control>
           </div>
         ) : (
-          <b>{workPackage.status}</b>
+          <b>{details.status}</b>
         )
       }
       body={detailsBody}

@@ -9,40 +9,24 @@ import { useHistory } from 'react-router-dom';
 import { FormContext, EditModeProps } from '../../work-package-container';
 import styles from './work-package-buttons.module.css';
 
+interface EditModeProps {
+  setEditMode: any;
+}
+
 const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
   const { editMode, setField } = useContext(FormContext);
   const history = useHistory();
 
   return (
     <div className={`mx-4 my-3 ${styles.workPackageActionButtonsContainer}`}>
-      <Button
-        className={styles.workPackageActionButton}
-        onClick={() => {
-          history.push('/change-requests/new');
-        }}
-      >
-        New Change Request
-      </Button>
-      <Button
-        className={styles.workPackageActionButton}
-        style={{ alignSelf: 'flex-end' }}
-        onClick={props.changeEditMode}
-        disabled={editMode}
-      >
-        Edit
-      </Button>
-      {editMode ? (
-        <Form.Control
-          required
-          className="w-25"
-          type="number"
-          placeholder="Change Request ID #"
-          onChange={(e) => setField('crId', e.target.value)}
-          min={0}
-        />
-      ) : (
-        ''
-      )}
+      <div className={styles.workPackageActionButtonsContainer}>
+        <Button type="submit" variant="success">
+          Save
+        </Button>
+        <Button variant="danger" onClick={() => setEditMode(false)}>
+          Cancel
+        </Button>
+      </div>
     </div>
   );
 };

@@ -149,7 +149,9 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     'dependency'
   );
   const expectedActivitiesChangeJson = createDescriptionBulletChangesJson(
-    originalWorkPackage.expectedActivities.map((element) => descBulletConverter(element)),
+    originalWorkPackage.expectedActivities
+      .filter((ele) => !ele.dateDeleted)
+      .map((element) => descBulletConverter(element)),
     expectedActivities,
     crId,
     userId,
@@ -157,7 +159,9 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     'expected activity'
   );
   const deliverablesChangeJson = createDescriptionBulletChangesJson(
-    originalWorkPackage.deliverables.map((element) => descBulletConverter(element)),
+    originalWorkPackage.deliverables
+      .filter((ele) => !ele.dateDeleted)
+      .map((element) => descBulletConverter(element)),
     deliverables,
     crId,
     userId,

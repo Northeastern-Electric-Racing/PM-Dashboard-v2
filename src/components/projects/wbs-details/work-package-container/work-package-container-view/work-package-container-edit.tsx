@@ -172,7 +172,11 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
     console.log(payload);
 
-    await mutateAsync(payload);
+    try {
+      await mutateAsync(payload);
+    } catch (_) {
+      return;
+    }
 
     // after edit is complete, reload
     window.location.reload();

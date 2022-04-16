@@ -66,6 +66,11 @@ export const useEditWorkPackage = () => {
     async (wpPayload: EditWorkPackagePayload) => {
       const { data } = await editWorkPackage(wpPayload);
       return data;
+    },
+    {
+      onError: (error) => {
+        alert(error.message + " but it's probably invalid cr id"); // very scuffed, find a better way to surface errors on front end
+      }
     }
   );
 };

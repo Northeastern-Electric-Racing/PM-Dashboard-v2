@@ -32,7 +32,7 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: User[], error?: E
 
 const users = [exampleAdminUser, exampleAppAdminUser, exampleLeadershipUser];
 
-describe('Rendering Work Package Details Component', () => {
+describe.skip('Rendering Work Package Details Component', () => {
   it('renders all the fields, example 1', () => {
     mockHook(false, false, users);
     const wp: WorkPackage = exampleWorkPackage1;

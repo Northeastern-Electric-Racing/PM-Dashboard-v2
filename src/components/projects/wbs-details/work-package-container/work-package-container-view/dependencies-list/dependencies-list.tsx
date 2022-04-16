@@ -2,27 +2,33 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-import { WbsNumber } from 'utils';
+
+import { Button, InputGroup, Form } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { validateWBS, WbsNumber } from 'utils';
 import HorizontalList from '../../../../../shared/horizontal-list/horizontal-list';
 import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
-import { Button, InputGroup, Form } from 'react-bootstrap';
-import { FormContext } from '../../work-package-container';
-import { useContext, useEffect, useState } from 'react';
-import { validateWBS } from 'utils';
 
 interface DependenciesListProps {
   dependencies: WbsNumber[];
+  setter: any;
 }
 
-const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => {
-  const { editMode } = useContext(FormContext);
+const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies, setter }) => {
   const [dependenciesState, setDependenciesState] = useState(dependencies);
   const [unvalidatedDependency, setUnvalidatedDependency] = useState('');
 
+  // useEffect(() => {
+  //   setDependenciesState(dependencies);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [editMode]);
+
+  // set form state for dependencies
   useEffect(() => {
-    setDependenciesState(dependencies);
-  }, [editMode, dependencies]);
+    setter(dependenciesState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dependenciesState]);
 
   const handleDelete = (dependencyToDelete: WbsNumber) => {
     const index = dependenciesState.indexOf(dependencyToDelete);
@@ -60,11 +66,7 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies }) => 
   ));
 
   return (
-    <HorizontalList
-      title={'Dependencies'}
-      headerRight={<></>}
-      items={editMode ? [...items, AddButton] : items}
-    />
+    <HorizontalList title={'Dependencies'} headerRight={<></>} items={[...items, AddButton]} />
   );
 };
 

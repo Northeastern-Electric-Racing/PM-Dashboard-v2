@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
-import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { createContext, useContext } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 
 interface EditableDetailProps {
@@ -17,7 +16,13 @@ interface EditableDetailProps {
   min?: number;
   max?: number;
   options?: string[];
+  setter?: any;
 }
+
+const FormContext = createContext({
+  editMode: true,
+  setField: (e: string, s: string) => null
+});
 
 const EditableDetail: React.FC<EditableDetailProps> = ({
   title,
@@ -28,7 +33,8 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   fieldName,
   min,
   max,
-  options
+  options,
+  setter
 }) => {
   const { editMode, setField } = useContext(FormContext);
   let detailInput = (
@@ -38,7 +44,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
         type={type}
         defaultValue={value}
         placeholder={value}
-        onChange={(e) => setField(fieldName!, e.target.value)}
+        onChange={(e) => setter(e.target.value)}
         min={min}
         max={max}
         readOnly={!!readOnly}
@@ -47,15 +53,17 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
     </InputGroup>
   );
 
-  if (type === "select") {
+  if (type === 'select') {
     detailInput = (
       <InputGroup aria-required>
         <Form.Control as="select">
           <option>{value}</option>
-          {options?.map((option) => <option>{option}</option>)}
+          {options?.map((option) => (
+            <option>{option}</option>
+          ))}
         </Form.Control>
       </InputGroup>
-    )
+    );
   }
 
   if (suffix && suffix !== '%') {

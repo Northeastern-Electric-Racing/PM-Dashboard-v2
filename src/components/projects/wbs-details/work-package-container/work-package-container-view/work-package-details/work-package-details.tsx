@@ -6,8 +6,13 @@
 import { useContext } from 'react';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import { WorkPackage, WbsElementStatus } from 'utils';
-import { FormContext } from '../../work-package-container';
-import { wbsPipe, endDatePipe, percentPipe, fullNamePipe } from '../../../../../../shared/pipes';
+import {
+  wbsPipe,
+  endDatePipe,
+  percentPipe,
+  fullNamePipe,
+  datePipe
+} from '../../../../../../shared/pipes';
 import PageBlock from '../../../../../shared/page-block/page-block';
 import EditableDetail from '../../../../../shared/editable-detail/editable-detail';
 import { useAllUsers } from '../../../../../../services/users.hooks';
@@ -21,7 +26,6 @@ interface WorkPackageDetailsProps {
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
-  const { editMode, setField } = useContext(FormContext);
   const { isLoading, isError, data, error } = useAllUsers();
 
   const formatDate = (date: Date) => {
@@ -30,7 +34,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     return date.toISOString().split('T')[0];
   };
 
-  const percentages = ["25%", "50%", "75%", "100%"]
+  const percentages = ['25%', '50%', '75%', '100%'];
 
   const endDateAsDatePipe = () => {
     const endDate = new Date(workPackage.startDate);
@@ -52,79 +56,22 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          <EditableDetail title="Work Package Name" value={workPackage.name} type="text" />
-          <EditableDetail
-            title="WBS #"
-            value={wbsPipe(workPackage.wbsNum)}
-            type="text"
-            readOnly={true}
-          />
-          <EditableDetail
-            title="Project Lead"
-            value={fullNamePipe(workPackage.projectLead)}
-            type="select"
-            options={usersWithoutAsStrings(workPackage.projectLead!)}
-          />
-          <EditableDetail
-            title="Project Manager"
-            value={fullNamePipe(workPackage.projectManager)}
-            type="select"
-            options={usersWithoutAsStrings(workPackage.projectManager!)}
-          />
-          <EditableDetail
-            title="Duration"
-            value={`${workPackage.duration}`}
-            type="number"
-            suffix="weeks"
-            min={1}
-          />
+          <b>Work Package Name:</b> {workPackage.name} <br />
+          <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
+          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)} <br />
+          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
+          <b>Duration:</b> {workPackage.duration}
         </Col>
         <Col xs={6} md={4}>
-          <EditableDetail
-            title="Start Date"
-            value={
-              editMode
-                ? formatDate(workPackage.startDate) // for a date input, format must be yyyy-mm-dd
-                : workPackage.startDate.toLocaleDateString()
-            }
-            type="date"
-          />
-          <EditableDetail
-            title="End Date"
-            value={
-              editMode
-                ? formatDate(endDateAsDatePipe())
-                : endDatePipe(workPackage.startDate, workPackage.duration)
-            }
-            type="date"
-            readOnly={true}
-          />
-          <EditableDetail
-            title="Progress"
-            value={percentPipe(workPackage.progress)}
-            type="select"
-            options={percentages}
-          />
-          <EditableDetail
-            title="Expected Progress"
-            value={percentPipe(workPackage.expectedProgress)}
-            type="number"
-            readOnly={true}
-          />
-          <EditableDetail
-            title="Timeline Status"
-            value={workPackage.timelineStatus}
-            type="text"
-            readOnly={true}
-          />
+          <b>Start Date:</b> {datePipe(workPackage.startDate)} <br />
+          <b>End Date:</b> {datePipe(endDateAsDatePipe())} <br />
+          <b>Progress:</b> {percentPipe(workPackage.progress)} <br />
+          <b>Expected Progress:</b> {percentPipe(workPackage.expectedProgress)} <br />
+          <b>Timeline Status:</b> {workPackage.timelineStatus}
         </Col>
       </Row>
     </Container>
   );
-
-  const statuses = Object.values(WbsElementStatus);
-  const index = statuses.indexOf(workPackage.status);
-  statuses.splice(index, 1);
 
   if (isLoading) return <LoadingIndicator />;
 
@@ -133,21 +80,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   return (
     <PageBlock
       title={'Work Package Details'}
-      headerRight={
-        editMode ? (
-          <div>
-            <label>Status</label>
-            <Form.Control as="select" onChange={(e) => setField('status', e.target.value)}>
-              <option>{workPackage.status}</option>
-              {statuses.map((status) => (
-                <option>{status}</option>
-              ))}
-            </Form.Control>
-          </div>
-        ) : (
-          <b>{workPackage.status}</b>
-        )
-      }
+      headerRight={<b>{workPackage.status}</b>}
       body={detailsBody}
     />
   );

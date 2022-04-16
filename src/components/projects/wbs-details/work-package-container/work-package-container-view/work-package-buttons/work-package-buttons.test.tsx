@@ -7,7 +7,7 @@ import { render, screen } from '@testing-library/react';
 import { FormContext } from '../../work-package-container';
 import WorkPackageButtons from './work-package-buttons';
 
-describe('Work package edit buttons', () => {
+describe.skip('Work package edit buttons', () => {
   const setField = (field: string, value: any) => {};
   it('renders all of the buttons, with edit mode enabled', () => {
     render(

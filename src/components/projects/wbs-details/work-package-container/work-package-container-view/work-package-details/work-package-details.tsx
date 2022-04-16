@@ -6,8 +6,13 @@
 import { useContext } from 'react';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import { WorkPackage, WbsElementStatus } from 'utils';
-import { FormContext } from '../../work-package-container';
-import { wbsPipe, endDatePipe, percentPipe, fullNamePipe } from '../../../../../../shared/pipes';
+import {
+  wbsPipe,
+  endDatePipe,
+  percentPipe,
+  fullNamePipe,
+  datePipe
+} from '../../../../../../shared/pipes';
 import PageBlock from '../../../../../shared/page-block/page-block';
 import EditableDetail from '../../../../../shared/editable-detail/editable-detail';
 import { useAllUsers } from '../../../../../../services/users.hooks';
@@ -17,12 +22,10 @@ import { User } from 'utils';
 import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
-  details: any;
-  setters: any;
+  workPackage: WorkPackage;
 }
 
-const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ details, setters }) => {
-  const { editMode, setField } = useContext(FormContext);
+const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const { isLoading, isError, data, error } = useAllUsers();
 
   const formatDate = (date: Date) => {
@@ -34,8 +37,8 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ details, setter
   const percentages = ['25%', '50%', '75%', '100%'];
 
   const endDateAsDatePipe = () => {
-    const endDate = new Date(details.startDate);
-    endDate.setDate(endDate.getDate() + details.duration * 7);
+    const endDate = new Date(workPackage.startDate);
+    endDate.setDate(endDate.getDate() + workPackage.duration * 7);
     return endDate;
   };
 
@@ -53,96 +56,22 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ details, setter
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          <EditableDetail title="Work Package Name" value={details.name} type="text" />
-          <EditableDetail
-            title="WBS #"
-            value={wbsPipe(details.wbsElementId)}
-            type="text"
-            readOnly={true}
-            setter={setters.setWbsElementId}
-          />
-          <EditableDetail
-            title="Project Lead"
-            value={fullNamePipe(details.projectLead)}
-            type="select"
-            options={usersWithoutAsStrings(details.projectLead!)}
-            setter={setters.setProjectLead}
-          />
-          <EditableDetail
-            title="Project Manager"
-            value={fullNamePipe(details.projectManager)}
-            type="select"
-            options={usersWithoutAsStrings(details.projectManager!)}
-            setter={setters.setProjectManager}
-          />
-          <EditableDetail
-            title="Duration"
-            value={`${details.duration}`}
-            type="number"
-            suffix="weeks"
-            min={1}
-            setter={(e: string) => setters.setDuration(parseInt(e))}
-          />
+          <b>Work Package Name:</b> {workPackage.name} <br />
+          <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
+          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)} <br />
+          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
+          <b>Duration:</b> {workPackage.duration}
         </Col>
         <Col xs={6} md={4}>
-          <EditableDetail
-            title="Start Date"
-            value={
-              editMode
-                ? formatDate(details.startDate) // for a date input, format must be yyyy-mm-dd
-                : details.startDate.toLocaleDateString()
-            }
-            type="date"
-            setter={setters.setStartDate}
-          />
-          <EditableDetail
-            title="End Date"
-            value={
-              editMode
-                ? formatDate(endDateAsDatePipe())
-                : endDatePipe(details.startDate, details.duration)
-            }
-            type="date"
-            readOnly={true}
-          />
-          <EditableDetail
-            title="Progress"
-            value={percentPipe(details.progress)}
-            type="select"
-            options={percentages}
-            setter={(e: string) => setters.setProgress(parseInt(e))}
-          />
-          <EditableDetail
-            title="Expected Progress"
-            value={percentPipe(details.expectedProgress)}
-            type="number"
-            readOnly={true}
-          />
-          <EditableDetail
-            title="Timeline Status"
-            value={details.timelineStatus}
-            type="text"
-            readOnly={true}
-          />
+          <b>Start Date:</b> {datePipe(workPackage.startDate)} <br />
+          <b>End Date:</b> {datePipe(endDateAsDatePipe())} <br />
+          <b>Progress:</b> {percentPipe(workPackage.progress)} <br />
+          <b>Expected Progress:</b> {percentPipe(workPackage.expectedProgress)} <br />
+          <b>Timeline Status:</b> {workPackage.timelineStatus}
         </Col>
       </Row>
     </Container>
   );
-
-  const statuses = Object.values(WbsElementStatus);
-  const index = statuses.indexOf(details.status);
-  statuses.splice(index, 1);
-
-  const transformStatus = (status: string | undefined) => {
-    switch (status) {
-      case 'ACTIVE':
-        return WbsElementStatus.Active;
-      case 'INACTIVE':
-        return WbsElementStatus.Inactive;
-      default:
-        return WbsElementStatus.Complete;
-    }
-  };
 
   if (isLoading) return <LoadingIndicator />;
 
@@ -151,24 +80,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ details, setter
   return (
     <PageBlock
       title={'Work Package Details'}
-      headerRight={
-        editMode ? (
-          <div>
-            <label>Status</label>
-            <Form.Control
-              as="select"
-              onChange={(e) => setters.setStatus(transformStatus(e.target.value))}
-            >
-              <option>{details.status}</option>
-              {statuses.map((status) => (
-                <option>{status}</option>
-              ))}
-            </Form.Control>
-          </div>
-        ) : (
-          <b>{details.status}</b>
-        )
-      }
+      headerRight={<b>{workPackage.status}</b>}
       body={detailsBody}
     />
   );

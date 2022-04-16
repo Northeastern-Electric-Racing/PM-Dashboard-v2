@@ -6,15 +6,13 @@
 import { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { FormContext, EditModeProps } from '../../work-package-container';
 import styles from './work-package-buttons.module.css';
 
 interface EditModeProps {
   setEditMode: any;
 }
 
-const WorkPackageButtons: React.FC<EditModeProps> = (props) => {
-  const { editMode, setField } = useContext(FormContext);
+const WorkPackageButtons: React.FC<EditModeProps> = ({ setEditMode }) => {
   const history = useHistory();
 
   return (

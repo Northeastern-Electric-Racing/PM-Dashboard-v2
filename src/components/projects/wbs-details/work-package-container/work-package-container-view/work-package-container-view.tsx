@@ -16,13 +16,14 @@ import DependenciesList from './dependencies-list/dependencies-list';
 import ChangesList from './changes-list/changes-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import PageBlock from '../../../../shared/page-block/page-block';
-import { FormContext } from '../work-package-container';
+import { EditModeContext, FormContext } from '../work-package-container';
+import DescriptionList from '../../../../shared/description-list/description-list';
+import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 
 interface WorkPackageContainerProps {
+  workPackage: WorkPackage;
   data: any;
   setters: any;
-  editMode: boolean;
-  setEditMode: any;
   handleSubmit: any;
 }
 
@@ -30,18 +31,17 @@ export interface EditModeProps {
   changeEditMode(arg: any): void;
 }
 
-const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
+const WorkPackageContainerView: React.FC<WorkPackageContainerProps> = ({
+  workPackage
   data,
   setters,
-  editMode,
-  setEditMode,
   handleSubmit
 }) => {
   const [ea, setEa] = useState<{ id: number | undefined; detail: string }[]>(
     data.expectedActivities
   );
   const [d, setD] = useState<{ id: number | undefined; detail: string }[]>(data.deliverables);
-  const { setField } = useContext(FormContext);
+  const { editMode, setEditMode } = useContext(EditModeContext);
 
   // Refreshes data to original data when edit mode is canceled.
   useEffect(() => {
@@ -107,42 +107,16 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({
 
   return (
     <div className="mb-5">
-      <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(data.wbsElementId)} - ${data.name}`} />
-        <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
-        <WorkPackageDetails details={details} setters={setters} />
-        <DependenciesList dependencies={data.dependencies} setter={setters.setDependencies} />
-        <PageBlock
-          title="Expected Activities"
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              readOnly={!editMode}
-              items={ea.map((ea) => ea.detail)}
-              add={expectedActivitiesUtil.add}
-              remove={expectedActivitiesUtil.remove}
-              update={expectedActivitiesUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Delieverables'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              readOnly={!editMode}
-              items={d.map((d) => d.detail)}
-              add={deliverablesUtil.add}
-              remove={deliverablesUtil.remove}
-              update={deliverablesUtil.update}
-            />
-          }
-        />
+        <PageTitle title={`${wbsPipe(data.wbsElementId)} - ${data.name}`}
+        actionButton={editMode ? <></> : <WorkPackageButtons setEditMode={setEditMode} />} />
+        <WorkPackageDetails workPackage={data} />
+        <HorizontalList title={'Dependencies'} headerRight={<></>} items={workPackage.dependencies.map(dep => <b>{dep}</b>)} />
+        <DescriptionList title={'Expected Activities'} items={workPackage.expectedActivities} />
+        <DescriptionList title={'Deliverables'} items={workPackage.deliverables} />
         <ChangesList changes={data.changes} />
         {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
-      </Form>
-    </div>
+  </div>
   );
 };
 
-export default WorkPackageContainer;
+export default WorkPackageContainerView;

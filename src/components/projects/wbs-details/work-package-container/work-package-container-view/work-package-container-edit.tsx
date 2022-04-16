@@ -162,16 +162,42 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   };
 
   return (
-    <FormContext.Provider value={{ editMode, setField }}>
-      <WorkPackageContainerView
-        data={data!}
-        editMode={editMode}
-        setEditMode={(mode: boolean) => setEditMode(mode)}
-        handleSubmit={(event: SyntheticEvent) => handleSubmit(event)}
-      />
-        <WorkPackageButtons setEditMode={setEditMode} />
+    <div className="mb-5">
+      <Form onSubmit={handleSubmit}>
+        <PageTitle title={`${wbsPipe(data.wbsElementId)} - ${data.name}`} />
+        <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
+        <WorkPackageDetails details={details} setters={setters} />
+        <DependenciesList dependencies={data.dependencies} setter={setters.setDependencies} />
+        <PageBlock
+          title="Expected Activities"
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              readOnly={!editMode}
+              items={ea.map((ea) => ea.detail)}
+              add={expectedActivitiesUtil.add}
+              remove={expectedActivitiesUtil.remove}
+              update={expectedActivitiesUtil.update}
+            />
+          }
+        />
+        <PageBlock
+          title={'Delieverables'}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              readOnly={!editMode}
+              items={d.map((d) => d.detail)}
+              add={deliverablesUtil.add}
+              remove={deliverablesUtil.remove}
+              update={deliverablesUtil.update}
+            />
+          }
+        />
+        <ChangesList changes={data.changes} />
+        {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
       </Form>
-    </>
+    </div>
   );
 };
 

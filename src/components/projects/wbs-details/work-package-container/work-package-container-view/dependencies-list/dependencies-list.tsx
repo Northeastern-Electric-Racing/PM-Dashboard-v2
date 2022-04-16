@@ -7,10 +7,13 @@ import HorizontalList from '../../../../../shared/horizontal-list/horizontal-lis
 import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
 import { Button, InputGroup, Form } from 'react-bootstrap';
-import { FormContext } from '../../work-package-container';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, createContext } from 'react';
 import { validateWBS } from 'utils';
 
+const FormContext = createContext({
+  editMode: true,
+  setField: () => null
+});
 interface DependenciesListProps {
   dependencies: WbsNumber[];
   setter: any;

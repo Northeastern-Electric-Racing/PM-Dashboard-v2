@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
-import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { createContext, useContext } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 
 interface EditableDetailProps {
@@ -19,6 +18,11 @@ interface EditableDetailProps {
   options?: string[];
   setter?: any;
 }
+
+const FormContext = createContext({
+  editMode: true,
+  setField: (e: string, s: string) => null
+});
 
 const EditableDetail: React.FC<EditableDetailProps> = ({
   title,

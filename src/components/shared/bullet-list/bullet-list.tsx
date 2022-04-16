@@ -6,8 +6,7 @@
 import PageBlock from '../page-block/page-block';
 import styles from './bullet-list.module.css';
 import { Form, Button, InputGroup } from 'react-bootstrap';
-import { useContext, useState, useEffect } from 'react';
-import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
+import { useContext, useState, useEffect, createContext } from 'react';
 
 interface BulletListProps {
   title: string;
@@ -17,6 +16,11 @@ interface BulletListProps {
   readOnly?: boolean;
   fieldName?: string;
 }
+
+const FormContext = createContext({
+  editMode: true,
+  setField: (e: string, s: string) => null
+});
 
 const BulletList: React.FC<BulletListProps> = ({
   title,

@@ -20,7 +20,13 @@ interface WorkPackageContainerProps {
 }
 
 // Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
-export const EditModeContext = createContext({});
+export const EditModeContext = createContext<{
+  editMode: boolean;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+}>({
+  editMode: false,
+  setEditMode: () => null
+});
 
 const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) => {
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
@@ -43,7 +49,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
       {editMode ? (
         <WorkPackageContainerEdit wbsNum={wbsNum} workPackage={data!} />
       ) : (
-        <WorkPackageContainerView wbsNum={wbsNum} data={data!} />
+        <WorkPackageContainerView workPackage={data!} />
       )}
     </EditModeContext.Provider>
   );

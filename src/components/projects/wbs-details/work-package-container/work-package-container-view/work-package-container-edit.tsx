@@ -3,26 +3,22 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { createContext, SyntheticEvent, useState } from 'react';
-import { validateWBS, WbsElementStatus, WbsNumber, WorkPackage } from 'utils';
-import { useEditWorkPackage, useSingleWorkPackage } from '../../../../services/work-packages.hooks';
-import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
-import ErrorPage from '../../../shared/error-page/error-page';
-import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
-import { useAuth } from '../../../../services/auth.hooks';
-import { useAllUsers } from '../../../../services/users.hooks';
-import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import { features } from 'process';
+import { createContext, useState, SyntheticEvent } from 'react';
 import { Form } from 'react-bootstrap';
-import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
-import PageBlock from '../../../shared/page-block/page-block';
-import PageTitle from '../../../shared/page-title/page-title';
-import ProjectEditDetails from '../../project-edit-form/project-edit-container/project-edit-details/project-edit-details';
-import ProjectEditSummary from '../../project-edit-form/project-edit-container/project-edit-summary/project-edit-summary';
-import WorkPackageSummary from '../project-container/work-package-summary/work-package-summary';
-import ChangesList from './work-package-container-view/changes-list/changes-list';
-import EditModeOptions from './work-package-container-view/edit-mode-options/edit-mode-options';
-import WorkPackageButtons from './work-package-container-view/work-package-buttons/work-package-buttons';
+import { WbsNumber, WorkPackage, WbsElementStatus } from 'utils';
+import { useAuth } from '../../../../../services/auth.hooks';
+import { useAllUsers } from '../../../../../services/users.hooks';
+import { useEditWorkPackage } from '../../../../../services/work-packages.hooks';
+import { fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
+import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
+import PageBlock from '../../../../shared/page-block/page-block';
+import PageTitle from '../../../../shared/page-title/page-title';
+import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
+import ChangesList from './changes-list/changes-list';
+import DependenciesList from './dependencies-list/dependencies-list';
+import EditModeOptions from './edit-mode-options/edit-mode-options';
+import WorkPackageButtons from './work-package-buttons/work-package-buttons';
+import WorkPackageDetails from './work-package-details/work-package-details';
 
 interface WorkPackageContainerEditProps {
   wbsNum: WbsNumber;
@@ -48,6 +44,48 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   const [form, setForm] = useState({});
   const { mutateAsync } = useEditWorkPackage();
   const { data: userData } = useAllUsers();
+
+  // const expectedActivitiesUtil: EditableTextInputListUtils = {
+  //   add: (val) => {
+  //     const clone = ea.slice();
+  //     clone.push({
+  //       id: undefined,
+  //       detail: val
+  //     });
+  //     setEa(clone);
+  //   },
+  //   remove: (idx) => {
+  //     const clone = ea.slice();
+  //     clone.splice(idx, 1);
+  //     setEa(clone);
+  //   },
+  //   update: (idx, val) => {
+  //     const clone = ea.slice();
+  //     clone[idx].detail = val;
+  //     setEa(clone);
+  //   }
+  // };
+
+  // const deliverablesUtil: EditableTextInputListUtils = {
+  //   add: (val) => {
+  //     const clone = d.slice();
+  //     clone.push({
+  //       id: undefined,
+  //       detail: val
+  //     });
+  //     setD(clone);
+  //   },
+  //   remove: (idx) => {
+  //     const clone = d.slice();
+  //     clone.splice(idx, 1);
+  //     setD(clone);
+  //   },
+  //   update: (idx, val) => {
+  //     const clone = d.slice();
+  //     clone[idx].detail = val;
+  //     setD(clone);
+  //   }
+  // };
 
   // states for the form's payload
   const [projectLead, setProjectLead] = useState<string>(fullNamePipe(workPackage.projectLead));
@@ -133,29 +171,29 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
     const { userId } = auth.user!;
 
-    const payload = {
-      projectLead: transformUser(projectLead),
-      projectManager: transformUser(projectManager),
-      wbsElementId: transformWbsNum(wbsNum),
-      userId,
-      name: name.trim(),
-      crId,
-      startDate,
-      duration,
-      dependencies: dependencies.map((dep) => {
-        return {
-          carNumber: dep.car,
-          projectNumber: dep.project,
-          workPackageNumber: dep.workPackage
-        };
-      }),
-      expectedActivities,
-      deliverables,
-      wbsElementStatus: status,
-      progress
-    };
+    // const payload = {
+    //   projectLead: transformUser(projectLead),
+    //   projectManager: transformUser(projectManager),
+    //   wbsElementId: transformWbsNum(wbsNum),
+    //   userId,
+    //   name: name.trim(),
+    //   crId,
+    //   startDate.to,
+    //   duration,
+    //   dependencies: dependencies.map((dep) => {
+    //     return {
+    //       carNumber: dep.car,
+    //       projectNumber: dep.project,
+    //       workPackageNumber: dep.workPackage
+    //     };
+    //   }),
+    //   expectedActivities,
+    //   deliverables,
+    //   wbsElementStatus: status,
+    //   progress
+    // };
 
-    await mutateAsync(payload);
+    // await mutateAsync(payload);
 
     // after edit is complete, switch off edit mode
     setEditMode(false);
@@ -163,7 +201,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
   return (
     <div className="mb-5">
-      <Form onSubmit={handleSubmit}>
+      {/* <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(data.wbsElementId)} - ${data.name}`} />
         <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
         <WorkPackageDetails details={details} setters={setters} />
@@ -196,7 +234,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
         />
         <ChangesList changes={data.changes} />
         {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
-      </Form>
+      </Form> */}
     </div>
   );
 };

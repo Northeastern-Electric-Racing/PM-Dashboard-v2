@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { FormContext } from '../../../work-package-container';
-import { useContext } from 'react';
+import { useContext, createContext } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../../../../shared/pipes';
@@ -12,6 +11,10 @@ import { useHistory } from 'react-router-dom';
 import { routes } from '../../../../../../../shared/routes';
 import styles from './dependency.module.css';
 
+const FormContext = createContext({
+  editMode: true,
+  setField: (e: string, s: string) => null
+});
 interface DependencyProps {
   wbsNumber: WbsNumber;
   handleDelete: any;

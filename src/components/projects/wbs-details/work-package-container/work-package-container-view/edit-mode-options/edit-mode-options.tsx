@@ -3,17 +3,19 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { EditModeProps } from '../work-package-container-view';
+import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
+import { EditModeContext } from '../../work-package-container';
 import styles from './edit-mode-options.module.css';
 
-const EditModeOptions: React.FC<EditModeProps> = (props) => {
+const EditModeOptions: React.FC = () => {
+  const { setEditMode } = useContext(EditModeContext);
   return (
     <div className={styles.editModeOptionsContainer}>
       <Button type="submit" variant="success">
         Save
       </Button>
-      <Button variant="danger" onClick={props.changeEditMode}>
+      <Button variant="danger" onClick={() => setEditMode(false)}>
         Cancel
       </Button>
     </div>

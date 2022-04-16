@@ -133,9 +133,11 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
   const transformDate = (date: Date) => {
     const month =
-      date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1).toString();
+      date.getUTCMonth() + 1 < 10
+        ? `0${date.getUTCMonth() + 1}`
+        : (date.getUTCMonth() + 1).toString();
     const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate().toString();
-    return `${date.getFullYear().toString()}-${month}-${day}`;
+    return `${date.getUTCFullYear().toString()}-${month}-${day}`;
   };
 
   const transformWbsNum = (wbsNum: WbsNumber) => {

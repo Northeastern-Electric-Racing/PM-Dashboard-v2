@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { data } from 'msw/lib/types/context';
 import { createContext, useState, SyntheticEvent } from 'react';
 import { Form } from 'react-bootstrap';
 import { WbsNumber, WorkPackage, WbsElementStatus } from 'utils';

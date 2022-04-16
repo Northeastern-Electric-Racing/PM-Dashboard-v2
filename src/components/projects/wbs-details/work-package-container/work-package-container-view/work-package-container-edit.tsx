@@ -39,7 +39,6 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   edit
 }) => {
   const auth = useAuth();
-  const [form, setForm] = useState({});
   const { mutateAsync } = useEditWorkPackage();
   const { data: userData } = useAllUsers();
 

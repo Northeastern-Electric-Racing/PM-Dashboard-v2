@@ -48,11 +48,10 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   const [projectManager, setProjectManager] = useState<string>(
     fullNamePipe(workPackage.projectManager)
   );
-  const [wbsElementId, setWbsElementId] = useState<string>(wbsPipe(workPackage.wbsNum));
   const [name, setName] = useState<string>(workPackage.name);
   const [crId, setCrId] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>(workPackage.startDate.toLocaleDateString());
-  const [duration, setDuration] = useState<string>(workPackage.duration.toString());
+  const [startDate, setStartDate] = useState<Date>(workPackage.startDate);
+  const [duration, setDuration] = useState<number>(workPackage.duration);
   const [deps, setDeps] = useState<WbsNumber[]>(workPackage.dependencies);
   const [ea, setEa] = useState<{ id: number; detail: string }[]>(
     workPackage.expectedActivities.map((ea) => ({
@@ -111,28 +110,9 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     }
   };
 
-  // const data = {
-  //   projectLead,
-  //   projectManager,
-  //   wbsElementId,
-  //   name,
-  //   crId,
-  //   startDate,
-  //   duration,
-  //   dependencies,
-  //   expectedActivities,
-  //   deliverables,
-  //   status,
-  //   progress,
-  //   changes: workPackage.changes,
-  //   expectedProgress: workPackage.expectedProgress,
-  //   timelineStatus: workPackage.timelineStatus
-  // };
-
   const setters = {
     setProjectLead,
     setProjectManager,
-    setWbsElementId,
     setName,
     setCrId,
     setStartDate,
@@ -165,29 +145,25 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
     const { userId } = auth.user!;
 
-    // const payload = {
-    //   projectLead: transformUser(projectLead),
-    //   projectManager: transformUser(projectManager),
-    //   wbsElementId: transformWbsNum(wbsNum),
-    //   userId,
-    //   name: name.trim(),
-    //   crId,
-    //   startDate.to,
-    //   duration,
-    //   dependencies: dependencies.map((dep) => {
-    //     return {
-    //       carNumber: dep.car,
-    //       projectNumber: dep.project,
-    //       workPackageNumber: dep.workPackage
-    //     };
-    //   }),
-    //   expectedActivities,
-    //   deliverables,
-    //   wbsElementStatus: status,
-    //   progress
-    // };
+    const payload = {
+      projectLead: transformUser(projectLead),
+      projectManager: transformUser(projectManager),
+      wbsElementId: transformWbsNum(workPackage.wbsNum),
+      userId,
+      name,
+      crId: parseInt(crId),
+      startDate: startDate.toLocaleString(),
+      duration,
+      dependencies: deps.map((dep) => transformWbsNum(dep)),
+      expectedActivities: ea,
+      deliverables: dels,
+      wbsElementStatus: status,
+      progress
+    };
 
-    // await mutateAsync(payload);
+    console.log(payload);
+
+    //await mutateAsync(payload);
 
     // after edit is complete, switch off edit mode
     edit.setEditMode(false);
@@ -197,7 +173,14 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     <div className="mb-5">
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`} />
-        <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
+        <Form.Control
+          className="m-4 w-25"
+          type="number"
+          placeholder="Change Request ID #"
+          min="0"
+          required
+          onChange={(e) => setCrId(e.target.value.trim())}
+        />
         <WorkPackageEditDetails workPackage={workPackage} users={userData!} setters={setters} />
         <DependenciesList dependencies={workPackage.dependencies} setter={setDeps} />
         <PageBlock

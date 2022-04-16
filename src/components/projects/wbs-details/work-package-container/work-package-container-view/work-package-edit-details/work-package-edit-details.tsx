@@ -60,8 +60,19 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     (status) => status !== workPackage.status
   );
 
+  const transformStatus = (status: string) => {
+    switch (status) {
+      case 'ACTIVE':
+        return WbsElementStatus.Active;
+      case 'INACTIVE':
+        return WbsElementStatus.Inactive;
+      default:
+        return WbsElementStatus.Complete;
+    }
+  };
+
   const statusSelect = (
-    <Form.Control as="select">
+    <Form.Control as="select" onChange={(e) => setters.setStatus(transformStatus(e.target.value))}>
       <option key={0} value={workPackage.status}>
         {workPackage.status}
       </option>
@@ -80,7 +91,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     return (
       <>
         <b>{title}</b>
-        <Form.Control as="select">
+        <Form.Control as="select" onChange={(e) => onChange(e.target.value)}>
           <option key={defaultVal} value={defaultVal}>
             {`${defaultVal}%`}
           </option>
@@ -116,7 +127,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     return (
       <>
         <b>{title}</b>
-        <Form.Control as="select">
+        <Form.Control as="select" onChange={(e) => onChange(e.target.value)}>
           <option key={defaultUser.userId} value={fullNamePipe(defaultUser)}>
             {fullNamePipe(defaultUser)}
           </option>
@@ -155,7 +166,6 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
   const transformDate = (date: Date) => {
     const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth().toString();
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate().toString();
-    console.log(`${date.getFullYear().toString()}-${month}-${day}`);
     return `${date.getFullYear().toString()}-${month}-${day}`;
   };
 
@@ -168,7 +178,11 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
             'WBS #:',
             'text',
             wbsPipe(workPackage.wbsNum),
-            setters.setWbsElementId
+            null,
+            '',
+            '',
+            '',
+            true
           )}
           {buildUsersSelect('Project Lead:', workPackage.projectLead!, setters.setProjectLead)}
           {buildUsersSelect(
@@ -177,7 +191,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
             setters.setProjectManager
           )}
           {editDetailsInputBuilder('Duration:', 'number', workPackage.duration, (val) =>
-            setters.setDuration(parseInt(val))
+            setters.setDuration(parseInt(val.trim()))
           )}
         </Col>
         <Col xs={6} md={4}>
@@ -198,7 +212,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
             true
           )}
           {buildProgressSelect('Progress:', workPackage.progress, (val: string) =>
-            setters.setProgress(parseInt(val))
+            setters.setProgress(parseInt(val.trim()))
           )}
           {editDetailsInputBuilder(
             'Expected Progress:',

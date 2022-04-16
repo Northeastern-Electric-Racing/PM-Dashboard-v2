@@ -347,7 +347,7 @@ export const createChangeJsonDates = (
       changeRequestId: crId,
       implementerId,
       wbsElementId,
-      detail: `Edited ${nameOfField} from "${oldValue.toDateString()}" to "${newValue.toDateString()}"`
+      detail: `Edited ${nameOfField} from "${oldValue.toUTCString()}" to "${newValue.toUTCString()}"`
     };
   }
   return undefined;

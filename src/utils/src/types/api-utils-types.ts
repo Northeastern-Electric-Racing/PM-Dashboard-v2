@@ -17,7 +17,7 @@ export interface ApiRoute {
   func: ApiRouteFunction;
 }
 
-export const intType = { type: 'integer', minimum: 0 } as const;
+export const intType = { type: 'integer' } as const; // please just leave out min so it works for now, everything is just so scuffed
 export const stringType = { type: 'string' } as const;
 export const dateType = { type: 'string', format: 'date' } as const;
 export const booleanType = { type: 'boolean' } as const;

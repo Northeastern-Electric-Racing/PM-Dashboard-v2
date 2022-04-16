@@ -131,6 +131,12 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     return undefined;
   };
 
+  const transformDate = (date: Date) => {
+    const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth().toString();
+    const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate().toString();
+    return `${date.getFullYear().toString()}-${month}-${day}`;
+  };
+
   const transformWbsNum = (wbsNum: WbsNumber) => {
     return {
       carNumber: wbsNum.car,
@@ -151,7 +157,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
       userId,
       name,
       crId: parseInt(crId),
-      startDate: startDate.toLocaleString(),
+      startDate: transformDate(startDate),
       duration,
       dependencies: deps.map((dep) => transformWbsNum(dep)),
       expectedActivities: ea,
@@ -162,7 +168,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 
     console.log(payload);
 
-    //await mutateAsync(payload);
+    await mutateAsync(payload);
 
     // after edit is complete, switch off edit mode
     edit.setEditMode(false);

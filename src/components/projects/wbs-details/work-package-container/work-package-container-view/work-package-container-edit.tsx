@@ -11,6 +11,8 @@ import { useAllUsers } from '../../../../../services/users.hooks';
 import { useEditWorkPackage } from '../../../../../services/work-packages.hooks';
 import { wbsPipe } from '../../../../../shared/pipes';
 import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
+import ErrorPage from '../../../../shared/error-page/error-page';
+import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
 import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
@@ -36,7 +38,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 }) => {
   const auth = useAuth();
   const { mutateAsync } = useEditWorkPackage();
-  const { data: userData } = useAllUsers();
+  const { data: userData, isLoading, isError, error } = useAllUsers();
 
   // states for the form's payload
   const [projectLead, setProjectLead] = useState(workPackage.projectLead?.userId);
@@ -166,6 +168,10 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     // after edit is complete, reload
     window.location.reload();
   };
+
+  if (isLoading) return <LoadingIndicator />;
+
+  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <div className="mb-5">

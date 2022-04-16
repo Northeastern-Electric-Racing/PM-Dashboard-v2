@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '../../../../../test-support/test-utils';
+import { act, render, screen } from '../../../../../test-support/test-utils';
 import userEvent from '@testing-library/user-event';
 import { endDatePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 import {

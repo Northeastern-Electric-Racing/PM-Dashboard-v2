@@ -36,6 +36,7 @@ const EditableDetail: React.FC<EditableDetailProps> = ({
   options,
   setter
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { editMode, setField } = useContext(FormContext);
   let detailInput = (
     <InputGroup aria-required>

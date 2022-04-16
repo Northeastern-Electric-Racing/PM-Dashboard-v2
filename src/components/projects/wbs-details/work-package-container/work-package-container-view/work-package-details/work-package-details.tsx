@@ -3,22 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
-import { Col, Container, Row, Form } from 'react-bootstrap';
-import { WorkPackage, WbsElementStatus } from 'utils';
-import {
-  wbsPipe,
-  endDatePipe,
-  percentPipe,
-  fullNamePipe,
-  datePipe
-} from '../../../../../../shared/pipes';
+import { Col, Container, Row } from 'react-bootstrap';
+import { WorkPackage } from 'utils';
+import { wbsPipe, percentPipe, fullNamePipe, datePipe } from '../../../../../../shared/pipes';
 import PageBlock from '../../../../../shared/page-block/page-block';
-import EditableDetail from '../../../../../shared/editable-detail/editable-detail';
-import { useAllUsers } from '../../../../../../services/users.hooks';
-import LoadingIndicator from '../../../../../shared/loading-indicator/loading-indicator';
-import ErrorPage from '../../../../../shared/error-page/error-page';
-import { User } from 'utils';
 import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
@@ -26,30 +14,17 @@ interface WorkPackageDetailsProps {
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
-  const { isLoading, isError, data, error } = useAllUsers();
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatDate = (date: Date) => {
     const offset = date.getTimezoneOffset();
     date = new Date(date.getTime() - offset * 60 * 1000);
     return date.toISOString().split('T')[0];
   };
 
-  const percentages = ['25%', '50%', '75%', '100%'];
-
   const endDateAsDatePipe = () => {
     const endDate = new Date(workPackage.startDate);
     endDate.setDate(endDate.getDate() + workPackage.duration * 7);
     return endDate;
-  };
-
-  const usersWithoutAsStrings = (user: User) => {
-    if (data) {
-      const users = data;
-      const otherUsers = users.filter((otherUser) => {
-        return otherUser.userId !== user.userId;
-      });
-      return otherUsers.map((otherUser) => fullNamePipe(otherUser));
-    }
   };
 
   const detailsBody = (
@@ -72,10 +47,6 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
       </Row>
     </Container>
   );
-
-  if (isLoading) return <LoadingIndicator />;
-
-  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <PageBlock

@@ -3,7 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useContext } from 'react';
 import { WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
 import DescriptionList from '../../../../shared/description-list/description-list';
@@ -11,7 +10,6 @@ import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditMode } from '../work-package-container';
 import ChangesList from './changes-list/changes-list';
-import EditModeOptions from './edit-mode-options/edit-mode-options';
 import WorkPackageButtons from './work-package-buttons/work-package-buttons';
 import WorkPackageDetails from './work-package-details/work-package-details';
 

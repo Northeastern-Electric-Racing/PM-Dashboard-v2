@@ -3,16 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { createContext, SyntheticEvent, useContext, useMemo, useState } from 'react';
-import { validateWBS, WbsElementStatus, WbsNumber } from 'utils';
-import { useEditWorkPackage, useSingleWorkPackage } from '../../../../services/work-packages.hooks';
+import { useState } from 'react';
+import { WbsNumber } from 'utils';
+import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
-import { useAuth } from '../../../../services/auth.hooks';
-import { useAllUsers } from '../../../../services/users.hooks';
-import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import { useParams } from 'react-router-dom';
 import WorkPackageContainerEdit from './work-package-container-view/work-package-container-edit';
 
 interface WorkPackageContainerProps {

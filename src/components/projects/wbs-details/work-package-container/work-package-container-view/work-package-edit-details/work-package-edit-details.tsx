@@ -142,6 +142,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatDate = (date: Date) => {
     const offset = date.getTimezoneOffset();
     date = new Date(date.getTime() - offset * 60 * 1000);

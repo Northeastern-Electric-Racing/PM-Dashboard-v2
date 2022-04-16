@@ -123,9 +123,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   ) => {
     let otherUsers = users;
     if (defaultUser !== undefined) {
-      otherUsers = users.filter((user) => {
-        return user.userId !== defaultUser.userId;
-      });
+      otherUsers = users.filter((user) => user.userId !== defaultUser.userId);
     }
     return (
       <>

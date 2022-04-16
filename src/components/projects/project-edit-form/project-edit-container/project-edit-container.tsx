@@ -202,9 +202,14 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
       projectManager
     };
 
-    await mutateAsync(payload);
-
-    window.location.reload();
+    try {
+      await mutateAsync(payload);
+      window.location.reload();
+    } catch (e) {
+      if (e instanceof Error) {
+        alert(e.message);
+      }
+    }
   };
 
   if (isLoading) return <LoadingIndicator />;

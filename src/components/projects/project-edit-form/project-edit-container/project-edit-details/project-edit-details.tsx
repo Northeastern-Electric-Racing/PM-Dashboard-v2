@@ -6,7 +6,7 @@
 import { Project, User } from 'utils';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageBlock from '../../../../shared/page-block/page-block';
-import { wbsPipe, endDatePipe, fullNamePipe } from '../../../../../shared/pipes';
+import { wbsPipe, endDatePipe, fullNamePipe, emDashPipe } from '../../../../../shared/pipes';
 import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 // new parts added at the bottom
@@ -118,12 +118,13 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
 
   const buildUsersSelect = (
     title: string,
-    defaultUser: User,
+    defaultUser: User | undefined,
     updateUser: (val: number) => void
   ) => {
-    const otherUsers = users.filter((user) => {
-      return user.userId !== defaultUser.userId;
-    });
+    let otherUsers = users;
+    if (defaultUser !== undefined) {
+      otherUsers = users.filter((user) => user.userId !== defaultUser.userId);
+    }
     return (
       <>
         <b>{title}</b>
@@ -132,10 +133,16 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
           data-testid={title}
           onChange={(e) => updateUser(parseInt(e.target.value))}
         >
-          <option key={defaultUser.userId} value={defaultUser.userId}>
-            {fullNamePipe(defaultUser)}
-          </option>
-          {otherUsers.map((user, index) => (
+          {defaultUser === undefined ? (
+            <option key={-1} value={-1}>
+              {emDashPipe('')}
+            </option>
+          ) : (
+            <option key={defaultUser.userId} value={defaultUser.userId}>
+              {fullNamePipe(defaultUser)}
+            </option>
+          )}
+          {otherUsers.map((user) => (
             <option key={user.userId} value={user.userId}>
               {fullNamePipe(user)}
             </option>
@@ -161,8 +168,8 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
             '',
             true
           )}
-          {buildUsersSelect('Project Lead:', project.projectLead!, updateProjectLead)}
-          {buildUsersSelect('Project Manager:', project.projectManager!, updateProjectManager)}
+          {buildUsersSelect('Project Lead:', project.projectLead, updateProjectLead)}
+          {buildUsersSelect('Project Manager:', project.projectManager, updateProjectManager)}
           {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
         </Col>
         <Col xs={6} md={4}>

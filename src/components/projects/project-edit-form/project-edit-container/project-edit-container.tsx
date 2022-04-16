@@ -198,8 +198,8 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
       slideDeckLink: slideDeck,
       bomLink: bom,
       taskListLink: taskList,
-      projectLead,
-      projectManager
+      projectLead: projectLead === -1 ? undefined : projectLead,
+      projectManager: projectManager === -1 ? undefined : projectManager
     };
 
     try {

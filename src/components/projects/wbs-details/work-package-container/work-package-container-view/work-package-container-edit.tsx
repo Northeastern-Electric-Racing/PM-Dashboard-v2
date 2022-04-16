@@ -9,8 +9,10 @@ import { WbsNumber, WorkPackage, WbsElementStatus } from 'utils';
 import { useAuth } from '../../../../../services/auth.hooks';
 import { useAllUsers } from '../../../../../services/users.hooks';
 import { useEditWorkPackage } from '../../../../../services/work-packages.hooks';
-import { fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
+import { wbsPipe } from '../../../../../shared/pipes';
 import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
+import ErrorPage from '../../../../shared/error-page/error-page';
+import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
 import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
@@ -36,13 +38,11 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
 }) => {
   const auth = useAuth();
   const { mutateAsync } = useEditWorkPackage();
-  const { data: userData } = useAllUsers();
+  const { data: userData, isLoading, isError, error } = useAllUsers();
 
   // states for the form's payload
-  const [projectLead, setProjectLead] = useState<string>(fullNamePipe(workPackage.projectLead));
-  const [projectManager, setProjectManager] = useState<string>(
-    fullNamePipe(workPackage.projectManager)
-  );
+  const [projectLead, setProjectLead] = useState(workPackage.projectLead?.userId);
+  const [projectManager, setProjectManager] = useState(workPackage.projectManager?.userId);
   const [name, setName] = useState<string>(workPackage.name);
   const [crId, setCrId] = useState<string>('');
   const [startDate, setStartDate] = useState<Date>(workPackage.startDate);
@@ -119,14 +119,6 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     setProgress
   };
 
-  const transformUser = (user: string | undefined) => {
-    if (userData) {
-      const userId = userData.filter((rawUser) => fullNamePipe(rawUser) === user);
-      return userId.length === 0 ? undefined : userId[0].userId;
-    }
-    return undefined;
-  };
-
   const transformDate = (date: Date) => {
     const month =
       date.getUTCMonth() + 1 < 10
@@ -150,8 +142,8 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     const { userId } = auth.user!;
 
     const payload = {
-      projectLead: transformUser(projectLead),
-      projectManager: transformUser(projectManager),
+      projectLead,
+      projectManager,
       workPackageId: workPackage.id,
       userId,
       name,
@@ -176,6 +168,10 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     // after edit is complete, reload
     window.location.reload();
   };
+
+  if (isLoading) return <LoadingIndicator />;
+
+  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <div className="mb-5">

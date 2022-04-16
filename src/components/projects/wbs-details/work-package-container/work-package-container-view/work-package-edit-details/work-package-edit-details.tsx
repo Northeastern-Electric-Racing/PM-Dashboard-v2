@@ -5,7 +5,13 @@
 
 import { Form, InputGroup, Container, Row, Col } from 'react-bootstrap';
 import { WorkPackage, User, WbsElementStatus } from 'utils';
-import { fullNamePipe, wbsPipe, datePipe, percentPipe } from '../../../../../../shared/pipes';
+import {
+  fullNamePipe,
+  wbsPipe,
+  datePipe,
+  percentPipe,
+  emDashPipe
+} from '../../../../../../shared/pipes';
 import PageBlock from '../../../../../shared/page-block/page-block';
 
 interface Props {
@@ -106,33 +112,34 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     );
   };
 
-  const buildUsersSelect = (title: string, defaultUser: User | undefined, onChange: any) => {
-    if (!defaultUser) {
-      return (
-        <>
-          <b>{title}</b>
-          <Form.Control as="select" onChange={(e) => onChange(e.target.value)}>
-            {users.map((user, index) => (
-              <option key={user.userId} value={fullNamePipe(user)}>
-                {fullNamePipe(user)}
-              </option>
-            ))}
-          </Form.Control>
-          <br />
-        </>
-      );
+  const buildUsersSelect = (
+    title: string,
+    defaultUser: User | undefined,
+    updateUser: (val: number) => void
+  ) => {
+    let otherUsers = users;
+    if (defaultUser !== undefined) {
+      otherUsers = users.filter((user) => user.userId !== defaultUser.userId);
     }
-
-    const otherUsers = users.filter((user) => user.userId !== defaultUser.userId);
     return (
       <>
         <b>{title}</b>
-        <Form.Control as="select" onChange={(e) => onChange(e.target.value)}>
-          <option key={defaultUser.userId} value={fullNamePipe(defaultUser)}>
-            {fullNamePipe(defaultUser)}
-          </option>
-          {otherUsers.map((user, index) => (
-            <option key={user.userId} value={fullNamePipe(user)}>
+        <Form.Control
+          as="select"
+          data-testid={title}
+          onChange={(e) => updateUser(parseInt(e.target.value))}
+        >
+          {defaultUser === undefined ? (
+            <option key={-1} value={-1}>
+              {emDashPipe('')}
+            </option>
+          ) : (
+            <option key={defaultUser.userId} value={defaultUser.userId}>
+              {fullNamePipe(defaultUser)}
+            </option>
+          )}
+          {otherUsers.map((user) => (
+            <option key={user.userId} value={user.userId}>
               {fullNamePipe(user)}
             </option>
           ))}
@@ -186,10 +193,10 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
             '',
             true
           )}
-          {buildUsersSelect('Project Lead:', workPackage.projectLead!, setters.setProjectLead)}
+          {buildUsersSelect('Project Lead:', workPackage.projectLead, setters.setProjectLead)}
           {buildUsersSelect(
             'Project Manager:',
-            workPackage.projectManager!,
+            workPackage.projectManager,
             setters.setProjectManager
           )}
           {editDetailsInputBuilder('Duration:', 'number', workPackage.duration, (val) =>

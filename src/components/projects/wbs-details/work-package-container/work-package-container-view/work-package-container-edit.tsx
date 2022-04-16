@@ -15,11 +15,8 @@ import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
 import { EditMode } from '../work-package-container';
-import ChangesList from './changes-list/changes-list';
 import DependenciesList from './dependencies-list/dependencies-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
-import WorkPackageButtons from './work-package-buttons/work-package-buttons';
-import WorkPackageDetails from './work-package-details/work-package-details';
 import WorkPackageEditDetails from './work-package-edit-details/work-package-edit-details';
 
 interface WorkPackageContainerEditProps {

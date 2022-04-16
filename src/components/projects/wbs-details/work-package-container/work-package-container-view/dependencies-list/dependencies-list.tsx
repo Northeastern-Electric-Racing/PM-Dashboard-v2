@@ -2,13 +2,14 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
-import { WbsNumber } from 'utils';
+
+import { Button, InputGroup, Form } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { validateWBS, WbsNumber } from 'utils';
 import HorizontalList from '../../../../../shared/horizontal-list/horizontal-list';
 import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
-import { Button, InputGroup, Form } from 'react-bootstrap';
-import { useContext, useEffect, useState, createContext } from 'react';
-import { validateWBS } from 'utils';
+
 interface DependenciesListProps {
   dependencies: WbsNumber[];
   setter: any;

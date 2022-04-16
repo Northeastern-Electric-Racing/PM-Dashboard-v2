@@ -4,11 +4,11 @@
  */
 
 import { Button, ButtonGroup } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../../../../shared/pipes';
-import { useHistory } from 'react-router-dom';
 import { routes } from '../../../../../../../shared/routes';
-import styles from './dependency.module.css';
+import './dependency.module.css';
 
 interface DependencyProps {
   wbsNumber: WbsNumber;

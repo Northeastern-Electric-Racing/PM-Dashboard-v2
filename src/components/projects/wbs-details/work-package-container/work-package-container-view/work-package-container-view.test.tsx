@@ -5,8 +5,6 @@
 
 import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
 import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
-import WorkPackageContainer from './work-package-container-view';
-import { FormContext } from '../work-package-container';
 import WorkPackageContainerView from './work-package-container-view';
 
 // Sets up the component under test with the desired values and renders it.

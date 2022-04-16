@@ -32,11 +32,17 @@ const WorkPackageContainerView: React.FC<Props> = ({ workPackage, edit }) => {
         title={'Dependencies'}
         headerRight={<></>}
         items={workPackage.dependencies.map((dep) => (
-          <b>{dep}</b>
+          <strong>{wbsPipe(dep)}</strong>
         ))}
       />
-      <DescriptionList title={'Expected Activities'} items={workPackage.expectedActivities} />
-      <DescriptionList title={'Deliverables'} items={workPackage.deliverables} />
+      <DescriptionList
+        title={'Expected Activities'}
+        items={workPackage.expectedActivities.filter((ea) => ea.dateDeleted === undefined)}
+      />
+      <DescriptionList
+        title={'Deliverables'}
+        items={workPackage.deliverables.filter((del) => del.dateDeleted === undefined)}
+      />
       <ChangesList changes={workPackage.changes} />
     </div>
   );

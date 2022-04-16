@@ -55,7 +55,7 @@ export const createSingleWorkPackage = (payload: CreateWorkPackagePayload) => {
  * @returns Promise that will resolve to either a success status code or a fail status code.
  */
 export const editWorkPackage = (payload: EditWorkPackagePayload) => {
-  return axios.put<{ message: string }>(apiUrls.workPackagesEdit(), {
+  return axios.post<{ message: string }>(apiUrls.workPackagesEdit(), {
     ...payload
   });
 };

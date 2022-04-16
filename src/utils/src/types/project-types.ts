@@ -79,7 +79,7 @@ export type CreateProjectPayload = FromSchema<typeof createProjectPayloadSchema>
 
 export const projectEditInputSchemaBody = bodySchema(
   {
-    wbsElementId: intType,
+    projectId: intType,
     crId: intType,
     name: stringType,
     userId: intType,

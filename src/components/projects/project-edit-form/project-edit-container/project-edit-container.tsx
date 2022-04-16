@@ -183,7 +183,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     const { userId } = auth.user!;
 
     const payload = {
-      wbsElementId: proj.id,
+      projectId: proj.id,
       crId,
       name,
       userId,

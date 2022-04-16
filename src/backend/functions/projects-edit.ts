@@ -37,7 +37,7 @@ const getChangeRequestReviewState = async (crId: number) => {
 
 export const editProject: Handler = async ({ body }, _context) => {
   const {
-    wbsElementId,
+    projectId,
     crId,
     userId,
     budget,
@@ -73,7 +73,7 @@ export const editProject: Handler = async ({ body }, _context) => {
   // get the original project so we can compare things
   const originalProject = await prisma.project.findUnique({
     where: {
-      wbsElementId
+      projectId
     },
     include: {
       wbsElement: true,
@@ -87,6 +87,8 @@ export const editProject: Handler = async ({ body }, _context) => {
   if (originalProject === null) {
     return buildClientFailureResponse('Project with given wbsElementId does not exist!');
   }
+
+  const { wbsElementId } = originalProject;
 
   let changes = [];
   // get the changes or undefined for each field and add it to changes
@@ -212,7 +214,9 @@ export const editProject: Handler = async ({ body }, _context) => {
     wbsElementId
   );
   const goalsChangeJson = createDescriptionBulletChangesJson(
-    originalProject.goals.map((element) => descBulletConverter(element)),
+    originalProject.goals
+      .filter((element) => !element.dateDeleted)
+      .map((element) => descBulletConverter(element)),
     goals,
     crId,
     userId,
@@ -220,7 +224,9 @@ export const editProject: Handler = async ({ body }, _context) => {
     'goals'
   );
   const featuresChangeJson = createDescriptionBulletChangesJson(
-    originalProject.features.map((element) => descBulletConverter(element)),
+    originalProject.features
+      .filter((element) => !element.dateDeleted)
+      .map((element) => descBulletConverter(element)),
     features,
     crId,
     userId,
@@ -228,7 +234,9 @@ export const editProject: Handler = async ({ body }, _context) => {
     'features'
   );
   const otherConstraintsChangeJson = createDescriptionBulletChangesJson(
-    originalProject.otherConstraints.map((element) => descBulletConverter(element)),
+    originalProject.otherConstraints
+      .filter((element) => !element.dateDeleted)
+      .map((element) => descBulletConverter(element)),
     otherConstraints,
     crId,
     userId,

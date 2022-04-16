@@ -100,7 +100,11 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   };
 
   const statusSelect = (
-    <Form.Control as="select" onChange={(e) => updateStatus(e.target.value as WbsElementStatus)}>
+    <Form.Control
+      as="select"
+      data-testid="status-select"
+      onChange={(e) => updateStatus(e.target.value as WbsElementStatus)}
+    >
       <option key={0} value={project.status}>
         {project.status}
       </option>
@@ -123,7 +127,11 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     return (
       <>
         <b>{title}</b>
-        <Form.Control as="select" onChange={(e) => updateUser(parseInt(e.target.value))}>
+        <Form.Control
+          as="select"
+          data-testid={title}
+          onChange={(e) => updateUser(parseInt(e.target.value))}
+        >
           <option key={defaultUser.userId} value={defaultUser.userId}>
             {fullNamePipe(defaultUser)}
           </option>

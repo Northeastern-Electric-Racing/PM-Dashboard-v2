@@ -17,6 +17,11 @@ interface projectDetailsProps {
   updateTaskList: (val: string) => void;
   updateBom: (val: string) => void;
   updateGDrive: (val: string) => void;
+  updateName: (val: string) => void;
+  updateBudget: (val: string) => void;
+  updateStatus: (val: WbsElementStatus) => void;
+  updateProjectLead: (val: number) => void;
+  updateProjectManager: (val: number) => void;
 }
 
 const ProjectEditDetails: React.FC<projectDetailsProps> = ({
@@ -25,7 +30,12 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   updateSlideDeck,
   updateTaskList,
   updateBom,
-  updateGDrive
+  updateGDrive,
+  updateName,
+  updateBudget,
+  updateStatus,
+  updateProjectLead,
+  updateProjectManager
 }) => {
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
   const startDate =
@@ -90,7 +100,11 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   };
 
   const statusSelect = (
-    <Form.Control as="select">
+    <Form.Control
+      as="select"
+      data-testid="status-select"
+      onChange={(e) => updateStatus(e.target.value as WbsElementStatus)}
+    >
       <option key={0} value={project.status}>
         {project.status}
       </option>
@@ -102,19 +116,27 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     </Form.Control>
   );
 
-  const buildUsersSelect = (title: string, defaultUser: User) => {
+  const buildUsersSelect = (
+    title: string,
+    defaultUser: User,
+    updateUser: (val: number) => void
+  ) => {
     const otherUsers = users.filter((user) => {
       return user.userId !== defaultUser.userId;
     });
     return (
       <>
         <b>{title}</b>
-        <Form.Control as="select">
-          <option key={defaultUser.userId} value={fullNamePipe(defaultUser)}>
+        <Form.Control
+          as="select"
+          data-testid={title}
+          onChange={(e) => updateUser(parseInt(e.target.value))}
+        >
+          <option key={defaultUser.userId} value={defaultUser.userId}>
             {fullNamePipe(defaultUser)}
           </option>
           {otherUsers.map((user, index) => (
-            <option key={user.userId} value={fullNamePipe(user)}>
+            <option key={user.userId} value={user.userId}>
               {fullNamePipe(user)}
             </option>
           ))}
@@ -128,7 +150,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     <Container fluid>
       <Row>
         <Col xs={12} md={6}>
-          {editDetailsInputBuilder('Project Name:', 'text', project.name, null, '', '', '')}
+          {editDetailsInputBuilder('Project Name:', 'text', project.name, updateName, '', '', '')}
           {editDetailsInputBuilder(
             'WBS #:',
             'text',
@@ -139,9 +161,9 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
             '',
             true
           )}
-          {buildUsersSelect('Project Lead:', project.projectLead!)}
-          {buildUsersSelect('Project Manager:', project.projectManager!)}
-          {editDetailsInputBuilder('Budget:', 'number', project.budget, null, '$')}
+          {buildUsersSelect('Project Lead:', project.projectLead!, updateProjectLead)}
+          {buildUsersSelect('Project Manager:', project.projectManager!, updateProjectManager)}
+          {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
         </Col>
         <Col xs={6} md={4}>
           {editDetailsInputBuilder(

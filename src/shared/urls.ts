@@ -18,6 +18,7 @@ const usersLogin = () => `${users()}/auth:login`;
 const projects = () => `${API_URL}/projects`;
 const projectsByWbsNum = (wbsNum: string) => `${projects()}/${wbsNum}`;
 const projectsCreate = () => `${projects()}-new`;
+const projectsEdit = () => `${projects()}-edit`;
 
 /**************** Work Packages Endpoint ****************/
 const workPackages = () => `${API_URL}/work-packages`;
@@ -38,6 +39,7 @@ export const apiUrls = {
   projects,
   projectsByWbsNum,
   projectsCreate,
+  projectsEdit,
 
   workPackages,
   workPackagesByWbsNum,

@@ -48,7 +48,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   _context
 ) => {
   const {
-    wbsElementId: wbsNum,
+    workPackageId,
     userId,
     name,
     crId,
@@ -63,15 +63,9 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     projectManager
   } = body;
 
-  const wbsElementId = await getWbsElementId(wbsNum);
-
-  if (wbsElementId === null) {
-    return buildNotFoundResponse('Wbs_Element_ID (Wbs_Num)', JSON.stringify(wbsNum));
-  }
-
   // get the original work package so we can compare things
   const originalWorkPackage = await prisma.work_Package.findUnique({
-    where: { wbsElementId },
+    where: { workPackageId },
     include: {
       wbsElement: true,
       dependencies: true,
@@ -82,8 +76,10 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
 
   // if it doesn't exist we error
   if (originalWorkPackage === null) {
-    return buildNotFoundResponse('Wbs_Element_ID', wbsElementId!.toString());
+    return buildNotFoundResponse('Work Package', workPackageId!.toString());
   }
+
+  const { wbsElementId } = originalWorkPackage;
 
   // if the crId doesn't match a valid approved change request then we need to error
   const changeRequest = await prisma.change_Request.findUnique({ where: { crId } });

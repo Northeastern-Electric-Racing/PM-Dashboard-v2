@@ -156,7 +156,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     const payload = {
       projectLead: transformUser(projectLead),
       projectManager: transformUser(projectManager),
-      wbsElementId: transformWbsNum(workPackage.wbsNum),
+      workPackageId: workPackage.id,
       userId,
       name,
       crId: parseInt(crId),

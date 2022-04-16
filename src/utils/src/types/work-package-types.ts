@@ -31,7 +31,7 @@ export type CreateWorkPackagePayload = FromSchema<typeof workPackageCreateInputS
 
 export const workPackageEditInputSchemaBody = bodySchema(
   {
-    wbsElementId: wbsNumType,
+    workPackageId: intType,
     userId: intType,
     name: stringType,
     crId: intType,

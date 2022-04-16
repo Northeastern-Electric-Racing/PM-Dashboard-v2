@@ -35,14 +35,8 @@ const WorkPackageContainerView: React.FC<Props> = ({ workPackage, edit }) => {
           <strong>{wbsPipe(dep)}</strong>
         ))}
       />
-      <DescriptionList
-        title={'Expected Activities'}
-        items={workPackage.expectedActivities.filter((ea) => ea.dateDeleted === undefined)}
-      />
-      <DescriptionList
-        title={'Deliverables'}
-        items={workPackage.deliverables.filter((del) => del.dateDeleted === undefined)}
-      />
+      <DescriptionList title={'Expected Activities'} items={workPackage.expectedActivities} />
+      <DescriptionList title={'Deliverables'} items={workPackage.deliverables} />
       <ChangesList changes={workPackage.changes} />
     </div>
   );

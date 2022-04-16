@@ -53,20 +53,16 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   const [duration, setDuration] = useState<number>(workPackage.duration);
   const [deps, setDeps] = useState<WbsNumber[]>(workPackage.dependencies);
   const [ea, setEa] = useState<{ id: number; detail: string }[]>(
-    workPackage.expectedActivities
-      .filter((ea) => ea.dateDeleted === undefined)
-      .map((ea) => ({
-        id: ea.id,
-        detail: ea.detail
-      }))
+    workPackage.expectedActivities.map((ea) => ({
+      id: ea.id,
+      detail: ea.detail
+    }))
   );
   const [dels, setDels] = useState<{ id: number; detail: string }[]>(
-    workPackage.deliverables
-      .filter((del) => del.dateDeleted === undefined)
-      .map((d) => ({
-        id: d.id,
-        detail: d.detail
-      }))
+    workPackage.deliverables.map((d) => ({
+      id: d.id,
+      detail: d.detail
+    }))
   );
   const [status, setStatus] = useState<WbsElementStatus>(workPackage.status);
   const [progress, setProgress] = useState<number>(workPackage.progress);
@@ -138,7 +134,7 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   const transformDate = (date: Date) => {
     const month =
       date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1).toString();
-    const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate().toString();
+    const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate().toString();
     return `${date.getFullYear().toString()}-${month}-${day}`;
   };
 

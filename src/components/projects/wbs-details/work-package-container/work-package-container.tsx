@@ -33,10 +33,16 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
 
   if (isError) return <ErrorPage message={error?.message} />;
 
+  const wp = {
+    ...data!,
+    expectedActivities: data!.expectedActivities.filter((ea) => ea.dateDeleted === undefined),
+    deliverables: data!.deliverables.filter((del) => del.dateDeleted === undefined)
+  };
+
   return editMode ? (
-    <WorkPackageContainerEdit workPackage={data!} edit={{ editMode, setEditMode }} />
+    <WorkPackageContainerEdit workPackage={wp} edit={{ editMode, setEditMode }} />
   ) : (
-    <WorkPackageContainerView workPackage={data!} edit={{ editMode, setEditMode }} />
+    <WorkPackageContainerView workPackage={wp} edit={{ editMode, setEditMode }} />
   );
 };
 

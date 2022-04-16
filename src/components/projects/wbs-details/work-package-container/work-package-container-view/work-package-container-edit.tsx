@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { data } from 'msw/lib/types/context';
 import { createContext, useState, SyntheticEvent } from 'react';
 import { Form } from 'react-bootstrap';
 import { WbsNumber, WorkPackage, WbsElementStatus } from 'utils';
@@ -14,19 +15,17 @@ import EditableTextInputList from '../../../../shared/editable-text-input-list/e
 import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
+import { EditMode } from '../work-package-container';
 import ChangesList from './changes-list/changes-list';
 import DependenciesList from './dependencies-list/dependencies-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import WorkPackageButtons from './work-package-buttons/work-package-buttons';
 import WorkPackageDetails from './work-package-details/work-package-details';
+import WorkPackageEditDetails from './work-package-edit-details/work-package-edit-details';
 
 interface WorkPackageContainerEditProps {
-  wbsNum: WbsNumber;
   workPackage: WorkPackage;
-}
-
-export interface EditModeProps {
-  changeEditMode(arg: any): void;
+  edit: EditMode;
 }
 
 // Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
@@ -36,75 +35,32 @@ export const FormContext = createContext({
 });
 
 const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
-  wbsNum,
-  workPackage
+  workPackage,
+  edit
 }) => {
   const auth = useAuth();
-  const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({});
   const { mutateAsync } = useEditWorkPackage();
   const { data: userData } = useAllUsers();
-
-  // const expectedActivitiesUtil: EditableTextInputListUtils = {
-  //   add: (val) => {
-  //     const clone = ea.slice();
-  //     clone.push({
-  //       id: undefined,
-  //       detail: val
-  //     });
-  //     setEa(clone);
-  //   },
-  //   remove: (idx) => {
-  //     const clone = ea.slice();
-  //     clone.splice(idx, 1);
-  //     setEa(clone);
-  //   },
-  //   update: (idx, val) => {
-  //     const clone = ea.slice();
-  //     clone[idx].detail = val;
-  //     setEa(clone);
-  //   }
-  // };
-
-  // const deliverablesUtil: EditableTextInputListUtils = {
-  //   add: (val) => {
-  //     const clone = d.slice();
-  //     clone.push({
-  //       id: undefined,
-  //       detail: val
-  //     });
-  //     setD(clone);
-  //   },
-  //   remove: (idx) => {
-  //     const clone = d.slice();
-  //     clone.splice(idx, 1);
-  //     setD(clone);
-  //   },
-  //   update: (idx, val) => {
-  //     const clone = d.slice();
-  //     clone[idx].detail = val;
-  //     setD(clone);
-  //   }
-  // };
 
   // states for the form's payload
   const [projectLead, setProjectLead] = useState<string>(fullNamePipe(workPackage.projectLead));
   const [projectManager, setProjectManager] = useState<string>(
     fullNamePipe(workPackage.projectManager)
   );
-  const [wbsElementId, setWbsElementId] = useState<WbsNumber>(workPackage.wbsNum);
+  const [wbsElementId, setWbsElementId] = useState<string>(wbsPipe(workPackage.wbsNum));
   const [name, setName] = useState<string>(workPackage.name);
-  const [crId, setCrId] = useState<number>(-1);
-  const [startDate, setStartDate] = useState<Date>(workPackage.startDate);
-  const [duration, setDuration] = useState<number>(workPackage.duration);
-  const [dependencies, setDependencies] = useState<WbsNumber[]>(workPackage.dependencies);
-  const [expectedActivities, setExpectedActivities] = useState<{ id: number; detail: string }[]>(
+  const [crId, setCrId] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>(workPackage.startDate.toLocaleDateString());
+  const [duration, setDuration] = useState<string>(workPackage.duration.toString());
+  const [deps, setDeps] = useState<WbsNumber[]>(workPackage.dependencies);
+  const [ea, setEa] = useState<{ id: number; detail: string }[]>(
     workPackage.expectedActivities.map((ea) => ({
       id: ea.id,
       detail: ea.detail
     }))
   );
-  const [deliverables, setDeliverables] = useState<{ id: number; detail: string }[]>(
+  const [dels, setDels] = useState<{ id: number; detail: string }[]>(
     workPackage.deliverables.map((d) => ({
       id: d.id,
       detail: d.detail
@@ -113,23 +69,65 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   const [status, setStatus] = useState<WbsElementStatus>(workPackage.status);
   const [progress, setProgress] = useState<number>(workPackage.progress);
 
-  const data = {
-    projectLead,
-    projectManager,
-    wbsElementId,
-    name,
-    crId,
-    startDate,
-    duration,
-    dependencies,
-    expectedActivities,
-    deliverables,
-    status,
-    progress,
-    changes: workPackage.changes,
-    expectedProgress: workPackage.expectedProgress,
-    timelineStatus: workPackage.timelineStatus
+  const expectedActivitiesUtil: EditableTextInputListUtils = {
+    add: (val) => {
+      const clone = ea.slice();
+      clone.push({
+        id: -1,
+        detail: val
+      });
+      setEa(clone);
+    },
+    remove: (idx) => {
+      const clone = ea.slice();
+      clone.splice(idx, 1);
+      setEa(clone);
+    },
+    update: (idx, val) => {
+      const clone = ea.slice();
+      clone[idx].detail = val;
+      setEa(clone);
+    }
   };
+
+  const deliverablesUtil: EditableTextInputListUtils = {
+    add: (val) => {
+      const clone = dels.slice();
+      clone.push({
+        id: -1,
+        detail: val
+      });
+      setDels(clone);
+    },
+    remove: (idx) => {
+      const clone = dels.slice();
+      clone.splice(idx, 1);
+      setDels(clone);
+    },
+    update: (idx, val) => {
+      const clone = dels.slice();
+      clone[idx].detail = val;
+      setDels(clone);
+    }
+  };
+
+  // const data = {
+  //   projectLead,
+  //   projectManager,
+  //   wbsElementId,
+  //   name,
+  //   crId,
+  //   startDate,
+  //   duration,
+  //   dependencies,
+  //   expectedActivities,
+  //   deliverables,
+  //   status,
+  //   progress,
+  //   changes: workPackage.changes,
+  //   expectedProgress: workPackage.expectedProgress,
+  //   timelineStatus: workPackage.timelineStatus
+  // };
 
   const setters = {
     setProjectLead,
@@ -139,15 +137,11 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     setCrId,
     setStartDate,
     setDuration,
-    setDependencies,
-    setExpectedActivities,
-    setDeliverables,
+    setDeps,
+    setEa,
+    setDels,
     setStatus,
     setProgress
-  };
-
-  const setField = (field: string, value: any) => {
-    setForm({ ...form, [field]: value });
   };
 
   const transformUser = (user: string | undefined) => {
@@ -196,22 +190,21 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
     // await mutateAsync(payload);
 
     // after edit is complete, switch off edit mode
-    setEditMode(false);
+    edit.setEditMode(false);
   };
 
   return (
     <div className="mb-5">
-      {/* <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(data.wbsElementId)} - ${data.name}`} />
-        <WorkPackageButtons changeEditMode={() => setEditMode(true)} />
-        <WorkPackageDetails details={details} setters={setters} />
-        <DependenciesList dependencies={data.dependencies} setter={setters.setDependencies} />
+      <Form onSubmit={handleSubmit}>
+        <PageTitle title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`} />
+        <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
+        <WorkPackageEditDetails workPackage={workPackage} users={userData!} setters={setters} />
+        <DependenciesList dependencies={workPackage.dependencies} setter={setDeps} />
         <PageBlock
           title="Expected Activities"
           headerRight={<></>}
           body={
             <EditableTextInputList
-              readOnly={!editMode}
               items={ea.map((ea) => ea.detail)}
               add={expectedActivitiesUtil.add}
               remove={expectedActivitiesUtil.remove}
@@ -224,17 +217,15 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
           headerRight={<></>}
           body={
             <EditableTextInputList
-              readOnly={!editMode}
-              items={d.map((d) => d.detail)}
+              items={dels.map((d) => d.detail)}
               add={deliverablesUtil.add}
               remove={deliverablesUtil.remove}
               update={deliverablesUtil.update}
             />
           }
         />
-        <ChangesList changes={data.changes} />
-        {editMode ? <EditModeOptions changeEditMode={() => setEditMode(false)} /> : ''}
-      </Form> */}
+        <EditModeOptions setEditMode={edit.setEditMode} />
+      </Form>
     </div>
   );
 };

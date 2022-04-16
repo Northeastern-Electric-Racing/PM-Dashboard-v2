@@ -21,7 +21,6 @@ interface Props {
 }
 
 const WorkPackageContainerView: React.FC<Props> = ({ workPackage, edit }) => {
-  console.log(edit);
   return (
     <div className="mb-5">
       <PageTitle

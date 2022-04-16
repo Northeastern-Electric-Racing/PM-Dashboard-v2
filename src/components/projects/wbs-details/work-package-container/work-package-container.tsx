@@ -34,7 +34,7 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   if (isError) return <ErrorPage message={error?.message} />;
 
   return editMode ? (
-    <WorkPackageContainerEdit wbsNum={wbsNum} workPackage={data!} />
+    <WorkPackageContainerEdit workPackage={data!} edit={{ editMode, setEditMode }} />
   ) : (
     <WorkPackageContainerView workPackage={data!} edit={{ editMode, setEditMode }} />
   );

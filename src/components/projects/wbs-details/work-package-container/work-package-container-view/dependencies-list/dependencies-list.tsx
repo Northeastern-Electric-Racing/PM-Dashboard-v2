@@ -9,27 +9,21 @@ import './dependencies-list.module.css';
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import { useContext, useEffect, useState, createContext } from 'react';
 import { validateWBS } from 'utils';
-
-const FormContext = createContext({
-  editMode: true,
-  setField: () => null
-});
 interface DependenciesListProps {
   dependencies: WbsNumber[];
   setter: any;
 }
 
 const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies, setter }) => {
-  const { editMode, setField } = useContext(FormContext);
   const [dependenciesState, setDependenciesState] = useState(dependencies);
   const [unvalidatedDependency, setUnvalidatedDependency] = useState('');
 
-  useEffect(() => {
-    setDependenciesState(dependencies);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode]);
+  // useEffect(() => {
+  //   setDependenciesState(dependencies);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [editMode]);
 
-  // set field for dependencies
+  // set form state for dependencies
   useEffect(() => {
     setter(dependenciesState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,11 +65,7 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies, sette
   ));
 
   return (
-    <HorizontalList
-      title={'Dependencies'}
-      headerRight={<></>}
-      items={editMode ? [...items, AddButton] : items}
-    />
+    <HorizontalList title={'Dependencies'} headerRight={<></>} items={[...items, AddButton]} />
   );
 };
 

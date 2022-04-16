@@ -47,7 +47,7 @@ describe('work package container', () => {
     expect(screen.getByText('1.1.1 - Bodywork Concept of Design')).toBeInTheDocument();
     expect(screen.getByText('Dependencies')).toBeInTheDocument();
     expect(screen.getByText('Expected Activities')).toBeInTheDocument();
-    expect(screen.getByText('Delieverables')).toBeInTheDocument();
+    expect(screen.getByText('Deliverables')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeEnabled();
   });
 

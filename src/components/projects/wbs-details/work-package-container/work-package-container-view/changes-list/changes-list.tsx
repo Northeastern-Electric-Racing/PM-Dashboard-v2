@@ -5,11 +5,11 @@
 
 import { Link } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { datePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 import { ImplementedChange } from 'utils';
 import { routes } from '../../../../../../shared/routes';
 import BulletList from '../../../../../shared/bullet-list/bullet-list';
 import './changes-list.module.css';
+import { datePipe, fullNamePipe } from '../../../../../../shared/pipes';
 
 interface ChangesListProps {
   changes: ImplementedChange[];

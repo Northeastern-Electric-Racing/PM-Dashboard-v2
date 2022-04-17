@@ -8,14 +8,17 @@ import { useHistory } from 'react-router';
 import { Role } from '@prisma/client';
 import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
 import { useAuth } from '../../../services/auth.hooks';
-import { routes } from '../../../shared/routes';
 import LoginPage from './login-page/login-page';
 import './login.module.css';
+
+interface LoginProps {
+  postLoginRedirect: string;
+}
 
 /**
  * Page for unauthenticated users to do login.
  */
-const Login: React.FC = () => {
+const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const [devUserRole, setDevUserRole] = useState<string>(Role.APP_ADMIN);
   const history = useHistory();
   const auth = useAuth();
@@ -25,14 +28,14 @@ const Login: React.FC = () => {
     const user = exampleAllUsers.find((u) => u.role === devUserRole);
     if (!user) throw new Error('user for dev not found from role: ' + devUserRole);
     auth.devSignin(user!);
-    history.push(routes.HOME);
+    history.push(postLoginRedirect);
   };
 
   const verifyLogin = async (response: any) => {
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);
-    history.push(routes.HOME);
+    history.push(postLoginRedirect);
   };
 
   const handleFailure = (response: any) => {

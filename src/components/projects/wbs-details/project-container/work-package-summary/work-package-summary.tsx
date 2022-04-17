@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import { weeksPipe, wbsPipe, endDatePipe, listPipe } from '../../../../../shared/pipes';
+import { weeksPipe, wbsPipe, endDatePipe, listPipe, datePipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -20,14 +20,20 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
   const [open, setOpen] = useState(false);
   const expectedActivitiesList = (
     <ul>
-      {workPackage.expectedActivities.slice(0, 3).map((item, idx) => <li key={idx}>{item.detail}</li>)}
+      {workPackage.expectedActivities.slice(0, 3).map((item, idx) => (
+        <li key={idx}>{item.detail}</li>
+      ))}
     </ul>
   );
+  const numMoreExpectedActivities = workPackage.expectedActivities.length - 3;
   const deliverablesList = (
     <ul>
-      {workPackage.deliverables.slice(0, 3).map((item, idx) => <li key={idx}>{item.detail}</li>)}
+      {workPackage.deliverables.slice(0, 3).map((item, idx) => (
+        <li key={idx}>{item.detail}</li>
+      ))}
     </ul>
   );
+  const numMoreDeliverables = workPackage.deliverables.length - 3;
 
   return (
     <Card>
@@ -50,16 +56,36 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
                   <b>Dependencies:</b> {listPipe(workPackage.dependencies, wbsPipe)}
                 </Col>
                 <Col xs={6} md={4}>
-                  <b>Start date:</b> {workPackage.startDate.toLocaleDateString()} <br />
+                  <b>Start date:</b> {datePipe(workPackage.startDate)} <br />
                   <b>End Date:</b> {endDatePipe(workPackage.startDate, workPackage.duration)}
                 </Col>
               </Row>
               <Row>
                 <Col xs={12} md={6}>
                   <b>Expected Activities:</b> {expectedActivitiesList}
+                  {numMoreExpectedActivities > 0 ? (
+                    <Link
+                      to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}
+                      className={styles.showMoreLink}
+                    >
+                      Show {numMoreExpectedActivities} more...
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                 </Col>
                 <Col xs={12} md={6}>
                   <b>Deliverables:</b> {deliverablesList}
+                  {numMoreDeliverables > 0 ? (
+                    <Link
+                      to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}
+                      className={styles.showMoreLink}
+                    >
+                      Show {numMoreDeliverables} more...
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                 </Col>
               </Row>
             </Container>

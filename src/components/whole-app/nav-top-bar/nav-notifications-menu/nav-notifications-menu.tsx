@@ -12,7 +12,7 @@ const NavNotificationsMenu: React.FC = () => {
   return (
     <NavDropdown
       className="m-auto"
-      title={<FontAwesomeIcon icon={faBell} />}
+      title={<FontAwesomeIcon icon={faBell} inverse />}
       id="notifications-dropdown"
       alignRight
     >

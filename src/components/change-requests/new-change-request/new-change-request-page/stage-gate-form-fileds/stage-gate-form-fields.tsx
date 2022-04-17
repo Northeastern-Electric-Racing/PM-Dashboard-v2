@@ -15,11 +15,6 @@ const StageGateFormFields: React.FC<StageGateProp> = ({ handleChange }) => {
     <div className={styles.container}>
       <div className={'px-4'}>
         <Form.Group controlId="newCR-project-design-review">
-          {/* This is not part of the activation currently. TODO */}
-
-          <Form.Label className={styles.label}>Who is Required for Design Review?</Form.Label>
-          <Form.Control as="textarea" rows={3} name="" required />
-
           <Form.Label className={styles.label}>Leftover Budget</Form.Label>
           <InputGroup>
             <InputGroup.Prepend>

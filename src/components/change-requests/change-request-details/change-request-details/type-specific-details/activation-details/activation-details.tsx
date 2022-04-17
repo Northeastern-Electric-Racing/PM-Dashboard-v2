@@ -3,17 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ActivationChangeRequest } from "utils";
-import { booleanPipe, fullNamePipe } from "../../../../../../shared/pipes";
-import PageBlock from "../../../../../shared/page-block/page-block";
+import { ActivationChangeRequest } from 'utils';
+import { booleanPipe, datePipe, fullNamePipe } from '../../../../../../shared/pipes';
+import PageBlock from '../../../../../shared/page-block/page-block';
 
 interface ActivationDetailsProps {
-  cr: ActivationChangeRequest
+  cr: ActivationChangeRequest;
 }
 
-const ActivationDetails: React.FC<ActivationDetailsProps> = ({
-  cr
-}: ActivationDetailsProps) => {
+const ActivationDetails: React.FC<ActivationDetailsProps> = ({ cr }: ActivationDetailsProps) => {
   return (
     <PageBlock
       title={'Activation Change Request Details'}
@@ -27,7 +25,7 @@ const ActivationDetails: React.FC<ActivationDetailsProps> = ({
           <dd className="col-3">{fullNamePipe(cr.projectManager)}</dd>
           <div className="w-100"></div>
           <dt className="col-2">Start Date</dt>
-          <dd className="col-3">{cr.startDate.toUTCString()}</dd>
+          <dd className="col-3">{datePipe(cr.startDate)}</dd>
           <div className="w-100"></div>
           <dt className="col-2">Confirm WP Details</dt>
           <dd className="col-3">{booleanPipe(cr.confirmDetails)}</dd>

@@ -60,14 +60,15 @@ export const emDashPipe = (str: string): string => {
 };
 
 /**
- * Return a given data as a string in the local en-US format,
+ * Return a given date as a string in the local en-US format,
  * with single digit numbers starting with a zero.
  */
 export const datePipe = (date: Date): string => {
   return date.toLocaleDateString('en-US', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   });
 };
 

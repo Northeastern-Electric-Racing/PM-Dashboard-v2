@@ -19,7 +19,6 @@ const project404 = '404 could not find the requested project request';
 const workPkg404 = '404 could not find the requested work package request';
 const error500 = '500 internal server error';
 const newChangeRequestStr = 'New Change Request';
-const whoDesignInquiry = 'Who is Required for Design Review?';
 const projectLeadStr = 'Project Lead';
 const scopeImpactStr = 'Scope Impact';
 
@@ -145,7 +144,6 @@ describe('change request page', () => {
     mockWorkPkgHook(false, false, exampleAllWorkPackages);
     renderComponent();
 
-    expect(screen.queryByText(whoDesignInquiry)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
 
@@ -155,14 +153,12 @@ describe('change request page', () => {
 
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
-    expect(screen.getByText(whoDesignInquiry)).toBeInTheDocument();
 
     fireEvent.change(screen.getByTestId('type'), {
       target: { value: ChangeRequestType.Activation }
     });
 
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
-    expect(screen.queryByText(whoDesignInquiry)).not.toBeInTheDocument();
     expect(screen.getByText(projectLeadStr)).toBeInTheDocument();
   });
 });

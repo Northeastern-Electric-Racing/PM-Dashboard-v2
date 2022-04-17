@@ -22,7 +22,8 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
       headerRight={<></>}
       list={changes.map((ic) => (
         <>
-          [<Link to={`${routes.PROJECTS}/${wbsPipe(ic.wbsNum)}`}>{wbsPipe(ic.wbsNum)}</Link>]{' '}
+          [<Link to={`${routes.CHANGE_REQUESTS}/${ic.changeRequestId}`}>#{ic.changeRequestId}</Link>
+          ]{' '}
           <OverlayTrigger
             placement="right"
             overlay={

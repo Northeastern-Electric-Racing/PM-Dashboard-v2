@@ -28,7 +28,7 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
             placement="right"
             overlay={
               <Tooltip id="tooltip">
-                {fullNamePipe(ic.implementer)} - {datePipe(new Date(ic.dateImplemented))}
+                {fullNamePipe(ic.implementer)} - {datePipe(ic.dateImplemented)}
               </Tooltip>
             }
           >

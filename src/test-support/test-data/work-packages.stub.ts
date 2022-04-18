@@ -62,7 +62,8 @@ export const exampleWorkPackage1: WorkPackage = {
       changeRequestId: 33,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleGuestUser,
-      detail: 'Increased funding by $500.'
+      detail: 'Increased funding by $500.',
+      dateImplemented: new Date('11/15/2003')
     }
   ]
 };
@@ -119,7 +120,8 @@ export const exampleWorkPackage2: WorkPackage = {
       changeRequestId: 1,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleAppAdminUser,
-      detail: 'Decreased duration from 10 weeks to 7 weeks.'
+      detail: 'Decreased duration from 10 weeks to 7 weeks.',
+      dateImplemented: new Date('03/24/21')
     },
 
     {
@@ -127,7 +129,8 @@ export const exampleWorkPackage2: WorkPackage = {
       changeRequestId: 54,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleProjectLeadUser,
-      detail: 'Added "jet fuel burns hot" bullet.'
+      detail: 'Added "jet fuel burns hot" bullet.',
+      dateImplemented: new Date('03/24/21')
     }
   ]
 };
@@ -184,7 +187,8 @@ export const exampleWorkPackage3: WorkPackage = {
       changeRequestId: 14,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleAdminUser,
-      detail: 'Increased budget from $10 to $200.'
+      detail: 'Increased budget from $10 to $200.',
+      dateImplemented: new Date('03/24/21')
     }
   ]
 };

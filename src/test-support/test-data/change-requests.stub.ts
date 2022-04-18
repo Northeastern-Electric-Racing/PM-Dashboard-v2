@@ -142,7 +142,8 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
         emailId: null,
         role: 'LEADERSHIP'
       },
-      detail: 'Adjust description'
+      detail: 'Adjust description',
+      dateImplemented: new Date('02/25/21')
     },
     {
       changeId: 1,
@@ -161,7 +162,8 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
         emailId: null,
         role: 'LEADERSHIP'
       },
-      detail: 'Increase budget to 200'
+      detail: 'Increase budget to 200',
+      dateImplemented: new Date('02/25/21')
     },
     {
       changeId: 1,
@@ -180,7 +182,8 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
         emailId: null,
         role: 'LEADERSHIP'
       },
-      detail: 'Add 3 weeks'
+      detail: 'Add 3 weeks',
+      dateImplemented: new Date('02/25/21')
     }
   ]
 };

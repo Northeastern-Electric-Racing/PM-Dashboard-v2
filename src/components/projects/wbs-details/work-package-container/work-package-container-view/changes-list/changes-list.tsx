@@ -4,10 +4,12 @@
  */
 
 import { Link } from 'react-router-dom';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ImplementedChange } from 'utils';
 import { routes } from '../../../../../../shared/routes';
 import BulletList from '../../../../../shared/bullet-list/bullet-list';
 import './changes-list.module.css';
+import { datePipe, fullNamePipe } from '../../../../../../shared/pipes';
 
 interface ChangesListProps {
   changes: ImplementedChange[];
@@ -21,7 +23,17 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
       list={changes.map((ic) => (
         <>
           [<Link to={`${routes.CHANGE_REQUESTS}/${ic.changeRequestId}`}>#{ic.changeRequestId}</Link>
-          ] {ic.detail}
+          ]{' '}
+          <OverlayTrigger
+            placement="right"
+            overlay={
+              <Tooltip id="tooltip">
+                {fullNamePipe(ic.implementer)} - {datePipe(ic.dateImplemented)}
+              </Tooltip>
+            }
+          >
+            <span>{ic.detail}</span>
+          </OverlayTrigger>
         </>
       ))}
       readOnly={true}

@@ -73,6 +73,7 @@ export interface ImplementedChange {
   wbsNum: WbsNumber;
   implementer: User;
   detail: string;
+  dateImplemented: Date;
 }
 
 export const reviewChangeRequestPayloadSchema = bodySchema({

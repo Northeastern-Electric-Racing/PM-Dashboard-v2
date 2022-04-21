@@ -180,6 +180,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   {status}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block" align="right">
+                  {/*Status set here*/}
                   {genDropdownItemsString(Object.values(WbsElementStatus), setStatus)}
                 </Dropdown.Menu>
               </Dropdown>

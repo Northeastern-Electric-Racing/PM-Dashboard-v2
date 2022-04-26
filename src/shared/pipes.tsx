@@ -104,8 +104,10 @@ export const wbsStatusPipe = (status: WbsElementStatus): JSX.Element => {
     }
   }
   return (
-    <Badge pill variant={color}>
-      {text}
-    </Badge>
+    <b>
+      <Badge pill variant={color}>
+        {text}
+      </Badge>
+    </b>
   );
 };

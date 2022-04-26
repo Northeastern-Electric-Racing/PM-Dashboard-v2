@@ -259,19 +259,25 @@ describe('Formatting Full Names', () => {
 describe('Formatting WBS Status', () => {
   test('with dummy data', () => {
     const active = (
-      <Badge pill variant="primary">
-        Active
-      </Badge>
+      <b>
+        <Badge pill variant="primary">
+          Active
+        </Badge>
+      </b>
     );
     const inactive = (
-      <Badge pill variant="secondary">
-        Inactive
-      </Badge>
+      <b>
+        <Badge pill variant="secondary">
+          Inactive
+        </Badge>
+      </b>
     );
     const complete = (
-      <Badge pill variant="success">
-        Complete
-      </Badge>
+      <b>
+        <Badge pill variant="success">
+          Complete
+        </Badge>
+      </b>
     );
     expect(wbsStatusPipe(WbsElementStatus.Active)).toStrictEqual(active);
     expect(wbsStatusPipe(WbsElementStatus.Inactive)).toStrictEqual(inactive);

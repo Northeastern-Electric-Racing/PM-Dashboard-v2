@@ -81,7 +81,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   return (
     <PageBlock
       title={'Project Details'}
-      headerRight={<b>{wbsStatusPipe(project.status)}</b>}
+      headerRight={wbsStatusPipe(project.status)}
       body={detailsBody}
     />
   );

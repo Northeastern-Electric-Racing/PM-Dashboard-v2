@@ -57,7 +57,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   return (
     <PageBlock
       title={'Work Package Details'}
-      headerRight={<b>{wbsStatusPipe(workPackage.status)}</b>}
+      headerRight={wbsStatusPipe(workPackage.status)}
       body={detailsBody}
     />
   );

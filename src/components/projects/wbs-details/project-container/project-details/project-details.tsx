@@ -11,6 +11,7 @@ import {
   fullNamePipe,
   linkPipe,
   wbsPipe,
+  wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
@@ -78,7 +79,11 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   );
 
   return (
-    <PageBlock title={'Project Details'} headerRight={<b>{project.status}</b>} body={detailsBody} />
+    <PageBlock
+      title={'Project Details'}
+      headerRight={wbsStatusPipe(project.status)}
+      body={detailsBody}
+    />
   );
 };
 

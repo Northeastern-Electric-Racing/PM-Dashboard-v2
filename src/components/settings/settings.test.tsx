@@ -27,6 +27,11 @@ describe('settings page component', () => {
 
   it('renders user', () => {
     renderComponent();
-    expect(screen.getByText('User:')).toBeInTheDocument();
+    expect(screen.getByText(/User:/)).toBeInTheDocument();
+  });
+
+  it('renders role', () => {
+    renderComponent();
+    expect(screen.getByText(/Role:/)).toBeInTheDocument();
   });
 });

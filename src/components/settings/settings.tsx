@@ -9,11 +9,20 @@ import PageBlock from '../shared/page-block/page-block';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
-  const pageBlockBody = <>User: {auth.user?.emailId}</>;
   return (
     <>
       <PageTitle title="This is the Settings Page" />
-      <PageBlock title="User Settings" headerRight={<></>} body={pageBlockBody} />
+      <PageBlock
+        title="User Settings"
+        headerRight={<></>}
+        body={
+          <>
+            User: {auth.user?.emailId}
+            <br />
+            Role: {auth.user?.role}
+          </>
+        }
+      />
     </>
   );
 };

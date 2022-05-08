@@ -61,6 +61,18 @@ describe('work package create', () => {
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });
+
+      it('returns failure when change request not reviewed', async () => {
+        const res = await func({ ...goodBody, crId: 4 });
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toBe('Event object failed validation');
+      });
+
+      it('returns failure when change request does not exist', async () => {
+        const res = await func({ ...goodBody, crId: 100000 });
+        expect(res.statusCode).toBe(400); // 404
+        expect(res.body).toBe('Event object failed validation');
+      });
     });
   });
 });

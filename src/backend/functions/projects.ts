@@ -27,6 +27,7 @@ import {
   Project,
   WbsElementStatus,
   DescriptionBullet,
+  calculateEndDate,
   calculatePercentExpectedProgress,
   calculateTimelineStatus
 } from 'utils';
@@ -129,8 +130,7 @@ const projectTransformer = (
     goals: project.goals.map(descBulletConverter),
     duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
     workPackages: project.workPackages.map((workPackage) => {
-      const endDate = new Date(workPackage.startDate);
-      endDate.setDate(workPackage.duration * 7);
+      const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
       const expectedProgress = calculatePercentExpectedProgress(
         workPackage.startDate,
         workPackage.duration,

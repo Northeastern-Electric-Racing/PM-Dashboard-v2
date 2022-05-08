@@ -20,6 +20,7 @@ import {
   isProject,
   WorkPackage,
   WbsElementStatus,
+  calculateEndDate,
   calculatePercentExpectedProgress,
   calculateTimelineStatus
 } from 'utils';
@@ -71,8 +72,7 @@ const workPackageTransformer = (
   if (payload === null) throw new TypeError('WBS_Element not found');
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
-  const endDate = new Date(workPackage.startDate);
-  endDate.setDate(workPackage.duration * 7);
+  const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
 
   const expectedProgress = calculatePercentExpectedProgress(
     workPackage.startDate,

@@ -3,7 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from '@testing-library/react';
+import {
+  routerWrapperBuilder,
+  fireEvent,
+  render,
+  screen,
+  act
+} from '../../../../test-support/test-utils';
 import {
   ActivationChangeRequest,
   ChangeRequest,
@@ -17,17 +23,20 @@ import {
   exampleStageGateChangeRequest,
   exampleStandardChangeRequest
 } from '../../../../test-support/test-data/change-requests.stub';
-import { routerWrapperBuilder } from '../../../../test-support/test-utils';
 import ChangeRequestDetails from './change-request-details';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = (cr: ChangeRequest) => {
+const renderComponent = (cr: ChangeRequest, allowed: boolean = false) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ChangeRequestDetails changeRequest={cr} />
+      <ChangeRequestDetails
+        changeRequest={cr}
+        isUserAllowedToReview={allowed}
+        isUserAllowedToImplement={allowed}
+      />
     </RouterWrapper>
   );
 };
@@ -157,5 +166,53 @@ describe('Change request review notes display elements test', () => {
         reviewNotes ? reviewNotes! : 'There are no review notes for this change request.'
       )
     ).toBeInTheDocument();
+  });
+});
+
+describe('Review change request permission tests', () => {
+  const actionBtnText = 'Review';
+  const acceptBtnText = 'Accept';
+  const denyBtnText = 'Deny';
+
+  it('Review disabled when not allowed', () => {
+    renderComponent(exampleActivationChangeRequest);
+    act(() => {
+      fireEvent.click(screen.getByText(actionBtnText));
+    });
+    expect(screen.getByText(acceptBtnText)).toHaveAttribute('disabled');
+    expect(screen.getByText(denyBtnText)).toHaveAttribute('disabled');
+  });
+
+  it('Review enabled when allowed', () => {
+    renderComponent(exampleActivationChangeRequest, true);
+    act(() => {
+      fireEvent.click(screen.getByText(actionBtnText));
+    });
+    expect(screen.getByText(acceptBtnText)).not.toHaveAttribute('disabled');
+    expect(screen.getByText(denyBtnText)).not.toHaveAttribute('disabled');
+  });
+});
+
+describe('Implement change request permission tests', () => {
+  const actionBtnText = 'Implement Change Request';
+  const newPrjBtnText = 'Create New Project';
+  const newWPBtnText = 'Create New Work Package';
+
+  it('Implemenetation actions disabled when not allowed', () => {
+    renderComponent(exampleStandardChangeRequest);
+    act(() => {
+      fireEvent.click(screen.getByText(actionBtnText));
+    });
+    expect(screen.getByText(newPrjBtnText)).toHaveAttribute('disabled');
+    expect(screen.getByText(newWPBtnText)).toHaveAttribute('disabled');
+  });
+
+  it('Implemenetation actions enabled when allowed', () => {
+    renderComponent(exampleStandardChangeRequest, true);
+    act(() => {
+      fireEvent.click(screen.getByText(actionBtnText));
+    });
+    expect(screen.getByText(newPrjBtnText)).not.toHaveAttribute('disabled');
+    expect(screen.getByText(newWPBtnText)).not.toHaveAttribute('disabled');
   });
 });

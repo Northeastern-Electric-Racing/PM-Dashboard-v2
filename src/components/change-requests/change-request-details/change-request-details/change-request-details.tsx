@@ -48,10 +48,14 @@ const buildDetails = (cr: ChangeRequest): ReactElement => {
 };
 
 interface ChangeRequestDetailsProps {
+  isUserAllowedToReview: boolean;
+  isUserAllowedToImplement: boolean;
   changeRequest: ChangeRequest;
 }
 
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
+  isUserAllowedToReview,
+  isUserAllowedToImplement,
   changeRequest
 }: ChangeRequestDetailsProps) => {
   const reviewDropdown = (
@@ -59,12 +63,14 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
       <Dropdown.Item
         as={Link}
         to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}
+        disabled={!isUserAllowedToReview}
       >
         Accept
       </Dropdown.Item>
       <Dropdown.Item
         as={Link}
         to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}
+        disabled={!isUserAllowedToReview}
       >
         Deny
       </Dropdown.Item>
@@ -73,10 +79,10 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 
   const implementCrDropdown = (
     <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
-      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>
+      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW} disabled={!isUserAllowedToImplement}>
         Create New Project
       </Dropdown.Item>
-      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>
+      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW} disabled={!isUserAllowedToImplement}>
         Create New Work Package
       </Dropdown.Item>
     </DropdownButton>

@@ -5,10 +5,22 @@
 
 import { UseQueryResult } from 'react-query';
 import { ChangeRequest } from 'utils';
-import { exampleStandardChangeRequest } from '../../../test-support/test-data/change-requests.stub';
-import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
-import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
+import { Auth } from '../../../shared/types';
+import {
+  exampleActivationChangeRequest,
+  exampleStandardChangeRequest
+} from '../../../test-support/test-data/change-requests.stub';
+import { exampleAdminUser, exampleGuestUser } from '../../../test-support/test-data/users.stub';
+import {
+  render,
+  screen,
+  routerWrapperBuilder,
+  act,
+  fireEvent
+} from '../../../test-support/test-utils';
+import { mockUseQueryResult, mockAuth } from '../../../test-support/test-data/test-utils.stub';
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
+import { useAuth } from '../../../services/auth.hooks';
 import ChangeRequestDetails from './change-request-details';
 
 jest.mock('../../../services/change-requests.hooks');
@@ -17,10 +29,23 @@ const mockedUseSingleChangeRequest = useSingleChangeRequest as jest.Mock<
   UseQueryResult<ChangeRequest>
 >;
 
-const mockHook = (isLoading: boolean, isError: boolean, data?: ChangeRequest, error?: Error) => {
+const mockSingleCRHook = (
+  isLoading: boolean,
+  isError: boolean,
+  data?: ChangeRequest,
+  error?: Error
+) => {
   mockedUseSingleChangeRequest.mockReturnValue(
     mockUseQueryResult<ChangeRequest>(isLoading, isError, data, error)
   );
+};
+
+jest.mock('../../../services/auth.hooks');
+
+const mockedUseAuth = useAuth as jest.Mock<Auth>;
+
+const mockAuthHook = (user = exampleAdminUser) => {
+  mockedUseAuth.mockReturnValue(mockAuth(user));
 };
 
 /**
@@ -37,7 +62,8 @@ const renderComponent = () => {
 
 describe('change request details container', () => {
   it('renders the loading indicator', () => {
-    mockHook(true, false);
+    mockSingleCRHook(true, false);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -45,7 +71,8 @@ describe('change request details container', () => {
   });
 
   it('renders the loaded change request', () => {
-    mockHook(false, false, exampleStandardChangeRequest);
+    mockSingleCRHook(false, false, exampleStandardChangeRequest);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -56,7 +83,13 @@ describe('change request details container', () => {
   });
 
   it('handles the error with message', () => {
-    mockHook(false, true, undefined, new Error('404 could not find the requested change request'));
+    mockSingleCRHook(
+      false,
+      true,
+      undefined,
+      new Error('404 could not find the requested change request')
+    );
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -65,11 +98,36 @@ describe('change request details container', () => {
   });
 
   it('handles the error with no message', () => {
-    mockHook(false, true, undefined);
+    mockSingleCRHook(false, true, undefined);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.queryByText('Change Request')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
+  });
+
+  it('disables reviewing change requests for guests', () => {
+    mockSingleCRHook(false, false, exampleActivationChangeRequest);
+    mockAuthHook(exampleGuestUser);
+    renderComponent();
+
+    act(() => {
+      fireEvent.click(screen.getByText('Review'));
+    });
+    expect(screen.getByText('Accept')).toHaveAttribute('disabled');
+    expect(screen.getByText('Deny')).toHaveAttribute('disabled');
+  });
+
+  it('disables implementing change requests for guests', () => {
+    mockSingleCRHook(false, false, exampleStandardChangeRequest);
+    mockAuthHook(exampleGuestUser);
+    renderComponent();
+
+    act(() => {
+      fireEvent.click(screen.getByText('Implement Change Request'));
+    });
+    expect(screen.getByText('Create New Project')).toHaveAttribute('disabled');
+    expect(screen.getByText('Create New Work Package')).toHaveAttribute('disabled');
   });
 });

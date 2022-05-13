@@ -4,6 +4,7 @@
  */
 
 import { useParams } from 'react-router-dom';
+import { useAuth } from '../../../services/auth.hooks';
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
 import ChangeRequestDetailsView from './change-request-details/change-request-details';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
@@ -16,12 +17,19 @@ const ChangeRequestDetails: React.FC = () => {
   }
   const { id } = useParams<ParamTypes>();
   const { isLoading, isError, data, error } = useSingleChangeRequest(parseInt(id));
+  const auth = useAuth();
 
   if (isLoading) return <LoadingIndicator />;
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  return <ChangeRequestDetailsView changeRequest={data!} />;
+  return (
+    <ChangeRequestDetailsView
+      isUserAllowedToReview={auth.user?.role !== 'GUEST'}
+      isUserAllowedToImplement={auth.user?.role !== 'GUEST'}
+      changeRequest={data!}
+    />
+  );
 };
 
 export default ChangeRequestDetails;

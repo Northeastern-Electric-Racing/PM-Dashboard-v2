@@ -14,7 +14,7 @@ interface ProjectEditButtonProps {
 
 const ProjectEditButton: React.FC<ProjectEditButtonProps> = ({ setEditMode, allowEdit }) => {
   return (
-    <div className={`mx-4 my-3 ${styles.projectActionButtonsContainer}`}>
+    <div className={`${styles.projectActionButtonsContainer}`}>
       <Button
         className={styles.projectActionButton}
         style={{ alignSelf: 'flex-end' }}

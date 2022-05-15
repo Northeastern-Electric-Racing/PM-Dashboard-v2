@@ -3,29 +3,35 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { routes } from '../../../shared/routes';
 import { exampleStandardChangeRequest } from '../../../test-support/test-data/change-requests.stub';
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import ReviewChangeRequest from './review-change-request';
 
-const renderComponent = (option: 'Accept' | 'Deny', route: string) => {
-  const RouterWrapper = routerWrapperBuilder({ path: '/change-requests/:id', route });
+const renderComponent = (modalShow: boolean, route: string) => {
+  const RouterWrapper = routerWrapperBuilder({ path: routes.CHANGE_REQUESTS_BY_ID, route });
   return render(
     <RouterWrapper>
-      <ReviewChangeRequest option={option} />
+      <ReviewChangeRequest modalShow={modalShow} handleClose={() => null} />
     </RouterWrapper>
   );
 };
 
 describe('review change request', () => {
-  it('renders change request review for accepting', () => {
-    renderComponent('Accept', `/change-requests/${exampleStandardChangeRequest.crId}`);
+  const route = `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`;
+  it('renders change request review modal', () => {
+    renderComponent(true, route);
 
-    expect(screen.getByText('Accept Change Request')).toBeInTheDocument();
+    expect(
+      screen.getByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+    ).toBeInTheDocument();
   });
 
-  it('renders change request review for denying', () => {
-    renderComponent('Deny', `/change-requests/${exampleStandardChangeRequest.crId}`);
+  it("doesn't render change request review modal when not shown", () => {
+    renderComponent(false, route);
 
-    expect(screen.getByText('Deny Change Request')).toBeInTheDocument();
+    expect(
+      screen.queryByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+    ).not.toBeInTheDocument();
   });
 });

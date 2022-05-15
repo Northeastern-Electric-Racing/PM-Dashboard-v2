@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import {
   ActivationChangeRequest,
   ChangeRequest,
@@ -19,9 +19,10 @@ import ActivationDetails from './type-specific-details/activation-details/activa
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
 import ReviewNotes from './review-notes/review-notes';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../shared/routes';
+import ReviewChangeRequest from '../../review-change-request/review-change-request';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -54,21 +55,14 @@ interface ChangeRequestDetailsProps {
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   changeRequest
 }: ChangeRequestDetailsProps) => {
-  const reviewDropdown = (
-    <DropdownButton id="review-dropdown" title="Review">
-      <Dropdown.Item
-        as={Link}
-        to={routes.CHANGE_REQUESTS_ACCEPT.replace(':id', changeRequest.crId.toString())}
-      >
-        Accept
-      </Dropdown.Item>
-      <Dropdown.Item
-        as={Link}
-        to={routes.CHANGE_REQUESTS_DENY.replace(':id', changeRequest.crId.toString())}
-      >
-        Deny
-      </Dropdown.Item>
-    </DropdownButton>
+  const [modalShow, setModalShow] = useState<boolean>(false);
+  const handleClose = () => setModalShow(false);
+  const handleOpen = () => setModalShow(true);
+
+  const reviewBtn = (
+    <Button variant="primary" onClick={handleOpen}>
+      Review
+    </Button>
   );
 
   const implementCrDropdown = (
@@ -83,7 +77,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   );
 
   let actionDropdown = <></>;
-  if (changeRequest.accepted === undefined) actionDropdown = reviewDropdown;
+  if (changeRequest.accepted === undefined) actionDropdown = reviewBtn;
   if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
 
   return (
@@ -116,6 +110,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
         dateImplemented={changeRequest.dateImplemented!}
       />
+      {modalShow && <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />}
     </>
   );
 };

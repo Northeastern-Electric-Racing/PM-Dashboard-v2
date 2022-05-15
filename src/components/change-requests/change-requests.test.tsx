@@ -34,15 +34,6 @@ jest.mock('./new-change-request/new-change-request', () => {
   };
 });
 
-jest.mock('./review-change-request/review-change-request', () => {
-  return {
-    __esModule: true,
-    default: () => {
-      return <div>review-change-request</div>;
-    }
-  };
-});
-
 /**
  * Sets up the component under test with the desired values and renders it.
  */
@@ -72,17 +63,5 @@ describe('change request pages', () => {
     renderComponent(routes.CHANGE_REQUESTS_NEW);
 
     expect(screen.getByText('new-change-request')).toBeInTheDocument();
-  });
-
-  it('renders the accept change request page', async () => {
-    renderComponent(routes.CHANGE_REQUESTS_ACCEPT);
-
-    expect(screen.getByText('review-change-request')).toBeInTheDocument();
-  });
-
-  it('renders the deny change request page', async () => {
-    renderComponent(routes.CHANGE_REQUESTS_DENY);
-
-    expect(screen.getByText('review-change-request')).toBeInTheDocument();
   });
 });

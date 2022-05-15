@@ -3,21 +3,26 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
 import { useReviewChangeRequest } from '../../../services/change-requests.hooks';
-import { routes } from '../../../shared/routes';
 import ErrorPage from '../../shared/error-page/error-page';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ReviewChangeRequestsView from './review-change-request/review-change-request';
 
 interface ReviewChangeRequestProps {
-  option: 'Accept' | 'Deny';
+  modalShow: boolean;
+  handleClose: () => void;
+}
+
+export interface FormInput {
+  reviewNotes: string;
+  accepted: boolean;
 }
 
 const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
-  option
+  modalShow,
+  handleClose
 }: ReviewChangeRequestProps) => {
   interface ParamTypes {
     id: string;
@@ -25,23 +30,18 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
   const { id } = useParams<ParamTypes>();
   const crId = parseInt(id);
   const auth = useAuth();
-  const history = useHistory();
-  const [reviewNotes, setReviewNotes] = useState('');
   const { isLoading, isError, error, mutateAsync } = useReviewChangeRequest();
 
-  const backToChangeRequestPage = () => history.push(`${routes.CHANGE_REQUESTS}/${crId}`);
-
-  const handleConfirm = async (e: any) => {
-    e.preventDefault();
+  const handleConfirm = async ({ reviewNotes, accepted }: FormInput) => {
+    handleClose();
     if (auth.user?.userId === undefined)
       throw new Error('Cannot review change request without being logged in');
     await mutateAsync({
       reviewerId: auth.user?.userId,
       crId,
       reviewNotes,
-      accepted: option === 'Accept'
+      accepted
     });
-    backToChangeRequestPage();
   };
 
   if (isLoading) return <LoadingIndicator />;
@@ -51,10 +51,9 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
   return (
     <ReviewChangeRequestsView
       crId={crId}
-      option={option}
-      setReviewNotes={setReviewNotes}
+      modalShow={modalShow}
+      onHide={handleClose}
       onSubmit={handleConfirm}
-      onCancel={backToChangeRequestPage}
     />
   );
 };

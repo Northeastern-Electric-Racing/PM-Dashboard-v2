@@ -113,17 +113,9 @@ const createStageGateChangeRequest = async (
 export const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type, payload } = body;
 
-  const submitter = await prisma.user.findUnique({
-    where: { userId: submitterId }
-  });
-
-  if (!submitter) {
-    return buildNotFoundResponse('User', `#${submitterId}`);
-  }
-
-  if (submitter.role === Role.GUEST) {
-    return buildNoAuthResponse();
-  }
+  const submitter = await prisma.user.findUnique({ where: { userId: submitterId } });
+  if (!submitter) return buildNotFoundResponse('User', `#${submitterId}`);
+  if (submitter.role === Role.GUEST) return buildNoAuthResponse();
 
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, payload);

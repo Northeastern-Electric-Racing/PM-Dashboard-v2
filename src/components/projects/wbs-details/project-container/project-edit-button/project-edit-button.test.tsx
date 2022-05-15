@@ -18,4 +18,14 @@ describe('test suite for ProjectEditButton', () => {
 
     expect(screen.getByText('Edit')).toBeInTheDocument();
   });
+
+  it('calls setEditMode when edit button is clicked', () => {
+    renderComponent();
+
+    const editButton = screen.getByText('Edit');
+    editButton.click();
+
+    expect(setEditModeFn).toHaveBeenCalled();
+    expect(setEditModeFn).toHaveBeenCalledTimes(1);
+  });
 });

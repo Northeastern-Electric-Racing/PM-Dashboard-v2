@@ -8,9 +8,10 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { Description_Bullet, PrismaClient } from '@prisma/client';
+import { Description_Bullet, PrismaClient, Role } from '@prisma/client';
 import {
   buildClientFailureResponse,
+  buildNoAuthResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   DescriptionBullet,
@@ -63,6 +64,11 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     projectLead,
     projectManager
   } = body;
+
+  // verify user is allowed to edit work packages
+  const user = await prisma.user.findUnique({ where: { userId } });
+  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  if (user.role === Role.GUEST) return buildNoAuthResponse();
 
   // get the original work package so we can compare things
   const originalWorkPackage = await prisma.work_Package.findUnique({

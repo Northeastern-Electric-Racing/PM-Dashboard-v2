@@ -4,7 +4,13 @@
  */
 
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap';
-import { exampleAllUsers } from '../../../../test-support/test-data/users.stub';
+import {
+  exampleAdminUser,
+  exampleAppAdminUser,
+  exampleLeadershipUser,
+  exampleMemberUser,
+  exampleGuestUser
+} from '../../../../test-support/test-data/users.stub';
 import './login-dev.module.css';
 
 interface LoginDevProps {
@@ -16,6 +22,13 @@ interface LoginDevProps {
  * Form for dev users to do login on the dev environment.
  */
 const LoginDev: React.FC<LoginDevProps> = ({ devSetRole, devFormSubmit }) => {
+  const usersList = [
+    exampleAppAdminUser,
+    exampleAdminUser,
+    exampleLeadershipUser,
+    exampleMemberUser,
+    exampleGuestUser
+  ];
   return (
     <Form className="pt-3" onSubmit={devFormSubmit}>
       <InputGroup>
@@ -27,7 +40,7 @@ const LoginDev: React.FC<LoginDevProps> = ({ devSetRole, devFormSubmit }) => {
           aria-describedby="user-select"
           as="select"
         >
-          {exampleAllUsers.map((user) => (
+          {usersList.map((user) => (
             <option key={user.role}>{user.role}</option>
           ))}
         </FormControl>

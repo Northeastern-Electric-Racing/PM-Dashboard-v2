@@ -8,9 +8,10 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import type { FromSchema } from 'json-schema-to-ts';
 import {
+  buildNoAuthResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   eventSchema,
@@ -24,8 +25,12 @@ export const reviewChangeRequest: Handler<FromSchema<typeof inputSchema>> = asyn
   { body },
   _context
 ) => {
-  // TODO: validate authorization
   const { reviewerId, crId, reviewNotes, accepted } = body;
+
+  // verify that the user is allowed review change requests
+  const reviewer = await prisma.user.findUnique({ where: { userId: reviewerId } });
+  if (!reviewer) return buildNotFoundResponse('User', `#${reviewerId}`);
+  if (reviewer.role === Role.GUEST || reviewer.role === Role.MEMBER) return buildNoAuthResponse();
 
   // ensure existence of change request
   const foundCR = prisma.change_Request.findUnique({ where: { crId } });

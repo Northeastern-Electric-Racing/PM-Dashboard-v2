@@ -84,9 +84,7 @@ export const editProject: Handler = async ({ body }, _context) => {
   });
 
   // if it doesn't exist we error
-  if (originalProject === null) {
-    return buildClientFailureResponse('Project with given projectId does not exist!');
-  }
+  if (originalProject === null) return buildNotFoundResponse('project', projectId);
 
   const { wbsElementId } = originalProject;
 

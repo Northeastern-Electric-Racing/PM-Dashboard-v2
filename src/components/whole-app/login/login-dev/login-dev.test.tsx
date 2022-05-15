@@ -35,6 +35,6 @@ describe('login dev-only component', () => {
   it('has expected role select options', async () => {
     renderComponent();
     const options = screen.getAllByRole('option');
-    expect(options.length).toEqual(7);
+    expect(options.length).toEqual(5);
   });
 });

@@ -16,7 +16,8 @@ import {
   newChangeRequestPayloadSchema,
   NewStandardChangeRequestPayload,
   NewActivationChangeRequestPayload,
-  NewStageRequestChangeRequestPayload
+  NewStageRequestChangeRequestPayload,
+  buildNotFoundResponse
 } from 'utils';
 import { ChangeRequestType } from 'utils';
 
@@ -117,7 +118,7 @@ export const baseHandler: Handler = async ({ body }, _context) => {
   });
 
   if (!submitter) {
-    return buildClientFailureResponse(`User with ID ${submitterId} does not exist.`);
+    return buildNotFoundResponse('User', `#${submitterId}`);
   }
 
   if (submitter.role === Role.GUEST) {

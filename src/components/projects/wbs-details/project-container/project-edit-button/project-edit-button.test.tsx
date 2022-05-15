@@ -8,8 +8,8 @@ import ProjectEditButton from './project-edit-button';
 
 const setEditModeFn = jest.fn();
 
-const renderComponent = () => {
-  render(<ProjectEditButton setEditMode={setEditModeFn} />);
+const renderComponent = (allowEdit = true) => {
+  render(<ProjectEditButton setEditMode={setEditModeFn} allowEdit={allowEdit} />);
 };
 
 describe('test suite for ProjectEditButton', () => {
@@ -27,5 +27,19 @@ describe('test suite for ProjectEditButton', () => {
 
     expect(setEditModeFn).toHaveBeenCalled();
     expect(setEditModeFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('disables edit button when not allowed', () => {
+    renderComponent(false);
+
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeDisabled();
+  });
+
+  it('enables edit button when allowed', () => {
+    renderComponent(true);
+
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeEnabled();
   });
 });

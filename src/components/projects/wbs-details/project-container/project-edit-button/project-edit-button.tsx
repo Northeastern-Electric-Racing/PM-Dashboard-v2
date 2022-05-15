@@ -9,15 +9,17 @@ import styles from './project-edit-button.module.css';
 
 interface ProjectEditButtonProps {
   setEditMode: Dispatch<SetStateAction<boolean>>;
+  allowEdit: boolean;
 }
 
-const ProjectEditButton: React.FC<ProjectEditButtonProps> = ({ setEditMode }) => {
+const ProjectEditButton: React.FC<ProjectEditButtonProps> = ({ setEditMode, allowEdit }) => {
   return (
     <div className={`mx-4 my-3 ${styles.projectActionButtonsContainer}`}>
       <Button
         className={styles.projectActionButton}
         style={{ alignSelf: 'flex-end' }}
         onClick={() => setEditMode(true)}
+        disabled={!allowEdit}
       >
         Edit
       </Button>

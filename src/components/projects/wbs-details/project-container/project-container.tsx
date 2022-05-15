@@ -4,7 +4,8 @@
  */
 
 import { useState } from 'react';
-import { WbsNumber, WorkPackage } from 'utils';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { WbsElementStatus, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
@@ -13,7 +14,6 @@ import ProjectEditContainer from '../../project-edit-form/project-edit-container
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import DescriptionList from '../../../shared/description-list/description-list';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
-import ProjectEditButton from './project-edit-button/project-edit-button';
 import ProjectDetails from './project-details/project-details';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
@@ -30,20 +30,31 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   const [editMode, setEditMode] = useState(false);
 
   if (isLoading) return <LoadingIndicator />;
-
   if (isError) return <ErrorPage message={error?.message} />;
+
+  const isGuest = auth.user?.role === 'GUEST';
+  const editBtn = (
+    <Dropdown.Item onClick={() => setEditMode(true)} disabled={isGuest}>
+      Edit
+    </Dropdown.Item>
+  );
+  const activateBtn = (
+    <Dropdown.Item onClick={() => console.log('Activate project')} disabled={isGuest}>
+      Activate
+    </Dropdown.Item>
+  );
+  const projectActionsDropdown = (
+    <DropdownButton id="project-actions-dropdown" title="Actions">
+      {!editMode ? editBtn : ''}
+      {data!.status === WbsElementStatus.Inactive ? activateBtn : ''}
+    </DropdownButton>
+  );
 
   const readOnlyView = (
     <div className="mb-5">
       <PageTitle
         title={`${wbsPipe(wbsNum)} - ${data!.name}`}
-        actionButton={
-          editMode ? (
-            <></>
-          ) : (
-            <ProjectEditButton setEditMode={setEditMode} allowEdit={auth.user?.role !== 'GUEST'} />
-          )
-        }
+        actionButton={projectActionsDropdown}
       />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />

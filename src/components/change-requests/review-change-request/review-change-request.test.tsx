@@ -4,68 +4,34 @@
  */
 
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
-import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
-import { Auth } from '../../../shared/types';
 import { exampleStandardChangeRequest } from '../../../test-support/test-data/change-requests.stub';
-import {
-  exampleAdminUser,
-  exampleGuestUser,
-  exampleMemberUser
-} from '../../../test-support/test-data/users.stub';
-import { mockAuth } from '../../../test-support/test-data/test-utils.stub';
 import ReviewChangeRequest from './review-change-request';
 
-jest.mock('../../../services/auth.hooks');
-
-const mockedUseAuth = useAuth as jest.Mock<Auth>;
-
-const mockAuthHook = (user = exampleAdminUser) => {
-  mockedUseAuth.mockReturnValue(mockAuth(user));
-};
-
-const renderComponent = (option: 'Accept' | 'Deny', route: string) => {
+const renderComponent = (modalShow: boolean, route: string) => {
   const RouterWrapper = routerWrapperBuilder({ path: routes.CHANGE_REQUESTS_BY_ID, route });
   return render(
     <RouterWrapper>
-      <ReviewChangeRequest option={option} />
+      <ReviewChangeRequest modalShow={modalShow} handleClose={() => null} />
     </RouterWrapper>
   );
 };
 
 describe('review change request', () => {
-  it('renders change request review for accepting', () => {
-    mockAuthHook();
-    renderComponent('Accept', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
+  const route = `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`;
+  it('renders change request review modal', () => {
+    renderComponent(true, route);
 
-    expect(screen.getByText('Accept Change Request')).toBeInTheDocument();
+    expect(
+      screen.getByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+    ).toBeInTheDocument();
   });
 
-  it('renders change request review for denying', () => {
-    mockAuthHook();
-    renderComponent('Deny', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
+  it("doesn't render change request review modal when not shown", () => {
+    renderComponent(false, route);
 
-    expect(screen.getByText('Deny Change Request')).toBeInTheDocument();
-  });
-
-  it('disables the submit button for guest users', () => {
-    mockAuthHook(exampleGuestUser);
-    renderComponent('Accept', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
-
-    expect(screen.getByText('Confirm')).toBeDisabled();
-  });
-
-  it('disables the submit button for member users', () => {
-    mockAuthHook(exampleMemberUser);
-    renderComponent('Accept', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
-
-    expect(screen.getByText('Confirm')).toBeDisabled();
-  });
-
-  it('enables the submit button for admin users', () => {
-    mockAuthHook(exampleAdminUser);
-    renderComponent('Accept', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
-
-    expect(screen.getByText('Confirm')).not.toBeDisabled();
+    expect(
+      screen.queryByText(`Review Change Request #${exampleStandardChangeRequest.crId}`)
+    ).not.toBeInTheDocument();
   });
 });

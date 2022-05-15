@@ -5,7 +5,13 @@
 
 import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
+import {
+  render,
+  screen,
+  routerWrapperBuilder,
+  act,
+  fireEvent
+} from '../../../../test-support/test-utils';
 import { Auth } from '../../../../shared/types';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
@@ -67,7 +73,7 @@ describe('work package container', () => {
     expect(screen.getByText('Dependencies')).toBeInTheDocument();
     expect(screen.getByText('Expected Activities')).toBeInTheDocument();
     expect(screen.getByText('Deliverables')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeEnabled();
+    expect(screen.getByText('Actions')).toBeInTheDocument();
   });
 
   it('handles the error with message', () => {
@@ -100,6 +106,9 @@ describe('work package container', () => {
     mockAuthHook(exampleAdminUser);
     renderComponent();
 
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
     expect(screen.getByText('Edit')).toBeEnabled();
   });
 
@@ -108,6 +117,9 @@ describe('work package container', () => {
     mockAuthHook(exampleGuestUser);
     renderComponent();
 
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
     expect(screen.getByText('Edit')).toBeDisabled();
   });
 });

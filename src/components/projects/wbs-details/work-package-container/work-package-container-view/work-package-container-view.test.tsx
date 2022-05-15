@@ -3,19 +3,35 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
-import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-packages.stub';
+import {
+  render,
+  screen,
+  routerWrapperBuilder,
+  act,
+  fireEvent
+} from '../../../../../test-support/test-utils';
+import {
+  exampleWorkPackage1,
+  exampleWorkPackage2
+} from '../../../../../test-support/test-data/work-packages.stub';
 import WorkPackageContainerView from './work-package-container-view';
 
 // Sets up the component under test with the desired values and renders it.
-const renderComponent = (allowEdit = true) => {
+const renderComponent = (
+  workPackage = exampleWorkPackage2,
+  allowEdit = true,
+  allowActivate = true,
+  allowStageGate = true
+) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
       <WorkPackageContainerView
-        workPackage={exampleWorkPackage2}
+        workPackage={workPackage}
         edit={{ editMode: false, setEditMode: () => null }}
         allowEdit={allowEdit}
+        allowActivate={allowActivate}
+        allowStageGate={allowStageGate}
       />
     </RouterWrapper>
   );
@@ -29,14 +45,58 @@ describe('work package container view', () => {
     expect(screen.getByText('Dependencies')).toBeInTheDocument();
     expect(screen.getByText('Expected Activities')).toBeInTheDocument();
     expect(screen.getByText('Deliverables')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeEnabled();
+    expect(screen.getByText('Actions')).toBeEnabled();
     expect(screen.queryByText('Save')).not.toBeInTheDocument();
   });
 
-  it('disables edit button when not allowed', () => {
-    renderComponent(false);
+  it('renders action menu buttons for inactive work package', () => {
+    renderComponent();
 
+    expect(screen.getByText('Actions')).toBeInTheDocument();
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
     expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.queryByText('Activate')).toBeInTheDocument();
+    expect(screen.queryByText('Stage Gate')).not.toBeInTheDocument();
+  });
+
+  it('renders action menu buttons for active work package', () => {
+    renderComponent(exampleWorkPackage1);
+
+    expect(screen.getByText('Actions')).toBeInTheDocument();
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.queryByText('Activate')).not.toBeInTheDocument();
+    expect(screen.queryByText('Stage Gate')).toBeInTheDocument();
+  });
+
+  it('disables edit button when not allowed', () => {
+    renderComponent(exampleWorkPackage2, false);
+
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
     expect(screen.getByText('Edit')).toBeDisabled();
+  });
+
+  it('disables activate button when not allowed', () => {
+    renderComponent(exampleWorkPackage2, true, false);
+
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
+    expect(screen.getByText('Activate')).toBeDisabled();
+  });
+
+  it('disables stage gate button when not allowed', () => {
+    renderComponent(exampleWorkPackage1, true, true, false);
+
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
+    expect(screen.getByText('Stage Gate')).toBeDisabled();
   });
 });

@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { WbsNumber } from 'utils';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
+import { useAuth } from '../../../../services/auth.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
@@ -22,6 +23,7 @@ export interface EditMode {
 }
 
 const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) => {
+  const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -38,7 +40,11 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   return editMode ? (
     <WorkPackageContainerEdit workPackage={wp} edit={{ editMode, setEditMode }} />
   ) : (
-    <WorkPackageContainerView workPackage={wp} edit={{ editMode, setEditMode }} />
+    <WorkPackageContainerView
+      workPackage={wp}
+      edit={{ editMode, setEditMode }}
+      allowEdit={auth.user?.role !== 'GUEST'}
+    />
   );
 };
 

@@ -2,23 +2,40 @@
  * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
  * See the LICENSE file in the repository root folder for details.
  */
+
 import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
-import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
-import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
+import { Auth } from '../../../../shared/types';
 import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
+import { useAuth } from '../../../../services/auth.hooks';
+import { mockAuth, mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
+import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
+import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
+import { exampleAdminUser, exampleGuestUser } from '../../../../test-support/test-data/users.stub';
 import WorkPackageContainer from './work-package-container';
 
 jest.mock('../../../../services/work-packages.hooks');
 
 const mockedUseSingleWorkPackage = useSingleWorkPackage as jest.Mock<UseQueryResult<WorkPackage>>;
 
-const mockHook = (isLoading: boolean, isError: boolean, data?: WorkPackage, error?: Error) => {
+const mockSingleWPHook = (
+  isLoading: boolean,
+  isError: boolean,
+  data?: WorkPackage,
+  error?: Error
+) => {
   mockedUseSingleWorkPackage.mockReturnValue(
     mockUseQueryResult<WorkPackage>(isLoading, isError, data, error)
   );
+};
+
+jest.mock('../../../../services/auth.hooks');
+
+const mockedUseAuth = useAuth as jest.Mock<Auth>;
+
+const mockAuthHook = (user = exampleAdminUser) => {
+  mockedUseAuth.mockReturnValue(mockAuth(user));
 };
 
 const renderComponent = () => {
@@ -32,7 +49,8 @@ const renderComponent = () => {
 
 describe('work package container', () => {
   it('renders the loading indicator', () => {
-    mockHook(true, false);
+    mockSingleWPHook(true, false);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -40,7 +58,8 @@ describe('work package container', () => {
   });
 
   it('renders the loaded project', () => {
-    mockHook(false, false, exampleWorkPackage1);
+    mockSingleWPHook(false, false, exampleWorkPackage1);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -52,7 +71,13 @@ describe('work package container', () => {
   });
 
   it('handles the error with message', () => {
-    mockHook(false, true, undefined, new Error('404 could not find the requested work package'));
+    mockSingleWPHook(
+      false,
+      true,
+      undefined,
+      new Error('404 could not find the requested work package')
+    );
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -61,11 +86,28 @@ describe('work package container', () => {
   });
 
   it('handles the error with no message', () => {
-    mockHook(false, true);
+    mockSingleWPHook(false, true);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.queryByText('work package')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
+  });
+
+  it('enables the edit button for non-guest user', () => {
+    mockSingleWPHook(false, false, exampleWorkPackage1);
+    mockAuthHook(exampleAdminUser);
+    renderComponent();
+
+    expect(screen.getByText('Edit')).toBeEnabled();
+  });
+
+  it('disables the edit button for guest user', () => {
+    mockSingleWPHook(false, false, exampleWorkPackage1);
+    mockAuthHook(exampleGuestUser);
+    renderComponent();
+
+    expect(screen.getByText('Edit')).toBeDisabled();
   });
 });

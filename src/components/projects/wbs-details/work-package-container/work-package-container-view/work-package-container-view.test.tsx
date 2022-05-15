@@ -8,14 +8,14 @@ import { exampleWorkPackage2 } from '../../../../../test-support/test-data/work-
 import WorkPackageContainerView from './work-package-container-view';
 
 // Sets up the component under test with the desired values and renders it.
-const renderComponent = () => {
+const renderComponent = (allowEdit = true) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
       <WorkPackageContainerView
         workPackage={exampleWorkPackage2}
         edit={{ editMode: false, setEditMode: () => null }}
-        allowEdit={true}
+        allowEdit={allowEdit}
       />
     </RouterWrapper>
   );
@@ -31,5 +31,12 @@ describe('work package container view', () => {
     expect(screen.getByText('Deliverables')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeEnabled();
     expect(screen.queryByText('Save')).not.toBeInTheDocument();
+  });
+
+  it('disables edit button when not allowed', () => {
+    renderComponent(false);
+
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeDisabled();
   });
 });

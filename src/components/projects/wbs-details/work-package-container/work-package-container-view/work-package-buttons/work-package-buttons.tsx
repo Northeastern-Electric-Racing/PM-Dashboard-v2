@@ -8,15 +8,17 @@ import styles from './work-package-buttons.module.css';
 
 interface EditModeProps {
   setEditMode: any;
+  allowEdit: boolean;
 }
 
-const WorkPackageButtons: React.FC<EditModeProps> = ({ setEditMode }) => {
+const WorkPackageButtons: React.FC<EditModeProps> = ({ setEditMode, allowEdit }) => {
   return (
     <div className={`mx-4 my-3 ${styles.workPackageActionButtonsContainer}`}>
       <Button
         className={styles.workPackageActionButton}
         style={{ alignSelf: 'flex-end' }}
         onClick={() => setEditMode(true)}
+        disabled={!allowEdit}
       >
         Edit
       </Button>

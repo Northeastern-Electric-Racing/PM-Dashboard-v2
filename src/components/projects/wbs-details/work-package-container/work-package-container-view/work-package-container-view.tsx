@@ -5,10 +5,10 @@
 
 import { WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
+import { EditMode } from '../work-package-container';
 import DescriptionList from '../../../../shared/description-list/description-list';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import PageTitle from '../../../../shared/page-title/page-title';
-import { EditMode } from '../work-package-container';
 import ChangesList from './changes-list/changes-list';
 import WorkPackageButtons from './work-package-buttons/work-package-buttons';
 import WorkPackageDetails from './work-package-details/work-package-details';
@@ -16,14 +16,21 @@ import WorkPackageDetails from './work-package-details/work-package-details';
 interface Props {
   workPackage: WorkPackage;
   edit: EditMode;
+  allowEdit: boolean;
 }
 
-const WorkPackageContainerView: React.FC<Props> = ({ workPackage, edit }) => {
+const WorkPackageContainerView: React.FC<Props> = ({ workPackage, edit, allowEdit }) => {
   return (
     <div className="mb-5">
       <PageTitle
         title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
-        actionButton={edit.editMode ? <></> : <WorkPackageButtons setEditMode={edit.setEditMode} />}
+        actionButton={
+          edit.editMode ? (
+            <></>
+          ) : (
+            <WorkPackageButtons setEditMode={edit.setEditMode} allowEdit={allowEdit} />
+          )
+        }
       />
       <WorkPackageDetails workPackage={workPackage} />
       <HorizontalList

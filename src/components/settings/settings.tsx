@@ -6,7 +6,6 @@
 import { useAuth } from '../../services/auth.hooks';
 import PageTitle from '../shared/page-title/page-title';
 import PageBlock from '../shared/page-block/page-block';
-import './settings.module.css';
 
 const Settings: React.FC = () => {
   const auth = useAuth();

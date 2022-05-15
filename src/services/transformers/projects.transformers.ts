@@ -4,6 +4,7 @@
  */
 
 import { DescriptionBullet, Project } from 'utils';
+import { implementedChangeTransformer } from './change-requests.transformers';
 import { workPackageTransformer } from './work-packages.transformers';
 
 /**
@@ -33,6 +34,7 @@ export const projectTransformer = (project: Project) => {
     workPackages: project.workPackages.map(workPackageTransformer),
     goals: project.goals.map(descriptionBulletTransformer),
     features: project.features.map(descriptionBulletTransformer),
-    otherConstraints: project.otherConstraints.map(descriptionBulletTransformer)
+    otherConstraints: project.otherConstraints.map(descriptionBulletTransformer),
+    changes: project.changes.map(implementedChangeTransformer)
   };
 };

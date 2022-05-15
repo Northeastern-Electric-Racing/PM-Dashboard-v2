@@ -4,6 +4,7 @@
  */
 
 import { WorkPackage } from 'utils';
+import { implementedChangeTransformer } from './change-requests.transformers';
 import { descriptionBulletTransformer } from './projects.transformers';
 
 /**
@@ -18,6 +19,7 @@ export const workPackageTransformer = (workPackage: WorkPackage) => {
     dateCreated: new Date(workPackage.dateCreated),
     startDate: new Date(workPackage.startDate),
     expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
-    deliverables: workPackage.deliverables.map(descriptionBulletTransformer)
+    deliverables: workPackage.deliverables.map(descriptionBulletTransformer),
+    changes: workPackage.changes.map(implementedChangeTransformer)
   };
 };

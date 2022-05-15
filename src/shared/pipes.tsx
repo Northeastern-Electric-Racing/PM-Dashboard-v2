@@ -5,7 +5,8 @@
 
 import { ReactElement } from 'react';
 import { User } from '@prisma/client';
-import { WbsNumber } from 'utils';
+import { WbsElementStatus, WbsNumber } from 'utils';
+import { Badge } from 'react-bootstrap';
 
 /**
  * Pipes:
@@ -60,13 +61,53 @@ export const emDashPipe = (str: string): string => {
 };
 
 /**
- * Return a given data as a string in the local en-US format,
+ * Return a given date as a string in the local en-US format,
  * with single digit numbers starting with a zero.
  */
 export const datePipe = (date: Date): string => {
   return date.toLocaleDateString('en-US', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   });
+};
+
+// returns a given number as a string with a percent sign
+export const percentPipe = (percent: number): string => {
+  return `${percent}%`;
+};
+
+/**
+ * Returns a colored chip in the form of a bootstrap pill badge.
+ * @param {WbsElementStatus} status
+ * @returns {JSX.Element}
+ */
+export const wbsStatusPipe = (status: WbsElementStatus): JSX.Element => {
+  let color: string;
+  let text: string;
+  switch (status) {
+    case WbsElementStatus.Active: {
+      color = 'primary';
+      text = 'Active';
+      break;
+    }
+    case WbsElementStatus.Inactive: {
+      color = 'secondary';
+      text = 'Inactive';
+      break;
+    }
+    default: {
+      color = 'success';
+      text = 'Complete';
+      break;
+    }
+  }
+  return (
+    <b>
+      <Badge pill variant={color}>
+        {text}
+      </Badge>
+    </b>
+  );
 };

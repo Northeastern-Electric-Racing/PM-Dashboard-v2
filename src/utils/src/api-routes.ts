@@ -13,6 +13,7 @@ const USERS_LOGIN: string = `${USERS}/auth\\:login`;
 /**************** Projects Endpoint ****************/
 const PROJECTS: string = `/projects`;
 const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbsNum`;
+const PROJECTS_EDIT: string = `${PROJECTS}-edit`;
 
 /**************** Work Packages Endpoint ****************/
 const WORK_PACKAGES: string = `/work-packages`;
@@ -33,6 +34,7 @@ export const apiRoutes = {
 
   PROJECTS,
   PROJECTS_BY_WBS,
+  PROJECTS_EDIT,
 
   WORK_PACKAGES,
   WORK_PACKAGES_BY_WBS,

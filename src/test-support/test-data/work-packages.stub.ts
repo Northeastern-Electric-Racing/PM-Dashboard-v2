@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { WbsElementStatus, WorkPackage } from 'utils';
+import { WbsElementStatus, WorkPackage, TimelineStatus } from 'utils';
 import {
   exampleAdminUser,
   exampleAppAdminUser,
@@ -29,6 +29,8 @@ export const exampleWorkPackage1: WorkPackage = {
   projectManager: exampleLeadershipUser,
   orderInProject: 1,
   progress: 25,
+  expectedProgress: 50,
+  timelineStatus: TimelineStatus.OnTrack,
   startDate: new Date('01/01/21'),
   endDate: new Date('01/22/21'),
   duration: 3,
@@ -60,7 +62,8 @@ export const exampleWorkPackage1: WorkPackage = {
       changeRequestId: 33,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleGuestUser,
-      detail: 'Increased funding by $500.'
+      detail: 'Increased funding by $500.',
+      dateImplemented: new Date('11/15/2003')
     }
   ]
 };
@@ -79,6 +82,8 @@ export const exampleWorkPackage2: WorkPackage = {
   projectManager: exampleLeadershipUser,
   orderInProject: 2,
   progress: 0,
+  expectedProgress: 0,
+  timelineStatus: TimelineStatus.OnTrack,
   startDate: new Date('01/22/21'),
   endDate: new Date('02/26/21'),
   duration: 5,
@@ -115,7 +120,8 @@ export const exampleWorkPackage2: WorkPackage = {
       changeRequestId: 1,
       wbsNum: exampleWbsWorkPackage2,
       implementer: exampleAppAdminUser,
-      detail: 'Decreased duration from 10 weeks to 7 weeks.'
+      detail: 'Decreased duration from 10 weeks to 7 weeks.',
+      dateImplemented: new Date('03/24/21')
     },
 
     {
@@ -123,7 +129,8 @@ export const exampleWorkPackage2: WorkPackage = {
       changeRequestId: 54,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleProjectLeadUser,
-      detail: 'Added "jet fuel burns hot" bullet.'
+      detail: 'Added "jet fuel burns hot" bullet.',
+      dateImplemented: new Date('03/24/21')
     }
   ]
 };
@@ -138,6 +145,8 @@ export const exampleWorkPackage3: WorkPackage = {
   projectManager: exampleProjectManagerUser,
   orderInProject: 3,
   progress: 100,
+  expectedProgress: 100,
+  timelineStatus: TimelineStatus.OnTrack,
   startDate: new Date('01/01/21'),
   endDate: new Date('01/15/21'),
   duration: 2,
@@ -178,7 +187,8 @@ export const exampleWorkPackage3: WorkPackage = {
       changeRequestId: 14,
       wbsNum: exampleWbsWorkPackage1,
       implementer: exampleAdminUser,
-      detail: 'Increased budget from $10 to $200.'
+      detail: 'Increased budget from $10 to $200.',
+      dateImplemented: new Date('03/24/21')
     }
   ]
 };

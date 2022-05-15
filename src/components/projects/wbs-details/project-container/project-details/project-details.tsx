@@ -5,11 +5,13 @@
 
 import { Project } from 'utils';
 import {
+  datePipe,
   dollarsPipe,
   endDatePipe,
   fullNamePipe,
   linkPipe,
   wbsPipe,
+  wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
 import PageBlock from '../../../../shared/page-block/page-block';
@@ -39,12 +41,12 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
             {weeksPipe(project.workPackages.reduce((tot, cur) => tot + cur.duration, 0))} <br />
             <b>Start Date:</b>{' '}
             {project.workPackages.length > 0
-              ? project.workPackages
-                  .reduce(
+              ? datePipe(
+                  project.workPackages.reduce(
                     (min, cur) => (cur.startDate < min ? cur.startDate : min),
                     project.workPackages[0].startDate
                   )
-                  .toLocaleDateString()
+                )
               : 'n/a'}{' '}
             <br />
             <b>End Date:</b>{' '}
@@ -77,7 +79,11 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }: ProjectDetai
   );
 
   return (
-    <PageBlock title={'Project Details'} headerRight={<b>{project.status}</b>} body={detailsBody} />
+    <PageBlock
+      title={'Project Details'}
+      headerRight={wbsStatusPipe(project.status)}
+      body={detailsBody}
+    />
   );
 };
 

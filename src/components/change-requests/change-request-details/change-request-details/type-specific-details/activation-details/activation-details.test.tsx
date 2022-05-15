@@ -3,10 +3,11 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen } from "@testing-library/react";
-import { ActivationChangeRequest } from "utils";
-import { exampleActivationChangeRequest } from "../../../../../../test-support/test-data/change-requests.stub";
-import ActivationDetails from "./activation-details";
+import { render, screen } from '@testing-library/react';
+import { ActivationChangeRequest } from 'utils';
+import { datePipe } from '../../../../../../shared/pipes';
+import { exampleActivationChangeRequest } from '../../../../../../test-support/test-data/change-requests.stub';
+import ActivationDetails from './activation-details';
 
 /**
  * Sets up the component under test with the desired values and renders it.
@@ -37,7 +38,7 @@ describe('Change request details activation cr display element tests', () => {
   it('Renders start date', () => {
     renderComponent(cr);
     expect(screen.getByText(`Start Date`)).toBeInTheDocument();
-    expect(screen.getByText(`${cr.startDate.toUTCString()}`)).toBeInTheDocument();
+    expect(screen.getByText(`${datePipe(cr.startDate)}`)).toBeInTheDocument();
   });
 
   it('Renders confirm details', () => {

@@ -5,20 +5,19 @@
 
 import { ReactElement, useState } from 'react';
 import {
-  ChangeRequest,
-  StandardChangeRequest,
   ActivationChangeRequest,
+  ChangeRequest,
+  ChangeRequestType,
   StageGateChangeRequest,
-  ChangeRequestType
+  StandardChangeRequest
 } from 'utils';
-import { fullNamePipe } from '../../../../shared/pipes';
+import { datePipe, fullNamePipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
-import './change-request-details.module.css';
 import ReviewNotes from './review-notes/review-notes';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -91,7 +90,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
           <dl className="row">
             <dt className="col-2">Submitted</dt>
             <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
-            <dd className="col-3">{changeRequest.dateSubmitted.toUTCString()}</dd>
+            <dd className="col-3">{datePipe(changeRequest.dateSubmitted)}</dd>
             <div className="w-100"></div>
             <dt className="col-2">Type</dt>
             <dd className="col-auto">{changeRequest.type}</dd>
@@ -100,7 +99,11 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         }
       />
       {buildDetails(changeRequest)}
-      <ReviewNotes reviewer={changeRequest.reviewer} reviewNotes={changeRequest.reviewNotes} />
+      <ReviewNotes
+        reviewer={changeRequest.reviewer}
+        reviewNotes={changeRequest.reviewNotes}
+        dateReviewed={changeRequest.dateReviewed}
+      />
       <ImplementedChangesList
         changes={
           changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges

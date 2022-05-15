@@ -19,7 +19,10 @@ import {
   validateWBS,
   isProject,
   WorkPackage,
-  WbsElementStatus
+  WbsElementStatus,
+  calculateEndDate,
+  calculatePercentExpectedProgress,
+  calculateTimelineStatus
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -49,11 +52,11 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
 });
 
 const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
-({
-  INACTIVE: WbsElementStatus.Inactive,
-  ACTIVE: WbsElementStatus.Active,
-  COMPLETE: WbsElementStatus.Complete
-}[status]);
+  ({
+    INACTIVE: WbsElementStatus.Inactive,
+    ACTIVE: WbsElementStatus.Active,
+    COMPLETE: WbsElementStatus.Complete
+  }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   car: element.carNumber,
@@ -69,8 +72,13 @@ const workPackageTransformer = (
   if (payload === null) throw new TypeError('WBS_Element not found');
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
-  const endDate = new Date(workPackage.startDate);
-  endDate.setDate(workPackage.duration * 7);
+  const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
+
+  const expectedProgress = calculatePercentExpectedProgress(
+    workPackage.startDate,
+    workPackage.duration,
+    wbsElement.status
+  );
 
   const wbsNum = wbsNumOf(wbsElement);
   return {
@@ -96,7 +104,9 @@ const workPackageTransformer = (
     projectLead: wbsElement.projectLead ?? undefined,
     status: convertStatus(wbsElement.status),
     wbsNum,
-    endDate
+    endDate,
+    expectedProgress,
+    timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress)
   };
 };
 

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ChangeRequest, ChangeRequestType } from 'utils';
+import { ChangeRequest, ChangeRequestType, ImplementedChange } from 'utils';
 
 /**
  * Transforms a change request to ensure deep field transformation of date objects.
@@ -27,4 +27,17 @@ export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
   }
   const output: ChangeRequest = data;
   return output;
+};
+
+/**
+ * Transforms an implemented change to ensure deep field transformation of date objects.
+ *
+ * @param immplementedChange Incoming implemented change object supplied by the HTTP response.
+ * @returns Properly transformed implemented change object.
+ */
+export const implementedChangeTransformer = (implementedChange: ImplementedChange) => {
+  return {
+    ...implementedChange,
+    dateImplemented: new Date(implementedChange.dateImplemented)
+  } as ImplementedChange;
 };

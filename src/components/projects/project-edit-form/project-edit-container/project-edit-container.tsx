@@ -4,9 +4,10 @@
  */
 
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
-import { Project, WbsNumber, WorkPackage } from 'utils';
-import { wbsPipe } from '../../../../shared/pipes';
 import { Form } from 'react-bootstrap';
+import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
+import { wbsPipe } from '../../../../shared/pipes';
+import { useAllUsers } from '../../../../services/users.hooks';
 import PageTitle from '../../../shared/page-title/page-title';
 import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
 import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
@@ -14,11 +15,22 @@ import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../shared/page-block/page-block';
-import ChangesList from '../../wbs-details/work-package-container/changes-list/changes-list';
-import { useAllUsers } from '../../../../services/users.hooks';
+import ChangesList from '../../wbs-details/work-package-container/work-package-container-view/changes-list/changes-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
+import { useAuth } from '../../../../services/auth.hooks';
+import { useEditSingleProject } from '../../../../services/projects.hooks';
+
+/**
+ * Helper function to turn DescriptionBullets into a list of { id:number, detail:string }.
+ */
+const bulletsToObject = (bullets: DescriptionBullet[]) =>
+  bullets
+    .filter((bullet) => !bullet.dateDeleted)
+    .map((bullet) => {
+      return { id: bullet.id, detail: bullet.detail };
+    });
 
 interface EditFormContainerProps {
   wbsNum: WbsNumber;
@@ -31,18 +43,47 @@ export interface EditModeProps {
 }
 
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
-  const [goals, setGoals] = useState(proj!.goals.map((goal) => goal.detail));
-  const [features, setFeatures] = useState(proj!.features.map((feature) => feature.detail));
-  const [otherConstraints, setOther] = useState(
-    proj!.otherConstraints.map((constraint) => constraint.detail)
+  const auth = useAuth();
+
+  const [crId, setCrId] = useState(-1);
+  const [name, setName] = useState(proj.name);
+  const [summary, setSummary] = useState(proj.summary);
+  const [budget, setBudget] = useState(proj.budget);
+  const [wbsElementStatus, setWbsElementStatus] = useState(proj.status);
+  const [projectLead, setProjectLead] = useState(proj.projectLead?.userId);
+  const [projectManager, setProjectManager] = useState(proj.projectManager?.userId);
+
+  const [slideDeck, setSlideDeck] = useState(proj.slideDeckLink);
+  const [taskList, setTaskList] = useState(proj.taskListLink);
+  const [bom, setBom] = useState(proj.bomLink);
+  const [gDrive, setGDrive] = useState(proj.gDriveLink);
+
+  const updateSlideDeck = (url: string | undefined) => setSlideDeck(url);
+  const updateTaskList = (url: string | undefined) => setTaskList(url);
+  const updateBom = (url: string | undefined) => setBom(url);
+  const updateGDrive = (url: string | undefined) => setGDrive(url);
+
+  const { mutateAsync } = useEditSingleProject();
+
+  const [goals, setGoals] = useState<{ id?: number; detail: string }[]>(
+    bulletsToObject(proj!.goals)
+  );
+  const [features, setFeatures] = useState<{ id?: number; detail: string }[]>(
+    bulletsToObject(proj!.features)
+  );
+  const [otherConstraints, setOther] = useState<{ id?: number; detail: string }[]>(
+    bulletsToObject(proj!.otherConstraints)
   );
   const [rules, setRules] = useState(proj!.rules);
   const { isLoading, isError, data, error } = useAllUsers();
 
+  const notEmptyString = (s: string) => s !== '';
+
   const goalsUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = goals.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone.map((c) => c.detail).every(notEmptyString))
+        clone.push({ detail: val });
       setGoals(clone);
     },
     remove: (idx) => {
@@ -52,14 +93,16 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = goals.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setGoals(clone);
     }
   };
+
   const featUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = features.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone.map((c) => c.detail).every(notEmptyString))
+        clone.push({ detail: val });
       setFeatures(clone);
     },
     remove: (idx) => {
@@ -69,14 +112,16 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = features.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setFeatures(clone);
     }
   };
+
   const ocUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = otherConstraints.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone.map((c) => c.detail).every(notEmptyString))
+        clone.push({ detail: val });
       setOther(clone);
     },
     remove: (idx) => {
@@ -86,14 +131,15 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     },
     update: (idx, val) => {
       const clone = otherConstraints.slice();
-      clone[idx] = val;
+      clone[idx].detail = val;
       setOther(clone);
     }
   };
+
   const rulesUtil: EditableTextInputListUtils = {
     add: (val) => {
       const clone = rules.slice();
-      clone.push(val);
+      if (clone.length === 0 || clone.every(notEmptyString)) clone.push(val);
       setRules(clone);
     },
     remove: (idx) => {
@@ -108,10 +154,62 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
     }
   };
 
-  const handleSubmit = (event: SyntheticEvent) => {
-    //event.preventDefault();
-    const { currentTarget } = event;
-    console.log(currentTarget);
+  const isValidURL = (url: string | undefined) => {
+    if (url !== undefined) {
+      try {
+        new URL(url);
+        return true;
+      } catch (_) {
+        alert('Invalid URL provided.');
+      }
+    } else {
+      alert('URL not provided.');
+    }
+    return false;
+  };
+
+  const checkValidity = () => {
+    return [slideDeck, taskList, bom, gDrive].every(isValidURL);
+  };
+
+  const handleSubmit = async (event: SyntheticEvent) => {
+    event.preventDefault();
+
+    if (checkValidity() === false) {
+      event.stopPropagation();
+      return;
+    }
+
+    const { userId } = auth.user!;
+
+    const payload = {
+      projectId: proj.id,
+      crId,
+      name,
+      userId,
+      budget,
+      summary,
+      rules,
+      goals,
+      features,
+      otherConstraints,
+      wbsElementStatus,
+      googleDriveFolderLink: gDrive,
+      slideDeckLink: slideDeck,
+      bomLink: bom,
+      taskListLink: taskList,
+      projectLead: projectLead === -1 ? undefined : projectLead,
+      projectManager: projectManager === -1 ? undefined : projectManager
+    };
+
+    try {
+      await mutateAsync(payload);
+      window.location.reload();
+    } catch (e) {
+      if (e instanceof Error) {
+        alert(e.message);
+      }
+    }
   };
 
   if (isLoading) return <LoadingIndicator />;
@@ -119,66 +217,77 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
   if (isError) return <ErrorPage message={error?.message} />;
 
   return (
-    <div className="mb-5">
+    <>
       <Form onSubmit={handleSubmit}>
         <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
-        <Form.Control className="m-4 w-25" type="number" placeholder="Change Request ID #" />
-        <ProjectEditDetails project={proj!} users={data!} />
-        <ProjectEditSummary project={proj!} />
+        <Form.Control
+          className="m-4 w-25"
+          type="number"
+          placeholder="Change Request ID #"
+          required
+          min={0}
+          onChange={(e) => setCrId(Number(e.target.value))}
+        />
+        <ProjectEditDetails
+          project={proj!}
+          users={data!}
+          updateSlideDeck={updateSlideDeck}
+          updateTaskList={updateTaskList}
+          updateBom={updateBom}
+          updateGDrive={updateGDrive}
+          updateName={setName}
+          updateBudget={(val: string) => setBudget(Number(val))}
+          updateStatus={setWbsElementStatus}
+          updateProjectLead={setProjectLead}
+          updateProjectManager={setProjectManager}
+        />
+        <ProjectEditSummary project={proj!} updateSummary={setSummary} />
         <PageBlock
           title={'Goals'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={goals}
-                add={goalsUtil.add}
-                remove={goalsUtil.remove}
-                update={goalsUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={goals.map((goal) => goal.detail)}
+              add={goalsUtil.add}
+              remove={goalsUtil.remove}
+              update={goalsUtil.update}
+            />
           }
         />
         <PageBlock
           title={'Features'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={features}
-                add={featUtil.add}
-                remove={featUtil.remove}
-                update={featUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={features.map((feature) => feature.detail)}
+              add={featUtil.add}
+              remove={featUtil.remove}
+              update={featUtil.update}
+            />
           }
         />
         <PageBlock
           title={'Other Constraints'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={otherConstraints}
-                add={ocUtil.add}
-                remove={ocUtil.remove}
-                update={ocUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={otherConstraints.map((other) => other.detail)}
+              add={ocUtil.add}
+              remove={ocUtil.remove}
+              update={ocUtil.update}
+            />
           }
         />
         <PageBlock
           title={'Rules'}
           headerRight={<></>}
           body={
-            <Form.Group>
-              <EditableTextInputList
-                items={rules}
-                add={rulesUtil.add}
-                remove={rulesUtil.remove}
-                update={rulesUtil.update}
-              />
-            </Form.Group>
+            <EditableTextInputList
+              items={rules}
+              add={rulesUtil.add}
+              remove={rulesUtil.remove}
+              update={rulesUtil.update}
+            />
           }
         />
         <ChangesList changes={proj!.changes} />
@@ -197,7 +306,7 @@ const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, 
         />
         <EditModeOptions setEditMode={setEditMode} />
       </Form>
-    </div>
+    </>
   );
 };
 

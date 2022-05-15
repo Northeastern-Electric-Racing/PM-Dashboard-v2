@@ -10,12 +10,11 @@ import ProjectDetails from './project-details/project-details';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import DescriptionList from '../../../shared/description-list/description-list';
-import ChangesList from '../work-package-container/changes-list/changes-list';
+import ChangesList from '../work-package-container/work-package-container-view/changes-list/changes-list';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
-import './project-container.module.css';
 import { useState } from 'react';
 import ProjectEditButton from './project-edit-button/project-edit-button';
 import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
@@ -40,9 +39,15 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />
-      <DescriptionList title={'Goals'} items={data!.goals} />
-      <DescriptionList title={'Features'} items={data!.features} />
-      <DescriptionList title={'Other Constraints'} items={data!.otherConstraints} />
+      <DescriptionList title={'Goals'} items={data!.goals.filter((goal) => !goal.dateDeleted)} />
+      <DescriptionList
+        title={'Features'}
+        items={data!.features.filter((feature) => !feature.dateDeleted)}
+      />
+      <DescriptionList
+        title={'Other Constraints'}
+        items={data!.otherConstraints.filter((constraint) => !constraint.dateDeleted)}
+      />
       <RulesList rules={data!.rules} />
       <ChangesList changes={data!.changes} />
       <PageBlock

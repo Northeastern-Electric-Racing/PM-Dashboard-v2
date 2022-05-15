@@ -3,22 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Navbar, Nav } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../shared/routes';
 import NavUserMenu from './nav-user-menu/nav-user-menu';
-import NavPageLinks from './nav-page-links/nav-page-links';
 import NavNotificationsMenu from './nav-notifications-menu/nav-notifications-menu';
 import styles from './nav-top-bar.module.css';
+import { useAuth } from '../../../services/auth.hooks';
+import { fullNamePipe } from '../../../shared/pipes';
 
 const NavTopBar: React.FC = () => {
+  const auth = useAuth();
   return (
     <Navbar className={styles.mainBackground} variant="light" expand="md" fixed="top">
       <Navbar.Brand as="div">
         <Link className="d-flex" to={routes.HOME} style={{ textDecoration: 'none' }}>
           <img
             className={`d-inline-block align-top ${styles.logo}`}
-            src={'NER-Logo-App-Icon.png'}
+            src={'/NER-Logo-App-Icon.png'}
             alt="Northeastern Electric Racing Logo"
           />{' '}
           <h3 className={styles.title}>NER PM Dashboard</h3>
@@ -28,7 +30,7 @@ const NavTopBar: React.FC = () => {
       <Navbar.Collapse id="nav-top-bar-items">
         <Nav className="ml-auto">
           <NavNotificationsMenu />
-          <NavPageLinks />
+          <div className={styles.username}>{fullNamePipe(auth.user)}</div>
           <NavUserMenu />
         </Nav>
       </Navbar.Collapse>

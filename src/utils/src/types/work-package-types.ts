@@ -31,13 +31,13 @@ export type CreateWorkPackagePayload = FromSchema<typeof workPackageCreateInputS
 
 export const workPackageEditInputSchemaBody = bodySchema(
   {
-    wbsElementId: intType,
+    workPackageId: intType,
     userId: intType,
     name: stringType,
     crId: intType,
     startDate: dateType,
     duration: intType,
-    dependencies: arrayType(intType),
+    dependencies: arrayType(wbsNumType),
     expectedActivities: arrayType(bodySchema({ id: intType, detail: stringType })),
     deliverables: arrayType(bodySchema({ id: intType, detail: stringType })),
     wbsElementStatus: enumType(
@@ -53,3 +53,10 @@ export const workPackageEditInputSchemaBody = bodySchema(
 );
 
 export type EditWorkPackagePayload = FromSchema<typeof workPackageEditInputSchemaBody>;
+
+export enum TimelineStatus {
+  Ahead = 'AHEAD',
+  OnTrack = 'ON_TRACK',
+  Behind = 'BEHIND',
+  VeryBehind = 'VERY_BEHIND'
+}

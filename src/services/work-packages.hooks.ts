@@ -4,9 +4,11 @@
  */
 
 import { useMutation, useQuery } from 'react-query';
-import { WorkPackage, WbsNumber, CreateWorkPackagePayload } from 'utils';
+import { WorkPackage, WbsNumber, CreateWorkPackagePayload, EditWorkPackagePayload } from 'utils';
+
 import {
   createSingleWorkPackage,
+  editWorkPackage,
   getAllWorkPackages,
   getSingleWorkPackage
 } from './work-packages.api';
@@ -14,8 +16,13 @@ import {
 /**
  * Custom React Hook to supply all work packages.
  */
-export const useAllWorkPackages = () => {
+export const useAllWorkPackages = (onSuccess?: (value: any) => void) => {
   return useQuery<WorkPackage[], Error>('work package', async () => {
+    if (onSuccess) {
+      const { data } = await getAllWorkPackages(onSuccess);
+      return data;
+    }
+
     const { data } = await getAllWorkPackages();
     return data;
   });
@@ -44,6 +51,26 @@ export const useCreateSingleWorkPackage = () => {
     async (wpPayload: CreateWorkPackagePayload) => {
       const { data } = await createSingleWorkPackage(wpPayload);
       return data;
+    }
+  );
+};
+
+/**
+ * Custom React Hook to edit a work package.
+ *
+ * @returns React-query tility functions exposed by the useMutation hook
+ */
+export const useEditWorkPackage = () => {
+  return useMutation<{ message: string }, Error, EditWorkPackagePayload>(
+    ['editWP'],
+    async (wpPayload: EditWorkPackagePayload) => {
+      const { data } = await editWorkPackage(wpPayload);
+      return data;
+    },
+    {
+      onError: (error) => {
+        alert(error.message + " but it's probably invalid cr id"); // very scuffed, find a better way to surface errors on front end
+      }
     }
   );
 };

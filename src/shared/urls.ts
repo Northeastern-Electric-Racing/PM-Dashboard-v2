@@ -18,16 +18,19 @@ const usersLogin = () => `${users()}/auth:login`;
 const projects = () => `${API_URL}/projects`;
 const projectsByWbsNum = (wbsNum: string) => `${projects()}/${wbsNum}`;
 const projectsCreate = () => `${projects()}-new`;
+const projectsEdit = () => `${projects()}-edit`;
 
 /**************** Work Packages Endpoint ****************/
 const workPackages = () => `${API_URL}/work-packages`;
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 const workPackagesCreate = () => `${workPackages()}-create`;
+const workPackagesEdit = () => `${workPackages()}-edit`;
 
 /**************** Change Requests Endpoint ****************/
 const changeRequests = () => `${API_URL}/change-requests`;
 const changeRequestsById = (id: string) => `${changeRequests()}/${id}`;
 const changeRequestsReview = () => `${changeRequests()}-review`;
+const changeRequestsCreate = () => `${changeRequests()}-new`;
 
 export const apiUrls = {
   users,
@@ -37,12 +40,15 @@ export const apiUrls = {
   projects,
   projectsByWbsNum,
   projectsCreate,
+  projectsEdit,
 
   workPackages,
   workPackagesByWbsNum,
   workPackagesCreate,
+  workPackagesEdit,
 
   changeRequests,
   changeRequestsById,
-  changeRequestsReview
+  changeRequestsReview,
+  changeRequestsCreate
 };

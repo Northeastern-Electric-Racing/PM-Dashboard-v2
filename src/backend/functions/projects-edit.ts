@@ -8,14 +8,15 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { Description_Bullet, PrismaClient } from '@prisma/client';
+import { Description_Bullet, PrismaClient, Role } from '@prisma/client';
 import {
   buildClientFailureResponse,
   buildSuccessResponse,
   DescriptionBullet,
   projectEditInputSchemaBody,
   eventSchema,
-  buildNotFoundResponse
+  buildNotFoundResponse,
+  buildNoAuthResponse
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -59,13 +60,14 @@ export const editProject: Handler = async ({ body }, _context) => {
   const projectLead = body.projectLead === undefined ? null : body.projectLead;
   const projectManager = body.projectManager === undefined ? null : body.projectManager;
 
+  // verify user is allowed to edit projects
+  const user = await prisma.user.findUnique({ where: { userId } });
+  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  if (user.role === Role.GUEST) return buildNoAuthResponse();
+
   // Verify valid change request
   const crReviewed = await getChangeRequestReviewState(body.crId);
-  if (crReviewed === null) {
-    return buildNotFoundResponse('change request', `CR #${body.crId}`);
-  }
-
-  // check if the change request for the project was reviewed
+  if (crReviewed === null) return buildNotFoundResponse('change request', `CR #${body.crId}`);
   if (!crReviewed) {
     return buildClientFailureResponse('Cannot implement an unreviewed change request');
   }
@@ -84,9 +86,7 @@ export const editProject: Handler = async ({ body }, _context) => {
   });
 
   // if it doesn't exist we error
-  if (originalProject === null) {
-    return buildClientFailureResponse('Project with given projectId does not exist!');
-  }
+  if (originalProject === null) return buildNotFoundResponse('project', projectId);
 
   const { wbsElementId } = originalProject;
 

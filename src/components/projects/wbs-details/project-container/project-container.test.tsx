@@ -6,20 +6,36 @@
 import { UseQueryResult } from 'react-query';
 import { Project } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
-import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
-import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
+import { Auth } from '../../../../shared/types';
 import { useSingleProject } from '../../../../services/projects.hooks';
+import { useAuth } from '../../../../services/auth.hooks';
+import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
+import { mockAuth, mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
+import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
+import { exampleAdminUser, exampleGuestUser } from '../../../../test-support/test-data/users.stub';
 import ProjectContainer from './project-container';
 
 jest.mock('../../../../services/projects.hooks');
 
 const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 
-const mockHook = (isLoading: boolean, isError: boolean, data?: Project, error?: Error) => {
+const mockSingleProjectHook = (
+  isLoading: boolean,
+  isError: boolean,
+  data?: Project,
+  error?: Error
+) => {
   mockedUseSingleProject.mockReturnValue(
     mockUseQueryResult<Project>(isLoading, isError, data, error)
   );
+};
+
+jest.mock('../../../../services/auth.hooks');
+
+const mockedUseAuth = useAuth as jest.Mock<Auth>;
+
+const mockAuthHook = (user = exampleAdminUser) => {
+  mockedUseAuth.mockReturnValue(mockAuth(user));
 };
 
 // Sets up the component under test with the desired values and renders it.
@@ -34,7 +50,8 @@ const renderComponent = () => {
 
 describe('Rendering Project Container', () => {
   it('renders the loading indicator', () => {
-    mockHook(true, false);
+    mockSingleProjectHook(true, false);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -42,7 +59,8 @@ describe('Rendering Project Container', () => {
   });
 
   it('renders the loaded project', () => {
-    mockHook(false, false, exampleProject1);
+    mockSingleProjectHook(false, false, exampleProject1);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -53,7 +71,13 @@ describe('Rendering Project Container', () => {
   });
 
   it('handles the error with message', () => {
-    mockHook(false, true, undefined, new Error('404 could not find the requested project'));
+    mockSingleProjectHook(
+      false,
+      true,
+      undefined,
+      new Error('404 could not find the requested project')
+    );
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -62,7 +86,8 @@ describe('Rendering Project Container', () => {
   });
 
   it('handles the error with no message', () => {
-    mockHook(false, true);
+    mockSingleProjectHook(false, true);
+    mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
@@ -70,5 +95,23 @@ describe('Rendering Project Container', () => {
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
   });
 
-  it.todo('simplify testing with mocks?');
+  it('disables the edit button for guest users', () => {
+    mockSingleProjectHook(false, false, exampleProject1);
+    mockAuthHook(exampleGuestUser);
+    renderComponent();
+
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
+    expect(screen.queryByText('Edit')).toBeDisabled();
+  });
+
+  it('enables the edit button for admin users', () => {
+    mockSingleProjectHook(false, false, exampleProject1);
+    mockAuthHook(exampleAdminUser);
+    renderComponent();
+
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeEnabled();
+  });
 });

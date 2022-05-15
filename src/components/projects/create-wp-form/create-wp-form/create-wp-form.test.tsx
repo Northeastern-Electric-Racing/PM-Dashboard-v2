@@ -26,7 +26,7 @@ const mockStates = {
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = () => {
+const renderComponent = (allowSubmit = true) => {
   return render(
     <CreateWPFormView
       states={mockStates}
@@ -38,6 +38,7 @@ const renderComponent = () => {
       delUtils={mockUtils}
       onSubmit={() => null}
       onCancel={() => null}
+      allowSubmit={allowSubmit}
     />
   );
 };
@@ -99,5 +100,17 @@ describe('create wp form view test suite', () => {
     expect(screen.getByText('Deliverables')).toBeInTheDocument();
     const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
     expect(res.map((item) => item.value)).toEqual(expect.arrayContaining(mockDeliverables));
+  });
+
+  it('disables submit button when allowSubmit is false', () => {
+    renderComponent(false);
+
+    expect(screen.getByText('Create')).toBeDisabled();
+  });
+
+  it('enables submit button when allowSubmit is true', () => {
+    renderComponent(true);
+
+    expect(screen.getByText('Create')).not.toBeDisabled();
   });
 });

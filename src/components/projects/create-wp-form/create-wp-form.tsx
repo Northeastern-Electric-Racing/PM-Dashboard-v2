@@ -174,6 +174,7 @@ const CreateWPForm: React.FC = () => {
       delUtils={delUtils}
       onSubmit={handleSubmit}
       onCancel={() => history.goBack()}
+      allowSubmit={auth.user?.role !== 'GUEST'}
     />
   );
 };

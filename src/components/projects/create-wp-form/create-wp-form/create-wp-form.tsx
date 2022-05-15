@@ -16,6 +16,7 @@ interface CreateWPFormViewProps {
   eaUtils: EditableTextInputListUtils;
   deliverables: string[];
   delUtils: EditableTextInputListUtils;
+  allowSubmit: boolean;
   onSubmit: (e: any) => void;
   onCancel: (e: any) => void;
 }
@@ -28,6 +29,7 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
   eaUtils,
   deliverables,
   delUtils,
+  allowSubmit,
   onSubmit,
   onCancel
 }) => {
@@ -151,7 +153,12 @@ const CreateWPFormView: React.FC<CreateWPFormViewProps> = ({
                 </Row>
                 <Row>
                   <Col>
-                    <Button className={'mr-3'} variant="primary" type="submit">
+                    <Button
+                      className={'mr-3'}
+                      variant="primary"
+                      type="submit"
+                      disabled={!allowSubmit}
+                    >
                       Create
                     </Button>
                     <Button variant="secondary" type="button" onClick={onCancel}>

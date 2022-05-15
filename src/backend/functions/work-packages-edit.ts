@@ -8,8 +8,10 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { Description_Bullet, PrismaClient } from '@prisma/client';
+import { Description_Bullet, PrismaClient, Role } from '@prisma/client';
 import {
+  buildClientFailureResponse,
+  buildNoAuthResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   DescriptionBullet,
@@ -63,6 +65,11 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     projectManager
   } = body;
 
+  // verify user is allowed to edit work packages
+  const user = await prisma.user.findUnique({ where: { userId } });
+  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  if (user.role === Role.GUEST) return buildNoAuthResponse();
+
   // get the original work package so we can compare things
   const originalWorkPackage = await prisma.work_Package.findUnique({
     where: { workPackageId },
@@ -73,27 +80,21 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
       deliverables: true
     }
   });
-
-  // if it doesn't exist we error
   if (originalWorkPackage === null) {
-    return buildNotFoundResponse('Work Package', workPackageId!.toString());
+    return buildNotFoundResponse('Work Package', `#${workPackageId}`);
   }
 
-  const { wbsElementId } = originalWorkPackage;
-
-  // if the crId doesn't match a valid approved change request then we need to error
+  // the crId must match a valid approved change request
   const changeRequest = await prisma.change_Request.findUnique({ where: { crId } });
-
-  if (!changeRequest?.accepted) {
-    return buildNotFoundResponse('Valid_Change_Request', crId.toString());
+  if (changeRequest === null) return buildNotFoundResponse('Change Request', `#${crId}`);
+  if (!changeRequest.accepted) {
+    return buildClientFailureResponse('Cannot implement an unreviewed change request');
   }
 
   const depsIds = await Promise.all(dependencies.map(async (wbsNum) => getWbsElementId(wbsNum)));
+  if (depsIds.includes(undefined)) return buildNotFoundResponse('Dependency', `${depsIds}`);
 
-  if (depsIds.includes(undefined)) {
-    return buildNotFoundResponse('Dependency', depsIds.toString());
-  }
-
+  const { wbsElementId } = originalWorkPackage;
   let changes = [];
   // get the changes or undefined for each of the fields
   const nameChangeJson = createChangeJsonNonList(

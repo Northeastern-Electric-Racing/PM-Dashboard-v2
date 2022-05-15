@@ -8,10 +8,11 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
 import {
   buildClientFailureResponse,
+  buildNoAuthResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   createProjectPayloadSchema,
@@ -40,13 +41,14 @@ const getChangeRequestReviewState = async (crId: number) => {
 };
 
 export const baseHandler: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
+  // verify user is allowed to create projects
+  const user = await prisma.user.findUnique({ where: { userId: body.userId } });
+  if (!user) return buildNotFoundResponse('user', `#${body.userId}`);
+  if (user.role === Role.GUEST) return buildNoAuthResponse();
+
   // check if the change request exists
   const crReviewed = await getChangeRequestReviewState(body.crId);
-  if (crReviewed === null) {
-    return buildNotFoundResponse('change request', `CR #${body.crId}`);
-  }
-
-  // check if the change request for the project was reviewed
+  if (crReviewed === null) return buildNotFoundResponse('change request', `CR #${body.crId}`);
   if (!crReviewed) {
     return buildClientFailureResponse('Cannot implement an unreviewed change request');
   }

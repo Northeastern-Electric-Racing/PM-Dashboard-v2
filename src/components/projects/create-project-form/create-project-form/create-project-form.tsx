@@ -9,12 +9,14 @@ import { CreateProjectFormStates } from '../create-project-form';
 
 interface CreateProjectFormViewProps {
   states: CreateProjectFormStates;
+  allowSubmit: boolean;
   onCancel: (e: any) => void;
   onSubmit: (e: any) => void;
 }
 
 const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
   states,
+  allowSubmit,
   onCancel,
   onSubmit
 }) => {
@@ -94,7 +96,12 @@ const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
                   </Row>
                   <Row>
                     <Col className={'d-flex'}>
-                      <Button className={'mr-3'} variant="primary" type="submit">
+                      <Button
+                        className={'mr-3'}
+                        variant="primary"
+                        type="submit"
+                        disabled={!allowSubmit}
+                      >
                         Create
                       </Button>
                       <Button variant="secondary" type="button" onClick={onCancel}>

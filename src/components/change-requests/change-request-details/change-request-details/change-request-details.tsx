@@ -49,10 +49,14 @@ const buildDetails = (cr: ChangeRequest): ReactElement => {
 };
 
 interface ChangeRequestDetailsProps {
+  isUserAllowedToReview: boolean;
+  isUserAllowedToImplement: boolean;
   changeRequest: ChangeRequest;
 }
 
 const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
+  isUserAllowedToReview,
+  isUserAllowedToImplement,
   changeRequest
 }: ChangeRequestDetailsProps) => {
   const [modalShow, setModalShow] = useState<boolean>(false);
@@ -60,17 +64,17 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   const handleOpen = () => setModalShow(true);
 
   const reviewBtn = (
-    <Button variant="primary" onClick={handleOpen}>
+    <Button variant="primary" onClick={handleOpen} disabled={!isUserAllowedToReview}>
       Review
     </Button>
   );
 
   const implementCrDropdown = (
     <DropdownButton id="implement-cr-dropdown" title="Implement Change Request">
-      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW}>
+      <Dropdown.Item as={Link} to={routes.PROJECTS_NEW} disabled={!isUserAllowedToImplement}>
         Create New Project
       </Dropdown.Item>
-      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW}>
+      <Dropdown.Item as={Link} to={routes.WORK_PACKAGE_NEW} disabled={!isUserAllowedToImplement}>
         Create New Work Package
       </Dropdown.Item>
     </DropdownButton>

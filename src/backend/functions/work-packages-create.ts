@@ -8,10 +8,11 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 import { FromSchema } from 'json-schema-to-ts';
 import {
   buildClientFailureResponse,
+  buildNoAuthResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   eventSchema,
@@ -45,12 +46,13 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     deliverables
   } = body;
 
-  const crReviewed = await getChangeRequestReviewState(crId);
-  if (crReviewed === null) {
-    return buildNotFoundResponse('change request', `CR #${crId}`);
-  }
+  // verify user is allowed to create work packages
+  const user = await prisma.user.findUnique({ where: { userId } });
+  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  if (user.role === Role.GUEST) return buildNoAuthResponse();
 
-  // check if the change request for the work package was reviewed
+  const crReviewed = await getChangeRequestReviewState(crId);
+  if (crReviewed === null) return buildNotFoundResponse('change request', `CR #${crId}`);
   if (!crReviewed) {
     return buildClientFailureResponse('Cannot implement an unreviewed change request');
   }

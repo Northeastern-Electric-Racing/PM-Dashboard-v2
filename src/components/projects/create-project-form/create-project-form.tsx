@@ -58,7 +58,14 @@ const CreateProjectForm: React.FC = () => {
     redirectToCrTable();
   };
 
-  return <CreateProjectFormView states={states} onCancel={handleCancel} onSubmit={handleSubmit} />;
+  return (
+    <CreateProjectFormView
+      states={states}
+      onCancel={handleCancel}
+      onSubmit={handleSubmit}
+      allowSubmit={auth.user?.role !== 'GUEST'}
+    />
+  );
 };
 
 export default CreateProjectForm;

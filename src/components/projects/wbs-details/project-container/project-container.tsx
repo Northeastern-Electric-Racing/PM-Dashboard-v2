@@ -3,27 +3,29 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useState } from 'react';
 import { WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
-import ProjectDetails from './project-details/project-details';
-import WorkPackageSummary from './work-package-summary/work-package-summary';
+import { useAuth } from '../../../../services/auth.hooks';
+import ChangesList from '../work-package-container/work-package-container-view/changes-list/changes-list';
+import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import DescriptionList from '../../../shared/description-list/description-list';
-import ChangesList from '../work-package-container/work-package-container-view/changes-list/changes-list';
+import WorkPackageSummary from './work-package-summary/work-package-summary';
+import ProjectEditButton from './project-edit-button/project-edit-button';
+import ProjectDetails from './project-details/project-details';
 import ErrorPage from '../../../shared/error-page/error-page';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
-import { useState } from 'react';
-import ProjectEditButton from './project-edit-button/project-edit-button';
-import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
 
 interface ProjectContainerProps {
   wbsNum: WbsNumber;
 }
 
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
+  const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
   const [editMode, setEditMode] = useState(false);
 
@@ -35,7 +37,13 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     <div className="mb-5">
       <PageTitle
         title={`${wbsPipe(wbsNum)} - ${data!.name}`}
-        actionButton={editMode ? <></> : <ProjectEditButton setEditMode={setEditMode} />}
+        actionButton={
+          editMode ? (
+            <></>
+          ) : (
+            <ProjectEditButton setEditMode={setEditMode} allowEdit={auth.user?.role !== 'GUEST'} />
+          )
+        }
       />
       <ProjectDetails project={data!} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{data!.summary}</>} />

@@ -6,9 +6,15 @@
 import { render, screen } from '../../../../../test-support/test-utils';
 import ProjectEditButton from './project-edit-button';
 
+const setEditModeFn = jest.fn();
+
+const renderComponent = () => {
+  render(<ProjectEditButton setEditMode={setEditModeFn} />);
+};
+
 describe('test suite for ProjectEditButton', () => {
   it('render edit button', () => {
-    render(<ProjectEditButton setEditMode={() => null} />);
+    renderComponent();
 
     expect(screen.getByText('Edit')).toBeInTheDocument();
   });

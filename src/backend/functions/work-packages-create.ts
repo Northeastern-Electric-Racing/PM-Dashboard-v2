@@ -46,11 +46,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   } = body;
 
   const crReviewed = await getChangeRequestReviewState(crId);
-  if (crReviewed === null) {
-    return buildNotFoundResponse('change request', `CR #${crId}`);
-  }
-
-  // check if the change request for the work package was reviewed
+  if (crReviewed === null) return buildNotFoundResponse('change request', `CR #${crId}`);
   if (!crReviewed) {
     return buildClientFailureResponse('Cannot implement an unreviewed change request');
   }

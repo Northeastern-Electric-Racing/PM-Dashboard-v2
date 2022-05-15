@@ -7,27 +7,45 @@ import { render, screen } from '../../../../../../test-support/test-utils';
 import { FormContext } from '../work-package-container-edit';
 import WorkPackageButtons from './work-package-buttons';
 
-const renderComponent = (editMode: boolean) => {
+const setEditModeFn = jest.fn();
+
+const renderComponent = (allowEdit = true) => {
+  const setField = (_field: string, _value: any) => {};
   return render(
-    <FormContext.Provider value={{ editMode, setField: (field: string, value: any) => {} }}>
-      <WorkPackageButtons setEditMode={() => {}} />
+    <FormContext.Provider value={{ editMode: false, setField }}>
+      <WorkPackageButtons setEditMode={setEditModeFn} allowEdit={allowEdit} />
     </FormContext.Provider>
   );
 };
 
-describe.skip('Work package edit buttons', () => {
-  it('renders all of the buttons, with edit mode enabled', () => {
+describe('Work package edit buttons', () => {
+  it('renders edit button', () => {
+    renderComponent();
+
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+  });
+
+  it('disables edit button when not allowed', () => {
     renderComponent(false);
 
-    expect(screen.getByText('New Change Request')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByText('Edit')).toBeDisabled();
+  });
+
+  it('enables edit button when allowed', () => {
+    renderComponent(true);
+
     expect(screen.getByText('Edit')).toBeInTheDocument();
     expect(screen.getByText('Edit')).toBeEnabled();
   });
-  it('renders all of the buttons, with edit mode disabled', () => {
-    renderComponent(true);
 
-    expect(screen.getByText('New Change Request')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeDisabled();
+  it('calls setEditMode when edit button is clicked', () => {
+    renderComponent();
+
+    const editButton = screen.getByText('Edit');
+    editButton.click();
+
+    expect(setEditModeFn).toHaveBeenCalled();
+    expect(setEditModeFn).toHaveBeenCalledTimes(1);
   });
 });

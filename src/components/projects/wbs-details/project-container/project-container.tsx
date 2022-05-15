@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import { WbsElementStatus, WbsNumber, WorkPackage } from 'utils';
+import { WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
@@ -27,7 +27,7 @@ interface ProjectContainerProps {
 const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
   const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   if (isLoading) return <LoadingIndicator />;
   if (isError) return <ErrorPage message={error?.message} />;
@@ -38,15 +38,9 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       Edit
     </Dropdown.Item>
   );
-  const activateBtn = (
-    <Dropdown.Item onClick={() => console.log('Activate project')} disabled={isGuest}>
-      Activate
-    </Dropdown.Item>
-  );
   const projectActionsDropdown = (
     <DropdownButton id="project-actions-dropdown" title="Actions">
       {!editMode ? editBtn : ''}
-      {data!.status === WbsElementStatus.Inactive ? activateBtn : ''}
     </DropdownButton>
   );
 

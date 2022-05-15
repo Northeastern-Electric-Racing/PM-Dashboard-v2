@@ -10,11 +10,18 @@ import ReviewChangeRequestsView from './review-change-request';
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = (option: 'Accept' | 'Deny') => {
+const renderComponent = (option: 'Accept' | 'Deny', allowSubmit = true) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ReviewChangeRequestsView crId={exampleStandardChangeRequest.crId} option={option} />
+      <ReviewChangeRequestsView
+        crId={exampleStandardChangeRequest.crId}
+        option={option}
+        onSubmit={() => {}}
+        onCancel={() => {}}
+        setReviewNotes={() => {}}
+        allowSubmit={allowSubmit}
+      />
     </RouterWrapper>
   );
 };
@@ -49,5 +56,17 @@ describe('review change request page', () => {
 
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Confirm')).toBeInTheDocument();
+  });
+
+  it('submit button disabled when submit not allowed', () => {
+    renderComponent('Accept', false);
+
+    expect(screen.getByText('Confirm')).toBeDisabled();
+  });
+
+  it('submit button enabled when submit allowed', () => {
+    renderComponent('Accept', true);
+
+    expect(screen.getByText('Confirm')).not.toBeDisabled();
   });
 });

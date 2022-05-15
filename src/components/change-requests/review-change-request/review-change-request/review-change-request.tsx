@@ -10,6 +10,7 @@ import PageTitle from '../../../shared/page-title/page-title';
 interface ReviewChangeRequestViewProps {
   crId: number;
   option: 'Accept' | 'Deny';
+  allowSubmit: boolean;
   onSubmit: (e: any) => any;
   onCancel: (e: any) => any;
   setReviewNotes: Dispatch<SetStateAction<string>>;
@@ -18,6 +19,7 @@ interface ReviewChangeRequestViewProps {
 const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
   crId,
   option,
+  allowSubmit,
   onSubmit,
   onCancel,
   setReviewNotes
@@ -49,7 +51,12 @@ const ReviewChangeRequestsView: React.FC<ReviewChangeRequestViewProps> = ({
                   <Button variant="danger" type="button" onClick={onCancel}>
                     Cancel
                   </Button>
-                  <Button className={'ml-3'} variant="success" type="submit">
+                  <Button
+                    className={'ml-3'}
+                    variant="success"
+                    type="submit"
+                    disabled={!allowSubmit}
+                  >
                     Confirm
                   </Button>
                 </div>

@@ -4,8 +4,8 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { useAuth } from '../../../services/auth.hooks';
 import { useSingleChangeRequest } from '../../../services/change-requests.hooks';
+import { useAuth } from '../../../services/auth.hooks';
 import ChangeRequestDetailsView from './change-request-details/change-request-details';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';

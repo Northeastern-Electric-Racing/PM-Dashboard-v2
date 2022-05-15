@@ -6,7 +6,15 @@
 import { FromSchema } from 'json-schema-to-ts';
 import { User } from './user-types';
 import { WbsNumber } from './project-types';
-import { bodySchema, intType, stringType, booleanType } from './api-utils-types';
+import {
+  bodySchema,
+  intType,
+  stringType,
+  booleanType,
+  wbsNumType,
+  enumType,
+  dateType
+} from './api-utils-types';
 
 export interface ChangeRequest {
   crId: number;
@@ -83,16 +91,29 @@ export const reviewChangeRequestPayloadSchema = bodySchema({
   accepted: booleanType
 });
 
+export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;
+
+export const createActivationChangeRequestPayloadSchema = bodySchema({
+  submitterId: intType,
+  wbsNum: wbsNumType,
+  type: enumType(ChangeRequestType.Activation),
+  projectLeadId: intType,
+  projectManagerId: intType,
+  startDate: dateType,
+  confirmDetails: booleanType
+});
+
+export type CreateActivationChangeRequestPayload = FromSchema<
+  typeof createActivationChangeRequestPayloadSchema
+>;
+
 export const newStandardChangeRequestPayloadSchema = {
   type: 'object',
   properties: {
-    type: { 
-      type: 'string', 
-      enum: [
-            ChangeRequestType.Other, 
-            ChangeRequestType.Issue, 
-            ChangeRequestType.Redefinition
-            ] },
+    type: {
+      type: 'string',
+      enum: [ChangeRequestType.Other, ChangeRequestType.Issue, ChangeRequestType.Redefinition]
+    },
     what: { type: 'string' },
     scopeImpact: { type: 'string' },
     timelineImpact: { type: 'integer', minimum: 0 },
@@ -113,7 +134,7 @@ export const newStandardChangeRequestPayloadSchema = {
               ChangeRequestReason.OtherProject,
               ChangeRequestReason.Rules,
               ChangeRequestReason.School,
-              ChangeRequestReason.Design,
+              ChangeRequestReason.Design
             ]
           }
         },
@@ -121,10 +142,10 @@ export const newStandardChangeRequestPayloadSchema = {
       },
       minItems: 1,
       uniqueItems: true
-    },
+    }
   },
   required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why'],
-  additionalProperties: false,
+  additionalProperties: false
 } as const;
 
 export const newActivationChangeRequestPayloadSchema = {
@@ -137,7 +158,7 @@ export const newActivationChangeRequestPayloadSchema = {
     confirmDetails: { type: 'boolean' }
   },
   required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails'],
-  additionalProperties: false,
+  additionalProperties: false
 } as const;
 
 export const newStageChangeRequestPayloadSchema = {
@@ -148,7 +169,7 @@ export const newStageChangeRequestPayloadSchema = {
     confirmDone: { type: 'boolean' }
   },
   required: ['leftoverBudget', 'confirmDone'],
-  additionalProperties: false,
+  additionalProperties: false
 } as const;
 
 export const newChangeRequestPayloadSchema = {
@@ -174,15 +195,19 @@ export const newChangeRequestPayloadSchema = {
       ]
     }
   },
-  required: ['submitterId', 'wbsElementId', 'type', 'payload'],
+  required: ['submitterId', 'wbsElementId', 'type', 'payload']
 } as const;
 
-export type ReviewChangeRequestPayload = FromSchema<typeof reviewChangeRequestPayloadSchema>;
+export type NewStandardChangeRequestPayload = FromSchema<
+  typeof newStandardChangeRequestPayloadSchema
+>;
 
-export type NewStandardChangeRequestPayload = FromSchema<typeof newStandardChangeRequestPayloadSchema>;
+export type NewActivationChangeRequestPayload = FromSchema<
+  typeof newActivationChangeRequestPayloadSchema
+>;
 
-export type NewActivationChangeRequestPayload = FromSchema<typeof newActivationChangeRequestPayloadSchema>;
-
-export type NewStageRequestChangeRequestPayload = FromSchema<typeof newStageChangeRequestPayloadSchema>;
+export type NewStageRequestChangeRequestPayload = FromSchema<
+  typeof newStageChangeRequestPayloadSchema
+>;
 
 export type NewChangeRequestPayload = FromSchema<typeof newChangeRequestPayloadSchema>;

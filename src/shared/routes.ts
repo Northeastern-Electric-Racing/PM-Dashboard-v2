@@ -18,8 +18,6 @@ const WORK_PACKAGE_NEW = PROJECTS + `/work-package/new`;
 const CHANGE_REQUESTS = `/change-requests`;
 const CHANGE_REQUESTS_BY_ID = CHANGE_REQUESTS + `/:id`;
 const CHANGE_REQUESTS_NEW = CHANGE_REQUESTS + `/new`;
-const CHANGE_REQUESTS_ACCEPT = CHANGE_REQUESTS_BY_ID + `/accept`;
-const CHANGE_REQUESTS_DENY = CHANGE_REQUESTS_BY_ID + `/deny`;
 
 export const routes = {
   HOME,
@@ -33,7 +31,5 @@ export const routes = {
 
   CHANGE_REQUESTS,
   CHANGE_REQUESTS_BY_ID,
-  CHANGE_REQUESTS_NEW,
-  CHANGE_REQUESTS_ACCEPT,
-  CHANGE_REQUESTS_DENY
+  CHANGE_REQUESTS_NEW
 };

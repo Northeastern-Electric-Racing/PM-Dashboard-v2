@@ -37,13 +37,16 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
     deliverables: data!.deliverables.filter((del) => del.dateDeleted === undefined)
   };
 
+  const isGuest = auth.user?.role === 'GUEST';
   return editMode ? (
     <WorkPackageContainerEdit workPackage={wp} edit={{ editMode, setEditMode }} />
   ) : (
     <WorkPackageContainerView
       workPackage={wp}
       edit={{ editMode, setEditMode }}
-      allowEdit={auth.user?.role !== 'GUEST'}
+      allowEdit={!isGuest}
+      allowActivate={!isGuest}
+      allowStageGate={!isGuest}
     />
   );
 };

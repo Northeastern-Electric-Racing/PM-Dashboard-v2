@@ -5,7 +5,12 @@
 
 import { UseQueryResult } from 'react-query';
 import { Project } from 'utils';
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
+import {
+  render,
+  screen,
+  routerWrapperBuilder,
+  fireEvent
+} from '../../../../test-support/test-utils';
 import { Auth } from '../../../../shared/types';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
@@ -14,6 +19,7 @@ import { mockAuth, mockUseQueryResult } from '../../../../test-support/test-data
 import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
 import { exampleAdminUser, exampleGuestUser } from '../../../../test-support/test-data/users.stub';
 import ProjectContainer from './project-container';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('../../../../services/projects.hooks');
 
@@ -102,7 +108,10 @@ describe('Rendering Project Container', () => {
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
-    expect(screen.queryByText('Edit')).toBeDisabled();
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
+    expect(screen.getByText('Edit')).toHaveClass('disabled');
   });
 
   it('enables the edit button for admin users', () => {
@@ -112,6 +121,9 @@ describe('Rendering Project Container', () => {
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeEnabled();
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
+    expect(screen.getByText('Edit')).not.toHaveClass('disabled');
   });
 });

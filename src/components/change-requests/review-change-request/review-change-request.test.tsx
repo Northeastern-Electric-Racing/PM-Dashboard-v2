@@ -8,7 +8,11 @@ import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
 import { Auth } from '../../../shared/types';
 import { exampleStandardChangeRequest } from '../../../test-support/test-data/change-requests.stub';
-import { exampleAdminUser, exampleGuestUser } from '../../../test-support/test-data/users.stub';
+import {
+  exampleAdminUser,
+  exampleGuestUser,
+  exampleMemberUser
+} from '../../../test-support/test-data/users.stub';
 import { mockAuth } from '../../../test-support/test-data/test-utils.stub';
 import ReviewChangeRequest from './review-change-request';
 
@@ -46,6 +50,13 @@ describe('review change request', () => {
 
   it('disables the submit button for guest users', () => {
     mockAuthHook(exampleGuestUser);
+    renderComponent('Accept', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
+
+    expect(screen.getByText('Confirm')).toBeDisabled();
+  });
+
+  it('disables the submit button for member users', () => {
+    mockAuthHook(exampleMemberUser);
     renderComponent('Accept', `${routes.CHANGE_REQUESTS}/${exampleStandardChangeRequest.crId}`);
 
     expect(screen.getByText('Confirm')).toBeDisabled();

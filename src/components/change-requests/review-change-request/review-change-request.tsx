@@ -55,7 +55,7 @@ const ReviewChangeRequest: React.FC<ReviewChangeRequestProps> = ({
       setReviewNotes={setReviewNotes}
       onSubmit={handleConfirm}
       onCancel={backToChangeRequestPage}
-      allowSubmit={auth.user?.role !== 'GUEST'}
+      allowSubmit={auth.user?.role !== 'GUEST' && auth.user?.role !== 'MEMBER'}
     />
   );
 };

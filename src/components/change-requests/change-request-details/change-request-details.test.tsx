@@ -10,7 +10,11 @@ import {
   exampleActivationChangeRequest,
   exampleStandardChangeRequest
 } from '../../../test-support/test-data/change-requests.stub';
-import { exampleAdminUser, exampleGuestUser } from '../../../test-support/test-data/users.stub';
+import {
+  exampleAdminUser,
+  exampleGuestUser,
+  exampleMemberUser
+} from '../../../test-support/test-data/users.stub';
 import {
   render,
   screen,
@@ -107,6 +111,18 @@ describe('change request details container', () => {
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
   });
 
+  it('enables review if the user is an admin', () => {
+    mockSingleCRHook(false, false, exampleActivationChangeRequest);
+    mockAuthHook(exampleAdminUser);
+    renderComponent();
+
+    act(() => {
+      fireEvent.click(screen.getByText('Review'));
+    });
+    expect(screen.getByText('Accept')).not.toHaveAttribute('disabled');
+    expect(screen.getByText('Deny')).not.toHaveAttribute('disabled');
+  });
+
   it('disables reviewing change requests for guests', () => {
     mockSingleCRHook(false, false, exampleActivationChangeRequest);
     mockAuthHook(exampleGuestUser);
@@ -117,6 +133,30 @@ describe('change request details container', () => {
     });
     expect(screen.getByText('Accept')).toHaveAttribute('disabled');
     expect(screen.getByText('Deny')).toHaveAttribute('disabled');
+  });
+
+  it('disables reviewing change requests for member users', () => {
+    mockSingleCRHook(false, false, exampleActivationChangeRequest);
+    mockAuthHook(exampleMemberUser);
+    renderComponent();
+
+    act(() => {
+      fireEvent.click(screen.getByText('Review'));
+    });
+    expect(screen.getByText('Accept')).toHaveAttribute('disabled');
+    expect(screen.getByText('Deny')).toHaveAttribute('disabled');
+  });
+
+  it('enables implementing if the user is an admin', () => {
+    mockSingleCRHook(false, false, exampleStandardChangeRequest);
+    mockAuthHook(exampleAdminUser);
+    renderComponent();
+
+    act(() => {
+      fireEvent.click(screen.getByText('Implement Change Request'));
+    });
+    expect(screen.getByText('Create New Project')).not.toHaveAttribute('disabled');
+    expect(screen.getByText('Create New Work Package')).not.toHaveAttribute('disabled');
   });
 
   it('disables implementing change requests for guests', () => {

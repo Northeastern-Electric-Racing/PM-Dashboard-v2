@@ -16,9 +16,14 @@ const mockStates = {
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = () => {
+const renderComponent = (allowSubmit = true) => {
   return render(
-    <CreateProjectFormView states={mockStates} onCancel={() => null} onSubmit={() => null} />
+    <CreateProjectFormView
+      states={mockStates}
+      onCancel={() => null}
+      onSubmit={() => null}
+      allowSubmit={allowSubmit}
+    />
   );
 };
 
@@ -62,5 +67,17 @@ describe('create project form view test suite', () => {
 
     expect(screen.getByText('Create')).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
+  });
+
+  it('disables submit button when allowSubmit is false', () => {
+    renderComponent(false);
+
+    expect(screen.getByText('Create')).toBeDisabled();
+  });
+
+  it('enables submit button when allowSubmit is true', () => {
+    renderComponent(true);
+
+    expect(screen.getByText('Create')).not.toBeDisabled();
   });
 });

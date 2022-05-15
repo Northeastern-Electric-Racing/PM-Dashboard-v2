@@ -170,26 +170,16 @@ describe('Change request review notes display elements test', () => {
 });
 
 describe('Review change request permission tests', () => {
-  const actionBtnText = 'Review';
-  const acceptBtnText = 'Accept';
-  const denyBtnText = 'Deny';
-
-  it('Review disabled when not allowed', () => {
+  it('Review button disabled when not allowed', () => {
     renderComponent(exampleActivationChangeRequest);
-    act(() => {
-      fireEvent.click(screen.getByText(actionBtnText));
-    });
-    expect(screen.getByText(acceptBtnText)).toHaveAttribute('disabled');
-    expect(screen.getByText(denyBtnText)).toHaveAttribute('disabled');
+
+    expect(screen.getByText('Review')).toBeDisabled();
   });
 
   it('Review enabled when allowed', () => {
     renderComponent(exampleActivationChangeRequest, true);
-    act(() => {
-      fireEvent.click(screen.getByText(actionBtnText));
-    });
-    expect(screen.getByText(acceptBtnText)).not.toHaveAttribute('disabled');
-    expect(screen.getByText(denyBtnText)).not.toHaveAttribute('disabled');
+
+    expect(screen.getByText('Review')).toBeEnabled();
   });
 });
 

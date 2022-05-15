@@ -64,7 +64,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   const handleOpen = () => setModalShow(true);
 
   const reviewBtn = (
-    <Button variant="primary" onClick={handleOpen}>
+    <Button variant="primary" onClick={handleOpen} disabled={!isUserAllowedToReview}>
       Review
     </Button>
   );

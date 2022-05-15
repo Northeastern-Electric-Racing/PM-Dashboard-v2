@@ -116,11 +116,7 @@ describe('change request details container', () => {
     mockAuthHook(exampleAdminUser);
     renderComponent();
 
-    act(() => {
-      fireEvent.click(screen.getByText('Review'));
-    });
-    expect(screen.getByText('Accept')).not.toHaveAttribute('disabled');
-    expect(screen.getByText('Deny')).not.toHaveAttribute('disabled');
+    expect(screen.getByText('Review')).not.toBeDisabled();
   });
 
   it('disables reviewing change requests for guests', () => {
@@ -128,11 +124,7 @@ describe('change request details container', () => {
     mockAuthHook(exampleGuestUser);
     renderComponent();
 
-    act(() => {
-      fireEvent.click(screen.getByText('Review'));
-    });
-    expect(screen.getByText('Accept')).toHaveAttribute('disabled');
-    expect(screen.getByText('Deny')).toHaveAttribute('disabled');
+    expect(screen.getByText('Review')).toBeDisabled();
   });
 
   it('disables reviewing change requests for member users', () => {
@@ -140,11 +132,7 @@ describe('change request details container', () => {
     mockAuthHook(exampleMemberUser);
     renderComponent();
 
-    act(() => {
-      fireEvent.click(screen.getByText('Review'));
-    });
-    expect(screen.getByText('Accept')).toHaveAttribute('disabled');
-    expect(screen.getByText('Deny')).toHaveAttribute('disabled');
+    expect(screen.getByText('Review')).toBeDisabled();
   });
 
   it('enables implementing if the user is an admin', () => {

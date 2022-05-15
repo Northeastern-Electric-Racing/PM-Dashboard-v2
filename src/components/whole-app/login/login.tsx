@@ -10,6 +10,7 @@ import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
 import { useAuth } from '../../../services/auth.hooks';
 import LoginPage from './login-page/login-page';
 import './login.module.css';
+import { routes } from '../../../shared/routes';
 
 interface LoginProps {
   postLoginRedirect: string;
@@ -23,19 +24,27 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const history = useHistory();
   const auth = useAuth();
 
+  const redirectAfterLogin = () => {
+    if (postLoginRedirect === routes.LOGIN) {
+      history.push(routes.HOME);
+    } else {
+      history.push(postLoginRedirect);
+    }
+  };
+
   const devFormSubmit = (e: any) => {
     e.preventDefault();
     const user = exampleAllUsers.find((u) => u.role === devUserRole);
     if (!user) throw new Error('user for dev not found from role: ' + devUserRole);
     auth.devSignin(user!);
-    history.push(postLoginRedirect);
+    redirectAfterLogin();
   };
 
   const verifyLogin = async (response: any) => {
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);
-    history.push(postLoginRedirect);
+    redirectAfterLogin();
   };
 
   const handleFailure = (response: any) => {

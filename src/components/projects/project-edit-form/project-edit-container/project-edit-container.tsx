@@ -32,13 +32,17 @@ const bulletsToObject = (bullets: DescriptionBullet[]) =>
       return { id: bullet.id, detail: bullet.detail };
     });
 
-interface EditFormContainerProps {
+interface ProjectEditContainerProps {
   wbsNum: WbsNumber;
   proj: Project;
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
+const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
+  wbsNum,
+  proj,
+  setEditMode
+}) => {
   const auth = useAuth();
 
   const [crId, setCrId] = useState(-1);

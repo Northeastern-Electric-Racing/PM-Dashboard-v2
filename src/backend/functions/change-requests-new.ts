@@ -8,10 +8,11 @@ import jsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
-import { PrismaClient, CR_Type } from '@prisma/client';
+import { PrismaClient, CR_Type, Role } from '@prisma/client';
 import {
   buildClientFailureResponse,
   buildSuccessResponse,
+  buildNoAuthResponse,
   newChangeRequestPayloadSchema,
   NewStandardChangeRequestPayload,
   NewActivationChangeRequestPayload,
@@ -110,6 +111,18 @@ const createStageGateChangeRequest = async (
 // Create proper type of new change request
 export const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type, payload } = body;
+
+  const submitter = await prisma.user.findUnique({
+    where: { userId: submitterId }
+  });
+
+  if (!submitter) {
+    return buildClientFailureResponse(`User with ID ${submitterId} does not exist.`);
+  }
+
+  if (submitter.role === Role.GUEST) {
+    return buildNoAuthResponse();
+  }
 
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, payload);

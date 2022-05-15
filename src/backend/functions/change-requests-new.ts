@@ -9,15 +9,15 @@ import httpErrorHandler from '@middy/http-error-handler';
 import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient, CR_Type } from '@prisma/client';
-import { 
-  buildClientFailureResponse, 
+import {
+  buildClientFailureResponse,
   buildSuccessResponse,
   newChangeRequestPayloadSchema,
   NewStandardChangeRequestPayload,
   NewActivationChangeRequestPayload,
-  NewStageRequestChangeRequestPayload,
+  NewStageRequestChangeRequestPayload
 } from 'utils';
-import { ChangeRequestType } from 'utils/src';
+import { ChangeRequestType } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -45,11 +45,10 @@ const createStandardChangeRequest = async (
     }
   });
   // TODO: check if this is the best thing to return
-  return buildSuccessResponse(
-    { 
-      message: `Change request #${createdChangeRequest.crId} successfully created.`,
-      crId: createdChangeRequest.crId
-   });
+  return buildSuccessResponse({
+    message: `Change request #${createdChangeRequest.crId} successfully created.`,
+    crId: createdChangeRequest.crId
+  });
 };
 
 // Create a new activation change request
@@ -75,11 +74,10 @@ const createActivationChangeRequest = async (
     }
   });
   // TODO: check if this is the best thing to return
-  return buildSuccessResponse(
-    { 
-      message: `Change request #${createdChangeRequest.crId} successfully created.`,
-      crId: createdChangeRequest.crId
-   });
+  return buildSuccessResponse({
+    message: `Change request #${createdChangeRequest.crId} successfully created.`,
+    crId: createdChangeRequest.crId
+  });
 };
 
 // Create a new stage gate change request
@@ -103,11 +101,10 @@ const createStageGateChangeRequest = async (
     }
   });
   // TODO: check if this is the best thing to return
-  return buildSuccessResponse(
-    { 
-      message: `Change request #${createdChangeRequest.crId} successfully created.`,
-      crId: createdChangeRequest.crId
-   });
+  return buildSuccessResponse({
+    message: `Change request #${createdChangeRequest.crId} successfully created.`,
+    crId: createdChangeRequest.crId
+  });
 };
 
 // Create proper type of new change request
@@ -116,14 +113,12 @@ export const baseHandler: Handler = async ({ body }, _context) => {
 
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, payload);
-  }
-  else if (type === CR_Type.ACTIVATION) {
+  } else if (type === CR_Type.ACTIVATION) {
     // TODO: is there a better way to convert this date string?
     // I couldn't seem to figure out if middy can handle this, but this 1 additional line isn't the worst
     body.startDate = new Date(body.startDate);
     return createActivationChangeRequest(submitterId, wbsElementId, type, payload);
-  }
-  else if (type === CR_Type.STAGE_GATE) {
+  } else if (type === CR_Type.STAGE_GATE) {
     return createStageGateChangeRequest(submitterId, wbsElementId, type, payload);
   }
   // TODO: change this return statement

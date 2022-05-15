@@ -38,10 +38,6 @@ interface EditFormContainerProps {
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
-export interface EditModeProps {
-  changeEditMode(arg: any): void;
-}
-
 const ProjectEditContainer: React.FC<EditFormContainerProps> = ({ wbsNum, proj, setEditMode }) => {
   const auth = useAuth();
 

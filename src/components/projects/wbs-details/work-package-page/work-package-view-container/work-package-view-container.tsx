@@ -5,7 +5,6 @@
 
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsElementStatus, WorkPackage } from 'utils';
-import { EditMode } from '../work-package-page';
 import { wbsPipe } from '../../../../../shared/pipes';
 import DescriptionList from '../../../../shared/description-list/description-list';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';

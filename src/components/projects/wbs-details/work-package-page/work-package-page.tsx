@@ -10,7 +10,7 @@ import { useAuth } from '../../../../services/auth.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import WorkPackageEditContainer from './work-package-edit-container/work-package-edit-container';
-import WorkPackageContainerView from './work-package-view-container/work-package-container-view';
+import WorkPackageViewContainer from './work-package-view-container/work-package-view-container';
 
 interface WorkPackagePageProps {
   wbsNum: WbsNumber;
@@ -44,7 +44,7 @@ const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
   }
 
   return (
-    <WorkPackageContainerView
+    <WorkPackageViewContainer
       workPackage={wp}
       edit={{ editMode, setEditMode }}
       allowEdit={!isGuest}

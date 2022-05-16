@@ -3,17 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsElementStatus, WorkPackage } from 'utils';
+import { EditMode } from '../work-package-page';
 import { wbsPipe } from '../../../../../shared/pipes';
-import { EditMode } from '../work-package-container';
 import DescriptionList from '../../../../shared/description-list/description-list';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import PageTitle from '../../../../shared/page-title/page-title';
 import ChangesList from './changes-list/changes-list';
 import WorkPackageDetails from './work-package-details/work-package-details';
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 
-interface Props {
+interface WorkPackageViewContainerProps {
   workPackage: WorkPackage;
   edit: EditMode;
   allowEdit: boolean;
@@ -21,7 +21,7 @@ interface Props {
   allowStageGate: boolean;
 }
 
-const WorkPackageContainerView: React.FC<Props> = ({
+const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   workPackage,
   edit,
   allowEdit,
@@ -76,4 +76,4 @@ const WorkPackageContainerView: React.FC<Props> = ({
   );
 };
 
-export default WorkPackageContainerView;
+export default WorkPackageViewContainer;

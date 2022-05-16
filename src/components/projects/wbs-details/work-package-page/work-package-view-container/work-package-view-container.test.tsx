@@ -14,7 +14,7 @@ import {
   exampleWorkPackage1,
   exampleWorkPackage2
 } from '../../../../../test-support/test-data/work-packages.stub';
-import WorkPackageContainerView from './work-package-container-view';
+import WorkPackageViewContainer from './work-package-view-container';
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = (
@@ -26,7 +26,7 @@ const renderComponent = (
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <WorkPackageContainerView
+      <WorkPackageViewContainer
         workPackage={workPackage}
         edit={{ editMode: false, setEditMode: () => null }}
         allowEdit={allowEdit}

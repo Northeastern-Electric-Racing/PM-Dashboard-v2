@@ -5,7 +5,7 @@
 
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
 import { Form } from 'react-bootstrap';
-import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
+import { DescriptionBullet, Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../../services/projects.hooks';
 import { useAllUsers } from '../../../../../services/users.hooks';
@@ -33,16 +33,11 @@ const bulletsToObject = (bullets: DescriptionBullet[]) =>
     });
 
 interface ProjectEditContainerProps {
-  wbsNum: WbsNumber;
   proj: Project;
   setEditMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
-  wbsNum,
-  proj,
-  setEditMode
-}) => {
+const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, setEditMode }) => {
   const auth = useAuth();
   const allUsers = useAllUsers();
   const { mutateAsync } = useEditSingleProject();
@@ -220,7 +215,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(wbsNum)} - ${proj.name}`} />
+        <PageTitle title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`} />
         <Form.Control
           className="m-4 w-25"
           type="number"

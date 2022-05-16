@@ -8,7 +8,6 @@ import { User } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
 import { wbsPipe } from '../../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../../services/projects.hooks';
-import { exampleWbsProject1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
 import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
 import { useAllUsers } from '../../../../../services/users.hooks';
 import {
@@ -48,11 +47,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ProjectEditContainer
-        wbsNum={exampleWbsProject1}
-        proj={exampleProject1}
-        setEditMode={() => null}
-      />
+      <ProjectEditContainer proj={exampleProject1} setEditMode={() => null} />
     </RouterWrapper>
   );
 };
@@ -65,7 +60,7 @@ describe('test suite for ProjectEditContainer', () => {
       renderComponent();
 
       expect(
-        screen.getByText(`${wbsPipe(exampleWbsProject1)} - ${exampleProject1.name}`)
+        screen.getByText(`${wbsPipe(exampleProject1.wbsNum)} - ${exampleProject1.name}`)
       ).toBeInTheDocument();
     });
 
@@ -171,7 +166,9 @@ describe('test suite for ProjectEditContainer', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
+    expect(
+      screen.getByText(`${wbsPipe(exampleProject1.wbsNum)} - ${exampleProject1.name}`)
+    ).toBeInTheDocument();
     expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
     expect(screen.getByText('Duration:')).toBeInTheDocument();
   });

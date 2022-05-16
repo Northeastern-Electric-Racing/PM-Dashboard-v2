@@ -10,7 +10,7 @@ import { useAuth } from '../../../../services/auth.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
 import WorkPackageEditContainer from './work-package-edit-container/work-package-edit-container';
-import WorkPackageContainerView from '../work-package-container/work-package-container-view/work-package-container-view';
+import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
 
 interface WorkPackagePageProps {
   wbsNum: WbsNumber;

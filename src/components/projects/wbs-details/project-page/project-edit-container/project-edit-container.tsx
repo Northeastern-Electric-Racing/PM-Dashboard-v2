@@ -17,7 +17,7 @@ import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../../shared/page-block/page-block';
-import ChangesList from '../../work-package-container/work-package-container-view/changes-list/changes-list';
+import ChangesList from '../../work-package-page/work-package-container-view/changes-list/changes-list';
 import ErrorPage from '../../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../project-view-container/work-package-summary/work-package-summary';

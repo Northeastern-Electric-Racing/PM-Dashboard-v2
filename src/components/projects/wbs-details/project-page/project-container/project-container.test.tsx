@@ -27,7 +27,7 @@ import {
 import ProjectContainer from './project-container';
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../../../services/projects.hooks');
+jest.mock('../../../../../services/projects.hooks');
 
 const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 
@@ -42,7 +42,7 @@ const mockSingleProjectHook = (
   );
 };
 
-jest.mock('../../../../services/auth.hooks');
+jest.mock('../../../../../services/auth.hooks');
 
 const mockedUseAuth = useAuth as jest.Mock<Auth>;
 

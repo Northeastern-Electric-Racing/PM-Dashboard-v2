@@ -22,21 +22,9 @@ import {
 } from '../../../../../test-support/test-data/users.stub';
 import ProjectEditContainer from './project-edit-container';
 
-jest.mock('../../../../services/projects.hooks');
+jest.mock('../../../../../services/projects.hooks');
 
-const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
-
-const mockSingleProjectHook = (
-  isLoading: boolean,
-  isError: boolean,
-  data?: Project,
-  error?: Error
-) => {
-  mockedUseSingleProject.mockReturnValue(
-    mockUseQueryResult<Project>(isLoading, isError, data, error)
-  );
-};
-
+// random shit to make test happy by mocking out this hook
 const mockedUseEditSingleProject = useEditSingleProject as jest.Mock<UseMutationResult>;
 
 const mockEditSingleProjectHook = (isLoading: boolean, isError: boolean, error?: Error) => {
@@ -45,7 +33,7 @@ const mockEditSingleProjectHook = (isLoading: boolean, isError: boolean, error?:
   );
 };
 
-jest.mock('../../../../services/users.hooks');
+jest.mock('../../../../../services/users.hooks');
 
 const mockedUseAllUsers = useAllUsers as jest.Mock<UseQueryResult<User[]>>;
 
@@ -73,7 +61,6 @@ describe('test suite for ProjectEditContainer', () => {
   describe('rendering subcomponents of ProjectEditContainer', () => {
     it('renders title', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -84,7 +71,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('renders change request input', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -93,7 +79,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render title of ProjectEditDetails', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -102,7 +87,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render title of ProjectEditSummary', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -111,7 +95,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render goals list', async () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -124,7 +107,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render features list', async () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -137,7 +119,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render other constraints list', async () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -150,7 +131,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render rules list', async () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -161,7 +141,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render title of ChangesList', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -170,7 +149,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('render title of ProjectEditWorkPackagesList', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -179,7 +157,6 @@ describe('test suite for ProjectEditContainer', () => {
 
     it('renders save and cancel buttons', () => {
       mockUsersHook(false, false, users);
-      mockSingleProjectHook(false, false, exampleProject1);
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
@@ -190,37 +167,27 @@ describe('test suite for ProjectEditContainer', () => {
 
   it('renders the loaded project', () => {
     mockUsersHook(false, false, users);
-    mockSingleProjectHook(false, false, exampleProject1);
     mockEditSingleProjectHook(false, false);
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('Impact Attenuator')).toBeInTheDocument();
-    expect(screen.getByText('Project Details')).toBeInTheDocument();
+    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
+    expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
     expect(screen.getByText('Duration:')).toBeInTheDocument();
-    expect(screen.getByText('Progress:')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeEnabled();
   });
 
   it('handles the error with message', () => {
-    mockUsersHook(false, false, users);
-    mockSingleProjectHook(
-      false,
-      true,
-      undefined,
-      new Error('404 could not find the requested project')
-    );
+    mockUsersHook(false, true, undefined, new Error('error'));
     mockEditSingleProjectHook(false, false);
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
-    expect(screen.getByText('404 could not find the requested project')).toBeInTheDocument();
+    expect(screen.getByText('error')).toBeInTheDocument();
   });
 
   it('handles the error with no message', () => {
-    mockUsersHook(false, false, users);
-    mockSingleProjectHook(false, true);
+    mockUsersHook(false, true, undefined);
     mockEditSingleProjectHook(false, false);
     renderComponent();
 

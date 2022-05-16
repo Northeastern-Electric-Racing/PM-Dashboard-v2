@@ -6,21 +6,21 @@
 import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
 import { Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WbsNumber, WorkPackage } from 'utils';
-import { wbsPipe } from '../../../../shared/pipes';
-import { useAllUsers } from '../../../../services/users.hooks';
-import PageTitle from '../../../shared/page-title/page-title';
-import EditableTextInputList from '../../../shared/editable-text-input-list/editable-text-input-list';
-import { EditableTextInputListUtils } from '../../create-wp-form/create-wp-form';
+import { wbsPipe } from '../../../../../shared/pipes';
+import { useEditSingleProject } from '../../../../../services/projects.hooks';
+import { useAllUsers } from '../../../../../services/users.hooks';
+import { useAuth } from '../../../../../services/auth.hooks';
+import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
+import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
+import PageTitle from '../../../../shared/page-title/page-title';
 import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
-import PageBlock from '../../../shared/page-block/page-block';
-import ChangesList from '../../wbs-details/work-package-container/work-package-container-view/changes-list/changes-list';
-import ErrorPage from '../../../shared/error-page/error-page';
-import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
-import WorkPackageSummary from '../../wbs-details/project-container/work-package-summary/work-package-summary';
-import { useAuth } from '../../../../services/auth.hooks';
-import { useEditSingleProject } from '../../../../services/projects.hooks';
+import PageBlock from '../../../../shared/page-block/page-block';
+import ChangesList from '../../work-package-container/work-package-container-view/changes-list/changes-list';
+import ErrorPage from '../../../../shared/error-page/error-page';
+import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
+import WorkPackageSummary from '../../project-container/work-package-summary/work-package-summary';
 
 /**
  * Helper function to turn DescriptionBullets into a list of { id:number, detail:string }.
@@ -44,6 +44,8 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
   setEditMode
 }) => {
   const auth = useAuth();
+  const allUsers = useAllUsers();
+  const { mutateAsync } = useEditSingleProject();
 
   const [crId, setCrId] = useState(-1);
   const [name, setName] = useState(proj.name);
@@ -63,19 +65,16 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
   const updateBom = (url: string | undefined) => setBom(url);
   const updateGDrive = (url: string | undefined) => setGDrive(url);
 
-  const { mutateAsync } = useEditSingleProject();
-
   const [goals, setGoals] = useState<{ id?: number; detail: string }[]>(
-    bulletsToObject(proj!.goals)
+    bulletsToObject(proj.goals)
   );
   const [features, setFeatures] = useState<{ id?: number; detail: string }[]>(
-    bulletsToObject(proj!.features)
+    bulletsToObject(proj.features)
   );
   const [otherConstraints, setOther] = useState<{ id?: number; detail: string }[]>(
-    bulletsToObject(proj!.otherConstraints)
+    bulletsToObject(proj.otherConstraints)
   );
-  const [rules, setRules] = useState(proj!.rules);
-  const { isLoading, isError, data, error } = useAllUsers();
+  const [rules, setRules] = useState(proj.rules);
 
   const notEmptyString = (s: string) => s !== '';
 
@@ -212,14 +211,16 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
     }
   };
 
-  if (isLoading) return <LoadingIndicator />;
+  if (allUsers.isLoading) return <LoadingIndicator />;
 
-  if (isError) return <ErrorPage message={error?.message} />;
+  if (allUsers.isError) {
+    return <ErrorPage message={allUsers.error?.message} />;
+  }
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(wbsNum)} - ${proj!.name}`} />
+        <PageTitle title={`${wbsPipe(wbsNum)} - ${proj.name}`} />
         <Form.Control
           className="m-4 w-25"
           type="number"
@@ -229,8 +230,8 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
           onChange={(e) => setCrId(Number(e.target.value))}
         />
         <ProjectEditDetails
-          project={proj!}
-          users={data!}
+          project={proj}
+          users={allUsers.data!}
           updateSlideDeck={updateSlideDeck}
           updateTaskList={updateTaskList}
           updateBom={updateBom}
@@ -241,7 +242,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
           updateProjectLead={setProjectLead}
           updateProjectManager={setProjectManager}
         />
-        <ProjectEditSummary project={proj!} updateSummary={setSummary} />
+        <ProjectEditSummary project={proj} updateSummary={setSummary} />
         <PageBlock
           title={'Goals'}
           headerRight={<></>}
@@ -290,13 +291,13 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({
             />
           }
         />
-        <ChangesList changes={proj!.changes} />
+        <ChangesList changes={proj.changes} />
         <PageBlock
           title={'Work Packages'}
           headerRight={<></>}
           body={
             <>
-              {proj!.workPackages.map((ele: WorkPackage) => (
+              {proj.workPackages.map((ele: WorkPackage) => (
                 <div key={wbsPipe(ele.wbsNum)} className="mt-3">
                   <WorkPackageSummary workPackage={ele} />
                 </div>

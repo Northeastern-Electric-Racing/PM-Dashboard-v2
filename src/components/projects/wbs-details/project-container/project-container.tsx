@@ -10,7 +10,6 @@ import { wbsPipe } from '../../../../shared/pipes';
 import { useSingleProject } from '../../../../services/projects.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
 import ChangesList from '../work-package-container/work-package-container-view/changes-list/changes-list';
-import ProjectEditContainer from '../../project-edit-form/project-edit-container/project-edit-container';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import DescriptionList from '../../../shared/description-list/description-list';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
@@ -44,7 +43,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
     </DropdownButton>
   );
 
-  const readOnlyView = (
+  return (
     <div className="mb-5">
       <PageTitle
         title={`${wbsPipe(wbsNum)} - ${data!.name}`}
@@ -78,10 +77,6 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
       />
     </div>
   );
-
-  const editView = <ProjectEditContainer wbsNum={wbsNum} proj={data!} setEditMode={setEditMode} />;
-
-  return <>{editMode ? editView : readOnlyView}</>;
 };
 
 export default ProjectContainer;

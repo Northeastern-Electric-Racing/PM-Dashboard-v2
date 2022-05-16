@@ -7,11 +7,11 @@ import { render, screen, routerWrapperBuilder } from '../../../test-support/test
 import { routes } from '../../../shared/routes';
 import WBSDetails from './wbs-details';
 
-jest.mock('./project-container/project-container', () => {
+jest.mock('./project-page/project-page', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>project container</div>;
+      return <div>project page</div>;
     }
   };
 });
@@ -45,7 +45,7 @@ const renderComponent = (wbsNumber: string) => {
 describe('wbs element details component', () => {
   it('renders the project page title', () => {
     renderComponent('1.1.0');
-    expect(screen.getByText('project container')).toBeInTheDocument();
+    expect(screen.getByText('project page')).toBeInTheDocument();
   });
 
   it('renders the work package page title', () => {

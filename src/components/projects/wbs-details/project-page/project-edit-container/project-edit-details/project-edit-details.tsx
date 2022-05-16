@@ -5,8 +5,8 @@
 
 import { Project, User } from 'utils';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
-import PageBlock from '../../../../shared/page-block/page-block';
-import { wbsPipe, endDatePipe, fullNamePipe, emDashPipe } from '../../../../../shared/pipes';
+import PageBlock from '../../../../../shared/page-block/page-block';
+import { wbsPipe, endDatePipe, fullNamePipe, emDashPipe } from '../../../../../../shared/pipes';
 import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 // new parts added at the bottom

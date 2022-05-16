@@ -18,12 +18,13 @@ import ErrorPage from '../../../../shared/error-page/error-page';
 import PageTitle from '../../../../shared/page-title/page-title';
 import PageBlock from '../../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
+import './project-view-container.module.css';
 
-interface ProjectContainerProps {
+interface ProjectViewContainerProps {
   wbsNum: WbsNumber;
 }
 
-const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectContainerProps) => {
+const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ wbsNum }) => {
   const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleProject(wbsNum);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -79,4 +80,4 @@ const ProjectContainer: React.FC<ProjectContainerProps> = ({ wbsNum }: ProjectCo
   );
 };
 
-export default ProjectContainer;
+export default ProjectViewContainer;

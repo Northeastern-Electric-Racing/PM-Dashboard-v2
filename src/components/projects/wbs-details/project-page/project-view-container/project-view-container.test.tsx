@@ -9,7 +9,8 @@ import {
   render,
   screen,
   routerWrapperBuilder,
-  fireEvent
+  fireEvent,
+  act
 } from '../../../../../test-support/test-utils';
 import { Auth } from '../../../../../shared/types';
 import { useSingleProject } from '../../../../../services/projects.hooks';
@@ -24,8 +25,7 @@ import {
   exampleAdminUser,
   exampleGuestUser
 } from '../../../../../test-support/test-data/users.stub';
-import ProjectContainer from './project-container';
-import { act } from 'react-dom/test-utils';
+import ProjectViewContainer from './project-view-container';
 
 jest.mock('../../../../../services/projects.hooks');
 
@@ -55,12 +55,12 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ProjectContainer wbsNum={exampleWbsProject1} />
+      <ProjectViewContainer wbsNum={exampleWbsProject1} />
     </RouterWrapper>
   );
 };
 
-describe('Rendering Project Container', () => {
+describe('Rendering Project View Container', () => {
   it('renders the loading indicator', () => {
     mockSingleProjectHook(true, false);
     mockAuthHook();

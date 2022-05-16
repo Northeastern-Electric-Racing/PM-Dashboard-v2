@@ -6,10 +6,10 @@
 import { useState } from 'react';
 import { WbsNumber } from 'utils';
 import { useSingleProject } from '../../../../services/projects.hooks';
+import ProjectViewContainer from './project-view-container/project-view-container';
 import ProjectEditContainer from './project-edit-container/project-edit-container';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
-import ProjectContainer from './project-container/project-container';
 
 interface ProjectPageProps {
   wbsNum: WbsNumber;
@@ -26,7 +26,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ wbsNum }) => {
     return <ProjectEditContainer wbsNum={wbsNum} proj={data!} setEditMode={setEditMode} />;
   }
 
-  return <ProjectContainer wbsNum={wbsNum} />;
+  return <ProjectViewContainer wbsNum={wbsNum} />;
 };
 
 export default ProjectPage;

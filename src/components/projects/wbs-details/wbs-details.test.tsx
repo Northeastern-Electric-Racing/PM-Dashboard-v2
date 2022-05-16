@@ -16,11 +16,11 @@ jest.mock('./project-page/project-page', () => {
   };
 });
 
-jest.mock('./work-package-container/work-package-container', () => {
+jest.mock('./work-package-page/work-package-page', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>work package container</div>;
+      return <div>work package page</div>;
     }
   };
 });
@@ -50,7 +50,7 @@ describe('wbs element details component', () => {
 
   it('renders the work package page title', () => {
     renderComponent('1.1.1');
-    expect(screen.getByText('work package container')).toBeInTheDocument();
+    expect(screen.getByText('work package page')).toBeInTheDocument();
   });
 
   it('throws when wbsNum is invalid', () => {

@@ -9,20 +9,26 @@ import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
-import WorkPackageContainerEdit from './work-package-edit-container/work-package-edit-container';
+import WorkPackageEditContainer from './work-package-edit-container/work-package-edit-container';
 import WorkPackageContainerView from '../work-package-container/work-package-container-view/work-package-container-view';
 
 interface WorkPackagePageProps {
   wbsNum: WbsNumber;
 }
 
+// Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
+export interface EditMode {
+  editMode: boolean;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
+  const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const auth = useAuth();
-  const isGuest = auth.user?.role === 'GUEST';
 
   if (isLoading) return <LoadingIndicator />;
+
   if (isError) return <ErrorPage message={error?.message} />;
 
   const wp = {
@@ -31,8 +37,10 @@ const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
     deliverables: data!.deliverables.filter((del) => del.dateDeleted === undefined)
   };
 
+  const isGuest = auth.user?.role === 'GUEST';
+
   if (editMode) {
-    return <WorkPackageContainerEdit workPackage={wp} edit={{ editMode, setEditMode }} />;
+    return <WorkPackageEditContainer workPackage={wp} edit={{ editMode, setEditMode }} />;
   }
 
   return (

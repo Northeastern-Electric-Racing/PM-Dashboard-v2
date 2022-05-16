@@ -19,7 +19,7 @@ import { mockAuth, mockUseQueryResult } from '../../../../test-support/test-data
 import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
 import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
 import { exampleAdminUser, exampleGuestUser } from '../../../../test-support/test-data/users.stub';
-import WorkPackageContainer from './work-package-container';
+import WorkPackagePage from './work-package-page';
 
 jest.mock('../../../../services/work-packages.hooks');
 
@@ -48,7 +48,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <WorkPackageContainer wbsNum={exampleWbsProject1} />
+      <WorkPackagePage wbsNum={exampleWbsProject1} />
     </RouterWrapper>
   );
 };

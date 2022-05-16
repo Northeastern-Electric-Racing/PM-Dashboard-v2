@@ -10,18 +10,18 @@ import { useAuth } from '../../../../../services/auth.hooks';
 import { useAllUsers } from '../../../../../services/users.hooks';
 import { useEditWorkPackage } from '../../../../../services/work-packages.hooks';
 import { wbsPipe } from '../../../../../shared/pipes';
+import { EditMode } from '../work-package-page';
 import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
 import ErrorPage from '../../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
 import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
-import { EditMode } from '../../work-package-container/work-package-container';
 import DependenciesList from '../../work-package-container/work-package-container-view/dependencies-list/dependencies-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
-import WorkPackageEditDetails from '../../work-package-container/work-package-container-view/work-package-edit-details/work-package-edit-details';
+import WorkPackageEditDetails from './work-package-edit-details/work-package-edit-details';
 
-interface WorkPackageContainerEditProps {
+interface WorkPackageEditContainerProps {
   workPackage: WorkPackage;
   edit: EditMode;
 }
@@ -32,7 +32,7 @@ export const FormContext = createContext({
   setField: (field: string, value: any) => {}
 });
 
-const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
+const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
   workPackage,
   edit
 }) => {
@@ -217,4 +217,4 @@ const WorkPackageContainerEdit: React.FC<WorkPackageContainerEditProps> = ({
   );
 };
 
-export default WorkPackageContainerEdit;
+export default WorkPackageEditContainer;

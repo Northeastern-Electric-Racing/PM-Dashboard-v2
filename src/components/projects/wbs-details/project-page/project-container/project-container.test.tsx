@@ -10,14 +10,20 @@ import {
   screen,
   routerWrapperBuilder,
   fireEvent
-} from '../../../../test-support/test-utils';
-import { Auth } from '../../../../shared/types';
-import { useSingleProject } from '../../../../services/projects.hooks';
-import { useAuth } from '../../../../services/auth.hooks';
-import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
-import { mockAuth, mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
-import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
-import { exampleAdminUser, exampleGuestUser } from '../../../../test-support/test-data/users.stub';
+} from '../../../../../test-support/test-utils';
+import { Auth } from '../../../../../shared/types';
+import { useSingleProject } from '../../../../../services/projects.hooks';
+import { useAuth } from '../../../../../services/auth.hooks';
+import { exampleWbsProject1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
+import {
+  mockAuth,
+  mockUseQueryResult
+} from '../../../../../test-support/test-data/test-utils.stub';
+import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
+import {
+  exampleAdminUser,
+  exampleGuestUser
+} from '../../../../../test-support/test-data/users.stub';
 import ProjectContainer from './project-container';
 import { act } from 'react-dom/test-utils';
 

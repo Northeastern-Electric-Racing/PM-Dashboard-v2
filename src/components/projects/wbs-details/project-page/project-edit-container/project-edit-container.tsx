@@ -20,7 +20,7 @@ import PageBlock from '../../../../shared/page-block/page-block';
 import ChangesList from '../../work-package-container/work-package-container-view/changes-list/changes-list';
 import ErrorPage from '../../../../shared/error-page/error-page';
 import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
-import WorkPackageSummary from '../../project-container/work-package-summary/work-package-summary';
+import WorkPackageSummary from '../project-container/work-package-summary/work-package-summary';
 
 /**
  * Helper function to turn DescriptionBullets into a list of { id:number, detail:string }.

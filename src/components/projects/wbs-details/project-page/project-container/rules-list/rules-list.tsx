@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
+import HorizontalList from '../../../../../shared/horizontal-list/horizontal-list';
 import './rules-list.module.css';
 
 interface RulesListProps {

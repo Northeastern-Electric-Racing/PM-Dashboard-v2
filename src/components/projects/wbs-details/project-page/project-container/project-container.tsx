@@ -6,17 +6,17 @@
 import { useState } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsNumber, WorkPackage } from 'utils';
-import { wbsPipe } from '../../../../shared/pipes';
-import { useSingleProject } from '../../../../services/projects.hooks';
-import { useAuth } from '../../../../services/auth.hooks';
-import ChangesList from '../work-package-container/work-package-container-view/changes-list/changes-list';
-import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
-import DescriptionList from '../../../shared/description-list/description-list';
+import { wbsPipe } from '../../../../../shared/pipes';
+import { useSingleProject } from '../../../../../services/projects.hooks';
+import { useAuth } from '../../../../../services/auth.hooks';
+import ChangesList from '../../work-package-container/work-package-container-view/changes-list/changes-list';
+import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
+import DescriptionList from '../../../../shared/description-list/description-list';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
 import ProjectDetails from './project-details/project-details';
-import ErrorPage from '../../../shared/error-page/error-page';
-import PageTitle from '../../../shared/page-title/page-title';
-import PageBlock from '../../../shared/page-block/page-block';
+import ErrorPage from '../../../../shared/error-page/error-page';
+import PageTitle from '../../../../shared/page-title/page-title';
+import PageBlock from '../../../../shared/page-block/page-block';
 import RulesList from './rules-list/rules-list';
 
 interface ProjectContainerProps {

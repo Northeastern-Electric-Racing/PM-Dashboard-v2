@@ -9,7 +9,7 @@ import { useSingleProject } from '../../../../services/projects.hooks';
 import ProjectEditContainer from './project-edit-container/project-edit-container';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
-import ProjectContainer from '../project-container/project-container';
+import ProjectContainer from './project-container/project-container';
 
 interface ProjectPageProps {
   wbsNum: WbsNumber;

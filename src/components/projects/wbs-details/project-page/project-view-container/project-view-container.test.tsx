@@ -3,8 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { UseQueryResult } from 'react-query';
-import { Project } from 'utils';
 import {
   render,
   screen,
@@ -13,34 +11,15 @@ import {
   act
 } from '../../../../../test-support/test-utils';
 import { Auth } from '../../../../../shared/types';
-import { useSingleProject } from '../../../../../services/projects.hooks';
 import { useAuth } from '../../../../../services/auth.hooks';
 import { exampleWbsProject1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
-import {
-  mockAuth,
-  mockUseQueryResult
-} from '../../../../../test-support/test-data/test-utils.stub';
 import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
+import { mockAuth } from '../../../../../test-support/test-data/test-utils.stub';
 import {
   exampleAdminUser,
   exampleGuestUser
 } from '../../../../../test-support/test-data/users.stub';
 import ProjectViewContainer from './project-view-container';
-
-jest.mock('../../../../../services/projects.hooks');
-
-const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
-
-const mockSingleProjectHook = (
-  isLoading: boolean,
-  isError: boolean,
-  data?: Project,
-  error?: Error
-) => {
-  mockedUseSingleProject.mockReturnValue(
-    mockUseQueryResult<Project>(isLoading, isError, data, error)
-  );
-};
 
 jest.mock('../../../../../services/auth.hooks');
 
@@ -55,14 +34,17 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ProjectViewContainer wbsNum={exampleWbsProject1} />
+      <ProjectViewContainer
+        wbsNum={exampleWbsProject1}
+        proj={exampleProject1}
+        enterEditMode={jest.fn}
+      />
     </RouterWrapper>
   );
 };
 
 describe('Rendering Project View Container', () => {
   it('renders the loading indicator', () => {
-    mockSingleProjectHook(true, false);
     mockAuthHook();
     renderComponent();
 
@@ -70,50 +52,20 @@ describe('Rendering Project View Container', () => {
     expect(screen.queryByText('Project Lead')).not.toBeInTheDocument();
   });
 
-  it('renders the loaded project', () => {
-    mockSingleProjectHook(false, false, exampleProject1);
+  it('renders the provided project', () => {
     mockAuthHook();
     renderComponent();
 
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
+    expect(screen.getByText('1.1.0 - Impact Attenuator')).toBeInTheDocument();
     expect(screen.getByText('Project Details')).toBeInTheDocument();
     expect(screen.getByText('Work Packages')).toBeInTheDocument();
     expect(screen.getByText('Bodywork Concept of Design')).toBeInTheDocument();
   });
 
-  it('handles the error with message', () => {
-    mockSingleProjectHook(
-      false,
-      true,
-      undefined,
-      new Error('404 could not find the requested project')
-    );
-    mockAuthHook();
-    renderComponent();
-
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
-    expect(screen.getByText('404 could not find the requested project')).toBeInTheDocument();
-  });
-
-  it('handles the error with no message', () => {
-    mockSingleProjectHook(false, true);
-    mockAuthHook();
-    renderComponent();
-
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.queryByText('project')).not.toBeInTheDocument();
-    expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();
-  });
-
   it('disables the edit button for guest users', () => {
-    mockSingleProjectHook(false, false, exampleProject1);
     mockAuthHook(exampleGuestUser);
     renderComponent();
 
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
     act(() => {
       fireEvent.click(screen.getByText('Actions'));
     });
@@ -121,12 +73,9 @@ describe('Rendering Project View Container', () => {
   });
 
   it('enables the edit button for admin users', () => {
-    mockSingleProjectHook(false, false, exampleProject1);
     mockAuthHook(exampleAdminUser);
     renderComponent();
 
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.12.0 - Impact Attenuator')).toBeInTheDocument();
     act(() => {
       fireEvent.click(screen.getByText('Actions'));
     });

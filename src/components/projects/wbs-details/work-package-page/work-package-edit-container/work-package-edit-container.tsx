@@ -17,7 +17,7 @@ import LoadingIndicator from '../../../../shared/loading-indicator/loading-indic
 import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
-import DependenciesList from '../work-package-container-view/dependencies-list/dependencies-list';
+import DependenciesList from '../work-package-view-container/dependencies-list/dependencies-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import WorkPackageEditDetails from './work-package-edit-details/work-package-edit-details';
 

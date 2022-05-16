@@ -49,16 +49,20 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
   const [duration, setDuration] = useState<number>(workPackage.duration);
   const [deps, setDeps] = useState<WbsNumber[]>(workPackage.dependencies);
   const [ea, setEa] = useState<{ id: number; detail: string }[]>(
-    workPackage.expectedActivities.map((ea) => ({
-      id: ea.id,
-      detail: ea.detail
-    }))
+    workPackage.expectedActivities
+      .filter((ea) => ea.dateDeleted === undefined)
+      .map((ea) => ({
+        id: ea.id,
+        detail: ea.detail
+      }))
   );
   const [dels, setDels] = useState<{ id: number; detail: string }[]>(
-    workPackage.deliverables.map((d) => ({
-      id: d.id,
-      detail: d.detail
-    }))
+    workPackage.deliverables
+      .filter((del) => del.dateDeleted === undefined)
+      .map((d) => ({
+        id: d.id,
+        detail: d.detail
+      }))
   );
   const [status, setStatus] = useState<WbsElementStatus>(workPackage.status);
   const [progress, setProgress] = useState<number>(workPackage.progress);

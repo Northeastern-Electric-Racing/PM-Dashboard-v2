@@ -32,21 +32,15 @@ const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
 
   if (isError) return <ErrorPage message={error?.message} />;
 
-  const wp = {
-    ...data!,
-    expectedActivities: data!.expectedActivities.filter((ea) => ea.dateDeleted === undefined),
-    deliverables: data!.deliverables.filter((del) => del.dateDeleted === undefined)
-  };
-
   const isGuest = auth.user?.role === 'GUEST';
 
   if (editMode) {
-    return <WorkPackageEditContainer workPackage={wp} edit={{ editMode, setEditMode }} />;
+    return <WorkPackageEditContainer workPackage={data!} edit={{ editMode, setEditMode }} />;
   }
 
   return (
     <WorkPackageViewContainer
-      workPackage={wp}
+      workPackage={data!}
       edit={{ editMode, setEditMode }}
       allowEdit={!isGuest}
       allowActivate={!isGuest}

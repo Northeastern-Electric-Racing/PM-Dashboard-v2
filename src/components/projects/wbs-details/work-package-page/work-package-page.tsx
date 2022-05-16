@@ -11,6 +11,7 @@ import LoadingIndicator from '../../../shared/loading-indicator/loading-indicato
 import ErrorPage from '../../../shared/error-page/error-page';
 import WorkPackageEditContainer from './work-package-edit-container/work-package-edit-container';
 import WorkPackageViewContainer from './work-package-view-container/work-package-view-container';
+import './work-package-page.module.css';
 
 interface WorkPackagePageProps {
   wbsNum: WbsNumber;

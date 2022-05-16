@@ -10,6 +10,7 @@ import ProjectViewContainer from './project-view-container/project-view-containe
 import ProjectEditContainer from './project-edit-container/project-edit-container';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
+import './project-page.module.css';
 
 interface ProjectPageProps {
   wbsNum: WbsNumber;

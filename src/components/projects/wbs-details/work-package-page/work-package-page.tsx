@@ -9,26 +9,20 @@ import { useSingleWorkPackage } from '../../../../services/work-packages.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
 import LoadingIndicator from '../../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../../shared/error-page/error-page';
-import WorkPackageContainerView from './work-package-container-view/work-package-container-view';
-import WorkPackageContainerEdit from '../work-package-page/work-package-edit-container/work-package-edit-container';
+import WorkPackageContainerEdit from './work-package-edit-container/work-package-edit-container';
+import WorkPackageContainerView from '../work-package-container/work-package-container-view/work-package-container-view';
 
-interface WorkPackageContainerProps {
+interface WorkPackagePageProps {
   wbsNum: WbsNumber;
 }
 
-// Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
-export interface EditMode {
-  editMode: boolean;
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) => {
-  const auth = useAuth();
+const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
   const [editMode, setEditMode] = useState<boolean>(false);
+  const auth = useAuth();
+  const isGuest = auth.user?.role === 'GUEST';
 
   if (isLoading) return <LoadingIndicator />;
-
   if (isError) return <ErrorPage message={error?.message} />;
 
   const wp = {
@@ -37,10 +31,11 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
     deliverables: data!.deliverables.filter((del) => del.dateDeleted === undefined)
   };
 
-  const isGuest = auth.user?.role === 'GUEST';
-  return editMode ? (
-    <WorkPackageContainerEdit workPackage={wp} edit={{ editMode, setEditMode }} />
-  ) : (
+  if (editMode) {
+    return <WorkPackageContainerEdit workPackage={wp} edit={{ editMode, setEditMode }} />;
+  }
+
+  return (
     <WorkPackageContainerView
       workPackage={wp}
       edit={{ editMode, setEditMode }}
@@ -51,4 +46,4 @@ const WorkPackageContainer: React.FC<WorkPackageContainerProps> = ({ wbsNum }) =
   );
 };
 
-export default WorkPackageContainer;
+export default WorkPackagePage;

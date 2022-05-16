@@ -8,7 +8,7 @@ import EditModeOptions from './edit-mode-options';
 
 describe('Renders edit mode options', () => {
   test('renders all of the buttons', () => {
-    render(<EditModeOptions changeEditMode={() => {}} />);
+    render(<EditModeOptions setEditMode={() => {}} />);
     expect(screen.getByText('Cancel')).toBeInTheDocument();
     expect(screen.getByText('Save')).toBeInTheDocument();
   });

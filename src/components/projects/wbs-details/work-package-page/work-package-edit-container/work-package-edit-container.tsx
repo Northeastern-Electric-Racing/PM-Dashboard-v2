@@ -16,10 +16,10 @@ import LoadingIndicator from '../../../../shared/loading-indicator/loading-indic
 import PageBlock from '../../../../shared/page-block/page-block';
 import PageTitle from '../../../../shared/page-title/page-title';
 import { EditableTextInputListUtils } from '../../../create-wp-form/create-wp-form';
-import { EditMode } from '../work-package-container';
-import DependenciesList from './dependencies-list/dependencies-list';
+import { EditMode } from '../../work-package-container/work-package-container';
+import DependenciesList from '../../work-package-container/work-package-container-view/dependencies-list/dependencies-list';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
-import WorkPackageEditDetails from './work-package-edit-details/work-package-edit-details';
+import WorkPackageEditDetails from '../../work-package-container/work-package-container-view/work-package-edit-details/work-package-edit-details';
 
 interface WorkPackageContainerEditProps {
   workPackage: WorkPackage;

@@ -12,7 +12,6 @@ import {
 } from '../../../../../test-support/test-utils';
 import { Auth } from '../../../../../shared/types';
 import { useAuth } from '../../../../../services/auth.hooks';
-import { exampleWbsProject1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
 import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
 import { mockAuth } from '../../../../../test-support/test-data/test-utils.stub';
 import {
@@ -34,11 +33,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ProjectViewContainer
-        wbsNum={exampleWbsProject1}
-        proj={exampleProject1}
-        enterEditMode={jest.fn}
-      />
+      <ProjectViewContainer proj={exampleProject1} enterEditMode={jest.fn} />
     </RouterWrapper>
   );
 };

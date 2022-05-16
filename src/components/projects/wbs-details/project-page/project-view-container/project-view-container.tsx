@@ -4,7 +4,7 @@
  */
 
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import { WbsNumber, WorkPackage, Project } from 'utils';
+import { WorkPackage, Project } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
 import { useAuth } from '../../../../../services/auth.hooks';
 import ChangesList from '../../work-package-container/work-package-container-view/changes-list/changes-list';
@@ -17,16 +17,11 @@ import RulesList from './rules-list/rules-list';
 import './project-view-container.module.css';
 
 interface ProjectViewContainerProps {
-  wbsNum: WbsNumber;
   proj: Project;
   enterEditMode: () => void;
 }
 
-const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({
-  wbsNum,
-  proj,
-  enterEditMode
-}) => {
+const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enterEditMode }) => {
   const auth = useAuth();
 
   const isGuest = auth.user?.role === 'GUEST';

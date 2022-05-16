@@ -17,31 +17,23 @@ interface WorkPackagePageProps {
   wbsNum: WbsNumber;
 }
 
-// Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
-export interface EditMode {
-  editMode: boolean;
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
-  const auth = useAuth();
   const { isLoading, isError, data, error } = useSingleWorkPackage(wbsNum);
   const [editMode, setEditMode] = useState<boolean>(false);
-
-  if (isLoading) return <LoadingIndicator />;
-
-  if (isError) return <ErrorPage message={error?.message} />;
-
+  const auth = useAuth();
   const isGuest = auth.user?.role === 'GUEST';
 
+  if (isLoading) return <LoadingIndicator />;
+  if (isError) return <ErrorPage message={error?.message} />;
+
   if (editMode) {
-    return <WorkPackageEditContainer workPackage={data!} edit={{ editMode, setEditMode }} />;
+    return <WorkPackageEditContainer workPackage={data!} exitEditMode={() => setEditMode(false)} />;
   }
 
   return (
     <WorkPackageViewContainer
       workPackage={data!}
-      edit={{ editMode, setEditMode }}
+      enterEditMode={() => setEditMode(true)}
       allowEdit={!isGuest}
       allowActivate={!isGuest}
       allowStageGate={!isGuest}

@@ -15,7 +15,7 @@ import WorkPackageDetails from './work-package-details/work-package-details';
 
 interface WorkPackageViewContainerProps {
   workPackage: WorkPackage;
-  edit: EditMode;
+  enterEditMode: () => void;
   allowEdit: boolean;
   allowActivate: boolean;
   allowStageGate: boolean;
@@ -23,13 +23,13 @@ interface WorkPackageViewContainerProps {
 
 const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   workPackage,
-  edit,
+  enterEditMode,
   allowEdit,
   allowActivate,
   allowStageGate
 }) => {
   const editBtn = (
-    <Dropdown.Item as={Button} onClick={() => edit.setEditMode(true)} disabled={!allowEdit}>
+    <Dropdown.Item as={Button} onClick={enterEditMode} disabled={!allowEdit}>
       Edit
     </Dropdown.Item>
   );
@@ -49,7 +49,7 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   );
   const projectActionsDropdown = (
     <DropdownButton id="work-package-actions-dropdown" title="Actions">
-      {!edit.editMode ? editBtn : ''}
+      {editBtn}
       {workPackage.status === WbsElementStatus.Inactive ? activateBtn : ''}
       {workPackage.status === WbsElementStatus.Active ? stageGateBtn : ''}
     </DropdownButton>

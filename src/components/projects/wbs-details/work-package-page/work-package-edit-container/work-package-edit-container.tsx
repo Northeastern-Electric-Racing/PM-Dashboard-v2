@@ -23,7 +23,7 @@ import WorkPackageEditDetails from './work-package-edit-details/work-package-edi
 
 interface WorkPackageEditContainerProps {
   workPackage: WorkPackage;
-  edit: EditMode;
+  exitEditMode: () => void;
 }
 
 // Making this an object. Later on more functions can be used that can pass up state from inputs for wiring and such.
@@ -34,7 +34,7 @@ export const FormContext = createContext({
 
 const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
   workPackage,
-  edit
+  exitEditMode
 }) => {
   const auth = useAuth();
   const { mutateAsync } = useEditWorkPackage();
@@ -215,7 +215,7 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
             />
           }
         />
-        <EditModeOptions setEditMode={edit.setEditMode} />
+        <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
     </div>
   );

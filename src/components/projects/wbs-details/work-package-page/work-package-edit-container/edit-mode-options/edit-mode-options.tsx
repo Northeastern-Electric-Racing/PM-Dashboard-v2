@@ -6,17 +6,17 @@
 import { Button } from 'react-bootstrap';
 import styles from './edit-mode-options.module.css';
 
-interface Props {
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+interface EditModeOptionsProps {
+  exitEditMode: () => void;
 }
 
-const EditModeOptions: React.FC<Props> = ({ setEditMode }) => {
+const EditModeOptions: React.FC<EditModeOptionsProps> = ({ exitEditMode }) => {
   return (
     <div className={styles.editModeOptionsContainer}>
       <Button type="submit" variant="success">
         Save
       </Button>
-      <Button variant="danger" onClick={() => setEditMode(false)}>
+      <Button variant="danger" onClick={exitEditMode}>
         Cancel
       </Button>
     </div>

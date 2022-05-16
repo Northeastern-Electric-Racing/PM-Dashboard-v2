@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { SyntheticEvent, useState, SetStateAction, Dispatch } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
@@ -34,10 +34,10 @@ const bulletsToObject = (bullets: DescriptionBullet[]) =>
 
 interface ProjectEditContainerProps {
   proj: Project;
-  setEditMode: Dispatch<SetStateAction<boolean>>;
+  exitEditMode: () => void;
 }
 
-const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, setEditMode }) => {
+const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitEditMode }) => {
   const auth = useAuth();
   const allUsers = useAllUsers();
   const { mutateAsync } = useEditSingleProject();
@@ -300,7 +300,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, setEd
             </>
           }
         />
-        <EditModeOptions setEditMode={setEditMode} />
+        <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
     </>
   );

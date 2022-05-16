@@ -47,7 +47,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ProjectEditContainer proj={exampleProject1} setEditMode={() => null} />
+      <ProjectEditContainer proj={exampleProject1} exitEditMode={() => null} />
     </RouterWrapper>
   );
 };

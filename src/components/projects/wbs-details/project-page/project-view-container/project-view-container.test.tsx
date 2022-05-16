@@ -39,14 +39,6 @@ const renderComponent = () => {
 };
 
 describe('Rendering Project View Container', () => {
-  it('renders the loading indicator', () => {
-    mockAuthHook();
-    renderComponent();
-
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.queryByText('Project Lead')).not.toBeInTheDocument();
-  });
-
   it('renders the provided project', () => {
     mockAuthHook();
     renderComponent();

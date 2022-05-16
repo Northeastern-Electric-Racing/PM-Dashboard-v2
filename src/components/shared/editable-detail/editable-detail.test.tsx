@@ -4,8 +4,8 @@
  */
 
 import { render, screen } from '../../../test-support/test-utils';
+import { FormContext } from '../../projects/wbs-details/work-package-page/work-package-edit-container/work-package-edit-container';
 import EditableDetail from './editable-detail';
-import { FormContext } from '../../projects/wbs-details/work-package-container/work-package-container';
 
 describe.skip('Rendering Editable Detail Component', () => {
   const setField = (field: string, value: any) => {};

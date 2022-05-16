@@ -10,7 +10,7 @@ import { wbsPipe } from '../../../../../shared/pipes';
 import DescriptionList from '../../../../shared/description-list/description-list';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import PageTitle from '../../../../shared/page-title/page-title';
-import ChangesList from './changes-list/changes-list';
+import ChangesList from '../../../../shared/changes-list/changes-list';
 import WorkPackageDetails from './work-package-details/work-package-details';
 
 interface WorkPackageViewContainerProps {

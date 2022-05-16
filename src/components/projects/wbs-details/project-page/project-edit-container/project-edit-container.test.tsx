@@ -4,10 +4,10 @@
  */
 
 import { UseMutationResult, UseQueryResult } from 'react-query';
-import { Project, User } from 'utils';
+import { User } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
 import { wbsPipe } from '../../../../../shared/pipes';
-import { useEditSingleProject, useSingleProject } from '../../../../../services/projects.hooks';
+import { useEditSingleProject } from '../../../../../services/projects.hooks';
 import { exampleWbsProject1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
 import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
 import { useAllUsers } from '../../../../../services/users.hooks';

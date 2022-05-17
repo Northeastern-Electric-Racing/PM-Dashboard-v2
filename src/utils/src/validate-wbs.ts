@@ -33,9 +33,9 @@ export const validateWBS = (wbsNum: string): WbsNumber => {
     return num;
   });
   return {
-    car: parseWbs[0],
-    project: parseWbs[1],
-    workPackage: parseWbs[2]
+    carNumber: parseWbs[0],
+    projectNumber: parseWbs[1],
+    workPackageNumber: parseWbs[2]
   };
 };
 
@@ -45,7 +45,7 @@ export const validateWBS = (wbsNum: string): WbsNumber => {
  * @param wbsNum WBS number to check
  */
 export const isProject = (wbsNum: WbsNumber) => {
-  return wbsNum.workPackage === 0;
+  return wbsNum.workPackageNumber === 0;
 };
 
 /**
@@ -56,8 +56,8 @@ export const isProject = (wbsNum: WbsNumber) => {
  */
 export const equalsWbsNumber = (wbsNum1: WbsNumber, wbsNum2: WbsNumber): boolean => {
   return (
-    wbsNum1.car === wbsNum2.car &&
-    wbsNum1.project === wbsNum2.project &&
-    wbsNum1.workPackage === wbsNum2.workPackage
+    wbsNum1.carNumber === wbsNum2.carNumber &&
+    wbsNum1.projectNumber === wbsNum2.projectNumber &&
+    wbsNum1.workPackageNumber === wbsNum2.workPackageNumber
   );
 };

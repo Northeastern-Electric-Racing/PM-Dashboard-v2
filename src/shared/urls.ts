@@ -31,6 +31,7 @@ const changeRequests = () => `${API_URL}/change-requests`;
 const changeRequestsById = (id: string) => `${changeRequests()}/${id}`;
 const changeRequestsReview = () => `${changeRequests()}-review`;
 const changeRequestsCreate = () => `${changeRequests()}-new`;
+const changeRequestsCreateActivation = () => `${changeRequestsCreate()}-activation`;
 
 export const apiUrls = {
   users,
@@ -50,5 +51,6 @@ export const apiUrls = {
   changeRequests,
   changeRequestsById,
   changeRequestsReview,
-  changeRequestsCreate
+  changeRequestsCreate,
+  changeRequestsCreateActivation
 };

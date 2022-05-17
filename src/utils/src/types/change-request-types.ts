@@ -107,6 +107,8 @@ export type CreateActivationChangeRequestPayload = FromSchema<
   typeof createActivationChangeRequestPayloadSchema
 >;
 
+// older non-abstracted schema below
+
 export const newStandardChangeRequestPayloadSchema = {
   type: 'object',
   properties: {

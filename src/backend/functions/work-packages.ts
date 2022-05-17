@@ -125,9 +125,9 @@ const getSingleWorkPackage: ApiRouteFunction = async (params: { wbsNum: string }
   const wbsEle = await prisma.wBS_Element.findUnique({
     where: {
       wbsNumber: {
-        carNumber: parsedWbs.car,
-        projectNumber: parsedWbs.project,
-        workPackageNumber: parsedWbs.workPackage
+        carNumber: parsedWbs.carNumber,
+        projectNumber: parsedWbs.projectNumber,
+        workPackageNumber: parsedWbs.workPackageNumber
       }
     },
     ...uniqueRelationArgs

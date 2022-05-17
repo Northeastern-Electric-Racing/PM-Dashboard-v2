@@ -32,7 +32,7 @@ export function filterProjects(
   projectManagerID: number
 ): Project[] {
   const carNumCheck = (project: Project) => {
-    return carNumber === project.wbsNum.car;
+    return carNumber === project.wbsNum.carNumber;
   };
   const statusCheck = (project: Project) => {
     return project.status === status;

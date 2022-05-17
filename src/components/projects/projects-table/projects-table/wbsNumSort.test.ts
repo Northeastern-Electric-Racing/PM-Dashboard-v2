@@ -22,51 +22,51 @@ describe('sort wbs numbers', () => {
     expect(wbsNumSort('24.36.12', '24.36.12', 'desc')).toEqual(0);
   });
 
-  it('a.car < b.car, asc', () => {
+  it('a.carNumber < b.carNumber, asc', () => {
     expect(wbsNumSort('0.7.12', '1.56.44', 'asc')).toEqual(-1);
   });
 
-  it('a.car > b.car, asc', () => {
+  it('a.carNumber > b.carNumber, asc', () => {
     expect(wbsNumSort('1.56.44', '0.7.12', 'asc')).toEqual(1);
   });
 
-  it('a.car < b.car, desc', () => {
+  it('a.carNumber < b.carNumber, desc', () => {
     expect(wbsNumSort('0.7.12', '1.56.44', 'desc')).toEqual(1);
   });
 
-  it('a.car > b.car, desc', () => {
+  it('a.carNumber > b.carNumber, desc', () => {
     expect(wbsNumSort('1.56.44', '0.7.12', 'desc')).toEqual(-1);
   });
 
-  it('a.project < b.project, asc', () => {
+  it('a.projectNumber < b.projectNumber, asc', () => {
     expect(wbsNumSort('1.7.12', '1.56.44', 'asc')).toEqual(-49);
   });
 
-  it('a.project > b.project, asc', () => {
+  it('a.projectNumber > b.projectNumber, asc', () => {
     expect(wbsNumSort('1.56.44', '1.7.12', 'asc')).toEqual(49);
   });
 
-  it('a.project < b.project, desc', () => {
+  it('a.projectNumber < b.projectNumber, desc', () => {
     expect(wbsNumSort('1.7.12', '1.56.44', 'desc')).toEqual(49);
   });
 
-  it('a.project > b.project, desc', () => {
+  it('a.projectNumber > b.projectNumber, desc', () => {
     expect(wbsNumSort('1.56.44', '1.7.12', 'desc')).toEqual(-49);
   });
 
-  it('a.workPackage < b.workPackage, asc', () => {
+  it('a.workPackageNumber < b.workPackageNumber, asc', () => {
     expect(wbsNumSort('1.2.12', '1.2.44', 'asc')).toEqual(-32);
   });
 
-  it('a.workPackage > b.workPackage, asc', () => {
+  it('a.workPackageNumber > b.workPackageNumber, asc', () => {
     expect(wbsNumSort('1.2.44', '1.2.12', 'asc')).toEqual(32);
   });
 
-  it('a.workPackage < b.workPackage, desc', () => {
+  it('a.workPackageNumber < b.workPackageNumber, desc', () => {
     expect(wbsNumSort('1.2.12', '1.2.44', 'desc')).toEqual(32);
   });
 
-  it('a.workPackage > b.workPackage, desc', () => {
+  it('a.workPackageNumber > b.workPackageNumber, desc', () => {
     expect(wbsNumSort('1.2.44', '1.2.12', 'desc')).toEqual(-32);
   });
 });

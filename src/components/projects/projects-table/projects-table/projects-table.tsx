@@ -35,23 +35,23 @@ interface DisplayProjectProps {
 export function wbsNumSort(a: string, b: string, order: SortOrder) {
   const wbs_a = validateWBS(a);
   const wbs_b = validateWBS(b);
-  if (wbs_a.car !== wbs_b.car) {
+  if (wbs_a.carNumber !== wbs_b.carNumber) {
     if (order === 'asc') {
-      return wbs_a.car - wbs_b.car;
+      return wbs_a.carNumber - wbs_b.carNumber;
     }
-    return wbs_b.car - wbs_a.car;
+    return wbs_b.carNumber - wbs_a.carNumber;
   }
-  if (wbs_a.project !== wbs_b.project) {
+  if (wbs_a.projectNumber !== wbs_b.projectNumber) {
     if (order === 'asc') {
-      return wbs_a.project - wbs_b.project;
+      return wbs_a.projectNumber - wbs_b.projectNumber;
     }
-    return wbs_b.project - wbs_a.project;
+    return wbs_b.projectNumber - wbs_a.projectNumber;
   }
-  if (wbs_a.workPackage !== wbs_b.workPackage) {
+  if (wbs_a.workPackageNumber !== wbs_b.workPackageNumber) {
     if (order === 'asc') {
-      return wbs_a.workPackage - wbs_b.workPackage;
+      return wbs_a.workPackageNumber - wbs_b.workPackageNumber;
     }
-    return wbs_b.workPackage - wbs_a.workPackage;
+    return wbs_b.workPackageNumber - wbs_a.workPackageNumber;
   }
   return 0; // Both wbsNums are exactly equal.
 }

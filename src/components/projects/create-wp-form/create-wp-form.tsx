@@ -121,9 +121,9 @@ const CreateWPForm: React.FC = () => {
       const depWbsNums = dependencies.map((dependency) => {
         const depWbsNum = validateWBS(dependency.trim());
         return {
-          carNumber: depWbsNum.car,
-          projectNumber: depWbsNum.project,
-          workPackageNumber: depWbsNum.workPackage
+          carNumber: depWbsNum.carNumber,
+          projectNumber: depWbsNum.projectNumber,
+          workPackageNumber: depWbsNum.workPackageNumber
         };
       });
       await mutateAsync({
@@ -131,9 +131,9 @@ const CreateWPForm: React.FC = () => {
         name: name.trim(),
         crId,
         projectWbsNum: {
-          carNumber: wbsNum.car,
-          projectNumber: wbsNum.project,
-          workPackageNumber: wbsNum.workPackage
+          carNumber: wbsNum.carNumber,
+          projectNumber: wbsNum.projectNumber,
+          workPackageNumber: wbsNum.workPackageNumber
         },
         startDate,
         duration,

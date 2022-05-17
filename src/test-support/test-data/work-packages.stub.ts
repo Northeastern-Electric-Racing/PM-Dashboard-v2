@@ -71,9 +71,9 @@ export const exampleWorkPackage1: WorkPackage = {
 export const exampleWorkPackage2: WorkPackage = {
   id: 2,
   wbsNum: {
-    car: 1,
-    project: 1,
-    workPackage: 2
+    carNumber: 1,
+    projectNumber: 1,
+    workPackageNumber: 2
   },
   dateCreated: new Date('10/02/20'),
   name: 'Adhesive Shear Strength Test',

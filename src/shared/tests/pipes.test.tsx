@@ -235,9 +235,9 @@ describe('Formatting Wbs Numbers', () => {
     expect(wbsPipe(exampleWbsWorkPackage2)).toBe('2.7.3');
   });
   test('with custom examples', () => {
-    const two_digit: WbsNumber = { car: 11, project: 22, workPackage: 33 };
-    const three_digit: WbsNumber = { car: 333, project: 666, workPackage: 999 };
-    const mixed: WbsNumber = { car: 420, project: 0, workPackage: 69 };
+    const two_digit: WbsNumber = { carNumber: 11, projectNumber: 22, workPackageNumber: 33 };
+    const three_digit: WbsNumber = { carNumber: 333, projectNumber: 666, workPackageNumber: 999 };
+    const mixed: WbsNumber = { carNumber: 420, projectNumber: 0, workPackageNumber: 69 };
     expect(wbsPipe(two_digit)).toBe('11.22.33');
     expect(wbsPipe(three_digit)).toBe('333.666.999');
     expect(wbsPipe(mixed)).toBe('420.0.69');

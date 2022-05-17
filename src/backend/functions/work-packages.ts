@@ -59,9 +59,9 @@ const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
   }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
-  car: element.carNumber,
-  project: element.projectNumber,
-  workPackage: element.workPackageNumber
+  carNumber: element.carNumber,
+  projectNumber: element.projectNumber,
+  workPackageNumber: element.workPackageNumber
 });
 
 const workPackageTransformer = (

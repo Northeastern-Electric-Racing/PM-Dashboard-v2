@@ -45,7 +45,11 @@ describe('work package api methods', () => {
       })
     );
 
-    const result = await getSingleWorkPackage({ car: 1, project: 1, workPackage: 1 });
+    const result = await getSingleWorkPackage({
+      carNumber: 1,
+      projectNumber: 1,
+      workPackageNumber: 1
+    });
     expect(result.data).not.toHaveProperty('length');
     expect(result.data).toHaveProperty('wbsNum');
     expect(result.data).toHaveProperty('duration');

@@ -41,7 +41,7 @@ describe('projects api endpoint handler', () => {
       projectsResponse.forEach((prj: Project) => {
         const project: Project = prj;
         expect(project.wbsNum).toBeTruthy();
-        expect(project.wbsNum.workPackage).toEqual(0);
+        expect(project.wbsNum.workPackageNumber).toEqual(0);
       });
     });
   });
@@ -69,7 +69,7 @@ describe('projects api endpoint handler', () => {
 
     it.skip('has proper project wbsNums', () => {
       expect(projectResponse.wbsNum).toBeTruthy();
-      expect(projectResponse.wbsNum.workPackage).toEqual(0);
+      expect(projectResponse.wbsNum.workPackageNumber).toEqual(0);
     });
 
     it.skip('handles 404 when project not found', async () => {

@@ -5,7 +5,7 @@
 
 import { HandlerCallback, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
-import { UseQueryResult } from 'react-query';
+import { UseMutationResult, UseQueryResult } from 'react-query';
 import { User } from '@prisma/client';
 import { ApiRoute, API_URL } from 'utils';
 import { exampleAdminUser } from './users.stub';
@@ -112,6 +112,32 @@ export const mockUseQueryResult = <Return>(
       return 0;
     }
   } as UseQueryResult<Return, Error>;
+};
+
+export const mockUseMutationResult = <Input>(
+  isLoading: boolean,
+  isError: boolean,
+  input: Input,
+  err?: Error
+) => {
+  return {
+    error: err ?? null,
+    isError,
+    isLoading,
+    context: undefined,
+    data: undefined,
+    failureCount: 0,
+    isIdle: true,
+    isPaused: false,
+    isSuccess: true,
+    variables: undefined,
+    reset: () => {},
+    status: 'idle',
+    mutate: () => {},
+    mutateAsync: () => {
+      return new Promise((_res, _rej) => 5);
+    }
+  } as UseMutationResult<Input, Error>;
 };
 
 export const mockAuth = (user?: User) => {

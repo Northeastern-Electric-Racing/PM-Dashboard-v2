@@ -9,7 +9,7 @@ import styles from './loading-indicator.module.css';
 const LoadingIndicator: React.FC = () => {
   return (
     <div className={styles.loaderWrapper}>
-      <span className={styles.loader}>
+      <span className={styles.loader} data-testid={'loader'}>
         <span className={styles.loaderInner}></span>
       </span>
     </div>

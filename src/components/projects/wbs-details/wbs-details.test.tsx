@@ -7,20 +7,20 @@ import { render, screen, routerWrapperBuilder } from '../../../test-support/test
 import { routes } from '../../../shared/routes';
 import WBSDetails from './wbs-details';
 
-jest.mock('./project-container/project-container', () => {
+jest.mock('./project-page/project-page', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>project container</div>;
+      return <div>project page</div>;
     }
   };
 });
 
-jest.mock('./work-package-container/work-package-container', () => {
+jest.mock('./work-package-page/work-package-page', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>work package container</div>;
+      return <div>work package page</div>;
     }
   };
 });
@@ -45,12 +45,12 @@ const renderComponent = (wbsNumber: string) => {
 describe('wbs element details component', () => {
   it('renders the project page title', () => {
     renderComponent('1.1.0');
-    expect(screen.getByText('project container')).toBeInTheDocument();
+    expect(screen.getByText('project page')).toBeInTheDocument();
   });
 
   it('renders the work package page title', () => {
     renderComponent('1.1.1');
-    expect(screen.getByText('work package container')).toBeInTheDocument();
+    expect(screen.getByText('work package page')).toBeInTheDocument();
   });
 
   it('throws when wbsNum is invalid', () => {

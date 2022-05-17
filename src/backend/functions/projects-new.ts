@@ -75,9 +75,9 @@ export const baseHandler: Handler<FromSchema<typeof inputSchema>> = async ({ bod
 
   return buildSuccessResponse({
     wbsNumber: {
-      car: createdProject.carNumber,
-      project: createdProject.projectNumber,
-      workPackage: createdProject.workPackageNumber
+      carNumber: createdProject.carNumber,
+      projectNumber: createdProject.projectNumber,
+      workPackageNumber: createdProject.workPackageNumber
     }
   });
 };

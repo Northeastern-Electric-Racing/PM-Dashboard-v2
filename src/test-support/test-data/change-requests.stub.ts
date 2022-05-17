@@ -129,9 +129,9 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
       changeId: 1,
       changeRequestId: 37,
       wbsNum: {
-        car: 1,
-        project: 23,
-        workPackage: 3
+        carNumber: 1,
+        projectNumber: 23,
+        workPackageNumber: 3
       },
       implementer: {
         userId: 22,
@@ -149,9 +149,9 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
       changeId: 1,
       changeRequestId: 37,
       wbsNum: {
-        car: 1,
-        project: 23,
-        workPackage: 4
+        carNumber: 1,
+        projectNumber: 23,
+        workPackageNumber: 4
       },
       implementer: {
         userId: 22,
@@ -169,9 +169,9 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
       changeId: 1,
       changeRequestId: 37,
       wbsNum: {
-        car: 1,
-        project: 23,
-        workPackage: 5
+        carNumber: 1,
+        projectNumber: 23,
+        workPackageNumber: 5
       },
       implementer: {
         userId: 22,

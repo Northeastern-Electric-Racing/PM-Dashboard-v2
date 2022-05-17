@@ -133,9 +133,9 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
 
   const transformWbsNum = (wbsNum: WbsNumber) => {
     return {
-      carNumber: wbsNum.car,
-      projectNumber: wbsNum.project,
-      workPackageNumber: wbsNum.workPackage
+      carNumber: wbsNum.carNumber,
+      projectNumber: wbsNum.projectNumber,
+      workPackageNumber: wbsNum.workPackageNumber
     };
   };
 

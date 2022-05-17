@@ -10,9 +10,9 @@ import { FromSchema } from 'json-schema-to-ts';
 import { arrayType, bodySchema, enumType, intType, stringType } from './api-utils-types';
 
 export interface WbsNumber {
-  car: number;
-  project: number;
-  workPackage: number;
+  carNumber: number;
+  projectNumber: number;
+  workPackageNumber: number;
 }
 
 export interface WbsElement {

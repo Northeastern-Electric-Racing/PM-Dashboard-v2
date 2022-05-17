@@ -43,7 +43,7 @@ describe('project api hooks', () => {
       })
     );
 
-    const result = await getSingleProject({ car: 1, project: 1, workPackage: 0 });
+    const result = await getSingleProject({ carNumber: 1, projectNumber: 1, workPackageNumber: 0 });
     expect(result.data).not.toHaveProperty('length');
     expect(result.data).toHaveProperty('wbsNum');
     expect(result.data).toHaveProperty('bomLink');

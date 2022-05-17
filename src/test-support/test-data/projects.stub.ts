@@ -20,7 +20,7 @@ import {
 
 export const exampleProject1: Project = {
   id: 4,
-  wbsNum: { car: 1, project: 1, workPackage: 0 },
+  wbsNum: { carNumber: 1, projectNumber: 1, workPackageNumber: 0 },
   dateCreated: new Date('08/01/20'),
   name: 'Impact Attenuator',
   status: WbsElementStatus.Active,
@@ -70,7 +70,7 @@ export const exampleProject1: Project = {
 
 export const exampleProject2: Project = {
   id: 5,
-  wbsNum: { car: 1, project: 2, workPackage: 0 },
+  wbsNum: { carNumber: 1, projectNumber: 2, workPackageNumber: 0 },
   dateCreated: new Date('08/02/20'),
   name: 'Bodywork',
   status: WbsElementStatus.Inactive,
@@ -185,7 +185,7 @@ export const exampleProject4: Project = {
 
 export const exampleProject5: Project = {
   id: 8,
-  wbsNum: { car: 2, project: 7, workPackage: 0 },
+  wbsNum: { carNumber: 2, projectNumber: 7, workPackageNumber: 0 },
   dateCreated: new Date('08/03/20'),
   name: 'Wiring Harness',
   status: WbsElementStatus.Complete,

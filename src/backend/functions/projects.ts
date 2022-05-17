@@ -88,9 +88,9 @@ const convertStatus = (status: WBS_Element_Status): WbsElementStatus =>
   }[status]);
 
 const wbsNumOf = (element: WBS_Element): WbsNumber => ({
-  car: element.carNumber,
-  project: element.projectNumber,
-  workPackage: element.workPackageNumber
+  carNumber: element.carNumber,
+  projectNumber: element.projectNumber,
+  workPackageNumber: element.workPackageNumber
 });
 
 export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
@@ -173,9 +173,9 @@ const getSingleProject: ApiRouteFunction = async (params: { wbsNum: string }) =>
   const wbsEle = await prisma.wBS_Element.findUnique({
     where: {
       wbsNumber: {
-        carNumber: parsedWbs.car,
-        projectNumber: parsedWbs.project,
-        workPackageNumber: parsedWbs.workPackage
+        carNumber: parsedWbs.carNumber,
+        projectNumber: parsedWbs.projectNumber,
+        workPackageNumber: parsedWbs.workPackageNumber
       }
     },
     ...uniqueRelationArgs

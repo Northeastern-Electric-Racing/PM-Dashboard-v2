@@ -6,45 +6,45 @@
 import { WbsNumber } from 'utils';
 
 export const exampleWbsWorkPackage1: WbsNumber = {
-  car: 1,
-  project: 1,
-  workPackage: 1
+  carNumber: 1,
+  projectNumber: 1,
+  workPackageNumber: 1
 };
 
 export const exampleWbsWorkPackage2: WbsNumber = {
-  car: 2,
-  project: 7,
-  workPackage: 3
+  carNumber: 2,
+  projectNumber: 7,
+  workPackageNumber: 3
 };
 
 export const exampleWbsProject1: WbsNumber = {
-  car: 1,
-  project: 12,
-  workPackage: 0
+  carNumber: 1,
+  projectNumber: 12,
+  workPackageNumber: 0
 };
 
 export const exampleWbsProject2: WbsNumber = {
-  car: 2,
-  project: 5,
-  workPackage: 0
+  carNumber: 2,
+  projectNumber: 5,
+  workPackageNumber: 0
 };
 
 export const exampleWbs1: WbsNumber = {
-  car: 1,
-  project: 1,
-  workPackage: 1
+  carNumber: 1,
+  projectNumber: 1,
+  workPackageNumber: 1
 };
 
 export const exampleWbs2: WbsNumber = {
-  car: 1,
-  project: 7,
-  workPackage: 1
+  carNumber: 1,
+  projectNumber: 7,
+  workPackageNumber: 1
 };
 
 export const exampleWbs3: WbsNumber = {
-  car: 1,
-  project: 7,
-  workPackage: 3
+  carNumber: 1,
+  projectNumber: 7,
+  workPackageNumber: 3
 };
 
 export const exampleAllWbsNums: WbsNumber[] = [

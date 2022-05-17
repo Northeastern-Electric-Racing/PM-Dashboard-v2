@@ -32,7 +32,7 @@ export const dollarsPipe = (dollars: number): string => {
 };
 
 export const wbsPipe = (wbsNum: WbsNumber): string => {
-  return `${wbsNum.car}.${wbsNum.project}.${wbsNum.workPackage}`;
+  return `${wbsNum.carNumber}.${wbsNum.projectNumber}.${wbsNum.workPackageNumber}`;
 };
 
 export const fullNamePipe = (user?: User): string => {

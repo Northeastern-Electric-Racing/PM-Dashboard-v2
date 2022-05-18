@@ -36,7 +36,7 @@ const renderComponent = (modalShow: boolean) => {
   );
 };
 
-describe('review change request page test suite', () => {
+describe('activate work package modal test suite', () => {
   it('renders accept title', () => {
     renderComponent(true);
 

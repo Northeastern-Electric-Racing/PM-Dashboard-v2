@@ -42,7 +42,7 @@ const ActivateWorkPackageModal: React.FC<ActivateWorkPackageModalProps> = ({
    */
   const onSubmitWrapper = async (data: FormInput) => {
     await onSubmit(data);
-    reset({ projectLeadId: -1, projectManagerId: 0, startDate: '', confirmDetails: false });
+    reset({ projectLeadId: -1, projectManagerId: -1, startDate: '', confirmDetails: false });
   };
 
   return (
@@ -100,56 +100,8 @@ const ActivateWorkPackageModal: React.FC<ActivateWorkPackageModalProps> = ({
                 value={0}
                 {...register('confirmDetails')}
               />
-              {/* <Form.Control {...register('confirmDetails')}>
-                {['Yes', 'No'].map((type) => (
-                  <Row key={type} className="mb-3">
-                    <Form.Check
-                      type="radio"
-                      id={type}
-                      label={type}
-                      name="confirmDetails"
-                      defaultChecked={type === 'No'}
-                    />
-                  </Row>
-                ))}
-              </Form.Control> */}
             </Form.Group>
-            {/* <label htmlFor="field-rain">
-                    <input
-                        {...register("weather")}
-                        type="radio"
-                        name="weather"
-                        value="rain"
-                        id="field-rain"
-                    />
-                    Rain
-                </label>
-                <label htmlFor="field-wind">
-                    <input
-                        {...register("weather")}
-                        type="radio"
-                        name="weather"
-                        value="wind"
-                        id="field-wind"
-                    />
-                    Lots of wind
-                </label> */}
           </div>
-
-          {/* <Form.Group className={'px-4'} controlId="newCR-wp-details">
-              {['Yes', 'No'].map((type) => (
-                <Row key={type} className="mb-3">
-                  <Form.Check
-                    type="radio"
-                    id={type}
-                    label={type}
-                    name="confirmDetails"
-                    onChange={handleChange}
-                    defaultChecked={type === 'No'}
-                  />
-                </Row>
-              ))}
-            </Form.Group> */}
         </Form>
       </Modal.Body>
       <Modal.Footer>

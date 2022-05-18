@@ -103,7 +103,7 @@ export const createChangeRequest = (
  */
 export const createActivationChangeRequest = (
   submitterId: number,
-  wbsNumber: WbsNumber,
+  wbsNum: WbsNumber,
   projectLeadId: number,
   projectManagerId: number,
   startDate: string,
@@ -111,7 +111,7 @@ export const createActivationChangeRequest = (
 ) => {
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreateActivation(), {
     submitterId,
-    wbsNumber,
+    wbsNum,
     type: CR_Type.ACTIVATION,
     projectLeadId,
     projectManagerId,

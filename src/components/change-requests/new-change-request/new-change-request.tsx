@@ -112,7 +112,7 @@ const NewChangeRequest: React.FC = () => {
     const sendData: NewChangeRequestPayload = {
       submitterId: userId,
       wbsElementId: wbsId,
-      type: formData.type,
+      type: formData.type as Omit<ChangeRequestType, 'Activation'>,
       payload: req
     };
 

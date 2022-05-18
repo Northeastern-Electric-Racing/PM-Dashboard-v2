@@ -170,6 +170,7 @@ export const newChangeRequestPayloadSchema = {
     type: {
       enum: [
         ChangeRequestType.StageGate,
+        ChangeRequestType.Activation,
         ChangeRequestType.Other,
         ChangeRequestType.Issue,
         ChangeRequestType.Redefinition

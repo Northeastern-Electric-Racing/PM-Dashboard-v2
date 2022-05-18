@@ -26,7 +26,6 @@ const renderComponent = (formType: ChangeRequestType) => {
         projectData={exampleAllProjects}
         workPkgsData={exampleAllWorkPackages}
         handleChange={jest.fn()}
-        handleStartDateChange={jest.fn()}
       />
     </RouterWrapper>
   );
@@ -49,11 +48,5 @@ describe('new change request page', () => {
     renderComponent(ChangeRequestType.StageGate);
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
-  });
-
-  it('checks if page renders correctly with activation type', () => {
-    renderComponent(ChangeRequestType.Activation);
-    expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
-    expect(screen.getByText(projectLeadStr)).toBeInTheDocument();
   });
 });

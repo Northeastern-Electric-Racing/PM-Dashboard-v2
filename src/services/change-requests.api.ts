@@ -5,9 +5,12 @@
 
 import { CR_Type } from '@prisma/client';
 import axios from 'axios';
-import { NewStandardChangeRequestPayload } from 'utils';
-import { ChangeRequest } from 'utils';
-import { NewActivationChangeRequestPayload, NewStageRequestChangeRequestPayload } from 'utils/src';
+import {
+  ChangeRequest,
+  NewStandardChangeRequestPayload,
+  NewStageRequestChangeRequestPayload,
+  WbsNumber
+} from 'utils';
 import { apiUrls } from '../shared/urls';
 import { changeRequestTransformer } from './transformers/change-requests.transformers';
 
@@ -64,10 +67,10 @@ export const reviewChangeRequest = (
 /**
  * Create a change request.
  *
- * @param submitterId The ID of the change request being reviewed.
- * @param wbsElementId Is the change request being accepted?
+ * @param submitterId The ID of the user creating the change request.
+ * @param wbsElementId the ID of the WBS element the change request is for.
  * @param type The notes attached to reviewing the change request.
- * @param payload
+ * @param payload The payload of the change request.
  *
  * TODO
  */
@@ -75,15 +78,40 @@ export const createChangeRequest = (
   submitterId: number,
   wbsElementId: number,
   type: CR_Type,
-  payload:
-    | NewStandardChangeRequestPayload
-    | NewActivationChangeRequestPayload
-    | NewStageRequestChangeRequestPayload
+  payload: NewStandardChangeRequestPayload | NewStageRequestChangeRequestPayload
 ) => {
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreate(), {
     submitterId,
     wbsElementId,
     type,
     payload
+  });
+};
+
+/**
+ * Create an activation change request.
+ * @param submitterId The ID of the user creating the change request.
+ * @param wbsNumber the wbsNumber of the WBS element the change request is for.
+ * @param projectLeadId the ID of the project lead intended to be assigned to the WBS element being activated.
+ * @param projectManagerId the ID of the project manager intended to be assigned to the WBS element being activated.
+ * @param startDate the intended start date of the WBS element being activated.
+ * @param confirmDetails are the details of the WBS element being activated fully confirmed?
+ */
+export const createActivationChangeRequest = (
+  submitterId: number,
+  wbsNum: WbsNumber,
+  projectLeadId: number,
+  projectManagerId: number,
+  startDate: string,
+  confirmDetails: boolean
+) => {
+  return axios.post<{ message: string }>(apiUrls.changeRequestsCreateActivation(), {
+    submitterId,
+    wbsNum,
+    type: CR_Type.ACTIVATION,
+    projectLeadId,
+    projectManagerId,
+    startDate,
+    confirmDetails
   });
 };

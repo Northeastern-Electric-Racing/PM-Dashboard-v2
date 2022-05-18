@@ -3,14 +3,16 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useState } from 'react';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsElementStatus, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
+import ActivateWorkPackageModalContainer from '../activate-work-package-modal-container/activate-work-package-modal-container';
 import DescriptionList from '../../../../shared/description-list/description-list';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
-import PageTitle from '../../../../shared/page-title/page-title';
-import ChangesList from '../../../../shared/changes-list/changes-list';
 import WorkPackageDetails from './work-package-details/work-package-details';
+import ChangesList from '../../../../shared/changes-list/changes-list';
+import PageTitle from '../../../../shared/page-title/page-title';
 
 interface WorkPackageViewContainerProps {
   workPackage: WorkPackage;
@@ -27,13 +29,15 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   allowActivate,
   allowStageGate
 }) => {
+  const [showActivateModal, setShowActivateModal] = useState<boolean>(false);
+
   const editBtn = (
     <Dropdown.Item as={Button} onClick={enterEditMode} disabled={!allowEdit}>
       Edit
     </Dropdown.Item>
   );
   const activateBtn = (
-    <Dropdown.Item as={Button} onClick={() => console.log('Activate WP')} disabled={!allowActivate}>
+    <Dropdown.Item as={Button} onClick={() => setShowActivateModal(true)} disabled={!allowActivate}>
       Activate
     </Dropdown.Item>
   );
@@ -77,6 +81,13 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
         items={workPackage.deliverables.filter((del) => del.dateDeleted === undefined)}
       />
       <ChangesList changes={workPackage.changes} />
+      {showActivateModal && (
+        <ActivateWorkPackageModalContainer
+          wbsNum={workPackage.wbsNum}
+          modalShow={showActivateModal}
+          handleClose={() => setShowActivateModal(false)}
+        />
+      )}
     </div>
   );
 };

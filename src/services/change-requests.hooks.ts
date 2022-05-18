@@ -4,8 +4,14 @@
  */
 
 import { useMutation, useQuery } from 'react-query';
-import { ChangeRequest, ReviewChangeRequestPayload, NewChangeRequestPayload } from 'utils';
 import {
+  ChangeRequest,
+  ReviewChangeRequestPayload,
+  NewChangeRequestPayload,
+  CreateActivationChangeRequestPayload
+} from 'utils';
+import {
+  createActivationChangeRequest,
   createChangeRequest,
   getAllChangeRequests,
   getSingleChangeRequest,
@@ -61,14 +67,34 @@ export const useReviewChangeRequest = () => {
  */
 export const useCreateChangeRequest = () => {
   return useMutation<{ message: string }, Error, NewChangeRequestPayload>(
-    ['reviewCR'],
-    async (reviewPayload: NewChangeRequestPayload) => {
-      console.log(reviewPayload);
+    ['createCR'],
+    async (createPayload: NewChangeRequestPayload) => {
+      console.log(createPayload);
       const { data } = await createChangeRequest(
-        reviewPayload.submitterId,
-        reviewPayload.wbsElementId,
-        reviewPayload.type,
-        reviewPayload.payload
+        createPayload.submitterId,
+        createPayload.wbsElementId,
+        createPayload.type,
+        createPayload.payload
+      );
+      return data;
+    }
+  );
+};
+
+/**
+ * Custom React Hook to create an activation change request.
+ */
+export const useCreateActivationChangeRequest = () => {
+  return useMutation<{ message: string }, Error, CreateActivationChangeRequestPayload>(
+    ['createActivationCR'],
+    async (payload: CreateActivationChangeRequestPayload) => {
+      const { data } = await createActivationChangeRequest(
+        payload.submitterId,
+        payload.wbsNum,
+        payload.projectLeadId,
+        payload.projectManagerId,
+        payload.startDate,
+        payload.confirmDetails
       );
       return data;
     }

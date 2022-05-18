@@ -83,12 +83,13 @@ const ActivateWorkPackageModal: React.FC<ActivateWorkPackageModalProps> = ({
             </Form.Group>
 
             <Form.Group controlId="activateWPForm-ConfirmDetails">
-              <Form.Label>Are the WP details correct?</Form.Label>
+              Are the WP details correct?
               <Form.Check
                 inline
                 label="Yes"
                 type={'radio'}
                 id={`activateWPForm-ConfirmDetails-checkbox-yes`}
+                aria-labelledby={`activateWPForm-ConfirmDetails`}
                 value={1}
                 {...register('confirmDetails')}
               />
@@ -97,6 +98,7 @@ const ActivateWorkPackageModal: React.FC<ActivateWorkPackageModalProps> = ({
                 label="No"
                 type={'radio'}
                 id={`activateWPForm-ConfirmDetails-checkbox-no`}
+                aria-labelledby={`activateWPForm-ConfirmDetails`}
                 value={0}
                 {...register('confirmDetails')}
               />

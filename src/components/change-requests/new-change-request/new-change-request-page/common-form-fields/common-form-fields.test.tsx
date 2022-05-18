@@ -42,7 +42,6 @@ describe('new change request page', () => {
 
     expect(screen.getByText(projectText)).toBeInTheDocument();
     expect(screen.getByText(workPkgText)).toBeInTheDocument();
-    expect(screen.getByText(ChangeRequestType.Activation)).toBeInTheDocument();
   });
 
   it('renders the project form field', () => {
@@ -77,11 +76,6 @@ describe('new change request page', () => {
     });
     expect(setType).toBeCalledWith(ChangeRequestType.Redefinition);
 
-    fireEvent.change(screen.getByTestId(typeStr), {
-      target: { value: ChangeRequestType.Activation }
-    });
-    expect(setType).toBeCalledWith(ChangeRequestType.Activation);
-
-    expect(setType).toHaveBeenCalledTimes(3);
+    expect(setType).toHaveBeenCalledTimes(2);
   });
 });

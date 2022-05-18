@@ -6,7 +6,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-  NewActivationChangeRequestPayload,
   NewStageRequestChangeRequestPayload,
   NewStandardChangeRequestPayload,
   ChangeRequestType,
@@ -19,7 +18,6 @@ import { useAuth } from '../../../services/auth.hooks';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { useAllWorkPackages } from '../../../services/work-packages.hooks';
 import { useCreateChangeRequest } from '../../../services/change-requests.hooks';
-import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
 import { exampleAllWorkPackages } from '../../../test-support/test-data/work-packages.stub';
 import NewChangeRequestPage from './new-change-request-page/new-change-request-page';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
@@ -45,11 +43,6 @@ interface FormData {
   other_project_explain: string;
   other_explain: string;
 
-  projectLeadId: number;
-  projectManagerId: number;
-  startDate: Date;
-  confirmDetails: boolean;
-
   leftoverBudget: number;
   confirmDone: boolean;
 }
@@ -73,20 +66,9 @@ const NewChangeRequest: React.FC = () => {
     const { user } = auth;
     const { userId } = user!;
 
-    let req:
-      | NewStandardChangeRequestPayload
-      | NewStageRequestChangeRequestPayload
-      | NewActivationChangeRequestPayload
-      | undefined;
+    let req: NewStandardChangeRequestPayload | NewStageRequestChangeRequestPayload | undefined;
 
-    if (type === ChangeRequestType.Activation) {
-      req = {
-        projectLeadId: formData.projectLeadId,
-        projectManagerId: formData.projectManagerId,
-        startDate: formData.startDate.toJSON(),
-        confirmDetails: formData.confirmDetails
-      };
-    } else if (type === ChangeRequestType.StageGate) {
+    if (type === ChangeRequestType.StageGate) {
       req = { leftoverBudget: formData.leftoverBudget, confirmDone: formData.confirmDone };
     } else {
       const {
@@ -138,10 +120,6 @@ const NewChangeRequest: React.FC = () => {
     history.push(`${routes.CHANGE_REQUESTS}/${response.crId}`);
   };
 
-  const handleStartDateChange = (d: Date) => {
-    updateValue('startDate', d);
-  };
-
   const handleChange = (e: any) => {
     if (e.target.type === 'number') {
       updateValue(e.target.name, parseInt(e.target.value));
@@ -182,11 +160,6 @@ const NewChangeRequest: React.FC = () => {
     other_project_explain: wbsPipe(exampleAllWorkPackages[0].wbsNum),
     other_explain: '',
 
-    projectLeadId: exampleAllUsers[0].userId,
-    projectManagerId: exampleAllUsers[0].userId,
-    startDate: new Date(),
-    confirmDetails: false,
-
     leftoverBudget: 0,
     confirmDone: false
   });
@@ -213,7 +186,6 @@ const NewChangeRequest: React.FC = () => {
       projectData={projectRes.data!}
       workPkgsData={workPkgsRes.data!}
       handleChange={handleChange}
-      handleStartDateChange={handleStartDateChange}
     />
   );
 };

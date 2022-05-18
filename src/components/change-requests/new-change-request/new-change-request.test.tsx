@@ -153,12 +153,5 @@ describe('change request page', () => {
 
     expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
-
-    fireEvent.change(screen.getByTestId('type'), {
-      target: { value: ChangeRequestType.Activation }
-    });
-
-    expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
-    expect(screen.getByText(projectLeadStr)).toBeInTheDocument();
   });
 });

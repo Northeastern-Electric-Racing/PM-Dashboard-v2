@@ -8,7 +8,6 @@ import axios from 'axios';
 import {
   ChangeRequest,
   NewStandardChangeRequestPayload,
-  NewActivationChangeRequestPayload,
   NewStageRequestChangeRequestPayload,
   WbsNumber
 } from 'utils';
@@ -79,10 +78,7 @@ export const createChangeRequest = (
   submitterId: number,
   wbsElementId: number,
   type: CR_Type,
-  payload:
-    | NewStandardChangeRequestPayload
-    | NewActivationChangeRequestPayload
-    | NewStageRequestChangeRequestPayload
+  payload: NewStandardChangeRequestPayload | NewStageRequestChangeRequestPayload
 ) => {
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreate(), {
     submitterId,

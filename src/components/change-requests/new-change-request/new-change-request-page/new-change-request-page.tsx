@@ -9,7 +9,6 @@ import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
 import CommonFormFields from './common-form-fields/common-form-fields';
 import StandardFormFields from './standard-form-fields/standard-form-fields';
-import ActivationFormFields from './activation-form-fields/activation-form-fields';
 import StageGateFormFields from './stage-gate-form-fileds/stage-gate-form-fields';
 import styles from './new-change-request-page.module.css';
 
@@ -20,7 +19,6 @@ interface NewChangeRequestPageProp {
   projectData: Project[];
   workPkgsData: WorkPackage[];
   handleChange: (e: any) => void;
-  handleStartDateChange: (d: Date) => void;
 }
 
 const NewChangeRequestPage: React.FC<NewChangeRequestPageProp> = ({
@@ -29,8 +27,7 @@ const NewChangeRequestPage: React.FC<NewChangeRequestPageProp> = ({
   formType,
   projectData,
   workPkgsData,
-  handleChange,
-  handleStartDateChange
+  handleChange
 }) => {
   return (
     <>
@@ -55,13 +52,6 @@ const NewChangeRequestPage: React.FC<NewChangeRequestPageProp> = ({
               formType !== ChangeRequestType.Activation && (
                 <StandardFormFields handleChange={handleChange} />
               )}
-
-            {formType === ChangeRequestType.Activation && (
-              <ActivationFormFields
-                handleChange={handleChange}
-                handleStartDateChange={handleStartDateChange}
-              />
-            )}
 
             <Button className={styles.submitButton} type="submit">
               Submit

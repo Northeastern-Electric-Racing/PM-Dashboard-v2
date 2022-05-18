@@ -150,19 +150,6 @@ export const newStandardChangeRequestPayloadSchema = {
   additionalProperties: false
 } as const;
 
-export const newActivationChangeRequestPayloadSchema = {
-  type: 'object',
-  properties: {
-    type: { type: 'string', enum: [ChangeRequestType.Activation] },
-    projectLeadId: { type: 'integer', minimum: 0 },
-    projectManagerId: { type: 'integer', minimum: 0 },
-    startDate: { type: 'string' },
-    confirmDetails: { type: 'boolean' }
-  },
-  required: ['projectLeadId', 'projectManagerId', 'startDate', 'confirmDetails'],
-  additionalProperties: false
-} as const;
-
 export const newStageChangeRequestPayloadSchema = {
   type: 'object',
   properties: {
@@ -182,7 +169,6 @@ export const newChangeRequestPayloadSchema = {
     wbsElementId: { type: 'integer', minimum: 0 },
     type: {
       enum: [
-        ChangeRequestType.Activation,
         ChangeRequestType.StageGate,
         ChangeRequestType.Other,
         ChangeRequestType.Issue,
@@ -190,11 +176,7 @@ export const newChangeRequestPayloadSchema = {
       ]
     },
     payload: {
-      oneOf: [
-        newStandardChangeRequestPayloadSchema,
-        newActivationChangeRequestPayloadSchema,
-        newStageChangeRequestPayloadSchema
-      ]
+      oneOf: [newStandardChangeRequestPayloadSchema, newStageChangeRequestPayloadSchema]
     }
   },
   required: ['submitterId', 'wbsElementId', 'type', 'payload']
@@ -202,10 +184,6 @@ export const newChangeRequestPayloadSchema = {
 
 export type NewStandardChangeRequestPayload = FromSchema<
   typeof newStandardChangeRequestPayloadSchema
->;
-
-export type NewActivationChangeRequestPayload = FromSchema<
-  typeof newActivationChangeRequestPayloadSchema
 >;
 
 export type NewStageRequestChangeRequestPayload = FromSchema<

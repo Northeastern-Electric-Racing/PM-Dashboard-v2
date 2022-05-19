@@ -13,6 +13,7 @@ import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
 import WorkPackageDetails from './work-package-details/work-package-details';
 import ChangesList from '../../../../shared/changes-list/changes-list';
 import PageTitle from '../../../../shared/page-title/page-title';
+import StageGateWorkPackageModalContainer from '../stage-gate-work-package-modal-container/stage-gate-work-package-modal-container';
 
 interface WorkPackageViewContainerProps {
   workPackage: WorkPackage;
@@ -30,6 +31,7 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   allowStageGate
 }) => {
   const [showActivateModal, setShowActivateModal] = useState<boolean>(false);
+  const [showStageGateModal, setShowStageGateModal] = useState<boolean>(false);
 
   const editBtn = (
     <Dropdown.Item as={Button} onClick={enterEditMode} disabled={!allowEdit}>
@@ -44,7 +46,7 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   const stageGateBtn = (
     <Dropdown.Item
       as={Button}
-      onClick={() => console.log('Stage Gate WP')}
+      onClick={() => setShowStageGateModal(true)}
       disabled={!allowStageGate}
     >
       Stage Gate
@@ -86,6 +88,13 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
           wbsNum={workPackage.wbsNum}
           modalShow={showActivateModal}
           handleClose={() => setShowActivateModal(false)}
+        />
+      )}
+      {showStageGateModal && (
+        <StageGateWorkPackageModalContainer
+          wbsNum={workPackage.wbsNum}
+          modalShow={showStageGateModal}
+          handleClose={() => setShowStageGateModal(false)}
         />
       )}
     </div>

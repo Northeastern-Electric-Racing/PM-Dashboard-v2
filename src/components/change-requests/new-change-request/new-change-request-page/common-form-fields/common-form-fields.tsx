@@ -74,7 +74,7 @@ const CommonFormFields: React.FC<CommonFormFieldsProp> = ({
           required
         >
           {Object.values(ChangeRequestType)
-            .filter((t) => t !== ChangeRequestType.Activation)
+            .filter((t) => t !== ChangeRequestType.Activation && t !== ChangeRequestType.StageGate)
             .map((t) => (
               <option value={t}>{t}</option>
             ))}

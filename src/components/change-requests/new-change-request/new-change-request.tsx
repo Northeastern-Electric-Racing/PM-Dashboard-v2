@@ -6,7 +6,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-  NewStageRequestChangeRequestPayload,
   NewStandardChangeRequestPayload,
   ChangeRequestType,
   ChangeRequestReason,
@@ -60,54 +59,48 @@ const NewChangeRequest: React.FC = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { type, projectWBS, workPackageWBS } = formData;
+    const { projectWBS, workPackageWBS } = formData;
     const wbsId = workPackageWBS === -1 ? projectWBS : workPackageWBS;
 
     const { user } = auth;
     const { userId } = user!;
 
-    let req: NewStandardChangeRequestPayload | NewStageRequestChangeRequestPayload | undefined;
+    const {
+      estimation_error,
+      school_work,
+      manufacturing_issues,
+      rules_compliance,
+      other_project,
+      other,
+      other_project_explain,
+      other_explain,
+      design
+    } = formData;
 
-    if (type === ChangeRequestType.StageGate) {
-      req = { leftoverBudget: formData.leftoverBudget, confirmDone: formData.confirmDone };
-    } else {
-      const {
-        estimation_error,
-        school_work,
-        manufacturing_issues,
-        rules_compliance,
-        other_project,
-        other,
-        other_project_explain,
-        other_explain,
-        design
-      } = formData;
+    const whyOpts: WhyResponse[] = [];
 
-      const whyOpts: WhyResponse[] = [];
+    if (estimation_error) whyOpts.push({ type: ChangeRequestReason.Estimation, explain: '' });
+    if (school_work) whyOpts.push({ type: ChangeRequestReason.School, explain: '' });
+    if (manufacturing_issues)
+      whyOpts.push({ type: ChangeRequestReason.Manufacturing, explain: '' });
+    if (rules_compliance) whyOpts.push({ type: ChangeRequestReason.Rules, explain: '' });
+    if (other_project)
+      whyOpts.push({ type: ChangeRequestReason.OtherProject, explain: other_project_explain });
+    if (other) whyOpts.push({ type: ChangeRequestReason.Other, explain: other_explain });
+    if (design) whyOpts.push({ type: ChangeRequestReason.Design, explain: '' });
 
-      if (estimation_error) whyOpts.push({ type: ChangeRequestReason.Estimation, explain: '' });
-      if (school_work) whyOpts.push({ type: ChangeRequestReason.School, explain: '' });
-      if (manufacturing_issues)
-        whyOpts.push({ type: ChangeRequestReason.Manufacturing, explain: '' });
-      if (rules_compliance) whyOpts.push({ type: ChangeRequestReason.Rules, explain: '' });
-      if (other_project)
-        whyOpts.push({ type: ChangeRequestReason.OtherProject, explain: other_project_explain });
-      if (other) whyOpts.push({ type: ChangeRequestReason.Other, explain: other_explain });
-      if (design) whyOpts.push({ type: ChangeRequestReason.Design, explain: '' });
-
-      if (whyOpts.length === 0) {
-        alert('Reason must be selected');
-        return;
-      }
-
-      req = {
-        what: formData.what,
-        scopeImpact: formData.scopeImpact,
-        timelineImpact: formData.timelineImpact,
-        budgetImpact: formData.budgetImpact,
-        why: whyOpts
-      };
+    if (whyOpts.length === 0) {
+      alert('Reason must be selected');
+      return;
     }
+
+    const req: NewStandardChangeRequestPayload | undefined = {
+      what: formData.what,
+      scopeImpact: formData.scopeImpact,
+      timelineImpact: formData.timelineImpact,
+      budgetImpact: formData.budgetImpact,
+      why: whyOpts
+    };
 
     const sendData: NewChangeRequestPayload = {
       submitterId: userId,

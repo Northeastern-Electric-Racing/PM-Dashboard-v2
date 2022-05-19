@@ -5,12 +5,7 @@
 
 import { CR_Type } from '@prisma/client';
 import axios from 'axios';
-import {
-  ChangeRequest,
-  NewStandardChangeRequestPayload,
-  NewStageRequestChangeRequestPayload,
-  WbsNumber
-} from 'utils';
+import { ChangeRequest, NewStandardChangeRequestPayload, WbsNumber } from 'utils';
 import { apiUrls } from '../shared/urls';
 import { changeRequestTransformer } from './transformers/change-requests.transformers';
 
@@ -78,7 +73,7 @@ export const createChangeRequest = (
   submitterId: number,
   wbsElementId: number,
   type: CR_Type,
-  payload: NewStandardChangeRequestPayload | NewStageRequestChangeRequestPayload
+  payload: NewStandardChangeRequestPayload
 ) => {
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreate(), {
     submitterId,
@@ -113,5 +108,27 @@ export const createActivationChangeRequest = (
     projectManagerId,
     startDate,
     confirmDetails
+  });
+};
+
+/**
+ * Create a stage gate change request.
+ * @param submitterId The ID of the user creating the change request.
+ * @param wbsNumber the wbsNumber of the WBS element the change request is for.
+ * @param leftoverBudget the amount of leftover budget in the WBS element being stage gated.
+ * @param confirmDone are all details of the WBS element being stage gated fully completed?
+ */
+export const createStageGateChangeRequest = (
+  submitterId: number,
+  wbsNum: WbsNumber,
+  leftoverBudget: number,
+  confirmDone: boolean
+) => {
+  return axios.post<{ message: string }>(apiUrls.changeRequestsCreateStageGate(), {
+    submitterId,
+    wbsNum,
+    type: CR_Type.STAGE_GATE,
+    leftoverBudget,
+    confirmDone
   });
 };

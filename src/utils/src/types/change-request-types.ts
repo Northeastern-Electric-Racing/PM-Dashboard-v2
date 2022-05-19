@@ -107,6 +107,18 @@ export type CreateActivationChangeRequestPayload = FromSchema<
   typeof createActivationChangeRequestPayloadSchema
 >;
 
+export const createStageGateChangeRequestPayloadSchema = bodySchema({
+  submitterId: intType,
+  wbsNum: wbsNumType,
+  type: enumType(ChangeRequestType.StageGate),
+  leftoverBudget: intType,
+  confirmDone: booleanType
+});
+
+export type CreateStageGateChangeRequestPayload = FromSchema<
+  typeof createStageGateChangeRequestPayloadSchema
+>;
+
 // older non-abstracted schema below
 
 export const newStandardChangeRequestPayloadSchema = {
@@ -150,17 +162,6 @@ export const newStandardChangeRequestPayloadSchema = {
   additionalProperties: false
 } as const;
 
-export const newStageChangeRequestPayloadSchema = {
-  type: 'object',
-  properties: {
-    type: { type: 'string', enum: [ChangeRequestType.StageGate] },
-    leftoverBudget: { type: 'integer', minimum: 0 },
-    confirmDone: { type: 'boolean' }
-  },
-  required: ['leftoverBudget', 'confirmDone'],
-  additionalProperties: false
-} as const;
-
 export const newChangeRequestPayloadSchema = {
   type: 'object',
   additionalProperties: false,
@@ -177,7 +178,7 @@ export const newChangeRequestPayloadSchema = {
       ]
     },
     payload: {
-      oneOf: [newStandardChangeRequestPayloadSchema, newStageChangeRequestPayloadSchema]
+      oneOf: [newStandardChangeRequestPayloadSchema]
     }
   },
   required: ['submitterId', 'wbsElementId', 'type', 'payload']
@@ -185,10 +186,6 @@ export const newChangeRequestPayloadSchema = {
 
 export type NewStandardChangeRequestPayload = FromSchema<
   typeof newStandardChangeRequestPayloadSchema
->;
-
-export type NewStageRequestChangeRequestPayload = FromSchema<
-  typeof newStageChangeRequestPayloadSchema
 >;
 
 export type NewChangeRequestPayload = FromSchema<typeof newChangeRequestPayloadSchema>;

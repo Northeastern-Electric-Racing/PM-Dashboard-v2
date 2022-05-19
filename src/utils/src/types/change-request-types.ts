@@ -13,7 +13,8 @@ import {
   booleanType,
   wbsNumType,
   enumType,
-  dateType
+  dateType,
+  arrayType
 } from './api-utils-types';
 
 export interface ChangeRequest {
@@ -119,73 +120,31 @@ export type CreateStageGateChangeRequestPayload = FromSchema<
   typeof createStageGateChangeRequestPayloadSchema
 >;
 
-// older non-abstracted schema below
+export const createStandardChangeRequestPayloadSchema = bodySchema({
+  submitterId: intType,
+  wbsNum: wbsNumType,
+  type: enumType(ChangeRequestType.Other, ChangeRequestType.Issue, ChangeRequestType.Redefinition),
+  what: stringType,
+  scopeImpact: stringType,
+  budgetImpact: intType,
+  timelineImpact: intType,
+  why: arrayType(
+    bodySchema({
+      type: enumType(
+        ChangeRequestReason.Estimation,
+        ChangeRequestReason.School,
+        ChangeRequestReason.Manufacturing,
+        ChangeRequestReason.Design,
+        ChangeRequestReason.Rules,
+        ChangeRequestReason.OtherProject,
+        ChangeRequestReason.Other
+      ),
+      explain: stringType
+    }),
+    1
+  )
+});
 
-export const newStandardChangeRequestPayloadSchema = {
-  type: 'object',
-  properties: {
-    type: {
-      type: 'string',
-      enum: [ChangeRequestType.Other, ChangeRequestType.Issue, ChangeRequestType.Redefinition]
-    },
-    what: { type: 'string' },
-    scopeImpact: { type: 'string' },
-    timelineImpact: { type: 'integer', minimum: 0 },
-    budgetImpact: { type: 'integer', minimum: 0 },
-    why: {
-      type: 'array',
-      items: {
-        additionalProperties: false,
-        type: 'object',
-        properties: {
-          explain: { type: 'string' },
-          type: {
-            type: 'string',
-            enum: [
-              ChangeRequestReason.Estimation,
-              ChangeRequestReason.Manufacturing,
-              ChangeRequestReason.Other,
-              ChangeRequestReason.OtherProject,
-              ChangeRequestReason.Rules,
-              ChangeRequestReason.School,
-              ChangeRequestReason.Design
-            ]
-          }
-        },
-        required: ['explain', 'type']
-      },
-      minItems: 1,
-      uniqueItems: true
-    }
-  },
-  required: ['what', 'scopeImpact', 'timelineImpact', 'budgetImpact', 'why'],
-  additionalProperties: false
-} as const;
-
-export const newChangeRequestPayloadSchema = {
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    submitterId: { type: 'integer', minimum: 0 },
-    wbsElementId: { type: 'integer', minimum: 0 },
-    type: {
-      enum: [
-        ChangeRequestType.StageGate,
-        ChangeRequestType.Activation,
-        ChangeRequestType.Other,
-        ChangeRequestType.Issue,
-        ChangeRequestType.Redefinition
-      ]
-    },
-    payload: {
-      oneOf: [newStandardChangeRequestPayloadSchema]
-    }
-  },
-  required: ['submitterId', 'wbsElementId', 'type', 'payload']
-} as const;
-
-export type NewStandardChangeRequestPayload = FromSchema<
-  typeof newStandardChangeRequestPayloadSchema
+export type CreateStandardChangeRequestPayload = FromSchema<
+  typeof createStandardChangeRequestPayloadSchema
 >;
-
-export type NewChangeRequestPayload = FromSchema<typeof newChangeRequestPayloadSchema>;

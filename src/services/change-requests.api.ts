@@ -3,9 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { CR_Type } from '@prisma/client';
 import axios from 'axios';
-import { ChangeRequest, NewStandardChangeRequestPayload, WbsNumber } from 'utils';
+import {
+  ChangeRequest,
+  WbsNumber,
+  ChangeRequestType,
+  CreateStandardChangeRequestPayload
+} from 'utils';
 import { apiUrls } from '../shared/urls';
 import { changeRequestTransformer } from './transformers/change-requests.transformers';
 
@@ -60,27 +64,12 @@ export const reviewChangeRequest = (
 };
 
 /**
- * Create a change request.
+ * Create a standard change request.
  *
- * @param submitterId The ID of the user creating the change request.
- * @param wbsElementId the ID of the WBS element the change request is for.
- * @param type The notes attached to reviewing the change request.
- * @param payload The payload of the change request.
- *
- * TODO
+ * @param payload The standard change request payload.
  */
-export const createChangeRequest = (
-  submitterId: number,
-  wbsElementId: number,
-  type: CR_Type,
-  payload: NewStandardChangeRequestPayload
-) => {
-  return axios.post<{ message: string }>(apiUrls.changeRequestsCreate(), {
-    submitterId,
-    wbsElementId,
-    type,
-    payload
-  });
+export const createStandardChangeRequest = (payload: CreateStandardChangeRequestPayload) => {
+  return axios.post<{ message: string }>(apiUrls.changeRequestsCreateStandard(), payload);
 };
 
 /**
@@ -103,7 +92,7 @@ export const createActivationChangeRequest = (
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreateActivation(), {
     submitterId,
     wbsNum,
-    type: CR_Type.ACTIVATION,
+    type: ChangeRequestType.Activation,
     projectLeadId,
     projectManagerId,
     startDate,
@@ -127,7 +116,7 @@ export const createStageGateChangeRequest = (
   return axios.post<{ message: string }>(apiUrls.changeRequestsCreateStageGate(), {
     submitterId,
     wbsNum,
-    type: CR_Type.STAGE_GATE,
+    type: ChangeRequestType.StageGate,
     leftoverBudget,
     confirmDone
   });

@@ -7,13 +7,13 @@ import { useMutation, useQuery } from 'react-query';
 import {
   ChangeRequest,
   ReviewChangeRequestPayload,
-  NewChangeRequestPayload,
+  CreateStandardChangeRequestPayload,
   CreateActivationChangeRequestPayload,
   CreateStageGateChangeRequestPayload
 } from 'utils';
 import {
   createActivationChangeRequest,
-  createChangeRequest,
+  createStandardChangeRequest,
   createStageGateChangeRequest,
   getAllChangeRequests,
   getSingleChangeRequest,
@@ -65,19 +65,13 @@ export const useReviewChangeRequest = () => {
 };
 
 /**
- * Custom React Hook to create a change request.
+ * Custom React Hook to create a standard change request.
  */
-export const useCreateChangeRequest = () => {
-  return useMutation<{ message: string }, Error, NewChangeRequestPayload>(
-    ['createCR'],
-    async (createPayload: NewChangeRequestPayload) => {
-      console.log(createPayload);
-      const { data } = await createChangeRequest(
-        createPayload.submitterId,
-        createPayload.wbsElementId,
-        createPayload.type,
-        createPayload.payload
-      );
+export const useCreateStandardChangeRequest = () => {
+  return useMutation<{ message: string }, Error, CreateStandardChangeRequestPayload>(
+    ['createStandardCR'],
+    async (payload: CreateStandardChangeRequestPayload) => {
+      const { data } = await createStandardChangeRequest(payload);
       return data;
     }
   );

@@ -9,7 +9,6 @@ import PageBlock from '../../../shared/page-block/page-block';
 import PageTitle from '../../../shared/page-title/page-title';
 import CommonFormFields from './common-form-fields/common-form-fields';
 import StandardFormFields from './standard-form-fields/standard-form-fields';
-import StageGateFormFields from './stage-gate-form-fileds/stage-gate-form-fields';
 import styles from './new-change-request-page.module.css';
 
 interface NewChangeRequestPageProp {
@@ -43,10 +42,6 @@ const NewChangeRequestPage: React.FC<NewChangeRequestPageProp> = ({
               workPkgs={workPkgsData}
               handleChange={handleChange}
             />
-
-            {formType === ChangeRequestType.StageGate && (
-              <StageGateFormFields handleChange={handleChange} />
-            )}
 
             {formType !== ChangeRequestType.StageGate &&
               formType !== ChangeRequestType.Activation && (

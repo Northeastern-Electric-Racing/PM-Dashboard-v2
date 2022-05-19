@@ -67,15 +67,10 @@ describe('new change request page', () => {
     renderComponent(setType);
 
     fireEvent.change(screen.getByTestId(typeStr), {
-      target: { value: ChangeRequestType.StageGate }
-    });
-    expect(setType).toBeCalledWith(ChangeRequestType.StageGate);
-
-    fireEvent.change(screen.getByTestId(typeStr), {
       target: { value: ChangeRequestType.Redefinition }
     });
     expect(setType).toBeCalledWith(ChangeRequestType.Redefinition);
 
-    expect(setType).toHaveBeenCalledTimes(2);
+    expect(setType).toHaveBeenCalledTimes(1);
   });
 });

@@ -10,15 +10,14 @@ import validator from '@middy/validator';
 import { Handler } from 'aws-lambda';
 import { PrismaClient, CR_Type, Role } from '@prisma/client';
 import {
+  ChangeRequestType,
   buildClientFailureResponse,
   buildSuccessResponse,
   buildNoAuthResponse,
   newChangeRequestPayloadSchema,
   NewStandardChangeRequestPayload,
-  NewStageRequestChangeRequestPayload,
   buildNotFoundResponse
 } from 'utils';
-import { ChangeRequestType } from 'utils';
 
 const prisma = new PrismaClient();
 
@@ -52,33 +51,6 @@ const createStandardChangeRequest = async (
   });
 };
 
-// Create a new stage gate change request
-const createStageGateChangeRequest = async (
-  submitterId: number,
-  wbsElementId: number,
-  type: CR_Type,
-  payload: NewStageRequestChangeRequestPayload
-) => {
-  const createdChangeRequest = await prisma.change_Request.create({
-    data: {
-      submitter: { connect: { userId: submitterId } },
-      wbsElement: { connect: { wbsElementId } },
-      type,
-      stageGateChangeRequest: {
-        create: {
-          leftoverBudget: payload.leftoverBudget,
-          confirmDone: payload.confirmDone
-        }
-      }
-    }
-  });
-  // TODO: check if this is the best thing to return
-  return buildSuccessResponse({
-    message: `Change request #${createdChangeRequest.crId} successfully created.`,
-    crId: createdChangeRequest.crId
-  });
-};
-
 // Create proper type of new change request
 export const baseHandler: Handler = async ({ body }, _context) => {
   const { submitterId, wbsElementId, type, payload } = body;
@@ -90,8 +62,6 @@ export const baseHandler: Handler = async ({ body }, _context) => {
 
   if (type === CR_Type.DEFINITION_CHANGE || type === CR_Type.ISSUE || type === CR_Type.OTHER) {
     return createStandardChangeRequest(submitterId, wbsElementId, type, payload);
-  } else if (type === CR_Type.STAGE_GATE) {
-    return createStageGateChangeRequest(submitterId, wbsElementId, type, payload);
   }
   // TODO: change this return statement
   return buildClientFailureResponse('CR type not supported');

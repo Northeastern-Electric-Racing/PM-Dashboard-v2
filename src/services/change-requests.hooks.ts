@@ -8,11 +8,13 @@ import {
   ChangeRequest,
   ReviewChangeRequestPayload,
   NewChangeRequestPayload,
-  CreateActivationChangeRequestPayload
+  CreateActivationChangeRequestPayload,
+  CreateStageGateChangeRequestPayload
 } from 'utils';
 import {
   createActivationChangeRequest,
   createChangeRequest,
+  createStageGateChangeRequest,
   getAllChangeRequests,
   getSingleChangeRequest,
   reviewChangeRequest
@@ -95,6 +97,24 @@ export const useCreateActivationChangeRequest = () => {
         payload.projectManagerId,
         payload.startDate,
         payload.confirmDetails
+      );
+      return data;
+    }
+  );
+};
+
+/**
+ * Custom React Hook to create a stage gate change request.
+ */
+export const useCreateStageGateChangeRequest = () => {
+  return useMutation<{ message: string }, Error, CreateStageGateChangeRequestPayload>(
+    ['createStageGateCR'],
+    async (payload: CreateStageGateChangeRequestPayload) => {
+      const { data } = await createStageGateChangeRequest(
+        payload.submitterId,
+        payload.wbsNum,
+        payload.leftoverBudget,
+        payload.confirmDone
       );
       return data;
     }

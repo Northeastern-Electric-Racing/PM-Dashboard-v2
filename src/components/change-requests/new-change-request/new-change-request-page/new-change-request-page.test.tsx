@@ -43,10 +43,4 @@ describe('new change request page', () => {
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
   });
-
-  it('checks if page renders correctly with stage gate type', () => {
-    renderComponent(ChangeRequestType.StageGate);
-    expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
-    expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
-  });
 });

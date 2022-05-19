@@ -4,9 +4,9 @@
  */
 
 import { UseQueryResult } from 'react-query';
-import { ChangeRequestType, Project, WorkPackage } from 'utils';
+import { Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../shared/pipes';
-import { render, screen, routerWrapperBuilder, fireEvent } from '../../../test-support/test-utils';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { exampleAllProjects } from '../../../test-support/test-data/projects.stub';
 import { exampleAllWorkPackages } from '../../../test-support/test-data/work-packages.stub';
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
@@ -146,12 +146,5 @@ describe('change request page', () => {
 
     expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
     expect(screen.getByText(scopeImpactStr)).toBeInTheDocument();
-
-    fireEvent.change(screen.getByTestId('type'), {
-      target: { value: ChangeRequestType.StageGate }
-    });
-
-    expect(screen.queryByText(scopeImpactStr)).not.toBeInTheDocument();
-    expect(screen.queryByText(projectLeadStr)).not.toBeInTheDocument();
   });
 });

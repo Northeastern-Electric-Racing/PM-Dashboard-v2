@@ -14,7 +14,7 @@ import {
   mockUseMutationResult,
   mockUseQueryResult
 } from '../../../../../test-support/test-data/test-utils.stub';
-import { useCreateActivationChangeRequest } from '../../../../../services/change-requests.hooks';
+import { useCreateStageGateChangeRequest } from '../../../../../services/change-requests.hooks';
 import { exampleAllUsers } from '../../../../../test-support/test-data/users.stub';
 
 jest.mock('../../../../../services/users.hooks');
@@ -28,10 +28,10 @@ const mockUseAllUsersHook = (isLoading = false, isError = false, data?: User[], 
 jest.mock('../../../../../services/change-requests.hooks');
 
 // random shit to make test happy by mocking out this hook
-const mockedUseCreateActivationCR = useCreateActivationChangeRequest as jest.Mock<UseMutationResult>;
+const mockedUseCreateStageGateCR = useCreateStageGateChangeRequest as jest.Mock<UseMutationResult>;
 
-const mockUseCreateActivationCRHook = (isLoading: boolean, isError: boolean, error?: Error) => {
-  mockedUseCreateActivationCR.mockReturnValue(
+const mockUseCreateStageGateCRHook = (isLoading: boolean, isError: boolean, error?: Error) => {
+  mockedUseCreateStageGateCR.mockReturnValue(
     mockUseMutationResult<{ in: string }>(isLoading, isError, { in: 'hi' }, error)
   );
 };
@@ -49,15 +49,15 @@ const renderComponent = () => {
 describe('activate work package modal container test suite', () => {
   it('renders component without crashing', () => {
     mockUseAllUsersHook(false, false, exampleAllUsers);
-    mockUseCreateActivationCRHook(false, false);
+    mockUseCreateStageGateCRHook(false, false);
     renderComponent();
 
-    expect(screen.getByText(`Activate #${wbsPipe(exampleWbs1)}`)).toBeInTheDocument();
+    expect(screen.getByText(`Stage Gate #${wbsPipe(exampleWbs1)}`)).toBeInTheDocument();
   });
 
   it('renders loading indicator when loading', () => {
     mockUseAllUsersHook(true, false);
-    mockUseCreateActivationCRHook(true, false);
+    mockUseCreateStageGateCRHook(true, false);
     renderComponent();
 
     expect(screen.getByTestId('loader')).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe('activate work package modal container test suite', () => {
 
   it('renders error page when error', () => {
     mockUseAllUsersHook(false, true, exampleAllUsers);
-    mockUseCreateActivationCRHook(false, true, new Error('some error'));
+    mockUseCreateStageGateCRHook(false, true, new Error('some error'));
     renderComponent();
 
     expect(screen.getByText('Oops, sorry!')).toBeInTheDocument();

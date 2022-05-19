@@ -4,10 +4,10 @@
  */
 
 import { render, screen, routerWrapperBuilder } from '../../../../../../test-support/test-utils';
+import { wbsPipe } from '../../../../../../shared/pipes';
 import { exampleAllUsers } from '../../../../../../test-support/test-data/users.stub';
 import { exampleWbs1 } from '../../../../../../test-support/test-data/wbs-numbers.stub';
 import StageGateWorkPackageModal from './stage-gate-work-package-modal';
-import { wbsPipe } from '../../../../../../shared/pipes';
 
 /**
  * Mock function for submitting the form, use if there is additional functionality added while submitting
@@ -36,27 +36,24 @@ const renderComponent = (modalShow: boolean) => {
   );
 };
 
-describe('activate work package modal test suite', () => {
+describe('stage gate work package modal test suite', () => {
   it('renders accept title', () => {
     renderComponent(true);
 
-    expect(screen.queryByText(`Activate #${wbsPipe(exampleWbs1)}`)).toBeInTheDocument();
+    expect(screen.queryByText(`Stage Gate #${wbsPipe(exampleWbs1)}`)).toBeInTheDocument();
   });
 
   it('renders label for inputs', () => {
     renderComponent(true);
 
-    expect(screen.getByLabelText(/Date/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Lead/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Manager/)).toBeInTheDocument();
-    expect(screen.getByText(/WP details/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Budget/)).toBeInTheDocument();
+    expect(screen.getByText(/done/)).toBeInTheDocument();
   });
 
   it('renders form elements', () => {
     renderComponent(true);
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getAllByRole('combobox').length).toBe(2);
     expect(screen.getAllByRole('radio').length).toBe(2);
   });
 
@@ -70,6 +67,6 @@ describe('activate work package modal test suite', () => {
   it("doesn't display modal", () => {
     renderComponent(false);
 
-    expect(screen.queryByText(`Activate #${wbsPipe(exampleWbs1)}`)).not.toBeInTheDocument();
+    expect(screen.queryByText(`Stage Gate #${wbsPipe(exampleWbs1)}`)).not.toBeInTheDocument();
   });
 });

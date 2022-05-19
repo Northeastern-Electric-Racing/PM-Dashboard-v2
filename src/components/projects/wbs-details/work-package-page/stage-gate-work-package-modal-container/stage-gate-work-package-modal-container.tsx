@@ -6,7 +6,7 @@
 import { useHistory } from 'react-router-dom';
 import { ChangeRequestType, WbsNumber } from 'utils';
 import { useAuth } from '../../../../../services/auth.hooks';
-import { useCreateActivationChangeRequest } from '../../../../../services/change-requests.hooks';
+import { useCreateStageGateChangeRequest } from '../../../../../services/change-requests.hooks';
 import { useAllUsers } from '../../../../../services/users.hooks';
 import { routes } from '../../../../../shared/routes';
 import ErrorPage from '../../../../shared/error-page/error-page';
@@ -20,10 +20,8 @@ interface StageGateWorkPackageModalContainerProps {
 }
 
 export interface FormInput {
-  projectLeadId: number;
-  projectManagerId: number;
-  startDate: string;
-  confirmDetails: boolean;
+  leftoverBudget: number;
+  confirmDone: boolean;
 }
 
 const StageGateWorkPackageModalContainer: React.FC<StageGateWorkPackageModalContainerProps> = ({
@@ -34,25 +32,18 @@ const StageGateWorkPackageModalContainer: React.FC<StageGateWorkPackageModalCont
   const auth = useAuth();
   const users = useAllUsers();
   const history = useHistory();
-  const { isLoading, isError, error, mutateAsync } = useCreateActivationChangeRequest();
+  const { isLoading, isError, error, mutateAsync } = useCreateStageGateChangeRequest();
 
-  const handleConfirm = async ({
-    projectLeadId,
-    projectManagerId,
-    startDate,
-    confirmDetails
-  }: FormInput) => {
+  const handleConfirm = async ({ leftoverBudget, confirmDone }: FormInput) => {
     handleClose();
     if (auth.user?.userId === undefined)
-      throw new Error('Cannot create activation change request without being logged in');
+      throw new Error('Cannot create stage gate change request without being logged in');
     await mutateAsync({
       submitterId: auth.user?.userId,
       wbsNum,
-      type: ChangeRequestType.Activation,
-      projectLeadId,
-      projectManagerId,
-      startDate,
-      confirmDetails
+      type: ChangeRequestType.StageGate,
+      leftoverBudget,
+      confirmDone
     });
     history.push(routes.CHANGE_REQUESTS);
   };

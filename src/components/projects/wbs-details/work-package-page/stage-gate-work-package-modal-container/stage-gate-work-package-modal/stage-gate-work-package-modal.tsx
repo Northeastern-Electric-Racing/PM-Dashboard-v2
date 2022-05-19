@@ -5,11 +5,11 @@
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { User, WbsNumber } from 'utils';
 import { FormInput } from '../stage-gate-work-package-modal-container';
-import { fullNamePipe, wbsPipe } from '../../../../../../shared/pipes';
+import { wbsPipe } from '../../../../../../shared/pipes';
 
 interface StageGateWorkPackageModalProps {
   allUsers: User[];
@@ -20,10 +20,8 @@ interface StageGateWorkPackageModalProps {
 }
 
 const schema = yup.object().shape({
-  projectLeadId: yup.number().required().min(0),
-  projectManagerId: yup.number().required().min(0),
-  startDate: yup.string().required(),
-  confirmDetails: yup.boolean().required()
+  leftoverBudget: yup.number().required().min(0),
+  confirmDone: yup.boolean().required()
 });
 
 const StageGateWorkPackageModal: React.FC<StageGateWorkPackageModalProps> = ({
@@ -42,65 +40,54 @@ const StageGateWorkPackageModal: React.FC<StageGateWorkPackageModalProps> = ({
    */
   const onSubmitWrapper = async (data: FormInput) => {
     await onSubmit(data);
-    reset({ projectLeadId: -1, projectManagerId: -1, startDate: '', confirmDetails: false });
+    reset({ leftoverBudget: 0, confirmDone: false });
   };
 
   return (
     <Modal show={modalShow} onHide={onHide} centered>
-      <Modal.Header className={'font-weight-bold'} closeButton>{`Activate #${wbsPipe(
+      <Modal.Header className={'font-weight-bold'} closeButton>{`Stage Gate #${wbsPipe(
         wbsNum
       )}`}</Modal.Header>
       <Modal.Body>
-        <Form id={'activate-work-package-form'} onSubmit={handleSubmit(onSubmitWrapper)}>
+        <Form id={'stage-gate-work-package-form'} onSubmit={handleSubmit(onSubmitWrapper)}>
           <div className={'px-4'}>
-            <Form.Group controlId="activateWPForm-StartDate">
-              <Form.Label>Start Date (YYYY-MM-DD)</Form.Label>
-              <Form.Control {...register('startDate')}></Form.Control>
+            <Form.Group controlId="stageGateWPForm-LeftoverBudget">
+              <Form.Label>Leftover Budget</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                  <InputGroup.Text>$</InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control {...register('leftoverBudget')}></Form.Control>
+              </InputGroup>
             </Form.Group>
 
-            <Form.Group controlId="activateWPForm-ProjectLead">
-              <Form.Label>Project Lead</Form.Label>
-              <Form.Control {...register('projectLeadId')} as="select">
-                <option key={-1} value={-1}></option>
-                {allUsers.map((p) => (
-                  <option key={p.userId} value={p.userId}>
-                    {fullNamePipe(p)}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="activateWPForm-ProjectManager">
-              <Form.Label>Project Manager</Form.Label>
-              <Form.Control {...register('projectManagerId')} as="select">
-                <option key={-1} value={-1}></option>
-                {allUsers.map((p) => (
-                  <option key={p.userId} value={p.userId}>
-                    {fullNamePipe(p)}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="activateWPForm-ConfirmDetails">
-              Are the WP details correct?
+            <Form.Group controlId="stageGateWPForm-ConfirmDone">
+              Is everything done?
+              <ul>
+                <li>Updated slide deck & documentation</li>
+                <li>Creating any outstanding change requests</li>
+                <li>Submitted all receipts to the procurement form</li>
+                <li>Completed all Work Package expected activities</li>
+                <li>Completed all Work Package deliverables</li>
+                <li>Ensure rules compliance</li>
+              </ul>
               <Form.Check
                 inline
                 label="Yes"
                 type={'radio'}
-                id={`activateWPForm-ConfirmDetails-checkbox-yes`}
-                aria-labelledby={`activateWPForm-ConfirmDetails`}
+                id={`stageGateWPForm-ConfirmDone-checkbox-yes`}
+                aria-labelledby={`stageGateWPForm-ConfirmDone`}
                 value={1}
-                {...register('confirmDetails')}
+                {...register('confirmDone')}
               />
               <Form.Check
                 inline
                 label="No"
                 type={'radio'}
-                id={`activateWPForm-ConfirmDetails-checkbox-no`}
-                aria-labelledby={`activateWPForm-ConfirmDetails`}
+                id={`stageGateWPForm-ConfirmDone-checkbox-no`}
+                aria-labelledby={`stageGateWPForm-ConfirmDone`}
                 value={0}
-                {...register('confirmDetails')}
+                {...register('confirmDone')}
               />
             </Form.Group>
           </div>
@@ -110,12 +97,12 @@ const StageGateWorkPackageModal: React.FC<StageGateWorkPackageModalProps> = ({
         <Button
           className={'ml-3'}
           variant="secondary"
-          form="activate-work-package-form"
+          form="stage-gate-work-package-form"
           onClick={onHide}
         >
           Cancel
         </Button>
-        <Button variant="success" type="submit" form="activate-work-package-form">
+        <Button variant="success" type="submit" form="stage-gate-work-package-form">
           Submit
         </Button>
       </Modal.Footer>

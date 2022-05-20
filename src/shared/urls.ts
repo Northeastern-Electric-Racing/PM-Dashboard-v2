@@ -33,6 +33,7 @@ const changeRequestsReview = () => `${changeRequests()}-review`;
 const changeRequestsCreate = () => `${changeRequests()}-new`;
 const changeRequestsCreateActivation = () => `${changeRequestsCreate()}-activation`;
 const changeRequestsCreateStageGate = () => `${changeRequestsCreate()}-stage-gate`;
+const changeRequestsCreateStandard = () => `${changeRequestsCreate()}-standard`;
 
 export const apiUrls = {
   users,
@@ -54,5 +55,6 @@ export const apiUrls = {
   changeRequestsReview,
   changeRequestsCreate,
   changeRequestsCreateActivation,
-  changeRequestsCreateStageGate
+  changeRequestsCreateStageGate,
+  changeRequestsCreateStandard
 };

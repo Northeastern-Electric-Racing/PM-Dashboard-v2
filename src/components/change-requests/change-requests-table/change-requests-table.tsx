@@ -24,7 +24,7 @@ import styles from './change-requests-table.module.css';
  * @param changeRequests The list of projects to filter.
  * @param type The category under which the change request falls.
  * @param impact The parts of the project the change will impact.
- * @param reason The reason the change is needed.
+ * @param whyType A why type of the change request.
  * @param state The state of review of the CR.
  * @param implemented Whether or not the CR has been implemented.
  * @return The filtered list of change requests.
@@ -33,7 +33,7 @@ export function filterCRs(
   changeRequests: ChangeRequest[],
   type: string,
   impact: number[],
-  reason: string,
+  whyType: string,
   state: number[],
   implemented: string
 ): ChangeRequest[] {
@@ -82,8 +82,8 @@ export function filterCRs(
     });
   }
 
-  // Reason filter
-  if (reason !== '') {
+  // whyType filter
+  if (whyType !== '') {
     changeRequests = changeRequests.filter((changeRequest: ChangeRequest) => {
       const standard = changeRequest as StandardChangeRequest;
       if (standard.why === undefined) {
@@ -91,7 +91,7 @@ export function filterCRs(
       }
       return (
         standard.why.filter((exp: ChangeRequestExplanation) => {
-          if (exp.reason === reason) {
+          if (exp.type === whyType) {
             return exp.explain !== '';
           }
           return false;
@@ -114,7 +114,7 @@ export function filterCRs(
 const ChangeRequestsTable: React.FC = () => {
   const [type, setType] = useState('');
   const [impact, setImpact] = useState<number[]>([]);
-  const [reason, setReason] = useState('');
+  const [whyType, setWhyType] = useState('');
   const [state, setState] = useState<number[]>([]);
   const [implemented, setImplemented] = useState('');
   const { isLoading, isError, data, error } = useAllChangeRequests();
@@ -140,13 +140,13 @@ const ChangeRequestsTable: React.FC = () => {
   const sendDataToParent = (
     type: string,
     impact: number[],
-    reason: string,
+    whyType: string,
     state: number[],
     implemented: string
   ) => {
     setType(type);
     setImpact(impact);
-    setReason(reason);
+    setWhyType(whyType);
     setState(state);
     setImplemented(implemented);
   };
@@ -158,7 +158,7 @@ const ChangeRequestsTable: React.FC = () => {
   const crTable = (
     <CRTable
       changeRequests={transformToDisplayChangeRequests(
-        filterCRs(data!, type, impact, reason, state, implemented)
+        filterCRs(data!, type, impact, whyType, state, implemented)
       )}
     />
   );

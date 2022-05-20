@@ -33,27 +33,27 @@ export const exampleStandardChangeRequest: StandardChangeRequest = {
   what: 'Spacers are needed to prevent the jet fuel from melting the I beams',
   why: [
     {
-      reason: ChangeRequestReason.Estimation,
+      type: ChangeRequestReason.Estimation,
       explain: 'Original estimate did not account for spacers'
     },
     {
-      reason: ChangeRequestReason.Manufacturing,
+      type: ChangeRequestReason.Manufacturing,
       explain: 'No availibilitiy in Richards'
     },
     {
-      reason: ChangeRequestReason.Other,
+      type: ChangeRequestReason.Other,
       explain: "Matt won't shut up"
     },
     {
-      reason: ChangeRequestReason.OtherProject,
+      type: ChangeRequestReason.OtherProject,
       explain: '2.2.0'
     },
     {
-      reason: ChangeRequestReason.Rules,
+      type: ChangeRequestReason.Rules,
       explain: 'Discovered rule EV 5.2.6'
     },
     {
-      reason: ChangeRequestReason.School,
+      type: ChangeRequestReason.School,
       explain: 'All team members had 5 midterms each'
     }
   ],
@@ -97,27 +97,27 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
   what: 'Spacers are needed to prevent the jet fuel from melting the I beams',
   why: [
     {
-      reason: ChangeRequestReason.Estimation,
+      type: ChangeRequestReason.Estimation,
       explain: 'Original estimate did not account for spacers'
     },
     {
-      reason: ChangeRequestReason.Manufacturing,
+      type: ChangeRequestReason.Manufacturing,
       explain: 'No availibilitiy in Richards'
     },
     {
-      reason: ChangeRequestReason.Other,
+      type: ChangeRequestReason.Other,
       explain: "Matt won't shut up"
     },
     {
-      reason: ChangeRequestReason.OtherProject,
+      type: ChangeRequestReason.OtherProject,
       explain: '2.2.0'
     },
     {
-      reason: ChangeRequestReason.Rules,
+      type: ChangeRequestReason.Rules,
       explain: 'Discovered rule EV 5.2.6'
     },
     {
-      reason: ChangeRequestReason.School,
+      type: ChangeRequestReason.School,
       explain: 'All team members had 5 midterms each'
     }
   ],

@@ -81,7 +81,7 @@ const changeRequestTransformer = (
     ...changeRequest.scopeChangeRequest,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({
       ...why,
-      reason: convertCRScopeWhyType(why.type)
+      type: convertCRScopeWhyType(why.type)
     })),
     ...changeRequest.activationChangeRequest,
     ...changeRequest.stageGateChangeRequest

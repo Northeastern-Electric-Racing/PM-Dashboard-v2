@@ -4,9 +4,10 @@
  */
 
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
-import { baseHandler, handler } from '../functions/change-requests-new';
+import { exampleWbs1 } from '../../test-support/test-data/wbs-numbers.stub';
+import { handler } from '../functions/change-requests-new-standard';
 
-describe('change requests new', () => {
+describe('change requests new standard', () => {
   describe('handler', () => {
     // TODO: these tests all work because validation catches and
     //       database access prisma code is never reached.
@@ -19,7 +20,7 @@ describe('change requests new', () => {
     describe('validates standard CR', () => {
       const goodStandardBody = {
         submitterId: 1,
-        wbsElementId: 1,
+        wbsNum: exampleWbs1,
         type: 'OTHER',
         what: 'some string right here',
         scopeImpact: 'not a whole lot more other than another string',
@@ -40,8 +41,8 @@ describe('change requests new', () => {
         expect(res.body).toBe('Event object failed validation');
       });
 
-      it('fails when wbsElementId is not number', async () => {
-        const res = await func({ body: { ...goodStandardBody, wbsElementId: 'hi' } });
+      it('fails when wbsNum is not a wbsNumber', async () => {
+        const res = await func({ body: { ...goodStandardBody, wbsNum: 'hi' } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });
@@ -118,67 +119,6 @@ describe('change requests new', () => {
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });
-    });
-
-    describe('validates stage gate CR', () => {
-      const goodStageGateBody = {
-        submitterId: 1,
-        wbsElementId: 1,
-        type: 'STAGE_GATE',
-        leftoverBudget: 46,
-        confirmDone: true
-      };
-
-      it('fails when leftoverBudget is not number', async () => {
-        const res = await func({ body: { ...goodStageGateBody, leftoverBudget: {} } });
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toBe('Event object failed validation');
-      });
-
-      it('fails when confirmDone is not boolean', async () => {
-        const res = await func({ body: { ...goodStageGateBody, confirmDone: {} } });
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toBe('Event object failed validation');
-      });
-    });
-
-    describe('validates activation CR', () => {
-      const goodActivationBody = {
-        submitterId: 1,
-        wbsElementId: 1,
-        type: 'ACTIVATION',
-        projectLeadId: 2,
-        projectManagerId: 3,
-        confirmDetails: true
-      };
-
-      it('fails when projectLeadId is not number', async () => {
-        const res = await func({ body: { ...goodActivationBody, projectLeadId: {} } });
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toBe('Event object failed validation');
-      });
-
-      it('fails when projectManagerId is not number', async () => {
-        const res = await func({ body: { ...goodActivationBody, projectManagerId: {} } });
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toBe('Event object failed validation');
-      });
-
-      it('fails when confirmDetails is not boolean', async () => {
-        const res = await func({ body: { ...goodActivationBody, confirmDetails: {} } });
-        expect(res.statusCode).toBe(400);
-        expect(res.body).toBe('Event object failed validation');
-      });
-    });
-  });
-
-  describe('baseHandler', () => {
-    // can't test this until prisma mocked because user check runs first and fetches from db
-    it.skip('returns failure when invalid type', async () => {
-      const res = await baseHandler({ body: { type: 'HI' } }, mockContext, () => {});
-      const body = JSON.parse(res.body);
-      expect(res.statusCode).toBe(400);
-      expect(body.message).toBe('Client error: CR type not supported');
     });
   });
 });

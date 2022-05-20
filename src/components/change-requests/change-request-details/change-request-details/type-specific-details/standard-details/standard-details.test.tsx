@@ -26,7 +26,7 @@ describe('Change request details standard cr display element tests', () => {
     renderComponent(cr);
     expect(screen.getByText(`Why`)).toBeInTheDocument();
     cr.why.forEach((explanation: ChangeRequestExplanation) => {
-      expect(screen.getByText(`${explanation.reason}`)).toBeInTheDocument();
+      expect(screen.getByText(`${explanation.type}`)).toBeInTheDocument();
       expect(screen.getByText(`${explanation.explain}`)).toBeInTheDocument();
     });
   });

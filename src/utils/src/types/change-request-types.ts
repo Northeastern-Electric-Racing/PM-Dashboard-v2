@@ -62,7 +62,7 @@ export interface StageGateChangeRequest extends ChangeRequest {
 }
 
 export interface ChangeRequestExplanation {
-  reason: ChangeRequestReason;
+  type: ChangeRequestReason;
   explain: string;
 }
 

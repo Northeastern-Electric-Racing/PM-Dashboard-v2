@@ -3,17 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ChangeRequestExplanation, StandardChangeRequest } from "utils";
-import { weeksPipe, dollarsPipe } from "../../../../../../shared/pipes";
-import PageBlock from "../../../../../shared/page-block/page-block";
+import { ChangeRequestExplanation, StandardChangeRequest } from 'utils';
+import { weeksPipe, dollarsPipe } from '../../../../../../shared/pipes';
+import PageBlock from '../../../../../shared/page-block/page-block';
 
 interface StandardDetailsProps {
-  cr: StandardChangeRequest
+  cr: StandardChangeRequest;
 }
 
-const StandardDetails: React.FC<StandardDetailsProps> = ({
-  cr
-}: StandardDetailsProps) => {
+const StandardDetails: React.FC<StandardDetailsProps> = ({ cr }: StandardDetailsProps) => {
   return (
     <PageBlock
       title={'Standard Change Request Details'}
@@ -28,7 +26,7 @@ const StandardDetails: React.FC<StandardDetailsProps> = ({
             <dl>
               {cr.why.map((ele: ChangeRequestExplanation, idx: number) => (
                 <div key={idx} className="row w-100">
-                  <dt className="col-3">{ele.reason}</dt>
+                  <dt className="col-3">{ele.type}</dt>
                   <dd className="col">{ele.explain}</dd>
                 </div>
               ))}

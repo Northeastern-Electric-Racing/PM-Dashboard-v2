@@ -117,7 +117,7 @@ describe('change requests table container', () => {
     expect(filterCRs(exampleAllChangeRequests, '', [0, 1], '', [], '')).toStrictEqual(filtered);
   });
 
-  it('checking if change request filtering with reason works as expected', async () => {
+  it('checking if change request filtering with whyType works as expected', async () => {
     const filtered: ChangeRequest[] = [exampleStandardChangeRequest];
     expect(
       filterCRs(exampleAllChangeRequests, '', [], ChangeRequestReason.School, [], '')

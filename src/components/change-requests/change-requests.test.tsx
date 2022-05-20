@@ -25,11 +25,11 @@ jest.mock('./change-request-details/change-request-details', () => {
   };
 });
 
-jest.mock('./new-change-request/new-change-request', () => {
+jest.mock('./create-change-request/create-change-request', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>new-change-request</div>;
+      return <div>create-change-request</div>;
     }
   };
 });
@@ -62,6 +62,6 @@ describe('change request pages', () => {
   it('renders the new change request form title', async () => {
     renderComponent(routes.CHANGE_REQUESTS_NEW);
 
-    expect(screen.getByText('new-change-request')).toBeInTheDocument();
+    expect(screen.getByText('create-change-request')).toBeInTheDocument();
   });
 });

@@ -21,17 +21,19 @@ const renderComponent = (
   workPackage = exampleWorkPackage2,
   allowEdit = true,
   allowActivate = true,
-  allowStageGate = true
+  allowStageGate = true,
+  allowRequestChange = true
 ) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
       <WorkPackageViewContainer
         workPackage={workPackage}
-        edit={{ editMode: false, setEditMode: () => null }}
+        enterEditMode={() => null}
         allowEdit={allowEdit}
         allowActivate={allowActivate}
         allowStageGate={allowStageGate}
+        allowRequestChange={allowRequestChange}
       />
     </RouterWrapper>
   );
@@ -98,5 +100,14 @@ describe('work package container view', () => {
       fireEvent.click(screen.getByText('Actions'));
     });
     expect(screen.getByText('Stage Gate')).toBeDisabled();
+  });
+
+  it('disables request change button when not allowed', () => {
+    renderComponent(exampleWorkPackage1, true, true, true, false);
+
+    act(() => {
+      fireEvent.click(screen.getByText('Actions'));
+    });
+    expect(screen.getByText('Request Change')).toHaveClass('disabled');
   });
 });

@@ -37,6 +37,7 @@ const WorkPackagePage: React.FC<WorkPackagePageProps> = ({ wbsNum }) => {
       allowEdit={!isGuest}
       allowActivate={!isGuest}
       allowStageGate={!isGuest}
+      allowRequestChange={!isGuest}
     />
   );
 };

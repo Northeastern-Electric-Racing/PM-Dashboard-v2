@@ -3,11 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Project, User } from 'utils';
+import { Project, User, WbsElementStatus } from 'utils';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
 import PageBlock from '../../../../../shared/page-block/page-block';
 import { wbsPipe, endDatePipe, fullNamePipe, emDashPipe } from '../../../../../../shared/pipes';
-import { WbsElementStatus } from 'utils/lib/types/project-types';
 
 // new parts added at the bottom
 interface projectDetailsProps {

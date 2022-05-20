@@ -226,7 +226,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         />
         <ProjectEditDetails
           project={proj}
-          users={allUsers.data!}
+          users={allUsers.data!.filter((u) => u.role !== 'GUEST')}
           updateSlideDeck={updateSlideDeck}
           updateTaskList={updateTaskList}
           updateBom={updateBom}

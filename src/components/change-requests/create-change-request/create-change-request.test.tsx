@@ -20,11 +20,11 @@ const mockUseCreateStandardCRHook = (isLoading: boolean, isError: boolean, error
   );
 };
 
-jest.mock('./create-change-request/create-change-request', () => {
+jest.mock('./create-change-request-view/create-change-request-view', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>create-change-request page</div>;
+      return <div>create-change-request-view page</div>;
     }
   };
 });
@@ -38,7 +38,7 @@ describe('create change request', () => {
     mockUseCreateStandardCRHook(false, false);
     renderComponent();
 
-    expect(screen.getByText(`create-change-request page`)).toBeInTheDocument();
+    expect(screen.getByText(`create-change-request-view page`)).toBeInTheDocument();
   });
 
   it('renders error message', () => {

@@ -16,7 +16,9 @@ const AppPublic: React.FC = () => {
   return (
     <Switch>
       <Route path={routes.LOGIN}>
-        <Login postLoginRedirect={history.location.pathname} />
+        <Login
+          postLoginRedirect={{ url: history.location.pathname, search: history.location.search }}
+        />
       </Route>
       <Route
         path="*"

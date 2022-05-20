@@ -67,7 +67,7 @@ const ActivateWorkPackageModalContainer: React.FC<ActivateWorkPackageModalContai
       modalShow={modalShow}
       onHide={handleClose}
       onSubmit={handleConfirm}
-      allUsers={users.data!}
+      allUsers={users.data!.filter((u) => u.role !== 'GUEST')}
     />
   );
 };

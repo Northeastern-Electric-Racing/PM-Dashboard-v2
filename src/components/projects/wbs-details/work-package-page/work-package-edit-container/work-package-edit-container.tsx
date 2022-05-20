@@ -188,7 +188,11 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
           required
           onChange={(e) => setCrId(e.target.value.trim())}
         />
-        <WorkPackageEditDetails workPackage={workPackage} users={userData!} setters={setters} />
+        <WorkPackageEditDetails
+          workPackage={workPackage}
+          users={userData!.filter((u) => u.role !== 'GUEST')}
+          setters={setters}
+        />
         <DependenciesList dependencies={workPackage.dependencies} setter={setDeps} />
         <PageBlock
           title="Expected Activities"

@@ -13,6 +13,7 @@ import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 
 interface CreateChangeRequestViewProps {
+  wbsNum: string;
   onSubmit: (data: FormInput) => Promise<void>;
 }
 
@@ -62,10 +63,10 @@ const schema = yup.object().shape({
     )
 });
 
-const CreateChangeRequestsView: React.FC<CreateChangeRequestViewProps> = ({ onSubmit }) => {
+const CreateChangeRequestsView: React.FC<CreateChangeRequestViewProps> = ({ wbsNum, onSubmit }) => {
   const { register, handleSubmit, control, formState } = useForm<FormInput>({
     resolver: yupResolver(schema),
-    defaultValues: { why: [{ type: ChangeRequestReason.Other, explain: '' }] }
+    defaultValues: { wbsNum, why: [{ type: ChangeRequestReason.Other, explain: '' }] }
   });
   const { fields, append, remove } = useFieldArray({ control, name: 'why' });
 

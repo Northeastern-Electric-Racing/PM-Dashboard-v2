@@ -4,9 +4,11 @@
  */
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsElementStatus, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
+import { routes } from '../../../../../shared/routes';
 import ActivateWorkPackageModalContainer from '../activate-work-package-modal-container/activate-work-package-modal-container';
 import DescriptionList from '../../../../shared/description-list/description-list';
 import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
@@ -21,6 +23,7 @@ interface WorkPackageViewContainerProps {
   allowEdit: boolean;
   allowActivate: boolean;
   allowStageGate: boolean;
+  allowRequestChange: boolean;
 }
 
 const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
@@ -28,7 +31,8 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   enterEditMode,
   allowEdit,
   allowActivate,
-  allowStageGate
+  allowStageGate,
+  allowRequestChange
 }) => {
   const [showActivateModal, setShowActivateModal] = useState<boolean>(false);
   const [showStageGateModal, setShowStageGateModal] = useState<boolean>(false);
@@ -52,11 +56,21 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
       Stage Gate
     </Dropdown.Item>
   );
+  const createCRBtn = (
+    <Dropdown.Item
+      as={Link}
+      to={routes.CHANGE_REQUESTS_NEW_WITH_WBS + wbsPipe(workPackage.wbsNum)}
+      disabled={!allowRequestChange}
+    >
+      Request Change
+    </Dropdown.Item>
+  );
   const projectActionsDropdown = (
     <DropdownButton id="work-package-actions-dropdown" title="Actions">
       {editBtn}
       {workPackage.status === WbsElementStatus.Inactive ? activateBtn : ''}
       {workPackage.status === WbsElementStatus.Active ? stageGateBtn : ''}
+      {createCRBtn}
     </DropdownButton>
   );
 

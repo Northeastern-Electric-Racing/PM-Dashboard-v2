@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { ChangeRequestExplanation, ChangeRequestType, validateWBS } from 'utils';
 import { useAuth } from '../../../services/auth.hooks';
 import { useCreateStandardChangeRequest } from '../../../services/change-requests.hooks';
+import { useQuery } from '../../../services/utils.hooks';
 import { routes } from '../../../shared/routes';
 import ErrorPage from '../../shared/error-page/error-page';
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
@@ -26,6 +27,7 @@ export interface FormInput {
 
 const CreateChangeRequest: React.FC<CreateChangeRequestProps> = () => {
   const auth = useAuth();
+  const query = useQuery();
   const history = useHistory();
   const { isLoading, isError, error, mutateAsync } = useCreateStandardChangeRequest();
 
@@ -44,7 +46,7 @@ const CreateChangeRequest: React.FC<CreateChangeRequestProps> = () => {
   if (isLoading) return <LoadingIndicator />;
   if (isError) return <ErrorPage message={error?.message} />;
 
-  return <CreateChangeRequestsView onSubmit={handleConfirm} />;
+  return <CreateChangeRequestsView wbsNum={query.get('wbsNum') || ''} onSubmit={handleConfirm} />;
 };
 
 export default CreateChangeRequest;

@@ -13,7 +13,7 @@ import './login.module.css';
 import { routes } from '../../../shared/routes';
 
 interface LoginProps {
-  postLoginRedirect: string;
+  postLoginRedirect: { url: string; search: string };
 }
 
 /**
@@ -25,10 +25,11 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const auth = useAuth();
 
   const redirectAfterLogin = () => {
-    if (postLoginRedirect === routes.LOGIN) {
+    console.log(postLoginRedirect);
+    if (postLoginRedirect.url === routes.LOGIN) {
       history.push(routes.HOME);
     } else {
-      history.push(postLoginRedirect);
+      history.push(`${postLoginRedirect.url}${postLoginRedirect.search}`);
     }
   };
 

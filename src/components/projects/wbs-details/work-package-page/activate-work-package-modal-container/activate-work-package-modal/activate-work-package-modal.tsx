@@ -60,7 +60,7 @@ const ActivateWorkPackageModal: React.FC<ActivateWorkPackageModalProps> = ({
 
             <Form.Group controlId="activateWPForm-ProjectLead">
               <Form.Label>Project Lead</Form.Label>
-              <Form.Control {...register('projectLeadId')} as="select">
+              <Form.Control {...register('projectLeadId')} as="select" custom>
                 <option key={-1} value={-1}></option>
                 {allUsers.map((p) => (
                   <option key={p.userId} value={p.userId}>
@@ -72,7 +72,7 @@ const ActivateWorkPackageModal: React.FC<ActivateWorkPackageModalProps> = ({
 
             <Form.Group controlId="activateWPForm-ProjectManager">
               <Form.Label>Project Manager</Form.Label>
-              <Form.Control {...register('projectManagerId')} as="select">
+              <Form.Control {...register('projectManagerId')} as="select" custom>
                 <option key={-1} value={-1}></option>
                 {allUsers.map((p) => (
                   <option key={p.userId} value={p.userId}>

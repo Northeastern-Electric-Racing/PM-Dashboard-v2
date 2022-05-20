@@ -78,7 +78,11 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
   };
 
   const statusSelect = (
-    <Form.Control as="select" onChange={(e) => setters.setStatus(transformStatus(e.target.value))}>
+    <Form.Control
+      as="select"
+      onChange={(e) => setters.setStatus(transformStatus(e.target.value))}
+      custom
+    >
       <option key={0} value={workPackage.status}>
         {workPackage.status}
       </option>
@@ -97,7 +101,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     return (
       <>
         <b>{title}</b>
-        <Form.Control as="select" onChange={(e) => onChange(e.target.value)}>
+        <Form.Control as="select" onChange={(e) => onChange(e.target.value)} custom>
           <option key={defaultVal} value={defaultVal}>
             {`${defaultVal}%`}
           </option>
@@ -128,6 +132,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
           as="select"
           data-testid={title}
           onChange={(e) => updateUser(parseInt(e.target.value))}
+          custom
         >
           {defaultUser === undefined ? (
             <option key={-1} value={-1}>

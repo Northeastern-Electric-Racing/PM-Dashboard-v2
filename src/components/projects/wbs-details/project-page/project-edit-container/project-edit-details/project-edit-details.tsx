@@ -103,6 +103,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
       as="select"
       data-testid="status-select"
       onChange={(e) => updateStatus(e.target.value as WbsElementStatus)}
+      custom
     >
       <option key={0} value={project.status}>
         {project.status}
@@ -131,6 +132,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
           as="select"
           data-testid={title}
           onChange={(e) => updateUser(parseInt(e.target.value))}
+          custom
         >
           {defaultUser === undefined ? (
             <option key={-1} value={-1}>

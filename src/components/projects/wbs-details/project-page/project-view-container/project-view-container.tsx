@@ -4,6 +4,7 @@
  */
 
 import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { WorkPackage, Project } from 'utils';
 import { wbsPipe } from '../../../../../shared/pipes';
 import { useAuth } from '../../../../../services/auth.hooks';
@@ -15,6 +16,7 @@ import PageBlock from '../../../../shared/page-block/page-block';
 import ProjectDetails from './project-details/project-details';
 import RulesList from './rules-list/rules-list';
 import './project-view-container.module.css';
+import { routes } from '../../../../../shared/routes';
 
 interface ProjectViewContainerProps {
   proj: Project;
@@ -30,9 +32,19 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
       Edit
     </Dropdown.Item>
   );
+  const createCRBtn = (
+    <Dropdown.Item
+      as={Link}
+      to={routes.CHANGE_REQUESTS_NEW_WITH_WBS + wbsPipe(proj.wbsNum)}
+      disabled={isGuest}
+    >
+      Request Change
+    </Dropdown.Item>
+  );
   const projectActionsDropdown = (
     <DropdownButton id="project-actions-dropdown" title="Actions">
       {editBtn}
+      {createCRBtn}
     </DropdownButton>
   );
 

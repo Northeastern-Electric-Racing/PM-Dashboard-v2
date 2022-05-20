@@ -49,7 +49,7 @@ describe('Rendering Project View Container', () => {
     expect(screen.getByText('Bodywork Concept of Design')).toBeInTheDocument();
   });
 
-  it('disables the edit button for guest users', () => {
+  it('disables the buttons for guest users', () => {
     mockAuthHook(exampleGuestUser);
     renderComponent();
 
@@ -57,9 +57,10 @@ describe('Rendering Project View Container', () => {
       fireEvent.click(screen.getByText('Actions'));
     });
     expect(screen.getByText('Edit')).toHaveClass('disabled');
+    expect(screen.getByText('Request Change')).toHaveClass('disabled');
   });
 
-  it('enables the edit button for admin users', () => {
+  it('enables the buttons for admin users', () => {
     mockAuthHook(exampleAdminUser);
     renderComponent();
 
@@ -67,5 +68,6 @@ describe('Rendering Project View Container', () => {
       fireEvent.click(screen.getByText('Actions'));
     });
     expect(screen.getByText('Edit')).not.toHaveClass('disabled');
+    expect(screen.getByText('Request Change')).not.toHaveClass('disabled');
   });
 });

@@ -11,7 +11,7 @@ import {
   StageGateChangeRequest,
   StandardChangeRequest
 } from 'utils';
-import { datePipe, fullNamePipe } from '../../../../shared/pipes';
+import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
 import PageTitle from '../../../shared/page-title/page-title';
 import PageBlock from '../../../shared/page-block/page-block';
 import StandardDetails from './type-specific-details/standard-details/standard-details';
@@ -92,13 +92,21 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         headerRight={<b>{convertStatus(changeRequest)}</b>}
         body={
           <dl className="row">
-            <dt className="col-2">Submitted</dt>
-            <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
-            <dd className="col-3">{datePipe(changeRequest.dateSubmitted)}</dd>
+            <dt className="col-2">Project / Work Package</dt>
+            <dd className="col-auto">
+              {
+                <Link to={`${routes.PROJECTS}/${wbsPipe(changeRequest.wbsNum)}`}>
+                  {wbsPipe(changeRequest.wbsNum)}
+                </Link>
+              }
+            </dd>
             <div className="w-100"></div>
             <dt className="col-2">Type</dt>
             <dd className="col-auto">{changeRequest.type}</dd>
             <div className="w-100"></div>
+            <dt className="col-2">Submitted</dt>
+            <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
+            <dd className="col-3">{datePipe(changeRequest.dateSubmitted)}</dd>
           </dl>
         }
       />

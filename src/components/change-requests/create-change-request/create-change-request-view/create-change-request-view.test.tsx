@@ -14,8 +14,8 @@ const mockHandleSubmit = jest.fn();
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = () => {
-  return render(<CreateChangeRequestsView onSubmit={mockHandleSubmit} />);
+const renderComponent = (wbsNum = '') => {
+  return render(<CreateChangeRequestsView wbsNum={wbsNum} onSubmit={mockHandleSubmit} />);
 };
 
 describe('create new change request page test suite', () => {
@@ -40,6 +40,12 @@ describe('create new change request page test suite', () => {
 
     expect(screen.getByText('Add Reason')).toBeInTheDocument();
     expect(screen.getByText('Submit')).toBeInTheDocument();
+  });
+
+  it('renders prefill wbsNumber', () => {
+    renderComponent('1.1.1');
+
+    expect(screen.getByDisplayValue('1.1.1')).toBeInTheDocument();
   });
 
   /**

@@ -6,7 +6,7 @@
 import { UseMutationResult } from 'react-query';
 import { useCreateStandardChangeRequest } from '../../../services/change-requests.hooks';
 import { mockUseMutationResult } from '../../../test-support/test-data/test-utils.stub';
-import { render, screen } from '../../../test-support/test-utils';
+import { render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
 import CreateChangeRequest from './create-change-request';
 
 jest.mock('../../../services/change-requests.hooks');
@@ -30,7 +30,12 @@ jest.mock('./create-change-request-view/create-change-request-view', () => {
 });
 
 const renderComponent = () => {
-  return render(<CreateChangeRequest />);
+  const RouterWrapper = routerWrapperBuilder({});
+  return render(
+    <RouterWrapper>
+      <CreateChangeRequest />
+    </RouterWrapper>
+  );
 };
 
 describe('create change request', () => {

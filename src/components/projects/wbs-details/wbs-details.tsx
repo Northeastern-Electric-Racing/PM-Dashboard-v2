@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { validateWBS, isProject } from 'utils';
 import WorkPackagePage from './work-package-page/work-package-page';
 import ErrorPage from '../../shared/error-page/error-page';
-import ProjectPage from './project-page/project-page';
+import ProjectPage from '../../../client/pages/ProjectDetailPage/project-page';
 import './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {

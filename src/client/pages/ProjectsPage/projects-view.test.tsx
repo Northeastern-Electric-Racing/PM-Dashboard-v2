@@ -17,7 +17,7 @@ import {
   exampleProject5
 } from '../../../test-support/test-data/projects.stub';
 import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
-import ProjectsTable, { filterProjects } from './projects-table';
+import ProjectsView, { filterProjects } from './projects-view';
 
 jest.mock('../../../services/projects.hooks');
 
@@ -31,7 +31,7 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: Project[], error?
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
-  render(<ProjectsTable />);
+  render(<ProjectsView />);
 };
 
 describe('projects table component', () => {

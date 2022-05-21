@@ -5,14 +5,14 @@
 
 import { Route, Switch } from 'react-router-dom';
 import { routes } from '../../../shared/routes';
-import ChangeRequests from '../../change-requests/change-requests';
-import Projects from '../../projects/projects';
+import ChangeRequests from '../../../client/pages/ChangeRequestsPage/change-requests';
+import Projects from '../../../client/pages/ProjectsPage/projects';
 import { PageNotFound } from '../../whole-app/page-not-found/page-not-found';
-import Home from '../../home/home';
+import Home from '../../../client/pages/HomePage/home';
 import NavTopBar from '../../whole-app/nav-top-bar/nav-top-bar';
-import Settings from '../../settings/settings';
+import Settings from '../../../client/pages/SettingsPage/settings';
 import styles from './app-authenticated.module.css';
-import Sidebar from '../../whole-app/sidebar/sidebar';
+import Sidebar from '../../../client/components/sidebar/sidebar';
 
 const AppAuthenticated: React.FC = () => {
   return (

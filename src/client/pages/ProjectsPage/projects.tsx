@@ -4,12 +4,12 @@
  */
 
 import { Route, Switch } from 'react-router-dom';
-import { routes } from '../../shared/routes';
-import ProjectsTable from './projects-table/projects-table';
-import WBSDetails from './wbs-details/wbs-details';
+import { routes } from '../../../shared/routes';
+import ProjectsView from './projects-view';
+import WBSDetails from '../../../components/projects/wbs-details/wbs-details';
 import './projects.module.css';
-import CreateProjectForm from './create-project-form/create-project-form';
-import CreateWPForm from './create-wp-form/create-wp-form';
+import CreateProjectForm from '../CreateProjectPage/create-project-form';
+import CreateWPForm from '../CreateWorkPackagePage/create-wp-form';
 
 const Projects: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const Projects: React.FC = () => {
       <Route path={routes.WORK_PACKAGE_NEW} component={CreateWPForm} />
       <Route path={routes.PROJECTS_NEW} component={CreateProjectForm} />
       <Route path={routes.PROJECTS_BY_WBS} component={WBSDetails} />
-      <Route path={routes.PROJECTS} component={ProjectsTable} />
+      <Route path={routes.PROJECTS} component={ProjectsView} />
     </Switch>
   );
 };

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useAuth } from '../../services/auth.hooks';
+import { useAuth } from '../../../services/auth.hooks';
 import UsefulLinks from './useful-links/useful-links';
 import styles from './home.module.css';
 

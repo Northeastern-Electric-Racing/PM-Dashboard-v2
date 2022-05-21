@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useAuth } from '../../services/auth.hooks';
-import PageTitle from '../shared/page-title/page-title';
-import PageBlock from '../shared/page-block/page-block';
+import { useAuth } from '../../../services/auth.hooks';
+import PageTitle from '../../../components/shared/page-title/page-title';
+import PageBlock from '../../../components/shared/page-block/page-block';
 
 const Settings: React.FC = () => {
   const auth = useAuth();

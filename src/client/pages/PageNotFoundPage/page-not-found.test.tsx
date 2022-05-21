@@ -4,7 +4,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import { PageNotFound } from './page-not-found';
+import { PageNotFound } from '../../../components/whole-app/page-not-found/page-not-found';
 
 test('404 rendered', () => {
   render(<PageNotFound />);

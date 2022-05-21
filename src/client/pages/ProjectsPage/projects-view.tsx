@@ -9,7 +9,7 @@ import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
 import ErrorPage from '../../shared/error-page/error-page';
-import styles from './projects-table.module.css';
+import styles from './projects-view.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
 import { useState } from 'react';
@@ -61,7 +61,7 @@ export function filterProjects(
 /**
  * Parent component for the projects page housing the filter table and projects table.
  */
-const ProjectsTable: React.FC = () => {
+const ProjectsView: React.FC = () => {
   const [status, setStatus] = useState('');
   const [projectLeadID, setProjectLeadID] = useState(-1);
   const [projectManagerID, setProjectManagerID] = useState(-1);
@@ -161,4 +161,4 @@ const ProjectsTable: React.FC = () => {
   );
 };
 
-export default ProjectsTable;
+export default ProjectsView;

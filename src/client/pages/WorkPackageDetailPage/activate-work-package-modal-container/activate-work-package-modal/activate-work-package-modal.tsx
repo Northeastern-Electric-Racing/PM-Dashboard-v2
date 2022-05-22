@@ -9,7 +9,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { User, WbsNumber } from 'utils';
 import { FormInput } from '../activate-work-package-modal-container';
-import { fullNamePipe, wbsPipe } from '../../../../../../shared/pipes';
+import { fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 
 interface ActivateWorkPackageModalProps {
   allUsers: User[];

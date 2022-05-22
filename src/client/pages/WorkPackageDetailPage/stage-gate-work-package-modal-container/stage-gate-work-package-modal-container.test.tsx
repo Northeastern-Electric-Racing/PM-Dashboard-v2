@@ -5,19 +5,19 @@
 
 import { UseMutationResult, UseQueryResult } from 'react-query';
 import { User } from 'utils';
-import { render, screen } from '../../../../../test-support/test-utils';
-import { wbsPipe } from '../../../../../shared/pipes';
-import { useAllUsers } from '../../../../../services/users.hooks';
-import { exampleWbs1 } from '../../../../../test-support/test-data/wbs-numbers.stub';
+import { render, screen } from '../../../../test-support/test-utils';
+import { wbsPipe } from '../../../../shared/pipes';
+import { useAllUsers } from '../../../../services/users.hooks';
+import { exampleWbs1 } from '../../../../test-support/test-data/wbs-numbers.stub';
 import StageGateWorkPackageModalContainer from './stage-gate-work-package-modal-container';
 import {
   mockUseMutationResult,
   mockUseQueryResult
-} from '../../../../../test-support/test-data/test-utils.stub';
-import { useCreateStageGateChangeRequest } from '../../../../../services/change-requests.hooks';
-import { exampleAllUsers } from '../../../../../test-support/test-data/users.stub';
+} from '../../../../test-support/test-data/test-utils.stub';
+import { useCreateStageGateChangeRequest } from '../../../../services/change-requests.hooks';
+import { exampleAllUsers } from '../../../../test-support/test-data/users.stub';
 
-jest.mock('../../../../../services/users.hooks');
+jest.mock('../../../../services/users.hooks');
 
 const mockedUseAllUsers = useAllUsers as jest.Mock<UseQueryResult<User[]>>;
 
@@ -25,7 +25,7 @@ const mockUseAllUsersHook = (isLoading = false, isError = false, data?: User[], 
   mockedUseAllUsers.mockReturnValue(mockUseQueryResult(isLoading, isError, data, error));
 };
 
-jest.mock('../../../../../services/change-requests.hooks');
+jest.mock('../../../../services/change-requests.hooks');
 
 // random shit to make test happy by mocking out this hook
 const mockedUseCreateStageGateCR = useCreateStageGateChangeRequest as jest.Mock<UseMutationResult>;

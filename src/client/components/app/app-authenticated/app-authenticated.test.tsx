@@ -3,10 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { fireEvent, render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
+import {
+  fireEvent,
+  render,
+  routerWrapperBuilder,
+  screen
+} from '../../../../test-support/test-utils';
 import AppAuthenticated from './app-authenticated';
 
-jest.mock('../../projects/projects', () => {
+jest.mock('../../../pages/ProjectsPage/projects', () => {
   return {
     __esModule: true,
     default: () => {

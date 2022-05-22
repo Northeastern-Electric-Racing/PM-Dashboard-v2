@@ -7,14 +7,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsElementStatus, WorkPackage } from 'utils';
-import { wbsPipe } from '../../../../../shared/pipes';
-import { routes } from '../../../../../shared/routes';
+import { wbsPipe } from '../../../../shared/pipes';
+import { routes } from '../../../../shared/routes';
 import ActivateWorkPackageModalContainer from '../activate-work-package-modal-container/activate-work-package-modal-container';
-import DescriptionList from '../../../../shared/description-list/description-list';
-import HorizontalList from '../../../../shared/horizontal-list/horizontal-list';
+import DescriptionList from '../../../components/description-list/description-list';
+import HorizontalList from '../../../components/horizontal-list/horizontal-list';
 import WorkPackageDetails from './work-package-details/work-package-details';
-import ChangesList from '../../../../shared/changes-list/changes-list';
-import PageTitle from '../../../../shared/page-title/page-title';
+import ChangesList from '../../../components/changes-list/changes-list';
+import PageTitle from '../../../components/page-title/page-title';
 import StageGateWorkPackageModalContainer from '../stage-gate-work-package-modal-container/stage-gate-work-package-modal-container';
 
 interface WorkPackageViewContainerProps {

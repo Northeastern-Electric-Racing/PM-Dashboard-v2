@@ -3,8 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../test-support/test-utils';
-import { routes } from '../../shared/routes';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { routes } from '../../../shared/routes';
 import ChangeRequests from './change-requests';
 
 jest.mock('./change-requests-table/change-requests-table', () => {
@@ -16,7 +16,7 @@ jest.mock('./change-requests-table/change-requests-table', () => {
   };
 });
 
-jest.mock('./change-request-details/change-request-details', () => {
+jest.mock('../ChangeRequestDetailPage/change-request-details', () => {
   return {
     __esModule: true,
     default: () => {
@@ -25,7 +25,7 @@ jest.mock('./change-request-details/change-request-details', () => {
   };
 });
 
-jest.mock('./create-change-request/create-change-request', () => {
+jest.mock('../CreateChangeRequestPage/create-change-request', () => {
   return {
     __esModule: true,
     default: () => {

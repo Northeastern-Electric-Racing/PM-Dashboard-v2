@@ -9,7 +9,7 @@ import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { User, WbsNumber } from 'utils';
 import { FormInput } from '../stage-gate-work-package-modal-container';
-import { wbsPipe } from '../../../../../../shared/pipes';
+import { wbsPipe } from '../../../../../shared/pipes';
 
 interface StageGateWorkPackageModalProps {
   allUsers: User[];

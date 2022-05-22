@@ -4,8 +4,8 @@
  */
 
 import { useAuth } from '../../../services/auth.hooks';
-import PageTitle from '../../../components/shared/page-title/page-title';
-import PageBlock from '../../../components/shared/page-block/page-block';
+import PageTitle from '../../components/page-title/page-title';
+import PageBlock from '../../components/page-block/page-block';
 
 const Settings: React.FC = () => {
   const auth = useAuth();

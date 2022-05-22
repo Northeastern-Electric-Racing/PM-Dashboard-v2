@@ -4,10 +4,10 @@
  */
 
 import { useParams } from 'react-router-dom';
-import { useAuth } from '../../../services/auth.hooks';
-import { useReviewChangeRequest } from '../../../services/change-requests.hooks';
-import ErrorPage from '../../shared/error-page/error-page';
-import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
+import { useAuth } from '../../../../services/auth.hooks';
+import { useReviewChangeRequest } from '../../../../services/change-requests.hooks';
+import ErrorPage from '../../../components/error-page/error-page';
+import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import ReviewChangeRequestsView from './review-change-request/review-change-request';
 
 interface ReviewChangeRequestProps {

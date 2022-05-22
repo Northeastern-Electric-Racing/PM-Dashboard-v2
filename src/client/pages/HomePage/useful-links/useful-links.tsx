@@ -4,8 +4,8 @@
  *
  */
 
-import { linkPipe } from '../../../shared/pipes';
-import PageBlock from '../../shared/page-block/page-block';
+import { linkPipe } from '../../../../shared/pipes';
+import PageBlock from '../../../components/page-block/page-block';
 import { Col, Container, Row } from 'react-bootstrap';
 import styles from './useful-links.module.css';
 

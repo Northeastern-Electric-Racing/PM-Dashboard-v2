@@ -6,12 +6,12 @@
 import React from 'react';
 import { UseQueryResult } from 'react-query';
 import { Project } from 'utils';
-import { render, screen } from '../../../../test-support/test-utils';
-import { useSingleProject } from '../../../../services/projects.hooks';
-import { exampleWbsProject1 } from '../../../../test-support/test-data/wbs-numbers.stub';
-import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
+import { render, screen } from '../../../test-support/test-utils';
+import { useSingleProject } from '../../../services/projects.hooks';
+import { exampleWbsProject1 } from '../../../test-support/test-data/wbs-numbers.stub';
+import { mockUseQueryResult } from '../../../test-support/test-data/test-utils.stub';
 import ProjectPage from './project-page';
-import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
+import { exampleProject1 } from '../../../test-support/test-data/projects.stub';
 
 jest.mock('./project-view-container/project-view-container', () => {
   return {
@@ -31,7 +31,7 @@ jest.mock('./project-edit-container/project-edit-container', () => {
   };
 });
 
-jest.mock('../../../../services/projects.hooks');
+jest.mock('../../../services/projects.hooks');
 
 const mockedUseSingleProject = useSingleProject as jest.Mock<UseQueryResult<Project>>;
 

@@ -6,7 +6,7 @@
 import { Button, InputGroup, Form } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { validateWBS, WbsNumber } from 'utils';
-import HorizontalList from '../../../../../shared/horizontal-list/horizontal-list';
+import HorizontalList from '../../../../components/horizontal-list/horizontal-list';
 import Dependency from './dependency/dependency';
 import './dependencies-list.module.css';
 

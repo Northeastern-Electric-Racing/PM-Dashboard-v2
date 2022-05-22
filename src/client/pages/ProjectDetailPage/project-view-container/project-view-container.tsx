@@ -6,17 +6,17 @@
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { WorkPackage, Project } from 'utils';
-import { wbsPipe } from '../../../../../shared/pipes';
-import { useAuth } from '../../../../../services/auth.hooks';
-import ChangesList from '../../../../shared/changes-list/changes-list';
-import DescriptionList from '../../../../shared/description-list/description-list';
+import { wbsPipe } from '../../../../shared/pipes';
+import { useAuth } from '../../../../services/auth.hooks';
+import ChangesList from '../../../components/changes-list/changes-list';
+import DescriptionList from '../../../components/description-list/description-list';
 import WorkPackageSummary from './work-package-summary/work-package-summary';
-import PageTitle from '../../../../shared/page-title/page-title';
-import PageBlock from '../../../../shared/page-block/page-block';
+import PageTitle from '../../../components/page-title/page-title';
+import PageBlock from '../../../components/page-block/page-block';
 import ProjectDetails from './project-details/project-details';
 import RulesList from './rules-list/rules-list';
 import './project-view-container.module.css';
-import { routes } from '../../../../../shared/routes';
+import { routes } from '../../../../shared/routes';
 
 interface ProjectViewContainerProps {
   proj: Project;

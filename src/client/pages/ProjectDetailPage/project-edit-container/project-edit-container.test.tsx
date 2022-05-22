@@ -5,23 +5,23 @@
 
 import { UseMutationResult, UseQueryResult } from 'react-query';
 import { User } from 'utils';
-import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
-import { wbsPipe } from '../../../../../shared/pipes';
-import { useEditSingleProject } from '../../../../../services/projects.hooks';
-import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
-import { useAllUsers } from '../../../../../services/users.hooks';
+import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
+import { wbsPipe } from '../../../../shared/pipes';
+import { useEditSingleProject } from '../../../../services/projects.hooks';
+import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
+import { useAllUsers } from '../../../../services/users.hooks';
 import {
   mockUseMutationResult,
   mockUseQueryResult
-} from '../../../../../test-support/test-data/test-utils.stub';
+} from '../../../../test-support/test-data/test-utils.stub';
 import {
   exampleAdminUser,
   exampleAppAdminUser,
   exampleLeadershipUser
-} from '../../../../../test-support/test-data/users.stub';
+} from '../../../../test-support/test-data/users.stub';
 import ProjectEditContainer from './project-edit-container';
 
-jest.mock('../../../../../services/projects.hooks');
+jest.mock('../../../../services/projects.hooks');
 
 // random shit to make test happy by mocking out this hook
 const mockedUseEditSingleProject = useEditSingleProject as jest.Mock<UseMutationResult>;
@@ -32,7 +32,7 @@ const mockEditSingleProjectHook = (isLoading: boolean, isError: boolean, error?:
   );
 };
 
-jest.mock('../../../../../services/users.hooks');
+jest.mock('../../../../services/users.hooks');
 
 const mockedUseAllUsers = useAllUsers as jest.Mock<UseQueryResult<User[]>>;
 

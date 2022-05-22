@@ -7,13 +7,13 @@ import { Project, User } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
-import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
-import ErrorPage from '../../shared/error-page/error-page';
+import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
+import ErrorPage from '../../components/error-page/error-page';
 import styles from './projects-view.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
 import { useState } from 'react';
-import PageTitle from '../../shared/page-title/page-title';
+import PageTitle from '../../components/page-title/page-title';
 
 /***
  * Returns a list of projects that has been filtered according to the given params.

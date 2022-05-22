@@ -5,7 +5,7 @@
 
 import { ActivationChangeRequest } from 'utils';
 import { booleanPipe, datePipe, fullNamePipe } from '../../../../../../shared/pipes';
-import PageBlock from '../../../../../shared/page-block/page-block';
+import PageBlock from '../../../../../components/page-block/page-block';
 
 interface ActivationDetailsProps {
   cr: ActivationChangeRequest;

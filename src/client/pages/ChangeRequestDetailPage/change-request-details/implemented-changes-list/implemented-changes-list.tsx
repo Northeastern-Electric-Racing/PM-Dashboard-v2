@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { ImplementedChange } from 'utils';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
-import BulletList from '../../../../shared/bullet-list/bullet-list';
+import BulletList from '../../../../components/bullet-list/bullet-list';
 import './implemented-changes-list.module.css';
 
 interface ImplementedChangesListProps {

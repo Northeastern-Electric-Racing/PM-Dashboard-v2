@@ -13,10 +13,10 @@ import { useAllChangeRequests } from '../../../services/change-requests.hooks';
 import { DisplayChangeRequest } from './change-requests-table/change-requests-table';
 import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
 import ChangeRequestsFilter from './change-requests-filter/change-requests-filter';
-import LoadingIndicator from '../../shared/loading-indicator/loading-indicator';
+import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 import ActionButton from '../../../client/components/action-button/action-button';
-import ErrorPage from '../../shared/error-page/error-page';
-import PageTitle from '../../shared/page-title/page-title';
+import ErrorPage from '../../components/error-page/error-page';
+import PageTitle from '../../components/page-title/page-title';
 import styles from './change-requests-table.module.css';
 
 /***

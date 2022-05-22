@@ -3,8 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, screen, routerWrapperBuilder } from '../../test-support/test-utils';
-import { routes } from '../../shared/routes';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { routes } from '../../../shared/routes';
 import Projects from './projects';
 
 jest.mock('./projects-table/projects-table', () => {
@@ -16,7 +16,7 @@ jest.mock('./projects-table/projects-table', () => {
   };
 });
 
-jest.mock('./wbs-details/wbs-details', () => {
+jest.mock('../Misc/wbs-details', () => {
   return {
     __esModule: true,
     default: () => {

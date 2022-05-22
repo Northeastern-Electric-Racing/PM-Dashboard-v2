@@ -12,8 +12,8 @@ import {
   StandardChangeRequest
 } from 'utils';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import PageTitle from '../../../shared/page-title/page-title';
-import PageBlock from '../../../shared/page-block/page-block';
+import PageTitle from '../../../components/page-title/page-title';
+import PageBlock from '../../../components/page-block/page-block';
 import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
@@ -22,7 +22,7 @@ import ReviewNotes from './review-notes/review-notes';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../shared/routes';
-import ReviewChangeRequest from '../../review-change-request/review-change-request';
+import ReviewChangeRequest from '../ReviewChangeRequestModal/review-change-request';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {

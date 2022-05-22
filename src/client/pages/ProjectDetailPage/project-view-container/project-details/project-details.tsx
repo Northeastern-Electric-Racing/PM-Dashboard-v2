@@ -13,8 +13,8 @@ import {
   wbsPipe,
   wbsStatusPipe,
   weeksPipe
-} from '../../../../../../shared/pipes';
-import PageBlock from '../../../../../shared/page-block/page-block';
+} from '../../../../../shared/pipes';
+import PageBlock from '../../../../components/page-block/page-block';
 import styles from './project-details.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 

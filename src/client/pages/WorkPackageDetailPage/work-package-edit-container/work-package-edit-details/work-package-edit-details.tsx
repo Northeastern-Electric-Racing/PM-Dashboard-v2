@@ -11,8 +11,8 @@ import {
   datePipe,
   percentPipe,
   emDashPipe
-} from '../../../../../../shared/pipes';
-import PageBlock from '../../../../../shared/page-block/page-block';
+} from '../../../../../shared/pipes';
+import PageBlock from '../../../../components/page-block/page-block';
 
 interface Props {
   workPackage: WorkPackage;

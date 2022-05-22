@@ -9,18 +9,15 @@ import {
   routerWrapperBuilder,
   fireEvent,
   act
-} from '../../../../../test-support/test-utils';
-import { Auth } from '../../../../../shared/types';
-import { useAuth } from '../../../../../services/auth.hooks';
-import { exampleProject1 } from '../../../../../test-support/test-data/projects.stub';
-import { mockAuth } from '../../../../../test-support/test-data/test-utils.stub';
-import {
-  exampleAdminUser,
-  exampleGuestUser
-} from '../../../../../test-support/test-data/users.stub';
+} from '../../../../test-support/test-utils';
+import { Auth } from '../../../../shared/types';
+import { useAuth } from '../../../../services/auth.hooks';
+import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
+import { mockAuth } from '../../../../test-support/test-data/test-utils.stub';
+import { exampleAdminUser, exampleGuestUser } from '../../../../test-support/test-data/users.stub';
 import ProjectViewContainer from './project-view-container';
 
-jest.mock('../../../../../services/auth.hooks');
+jest.mock('../../../../services/auth.hooks');
 
 const mockedUseAuth = useAuth as jest.Mock<Auth>;
 

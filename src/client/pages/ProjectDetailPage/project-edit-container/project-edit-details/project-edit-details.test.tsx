@@ -1,17 +1,17 @@
-import { act, render, screen } from '../../../../../../test-support/test-utils';
+import { act, render, screen } from '../../../../../test-support/test-utils';
 import userEvent from '@testing-library/user-event';
-import { endDatePipe, fullNamePipe, wbsPipe } from '../../../../../../shared/pipes';
+import { endDatePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
 import {
   exampleProject1,
   exampleProject2,
   exampleProject3
-} from '../../../../../../test-support/test-data/projects.stub';
+} from '../../../../../test-support/test-data/projects.stub';
 import ProjectEditDetails from './project-edit-details';
 import {
   exampleAdminUser,
   exampleAppAdminUser,
   exampleLeadershipUser
-} from '../../../../../../test-support/test-data/users.stub';
+} from '../../../../../test-support/test-data/users.stub';
 import { WbsElementStatus } from 'utils';
 
 const projs = [exampleProject1, exampleProject2, exampleProject3];

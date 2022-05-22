@@ -7,7 +7,7 @@ import { render, screen, routerWrapperBuilder } from '../../../test-support/test
 import { routes } from '../../../shared/routes';
 import WBSDetails from './wbs-details';
 
-jest.mock('./project-page/project-page', () => {
+jest.mock('../ProjectDetailPage/project-page', () => {
   return {
     __esModule: true,
     default: () => {
@@ -16,7 +16,7 @@ jest.mock('./project-page/project-page', () => {
   };
 });
 
-jest.mock('./work-package-page/work-package-page', () => {
+jest.mock('../WorkPackageDetailPage/work-package-page', () => {
   return {
     __esModule: true,
     default: () => {

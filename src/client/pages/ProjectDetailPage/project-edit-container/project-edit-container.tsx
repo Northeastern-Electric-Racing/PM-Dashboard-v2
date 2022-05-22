@@ -6,20 +6,20 @@
 import { SyntheticEvent, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WorkPackage } from 'utils';
-import { wbsPipe } from '../../../../../shared/pipes';
-import { useEditSingleProject } from '../../../../../services/projects.hooks';
-import { useAllUsers } from '../../../../../services/users.hooks';
-import { useAuth } from '../../../../../services/auth.hooks';
-import { EditableTextInputListUtils } from '../../../../../client/pages/CreateWorkPackagePage/create-wp-form';
-import EditableTextInputList from '../../../../shared/editable-text-input-list/editable-text-input-list';
-import PageTitle from '../../../../shared/page-title/page-title';
+import { wbsPipe } from '../../../../shared/pipes';
+import { useEditSingleProject } from '../../../../services/projects.hooks';
+import { useAllUsers } from '../../../../services/users.hooks';
+import { useAuth } from '../../../../services/auth.hooks';
+import { EditableTextInputListUtils } from '../../../../client/pages/CreateWorkPackagePage/create-wp-form';
+import EditableTextInputList from '../../../components/editable-text-input-list/editable-text-input-list';
+import PageTitle from '../../../components/page-title/page-title';
 import ProjectEditDetails from './project-edit-details/project-edit-details';
 import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
-import PageBlock from '../../../../shared/page-block/page-block';
-import ChangesList from '../../../../shared/changes-list/changes-list';
-import ErrorPage from '../../../../shared/error-page/error-page';
-import LoadingIndicator from '../../../../shared/loading-indicator/loading-indicator';
+import PageBlock from '../../../components/page-block/page-block';
+import ChangesList from '../../../components/changes-list/changes-list';
+import ErrorPage from '../../../components/error-page/error-page';
+import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../project-view-container/work-package-summary/work-package-summary';
 
 /**

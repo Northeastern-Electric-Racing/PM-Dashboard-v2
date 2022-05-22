@@ -7,14 +7,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  wbsPipe,
-  endDatePipe,
-  listPipe,
-  datePipe
-} from '../../../../../../shared/pipes';
-import { routes } from '../../../../../../shared/routes';
+import { weeksPipe, wbsPipe, endDatePipe, listPipe, datePipe } from '../../../../../shared/pipes';
+import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 

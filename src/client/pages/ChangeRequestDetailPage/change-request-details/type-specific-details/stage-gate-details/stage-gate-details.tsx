@@ -3,17 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { StageGateChangeRequest } from "utils";
-import { booleanPipe, dollarsPipe } from "../../../../../../shared/pipes";
-import PageBlock from "../../../../../shared/page-block/page-block";
+import { StageGateChangeRequest } from 'utils';
+import { booleanPipe, dollarsPipe } from '../../../../../../shared/pipes';
+import PageBlock from '../../../../../components/page-block/page-block';
 
 interface StageGateDetailsProps {
-  cr: StageGateChangeRequest
+  cr: StageGateChangeRequest;
 }
 
-const StageGateDetails: React.FC<StageGateDetailsProps> = ({
-  cr
-}: StageGateDetailsProps) => {
+const StageGateDetails: React.FC<StageGateDetailsProps> = ({ cr }: StageGateDetailsProps) => {
   return (
     <PageBlock
       title={'Stage Gate Change Request Details'}
@@ -29,6 +27,6 @@ const StageGateDetails: React.FC<StageGateDetailsProps> = ({
       }
     />
   );
-}
+};
 
 export default StageGateDetails;

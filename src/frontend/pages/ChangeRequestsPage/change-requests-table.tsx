@@ -14,7 +14,7 @@ import { DisplayChangeRequest } from './change-requests-table/change-requests-ta
 import CRTable from './change-requests-table/change-requests-table'; // Directly rename the default import
 import ChangeRequestsFilter from './change-requests-filter/change-requests-filter';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
-import ActionButton from '../../../client/components/action-button/action-button';
+import ActionButton from '../../components/action-button/action-button';
 import ErrorPage from '../../components/error-page/error-page';
 import PageTitle from '../../components/page-title/page-title';
 import styles from './change-requests-table.module.css';

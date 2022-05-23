@@ -5,14 +5,14 @@
 
 import { Route, Switch } from 'react-router-dom';
 import { routes } from '../../../../shared/routes';
-import ChangeRequests from '../../../../client/pages/ChangeRequestsPage/change-requests';
-import Projects from '../../../../client/pages/ProjectsPage/projects';
-import { PageNotFound } from '../../../../client/pages/PageNotFoundPage/page-not-found';
-import Home from '../../../../client/pages/HomePage/home';
-import NavTopBar from '../../../../client/components/nav-top-bar/nav-top-bar';
-import Settings from '../../../../client/pages/SettingsPage/settings';
+import ChangeRequests from '../../../pages/ChangeRequestsPage/change-requests';
+import Projects from '../../../pages/ProjectsPage/projects';
+import { PageNotFound } from '../../../pages/PageNotFoundPage/page-not-found';
+import Home from '../../../pages/HomePage/home';
+import NavTopBar from '../../nav-top-bar/nav-top-bar';
+import Settings from '../../../pages/SettingsPage/settings';
 import styles from './app-authenticated.module.css';
-import Sidebar from '../../../../client/components/sidebar/sidebar';
+import Sidebar from '../../sidebar/sidebar';
 
 const AppAuthenticated: React.FC = () => {
   return (

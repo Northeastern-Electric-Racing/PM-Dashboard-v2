@@ -10,7 +10,7 @@ import { wbsPipe } from '../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
-import { EditableTextInputListUtils } from '../../../../client/pages/CreateWorkPackagePage/create-wp-form';
+import { EditableTextInputListUtils } from '../../CreateWorkPackagePage/create-wp-form';
 import EditableTextInputList from '../../../components/editable-text-input-list/editable-text-input-list';
 import PageTitle from '../../../components/page-title/page-title';
 import ProjectEditDetails from './project-edit-details/project-edit-details';

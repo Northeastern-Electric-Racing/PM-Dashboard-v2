@@ -16,7 +16,7 @@ jest.mock('./projects-table/projects-table', () => {
   };
 });
 
-jest.mock('../Misc/wbs-details', () => {
+jest.mock('../WbsDetailsSwitchPage/wbs-details', () => {
   return {
     __esModule: true,
     default: () => {

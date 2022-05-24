@@ -18,7 +18,7 @@ import EditModeOptions from './edit-mode-options/edit-mode-options';
 import ProjectEditSummary from './project-edit-summary/project-edit-summary';
 import PageBlock from '../../../components/page-block/page-block';
 import ChangesList from '../../../components/changes-list/changes-list';
-import ErrorPage from '../../../components/error-page/error-page';
+import ErrorPage from '../../../pages/ErrorPage/error-page';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import WorkPackageSummary from '../project-view-container/work-package-summary/work-package-summary';
 

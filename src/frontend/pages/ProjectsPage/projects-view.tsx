@@ -8,7 +8,7 @@ import { useAllProjects } from '../../../services/projects.hooks';
 import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
-import ErrorPage from '../../components/error-page/error-page';
+import ErrorPage from '../../pages/ErrorPage/error-page';
 import styles from './projects-view.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';

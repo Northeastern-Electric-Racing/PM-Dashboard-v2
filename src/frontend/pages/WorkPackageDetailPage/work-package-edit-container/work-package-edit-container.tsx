@@ -11,7 +11,7 @@ import { useAllUsers } from '../../../../services/users.hooks';
 import { useEditWorkPackage } from '../../../../services/work-packages.hooks';
 import { wbsPipe } from '../../../../shared/pipes';
 import EditableTextInputList from '../../../components/editable-text-input-list/editable-text-input-list';
-import ErrorPage from '../../../components/error-page/error-page';
+import ErrorPage from '../../../pages/ErrorPage/error-page';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import PageBlock from '../../../components/page-block/page-block';
 import PageTitle from '../../../components/page-title/page-title';

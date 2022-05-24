@@ -9,7 +9,7 @@ import { useAuth } from '../../../../services/auth.hooks';
 import { useCreateStageGateChangeRequest } from '../../../../services/change-requests.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { routes } from '../../../../shared/routes';
-import ErrorPage from '../../../components/error-page/error-page';
+import ErrorPage from '../../../pages/ErrorPage/error-page';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import StageGateWorkPackageModal from './stage-gate-work-package-modal/stage-gate-work-package-modal';
 

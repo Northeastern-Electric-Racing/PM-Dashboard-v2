@@ -9,7 +9,7 @@ import { useAuth } from '../../../services/auth.hooks';
 import { useCreateStandardChangeRequest } from '../../../services/change-requests.hooks';
 import { useQuery } from '../../../services/utils.hooks';
 import { routes } from '../../../shared/routes';
-import ErrorPage from '../../components/error-page/error-page';
+import ErrorPage from '../../pages/ErrorPage/error-page';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 import CreateChangeRequestsView from './create-change-request-view/create-change-request-view';
 

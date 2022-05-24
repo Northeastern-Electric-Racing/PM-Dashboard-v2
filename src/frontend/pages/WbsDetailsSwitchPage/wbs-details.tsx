@@ -6,7 +6,7 @@
 import { useParams } from 'react-router-dom';
 import { validateWBS, isProject } from 'utils';
 import WorkPackagePage from '../WorkPackageDetailPage/work-package-page';
-import ErrorPage from '../../components/error-page/error-page';
+import ErrorPage from '../../pages/ErrorPage/error-page';
 import ProjectPage from '../ProjectDetailPage/project-page';
 import './wbs-details.module.css';
 

@@ -4,9 +4,9 @@
  */
 
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
-import { useAuth } from '../../../../services/auth.hooks';
-import { routes } from '../../../../shared/routes';
-import Login from '../../../pages/LoginPage/login';
+import { useAuth } from '../../../services/auth.hooks';
+import { routes } from '../../../shared/routes';
+import Login from '../../pages/LoginPage/login';
 import AppAuthenticated from '../app-authenticated/app-authenticated';
 import './app-public.module.css';
 

@@ -4,12 +4,12 @@
  */
 
 import { User } from '@prisma/client';
-import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
-import { exampleAdminUser } from '../../../../test-support/test-data/users.stub';
-import { mockAuth } from '../../../../test-support/test-data/test-utils.stub';
-import { useAuth } from '../../../../services/auth.hooks';
-import { routes } from '../../../../shared/routes';
-import { Auth } from '../../../../shared/types';
+import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
+import { exampleAdminUser } from '../../../test-support/test-data/users.stub';
+import { mockAuth } from '../../../test-support/test-data/test-utils.stub';
+import { useAuth } from '../../../services/auth.hooks';
+import { routes } from '../../../shared/routes';
+import { Auth } from '../../../shared/types';
 import AppPublic from './app-public';
 
 jest.mock('../app-authenticated/app-authenticated', () => {
@@ -21,7 +21,7 @@ jest.mock('../app-authenticated/app-authenticated', () => {
   };
 });
 
-jest.mock('../../../../services/auth.hooks');
+jest.mock('../../../services/auth.hooks');
 
 const mockedUseAuth = useAuth as jest.Mock<Auth>;
 

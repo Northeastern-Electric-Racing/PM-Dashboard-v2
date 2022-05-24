@@ -13,7 +13,7 @@ import styles from './projects-view.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import { Row } from 'react-bootstrap';
 import { useState } from 'react';
-import PageTitle from '../../components/page-title/page-title';
+import PageTitle from '../../layouts/page-title/page-title';
 
 /***
  * Returns a list of projects that has been filtered according to the given params.

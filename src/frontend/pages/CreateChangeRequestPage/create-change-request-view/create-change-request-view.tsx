@@ -9,8 +9,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ChangeRequestReason, ChangeRequestType, validateWBS } from 'utils';
 import { FormInput } from '../create-change-request';
-import PageTitle from '../../../components/page-title/page-title';
-import PageBlock from '../../../components/page-block/page-block';
+import PageTitle from '../../../layouts/page-title/page-title';
+import PageBlock from '../../../layouts/page-block/page-block';
 
 interface CreateChangeRequestViewProps {
   wbsNum: string;

@@ -12,8 +12,8 @@ import {
   StandardChangeRequest
 } from 'utils';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import PageTitle from '../../../components/page-title/page-title';
-import PageBlock from '../../../components/page-block/page-block';
+import PageTitle from '../../../layouts/page-title/page-title';
+import PageBlock from '../../../layouts/page-block/page-block';
 import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';

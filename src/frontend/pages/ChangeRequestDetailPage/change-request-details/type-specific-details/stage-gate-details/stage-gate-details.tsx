@@ -5,7 +5,7 @@
 
 import { StageGateChangeRequest } from 'utils';
 import { booleanPipe, dollarsPipe } from '../../../../../../shared/pipes';
-import PageBlock from '../../../../../components/page-block/page-block';
+import PageBlock from '../../../../../layouts/page-block/page-block';
 
 interface StageGateDetailsProps {
   cr: StageGateChangeRequest;

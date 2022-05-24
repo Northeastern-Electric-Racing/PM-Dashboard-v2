@@ -12,7 +12,7 @@ import {
   datePipe,
   wbsStatusPipe
 } from '../../../../../shared/pipes';
-import PageBlock from '../../../../components/page-block/page-block';
+import PageBlock from '../../../../layouts/page-block/page-block';
 import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {

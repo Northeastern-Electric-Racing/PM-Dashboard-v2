@@ -16,7 +16,7 @@ import ChangeRequestsFilter from './change-requests-filter/change-requests-filte
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 import ActionButton from '../../components/action-button/action-button';
 import ErrorPage from '../../pages/ErrorPage/error-page';
-import PageTitle from '../../components/page-title/page-title';
+import PageTitle from '../../layouts/page-title/page-title';
 import styles from './change-requests-table.module.css';
 
 /***

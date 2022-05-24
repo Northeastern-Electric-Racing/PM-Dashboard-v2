@@ -14,7 +14,7 @@ import DescriptionList from '../../../components/description-list/description-li
 import HorizontalList from '../../../components/horizontal-list/horizontal-list';
 import WorkPackageDetails from './work-package-details/work-package-details';
 import ChangesList from '../../../components/changes-list/changes-list';
-import PageTitle from '../../../components/page-title/page-title';
+import PageTitle from '../../../layouts/page-title/page-title';
 import StageGateWorkPackageModalContainer from '../stage-gate-work-package-modal-container/stage-gate-work-package-modal-container';
 
 interface WorkPackageViewContainerProps {

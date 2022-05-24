@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import PageBlock from '../page-block/page-block';
+import PageBlock from '../../layouts/page-block/page-block';
 import styles from './bullet-list.module.css';
 
 interface BulletListProps {

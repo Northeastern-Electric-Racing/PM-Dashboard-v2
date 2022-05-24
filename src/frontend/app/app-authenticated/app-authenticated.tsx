@@ -9,10 +9,10 @@ import ChangeRequests from '../../pages/ChangeRequestsPage/change-requests';
 import Projects from '../../pages/ProjectsPage/projects';
 import { PageNotFound } from '../../pages/PageNotFoundPage/page-not-found';
 import Home from '../../pages/HomePage/home';
-import NavTopBar from '../../components/nav-top-bar/nav-top-bar';
+import NavTopBar from '../../layouts/nav-top-bar/nav-top-bar';
 import Settings from '../../pages/SettingsPage/settings';
 import styles from './app-authenticated.module.css';
-import Sidebar from '../../components/sidebar/sidebar';
+import Sidebar from '../../layouts/sidebar/sidebar';
 
 const AppAuthenticated: React.FC = () => {
   return (

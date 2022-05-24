@@ -14,7 +14,7 @@ import {
   wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
-import PageBlock from '../../../../components/page-block/page-block';
+import PageBlock from '../../../../layouts/page-block/page-block';
 import styles from './project-details.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
 

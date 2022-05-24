@@ -5,7 +5,7 @@
 
 import { ChangeRequestExplanation, StandardChangeRequest } from 'utils';
 import { weeksPipe, dollarsPipe } from '../../../../../../shared/pipes';
-import PageBlock from '../../../../../components/page-block/page-block';
+import PageBlock from '../../../../../layouts/page-block/page-block';
 
 interface StandardDetailsProps {
   cr: StandardChangeRequest;

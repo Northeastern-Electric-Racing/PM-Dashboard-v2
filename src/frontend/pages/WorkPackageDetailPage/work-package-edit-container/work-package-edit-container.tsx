@@ -207,7 +207,7 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
           }
         />
         <PageBlock
-          title={'Delieverables'}
+          title={'Deliverables'}
           headerRight={<></>}
           body={
             <EditableTextInputList

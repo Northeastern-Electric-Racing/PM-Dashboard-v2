@@ -7,7 +7,7 @@ import { render, screen, routerWrapperBuilder } from '../../../test-support/test
 import { routes } from '../../../shared/routes';
 import ChangeRequests from './change-requests';
 
-jest.mock('./change-requests-table/change-requests-table', () => {
+jest.mock('./change-requests-table', () => {
   return {
     __esModule: true,
     default: () => {

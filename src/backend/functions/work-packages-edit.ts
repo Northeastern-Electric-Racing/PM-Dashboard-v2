@@ -293,17 +293,15 @@ const addDescriptionBullets = async (
   });
 };
 
-// edit descrption bullets in the db for each id and detail pair
+// edit description bullets in the db for each id and detail pair
 const editDescriptionBullets = async (editedIdsAndDetails: { id: number; detail: string }[]) => {
   if (editedIdsAndDetails.length < 1) return;
-  // edit the edited bullets if there are any to update
-  await prisma.$transaction(
-    editedIdsAndDetails.map((element) =>
-      prisma.description_Bullet.update({
+  editedIdsAndDetails.forEach(
+    async (element) =>
+      await prisma.description_Bullet.update({
         where: { descriptionId: element.id },
         data: { detail: element.detail }
       })
-    )
   );
 };
 

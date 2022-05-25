@@ -6,7 +6,7 @@
 import { Route, Switch } from 'react-router-dom';
 import { routes } from '../../../shared/routes';
 import ChangeRequestDetails from '../ChangeRequestDetailPage/change-request-details';
-import ChangeRequestsTable from './change-requests-table/change-requests-table';
+import ChangeRequestsTable from './change-requests-table';
 import CreateChangeRequest from '../CreateChangeRequestPage/create-change-request';
 import './change-requests.module.css';
 

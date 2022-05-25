@@ -18,7 +18,18 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "@@app/*": ["frontend/app/*"],
+      "@@components/*": ["frontend/components/*"],
+      "@@layouts/*": ["frontend/layouts/*"],
+      "@@pages/*": ["frontend/pages/*"],
+      "backend/*": ["backend/*"],
+      "test-support/*": ["test-support/*"],
+      "shared/*": ["shared/*"],
+      "*": ["./*"]
+    }
   },
   "exclude": [
     "src/setupProxy.js",

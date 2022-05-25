@@ -42,6 +42,7 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   };
 
   const verifyLogin = async (response: any) => {
+    history.push(routes.LOADING);
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);

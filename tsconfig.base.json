@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@@app/*": ["frontend/app/*"],
+      "@@components/*": ["frontend/components/*"],
+      "@@layouts/*": ["frontend/layouts/*"],
+      "@@pages/*": ["frontend/pages/*"],
+      "backend/*": ["backend/*"],
+      "test-support/*": ["test-support/*"],
+      "shared/*": ["shared/*"],
+      "*": ["./*"]
+    }
+  }
+}

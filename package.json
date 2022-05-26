@@ -108,27 +108,6 @@
       "lib"
     ]
   },
-  "jest": {
-    "coverageReporters": [
-      "text",
-      "html"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/node_modules/",
-      "!<rootDir>/.github/",
-      "!<rootDir>/build/",
-      "!<rootDir>/coverage/",
-      "!<rootDir>/docs/",
-      "!<rootDir>/lambda/",
-      "!<rootDir>/public/",
-      "!<rootDir>/src/backend/prisma/",
-      "!<rootDir>/src/utils/lib",
-      "!<rootDir>/src/utils/node_modules/",
-      "!**/lib/**",
-      "!src/**/*.d.ts"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

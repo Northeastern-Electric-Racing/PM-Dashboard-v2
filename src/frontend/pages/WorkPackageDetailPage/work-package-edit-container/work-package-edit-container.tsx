@@ -179,14 +179,17 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
   return (
     <div className="mb-5">
       <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`} />
-        <Form.Control
-          className="m-4 w-25"
-          type="number"
-          placeholder="Change Request ID #"
-          min="0"
-          required
-          onChange={(e) => setCrId(e.target.value.trim())}
+        <PageTitle
+          title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
+          actionButton={
+            <Form.Control
+              type="number"
+              placeholder="Change Request ID #"
+              min="0"
+              required
+              onChange={(e) => setCrId(e.target.value.trim())}
+            />
+          }
         />
         <WorkPackageEditDetails
           workPackage={workPackage}

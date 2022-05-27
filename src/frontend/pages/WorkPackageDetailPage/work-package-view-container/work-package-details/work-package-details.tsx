@@ -20,11 +20,6 @@ interface WorkPackageDetailsProps {
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
-  const endDateAsDatePipe = () => {
-    const endDate = new Date(workPackage.startDate);
-    endDate.setDate(endDate.getDate() + workPackage.duration * 7);
-    return endDate;
-  };
   const allColsStyle = 'mb-2';
   return (
     <PageBlock
@@ -46,7 +41,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
               <b>Start Date:</b> {datePipe(workPackage.startDate)}
             </Col>
             <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
-              <b>End Date:</b> {datePipe(endDateAsDatePipe())}
+              <b>End Date:</b> {datePipe(workPackage.endDate)}
             </Col>
           </Row>
           <Row>

@@ -5,8 +5,8 @@
 
 import { Project, User, WbsElementStatus } from 'utils';
 import { Col, Container, Row, Form, InputGroup } from 'react-bootstrap';
+import { fullNamePipe, emDashPipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../layouts/page-block/page-block';
-import { wbsPipe, endDatePipe, fullNamePipe, emDashPipe } from '../../../../../shared/pipes';
 
 // new parts added at the bottom
 interface projectDetailsProps {
@@ -37,26 +37,6 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   updateProjectManager
 }) => {
   const statuses = Object.values(WbsElementStatus).filter((status) => status !== project.status);
-  const startDate =
-    project.workPackages.length > 0
-      ? project.workPackages
-          .reduce(
-            (min, cur) => (cur.startDate < min ? cur.startDate : min),
-            project.workPackages[0].startDate
-          )
-          .toLocaleDateString()
-      : 'n/a';
-  const endDate =
-    project.workPackages.length > 0
-      ? endDatePipe(
-          project.workPackages.reduce(
-            (min, cur) => (cur.startDate < min ? cur.startDate : min),
-            project.workPackages[0].startDate
-          ),
-          project.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
-        )
-      : 'n/a';
-
   const editDetailsInputBuilder = (
     title: string,
     type: string,
@@ -154,100 +134,77 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     );
   };
 
-  const detailsBody = (
-    <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          {editDetailsInputBuilder('Project Name:', 'text', project.name, updateName, '', '', '')}
-          {editDetailsInputBuilder(
-            'WBS #:',
-            'text',
-            wbsPipe(project.wbsNum),
-            null,
-            '',
-            '',
-            '',
-            true
-          )}
-          {buildUsersSelect('Project Lead:', project.projectLead, updateProjectLead)}
-          {buildUsersSelect('Project Manager:', project.projectManager, updateProjectManager)}
-          {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
-        </Col>
-        <Col xs={6} md={4}>
-          {editDetailsInputBuilder(
-            'Duration:',
-            'number',
-            project.duration,
-            null,
-            '',
-            'weeks',
-            '',
-            true
-          )}
-          {editDetailsInputBuilder('Start Date:', 'text', '', null, '', '', startDate, true)}
-          {editDetailsInputBuilder('End Date:', 'text', '', null, '', '', endDate, true)}
-          <br />
-          {editDetailsInputBuilder(
-            'Expected Progress:',
-            'text',
-            '',
-            null,
-            '',
-            '',
-            'Not implemented yet',
-            true
-          )}
-          {editDetailsInputBuilder(
-            'Timeline Status:',
-            'text',
-            '',
-            null,
-            '',
-            '',
-            'Not implemented yet',
-            true
-          )}
-        </Col>
-      </Row>
-      <br />
-      <br />
-      <Row>
-        <Col>
-          {editDetailsInputBuilder(
-            'Slide Deck',
-            'text',
-            project.slideDeckLink!,
-            updateSlideDeck,
-            '',
-            '',
-            'Slide deck link'
-          )}
-          {editDetailsInputBuilder(
-            'Task List',
-            'text',
-            project.taskListLink!,
-            updateTaskList,
-            '',
-            '',
-            'Task list link'
-          )}
-          {editDetailsInputBuilder('BOM', 'text', project.bomLink!, updateBom, '', '', 'BOM link')}
-          {editDetailsInputBuilder(
-            'Google Drive',
-            'text',
-            project.gDriveLink!,
-            updateGDrive,
-            '',
-            '',
-            'Google drive link'
-          )}
-        </Col>
-      </Row>
-    </Container>
-  );
-
   return (
-    <PageBlock title={'Project Details (EDIT)'} headerRight={statusSelect} body={detailsBody} />
+    <PageBlock
+      title={'Project Details (EDIT)'}
+      headerRight={statusSelect}
+      body={
+        <Container fluid>
+          <Row>
+            <Col>
+              {editDetailsInputBuilder(
+                'Project Name:',
+                'text',
+                project.name,
+                updateName,
+                '',
+                '',
+                ''
+              )}
+            </Col>
+            <Col lg={3} xl={2}>
+              {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
+            </Col>
+          </Row>
+          <Row>
+            <Col>{buildUsersSelect('Project Lead:', project.projectLead, updateProjectLead)}</Col>
+            <Col>
+              {buildUsersSelect('Project Manager:', project.projectManager, updateProjectManager)}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {editDetailsInputBuilder(
+                'Slide Deck',
+                'text',
+                project.slideDeckLink!,
+                updateSlideDeck,
+                '',
+                '',
+                'Slide deck link'
+              )}
+              {editDetailsInputBuilder(
+                'Task List',
+                'text',
+                project.taskListLink!,
+                updateTaskList,
+                '',
+                '',
+                'Task list link'
+              )}
+              {editDetailsInputBuilder(
+                'BOM',
+                'text',
+                project.bomLink!,
+                updateBom,
+                '',
+                '',
+                'BOM link'
+              )}
+              {editDetailsInputBuilder(
+                'Google Drive',
+                'text',
+                project.gDriveLink!,
+                updateGDrive,
+                '',
+                '',
+                'Google drive link'
+              )}
+            </Col>
+          </Row>
+        </Container>
+      }
+    />
   );
 };
 

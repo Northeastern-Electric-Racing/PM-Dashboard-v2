@@ -25,8 +25,9 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     placeholder = '',
     readOnly = false
   ) => {
-    const formInput = (
+    return (
       <Form.Group>
+        <Form.Label>{title}</Form.Label>
         <InputGroup>
           {prefix ? <InputGroup.Text>{prefix}</InputGroup.Text> : <></>}
           <Form.Control
@@ -45,14 +46,6 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
           {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : <></>}
         </InputGroup>
       </Form.Group>
-    );
-
-    return (
-      <>
-        <b>{title}</b>
-        {formInput}
-        <br />
-      </>
     );
   };
 

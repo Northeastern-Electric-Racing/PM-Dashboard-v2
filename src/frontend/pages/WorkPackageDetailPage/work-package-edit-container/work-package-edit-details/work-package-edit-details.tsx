@@ -81,28 +81,6 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     </Form.Control>
   );
 
-  const percentages = [25, 50, 75, 100];
-
-  const buildProgressSelect = (title: string, defaultVal: number, onChange: any) => {
-    const otherProgress = percentages.filter((percentage) => percentage !== defaultVal);
-    return (
-      <>
-        <b>{title}</b>
-        <Form.Control as="select" onChange={(e) => onChange(e.target.value)} custom>
-          <option key={defaultVal} value={defaultVal}>
-            {`${defaultVal}%`}
-          </option>
-          {otherProgress.map((progress, index) => (
-            <option key={progress} value={progress}>
-              {`${progress}%`}
-            </option>
-          ))}
-        </Form.Control>
-        <br />
-      </>
-    );
-  };
-
   const buildUsersSelect = (
     title: string,
     defaultUser: User | undefined,
@@ -113,8 +91,8 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
       otherUsers = users.filter((user) => user.userId !== defaultUser.userId);
     }
     return (
-      <>
-        <b>{title}</b>
+      <Form.Group>
+        <Form.Label>{title}</Form.Label>
         <Form.Control
           as="select"
           data-testid={title}
@@ -136,8 +114,7 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
             </option>
           ))}
         </Form.Control>
-        <br />
-      </>
+      </Form.Group>
     );
   };
 
@@ -155,19 +132,35 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
       body={
         <Container fluid>
           <Row>
-            <Col xs={12} md={6}>
+            <Col>
               {editDetailsInputBuilder(
                 'Work Package Name:',
                 'text',
                 workPackage.name,
                 setters.setName
               )}
+            </Col>
+            <Col md={3} lg={2} xl={2}>
+              {editDetailsInputBuilder(
+                'Start Date:',
+                'date',
+                transformDate(workPackage.startDate),
+                (val) => setters.setStartDate(new Date(val.replace(/-/g, '/'))) // must use / for date format to prevent day being behind by 1
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4}>
               {buildUsersSelect('Project Lead:', workPackage.projectLead, setters.setProjectLead)}
+            </Col>
+            <Col md={4}>
               {buildUsersSelect(
                 'Project Manager:',
                 workPackage.projectManager,
                 setters.setProjectManager
               )}
+            </Col>
+            <Col md={4} lg={2} xl={2}>
               {editDetailsInputBuilder(
                 'Duration:',
                 'number',
@@ -177,26 +170,27 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
                 'weeks'
               )}
             </Col>
-            <Col xs={6} md={4}>
-              {editDetailsInputBuilder(
-                'Start Date:',
-                'date',
-                transformDate(workPackage.startDate),
-                (val) => setters.setStartDate(new Date(val.replace(/-/g, '/'))) // must use / for date format to prevent day being behind by 1
-              )}
-              {buildProgressSelect('Progress:', workPackage.progress, (val: string) =>
-                setters.setProgress(parseInt(val.trim()))
-              )}
-              {editDetailsInputBuilder(
-                'Expected Progress:',
-                'number',
-                '',
-                null,
-                '',
-                '',
-                percentPipe(workPackage.expectedProgress),
-                true
-              )}
+            <Col sm={3} md={2} lg={2} xl={2}>
+              <Form.Group>
+                <Form.Label>Progress:</Form.Label>
+                <Form.Control
+                  as="select"
+                  onChange={(e) => setters.setProgress(parseInt(e.target.value.trim()))}
+                  custom
+                >
+                  <option key={workPackage.progress} value={workPackage.progress}>
+                    {percentPipe(workPackage.progress)}
+                  </option>
+                  {[0, 25, 50, 75, 100]
+                    .filter((p) => p !== workPackage.progress)
+                    .map((progress, index) => (
+                      <option key={progress} value={progress}>
+                        {percentPipe(progress)}
+                      </option>
+                    ))}
+                </Form.Control>
+                <Form.Text>Expected: {percentPipe(workPackage.expectedProgress)}</Form.Text>
+              </Form.Group>
             </Col>
           </Row>
         </Container>

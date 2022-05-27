@@ -28,20 +28,8 @@
 
 .applyButton {
   float: right;
-  background-color: #ef4345 !important;
-  border-color: #ef4345 !important;
 }
 
 .clearButton {
   float: left;
-  background-color: #ef4345 !important;
-  border-color: #ef4345 !important;
-}
-
-.applyButton:focus {
-  box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5) !important;
-}
-
-.clearButton:focus {
-  box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5) !important;
 }

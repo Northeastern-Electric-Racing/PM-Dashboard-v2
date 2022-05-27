@@ -6,8 +6,7 @@
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
-import styles from './change-requests-filter.module.css';
-
+import styles from './change-requests-filter.module.scss';
 interface FilterFieldStateProps {
   update: (
     type: string,
@@ -142,13 +141,13 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
           </Form.Group>
           <Form.Group className={styles.filterActions}>
             <Button
-              className={styles.applyButton}
+              variant="secondary"
               onClick={() => update(type, impact, reason, state, implemented)}
             >
               Apply
             </Button>
             <Button
-              className={styles.clearButton}
+              variant="secondary"
               onClick={() => {
                 setType('');
                 setImpact([]);

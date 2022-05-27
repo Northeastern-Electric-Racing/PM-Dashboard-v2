@@ -4,6 +4,8 @@
  */
 
 import { ReactElement, useState } from 'react';
+import { Button, Container, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import {
   ActivationChangeRequest,
   ChangeRequest,
@@ -11,18 +13,16 @@ import {
   StageGateChangeRequest,
   StandardChangeRequest
 } from 'utils';
+import { routes } from '../../../../shared/routes';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import PageTitle from '../../../layouts/page-title/page-title';
-import PageBlock from '../../../layouts/page-block/page-block';
-import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
-import ReviewNotes from './review-notes/review-notes';
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { routes } from '../../../../shared/routes';
+import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ReviewChangeRequest from '../ReviewChangeRequestModal/review-change-request';
+import PageTitle from '../../../layouts/page-title/page-title';
+import PageBlock from '../../../layouts/page-block/page-block';
+import ReviewNotes from './review-notes/review-notes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -85,7 +85,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
 
   return (
-    <>
+    <Container fluid>
       <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={actionDropdown} />
       <PageBlock
         title={'Change Request Details'}
@@ -123,7 +123,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         dateImplemented={changeRequest.dateImplemented!}
       />
       {modalShow && <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />}
-    </>
+    </Container>
   );
 };
 

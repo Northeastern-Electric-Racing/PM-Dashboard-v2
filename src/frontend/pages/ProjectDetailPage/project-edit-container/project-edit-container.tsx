@@ -4,7 +4,7 @@
  */
 
 import { SyntheticEvent, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
@@ -213,97 +213,99 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <PageTitle
-        title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
-        actionButton={
-          <Form.Control
-            type="number"
-            placeholder="Change Request ID #"
-            required
-            min={0}
-            onChange={(e) => setCrId(Number(e.target.value))}
-          />
-        }
-      />
-      <ProjectEditDetails
-        project={proj}
-        users={allUsers.data!.filter((u) => u.role !== 'GUEST')}
-        updateSlideDeck={updateSlideDeck}
-        updateTaskList={updateTaskList}
-        updateBom={updateBom}
-        updateGDrive={updateGDrive}
-        updateName={setName}
-        updateBudget={(val: string) => setBudget(Number(val))}
-        updateStatus={setWbsElementStatus}
-        updateProjectLead={setProjectLead}
-        updateProjectManager={setProjectManager}
-      />
-      <ProjectEditSummary project={proj} updateSummary={setSummary} />
-      <PageBlock
-        title={'Goals'}
-        headerRight={<></>}
-        body={
-          <EditableTextInputList
-            items={goals.map((goal) => goal.detail)}
-            add={goalsUtil.add}
-            remove={goalsUtil.remove}
-            update={goalsUtil.update}
-          />
-        }
-      />
-      <PageBlock
-        title={'Features'}
-        headerRight={<></>}
-        body={
-          <EditableTextInputList
-            items={features.map((feature) => feature.detail)}
-            add={featUtil.add}
-            remove={featUtil.remove}
-            update={featUtil.update}
-          />
-        }
-      />
-      <PageBlock
-        title={'Other Constraints'}
-        headerRight={<></>}
-        body={
-          <EditableTextInputList
-            items={otherConstraints.map((other) => other.detail)}
-            add={ocUtil.add}
-            remove={ocUtil.remove}
-            update={ocUtil.update}
-          />
-        }
-      />
-      <PageBlock
-        title={'Rules'}
-        headerRight={<></>}
-        body={
-          <EditableTextInputList
-            items={rules}
-            add={rulesUtil.add}
-            remove={rulesUtil.remove}
-            update={rulesUtil.update}
-          />
-        }
-      />
-      <ChangesList changes={proj.changes} />
-      <PageBlock
-        title={'Work Packages'}
-        headerRight={<></>}
-        body={
-          <>
-            {proj.workPackages.map((ele: WorkPackage) => (
-              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
-                <WorkPackageSummary workPackage={ele} />
-              </div>
-            ))}
-          </>
-        }
-      />
-      <EditModeOptions exitEditMode={exitEditMode} />
-    </Form>
+    <Container fluid className="mb-5">
+      <Form onSubmit={handleSubmit}>
+        <PageTitle
+          title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
+          actionButton={
+            <Form.Control
+              type="number"
+              placeholder="Change Request ID #"
+              required
+              min={0}
+              onChange={(e) => setCrId(Number(e.target.value))}
+            />
+          }
+        />
+        <ProjectEditDetails
+          project={proj}
+          users={allUsers.data!.filter((u) => u.role !== 'GUEST')}
+          updateSlideDeck={updateSlideDeck}
+          updateTaskList={updateTaskList}
+          updateBom={updateBom}
+          updateGDrive={updateGDrive}
+          updateName={setName}
+          updateBudget={(val: string) => setBudget(Number(val))}
+          updateStatus={setWbsElementStatus}
+          updateProjectLead={setProjectLead}
+          updateProjectManager={setProjectManager}
+        />
+        <ProjectEditSummary project={proj} updateSummary={setSummary} />
+        <PageBlock
+          title={'Goals'}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={goals.map((goal) => goal.detail)}
+              add={goalsUtil.add}
+              remove={goalsUtil.remove}
+              update={goalsUtil.update}
+            />
+          }
+        />
+        <PageBlock
+          title={'Features'}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={features.map((feature) => feature.detail)}
+              add={featUtil.add}
+              remove={featUtil.remove}
+              update={featUtil.update}
+            />
+          }
+        />
+        <PageBlock
+          title={'Other Constraints'}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={otherConstraints.map((other) => other.detail)}
+              add={ocUtil.add}
+              remove={ocUtil.remove}
+              update={ocUtil.update}
+            />
+          }
+        />
+        <PageBlock
+          title={'Rules'}
+          headerRight={<></>}
+          body={
+            <EditableTextInputList
+              items={rules}
+              add={rulesUtil.add}
+              remove={rulesUtil.remove}
+              update={rulesUtil.update}
+            />
+          }
+        />
+        <ChangesList changes={proj.changes} />
+        <PageBlock
+          title={'Work Packages'}
+          headerRight={<></>}
+          body={
+            <>
+              {proj.workPackages.map((ele: WorkPackage) => (
+                <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+                  <WorkPackageSummary workPackage={ele} />
+                </div>
+              ))}
+            </>
+          }
+        />
+        <EditModeOptions exitEditMode={exitEditMode} />
+      </Form>
+    </Container>
   );
 };
 

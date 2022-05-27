@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
-import styles from './projects-table-filter.module.css';
+import styles from './_projects-table-filter.module.scss';
 import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
 
@@ -219,7 +219,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               </Dropdown>
             </Form.Group>
             <Button
-              // variant='ner-red'
+              variant="secondary"
               className={styles.applyButton}
               onClick={() => {
                 onClick(status, project_leadID, project_managerID, car_number);
@@ -227,7 +227,11 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
             >
               Apply
             </Button>
-            <Button className={styles.clearButton} onClick={resetFiltersToDefault}>
+            <Button
+              className={styles.clearButton}
+              variant="secondary"
+              onClick={resetFiltersToDefault}
+            >
               Clear
             </Button>
           </Form>

@@ -163,7 +163,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   {car_number === -1 ? '' : car_number}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsNum([1, 2], setCar_number)}
+                  {genDropdownItemsNum([0, 1, 2], setCar_number)}
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
@@ -218,21 +218,14 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <Button
-              variant="secondary"
-              className={styles.applyButton}
-              onClick={() => {
-                onClick(status, project_leadID, project_managerID, car_number);
-              }}
-            >
-              Apply
+            <Button variant={'outline-secondary float-left'} onClick={resetFiltersToDefault}>
+              Clear
             </Button>
             <Button
-              className={styles.clearButton}
-              variant="secondary"
-              onClick={resetFiltersToDefault}
+              variant={'outline-primary float-right'}
+              onClick={() => onClick(status, project_leadID, project_managerID, car_number)}
             >
-              Clear
+              Apply
             </Button>
           </Form>
         </Card.Body>

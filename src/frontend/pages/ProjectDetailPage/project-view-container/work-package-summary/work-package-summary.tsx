@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Collapse } from 'react-bootstrap';
+import { Card, Collapse, Col, Container, Row } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
 import {
   weeksPipe,
@@ -16,8 +16,7 @@ import {
   wbsStatusPipe
 } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
-import styles from './work-package-summary.module.css';
-import { Col, Container, Row } from 'react-bootstrap';
+import styles from './work-package-summary.module.scss';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
@@ -74,10 +73,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
                 <Col xs={12} md={6}>
                   <b>Expected Activities:</b> {expectedActivitiesList}
                   {numMoreExpectedActivities > 0 ? (
-                    <Link
-                      to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}
-                      className={styles.showMoreLink}
-                    >
+                    <Link to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}>
                       Show {numMoreExpectedActivities} more...
                     </Link>
                   ) : (

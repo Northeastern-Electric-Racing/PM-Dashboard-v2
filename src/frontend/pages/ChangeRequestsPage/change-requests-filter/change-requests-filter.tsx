@@ -6,8 +6,7 @@
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
-import styles from './_change-requests-filter.module.scss';
-
+import styles from './change-requests-filter.module.scss';
 interface FilterFieldStateProps {
   update: (
     type: string,

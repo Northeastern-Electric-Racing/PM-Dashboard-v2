@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
-import styles from './_projects-table-filter.module.scss';
+import styles from './projects-table-filter.module.scss';
 import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
 

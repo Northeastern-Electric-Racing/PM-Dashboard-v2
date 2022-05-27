@@ -25,6 +25,7 @@ interface ProjectViewContainerProps {
 
 const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enterEditMode }) => {
   const auth = useAuth();
+  proj.workPackages.sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
 
   const isGuest = auth.user?.role === 'GUEST';
   const editBtn = (

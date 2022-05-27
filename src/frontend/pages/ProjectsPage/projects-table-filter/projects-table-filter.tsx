@@ -146,7 +146,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
 
   return (
     <>
-      <Card className={styles.card}>
+      <Card>
         <Card.Body>
           <Card.Title>Filters</Card.Title>
           <Form>

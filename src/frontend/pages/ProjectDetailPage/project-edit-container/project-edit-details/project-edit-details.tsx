@@ -47,8 +47,9 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
     placeholder = '',
     readOnly = false
   ) => {
-    const formInput = (
+    return (
       <Form.Group>
+        <Form.Label>{title}</Form.Label>
         <InputGroup>
           {prefix ? <InputGroup.Text>{prefix}</InputGroup.Text> : <></>}
           <Form.Control
@@ -67,14 +68,6 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
           {suffix ? <InputGroup.Text>{suffix}</InputGroup.Text> : <></>}
         </InputGroup>
       </Form.Group>
-    );
-
-    return (
-      <>
-        <b>{title}</b>
-        {formInput}
-        <br />
-      </>
     );
   };
 
@@ -106,8 +99,8 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
       otherUsers = users.filter((user) => user.userId !== defaultUser.userId);
     }
     return (
-      <>
-        <b>{title}</b>
+      <Form.Group>
+        <Form.Label>{title}</Form.Label>
         <Form.Control
           as="select"
           data-testid={title}
@@ -129,8 +122,7 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
             </option>
           ))}
         </Form.Control>
-        <br />
-      </>
+      </Form.Group>
     );
   };
 

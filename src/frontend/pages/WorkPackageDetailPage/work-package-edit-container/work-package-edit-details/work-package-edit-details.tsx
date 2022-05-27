@@ -5,13 +5,7 @@
 
 import { Form, InputGroup, Container, Row, Col } from 'react-bootstrap';
 import { WorkPackage, User, WbsElementStatus } from 'utils';
-import {
-  fullNamePipe,
-  wbsPipe,
-  datePipe,
-  percentPipe,
-  emDashPipe
-} from '../../../../../shared/pipes';
+import { fullNamePipe, percentPipe, emDashPipe } from '../../../../../shared/pipes';
 import PageBlock from '../../../../layouts/page-block/page-block';
 
 interface Props {
@@ -154,28 +148,6 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     );
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const formatDate = (date: Date) => {
-    const offset = date.getTimezoneOffset();
-    date = new Date(date.getTime() - offset * 60 * 1000);
-    return date.toISOString().split('T')[0];
-  };
-
-  const endDateAsDatePipe = () => {
-    const endDate = new Date(workPackage.startDate);
-    endDate.setDate(endDate.getDate() + workPackage.duration * 7);
-    return endDate;
-  };
-
-  // const usersWithoutAsStrings = (user: User) => {
-  //   if (data) {
-  //     const users = data;
-  //     const otherUsers = users.filter((otherUser) => {
-  //       return otherUser.userId !== user.userId;
-  //     });
-  //     return otherUsers.map((otherUser) => fullNamePipe(otherUser));
-  //   }
-  // };
   const transformDate = (date: Date) => {
     const month =
       date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1).toString();
@@ -183,86 +155,59 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
     return `${date.getFullYear().toString()}-${month}-${day}`;
   };
 
-  const detailsBody = (
-    <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          {editDetailsInputBuilder('Work Package Name:', 'text', workPackage.name, setters.setName)}
-          {editDetailsInputBuilder(
-            'WBS #:',
-            'text',
-            wbsPipe(workPackage.wbsNum),
-            null,
-            '',
-            '',
-            '',
-            true
-          )}
-          {buildUsersSelect('Project Lead:', workPackage.projectLead, setters.setProjectLead)}
-          {buildUsersSelect(
-            'Project Manager:',
-            workPackage.projectManager,
-            setters.setProjectManager
-          )}
-          {editDetailsInputBuilder(
-            'Duration:',
-            'number',
-            workPackage.duration,
-            (val) => setters.setDuration(parseInt(val.trim())),
-            '',
-            'weeks'
-          )}
-        </Col>
-        <Col xs={6} md={4}>
-          {editDetailsInputBuilder(
-            'Start Date:',
-            'date',
-            transformDate(workPackage.startDate),
-            (val) => setters.setStartDate(new Date(val.replace(/-/g, '/'))) // must use / for date format to prevent day being behind by 1
-          )}
-          {editDetailsInputBuilder(
-            'End Date:',
-            'text',
-            '',
-            null,
-            '',
-            '',
-            datePipe(endDateAsDatePipe()),
-            true
-          )}
-          {buildProgressSelect('Progress:', workPackage.progress, (val: string) =>
-            setters.setProgress(parseInt(val.trim()))
-          )}
-          {editDetailsInputBuilder(
-            'Expected Progress:',
-            'number',
-            '',
-            null,
-            '',
-            '',
-            percentPipe(workPackage.expectedProgress),
-            true
-          )}
-          {editDetailsInputBuilder(
-            'Timeline Status:',
-            'text',
-            '',
-            null,
-            '',
-            '',
-            workPackage.timelineStatus,
-            true
-          )}
-        </Col>
-      </Row>
-    </Container>
-  );
-
   return (
     <PageBlock
       title={'Work Package Details'}
       headerRight={<b>{statusSelect}</b>}
-      body={detailsBody}
+      body={
+        <Container fluid>
+          <Row>
+            <Col xs={12} md={6}>
+              {editDetailsInputBuilder(
+                'Work Package Name:',
+                'text',
+                workPackage.name,
+                setters.setName
+              )}
+              {buildUsersSelect('Project Lead:', workPackage.projectLead, setters.setProjectLead)}
+              {buildUsersSelect(
+                'Project Manager:',
+                workPackage.projectManager,
+                setters.setProjectManager
+              )}
+              {editDetailsInputBuilder(
+                'Duration:',
+                'number',
+                workPackage.duration,
+                (val) => setters.setDuration(parseInt(val.trim())),
+                '',
+                'weeks'
+              )}
+            </Col>
+            <Col xs={6} md={4}>
+              {editDetailsInputBuilder(
+                'Start Date:',
+                'date',
+                transformDate(workPackage.startDate),
+                (val) => setters.setStartDate(new Date(val.replace(/-/g, '/'))) // must use / for date format to prevent day being behind by 1
+              )}
+              {buildProgressSelect('Progress:', workPackage.progress, (val: string) =>
+                setters.setProgress(parseInt(val.trim()))
+              )}
+              {editDetailsInputBuilder(
+                'Expected Progress:',
+                'number',
+                '',
+                null,
+                '',
+                '',
+                percentPipe(workPackage.expectedProgress),
+                true
+              )}
+            </Col>
+          </Row>
+        </Container>
+      }
     />
   );
 };

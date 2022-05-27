@@ -218,11 +218,16 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
-            <Button variant={'outline-secondary float-left'} onClick={resetFiltersToDefault}>
+            <Button
+              className={'float-left'}
+              variant={'outline-secondary'}
+              onClick={resetFiltersToDefault}
+            >
               Clear
             </Button>
             <Button
-              variant={'outline-primary float-right'}
+              className={'float-right'}
+              variant={'outline-primary'}
               onClick={() => onClick(status, project_leadID, project_managerID, car_number)}
             >
               Apply

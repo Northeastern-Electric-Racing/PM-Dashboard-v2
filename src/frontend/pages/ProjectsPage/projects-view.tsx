@@ -139,7 +139,7 @@ const ProjectsView: React.FC = () => {
   return (
     <Container fluid>
       <PageTitle title={'Projects'} />
-      <Row className="">
+      <Row>
         <Col sm={4} md={3} lg={3} xl={2}>
           <ProjectsTableFilter
             onClick={sendDataToParent}

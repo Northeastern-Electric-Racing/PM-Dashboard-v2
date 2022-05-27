@@ -16,13 +16,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3, h4, h5 {
   font-family: $ner-header-font;
 }
 
-$secondary: #ef4345;
+$primary: #ef4345;
 
 // change the theme
 $theme-colors: (

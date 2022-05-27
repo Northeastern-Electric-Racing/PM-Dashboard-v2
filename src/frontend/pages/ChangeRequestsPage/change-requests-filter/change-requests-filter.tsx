@@ -139,27 +139,27 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
-          <Form.Group className={styles.filterActions}>
-            <Button
-              variant="secondary"
-              onClick={() => update(type, impact, reason, state, implemented)}
-            >
-              Apply
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setType('');
-                setImpact([]);
-                setReason('');
-                setState([]);
-                setImplemented('');
-                update('', [], '', [], '');
-              }}
-            >
-              Clear
-            </Button>
-          </Form.Group>
+          <Button
+            className={'float-left'}
+            variant={'outline-secondary'}
+            onClick={() => {
+              setType('');
+              setImpact([]);
+              setReason('');
+              setState([]);
+              setImplemented('');
+              update('', [], '', [], '');
+            }}
+          >
+            Clear
+          </Button>
+          <Button
+            className={'float-right'}
+            variant={'outline-primary'}
+            onClick={() => update(type, impact, reason, state, implemented)}
+          >
+            Apply
+          </Button>
         </Form>
       </Card.Body>
     </Card>

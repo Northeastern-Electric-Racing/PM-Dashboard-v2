@@ -134,9 +134,10 @@ export const createStandardChangeRequestPayloadSchema = bodySchema({
       type: enumType(
         ChangeRequestReason.Estimation,
         ChangeRequestReason.School,
-        ChangeRequestReason.Manufacturing,
         ChangeRequestReason.Design,
+        ChangeRequestReason.Manufacturing,
         ChangeRequestReason.Rules,
+        ChangeRequestReason.Initialization,
         ChangeRequestReason.OtherProject,
         ChangeRequestReason.Other
       ),

@@ -24,9 +24,15 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
   remove,
   update
 }) => {
+  // last input of the list is being kept track of so that we know if we should add a new input when enter is pressed
+  // (only add one when the box is not empty)
   const [lastInput, setLastInput] = useState(
     items.length > 0 ? items[items.length - 1].toString() : ''
   );
+
+  // this hook is used to prevent auto focusing on something when the page is loaded
+  const [hasTyped, setHasTyped] = useState(false);
+
   const focusRef = useRef<HTMLInputElement>(null);
 
   /**
@@ -38,9 +44,14 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
     switch (e.key) {
       case 'Enter':
         e.preventDefault();
+        setHasTyped(true);
+
+        // if the last input is not empty, make a new input
         if (lastInput) {
           addButtonOnClick();
         }
+
+        // set the focus to the last input
         focusRef.current?.focus();
         break;
     }
@@ -80,13 +91,14 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
         <InputGroup>
           <Form.Control
             required
-            autoFocus={isLastElement(index)}
+            autoFocus={hasTyped && isLastElement(index)}
             type="text"
             ref={isLastElement(index) ? focusRef : null}
             value={item.toString()}
             placeholder={'Input new bullet here...'}
             onKeyDown={(e: any) => handleKeyDown(e, index)}
             onChange={(e) => {
+              setHasTyped(true);
               update(index, e.target.value);
               if (isLastElement(index)) {
                 setLastInput(e.target.value);

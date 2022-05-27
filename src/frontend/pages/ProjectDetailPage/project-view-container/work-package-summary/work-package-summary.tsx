@@ -7,7 +7,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import { weeksPipe, wbsPipe, endDatePipe, listPipe, datePipe } from '../../../../../shared/pipes';
+import {
+  weeksPipe,
+  wbsPipe,
+  endDatePipe,
+  listPipe,
+  datePipe,
+  wbsStatusPipe
+} from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -38,12 +45,15 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
   return (
     <Card>
       <Card.Header className={styles.header} onClick={() => setOpen(!open)} aria-expanded={open}>
-        <div>
-          <p className={styles.wbsNum}>{wbsPipe(workPackage.wbsNum)}</p>
-          <p className={styles.name}>
+        <div className={'d-flex justify-content-between'}>
+          <div className={'d-flex'}>
+            <div className={'mr-3'}>{wbsPipe(workPackage.wbsNum)}</div>
             <Link to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}>{workPackage.name}</Link>
-          </p>
-          <p className={styles.duration}>{weeksPipe(workPackage.duration)}</p>
+          </div>
+          <div className={'d-flex'}>
+            <div className={'mr-3'}>{wbsStatusPipe(workPackage.status)}</div>
+            <div>{weeksPipe(workPackage.duration)}</div>
+          </div>
         </div>
       </Card.Header>
 

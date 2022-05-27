@@ -204,8 +204,13 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
             workPackage.projectManager,
             setters.setProjectManager
           )}
-          {editDetailsInputBuilder('Duration:', 'number', workPackage.duration, (val) =>
-            setters.setDuration(parseInt(val.trim()))
+          {editDetailsInputBuilder(
+            'Duration:',
+            'number',
+            workPackage.duration,
+            (val) => setters.setDuration(parseInt(val.trim())),
+            '',
+            'weeks'
           )}
         </Col>
         <Col xs={6} md={4}>

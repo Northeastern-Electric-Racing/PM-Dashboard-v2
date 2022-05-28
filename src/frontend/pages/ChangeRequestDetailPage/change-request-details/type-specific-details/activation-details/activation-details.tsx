@@ -46,7 +46,6 @@ const ActivationDetails: React.FC<ActivationDetailsProps> = ({ cr }) => {
               {booleanPipe(cr.confirmDetails)}
             </Col>
           </Row>
-          <Row></Row>
         </Container>
       }
     />

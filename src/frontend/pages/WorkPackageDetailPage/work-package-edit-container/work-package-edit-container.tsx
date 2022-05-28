@@ -4,7 +4,7 @@
  */
 
 import { createContext, useState, SyntheticEvent } from 'react';
-import { Form } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import { WbsNumber, WorkPackage, WbsElementStatus } from 'utils';
 import { useAuth } from '../../../../services/auth.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
@@ -177,7 +177,7 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
   if (isError) return <ErrorPage message={error?.message} />;
 
   return (
-    <div className="mb-5">
+    <Container fluid className="mb-5">
       <Form onSubmit={handleSubmit}>
         <PageTitle
           title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
@@ -223,7 +223,7 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
         />
         <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
-    </div>
+    </Container>
   );
 };
 

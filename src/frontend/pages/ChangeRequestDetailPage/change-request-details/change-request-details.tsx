@@ -4,6 +4,8 @@
  */
 
 import { ReactElement, useState } from 'react';
+import { Button, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import {
   ActivationChangeRequest,
   ChangeRequest,
@@ -11,18 +13,16 @@ import {
   StageGateChangeRequest,
   StandardChangeRequest
 } from 'utils';
+import { routes } from '../../../../shared/routes';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import PageTitle from '../../../layouts/page-title/page-title';
-import PageBlock from '../../../layouts/page-block/page-block';
-import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ActivationDetails from './type-specific-details/activation-details/activation-details';
 import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
 import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
-import ReviewNotes from './review-notes/review-notes';
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { routes } from '../../../../shared/routes';
+import StandardDetails from './type-specific-details/standard-details/standard-details';
 import ReviewChangeRequest from '../ReviewChangeRequestModal/review-change-request';
+import PageTitle from '../../../layouts/page-title/page-title';
+import PageBlock from '../../../layouts/page-block/page-block';
+import ReviewNotes from './review-notes/review-notes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {
@@ -83,31 +83,42 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
   let actionDropdown = <></>;
   if (changeRequest.accepted === undefined) actionDropdown = reviewBtn;
   if (changeRequest.accepted!) actionDropdown = implementCrDropdown;
+  const spacer = 'mb-2';
 
   return (
-    <>
+    <Container fluid>
       <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={actionDropdown} />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
         body={
-          <dl className="row">
-            <dt className="col-2">Project / Work Package</dt>
-            <dd className="col-auto">
-              {
+          <Container fluid>
+            <Row>
+              <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
+                <b>Type</b>
+              </Col>
+              <Col className={spacer}>{changeRequest.type}</Col>
+            </Row>
+            <Row>
+              <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
+                <b>WBS #</b>
+              </Col>
+              <Col className={spacer}>
                 <Link to={`${routes.PROJECTS}/${wbsPipe(changeRequest.wbsNum)}`}>
                   {wbsPipe(changeRequest.wbsNum)}
                 </Link>
-              }
-            </dd>
-            <div className="w-100"></div>
-            <dt className="col-2">Type</dt>
-            <dd className="col-auto">{changeRequest.type}</dd>
-            <div className="w-100"></div>
-            <dt className="col-2">Submitted</dt>
-            <dd className="col-2">{fullNamePipe(changeRequest.submitter)}</dd>
-            <dd className="col-3">{datePipe(changeRequest.dateSubmitted)}</dd>
-          </dl>
+              </Col>
+            </Row>
+            <Row>
+              <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
+                <b>Submitted By</b>
+              </Col>
+              <Col className={spacer} xs={5} sm={5} md={4} lg={3} xl={2}>
+                {fullNamePipe(changeRequest.submitter)}
+              </Col>
+              <Col className={spacer}>{datePipe(changeRequest.dateSubmitted)}</Col>
+            </Row>
+          </Container>
         }
       />
       {buildDetails(changeRequest)}
@@ -123,7 +134,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         dateImplemented={changeRequest.dateImplemented!}
       />
       {modalShow && <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />}
-    </>
+    </Container>
   );
 };
 

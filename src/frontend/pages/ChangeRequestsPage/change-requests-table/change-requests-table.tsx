@@ -9,8 +9,8 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
-import styles from './change-requests-table.module.css';
 import { routes } from '../../../../shared/routes';
+import './change-requests-table.module.css';
 
 export interface DisplayChangeRequest {
   id: number;
@@ -36,13 +36,55 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
 
   // Configures display options for all data columns
   const columns: ColumnDescription[] = [
-    { dataField: 'id', text: 'ID', align: 'center', sort: true },
-    { dataField: 'submitterName', text: 'Submitter', align: 'left', sort: true },
-    { dataField: 'wbsNum', text: 'WBS #', align: 'left', sort: true },
-    { dataField: 'type', text: 'Type', align: 'left', sort: true },
-    { dataField: 'dateReviewed', text: 'Reviewed', align: 'left', sort: true },
-    { dataField: 'accepted', text: 'Accepted', align: 'center', sort: true },
-    { dataField: 'dateImplemented', text: 'Implemented', align: 'left', sort: true }
+    {
+      headerAlign: 'center',
+      dataField: 'id',
+      text: 'ID',
+      align: 'center',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'submitterName',
+      text: 'Submitter',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'wbsNum',
+      text: 'WBS #',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'type',
+      text: 'Type',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'dateReviewed',
+      text: 'Reviewed',
+      align: 'left',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'accepted',
+      text: 'Accepted',
+      align: 'center',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'dateImplemented',
+      text: 'Implemented',
+      align: 'left',
+      sort: true
+    }
   ];
 
   const defaultSort: [{ dataField: any; order: SortOrder }] = [
@@ -65,7 +107,6 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
         striped
         hover
         condensed
-        wrapperClasses={styles.table}
         bootstrap4={true}
         keyField="id"
         data={changeRequests}

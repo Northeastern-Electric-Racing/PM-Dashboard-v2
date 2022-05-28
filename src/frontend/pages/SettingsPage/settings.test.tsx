@@ -22,12 +22,22 @@ const renderComponent = () => {
 describe('settings page component', () => {
   it('renders title', () => {
     renderComponent();
-    expect(screen.getByText('This is the Settings Page')).toBeInTheDocument();
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+  });
+
+  it('renders organization settings', () => {
+    renderComponent();
+    expect(screen.getByText(/Organization/)).toBeInTheDocument();
   });
 
   it('renders user', () => {
     renderComponent();
-    expect(screen.getByText(/User:/)).toBeInTheDocument();
+    expect(screen.getByText(/First Name:/)).toBeInTheDocument();
+  });
+
+  it('renders email', () => {
+    renderComponent();
+    expect(screen.getByText(/Email:/)).toBeInTheDocument();
   });
 
   it('renders role', () => {

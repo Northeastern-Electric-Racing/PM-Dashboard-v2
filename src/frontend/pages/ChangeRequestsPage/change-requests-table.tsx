@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { ChangeRequest, ChangeRequestExplanation, StandardChangeRequest } from 'utils';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { routes } from '../../../shared/routes';
@@ -17,7 +17,7 @@ import LoadingIndicator from '../../components/loading-indicator/loading-indicat
 import ActionButton from '../../components/action-button/action-button';
 import ErrorPage from '../../pages/ErrorPage/error-page';
 import PageTitle from '../../layouts/page-title/page-title';
-import styles from './change-requests-table.module.css';
+import './change-requests-table.module.css';
 
 /***
  * Returns a list of change requests that has been filtered according to the given params.
@@ -150,31 +150,31 @@ const ChangeRequestsTable: React.FC = () => {
     setState(state);
     setImplemented(implemented);
   };
-
-  const actionBtn = (
-    <ActionButton link={routes.CHANGE_REQUESTS_NEW} icon={faPlus} text={'New Change Request'} />
-  );
-
-  const crTable = (
-    <CRTable
-      changeRequests={transformToDisplayChangeRequests(
-        filterCRs(data!, type, impact, whyType, state, implemented)
-      )}
-    />
-  );
-
   return (
-    <>
-      <PageTitle title={'Change Requests'} actionButton={actionBtn} />
-      <div className={styles.container}>
-        <Row className="mx-3">
-          <div className={styles.filterTable}>
-            <ChangeRequestsFilter update={sendDataToParent} />
-          </div>
-          <div className={styles.crTable}>{crTable}</div>
-        </Row>
-      </div>
-    </>
+    <Container fluid>
+      <PageTitle
+        title={'Change Requests'}
+        actionButton={
+          <ActionButton
+            link={routes.CHANGE_REQUESTS_NEW}
+            icon={faPlus}
+            text={'New Change Request'}
+          />
+        }
+      />
+      <Row>
+        <Col sm={4} md={3} lg={3} xl={2}>
+          <ChangeRequestsFilter update={sendDataToParent} />
+        </Col>
+        <Col>
+          <CRTable
+            changeRequests={transformToDisplayChangeRequests(
+              filterCRs(data!, type, impact, whyType, state, implemented)
+            )}
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

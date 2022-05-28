@@ -76,7 +76,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   };
 
   return (
-    <Card className={styles.card}>
+    <Card>
       <Card.Body>
         <Card.Title>Filters</Card.Title>
         <Form>

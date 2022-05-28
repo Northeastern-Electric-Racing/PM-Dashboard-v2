@@ -6,14 +6,15 @@
 import { useAuth } from '../../../services/auth.hooks';
 import UsefulLinks from './useful-links/useful-links';
 import styles from './home.module.css';
+import { Container } from 'react-bootstrap';
 
 const Home: React.FC = () => {
   const auth = useAuth();
   return (
-    <>
+    <Container fluid>
       <h1 className={styles.title}>Welcome, {auth.user?.emailId}!</h1>
       <UsefulLinks />
-    </>
+    </Container>
   );
 };
 

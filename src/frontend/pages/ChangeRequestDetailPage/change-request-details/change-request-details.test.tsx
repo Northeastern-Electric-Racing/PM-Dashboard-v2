@@ -54,7 +54,7 @@ describe('Change request details common display element tests', () => {
     'Renders submitter data for CR %#',
     (cr: ChangeRequest) => {
       renderComponent(cr);
-      expect(screen.getByText(`Submitted`)).toBeInTheDocument();
+      expect(screen.getByText(/Submitted by/i)).toBeInTheDocument();
       expect(
         screen.getByText(`${cr.submitter.firstName} ${cr.submitter.lastName}`)
       ).toBeInTheDocument();

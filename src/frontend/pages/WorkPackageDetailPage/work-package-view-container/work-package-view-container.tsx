@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Button, Container, Dropdown, DropdownButton } from 'react-bootstrap';
 import { WbsElementStatus, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { routes } from '../../../../shared/routes';
@@ -75,7 +75,7 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
   );
 
   return (
-    <div className="mb-5">
+    <Container fluid>
       <PageTitle
         title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
         actionButton={projectActionsDropdown}
@@ -111,7 +111,7 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
           handleClose={() => setShowStageGateModal(false)}
         />
       )}
-    </div>
+    </Container>
   );
 };
 

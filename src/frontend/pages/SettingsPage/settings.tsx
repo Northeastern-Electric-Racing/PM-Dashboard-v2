@@ -11,7 +11,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 const Settings: React.FC = () => {
   const auth = useAuth();
   return (
-    <>
+    <Container fluid>
       <PageTitle title="Settings" />
       <PageBlock
         title={'Organization Settings'}
@@ -54,7 +54,7 @@ const Settings: React.FC = () => {
           </Container>
         }
       />
-    </>
+    </Container>
   );
 };
 

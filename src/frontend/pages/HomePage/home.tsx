@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const auth = useAuth();
   return (
     <Container fluid>
-      <h1 className={styles.title}>Welcome, {auth.user?.emailId}!</h1>
+      <h1 className={styles.title}>Welcome, {auth.user?.firstName}!</h1>
       <UsefulLinks />
     </Container>
   );

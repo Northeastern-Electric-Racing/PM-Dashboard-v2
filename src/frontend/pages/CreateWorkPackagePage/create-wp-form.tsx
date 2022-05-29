@@ -142,9 +142,9 @@ const CreateWPForm: React.FC = () => {
         deliverables
       });
       history.push(routes.CHANGE_REQUESTS);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
-      alert('something went wrong');
+      alert(e.message);
     }
 
     /**

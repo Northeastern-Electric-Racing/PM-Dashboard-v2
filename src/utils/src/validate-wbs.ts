@@ -11,13 +11,11 @@ import { WbsNumber } from './types/project-types';
  * @param wbsNum WBS number to validate
  */
 export const validateWBS = (wbsNum: string): WbsNumber => {
-  const errorMsg: string = 'WBS Invalid: ';
+  const errorMsg: string = `WBS "${wbsNum}" is Invalid: `;
   if (wbsNum == null || wbsNum === undefined) {
     throw new Error(errorMsg + 'given WBS # is null');
   }
-  if (wbsNum.match(/\./g) == null) {
-    throw new Error(errorMsg + 'WBS #s include periods, none found');
-  }
+
   const parseSections: string[] = wbsNum.split('.');
   if (parseSections.length !== 3) {
     throw new Error(errorMsg + 'incorrect number of periods');

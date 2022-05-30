@@ -96,7 +96,10 @@ const changeRequestTransformer = (
     budgetImpact: changeRequest.scopeChangeRequest?.budgetImpact ?? undefined,
     timelineImpact: changeRequest.scopeChangeRequest?.timelineImpact ?? undefined,
     // activation cr fields
-    ...changeRequest.activationChangeRequest,
+    projectLead: changeRequest.activationChangeRequest?.projectLead ?? undefined,
+    projectManager: changeRequest.activationChangeRequest?.projectManager ?? undefined,
+    startDate: changeRequest.activationChangeRequest?.startDate ?? undefined,
+    confirmDetails: changeRequest.activationChangeRequest?.confirmDetails ?? undefined,
     // stage gate cr fields
     ...changeRequest.stageGateChangeRequest
   };

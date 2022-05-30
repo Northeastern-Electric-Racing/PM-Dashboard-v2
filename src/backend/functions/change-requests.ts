@@ -63,7 +63,11 @@ const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
 ): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
   return {
-    ...changeRequest,
+    // all cr fields
+    crId: changeRequest.crId,
+    wbsNum: wbsNumOf(changeRequest.wbsElement),
+    submitter: changeRequest.submitter,
+    dateSubmitted: changeRequest.dateSubmitted,
     type: changeRequest.type,
     reviewer: changeRequest.reviewer ?? undefined,
     dateReviewed: changeRequest.dateReviewed ?? undefined,
@@ -75,17 +79,30 @@ const changeRequestTransformer = (
       undefined
     ),
     implementedChanges: changeRequest.changes.map((change) => ({
-      ...change,
-      wbsNum: wbsNumOf(change.wbsElement)
+      wbsNum: wbsNumOf(change.wbsElement),
+      changeId: change.changeId,
+      changeRequestId: change.changeRequestId,
+      implementer: change.implementer,
+      detail: change.detail,
+      dateImplemented: change.dateImplemented
     })),
-    wbsNum: wbsNumOf(changeRequest.wbsElement),
-    ...changeRequest.scopeChangeRequest,
+    // scope cr fields
+    what: changeRequest.scopeChangeRequest?.what ?? undefined,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({
-      ...why,
-      type: convertCRScopeWhyType(why.type)
+      type: convertCRScopeWhyType(why.type),
+      explain: why.explain
     })),
-    ...changeRequest.activationChangeRequest,
-    ...changeRequest.stageGateChangeRequest
+    scopeImpact: changeRequest.scopeChangeRequest?.scopeImpact ?? undefined,
+    budgetImpact: changeRequest.scopeChangeRequest?.budgetImpact ?? undefined,
+    timelineImpact: changeRequest.scopeChangeRequest?.timelineImpact ?? undefined,
+    // activation cr fields
+    projectLead: changeRequest.activationChangeRequest?.projectLead ?? undefined,
+    projectManager: changeRequest.activationChangeRequest?.projectManager ?? undefined,
+    startDate: changeRequest.activationChangeRequest?.startDate ?? undefined,
+    confirmDetails: changeRequest.activationChangeRequest?.confirmDetails ?? undefined,
+    // stage gate cr fields
+    leftoverBudget: changeRequest.stageGateChangeRequest?.leftoverBudget ?? undefined,
+    confirmDone: changeRequest.stageGateChangeRequest?.confirmDone ?? undefined
   };
 };
 

@@ -87,11 +87,14 @@ const changeRequestTransformer = (
       dateImplemented: change.dateImplemented
     })),
     // scope cr fields
-    ...changeRequest.scopeChangeRequest,
+    what: changeRequest.scopeChangeRequest?.what ?? undefined,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({
-      ...why,
-      type: convertCRScopeWhyType(why.type)
+      type: convertCRScopeWhyType(why.type),
+      explain: why.explain
     })),
+    scopeImpact: changeRequest.scopeChangeRequest?.scopeImpact ?? undefined,
+    budgetImpact: changeRequest.scopeChangeRequest?.budgetImpact ?? undefined,
+    timelineImpact: changeRequest.scopeChangeRequest?.timelineImpact ?? undefined,
     // activation cr fields
     ...changeRequest.activationChangeRequest,
     // stage gate cr fields

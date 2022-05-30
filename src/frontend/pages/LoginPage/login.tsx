@@ -11,6 +11,7 @@ import { useAuth } from '../../../services/auth.hooks';
 import LoginPage from './login-page/login-page';
 import './login.module.css';
 import { routes } from '../../../shared/routes';
+import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 
 interface LoginProps {
   postLoginRedirect: { url: string; search: string };
@@ -42,10 +43,10 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   };
 
   const verifyLogin = async (response: any) => {
-    history.push(routes.LOADING);
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);
+    if (auth.updateLoadingState()) return <LoadingIndicator />;
     redirectAfterLogin();
   };
 

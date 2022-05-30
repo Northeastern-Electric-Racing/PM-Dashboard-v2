@@ -13,6 +13,7 @@ import { Auth } from '../shared/types';
 export const useProvideAuth = () => {
   const serverSignin = useLogUserIn();
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean | undefined>(undefined);
 
   const devSignin = (user: User) => {
     setUser(user);
@@ -29,11 +30,17 @@ export const useProvideAuth = () => {
     setUser(undefined);
   };
 
+  const updateLoadingState = () => {
+    setIsLoading(serverSignin.isLoading);
+    return isLoading;
+  };
+
   return {
     user,
     devSignin,
     signin,
-    signout
+    signout,
+    updateLoadingState
   } as Auth;
 };
 

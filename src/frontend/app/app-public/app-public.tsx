@@ -9,7 +9,6 @@ import { routes } from '../../../shared/routes';
 import Login from '../../pages/LoginPage/login';
 import AppAuthenticated from '../app-authenticated/app-authenticated';
 import './app-public.module.css';
-import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 
 const AppPublic: React.FC = () => {
   const auth = useAuth();
@@ -21,7 +20,6 @@ const AppPublic: React.FC = () => {
           postLoginRedirect={{ url: history.location.pathname, search: history.location.search }}
         />
       </Route>
-      <Route path={routes.LOADING} component={LoadingIndicator} />
       <Route
         path="*"
         render={({ location }) =>

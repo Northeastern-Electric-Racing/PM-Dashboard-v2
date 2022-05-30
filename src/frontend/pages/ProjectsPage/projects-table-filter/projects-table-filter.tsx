@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
-import styles from './projects-table-filter.module.css';
+import styles from './projects-table-filter.module.scss';
 import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
 
@@ -146,7 +146,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
 
   return (
     <>
-      <Card className={styles.card}>
+      <Card>
         <Card.Body>
           <Card.Title>Filters</Card.Title>
           <Form>
@@ -163,7 +163,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
                   {car_number === -1 ? '' : car_number}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsNum([1, 2], setCar_number)}
+                  {genDropdownItemsNum([0, 1, 2], setCar_number)}
                 </Dropdown.Menu>
               </Dropdown>
             </Form.Group>
@@ -219,16 +219,18 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
               </Dropdown>
             </Form.Group>
             <Button
-              // variant='ner-red'
-              className={styles.applyButton}
-              onClick={() => {
-                onClick(status, project_leadID, project_managerID, car_number);
-              }}
+              className={'float-left'}
+              variant={'outline-secondary'}
+              onClick={resetFiltersToDefault}
+            >
+              Clear
+            </Button>
+            <Button
+              className={'float-right'}
+              variant={'outline-primary'}
+              onClick={() => onClick(status, project_leadID, project_managerID, car_number)}
             >
               Apply
-            </Button>
-            <Button className={styles.clearButton} onClick={resetFiltersToDefault}>
-              Clear
             </Button>
           </Form>
         </Card.Body>

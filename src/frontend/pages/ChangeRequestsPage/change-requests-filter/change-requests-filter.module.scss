@@ -3,10 +3,6 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.card {
-  width: 15rem;
-}
-
 .dropdown {
   display: flex;
   flex-direction: row;
@@ -24,24 +20,4 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.applyButton {
-  float: right;
-  background-color: #ef4345 !important;
-  border-color: #ef4345 !important;
-}
-
-.clearButton {
-  float: left;
-  background-color: #ef4345 !important;
-  border-color: #ef4345 !important;
-}
-
-.applyButton:focus {
-  box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5) !important;
-}
-
-.clearButton:focus {
-  box-shadow: 0 0 0 0.2rem rgba(239, 67, 69, 0.5) !important;
 }

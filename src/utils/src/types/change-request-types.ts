@@ -69,9 +69,10 @@ export interface ChangeRequestExplanation {
 export enum ChangeRequestReason {
   Estimation = 'ESTIMATION',
   School = 'SCHOOL',
-  Manufacturing = 'MANUFACTURING',
   Design = 'DESIGN',
+  Manufacturing = 'MANUFACTURING',
   Rules = 'RULES',
+  Initialization = 'INITIALIZATION',
   OtherProject = 'OTHER_PROJECT',
   Other = 'OTHER'
 }
@@ -133,9 +134,10 @@ export const createStandardChangeRequestPayloadSchema = bodySchema({
       type: enumType(
         ChangeRequestReason.Estimation,
         ChangeRequestReason.School,
-        ChangeRequestReason.Manufacturing,
         ChangeRequestReason.Design,
+        ChangeRequestReason.Manufacturing,
         ChangeRequestReason.Rules,
+        ChangeRequestReason.Initialization,
         ChangeRequestReason.OtherProject,
         ChangeRequestReason.Other
       ),

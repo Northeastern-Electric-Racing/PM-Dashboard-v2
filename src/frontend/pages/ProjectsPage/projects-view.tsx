@@ -3,17 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import { Project, User } from 'utils';
 import { useAllProjects } from '../../../services/projects.hooks';
 import { fullNamePipe, wbsPipe, weeksPipe } from '../../../shared/pipes';
 import PrjsTable, { DisplayProject } from './projects-table/projects-table'; // Directly rename the default import
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
-import ErrorPage from '../../pages/ErrorPage/error-page';
-import styles from './projects-view.module.css';
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
-import { Row } from 'react-bootstrap';
-import { useState } from 'react';
 import PageTitle from '../../layouts/page-title/page-title';
+import ErrorPage from '../../pages/ErrorPage/error-page';
+import './projects-view.module.css';
 
 /***
  * Returns a list of projects that has been filtered according to the given params.
@@ -137,27 +137,25 @@ const ProjectsView: React.FC = () => {
   };
 
   return (
-    <>
+    <Container fluid>
       <PageTitle title={'Projects'} />
-      <div className={styles.container}>
-        <Row className="mx-3">
-          <div className={styles.filterTable}>
-            <ProjectsTableFilter
-              onClick={sendDataToParent}
-              leads={getLeads()}
-              managers={getManagers()}
-            />
-          </div>
-          <div className={styles.projectsTable}>
-            <PrjsTable
-              allProjects={transformToDisplayProjects(
-                filterProjects(data!, carNumber, status, projectLeadID, projectManagerID)
-              )}
-            />
-          </div>
-        </Row>
-      </div>
-    </>
+      <Row>
+        <Col sm={4} md={3} lg={3} xl={2}>
+          <ProjectsTableFilter
+            onClick={sendDataToParent}
+            leads={getLeads()}
+            managers={getManagers()}
+          />
+        </Col>
+        <Col>
+          <PrjsTable
+            allProjects={transformToDisplayProjects(
+              filterProjects(data!, carNumber, status, projectLeadID, projectManagerID)
+            )}
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

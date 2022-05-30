@@ -4,16 +4,5 @@
  */
 
 .header {
-  width: 100%;
   overflow: hidden;
-  margin-bottom: 1em;
-}
-
-.title {
-  font-weight: bold;
-  float: left;
-}
-
-.headerRight {
-  float: right;
 }

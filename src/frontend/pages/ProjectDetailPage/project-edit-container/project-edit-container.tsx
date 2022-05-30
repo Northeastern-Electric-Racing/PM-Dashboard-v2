@@ -4,7 +4,7 @@
  */
 
 import { SyntheticEvent, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
@@ -213,16 +213,19 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
   }
 
   return (
-    <>
+    <Container fluid className="mb-5">
       <Form onSubmit={handleSubmit}>
-        <PageTitle title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`} />
-        <Form.Control
-          className="m-4 w-25"
-          type="number"
-          placeholder="Change Request ID #"
-          required
-          min={0}
-          onChange={(e) => setCrId(Number(e.target.value))}
+        <PageTitle
+          title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
+          actionButton={
+            <Form.Control
+              type="number"
+              placeholder="Change Request ID #"
+              required
+              min={0}
+              onChange={(e) => setCrId(Number(e.target.value))}
+            />
+          }
         />
         <ProjectEditDetails
           project={proj}
@@ -302,7 +305,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         />
         <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
-    </>
+    </Container>
   );
 };
 

@@ -170,7 +170,7 @@ describe('test suite for ProjectEditContainer', () => {
       screen.getByText(`${wbsPipe(exampleProject1.wbsNum)} - ${exampleProject1.name}`)
     ).toBeInTheDocument();
     expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
-    expect(screen.getByText('Duration:')).toBeInTheDocument();
+    expect(screen.getByText('Project Name:')).toBeInTheDocument();
   });
 
   it('handles the error with message', () => {

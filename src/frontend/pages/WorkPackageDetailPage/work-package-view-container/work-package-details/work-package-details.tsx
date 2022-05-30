@@ -6,11 +6,11 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
 import {
-  wbsPipe,
   percentPipe,
   fullNamePipe,
   datePipe,
-  wbsStatusPipe
+  wbsStatusPipe,
+  weeksPipe
 } from '../../../../../shared/pipes';
 import PageBlock from '../../../../layouts/page-block/page-block';
 import './work-package-details.module.css';
@@ -20,45 +20,43 @@ interface WorkPackageDetailsProps {
 }
 
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const formatDate = (date: Date) => {
-    const offset = date.getTimezoneOffset();
-    date = new Date(date.getTime() - offset * 60 * 1000);
-    return date.toISOString().split('T')[0];
-  };
-
-  const endDateAsDatePipe = () => {
-    const endDate = new Date(workPackage.startDate);
-    endDate.setDate(endDate.getDate() + workPackage.duration * 7);
-    return endDate;
-  };
-
-  const detailsBody = (
-    <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <b>Work Package Name:</b> {workPackage.name} <br />
-          <b>WBS #:</b> {wbsPipe(workPackage.wbsNum)} <br />
-          <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)} <br />
-          <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)} <br />
-          <b>Duration:</b> {workPackage.duration}
-        </Col>
-        <Col xs={6} md={4}>
-          <b>Start Date:</b> {datePipe(workPackage.startDate)} <br />
-          <b>End Date:</b> {datePipe(endDateAsDatePipe())} <br />
-          <b>Progress:</b> {percentPipe(workPackage.progress)} <br />
-          <b>Expected Progress:</b> {percentPipe(workPackage.expectedProgress)} <br />
-          <b>Timeline Status:</b> {workPackage.timelineStatus}
-        </Col>
-      </Row>
-    </Container>
-  );
-
+  const allColsStyle = 'mb-2';
   return (
     <PageBlock
       title={'Work Package Details'}
       headerRight={wbsStatusPipe(workPackage.status)}
-      body={detailsBody}
+      body={
+        <Container fluid>
+          <Row>
+            <Col className={allColsStyle} md={5} lg={4} xl={3}>
+              <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
+            </Col>
+            <Col className={allColsStyle} md={6} lg={4} xl={3}>
+              <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
+            </Col>
+            <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
+              <b>Duration:</b> {weeksPipe(workPackage.duration)}
+            </Col>
+            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
+              <b>Start Date:</b> {datePipe(workPackage.startDate)}
+            </Col>
+            <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
+              <b>End Date:</b> {datePipe(workPackage.endDate)}
+            </Col>
+          </Row>
+          <Row>
+            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+              <b>Progress:</b> {percentPipe(workPackage.progress)}
+            </Col>
+            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+              <b>Expected Progress:</b> {percentPipe(workPackage.expectedProgress)}
+            </Col>
+            <Col className={allColsStyle} sm={5} md={4} lg={4} xl={3}>
+              <b>Timeline Status:</b> {workPackage.timelineStatus}
+            </Col>
+          </Row>
+        </Container>
+      }
     />
   );
 };

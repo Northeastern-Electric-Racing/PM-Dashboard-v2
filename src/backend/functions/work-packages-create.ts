@@ -111,7 +111,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
   });
 
   // add to the database
-  const created = await prisma.work_Package.create({
+  await prisma.work_Package.create({
     data: {
       wbsElement: {
         create: {
@@ -138,7 +138,7 @@ export const createWorkPackage: Handler<FromSchema<typeof inputSchema>> = async 
     }
   });
 
-  return buildSuccessResponse(created);
+  return buildSuccessResponse({ message: 'Work Package Created' });
 };
 
 // expected structure of json body

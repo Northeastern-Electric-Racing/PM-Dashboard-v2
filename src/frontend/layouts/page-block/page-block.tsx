@@ -15,11 +15,11 @@ interface PageBlockProps {
 // Custom card component for page blocks
 const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
   return (
-    <Card className={'mx-4 my-3'} border="dark" bg="light">
+    <Card className={'my-3'} border="dark" bg="light">
       <Card.Body>
         <Card.Title className={styles.header}>
-          <div className={styles.title}>{title}</div>
-          <div className={styles.headerRight}>{headerRight}</div>
+          <h5 className={'float-left mb-0'}>{title}</h5>
+          <div className={'float-right'}>{headerRight}</div>
         </Card.Title>
         {body}
       </Card.Body>

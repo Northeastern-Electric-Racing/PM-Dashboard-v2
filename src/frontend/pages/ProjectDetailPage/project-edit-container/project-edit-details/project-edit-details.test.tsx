@@ -1,18 +1,23 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
 import { act, render, screen } from '../../../../../test-support/test-utils';
 import userEvent from '@testing-library/user-event';
-import { endDatePipe, fullNamePipe, wbsPipe } from '../../../../../shared/pipes';
+import { WbsElementStatus } from 'utils';
+import { fullNamePipe } from '../../../../../shared/pipes';
 import {
   exampleProject1,
   exampleProject2,
   exampleProject3
 } from '../../../../../test-support/test-data/projects.stub';
-import ProjectEditDetails from './project-edit-details';
 import {
   exampleAdminUser,
   exampleAppAdminUser,
   exampleLeadershipUser
 } from '../../../../../test-support/test-data/users.stub';
-import { WbsElementStatus } from 'utils';
+import ProjectEditDetails from './project-edit-details';
 
 const projs = [exampleProject1, exampleProject2, exampleProject3];
 const users = [exampleAdminUser, exampleAppAdminUser, exampleLeadershipUser];
@@ -158,26 +163,6 @@ describe('project-edit-details', () => {
 
   describe('Rendering Project Details Component', () => {
     projs.forEach((proj, index) => {
-      const startDate =
-        proj.workPackages.length > 0
-          ? proj.workPackages
-              .reduce(
-                (min, cur) => (cur.startDate < min ? cur.startDate : min),
-                proj.workPackages[0].startDate
-              )
-              .toLocaleDateString()
-          : 'n/a';
-      const endDate =
-        proj.workPackages.length > 0
-          ? endDatePipe(
-              proj.workPackages.reduce(
-                (min, cur) => (cur.startDate < min ? cur.startDate : min),
-                proj.workPackages[0].startDate
-              ),
-              proj.workPackages.reduce((tot, cur) => tot + cur.duration, 0)
-            )
-          : 'n/a';
-
       it(`renders all fields for project ${index + 1}`, async () => {
         renderComponent(proj);
 
@@ -193,11 +178,8 @@ describe('project-edit-details', () => {
           'spinbutton'
         )) as HTMLInputElement[]).map((input) => parseInt(input.value));
 
-        // Left column of form
         expect(screen.getByText('Project Name:')).toBeInTheDocument();
         expect(textboxInputs).toContain(proj.name);
-        expect(screen.getByText('WBS #:')).toBeInTheDocument();
-        expect(textboxInputs).toContain(wbsPipe(proj.wbsNum));
         expect(screen.getByText('Project Lead:')).toBeInTheDocument();
         expect(screen.getByText('Project Manager:')).toBeInTheDocument();
         // checks that the options for both dropdowns contain all the users
@@ -206,19 +188,6 @@ describe('project-edit-details', () => {
         });
         expect(screen.getByText('Budget:')).toBeInTheDocument();
         expect(numberInputs).toContain(proj.budget);
-
-        // Right column of form
-        expect(screen.getByText('Duration:')).toBeInTheDocument();
-        expect(numberInputs).toContain(proj.duration);
-        expect(screen.getByText('weeks')).toBeInTheDocument();
-        expect(screen.getByText('Start Date:')).toBeInTheDocument();
-        // have to do not length 0 in case both start and end date are both 'n/a'
-        expect(screen.getAllByPlaceholderText(startDate)).not.toHaveLength(0);
-        expect(screen.getByText('End Date:')).toBeInTheDocument();
-        expect(screen.getAllByPlaceholderText(endDate)).not.toHaveLength(0);
-        expect(screen.getByText('Expected Progress:')).toBeInTheDocument();
-        expect(screen.getByText('Timeline Status:')).toBeInTheDocument();
-        expect(screen.getAllByPlaceholderText('Not implemented yet')).toHaveLength(2);
 
         // Links
         expect(screen.getByText('Slide Deck')).toBeInTheDocument();

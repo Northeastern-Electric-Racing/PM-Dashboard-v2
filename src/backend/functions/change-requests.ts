@@ -63,6 +63,7 @@ const changeRequestTransformer = (
   changeRequest: Prisma.Change_RequestGetPayload<typeof relationArgs>
 ): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
   return {
+    // all cr fields
     ...changeRequest,
     type: changeRequest.type,
     reviewer: changeRequest.reviewer ?? undefined,
@@ -79,12 +80,15 @@ const changeRequestTransformer = (
       wbsNum: wbsNumOf(change.wbsElement)
     })),
     wbsNum: wbsNumOf(changeRequest.wbsElement),
+    // scope cr fields
     ...changeRequest.scopeChangeRequest,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({
       ...why,
       type: convertCRScopeWhyType(why.type)
     })),
+    // activation cr fields
     ...changeRequest.activationChangeRequest,
+    // stage gate cr fields
     ...changeRequest.stageGateChangeRequest
   };
 };

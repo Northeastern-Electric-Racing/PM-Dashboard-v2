@@ -94,19 +94,15 @@ const workPackageTransformer = (
 
   const wbsNum = wbsNumOf(wbsElement);
   return {
-    ...workPackage,
-    ...wbsElement,
     id: workPackage.workPackageId,
+    dateCreated: wbsElement.dateCreated,
+    name: wbsElement.name,
+    orderInProject: workPackage.orderInProject,
+    progress: workPackage.progress,
+    startDate: workPackage.startDate,
+    duration: workPackage.duration,
     expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
     deliverables: workPackage.deliverables.map(descriptionBulletTransformer),
-    changes: wbsElement.changes.map((change) => ({
-      wbsNum,
-      changeId: change.changeId,
-      changeRequestId: change.changeRequestId,
-      implementer: change.implementer,
-      detail: change.detail,
-      dateImplemented: change.dateImplemented
-    })),
     dependencies: workPackage.dependencies.map(wbsNumOf),
     projectManager: wbsElement.projectManager ?? undefined,
     projectLead: wbsElement.projectLead ?? undefined,
@@ -114,7 +110,15 @@ const workPackageTransformer = (
     wbsNum,
     endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
     expectedProgress,
-    timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress)
+    timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress),
+    changes: wbsElement.changes.map((change) => ({
+      wbsNum,
+      changeId: change.changeId,
+      changeRequestId: change.changeRequestId,
+      implementer: change.implementer,
+      detail: change.detail,
+      dateImplemented: change.dateImplemented
+    }))
   };
 };
 

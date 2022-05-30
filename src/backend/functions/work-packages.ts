@@ -4,7 +4,13 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { Prisma, PrismaClient, WBS_Element, WBS_Element_Status } from '@prisma/client';
+import {
+  Description_Bullet,
+  Prisma,
+  PrismaClient,
+  WBS_Element,
+  WBS_Element_Status
+} from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -64,6 +70,13 @@ const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   workPackageNumber: element.workPackageNumber
 });
 
+const descriptionBulletTransformer = (descBullet: Description_Bullet) => ({
+  id: descBullet.descriptionId,
+  detail: descBullet.detail,
+  dateAdded: descBullet.dateAdded,
+  dateDeleted: descBullet.dateDeleted ?? undefined
+});
+
 const workPackageTransformer = (
   payload:
     | Prisma.Work_PackageGetPayload<typeof manyRelationArgs>
@@ -72,7 +85,6 @@ const workPackageTransformer = (
   if (payload === null) throw new TypeError('WBS_Element not found');
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
-  const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
 
   const expectedProgress = calculatePercentExpectedProgress(
     workPackage.startDate,
@@ -85,16 +97,8 @@ const workPackageTransformer = (
     ...workPackage,
     ...wbsElement,
     id: workPackage.workPackageId,
-    expectedActivities: workPackage.expectedActivities.map((descBullet) => ({
-      ...descBullet,
-      id: descBullet.descriptionId,
-      dateDeleted: descBullet.dateDeleted ?? undefined
-    })),
-    deliverables: workPackage.deliverables.map((deliverable) => ({
-      ...deliverable,
-      id: deliverable.descriptionId,
-      dateDeleted: deliverable.dateDeleted ?? undefined
-    })),
+    expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
+    deliverables: workPackage.deliverables.map(descriptionBulletTransformer),
     changes: wbsElement.changes.map((change) => ({
       ...change,
       wbsNum
@@ -104,7 +108,7 @@ const workPackageTransformer = (
     projectLead: wbsElement.projectLead ?? undefined,
     status: convertStatus(wbsElement.status),
     wbsNum,
-    endDate,
+    endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
     expectedProgress,
     timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress)
   };

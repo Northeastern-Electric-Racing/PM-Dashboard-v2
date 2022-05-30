@@ -64,7 +64,10 @@ const changeRequestTransformer = (
 ): ChangeRequest | StandardChangeRequest | ActivationChangeRequest | StageGateChangeRequest => {
   return {
     // all cr fields
-    ...changeRequest,
+    crId: changeRequest.crId,
+    wbsNum: wbsNumOf(changeRequest.wbsElement),
+    submitter: changeRequest.submitter,
+    dateSubmitted: changeRequest.dateSubmitted,
     type: changeRequest.type,
     reviewer: changeRequest.reviewer ?? undefined,
     dateReviewed: changeRequest.dateReviewed ?? undefined,
@@ -76,10 +79,13 @@ const changeRequestTransformer = (
       undefined
     ),
     implementedChanges: changeRequest.changes.map((change) => ({
-      ...change,
-      wbsNum: wbsNumOf(change.wbsElement)
+      wbsNum: wbsNumOf(change.wbsElement),
+      changeId: change.changeId,
+      changeRequestId: change.changeRequestId,
+      implementer: change.implementer,
+      detail: change.detail,
+      dateImplemented: change.dateImplemented
     })),
-    wbsNum: wbsNumOf(changeRequest.wbsElement),
     // scope cr fields
     ...changeRequest.scopeChangeRequest,
     why: changeRequest.scopeChangeRequest?.why.map((why) => ({

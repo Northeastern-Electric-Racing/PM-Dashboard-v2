@@ -270,7 +270,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   await prisma.change.createMany({ data: changes });
 
   // return the updated work package
-  return buildSuccessResponse(updatedWorkPackage);
+  return buildSuccessResponse({ message: 'Work package updated successfully' });
 };
 
 /**

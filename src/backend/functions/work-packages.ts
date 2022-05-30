@@ -100,8 +100,12 @@ const workPackageTransformer = (
     expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
     deliverables: workPackage.deliverables.map(descriptionBulletTransformer),
     changes: wbsElement.changes.map((change) => ({
-      ...change,
-      wbsNum
+      wbsNum,
+      changeId: change.changeId,
+      changeRequestId: change.changeRequestId,
+      implementer: change.implementer,
+      detail: change.detail,
+      dateImplemented: change.dateImplemented
     })),
     dependencies: workPackage.dependencies.map(wbsNumOf),
     projectManager: wbsElement.projectManager ?? undefined,

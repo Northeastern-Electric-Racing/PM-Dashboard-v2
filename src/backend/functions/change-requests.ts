@@ -101,7 +101,8 @@ const changeRequestTransformer = (
     startDate: changeRequest.activationChangeRequest?.startDate ?? undefined,
     confirmDetails: changeRequest.activationChangeRequest?.confirmDetails ?? undefined,
     // stage gate cr fields
-    ...changeRequest.stageGateChangeRequest
+    leftoverBudget: changeRequest.stageGateChangeRequest?.leftoverBudget ?? undefined,
+    confirmDone: changeRequest.stageGateChangeRequest?.confirmDone ?? undefined
   };
 };
 

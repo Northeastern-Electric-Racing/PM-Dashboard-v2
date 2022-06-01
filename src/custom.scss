@@ -56,51 +56,5 @@ $theme-colors: (
 .light {
 }
 
-// $bg--light: white;
-// $text--light: black;
-
-// $bg--dark: #353434;
-// $text--dark: white;
-
-// $themes: (
-//   light: (
-//     bg: $bg--light,
-//     text: $text--light
-//   ),
-//   dark: (
-//     bg: $bg--dark,
-//     text: $text--dark
-//   )
-// );
-
-// @mixin themed() {
-//   @each $theme, $map in $themes {
-//     .theme--#{$theme} & {
-//       $theme-map: () !global;
-//       @each $key, $submap in $map {
-//         $value: map-get(map-get($themes, $theme), '#{$key}');
-//         $theme-map: map-merge(
-//           $theme-map,
-//           (
-//             $key: $value
-//           )
-//         ) !global;
-//       }
-//       @content;
-//       $theme-map: null !global;
-//     }
-//   }
-// }
-
-// @function t($key) {
-//   @return map-get($theme-map, $key);
-// }
-
-// .lig {
-//   @include themed() {
-//     background-color: t('bg');
-//   }
-// }
-
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';

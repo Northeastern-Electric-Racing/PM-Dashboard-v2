@@ -8,6 +8,7 @@ import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import styles from './projects-table-filter.module.scss';
 import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
+import { useTheme } from '../../../../services/theme.hooks';
 
 /**
  * Variables to filter table with.
@@ -36,6 +37,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   const [project_managerName, setProject_managerName] = useState('');
   const [project_managerID, setProject_managerID] = useState(-1);
   const [car_number, setCar_number] = useState(-1);
+  const theme = useTheme();
 
   /**
    * Programmatically generates dropdown menu items for state variables of type number.
@@ -146,7 +148,7 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
 
   return (
     <>
-      <Card>
+      <Card bg={theme.cardBg} className={theme.themeName}>
         <Card.Body>
           <Card.Title>Filters</Card.Title>
           <Form>

@@ -11,3 +11,11 @@ export interface Auth {
   signin: (token: string) => Promise<User>;
   signout: () => void;
 }
+
+export interface Theme {
+  toggleTheme?: (theme: Theme) => void;
+  themeName: string;
+  bgColor: string;
+  cardBg: string;
+  cardBorder: string;
+}

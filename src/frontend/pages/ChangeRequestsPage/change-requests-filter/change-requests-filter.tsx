@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { Button, Card, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
+import { useTheme } from '../../../../services/theme.hooks';
 import styles from './change-requests-filter.module.scss';
 interface FilterFieldStateProps {
   update: (
@@ -20,6 +21,7 @@ interface FilterFieldStateProps {
 const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   update
 }: FilterFieldStateProps) => {
+  const theme = useTheme();
   const [type, setType] = useState('');
   const [impact, setImpact] = useState<number[]>([]);
   const [reason, setReason] = useState('');
@@ -76,7 +78,7 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   };
 
   return (
-    <Card>
+    <Card bg={theme.cardBg}>
       <Card.Body>
         <Card.Title>Filters</Card.Title>
         <Form>

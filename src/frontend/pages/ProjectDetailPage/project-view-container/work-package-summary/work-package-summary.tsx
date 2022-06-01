@@ -17,6 +17,7 @@ import {
 } from '../../../../../shared/pipes';
 import { routes } from '../../../../../shared/routes';
 import styles from './work-package-summary.module.scss';
+import { useTheme } from '../../../../../services/theme.hooks';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
@@ -24,6 +25,8 @@ interface WorkPackageSummaryProps {
 
 const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) => {
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
+
   const expectedActivitiesList = (
     <ul>
       {workPackage.expectedActivities.slice(0, 3).map((item, idx) => (
@@ -42,7 +45,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
   const numMoreDeliverables = workPackage.deliverables.length - 3;
 
   return (
-    <Card>
+    <Card bg={theme.cardBg} border={theme.cardBorder}>
       <Card.Header className={styles.header} onClick={() => setOpen(!open)} aria-expanded={open}>
         <div className={'d-flex justify-content-between'}>
           <div className={'d-flex'}>

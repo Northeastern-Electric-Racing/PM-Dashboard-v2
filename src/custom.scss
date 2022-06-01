@@ -16,22 +16,91 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: $ner-header-font;
 }
 
 $primary: #ef4345;
+$dark: #464646;
 
 // change the theme
 $theme-colors: (
   'ner-red': #ef4345,
   'ner-dark-grey': #292929,
+  'ner-dark-bg': #353434,
+  'ner-light-bg': #ffffff,
   'ner-white': #ffffff
 );
 
 @function theme-color($key) {
   @return map-get($theme-colors, $key);
 }
+
+.dark {
+  p,
+  div,
+  body,
+  div,
+  td,
+  tr {
+    color: #ffffff;
+  }
+
+  background-color: #353434;
+}
+
+.light {
+}
+
+// $bg--light: white;
+// $text--light: black;
+
+// $bg--dark: #353434;
+// $text--dark: white;
+
+// $themes: (
+//   light: (
+//     bg: $bg--light,
+//     text: $text--light
+//   ),
+//   dark: (
+//     bg: $bg--dark,
+//     text: $text--dark
+//   )
+// );
+
+// @mixin themed() {
+//   @each $theme, $map in $themes {
+//     .theme--#{$theme} & {
+//       $theme-map: () !global;
+//       @each $key, $submap in $map {
+//         $value: map-get(map-get($themes, $theme), '#{$key}');
+//         $theme-map: map-merge(
+//           $theme-map,
+//           (
+//             $key: $value
+//           )
+//         ) !global;
+//       }
+//       @content;
+//       $theme-map: null !global;
+//     }
+//   }
+// }
+
+// @function t($key) {
+//   @return map-get($theme-map, $key);
+// }
+
+// .lig {
+//   @include themed() {
+//     background-color: t('bg');
+//   }
+// }
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';

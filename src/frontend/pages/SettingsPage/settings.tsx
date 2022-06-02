@@ -3,16 +3,21 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useState } from 'react';
+import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useAuth } from '../../../services/auth.hooks';
 import PageTitle from '../../layouts/page-title/page-title';
 import PageBlock from '../../layouts/page-block/page-block';
-import { Col, Container, Row } from 'react-bootstrap';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
+  const [showAlert, setShowAlert] = useState(false);
   return (
     <Container fluid>
       <PageTitle title="Settings" />
+      <Alert variant={'success'} show={showAlert}>
+        Haha {auth.user?.firstName} bye bye!
+      </Alert>
       <PageBlock
         title={'Organization Settings'}
         headerRight={<></>}
@@ -23,7 +28,16 @@ const Settings: React.FC = () => {
                 <b>Name:</b> Northeastern Electric Racing
               </Col>
               <Col md={4} lg={2}>
-                <b>Trickster Mode:</b> OFF
+                <Form.Switch
+                  id="trick-switch"
+                  label="Trickster Mode"
+                  onClick={() => {
+                    setShowAlert(true);
+                    setTimeout(() => {
+                      auth.signout();
+                    }, 2000);
+                  }}
+                />
               </Col>
             </Row>
           </Container>

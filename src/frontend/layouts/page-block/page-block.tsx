@@ -18,7 +18,7 @@ const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
   const theme = useTheme();
 
   return (
-    <Card className={theme.themeName + ' my-3'} border={theme.cardBorder} bg={theme.cardBg}>
+    <Card className={'my-3'} border={theme.cardBorder} bg={theme.cardBg}>
       <Card.Body>
         <Card.Title className={styles.header}>
           <h5 className={'float-left mb-0'}>{title}</h5>

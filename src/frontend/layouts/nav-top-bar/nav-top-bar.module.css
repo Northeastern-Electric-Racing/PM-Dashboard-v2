@@ -22,3 +22,10 @@
   color: white;
   margin: auto;
 }
+
+.dropdown {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  vertical-align: bottom;
+}

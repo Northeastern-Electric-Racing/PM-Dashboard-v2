@@ -28,7 +28,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
   const theme = useTheme();
 
   return (
-    <Card bg={theme.cardBg} className={theme.themeName + ' mx-auto mt-sm-5 ' + styles.card}>
+    <Card bg={theme.cardBg} className={'mx-auto mt-sm-5 ' + styles.card}>
       <Card.Body>
         <Card.Title>NER PM Dashboard</Card.Title>
         <Card.Text>Login Required. Students must use their Husky Google account.</Card.Text>

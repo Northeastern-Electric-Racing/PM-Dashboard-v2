@@ -13,8 +13,8 @@ export interface Auth {
 }
 
 export interface Theme {
-  toggleTheme?: (theme: Theme) => void;
-  themeName: string;
+  toggleTheme?: (name: string) => void;
+  name: string;
   bgColor: string;
   cardBg: string;
   cardBorder: string;

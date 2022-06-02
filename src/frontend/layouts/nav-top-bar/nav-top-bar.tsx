@@ -13,7 +13,6 @@ import { useAuth } from '../../../services/auth.hooks';
 import { fullNamePipe } from '../../../shared/pipes';
 import { useTheme } from '../../../services/theme.hooks';
 import themes from '../../../shared/themes';
-import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 const NavTopBar: React.FC = () => {
   const auth = useAuth();
@@ -40,7 +39,7 @@ const NavTopBar: React.FC = () => {
               {themes
                 .filter((t) => t.name !== theme.name)
                 .map((t) => (
-                  <DropdownItem onClick={() => theme.toggleTheme!(t.name)}>{t.name}</DropdownItem>
+                  <Dropdown.Item onClick={() => theme.toggleTheme!(t.name)}>{t.name}</Dropdown.Item>
                 ))}
             </Dropdown.Menu>
           </Dropdown>

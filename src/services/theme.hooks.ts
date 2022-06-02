@@ -24,6 +24,6 @@ export const useProvideTheme = () => {
 // Hook for child components to get the theme object
 export const useTheme = () => {
   const context = useContext(ThemeContext);
-  if (context === undefined) throw Error('Settings must be used inside of context.');
+  if (context === undefined) throw Error('Theme must be used inside of context.');
   return context;
 };

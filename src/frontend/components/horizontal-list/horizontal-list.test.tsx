@@ -5,8 +5,24 @@
 
 import { render, screen } from '@testing-library/react';
 import HorizontalList from './horizontal-list';
+import { useTheme } from '../../../services/theme.hooks';
+import { Theme } from '../../../shared/types';
+
+jest.mock('../../../services/theme.hooks');
+const mockTheme = useTheme as jest.Mock<Theme>;
+
+const mockHook = () => {
+  mockTheme.mockReturnValue({
+    name: 'light',
+    bgColor: '#ffffff',
+    cardBg: 'light',
+    cardBorder: 'dark'
+  });
+};
 
 describe('Horizontal List Component', () => {
+  beforeEach(() => mockHook());
+
   it('renders the title', () => {
     render(<HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />);
 

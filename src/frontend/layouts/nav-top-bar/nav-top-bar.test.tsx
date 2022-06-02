@@ -3,8 +3,22 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { useTheme } from '../../../services/theme.hooks';
+import { Theme } from '../../../shared/types';
 import { render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
 import NavTopBar from './nav-top-bar';
+
+jest.mock('../../../services/theme.hooks');
+const mockTheme = useTheme as jest.Mock<Theme>;
+
+const mockHook = () => {
+  mockTheme.mockReturnValue({
+    name: 'light',
+    bgColor: '#ffffff',
+    cardBg: 'light',
+    cardBorder: 'dark'
+  });
+};
 
 /**
  * Sets up the component under test with the desired values and renders it.
@@ -19,6 +33,8 @@ const renderComponent = () => {
 };
 
 describe('navigation top bar tests', () => {
+  beforeEach(() => mockHook());
+
   it('renders site title', () => {
     renderComponent();
     expect(screen.getByText(/NER PM Dashboard/i)).toBeInTheDocument();

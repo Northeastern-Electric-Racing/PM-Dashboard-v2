@@ -9,7 +9,6 @@ import AppPublic from '../app-public/app-public';
 import './app-main.module.css';
 
 const AppMain: React.FC = () => {
-  throw Error('oopsie doopsie');
   return (
     <AppContext>
       <BrowserRouter>

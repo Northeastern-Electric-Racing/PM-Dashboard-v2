@@ -7,7 +7,7 @@ import { UseMutationResult, UseQueryResult } from 'react-query';
 import { User } from 'utils';
 import { render, screen } from '../../../../test-support/test-utils';
 import { wbsPipe } from '../../../../shared/pipes';
-import { useAllUsers } from '../../../../services/users.hooks';
+import { useAllUsers, useLogUserIn } from '../../../../services/users.hooks';
 import { exampleWbs1 } from '../../../../test-support/test-data/wbs-numbers.stub';
 import StageGateWorkPackageModalContainer from './stage-gate-work-package-modal-container';
 import {
@@ -23,6 +23,14 @@ const mockedUseAllUsers = useAllUsers as jest.Mock<UseQueryResult<User[]>>;
 
 const mockUseAllUsersHook = (isLoading = false, isError = false, data?: User[], error?: Error) => {
   mockedUseAllUsers.mockReturnValue(mockUseQueryResult(isLoading, isError, data, error));
+};
+
+const mockedUseLogUserIn = useLogUserIn as jest.Mock<UseMutationResult>;
+
+const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Error) => {
+  mockedUseLogUserIn.mockReturnValue(
+    mockUseMutationResult<{ in: string }>(isLoading, isError, { in: 'hi' }, error)
+  );
 };
 
 jest.mock('../../../../services/change-requests.hooks');
@@ -47,6 +55,10 @@ const renderComponent = () => {
 };
 
 describe('activate work package modal container test suite', () => {
+  beforeEach(() => {
+    mockUseLogUserInHook(false, false);
+  });
+
   it('renders component without crashing', () => {
     mockUseAllUsersHook(false, false, exampleAllUsers);
     mockUseCreateStageGateCRHook(false, false);

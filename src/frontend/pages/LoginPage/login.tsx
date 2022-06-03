@@ -11,6 +11,7 @@ import { useAuth } from '../../../services/auth.hooks';
 import LoginPage from './login-page/login-page';
 import './login.module.css';
 import { routes } from '../../../shared/routes';
+import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 
 interface LoginProps {
   postLoginRedirect: { url: string; search: string };
@@ -23,6 +24,8 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const [devUserRole, setDevUserRole] = useState<string>(Role.APP_ADMIN);
   const history = useHistory();
   const auth = useAuth();
+
+  if (auth.isLoading) return <LoadingIndicator />;
 
   const redirectAfterLogin = () => {
     console.log(postLoginRedirect);

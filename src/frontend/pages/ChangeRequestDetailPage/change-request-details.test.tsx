@@ -49,7 +49,7 @@ jest.mock('../../../services/auth.hooks');
 const mockedUseAuth = useAuth as jest.Mock<Auth>;
 
 const mockAuthHook = (user = exampleAdminUser) => {
-  mockedUseAuth.mockReturnValue(mockAuth(user));
+  mockedUseAuth.mockReturnValue(mockAuth(false, user));
 };
 
 /**

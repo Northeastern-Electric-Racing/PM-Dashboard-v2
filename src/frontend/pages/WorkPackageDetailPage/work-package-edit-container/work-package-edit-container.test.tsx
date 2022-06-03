@@ -8,7 +8,7 @@ import { User } from 'utils';
 import { render, screen } from '../../../../test-support/test-utils';
 import { useEditWorkPackage } from '../../../../services/work-packages.hooks';
 import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
-import { useAllUsers } from '../../../../services/users.hooks';
+import { useAllUsers, useLogUserIn } from '../../../../services/users.hooks';
 import {
   mockUseMutationResult,
   mockUseQueryResult
@@ -35,6 +35,14 @@ const mockUsersHook = (isLoading: boolean, isError: boolean, data?: User[], erro
   mockedUseAllUsers.mockReturnValue(mockUseQueryResult<User[]>(isLoading, isError, data, error));
 };
 
+const mockedUseLogUserIn = useLogUserIn as jest.Mock<UseMutationResult>;
+
+const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Error) => {
+  mockedUseLogUserIn.mockReturnValue(
+    mockUseMutationResult<{ in: string }>(isLoading, isError, { in: 'hi' }, error)
+  );
+};
+
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
   return render(
@@ -43,6 +51,9 @@ const renderComponent = () => {
 };
 
 describe('test suite for WorkPackageEditContainer', () => {
+  beforeEach(() => {
+    mockUseLogUserInHook(false, false);
+  });
   it('renders without crashing', () => {
     mockEditWorkPackageHook(false, false);
     mockUsersHook(false, false, exampleAllUsers);

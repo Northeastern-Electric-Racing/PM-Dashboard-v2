@@ -9,7 +9,7 @@ import { render, screen, routerWrapperBuilder } from '../../../../test-support/t
 import { wbsPipe } from '../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
 import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
-import { useAllUsers } from '../../../../services/users.hooks';
+import { useAllUsers, useLogUserIn } from '../../../../services/users.hooks';
 import {
   mockUseMutationResult,
   mockUseQueryResult
@@ -40,6 +40,14 @@ const mockUsersHook = (isLoading: boolean, isError: boolean, data?: User[], erro
   mockedUseAllUsers.mockReturnValue(mockUseQueryResult<User[]>(isLoading, isError, data, error));
 };
 
+const mockedUseLogUserIn = useLogUserIn as jest.Mock<UseMutationResult>;
+
+const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Error) => {
+  mockedUseLogUserIn.mockReturnValue(
+    mockUseMutationResult<{ in: string }>(isLoading, isError, { in: 'hi' }, error)
+  );
+};
+
 const users = [exampleAdminUser, exampleAppAdminUser, exampleLeadershipUser];
 
 // Sets up the component under test with the desired values and renders it.
@@ -53,6 +61,10 @@ const renderComponent = () => {
 };
 
 describe('test suite for ProjectEditContainer', () => {
+  beforeEach(() => {
+    mockUseLogUserInHook(false, false);
+  });
+
   describe('rendering subcomponents of ProjectEditContainer', () => {
     it('renders title', () => {
       mockUsersHook(false, false, users);

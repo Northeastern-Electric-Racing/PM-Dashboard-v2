@@ -25,6 +25,8 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const history = useHistory();
   const auth = useAuth();
 
+  if (auth.isLoading) return <LoadingIndicator />;
+
   const redirectAfterLogin = () => {
     console.log(postLoginRedirect);
     if (postLoginRedirect.url === routes.LOGIN) {
@@ -46,7 +48,6 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
     await auth.signin(id_token);
-    if (auth.updateLoadingState()) return <LoadingIndicator />;
     redirectAfterLogin();
   };
 

@@ -140,12 +140,13 @@ export const mockUseMutationResult = <Input>(
   } as UseMutationResult<Input, Error>;
 };
 
-export const mockAuth = (user?: User) => {
+export const mockAuth = (isLoading: boolean, user?: User) => {
   return {
     user,
     devSignin: (u) => u,
     signin: (t) => new Promise((res, rej) => res(exampleAdminUser)),
-    signout: () => {}
+    signout: () => {},
+    isLoading
   } as Auth;
 };
 

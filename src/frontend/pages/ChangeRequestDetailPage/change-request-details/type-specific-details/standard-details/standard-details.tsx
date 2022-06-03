@@ -7,26 +7,25 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { ChangeRequestExplanation, StandardChangeRequest } from 'utils';
 import { weeksPipe, dollarsPipe } from '../../../../../../shared/pipes';
 import PageBlock from '../../../../../layouts/page-block/page-block';
-import styles from './standard-details.module.css';
 
 interface StandardDetailsProps {
   cr: StandardChangeRequest;
 }
 
 const StandardDetails: React.FC<StandardDetailsProps> = ({ cr }: StandardDetailsProps) => {
-  const { spacer } = styles;
+  const spacer = 'mb-2 p-0';
   return (
     <PageBlock
       title={'Standard Change Request Details'}
       headerRight={<></>}
       body={
         <Container fluid>
-          <Col className={spacer}>
+          <div className={spacer}>
             <Row className={spacer} sm={3} md={2} lg={2} xl={1}>
               <b>What</b>
             </Row>
             <Row className={spacer}>{cr.what}</Row>
-          </Col>
+          </div>
           <Row className={spacer}>
             <Col className={spacer} xs={4} sm={3} md={2} lg={2} xl={1}>
               <b>Why</b>
@@ -46,12 +45,12 @@ const StandardDetails: React.FC<StandardDetailsProps> = ({ cr }: StandardDetails
             <Row className={spacer} xs={4} sm={3} md={2} lg={2} xl={1}>
               <b>Impact</b>
             </Row>
-            <Col className={spacer}>
+            <div className={spacer}>
               <Row className={spacer} md={4} lg={3} xl={2}>
                 <b>Scope Impact</b>
               </Row>
               <Row className={spacer}>{cr.scopeImpact}</Row>
-            </Col>
+            </div>
             <Row>
               <Col className={spacer} xs={7} sm={6} md={4} lg={3} xl={2}>
                 <b>Budget Impact</b>

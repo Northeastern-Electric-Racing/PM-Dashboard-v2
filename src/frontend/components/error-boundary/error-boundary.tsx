@@ -26,9 +26,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             'Please send a screenshot of this error to the software team, and try reloading the page to resolve the issue.'
           }
           error={this.state.error}
-        >
-          {' '}
-        </ErrorPage>
+        />
       );
     }
 

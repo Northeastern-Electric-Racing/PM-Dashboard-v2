@@ -10,10 +10,13 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './custom.scss';
+import ErrorBoundary from './frontend/components/error-boundary/error-boundary';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppMain />
+    <ErrorBoundary>
+      <AppMain />
+    </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 );

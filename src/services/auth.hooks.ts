@@ -11,7 +11,7 @@ import { Auth } from '../shared/types';
 
 // Provider hook that creates auth object and handles state
 export const useProvideAuth = () => {
-  const serverSignin = useLogUserIn();
+  const { isLoading, mutateAsync } = useLogUserIn();
   const [user, setUser] = useState<User | undefined>(undefined);
 
   const devSignin = (user: User) => {
@@ -20,7 +20,7 @@ export const useProvideAuth = () => {
   };
 
   const signin = async (id_token: string) => {
-    const user = await serverSignin.mutateAsync(id_token);
+    const user = await mutateAsync(id_token);
     setUser(user);
     return user;
   };
@@ -33,7 +33,8 @@ export const useProvideAuth = () => {
     user,
     devSignin,
     signin,
-    signout
+    signout,
+    isLoading
   } as Auth;
 };
 

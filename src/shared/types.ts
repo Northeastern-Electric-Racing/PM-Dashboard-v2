@@ -10,6 +10,7 @@ export interface Auth {
   devSignin: (user: User) => User;
   signin: (token: string) => Promise<User>;
   signout: () => void;
+  isLoading: boolean;
 }
 
 export interface Theme {

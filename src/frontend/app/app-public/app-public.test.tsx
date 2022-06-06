@@ -25,8 +25,8 @@ jest.mock('../../../services/auth.hooks');
 
 const mockedUseAuth = useAuth as jest.Mock<Auth>;
 
-const mockHook = (user?: User) => {
-  mockedUseAuth.mockReturnValue(mockAuth(user));
+const mockHook = (isLoading: boolean, user?: User) => {
+  mockedUseAuth.mockReturnValue(mockAuth(isLoading, user));
 };
 
 // Sets up the component under test with the desired values and renders it
@@ -41,6 +41,7 @@ const renderComponent = (path?: string, route?: string) => {
 
 describe('app public section', () => {
   it('renders login page', () => {
+    mockHook(false, exampleAdminUser);
     renderComponent(routes.LOGIN, routes.LOGIN);
 
     expect(screen.getByText('NER PM Dashboard')).toBeInTheDocument();
@@ -48,8 +49,15 @@ describe('app public section', () => {
     expect(screen.getByText('Login')).toBeInTheDocument();
   });
 
+  it('renders loading spinner', () => {
+    mockHook(true, exampleAdminUser);
+    renderComponent(routes.LOGIN, routes.LOGIN);
+
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+  });
+
   it('renders app authenticated', () => {
-    mockHook(exampleAdminUser);
+    mockHook(false, exampleAdminUser);
     renderComponent(routes.PROJECTS, routes.PROJECTS);
 
     expect(screen.getByText('app-authenticated')).toBeInTheDocument();

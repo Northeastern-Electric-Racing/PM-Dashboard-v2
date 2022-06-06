@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import { ChangeRequestType, WbsNumber } from 'utils';
 import { useAuth } from '../../../../services/auth.hooks';
 import { useCreateStageGateChangeRequest } from '../../../../services/change-requests.hooks';
-import { useAllUsers } from '../../../../services/users.hooks';
 import { routes } from '../../../../shared/routes';
 import ErrorPage from '../../../pages/ErrorPage/error-page';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
@@ -30,7 +29,6 @@ const StageGateWorkPackageModalContainer: React.FC<StageGateWorkPackageModalCont
   handleClose
 }) => {
   const auth = useAuth();
-  const users = useAllUsers();
   const history = useHistory();
   const { isLoading, isError, error, mutateAsync } = useCreateStageGateChangeRequest();
 
@@ -48,9 +46,9 @@ const StageGateWorkPackageModalContainer: React.FC<StageGateWorkPackageModalCont
     history.push(routes.CHANGE_REQUESTS);
   };
 
-  if (isLoading || users.isLoading) return <LoadingIndicator />;
+  if (isLoading) return <LoadingIndicator />;
 
-  if (isError || users.isError) return <ErrorPage message={error?.message} />;
+  if (isError) return <ErrorPage message={error?.message} />;
 
   return (
     <StageGateWorkPackageModal
@@ -58,7 +56,6 @@ const StageGateWorkPackageModalContainer: React.FC<StageGateWorkPackageModalCont
       modalShow={modalShow}
       onHide={handleClose}
       onSubmit={handleConfirm}
-      allUsers={users.data!}
     />
   );
 };

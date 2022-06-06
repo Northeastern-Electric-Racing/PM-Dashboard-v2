@@ -4,13 +4,25 @@
  */
 
 import { render } from '@testing-library/react';
+import { useTheme } from '../../../services/theme.hooks';
+import themes from '../../../shared/themes';
+import { Theme } from '../../../shared/types';
 import PageBlock from './page-block';
+
+jest.mock('../../../services/theme.hooks');
+const mockTheme = useTheme as jest.Mock<Theme>;
+
+const mockHook = () => {
+  mockTheme.mockReturnValue(themes[0]);
+};
 
 const renderComponent = () => {
   return render(<PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />);
 };
 
 describe('card component', () => {
+  beforeEach(() => mockHook());
+
   it('renders without error', () => {
     renderComponent();
   });

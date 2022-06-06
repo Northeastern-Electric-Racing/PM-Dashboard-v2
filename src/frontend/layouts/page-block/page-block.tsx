@@ -4,6 +4,7 @@
  */
 
 import { Card } from 'react-bootstrap';
+import { useTheme } from '../../../services/theme.hooks';
 import styles from './page-block.module.css';
 
 interface PageBlockProps {
@@ -14,8 +15,10 @@ interface PageBlockProps {
 
 // Custom card component for page blocks
 const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
+  const theme = useTheme();
+
   return (
-    <Card className={'my-3'} border="dark" bg="light">
+    <Card className={'my-3'} border={theme.cardBorder} bg={theme.cardBg}>
       <Card.Body>
         <Card.Title className={styles.header}>
           <h5 className={'float-left mb-0'}>{title}</h5>

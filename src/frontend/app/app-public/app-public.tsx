@@ -5,6 +5,7 @@
 
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../services/auth.hooks';
+import { useTheme } from '../../../services/theme.hooks';
 import { routes } from '../../../shared/routes';
 import Login from '../../pages/LoginPage/login';
 import AppAuthenticated from '../app-authenticated/app-authenticated';
@@ -13,29 +14,36 @@ import './app-public.module.css';
 const AppPublic: React.FC = () => {
   const auth = useAuth();
   const history = useHistory();
+  const theme = useTheme();
+
+  // eslint-disable-next-line prefer-destructuring
+  document.body.style.backgroundColor = theme.bgColor;
+
   return (
-    <Switch>
-      <Route path={routes.LOGIN}>
-        <Login
-          postLoginRedirect={{ url: history.location.pathname, search: history.location.search }}
+    <html className={theme.name}>
+      <Switch>
+        <Route path={routes.LOGIN}>
+          <Login
+            postLoginRedirect={{ url: history.location.pathname, search: history.location.search }}
+          />
+        </Route>
+        <Route
+          path="*"
+          render={({ location }) =>
+            auth.user === undefined ? (
+              <Redirect
+                to={{
+                  pathname: routes.LOGIN,
+                  state: { from: location }
+                }}
+              />
+            ) : (
+              <AppAuthenticated />
+            )
+          }
         />
-      </Route>
-      <Route
-        path="*"
-        render={({ location }) =>
-          auth.user === undefined ? (
-            <Redirect
-              to={{
-                pathname: routes.LOGIN,
-                state: { from: location }
-              }}
-            />
-          ) : (
-            <AppAuthenticated />
-          )
-        }
-      />
-    </Switch>
+      </Switch>
+    </html>
   );
 };
 

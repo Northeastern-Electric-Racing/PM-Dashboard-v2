@@ -5,12 +5,15 @@
 
 import AppContextAuth from '../app-context-auth/app-context-auth';
 import AppContextQuery from '../app-context-query/app-context-query';
+import AppContextTheme from '../app-context-theme/app-context-theme';
 import './app-context.module.css';
 
 const AppContext: React.FC = (props) => {
   return (
     <AppContextQuery>
-      <AppContextAuth>{props.children}</AppContextAuth>
+      <AppContextAuth>
+        <AppContextTheme>{props.children}</AppContextTheme>
+      </AppContextAuth>
     </AppContextQuery>
   );
 };

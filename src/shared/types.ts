@@ -12,3 +12,11 @@ export interface Auth {
   signout: () => void;
   isLoading: boolean;
 }
+
+export interface Theme {
+  toggleTheme?: (name: string) => void;
+  name: string;
+  bgColor: string;
+  cardBg: string;
+  cardBorder: string;
+}

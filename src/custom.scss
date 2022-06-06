@@ -16,21 +16,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: $ner-header-font;
 }
 
 $primary: #ef4345;
+$dark: #464646;
 
 // change the theme
 $theme-colors: (
   'ner-red': #ef4345,
   'ner-dark-grey': #292929,
+  'ner-dark-bg': #353434,
+  'ner-light-bg': #ffffff,
   'ner-white': #ffffff
 );
 
 @function theme-color($key) {
   @return map-get($theme-colors, $key);
+}
+
+.dark {
+  p,
+  div,
+  body,
+  div,
+  td,
+  tr {
+    color: #ffffff;
+  }
+
+  background-color: #353434;
+}
+
+.light {
+  // this is empty because not setting the text color defaults everything to what it was before
+  // same for background color
 }
 
 // Import Bootstrap and its default variables

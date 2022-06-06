@@ -4,6 +4,7 @@
  */
 
 import { useTheme } from '../../../services/theme.hooks';
+import themes from '../../../shared/themes';
 import { Theme } from '../../../shared/types';
 import { render, routerWrapperBuilder, screen } from '../../../test-support/test-utils';
 import NavTopBar from './nav-top-bar';
@@ -12,12 +13,7 @@ jest.mock('../../../services/theme.hooks');
 const mockTheme = useTheme as jest.Mock<Theme>;
 
 const mockHook = () => {
-  mockTheme.mockReturnValue({
-    name: 'light',
-    bgColor: '#ffffff',
-    cardBg: 'light',
-    cardBorder: 'dark'
-  });
+  mockTheme.mockReturnValue(themes[0]);
 };
 
 /**

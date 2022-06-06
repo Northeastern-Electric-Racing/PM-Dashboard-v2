@@ -19,6 +19,7 @@ import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import ChangeRequestsTable, { filterCRs } from './change-requests-table';
 import { useTheme } from '../../../services/theme.hooks';
 import { Theme } from '../../../shared/types';
+import themes from '../../../shared/themes';
 
 jest.mock('../../../services/change-requests.hooks');
 
@@ -34,12 +35,7 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: ChangeRequest[], 
     mockUseQueryResult<ChangeRequest[]>(isLoading, isError, data, error)
   );
 
-  mockTheme.mockReturnValue({
-    name: 'light',
-    bgColor: '#ffffff',
-    cardBg: 'light',
-    cardBorder: 'dark'
-  });
+  mockTheme.mockReturnValue(themes[0]);
 };
 
 // Sets up the component under test with the desired values and renders it.

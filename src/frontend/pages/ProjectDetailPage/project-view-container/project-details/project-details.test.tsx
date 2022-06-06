@@ -6,6 +6,7 @@
 import { render, screen } from '@testing-library/react';
 import { useTheme } from '../../../../../services/theme.hooks';
 import { fullNamePipe } from '../../../../../shared/pipes';
+import themes from '../../../../../shared/themes';
 import { Theme } from '../../../../../shared/types';
 import {
   exampleProject1,
@@ -17,12 +18,7 @@ jest.mock('../../../../../services/theme.hooks');
 const mockTheme = useTheme as jest.Mock<Theme>;
 
 const mockHook = () => {
-  mockTheme.mockReturnValue({
-    name: 'light',
-    bgColor: '#ffffff',
-    cardBg: 'light',
-    cardBorder: 'dark'
-  });
+  mockTheme.mockReturnValue(themes[0]);
 };
 
 describe('project details component', () => {

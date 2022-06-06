@@ -39,6 +39,7 @@ const LoginDev: React.FC<LoginDevProps> = ({ devSetRole, devFormSubmit }) => {
           onChange={(e: any) => devSetRole(e.target.value)}
           aria-describedby="user-select"
           as="select"
+          custom
         >
           {usersList.map((user) => (
             <option key={user.role}>{user.role}</option>

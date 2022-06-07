@@ -14,6 +14,7 @@ import { ChangeRequest, ChangeRequestType, ImplementedChange } from 'utils';
 export const changeRequestTransformer = (changeRequest: ChangeRequest) => {
   const data: any = {
     ...changeRequest,
+    implementedChanges: changeRequest.implementedChanges?.map(implementedChangeTransformer),
     dateSubmitted: new Date(changeRequest.dateSubmitted),
     dateReviewed: changeRequest.dateReviewed
       ? new Date(changeRequest.dateReviewed)

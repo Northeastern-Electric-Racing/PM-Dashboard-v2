@@ -127,11 +127,7 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         reviewNotes={changeRequest.reviewNotes}
         dateReviewed={changeRequest.dateReviewed}
       />
-      <ImplementedChangesList
-        changes={
-          changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges
-        }
-      />
+      <ImplementedChangesList changes={changeRequest.implementedChanges || []} />
       {modalShow && <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />}
     </Container>
   );

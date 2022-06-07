@@ -13,13 +13,9 @@ import './implemented-changes-list.module.css';
 
 interface ImplementedChangesListProps {
   changes: ImplementedChange[];
-  dateImplemented: Date;
 }
 
-const ImplementedChangesList: React.FC<ImplementedChangesListProps> = ({
-  changes,
-  dateImplemented
-}) => {
+const ImplementedChangesList: React.FC<ImplementedChangesListProps> = ({ changes }) => {
   return (
     <BulletList
       title={'Implemented Changes'}
@@ -31,7 +27,7 @@ const ImplementedChangesList: React.FC<ImplementedChangesListProps> = ({
             placement="right"
             overlay={
               <Tooltip id="tooltip">
-                {fullNamePipe(ic.implementer)} - {datePipe(dateImplemented)}
+                {fullNamePipe(ic.implementer)} - {datePipe(ic.dateImplemented)}
               </Tooltip>
             }
           >

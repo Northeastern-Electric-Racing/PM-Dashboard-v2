@@ -4,24 +4,18 @@
  */
 
 import { render, screen, routerWrapperBuilder } from '../../../../../test-support/test-utils';
+import { ImplementedChange } from 'utils';
 import { exampleStandardImplementedChangeRequest } from '../../../../../test-support/test-data/change-requests.stub';
 import ImplementedChangesList from './implemented-changes-list';
 
 /**
  * Sets up the component under test with the desired values and renders it.
  */
-const renderComponent = () => {
+const renderComponent = (changes: ImplementedChange[] = []) => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ImplementedChangesList
-        changes={
-          exampleStandardImplementedChangeRequest.implementedChanges === undefined
-            ? []
-            : exampleStandardImplementedChangeRequest.implementedChanges
-        }
-        dateImplemented={exampleStandardImplementedChangeRequest.dateImplemented!}
-      />
+      <ImplementedChangesList changes={changes} />
     </RouterWrapper>
   );
 };
@@ -34,7 +28,7 @@ describe('Rendering Implemented Changes List Component', () => {
   });
 
   it('renders the implemented changes list', () => {
-    renderComponent();
+    renderComponent(exampleStandardImplementedChangeRequest.implementedChanges);
 
     expect(screen.getByText('1.23.3')).toBeInTheDocument();
     expect(screen.getByText(/Increase budget to 200/i)).toBeInTheDocument();

@@ -128,10 +128,8 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
         dateReviewed={changeRequest.dateReviewed}
       />
       <ImplementedChangesList
-        changes={
-          changeRequest.implementedChanges === undefined ? [] : changeRequest.implementedChanges
-        }
-        dateImplemented={changeRequest.dateImplemented!}
+        changes={changeRequest.implementedChanges || []}
+        overallDateImplemented={changeRequest.dateImplemented}
       />
       {modalShow && <ReviewChangeRequest modalShow={modalShow} handleClose={handleClose} />}
     </Container>

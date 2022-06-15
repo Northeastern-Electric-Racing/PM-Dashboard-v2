@@ -73,6 +73,8 @@ export enum ChangeRequestReason {
   Manufacturing = 'MANUFACTURING',
   Rules = 'RULES',
   Initialization = 'INITIALIZATION',
+  Competition = 'COMPETITION',
+  Maintenance = 'MAINTENANCE',
   OtherProject = 'OTHER_PROJECT',
   Other = 'OTHER'
 }
@@ -138,6 +140,8 @@ export const createStandardChangeRequestPayloadSchema = bodySchema({
         ChangeRequestReason.Manufacturing,
         ChangeRequestReason.Rules,
         ChangeRequestReason.Initialization,
+        ChangeRequestReason.Competition,
+        ChangeRequestReason.Maintenance,
         ChangeRequestReason.OtherProject,
         ChangeRequestReason.Other
       ),

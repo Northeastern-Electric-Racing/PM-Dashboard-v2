@@ -175,6 +175,7 @@ model Project {
   features              Description_Bullet[] @relation(name: "projectFeatures")
   otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
+  risks                 Risk[]
 }
 
 model Work_Package {
@@ -208,4 +209,14 @@ model Description_Bullet {
   workPackageExpectedActivities   Work_Package? @relation(name: "workPackageExpectedActivities", fields: [workPackageIdExpectedActivities], references: [workPackageId])
   workPackageIdDeliverables       Int?
   workPackageDeliverables         Work_Package? @relation(name: "workPackageDeliverables", fields: [workPackageIdDeliverables], references: [workPackageId])
+}
+
+model Risk {
+  riskId      Int       @id @default(autoincrement())
+  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [projectId])
+  detail      String
+  isResolved  Boolean   @default(false)
+  dateDeleted DateTime?
+  dateCreated DateTime  @default(now())
 }

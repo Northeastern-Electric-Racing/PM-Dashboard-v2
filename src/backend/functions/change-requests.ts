@@ -49,6 +49,8 @@ const convertCRScopeWhyType = (whyType: Scope_CR_Why_Type): ChangeRequestReason 
     MANUFACTURING: ChangeRequestReason.Manufacturing,
     RULES: ChangeRequestReason.Rules,
     INITIALIZATION: ChangeRequestReason.Initialization,
+    COMPETITION: ChangeRequestReason.Competition,
+    MAINTENANCE: ChangeRequestReason.Maintenance,
     OTHER_PROJECT: ChangeRequestReason.OtherProject,
     OTHER: ChangeRequestReason.Other
   }[whyType]);

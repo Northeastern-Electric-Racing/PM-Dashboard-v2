@@ -27,7 +27,7 @@ const HelpPage: React.FC = () => {
                   'https://docs.google.com/document/d/1_kr7PQxjYKvBTmZc8cxeSv5xx0lE88v0wVXkVg3Mez8/edit?usp=sharing'
                 )}
               </Col>
-              <Col>Got any suggestions for additional resources? Message in Slack!</Col>
+              <Col>Got any suggestions for additional resources? Drop a message in Slack!</Col>
             </Row>
           </Container>
         }

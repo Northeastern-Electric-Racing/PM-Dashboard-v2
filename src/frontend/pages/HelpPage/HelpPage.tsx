@@ -4,8 +4,8 @@
  */
 
 import { Col, Container, Row } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faScroll } from '@fortawesome/free-solid-svg-icons';
+import { iconLinkPipe } from '../../../shared/pipes';
 import PageTitle from '../../layouts/page-title/page-title';
 import PageBlock from '../../layouts/page-block/page-block';
 
@@ -19,8 +19,12 @@ const HelpPage: React.FC = () => {
         body={
           <Container fluid>
             <Row>
-              <Col md={6} lg={4}>
-                <FontAwesomeIcon icon={faScroll} size="1x" className="pr-1" />
+              <Col md={4} lg={2}>
+                {iconLinkPipe(
+                  faScroll,
+                  'Glossary Document',
+                  'https://docs.google.com/document/d/1_kr7PQxjYKvBTmZc8cxeSv5xx0lE88v0wVXkVg3Mez8/edit?usp=sharing'
+                )}
               </Col>
               <Col md={4} lg={2}></Col>
             </Row>

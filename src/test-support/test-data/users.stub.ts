@@ -25,6 +25,16 @@ export const exampleAdminUser: User = {
   role: Role.ADMIN
 };
 
+export const exampleAdminUser2: User = {
+  userId: 3,
+  firstName: 'Joe',
+  lastName: 'Shmoe',
+  googleAuthId: '2',
+  email: 'shmoe.j@husky.neu.edu',
+  emailId: 'shmoe.j',
+  role: Role.ADMIN
+};
+
 export const exampleLeadershipUser: User = {
   userId: 3,
   firstName: 'Joe',

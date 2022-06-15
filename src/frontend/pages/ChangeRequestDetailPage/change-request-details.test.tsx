@@ -12,6 +12,7 @@ import {
 } from '../../../test-support/test-data/change-requests.stub';
 import {
   exampleAdminUser,
+  exampleAdminUser2,
   exampleGuestUser,
   exampleMemberUser
 } from '../../../test-support/test-data/users.stub';
@@ -113,7 +114,7 @@ describe('change request details container', () => {
 
   it('enables review if the user is an admin', () => {
     mockSingleCRHook(false, false, exampleActivationChangeRequest);
-    mockAuthHook(exampleAdminUser);
+    mockAuthHook(exampleAdminUser2);
     renderComponent();
 
     expect(screen.getByText('Review')).not.toBeDisabled();

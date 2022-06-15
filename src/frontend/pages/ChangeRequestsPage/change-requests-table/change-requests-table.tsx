@@ -14,6 +14,7 @@ import './change-requests-table.module.css';
 
 export interface DisplayChangeRequest {
   id: number;
+  dateSubmitted: string;
   submitterName: string;
   wbsNum: string;
   type: string;
@@ -41,6 +42,13 @@ const ChangeRequestsTable: React.FC<ChangeRequestsTableProps> = ({
       dataField: 'id',
       text: 'ID',
       align: 'center',
+      sort: true
+    },
+    {
+      headerAlign: 'center',
+      dataField: 'dateSubmitted',
+      text: 'Date Submitted',
+      align: 'left',
       sort: true
     },
     {

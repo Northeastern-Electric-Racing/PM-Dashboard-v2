@@ -127,6 +127,7 @@ const ChangeRequestsTable: React.FC = () => {
     return changeRequests.map((cr: ChangeRequest) => {
       return {
         id: cr.crId,
+        dateSubmitted: datePipe(cr.dateSubmitted),
         submitterName: fullNamePipe(cr.submitter),
         wbsNum: wbsPipe(cr.wbsNum),
         type: cr.type,

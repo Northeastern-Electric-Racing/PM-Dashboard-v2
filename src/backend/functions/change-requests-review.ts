@@ -33,8 +33,11 @@ export const reviewChangeRequest: Handler<FromSchema<typeof inputSchema>> = asyn
   if (reviewer.role === Role.GUEST || reviewer.role === Role.MEMBER) return buildNoAuthResponse();
 
   // ensure existence of change request
-  const foundCR = prisma.change_Request.findUnique({ where: { crId } });
+  const foundCR = await prisma.change_Request.findUnique({ where: { crId } });
   if (!foundCR) return buildNotFoundResponse('change request', `#${crId}`);
+
+  // verify that the user is not reviewing their own change request
+  if (reviewerId === foundCR.submitterId) return buildNoAuthResponse();
 
   // update change request
   const update = await prisma.change_Request.update({

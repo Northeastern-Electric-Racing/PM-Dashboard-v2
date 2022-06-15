@@ -4,7 +4,7 @@
  */
 
 import { Col, Container, Row } from 'react-bootstrap';
-import { faScroll } from '@fortawesome/free-solid-svg-icons';
+import { faScroll, faCode, faCommentAlt } from '@fortawesome/free-solid-svg-icons';
 import { iconLinkPipe } from '../../../shared/pipes';
 import PageTitle from '../../layouts/page-title/page-title';
 import PageBlock from '../../layouts/page-block/page-block';
@@ -18,15 +18,16 @@ const HelpPage: React.FC = () => {
         headerRight={<></>}
         body={
           <Container fluid>
+            <Row className="pb-2">Check out these helpful resources:</Row>
             <Row>
-              <Col md={4} lg={2}>
+              <Col md={4} lg={3}>
                 {iconLinkPipe(
                   faScroll,
                   'Glossary Document',
                   'https://docs.google.com/document/d/1_kr7PQxjYKvBTmZc8cxeSv5xx0lE88v0wVXkVg3Mez8/edit?usp=sharing'
                 )}
               </Col>
-              <Col md={4} lg={2}></Col>
+              <Col>Got any suggestions for additional resources? Message in Slack!</Col>
             </Row>
           </Container>
         }
@@ -36,21 +37,24 @@ const HelpPage: React.FC = () => {
         headerRight={<></>}
         body={
           <Container fluid>
+            <Row className="pb-2">
+              Any and all questions, comments, suggestions, bugs, or other issues can be directed to
+              the resources below:
+            </Row>
             <Row>
-              <Col md={4} lg={2}>
-                <b>First Name:</b>
+              <Col sm={5} md={4} lg={3}>
+                {iconLinkPipe(
+                  faCommentAlt,
+                  'Message in Slack',
+                  'slack://channel?team=T7MHAQ5TL&id=C02U5TKHLER'
+                )}
               </Col>
-              <Col md={4} lg={2}>
-                <b>Last Name:</b>
-              </Col>
-              <Col md={4} lg={3}>
-                <b>Email: </b>
-              </Col>
-              <Col md={4} lg={2}>
-                <b>Email ID:</b>
-              </Col>
-              <Col md={4} lg={2}>
-                <b>Role: </b>
+              <Col sm={6} md={4} lg={3}>
+                {iconLinkPipe(
+                  faCode,
+                  'Submit a ticket on GitHub',
+                  'https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/issues/new/choose'
+                )}
               </Col>
             </Row>
           </Container>

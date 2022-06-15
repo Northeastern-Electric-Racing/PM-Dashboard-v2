@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { routes } from '../../../shared/routes';
 import ChangeRequests from '../../pages/ChangeRequestsPage/change-requests';
 import Projects from '../../pages/ProjectsPage/projects';
@@ -24,6 +24,7 @@ const AppAuthenticated: React.FC = () => {
         <div className={styles.content}>
           <Switch>
             <Route path={routes.PROJECTS} component={Projects} />
+            <Redirect from={routes.CR_BY_ID} to={routes.CHANGE_REQUESTS_BY_ID} />
             <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
             <Route path={routes.SETTINGS} component={Settings} />
             <Route path={routes.HELP} component={HelpPage} />

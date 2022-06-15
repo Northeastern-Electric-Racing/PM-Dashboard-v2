@@ -18,6 +18,7 @@ const WORK_PACKAGE_NEW = PROJECTS + `/work-package/new`;
 /**************** Change Requests Section ****************/
 const CHANGE_REQUESTS = `/change-requests`;
 const CHANGE_REQUESTS_BY_ID = CHANGE_REQUESTS + `/:id`;
+const CR_BY_ID = `/cr/:id`; // short version of CHANGE_REQUESTS_BY_ID
 const CHANGE_REQUESTS_NEW = CHANGE_REQUESTS + `/new`;
 const CHANGE_REQUESTS_NEW_WITH_WBS = CHANGE_REQUESTS_NEW + `?wbsNum=`;
 
@@ -34,6 +35,7 @@ export const routes = {
 
   CHANGE_REQUESTS,
   CHANGE_REQUESTS_BY_ID,
+  CR_BY_ID,
   CHANGE_REQUESTS_NEW,
   CHANGE_REQUESTS_NEW_WITH_WBS
 };

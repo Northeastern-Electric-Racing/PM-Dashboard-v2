@@ -26,6 +26,5 @@ describe('useful links component', () => {
     expect(screen.getByText(/Personal purchasing guidelines/i)).toBeInTheDocument();
     expect(screen.getByText(/Procurement form/i)).toBeInTheDocument();
     expect(screen.getByText(/Part numbering spreadsheet/i)).toBeInTheDocument();
-    expect(screen.getByText(/Glossary Document/i)).toBeInTheDocument();
   });
 });

@@ -11,8 +11,9 @@ import { PageNotFound } from '../../pages/PageNotFoundPage/page-not-found';
 import Home from '../../pages/HomePage/home';
 import NavTopBar from '../../layouts/nav-top-bar/nav-top-bar';
 import Settings from '../../pages/SettingsPage/settings';
-import styles from './app-authenticated.module.css';
+import HelpPage from '../../pages/HelpPage/HelpPage';
 import Sidebar from '../../layouts/sidebar/sidebar';
+import styles from './app-authenticated.module.css';
 
 const AppAuthenticated: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const AppAuthenticated: React.FC = () => {
             <Route path={routes.PROJECTS} component={Projects} />
             <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
             <Route path={routes.SETTINGS} component={Settings} />
+            <Route path={routes.HELP} component={HelpPage} />
             <Route exact path={routes.HOME} component={Home} />
             <Route path="*" component={PageNotFound} />
           </Switch>

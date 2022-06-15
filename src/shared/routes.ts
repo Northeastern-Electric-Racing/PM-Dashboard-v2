@@ -7,6 +7,7 @@
 const HOME = `/`;
 const LOGIN = `/login`;
 const SETTINGS = `/settings`;
+const HELP = `/help`;
 
 /**************** Projects Section ****************/
 const PROJECTS = `/projects`;
@@ -24,6 +25,7 @@ export const routes = {
   HOME,
   LOGIN,
   SETTINGS,
+  HELP,
 
   PROJECTS,
   PROJECTS_BY_WBS,

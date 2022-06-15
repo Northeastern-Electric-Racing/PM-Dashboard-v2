@@ -7,6 +7,8 @@ import { ReactElement } from 'react';
 import { User } from '@prisma/client';
 import { WbsElementStatus, WbsNumber } from 'utils';
 import { Badge } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 /**
  * Pipes:
@@ -20,6 +22,15 @@ export const linkPipe = (description: string, link: string): ReactElement => {
     <a href={link} target="_blank" rel="noopener noreferrer">
       {description}
     </a>
+  );
+};
+
+export const iconLinkPipe = (icon: IconProp, description: string, link: string) => {
+  return (
+    <div className="d-flex flex-row align-items-center">
+      <FontAwesomeIcon icon={icon} size="1x" className="pr-1" />
+      {linkPipe(description, link)}
+    </div>
   );
 };
 

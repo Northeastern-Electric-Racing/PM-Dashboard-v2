@@ -7,7 +7,12 @@ import { Nav } from 'react-bootstrap';
 import styles from './sidebar.module.css';
 import NavPageLinks, { LinkItem } from './nav-page-links/nav-page-links';
 import { routes } from '../../../shared/routes';
-import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExchangeAlt,
+  faFolder,
+  faHome,
+  faQuestionCircle
+} from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar: React.FC = () => {
   const linkItems: LinkItem[] = [
@@ -25,6 +30,11 @@ const Sidebar: React.FC = () => {
       name: 'Change Requests',
       icon: faExchangeAlt,
       route: routes.CHANGE_REQUESTS
+    },
+    {
+      name: 'Help',
+      icon: faQuestionCircle,
+      route: routes.HELP
     }
   ];
   return (

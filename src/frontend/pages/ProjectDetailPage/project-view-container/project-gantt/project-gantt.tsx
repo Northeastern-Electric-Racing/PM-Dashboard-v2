@@ -38,7 +38,13 @@ const ProjectGantt: React.FC<ProjectGanttProps> = ({ workPackages }) => {
     <PageBlock
       title={'Gantt Chart'}
       headerRight={<></>}
-      body={<Chart chartType="Gantt" width="100%" height="100%" data={data} options={options} />}
+      body={
+        workPackages.length > 0 ? (
+          <Chart chartType="Gantt" width="100%" height="100%" data={data} options={options} />
+        ) : (
+          <></>
+        )
+      }
     />
   );
 };

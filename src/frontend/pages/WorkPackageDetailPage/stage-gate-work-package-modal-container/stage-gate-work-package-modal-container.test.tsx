@@ -10,7 +10,6 @@ import { exampleWbs1 } from '../../../../test-support/test-data/wbs-numbers.stub
 import StageGateWorkPackageModalContainer from './stage-gate-work-package-modal-container';
 import { mockUseMutationResult } from '../../../../test-support/test-data/test-utils.stub';
 import { useCreateStageGateChangeRequest } from '../../../../services/change-requests.hooks';
-import { exampleAllUsers } from '../../../../test-support/test-data/users.stub';
 
 jest.mock('../../../../services/change-requests.hooks');
 

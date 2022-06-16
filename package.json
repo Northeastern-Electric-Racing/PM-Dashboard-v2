@@ -168,6 +168,7 @@
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-table-next": "^4.0.3",
     "react-dom": "^17.0.1",
+    "react-google-charts": "^4.0.0",
     "react-google-login": "^5.2.2",
     "react-hook-form": "^7.27.1",
     "react-query": "3.17.0",

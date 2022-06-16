@@ -3,8 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Container } from 'react-bootstrap';
+import Chart from 'react-google-charts';
 import { WorkPackage } from 'utils';
+import { ganttAllColumns } from '../../../../../shared/chart-data';
 import PageBlock from '../../../../layouts/page-block/page-block';
 
 interface ProjectGanttProps {
@@ -12,8 +13,33 @@ interface ProjectGanttProps {
 }
 
 const ProjectGantt: React.FC<ProjectGanttProps> = ({ workPackages }) => {
+  const rows = workPackages.map((wp) => [
+    wp.id,
+    wp.name,
+    wp.startDate,
+    wp.endDate,
+    wp.duration,
+    wp.progress,
+    null
+  ]);
+  const data = [ganttAllColumns, ...rows];
+  const options = {
+    height: 30 * rows.length + 50,
+    gantt: {
+      trackHeight: 30,
+      barHeight: 20,
+      labelStyle: {
+        fontName: 'Oswald',
+        fontSize: 14
+      }
+    }
+  };
   return (
-    <PageBlock title={'Gantt Chart'} headerRight={<></>} body={<Container fluid></Container>} />
+    <PageBlock
+      title={'Gantt Chart'}
+      headerRight={<></>}
+      body={<Chart chartType="Gantt" width="100%" height="100%" data={data} options={options} />}
+    />
   );
 };
 

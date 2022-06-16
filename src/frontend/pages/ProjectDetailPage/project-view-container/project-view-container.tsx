@@ -17,6 +17,7 @@ import ProjectDetails from './project-details/project-details';
 import RulesList from './rules-list/rules-list';
 import './project-view-container.module.css';
 import { routes } from '../../../../shared/routes';
+import ProjectGantt from './project-gantt/project-gantt';
 
 interface ProjectViewContainerProps {
   proj: Project;
@@ -57,6 +58,7 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
       />
       <ProjectDetails project={proj} />
       <PageBlock title={'Summary'} headerRight={<></>} body={<>{proj.summary}</>} />
+      <ProjectGantt workPackages={proj.workPackages} />
       <DescriptionList title={'Goals'} items={proj.goals.filter((goal) => !goal.dateDeleted)} />
       <DescriptionList
         title={'Features'}

@@ -38,6 +38,7 @@ const usersTransformer = (user: Prisma.UserGetPayload<null>): User => {
 // Fetch all users
 const getAllUsers: ApiRouteFunction = async () => {
   const users = await prisma.user.findMany();
+  users.sort((a, b) => a.firstName.localeCompare(b.firstName));
   return buildSuccessResponse(users.map(usersTransformer));
 };
 

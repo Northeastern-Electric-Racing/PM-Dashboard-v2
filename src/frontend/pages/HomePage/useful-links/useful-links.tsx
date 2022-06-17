@@ -4,66 +4,68 @@
  *
  */
 
+import {
+  faCoins,
+  faReceipt,
+  faHandHoldingUsd,
+  faDollarSign,
+  faFileAlt,
+  faSortNumericDown,
+  faCogs
+} from '@fortawesome/free-solid-svg-icons';
 import { Col, Container, Row } from 'react-bootstrap';
-import { linkPipe } from '../../../../shared/pipes';
+import { iconLinkPipe } from '../../../../shared/pipes';
 import PageBlock from '../../../layouts/page-block/page-block';
-import styles from './useful-links.module.css';
+import './useful-links.module.css';
 
 const UsefulLinks: React.FC = () => {
-  const financeLinks = [
-    linkPipe(
-      'Personal Purchasing Guidelines',
+  const links = [
+    iconLinkPipe(
+      faCoins,
+      'Purchasing Guidelines',
       'https://docs.google.com/document/d/1M5Ldy9L1BifBo18tdKpv3CH-frRneyEK26hUXbtMg7Q/edit'
     ),
-    linkPipe(
+    iconLinkPipe(
+      faHandHoldingUsd,
       'Reimbursement Guidelines',
       'https://docs.google.com/document/d/1HvLnVNzZTftgoAXppIEp-gTmUBQGt-V6n97prziWWrs/edit'
     ),
-    linkPipe('Procurement Form', 'https://forms.gle/6ztRoa1iL7p1KHwP6')
-  ];
-
-  const otherLinks = [
-    linkPipe(
+    iconLinkPipe(faDollarSign, 'Procurement Form', 'https://forms.gle/6ztRoa1iL7p1KHwP6'),
+    iconLinkPipe(
+      faReceipt,
       'McMaster Order Sheet',
       'https://docs.google.com/spreadsheets/d/1kqpnw8jZDx2GO5NFUtqefRXqT1XX46iMx5ZI4euPJgY/edit'
     ),
-    linkPipe(
+    iconLinkPipe(
+      faFileAlt,
       'Project Update Log',
       'https://docs.google.com/document/d/1w0B6upZRY28MlbVA4hyU3X_NRNP0cagmLWqjHn6B8OA/edit'
     ),
-    linkPipe(
+    iconLinkPipe(
+      faSortNumericDown,
       'Part Numbering Guidelines',
       'https://docs.google.com/document/d/1Y8IXCvYjXP3RBj6h4-xLCHXVLW5R6pi3-4i5SYMKtZY/edit'
     ),
-    linkPipe(
+    iconLinkPipe(
+      faCogs,
       'Hardware Guidelines',
       'https://docs.google.com/document/d/1OD1d1VaIEHCwiFCuU7wfwAPu-UA--0_QzbyJjBsexwg/edit'
     )
   ];
 
+  const allColsStyle = 'mb-2';
   return (
     <PageBlock
       title={'Useful Links'}
       headerRight={<></>}
       body={
-        <Container fluid className={styles.linksContainer}>
+        <Container fluid>
           <Row>
-            <Col md>
-              <h4>Finance</h4>
-              <ul>
-                {financeLinks.map((link, idx) => (
-                  <li key={idx}>{link}</li>
-                ))}
-              </ul>
-            </Col>
-            <Col md>
-              <h4>Other</h4>
-              <ul>
-                {otherLinks.map((link, idx) => (
-                  <li key={idx}>{link}</li>
-                ))}
-              </ul>
-            </Col>
+            {links.map((link) => (
+              <Col className={allColsStyle} xs={6} sm={6} md={4} lg={3} xl={2}>
+                {link}
+              </Col>
+            ))}
           </Row>
         </Container>
       }

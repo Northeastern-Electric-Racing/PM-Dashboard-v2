@@ -28,7 +28,7 @@ export const linkPipe = (description: string, link: string): ReactElement => {
 export const iconLinkPipe = (icon: IconProp, description: string, link: string) => {
   return (
     <div className="d-flex flex-row align-items-center">
-      <FontAwesomeIcon icon={icon} size="1x" className="pr-1" />
+      <FontAwesomeIcon icon={icon} size="lg" className="pr-1" />
       {linkPipe(description, link)}
     </div>
   );

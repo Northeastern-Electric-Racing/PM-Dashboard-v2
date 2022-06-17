@@ -23,8 +23,8 @@ describe('useful links component', () => {
 
   it('renders links', () => {
     renderComponent();
-    expect(screen.getByText(/Personal purchasing guidelines/i)).toBeInTheDocument();
-    expect(screen.getByText(/Procurement form/i)).toBeInTheDocument();
-    expect(screen.getByText(/Part numbering spreadsheet/i)).toBeInTheDocument();
+    expect(screen.getByText(/Personal Purchasing Guidelines/i)).toBeInTheDocument();
+    expect(screen.getByText(/Procurement Form/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Guidelines/i).length).toEqual(4);
   });
 });

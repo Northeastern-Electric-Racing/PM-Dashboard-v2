@@ -160,15 +160,15 @@ const getAllWorkPackagesUpcomingDeadlines: ApiRouteFunction = async () => {
     },
     ...manyRelationArgs
   });
-  return buildSuccessResponse(
-    workPackages
-      .filter((wp) => {
-        const endDate = calculateEndDate(wp.startDate, wp.duration);
-        const daysFromNow = Math.round((endDate.getTime() - new Date().getTime()) / 86400000);
-        return daysFromNow <= 14;
-      })
-      .map(workPackageTransformer)
-  );
+  const outputWorkPackages = workPackages
+    .filter((wp) => {
+      const endDate = calculateEndDate(wp.startDate, wp.duration);
+      const daysFromNow = Math.round((endDate.getTime() - new Date().getTime()) / 86400000);
+      return daysFromNow <= 14;
+    })
+    .map(workPackageTransformer);
+  outputWorkPackages.sort((wpA, wpB) => wpA.endDate.getTime() - wpB.endDate.getTime());
+  return buildSuccessResponse(outputWorkPackages);
 };
 
 // Define all valid routes for the endpoint

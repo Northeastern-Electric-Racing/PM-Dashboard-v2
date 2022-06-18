@@ -4,6 +4,6 @@
  */
 
  .upcomingDeadlineCard {
-  width: fit-content;
+  min-width: fit-content !important;
   margin: 0px 5px;
  }

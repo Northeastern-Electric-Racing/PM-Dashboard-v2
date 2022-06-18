@@ -10,6 +10,7 @@ import { useAllWorkPackagesUpcomingDeadlines } from '../../../../services/work-p
 import { datePipe, wbsPipe, fullNamePipe } from '../../../../shared/pipes';
 import { routes } from '../../../../shared/routes';
 import PageBlock from '../../../layouts/page-block/page-block';
+import './upcoming-deadlines.module.css';
 
 const UpcomingDeadlines: React.FC = () => {
   const theme = useTheme();

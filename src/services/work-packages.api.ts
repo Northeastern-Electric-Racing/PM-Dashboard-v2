@@ -51,3 +51,12 @@ export const editWorkPackage = (payload: EditWorkPackagePayload) => {
     ...payload
   });
 };
+
+/**
+ * Fetch all work packages with upcoming deadlines.
+ */
+export const getAllWorkPackagesUpcomingDeadlines = () => {
+  return axios.get<WorkPackage[]>(apiUrls.workPackagesUpcomingDeadlines(), {
+    transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
+  });
+};

@@ -10,6 +10,7 @@ import {
   createSingleWorkPackage,
   editWorkPackage,
   getAllWorkPackages,
+  getAllWorkPackagesUpcomingDeadlines,
   getSingleWorkPackage
 } from './work-packages.api';
 
@@ -68,4 +69,14 @@ export const useEditWorkPackage = () => {
       }
     }
   );
+};
+
+/**
+ * Custom React Hook to supply all work packages with an upcoming deadline.
+ */
+export const useAllWorkPackagesUpcomingDeadlines = () => {
+  return useQuery<WorkPackage[], Error>(['work packages', 'upcoming deadlines'], async () => {
+    const { data } = await getAllWorkPackagesUpcomingDeadlines();
+    return data;
+  });
 };

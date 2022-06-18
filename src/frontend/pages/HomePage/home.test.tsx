@@ -7,6 +7,24 @@ import { render, screen, routerWrapperBuilder } from '../../../test-support/test
 import { routes } from '../../../shared/routes';
 import Home from './home';
 
+jest.mock('./useful-links/useful-links', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>useful-links</div>;
+    }
+  };
+});
+
+jest.mock('./upcoming-deadlines/upcoming-deadlines', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>upcoming-deadlines</div>;
+    }
+  };
+});
+
 /**
  * Sets up the component under test with the desired values and renders it.
  */
@@ -23,5 +41,15 @@ describe('home component', () => {
   it('renders welcome', () => {
     renderComponent();
     expect(screen.getByText(/Welcome/i)).toBeInTheDocument();
+  });
+
+  it('renders useful links', () => {
+    renderComponent();
+    expect(screen.getByText('useful-links')).toBeInTheDocument();
+  });
+
+  it('renders upcoming deadlines', () => {
+    renderComponent();
+    expect(screen.getByText('upcoming-deadlines')).toBeInTheDocument();
   });
 });

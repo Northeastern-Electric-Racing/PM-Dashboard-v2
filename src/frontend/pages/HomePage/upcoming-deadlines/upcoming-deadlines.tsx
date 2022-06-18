@@ -7,7 +7,7 @@ import { Card, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../../../services/theme.hooks';
 import { useAllWorkPackagesUpcomingDeadlines } from '../../../../services/work-packages.hooks';
-import { datePipe, wbsPipe, fullNamePipe } from '../../../../shared/pipes';
+import { datePipe, wbsPipe, fullNamePipe, percentPipe } from '../../../../shared/pipes';
 import { routes } from '../../../../shared/routes';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import PageBlock from '../../../layouts/page-block/page-block';
@@ -41,6 +41,9 @@ const UpcomingDeadlines: React.FC = () => {
                 <Card.Text>
                   <Container fluid>
                     <Row className="pb-1">End Date: {datePipe(wp.endDate)}</Row>
+                    <Row className="pb-1">
+                      Progress: {percentPipe(wp.progress)}, {wp.timelineStatus}
+                    </Row>
                     <Row className="pb-1">Engineering Lead: {fullNamePipe(wp.projectLead)}</Row>
                     <Row className="pb-1">Project Manager: {fullNamePipe(wp.projectManager)}</Row>
                     <Row>

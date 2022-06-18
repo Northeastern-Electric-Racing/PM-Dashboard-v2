@@ -60,13 +60,7 @@ const UsefulLinks: React.FC = () => {
       headerRight={<></>}
       body={
         <Container fluid>
-          <Row>
-            {links.map((link) => (
-              <Col className={allColsStyle} xs={6} sm={6} md={4} lg={3} xl={2}>
-                {link}
-              </Col>
-            ))}
-          </Row>
+          <Row>{links}</Row>
         </Container>
       }
     />

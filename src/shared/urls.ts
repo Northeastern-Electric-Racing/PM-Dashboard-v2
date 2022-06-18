@@ -23,6 +23,7 @@ const projectsEdit = () => `${projects()}-edit`;
 /**************** Work Packages Endpoint ****************/
 const workPackages = () => `${API_URL}/work-packages`;
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
+const workPackagesUpcomingDeadlines = () => `${workPackages()}/upcoming-deadlines`;
 const workPackagesCreate = () => `${workPackages()}-create`;
 const workPackagesEdit = () => `${workPackages()}-edit`;
 
@@ -47,6 +48,7 @@ export const apiUrls = {
 
   workPackages,
   workPackagesByWbsNum,
+  workPackagesUpcomingDeadlines,
   workPackagesCreate,
   workPackagesEdit,
 

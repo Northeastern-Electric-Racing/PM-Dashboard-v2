@@ -72,4 +72,10 @@ describe('upcoming deadlines component', () => {
       screen.getByText(datePipe(exampleAllWorkPackages[1].endDate), { exact: false })
     ).toBeInTheDocument();
   });
+
+  it('renders when no upcoming deadlines', () => {
+    mockHook(false, false, []);
+    renderComponent();
+    expect(screen.getByText('No upcoming deadlines')).toBeInTheDocument();
+  });
 });

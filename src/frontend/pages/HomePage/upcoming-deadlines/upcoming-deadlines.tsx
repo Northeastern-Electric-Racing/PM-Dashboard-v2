@@ -24,30 +24,32 @@ const UpcomingDeadlines: React.FC = () => {
 
   const fullDisplay = (
     <Row className="flex-nowrap overflow-auto">
-      {workPackages.data?.map((wp) => (
-        <Col className="px-1" xs={12} sm={7} md={5} lg={4} xl={3}>
-          <Card border={theme.cardBorder} bg={theme.cardBg}>
-            <Card.Body className="p-3">
-              <Card.Title className="mb-2">
-                <Link to={`${routes.PROJECTS}/${wbsPipe(wp.wbsNum)}`}>
-                  {wbsPipe(wp.wbsNum)} - {wp.name}
-                </Link>
-              </Card.Title>
-              <Card.Text>
-                <Container fluid>
-                  <Row className="pb-1">End Date: {datePipe(wp.endDate)}</Row>
-                  <Row className="pb-1">Engineering Lead: {fullNamePipe(wp.projectLead)}</Row>
-                  <Row className="pb-1">Project Manager: {fullNamePipe(wp.projectManager)}</Row>
-                  <Row>
-                    {wp.expectedActivities.length} Expected Activities, {wp.deliverables.length}{' '}
-                    Deliverables
-                  </Row>
-                </Container>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
+      {workPackages.data?.length === 0
+        ? 'No upcoming deadlines'
+        : workPackages.data?.map((wp) => (
+            <Col className="px-1" xs={12} sm={7} md={5} lg={4} xl={3}>
+              <Card border={theme.cardBorder} bg={theme.cardBg}>
+                <Card.Body className="p-3">
+                  <Card.Title className="mb-2">
+                    <Link to={`${routes.PROJECTS}/${wbsPipe(wp.wbsNum)}`}>
+                      {wbsPipe(wp.wbsNum)} - {wp.name}
+                    </Link>
+                  </Card.Title>
+                  <Card.Text>
+                    <Container fluid>
+                      <Row className="pb-1">End Date: {datePipe(wp.endDate)}</Row>
+                      <Row className="pb-1">Engineering Lead: {fullNamePipe(wp.projectLead)}</Row>
+                      <Row className="pb-1">Project Manager: {fullNamePipe(wp.projectManager)}</Row>
+                      <Row>
+                        {wp.expectedActivities.length} Expected Activities, {wp.deliverables.length}{' '}
+                        Deliverables
+                      </Row>
+                    </Container>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
     </Row>
   );
 

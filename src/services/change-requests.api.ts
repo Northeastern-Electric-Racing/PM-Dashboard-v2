@@ -16,18 +16,10 @@ import { changeRequestTransformer } from './transformers/change-requests.transfo
 /**
  * Fetches all change requests.
  */
-export const getAllChangeRequests = (onSuccess?: (value: any) => void) => {
-  const changeRequests = axios.get<ChangeRequest[]>(apiUrls.changeRequests(), {
+export const getAllChangeRequests = () => {
+  return axios.get<ChangeRequest[]>(apiUrls.changeRequests(), {
     transformResponse: (data) => JSON.parse(data).map(changeRequestTransformer)
   });
-
-  if (onSuccess) {
-    changeRequests.then((response) => {
-      onSuccess!(response);
-    });
-  }
-
-  return changeRequests;
 };
 
 /**

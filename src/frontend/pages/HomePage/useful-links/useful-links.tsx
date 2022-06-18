@@ -13,7 +13,7 @@ import {
   faSortNumericDown,
   faCogs
 } from '@fortawesome/free-solid-svg-icons';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { iconLinkPipe } from '../../../../shared/pipes';
 import PageBlock from '../../../layouts/page-block/page-block';
 import './useful-links.module.css';
@@ -53,20 +53,13 @@ const UsefulLinks: React.FC = () => {
     )
   ];
 
-  const allColsStyle = 'mb-2';
   return (
     <PageBlock
       title={'Useful Links'}
       headerRight={<></>}
       body={
         <Container fluid>
-          <Row>
-            {links.map((link) => (
-              <Col className={allColsStyle} xs={6} sm={6} md={4} lg={3} xl={2}>
-                {link}
-              </Col>
-            ))}
-          </Row>
+          <Row>{links}</Row>
         </Container>
       }
     />

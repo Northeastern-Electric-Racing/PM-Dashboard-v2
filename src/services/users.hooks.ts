@@ -11,7 +11,7 @@ import { getAllUsers, getSingleUser, logUserIn } from './users.api';
  * Custom React Hook to supply all users.
  */
 export const useAllUsers = () => {
-  return useQuery<User[], Error>('users', async () => {
+  return useQuery<User[], Error>(['users'], async () => {
     const { data } = await getAllUsers();
     return data;
   });
@@ -23,7 +23,7 @@ export const useAllUsers = () => {
  * @param id User ID of the requested user.
  */
 export const useSingleUser = (id: number) => {
-  return useQuery<User, Error>(['user', id], async () => {
+  return useQuery<User, Error>(['users', id], async () => {
     const { data } = await getSingleUser(id);
     return data;
   });
@@ -33,7 +33,7 @@ export const useSingleUser = (id: number) => {
  * Custom React Hook to log a user in.
  */
 export const useLogUserIn = () => {
-  return useMutation<User, Error, string>(['login'], async (id_token: string) => {
+  return useMutation<User, Error, string>(['users', 'login'], async (id_token: string) => {
     const { data } = await logUserIn(id_token);
     return data;
   });

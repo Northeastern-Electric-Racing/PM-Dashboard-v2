@@ -15,13 +15,8 @@ import {
 /**
  * Custom React Hook to supply all projects.
  */
-export const useAllProjects = (onSuccess?: (value: any) => void) => {
-  return useQuery<Project[], Error>('projects', async () => {
-    if (onSuccess) {
-      const { data } = await getAllProjects(onSuccess);
-      return data;
-    }
-
+export const useAllProjects = () => {
+  return useQuery<Project[], Error>(['projects'], async () => {
     const { data } = await getAllProjects();
     return data;
   });
@@ -33,7 +28,7 @@ export const useAllProjects = (onSuccess?: (value: any) => void) => {
  * @param wbsNum WBS number of the requested project.
  */
 export const useSingleProject = (wbsNum: WbsNumber) => {
-  return useQuery<Project, Error>(['project', wbsNum], async () => {
+  return useQuery<Project, Error>(['projects', wbsNum], async () => {
     const { data } = await getSingleProject(wbsNum);
     return data;
   });
@@ -45,7 +40,7 @@ export const useSingleProject = (wbsNum: WbsNumber) => {
  */
 export const useCreateSingleProject = () => {
   return useMutation<{ message: string }, Error, CreateProjectPayload>(
-    ['createProject'],
+    ['projects', 'create'],
     async (projectPayload: CreateProjectPayload) => {
       const { data } = await createSingleProject(projectPayload);
       return data;
@@ -58,7 +53,7 @@ export const useCreateSingleProject = () => {
  */
 export const useEditSingleProject = () => {
   return useMutation<{ message: string }, Error, EditProjectPayload>(
-    ['editProject'],
+    ['projects', 'edit'],
     async (projectPayload: EditProjectPayload) => {
       const { data } = await editSingleProject(projectPayload);
       return data;

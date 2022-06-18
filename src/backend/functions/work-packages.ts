@@ -150,12 +150,38 @@ const getSingleWorkPackage: ApiRouteFunction = async (params: { wbsNum: string }
   return buildSuccessResponse(workPackageTransformer(wbsEle));
 };
 
+// Fetch all work packages with an end date in the next 2 weeks
+const getAllWorkPackagesUpcomingDeadlines: ApiRouteFunction = async () => {
+  const workPackages = await prisma.work_Package.findMany({
+    where: {
+      wbsElement: {
+        status: 'ACTIVE'
+      }
+    },
+    ...manyRelationArgs
+  });
+  const outputWorkPackages = workPackages
+    .filter((wp) => {
+      const endDate = calculateEndDate(wp.startDate, wp.duration);
+      const daysFromNow = Math.round((endDate.getTime() - new Date().getTime()) / 86400000);
+      return daysFromNow <= 14;
+    })
+    .map(workPackageTransformer);
+  outputWorkPackages.sort((wpA, wpB) => wpA.endDate.getTime() - wpB.endDate.getTime());
+  return buildSuccessResponse(outputWorkPackages);
+};
+
 // Define all valid routes for the endpoint
 const routes: ApiRoute[] = [
   {
     path: `${API_URL}${apiRoutes.WORK_PACKAGES}`,
     httpMethod: 'GET',
     func: getAllWorkPackages
+  },
+  {
+    path: `${API_URL}${apiRoutes.WORK_PACKAGES_UPCOMING_DEADLINES}`,
+    httpMethod: 'GET',
+    func: getAllWorkPackagesUpcomingDeadlines
   },
   {
     path: `${API_URL}${apiRoutes.WORK_PACKAGES_BY_WBS}`,

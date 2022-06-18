@@ -12,18 +12,10 @@ import { workPackageTransformer } from './transformers/work-packages.transformer
 /**
  * Fetch all work packages.
  */
-export const getAllWorkPackages = (onSuccess?: (value: any) => void) => {
-  const workPackages = axios.get<WorkPackage[]>(apiUrls.workPackages(), {
+export const getAllWorkPackages = () => {
+  return axios.get<WorkPackage[]>(apiUrls.workPackages(), {
     transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
   });
-
-  if (onSuccess) {
-    workPackages.then((response) => {
-      onSuccess!(response);
-    });
-  }
-
-  return workPackages;
 };
 
 /**
@@ -57,5 +49,14 @@ export const createSingleWorkPackage = (payload: CreateWorkPackagePayload) => {
 export const editWorkPackage = (payload: EditWorkPackagePayload) => {
   return axios.post<{ message: string }>(apiUrls.workPackagesEdit(), {
     ...payload
+  });
+};
+
+/**
+ * Fetch all work packages with upcoming deadlines.
+ */
+export const getAllWorkPackagesUpcomingDeadlines = () => {
+  return axios.get<WorkPackage[]>(apiUrls.workPackagesUpcomingDeadlines(), {
+    transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
   });
 };

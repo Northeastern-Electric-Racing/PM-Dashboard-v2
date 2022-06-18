@@ -18,6 +18,7 @@ const PROJECTS_EDIT: string = `${PROJECTS}-edit`;
 /**************** Work Packages Endpoint ****************/
 const WORK_PACKAGES: string = `/work-packages`;
 const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbsNum`;
+const WORK_PACKAGES_UPCOMING_DEADLINES: string = `${WORK_PACKAGES}/upcoming-deadlines`;
 const WORK_PACKAGES_CREATE: string = `${WORK_PACKAGES}-create`;
 const WORK_PACKAGES_EDIT: string = `${WORK_PACKAGES}-edit`;
 
@@ -38,6 +39,7 @@ export const apiRoutes = {
 
   WORK_PACKAGES,
   WORK_PACKAGES_BY_WBS,
+  WORK_PACKAGES_UPCOMING_DEADLINES,
   WORK_PACKAGES_CREATE,
   WORK_PACKAGES_EDIT,
 

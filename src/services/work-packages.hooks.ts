@@ -16,13 +16,8 @@ import {
 /**
  * Custom React Hook to supply all work packages.
  */
-export const useAllWorkPackages = (onSuccess?: (value: any) => void) => {
+export const useAllWorkPackages = () => {
   return useQuery<WorkPackage[], Error>('work package', async () => {
-    if (onSuccess) {
-      const { data } = await getAllWorkPackages(onSuccess);
-      return data;
-    }
-
     const { data } = await getAllWorkPackages();
     return data;
   });

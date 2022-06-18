@@ -23,12 +23,8 @@ import {
 /**
  * Custom React Hook to supply all change requests.
  */
-export const useAllChangeRequests = (onSuccess?: (value: any) => void) => {
+export const useAllChangeRequests = () => {
   return useQuery<ChangeRequest[], Error>('change requests', async () => {
-    if (onSuccess) {
-      const { data } = await getAllChangeRequests(onSuccess);
-      return data;
-    }
     const { data } = await getAllChangeRequests();
     return data;
   });

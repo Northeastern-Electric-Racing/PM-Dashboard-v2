@@ -78,4 +78,10 @@ describe('upcoming deadlines component', () => {
     renderComponent();
     expect(screen.getByText('No upcoming deadlines')).toBeInTheDocument();
   });
+
+  it('renders work package count', () => {
+    mockHook(false, false, exampleAllWorkPackages);
+    renderComponent();
+    expect(screen.getByText('3 Work Packages')).toBeInTheDocument();
+  });
 });

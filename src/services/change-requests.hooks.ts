@@ -24,7 +24,7 @@ import {
  * Custom React Hook to supply all change requests.
  */
 export const useAllChangeRequests = () => {
-  return useQuery<ChangeRequest[], Error>('change requests', async () => {
+  return useQuery<ChangeRequest[], Error>(['change requests'], async () => {
     const { data } = await getAllChangeRequests();
     return data;
   });
@@ -36,7 +36,7 @@ export const useAllChangeRequests = () => {
  * @param id Change request ID of the requested change request.
  */
 export const useSingleChangeRequest = (id: number) => {
-  return useQuery<ChangeRequest, Error>(['change request', id], async () => {
+  return useQuery<ChangeRequest, Error>(['change requests', id], async () => {
     const { data } = await getSingleChangeRequest(id);
     return data;
   });
@@ -47,7 +47,7 @@ export const useSingleChangeRequest = (id: number) => {
  */
 export const useReviewChangeRequest = () => {
   return useMutation<{ message: string }, Error, ReviewChangeRequestPayload>(
-    ['reviewCR'],
+    ['change requests', 'review'],
     async (reviewPayload: ReviewChangeRequestPayload) => {
       const { data } = await reviewChangeRequest(
         reviewPayload.reviewerId,
@@ -65,7 +65,7 @@ export const useReviewChangeRequest = () => {
  */
 export const useCreateStandardChangeRequest = () => {
   return useMutation<{ message: string }, Error, CreateStandardChangeRequestPayload>(
-    ['createStandardCR'],
+    ['change requests', 'create', 'standard'],
     async (payload: CreateStandardChangeRequestPayload) => {
       const { data } = await createStandardChangeRequest(payload);
       return data;
@@ -78,7 +78,7 @@ export const useCreateStandardChangeRequest = () => {
  */
 export const useCreateActivationChangeRequest = () => {
   return useMutation<{ message: string }, Error, CreateActivationChangeRequestPayload>(
-    ['createActivationCR'],
+    ['change requests', 'create', 'activation'],
     async (payload: CreateActivationChangeRequestPayload) => {
       const { data } = await createActivationChangeRequest(
         payload.submitterId,
@@ -98,7 +98,7 @@ export const useCreateActivationChangeRequest = () => {
  */
 export const useCreateStageGateChangeRequest = () => {
   return useMutation<{ message: string }, Error, CreateStageGateChangeRequestPayload>(
-    ['createStageGateCR'],
+    ['change requests', 'create', 'stage gate'],
     async (payload: CreateStageGateChangeRequestPayload) => {
       const { data } = await createStageGateChangeRequest(
         payload.submitterId,

@@ -17,7 +17,7 @@ import {
  * Custom React Hook to supply all work packages.
  */
 export const useAllWorkPackages = () => {
-  return useQuery<WorkPackage[], Error>('work package', async () => {
+  return useQuery<WorkPackage[], Error>(['work packages'], async () => {
     const { data } = await getAllWorkPackages();
     return data;
   });
@@ -29,7 +29,7 @@ export const useAllWorkPackages = () => {
  * @param wbsNum WBS number of the requested work package.
  */
 export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
-  return useQuery<WorkPackage, Error>(['work package', wbsNum], async () => {
+  return useQuery<WorkPackage, Error>(['work packages', wbsNum], async () => {
     const { data } = await getSingleWorkPackage(wbsNum);
     return data;
   });
@@ -42,7 +42,7 @@ export const useSingleWorkPackage = (wbsNum: WbsNumber) => {
  */
 export const useCreateSingleWorkPackage = () => {
   return useMutation<{ message: string }, Error, CreateWorkPackagePayload>(
-    ['createWP'],
+    ['work packages', 'create'],
     async (wpPayload: CreateWorkPackagePayload) => {
       const { data } = await createSingleWorkPackage(wpPayload);
       return data;
@@ -57,7 +57,7 @@ export const useCreateSingleWorkPackage = () => {
  */
 export const useEditWorkPackage = () => {
   return useMutation<{ message: string }, Error, EditWorkPackagePayload>(
-    ['editWP'],
+    ['work packages', 'edit'],
     async (wpPayload: EditWorkPackagePayload) => {
       const { data } = await editWorkPackage(wpPayload);
       return data;

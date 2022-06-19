@@ -39,7 +39,7 @@ const wpQueryArgs = Prisma.validator<Prisma.Work_PackageArgs>()({
       include: {
         projectLead: true,
         projectManager: true,
-        changes: { include: { implementer: true } }
+        changes: { include: { implementer: true }, orderBy: { dateImplemented: 'asc' } }
       }
     },
     expectedActivities: true,

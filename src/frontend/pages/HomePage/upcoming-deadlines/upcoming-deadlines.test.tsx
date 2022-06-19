@@ -40,7 +40,7 @@ describe('upcoming deadlines component', () => {
   it('renders headers', () => {
     mockHook(false, false, []);
     renderComponent();
-    expect(screen.getByText('Upcoming Deadlines')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming Deadlines (0)')).toBeInTheDocument();
   });
 
   it('renders loading indicator', () => {
@@ -77,11 +77,5 @@ describe('upcoming deadlines component', () => {
     mockHook(false, false, []);
     renderComponent();
     expect(screen.getByText('No upcoming deadlines')).toBeInTheDocument();
-  });
-
-  it('renders work package count', () => {
-    mockHook(false, false, exampleAllWorkPackages);
-    renderComponent();
-    expect(screen.getByText('3 Work Packages')).toBeInTheDocument();
   });
 });

@@ -60,8 +60,8 @@ const UpcomingDeadlines: React.FC = () => {
 
   return (
     <PageBlock
-      title={'Upcoming Deadlines'}
-      headerRight={workPackages.isLoading ? <></> : <>{workPackages.data?.length} Work Packages</>}
+      title={`Upcoming Deadlines (${workPackages.data?.length})`}
+      headerRight={<></>}
       body={
         <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
       }

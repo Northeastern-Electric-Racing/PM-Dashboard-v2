@@ -64,7 +64,7 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
 
   return (
     <PageBlock
-      title={'Work Packages By Timeline Status'}
+      title={`Work Packages By Timeline Status (${workPackages.data?.length})`}
       headerRight={
         <div className="d-flex flex-row align-items-center">
           <div className="pr-2">Status:</div>

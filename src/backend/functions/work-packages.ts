@@ -105,9 +105,20 @@ const workPackageTransformer = (wpInput: Prisma.Work_PackageGetPayload<typeof wp
 };
 
 // Fetch all work packages
-const getAllWorkPackages: ApiRouteFunction = async () => {
+const getAllWorkPackages: ApiRouteFunction = async (_, e) => {
   const workPackages = await prisma.work_Package.findMany(wpQueryArgs);
-  return buildSuccessResponse(workPackages.map(workPackageTransformer));
+  return buildSuccessResponse(
+    workPackages.map(workPackageTransformer).filter((wp) => {
+      let passes = true;
+      if (e.queryStringParameters?.status) {
+        passes = passes && wp.status === e.queryStringParameters?.status;
+      }
+      if (e.queryStringParameters?.timelineStatus) {
+        passes = passes && wp.timelineStatus === e.queryStringParameters?.timelineStatus;
+      }
+      return passes;
+    })
+  );
 };
 
 // Fetch the work package for the specified WBS number

@@ -35,7 +35,12 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
       {workPackages.data?.length === 0
         ? `No ${timelineStatus} work packages`
         : workPackages.data?.map((wp) => (
-            <Card className={styles.workPackageCard} border={theme.cardBorder} bg={theme.cardBg}>
+            <Card
+              key={wbsPipe(wp.wbsNum)}
+              className={styles.workPackageCard}
+              border={theme.cardBorder}
+              bg={theme.cardBg}
+            >
               <Card.Body className="p-3">
                 <Card.Title className="mb-2">
                   <Link to={`${routes.PROJECTS}/${wbsPipe(wp.wbsNum)}`}>

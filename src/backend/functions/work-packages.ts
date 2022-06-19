@@ -118,6 +118,7 @@ const getAllWorkPackages: ApiRouteFunction = async (_, event) => {
     }
     return passes;
   });
+  outputWorkPackages.sort((wpA, wpB) => wpA.endDate.getTime() - wpB.endDate.getTime());
   return buildSuccessResponse(outputWorkPackages);
 };
 

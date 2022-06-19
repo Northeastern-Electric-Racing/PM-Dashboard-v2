@@ -108,14 +108,17 @@ const workPackageTransformer = (wpInput: Prisma.Work_PackageGetPayload<typeof wp
 const getAllWorkPackages: ApiRouteFunction = async (_, event) => {
   const { queryStringParameters: eQSP } = event;
   const workPackages = await prisma.work_Package.findMany(wpQueryArgs);
-  return buildSuccessResponse(
-    workPackages.map(workPackageTransformer).filter((wp) => {
-      let passes = true;
-      if (eQSP?.status) passes &&= wp.status === eQSP?.status;
-      if (eQSP?.timelineStatus) passes &&= wp.timelineStatus === eQSP?.timelineStatus;
-      return passes;
-    })
-  );
+  const outputWorkPackages = workPackages.map(workPackageTransformer).filter((wp) => {
+    let passes = true;
+    if (eQSP?.status) passes &&= wp.status === eQSP?.status;
+    if (eQSP?.timelineStatus) passes &&= wp.timelineStatus === eQSP?.timelineStatus;
+    if (eQSP?.daysUntilDeadline) {
+      const daysToDeadline = Math.round((wp.endDate.getTime() - new Date().getTime()) / 86400000);
+      passes &&= daysToDeadline <= parseInt(eQSP?.daysUntilDeadline);
+    }
+    return passes;
+  });
+  return buildSuccessResponse(outputWorkPackages);
 };
 
 // Fetch the work package for the specified WBS number

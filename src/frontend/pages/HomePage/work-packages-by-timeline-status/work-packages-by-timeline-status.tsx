@@ -19,7 +19,7 @@ import styles from './work-packages-by-timeline-status.module.css';
 const WorkPackagesByTimelineStatus: React.FC = () => {
   const [timelineStatus, setTimelineStatus] = useState<TimelineStatus>(TimelineStatus.VeryBehind);
   const theme = useTheme();
-  const workPackages = useAllWorkPackages(WbsElementStatus.Active, timelineStatus);
+  const workPackages = useAllWorkPackages({ status: WbsElementStatus.Active, timelineStatus });
 
   useEffect(() => {
     workPackages.refetch();

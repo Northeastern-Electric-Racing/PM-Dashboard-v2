@@ -4,14 +4,7 @@
  */
 
 import axios from 'axios';
-import {
-  CreateWorkPackagePayload,
-  EditWorkPackagePayload,
-  TimelineStatus,
-  WbsElementStatus,
-  WbsNumber,
-  WorkPackage
-} from 'utils';
+import { CreateWorkPackagePayload, EditWorkPackagePayload, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
 import { workPackageTransformer } from './transformers/work-packages.transformers';
@@ -19,17 +12,10 @@ import { workPackageTransformer } from './transformers/work-packages.transformer
 /**
  * Fetch all work packages.
  */
-export const getAllWorkPackages = (
-  status?: WbsElementStatus,
-  timelineStatus?: TimelineStatus,
-  daysUntilDeadline?: number
-) => {
-  return axios.get<WorkPackage[]>(
-    apiUrls.workPackages(status, timelineStatus, daysUntilDeadline?.toString()),
-    {
-      transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
-    }
-  );
+export const getAllWorkPackages = (queryParams?: { [field: string]: string }) => {
+  return axios.get<WorkPackage[]>(apiUrls.workPackages(queryParams), {
+    transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
+  });
 };
 
 /**

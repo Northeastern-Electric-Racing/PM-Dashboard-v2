@@ -4,14 +4,7 @@
  */
 
 import { useMutation, useQuery } from 'react-query';
-import {
-  WorkPackage,
-  WbsNumber,
-  CreateWorkPackagePayload,
-  EditWorkPackagePayload,
-  WbsElementStatus,
-  TimelineStatus
-} from 'utils';
+import { WorkPackage, WbsNumber, CreateWorkPackagePayload, EditWorkPackagePayload } from 'utils';
 import {
   createSingleWorkPackage,
   editWorkPackage,
@@ -22,18 +15,11 @@ import {
 /**
  * Custom React Hook to supply all work packages.
  */
-export const useAllWorkPackages = (
-  status?: WbsElementStatus,
-  timelineStatus?: TimelineStatus,
-  daysUntilDeadline?: number
-) => {
-  return useQuery<WorkPackage[], Error>(
-    ['work packages', status, timelineStatus, daysUntilDeadline],
-    async () => {
-      const { data } = await getAllWorkPackages(status, timelineStatus, daysUntilDeadline);
-      return data;
-    }
-  );
+export const useAllWorkPackages = (queryParams?: { [field: string]: string }) => {
+  return useQuery<WorkPackage[], Error>(['work packages', queryParams], async () => {
+    const { data } = await getAllWorkPackages(queryParams);
+    return data;
+  });
 };
 
 /**

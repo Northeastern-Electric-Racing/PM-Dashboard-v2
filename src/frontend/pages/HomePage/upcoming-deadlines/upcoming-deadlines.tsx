@@ -17,7 +17,10 @@ import styles from './upcoming-deadlines.module.css';
 
 const UpcomingDeadlines: React.FC = () => {
   const theme = useTheme();
-  const workPackages = useAllWorkPackages(WbsElementStatus.Active, undefined, 14);
+  const workPackages = useAllWorkPackages({
+    status: WbsElementStatus.Active,
+    daysUntilDeadline: '14'
+  });
 
   if (workPackages.isError) {
     return <ErrorPage message={workPackages.error.message} error={workPackages.error} />;

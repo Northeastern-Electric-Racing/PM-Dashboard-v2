@@ -105,17 +105,14 @@ const workPackageTransformer = (wpInput: Prisma.Work_PackageGetPayload<typeof wp
 };
 
 // Fetch all work packages
-const getAllWorkPackages: ApiRouteFunction = async (_, e) => {
+const getAllWorkPackages: ApiRouteFunction = async (_, event) => {
+  const { queryStringParameters: eQSP } = event;
   const workPackages = await prisma.work_Package.findMany(wpQueryArgs);
   return buildSuccessResponse(
     workPackages.map(workPackageTransformer).filter((wp) => {
       let passes = true;
-      if (e.queryStringParameters?.status) {
-        passes &&= wp.status === e.queryStringParameters?.status;
-      }
-      if (e.queryStringParameters?.timelineStatus) {
-        passes &&= wp.timelineStatus === e.queryStringParameters?.timelineStatus;
-      }
+      if (eQSP?.status) passes &&= wp.status === eQSP?.status;
+      if (eQSP?.timelineStatus) passes &&= wp.timelineStatus === eQSP?.timelineStatus;
       return passes;
     })
   );

@@ -33,7 +33,7 @@ import {
 
 const prisma = new PrismaClient();
 
-const manyRelationArgs = Prisma.validator<Prisma.Work_PackageArgs>()({
+const wpQueryArgs = Prisma.validator<Prisma.Work_PackageArgs>()({
   include: {
     wbsElement: {
       include: {
@@ -45,15 +45,6 @@ const manyRelationArgs = Prisma.validator<Prisma.Work_PackageArgs>()({
     expectedActivities: true,
     deliverables: true,
     dependencies: true
-  }
-});
-
-const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
-  include: {
-    workPackage: { include: { expectedActivities: true, deliverables: true, dependencies: true } },
-    projectLead: true,
-    projectManager: true,
-    changes: { include: { implementer: true } }
   }
 });
 
@@ -77,41 +68,32 @@ const descriptionBulletTransformer = (descBullet: Description_Bullet) => ({
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
-const workPackageTransformer = (
-  payload:
-    | Prisma.Work_PackageGetPayload<typeof manyRelationArgs>
-    | Prisma.WBS_ElementGetPayload<typeof uniqueRelationArgs>
-): WorkPackage => {
-  if (payload === null) throw new TypeError('WBS_Element not found');
-  const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
-  const workPackage = 'workPackage' in payload ? payload.workPackage! : payload;
-
+const workPackageTransformer = (wpInput: Prisma.Work_PackageGetPayload<typeof wpQueryArgs>) => {
   const expectedProgress = calculatePercentExpectedProgress(
-    workPackage.startDate,
-    workPackage.duration,
-    wbsElement.status
+    wpInput.startDate,
+    wpInput.duration,
+    wpInput.wbsElement.status
   );
-
-  const wbsNum = wbsNumOf(wbsElement);
+  const wbsNum = wbsNumOf(wpInput.wbsElement);
   return {
-    id: workPackage.workPackageId,
-    dateCreated: wbsElement.dateCreated,
-    name: wbsElement.name,
-    orderInProject: workPackage.orderInProject,
-    progress: workPackage.progress,
-    startDate: workPackage.startDate,
-    duration: workPackage.duration,
-    expectedActivities: workPackage.expectedActivities.map(descriptionBulletTransformer),
-    deliverables: workPackage.deliverables.map(descriptionBulletTransformer),
-    dependencies: workPackage.dependencies.map(wbsNumOf),
-    projectManager: wbsElement.projectManager ?? undefined,
-    projectLead: wbsElement.projectLead ?? undefined,
-    status: convertStatus(wbsElement.status),
+    id: wpInput.workPackageId,
+    dateCreated: wpInput.wbsElement.dateCreated,
+    name: wpInput.wbsElement.name,
+    orderInProject: wpInput.orderInProject,
+    progress: wpInput.progress,
+    startDate: wpInput.startDate,
+    duration: wpInput.duration,
+    expectedActivities: wpInput.expectedActivities.map(descriptionBulletTransformer),
+    deliverables: wpInput.deliverables.map(descriptionBulletTransformer),
+    dependencies: wpInput.dependencies.map(wbsNumOf),
+    projectManager: wpInput.wbsElement.projectManager ?? undefined,
+    projectLead: wpInput.wbsElement.projectLead ?? undefined,
+    status: convertStatus(wpInput.wbsElement.status),
     wbsNum,
-    endDate: calculateEndDate(workPackage.startDate, workPackage.duration),
+    endDate: calculateEndDate(wpInput.startDate, wpInput.duration),
     expectedProgress,
-    timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress),
-    changes: wbsElement.changes.map((change) => ({
+    timelineStatus: calculateTimelineStatus(wpInput.progress, expectedProgress),
+    changes: wpInput.wbsElement.changes.map((change) => ({
       wbsNum,
       changeId: change.changeId,
       changeRequestId: change.changeRequestId,
@@ -119,12 +101,12 @@ const workPackageTransformer = (
       detail: change.detail,
       dateImplemented: change.dateImplemented
     }))
-  };
+  } as WorkPackage;
 };
 
 // Fetch all work packages
 const getAllWorkPackages: ApiRouteFunction = async () => {
-  const workPackages = await prisma.work_Package.findMany(manyRelationArgs);
+  const workPackages = await prisma.work_Package.findMany(wpQueryArgs);
   return buildSuccessResponse(workPackages.map(workPackageTransformer));
 };
 
@@ -134,20 +116,18 @@ const getSingleWorkPackage: ApiRouteFunction = async (params: { wbsNum: string }
   if (isProject(parsedWbs)) {
     return buildClientFailureResponse('WBS Number is a project WBS#, not a Work Package WBS#');
   }
-  const wbsEle = await prisma.wBS_Element.findUnique({
+  const wp = await prisma.work_Package.findFirst({
     where: {
-      wbsNumber: {
+      wbsElement: {
         carNumber: parsedWbs.carNumber,
         projectNumber: parsedWbs.projectNumber,
         workPackageNumber: parsedWbs.workPackageNumber
       }
     },
-    ...uniqueRelationArgs
+    ...wpQueryArgs
   });
-  if (wbsEle === null) {
-    return buildNotFoundResponse('work package', `WBS # ${params.wbsNum}`);
-  }
-  return buildSuccessResponse(workPackageTransformer(wbsEle));
+  if (wp === null) return buildNotFoundResponse('work package', `WBS # ${params.wbsNum}`);
+  return buildSuccessResponse(workPackageTransformer(wp));
 };
 
 // Fetch all work packages with an end date in the next 2 weeks
@@ -158,7 +138,7 @@ const getAllWorkPackagesUpcomingDeadlines: ApiRouteFunction = async () => {
         status: WBS_Element_Status.ACTIVE
       }
     },
-    ...manyRelationArgs
+    ...wpQueryArgs
   });
   const outputWorkPackages = workPackages
     .filter((wp) => {

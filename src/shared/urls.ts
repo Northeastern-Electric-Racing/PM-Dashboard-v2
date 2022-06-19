@@ -21,7 +21,11 @@ const projectsCreate = () => `${projects()}-new`;
 const projectsEdit = () => `${projects()}-edit`;
 
 /**************** Work Packages Endpoint ****************/
-const workPackages = () => `${API_URL}/work-packages`;
+const workPackages = (status?: string, timelineStatus?: string) => {
+  const base = `${API_URL}/work-packages`;
+  if (status && timelineStatus) return `${base}?status=${status}&timelineStatus=${timelineStatus}`;
+  return base;
+};
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 const workPackagesUpcomingDeadlines = () => `${workPackages()}/upcoming-deadlines`;
 const workPackagesCreate = () => `${workPackages()}-create`;

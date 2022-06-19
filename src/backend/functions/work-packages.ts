@@ -155,7 +155,7 @@ const getAllWorkPackagesUpcomingDeadlines: ApiRouteFunction = async () => {
   const workPackages = await prisma.work_Package.findMany({
     where: {
       wbsElement: {
-        status: 'ACTIVE'
+        status: WBS_Element_Status.ACTIVE
       }
     },
     ...manyRelationArgs

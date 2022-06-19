@@ -21,12 +21,12 @@ const projectsCreate = () => `${projects()}-new`;
 const projectsEdit = () => `${projects()}-edit`;
 
 /**************** Work Packages Endpoint ****************/
-const workPackages = (status?: string, timelineStatus?: string, daysUntilDeadline?: string) => {
-  let url = `${API_URL}/work-packages`;
-  if (status) url += `?status=${status}&`;
-  if (timelineStatus) url += `timelineStatus=${timelineStatus}&`;
-  if (daysUntilDeadline) url += `daysUntilDeadline=${daysUntilDeadline}`;
-  return url;
+const workPackages = (queryParams?: { [field: string]: string }) => {
+  const url = `${API_URL}/work-packages`;
+  if (!queryParams) return url;
+  return `${url}?${Object.keys(queryParams)
+    .map((param) => `${param}=${queryParams[param]}`)
+    .join('&')}`;
 };
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 const workPackagesCreate = () => `${workPackages()}-create`;

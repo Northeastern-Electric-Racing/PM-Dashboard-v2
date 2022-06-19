@@ -6,6 +6,10 @@
 import { render, screen, routerWrapperBuilder } from '../../../test-support/test-utils';
 import { routes } from '../../../shared/routes';
 import Home from './home';
+import { useAuth } from '../../../services/auth.hooks';
+import { Auth } from '../../../shared/types';
+import { exampleAdminUser } from '../../../test-support/test-data/users.stub';
+import { mockAuth } from '../../../test-support/test-data/test-utils.stub';
 
 jest.mock('./useful-links/useful-links', () => {
   return {
@@ -25,6 +29,23 @@ jest.mock('./upcoming-deadlines/upcoming-deadlines', () => {
   };
 });
 
+jest.mock('./work-packages-by-timeline-status/work-packages-by-timeline-status', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>work-packages-by-timeline-status</div>;
+    }
+  };
+});
+
+jest.mock('../../../services/auth.hooks');
+
+const mockedUseAuth = useAuth as jest.Mock<Auth>;
+
+const mockAuthHook = (user = exampleAdminUser) => {
+  mockedUseAuth.mockReturnValue(mockAuth(false, user));
+};
+
 /**
  * Sets up the component under test with the desired values and renders it.
  */
@@ -38,9 +59,13 @@ const renderComponent = () => {
 };
 
 describe('home component', () => {
+  beforeEach(() => {
+    mockAuthHook();
+  });
+
   it('renders welcome', () => {
     renderComponent();
-    expect(screen.getByText(/Welcome/i)).toBeInTheDocument();
+    expect(screen.getByText(`Welcome, ${exampleAdminUser.firstName}!`)).toBeInTheDocument();
   });
 
   it('renders useful links', () => {
@@ -51,5 +76,10 @@ describe('home component', () => {
   it('renders upcoming deadlines', () => {
     renderComponent();
     expect(screen.getByText('upcoming-deadlines')).toBeInTheDocument();
+  });
+
+  it('renders work packages by timeline status', () => {
+    renderComponent();
+    expect(screen.getByText('work-packages-by-timeline-status')).toBeInTheDocument();
   });
 });

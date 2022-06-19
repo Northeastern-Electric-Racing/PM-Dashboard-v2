@@ -111,10 +111,10 @@ const getAllWorkPackages: ApiRouteFunction = async (_, e) => {
     workPackages.map(workPackageTransformer).filter((wp) => {
       let passes = true;
       if (e.queryStringParameters?.status) {
-        passes = passes && wp.status === e.queryStringParameters?.status;
+        passes &&= wp.status === e.queryStringParameters?.status;
       }
       if (e.queryStringParameters?.timelineStatus) {
-        passes = passes && wp.timelineStatus === e.queryStringParameters?.timelineStatus;
+        passes &&= wp.timelineStatus === e.queryStringParameters?.timelineStatus;
       }
       return passes;
     })

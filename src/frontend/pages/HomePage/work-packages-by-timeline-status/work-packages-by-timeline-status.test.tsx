@@ -80,7 +80,7 @@ describe('upcoming deadlines component', () => {
   it('renders timeline status selector', () => {
     mockHook(false, false, exampleAllWorkPackages);
     renderComponent();
-    expect(screen.getByText('Status:')).toBeInTheDocument();
+    expect(screen.getByText('Timeline Status')).toBeInTheDocument();
     expect(screen.getByText('VERY_BEHIND')).toBeInTheDocument();
   });
 });

@@ -5,8 +5,9 @@
 
 import { Card, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { WbsElementStatus } from 'utils';
 import { useTheme } from '../../../../services/theme.hooks';
-import { useAllWorkPackagesUpcomingDeadlines } from '../../../../services/work-packages.hooks';
+import { useAllWorkPackages } from '../../../../services/work-packages.hooks';
 import { datePipe, wbsPipe, fullNamePipe, percentPipe } from '../../../../shared/pipes';
 import { routes } from '../../../../shared/routes';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
@@ -16,7 +17,7 @@ import styles from './upcoming-deadlines.module.css';
 
 const UpcomingDeadlines: React.FC = () => {
   const theme = useTheme();
-  const workPackages = useAllWorkPackagesUpcomingDeadlines();
+  const workPackages = useAllWorkPackages(WbsElementStatus.Active, undefined, 14);
 
   if (workPackages.isError) {
     return <ErrorPage message={workPackages.error.message} error={workPackages.error} />;

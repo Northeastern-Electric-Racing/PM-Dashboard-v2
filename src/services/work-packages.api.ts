@@ -19,10 +19,17 @@ import { workPackageTransformer } from './transformers/work-packages.transformer
 /**
  * Fetch all work packages.
  */
-export const getAllWorkPackages = (status?: WbsElementStatus, timelineStatus?: TimelineStatus) => {
-  return axios.get<WorkPackage[]>(apiUrls.workPackages(status, timelineStatus), {
-    transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
-  });
+export const getAllWorkPackages = (
+  status?: WbsElementStatus,
+  timelineStatus?: TimelineStatus,
+  daysUntilDeadline?: number
+) => {
+  return axios.get<WorkPackage[]>(
+    apiUrls.workPackages(status, timelineStatus, daysUntilDeadline?.toString()),
+    {
+      transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
+    }
+  );
 };
 
 /**

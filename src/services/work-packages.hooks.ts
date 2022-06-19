@@ -23,9 +23,13 @@ import {
 /**
  * Custom React Hook to supply all work packages.
  */
-export const useAllWorkPackages = (status?: WbsElementStatus, timelineStatus?: TimelineStatus) => {
+export const useAllWorkPackages = (
+  status?: WbsElementStatus,
+  timelineStatus?: TimelineStatus,
+  daysUntilDeadline?: number
+) => {
   return useQuery<WorkPackage[], Error>(['work packages'], async () => {
-    const { data } = await getAllWorkPackages(status, timelineStatus);
+    const { data } = await getAllWorkPackages(status, timelineStatus, daysUntilDeadline);
     return data;
   });
 };

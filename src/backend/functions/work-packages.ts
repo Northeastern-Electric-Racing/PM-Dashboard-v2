@@ -104,7 +104,7 @@ const workPackageTransformer = (wpInput: Prisma.Work_PackageGetPayload<typeof wp
   } as WorkPackage;
 };
 
-// Fetch all work packages
+// Fetch all work packages, optionally filtered by query parameters
 const getAllWorkPackages: ApiRouteFunction = async (_, event) => {
   const { queryStringParameters: eQSP } = event;
   const workPackages = await prisma.work_Package.findMany(wpQueryArgs);
@@ -142,38 +142,12 @@ const getSingleWorkPackage: ApiRouteFunction = async (params: { wbsNum: string }
   return buildSuccessResponse(workPackageTransformer(wp));
 };
 
-// Fetch all work packages with an end date in the next 2 weeks
-const getAllWorkPackagesUpcomingDeadlines: ApiRouteFunction = async () => {
-  const workPackages = await prisma.work_Package.findMany({
-    where: {
-      wbsElement: {
-        status: WBS_Element_Status.ACTIVE
-      }
-    },
-    ...wpQueryArgs
-  });
-  const outputWorkPackages = workPackages
-    .filter((wp) => {
-      const endDate = calculateEndDate(wp.startDate, wp.duration);
-      const daysFromNow = Math.round((endDate.getTime() - new Date().getTime()) / 86400000);
-      return daysFromNow <= 14;
-    })
-    .map(workPackageTransformer);
-  outputWorkPackages.sort((wpA, wpB) => wpA.endDate.getTime() - wpB.endDate.getTime());
-  return buildSuccessResponse(outputWorkPackages);
-};
-
 // Define all valid routes for the endpoint
 const routes: ApiRoute[] = [
   {
     path: `${API_URL}${apiRoutes.WORK_PACKAGES}`,
     httpMethod: 'GET',
     func: getAllWorkPackages
-  },
-  {
-    path: `${API_URL}${apiRoutes.WORK_PACKAGES_UPCOMING_DEADLINES}`,
-    httpMethod: 'GET',
-    func: getAllWorkPackagesUpcomingDeadlines
   },
   {
     path: `${API_URL}${apiRoutes.WORK_PACKAGES_BY_WBS}`,

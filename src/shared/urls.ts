@@ -29,7 +29,6 @@ const workPackages = (status?: string, timelineStatus?: string, daysUntilDeadlin
   return url;
 };
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
-const workPackagesUpcomingDeadlines = () => `${workPackages()}/upcoming-deadlines`;
 const workPackagesCreate = () => `${workPackages()}-create`;
 const workPackagesEdit = () => `${workPackages()}-edit`;
 
@@ -54,7 +53,6 @@ export const apiUrls = {
 
   workPackages,
   workPackagesByWbsNum,
-  workPackagesUpcomingDeadlines,
   workPackagesCreate,
   workPackagesEdit,
 

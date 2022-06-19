@@ -3,10 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Card, Container, Row } from 'react-bootstrap';
+import { useState } from 'react';
+import { Card, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { WbsElementStatus } from 'utils';
 import { useTheme } from '../../../../services/theme.hooks';
-import { useAllWorkPackagesUpcomingDeadlines } from '../../../../services/work-packages.hooks';
+import { useAllWorkPackages } from '../../../../services/work-packages.hooks';
 import { datePipe, wbsPipe, fullNamePipe, percentPipe } from '../../../../shared/pipes';
 import { routes } from '../../../../shared/routes';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
@@ -15,8 +17,9 @@ import ErrorPage from '../../ErrorPage/error-page';
 import styles from './upcoming-deadlines.module.css';
 
 const UpcomingDeadlines: React.FC = () => {
+  const [daysUntilDeadline, setDaysUntilDeadline] = useState<string>('14');
   const theme = useTheme();
-  const workPackages = useAllWorkPackagesUpcomingDeadlines();
+  const workPackages = useAllWorkPackages({ status: WbsElementStatus.Active, daysUntilDeadline });
 
   if (workPackages.isError) {
     return <ErrorPage message={workPackages.error.message} error={workPackages.error} />;
@@ -28,6 +31,7 @@ const UpcomingDeadlines: React.FC = () => {
         ? 'No upcoming deadlines'
         : workPackages.data?.map((wp) => (
             <Card
+              key={wbsPipe(wp.wbsNum)}
               className={styles.upcomingDeadlineCard}
               border={theme.cardBorder}
               bg={theme.cardBg}
@@ -60,8 +64,29 @@ const UpcomingDeadlines: React.FC = () => {
 
   return (
     <PageBlock
-      title={'Upcoming Deadlines'}
-      headerRight={workPackages.isLoading ? <></> : <>{workPackages.data?.length} Work Packages</>}
+      title={`Upcoming Deadlines (${workPackages.data?.length})`}
+      headerRight={
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text>Next</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            custom
+            as="select"
+            value={daysUntilDeadline}
+            onChange={(e) => setDaysUntilDeadline(e.target.value)}
+          >
+            {['1', '2', '5', '7', '14', '21', '30'].map((days) => (
+              <option key={days} value={days}>
+                {days}
+              </option>
+            ))}
+          </Form.Control>
+          <InputGroup.Append>
+            <InputGroup.Text>Days</InputGroup.Text>
+          </InputGroup.Append>
+        </InputGroup>
+      }
       body={
         <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
       }

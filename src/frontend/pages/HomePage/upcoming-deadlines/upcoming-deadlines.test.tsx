@@ -5,7 +5,7 @@
 
 import { UseQueryResult } from 'react-query';
 import { WorkPackage } from 'utils';
-import { useAllWorkPackagesUpcomingDeadlines } from '../../../../services/work-packages.hooks';
+import { useAllWorkPackages } from '../../../../services/work-packages.hooks';
 import { datePipe, fullNamePipe } from '../../../../shared/pipes';
 import { mockUseQueryResult } from '../../../../test-support/test-data/test-utils.stub';
 import { exampleAllWorkPackages } from '../../../../test-support/test-data/work-packages.stub';
@@ -14,9 +14,7 @@ import UpcomingDeadlines from './upcoming-deadlines';
 
 jest.mock('../../../../services/work-packages.hooks');
 
-const mockedUseAllWPs = useAllWorkPackagesUpcomingDeadlines as jest.Mock<
-  UseQueryResult<WorkPackage[]>
->;
+const mockedUseAllWPs = useAllWorkPackages as jest.Mock<UseQueryResult<WorkPackage[]>>;
 
 const mockHook = (isLoading: boolean, isError: boolean, data?: WorkPackage[], error?: Error) => {
   mockedUseAllWPs.mockReturnValue(
@@ -40,7 +38,7 @@ describe('upcoming deadlines component', () => {
   it('renders headers', () => {
     mockHook(false, false, []);
     renderComponent();
-    expect(screen.getByText('Upcoming Deadlines')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming Deadlines (0)')).toBeInTheDocument();
   });
 
   it('renders loading indicator', () => {
@@ -79,9 +77,11 @@ describe('upcoming deadlines component', () => {
     expect(screen.getByText('No upcoming deadlines')).toBeInTheDocument();
   });
 
-  it('renders work package count', () => {
+  it('renders time period selector', () => {
     mockHook(false, false, exampleAllWorkPackages);
     renderComponent();
-    expect(screen.getByText('3 Work Packages')).toBeInTheDocument();
+    expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(screen.getByText('14')).toBeInTheDocument();
+    expect(screen.getByText('Days')).toBeInTheDocument();
   });
 });

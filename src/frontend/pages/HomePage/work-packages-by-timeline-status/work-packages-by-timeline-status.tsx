@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Card, Container, Form, Row } from 'react-bootstrap';
+import { Card, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { TimelineStatus, WbsElementStatus } from 'utils';
 import { useTheme } from '../../../../services/theme.hooks';
@@ -19,7 +19,7 @@ import styles from './work-packages-by-timeline-status.module.css';
 const WorkPackagesByTimelineStatus: React.FC = () => {
   const [timelineStatus, setTimelineStatus] = useState<TimelineStatus>(TimelineStatus.VeryBehind);
   const theme = useTheme();
-  const workPackages = useAllWorkPackages(WbsElementStatus.Active, timelineStatus);
+  const workPackages = useAllWorkPackages({ status: WbsElementStatus.Active, timelineStatus });
 
   useEffect(() => {
     workPackages.refetch();
@@ -35,7 +35,12 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
       {workPackages.data?.length === 0
         ? `No ${timelineStatus} work packages`
         : workPackages.data?.map((wp) => (
-            <Card className={styles.workPackageCard} border={theme.cardBorder} bg={theme.cardBg}>
+            <Card
+              key={wbsPipe(wp.wbsNum)}
+              className={styles.workPackageCard}
+              border={theme.cardBorder}
+              bg={theme.cardBg}
+            >
               <Card.Body className="p-3">
                 <Card.Title className="mb-2">
                   <Link to={`${routes.PROJECTS}/${wbsPipe(wp.wbsNum)}`}>
@@ -64,27 +69,26 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
 
   return (
     <PageBlock
-      title={'Work Packages By Timeline Status'}
+      title={`Work Packages By Timeline Status (${workPackages.data?.length})`}
       headerRight={
-        <div className="d-flex flex-row align-items-center">
-          <div className="pr-2">Status:</div>
+        <InputGroup>
+          <InputGroup.Prepend>
+            <InputGroup.Text id="selectTimelineStatus">Timeline Status</InputGroup.Text>
+          </InputGroup.Prepend>
           <Form.Control
             as="select"
+            aria-describedby="selectTimelineStatus"
+            value={timelineStatus}
             onChange={(e) => setTimelineStatus(e.target.value as TimelineStatus)}
             custom
           >
-            <option key={timelineStatus} value={timelineStatus}>
-              {timelineStatus}
-            </option>
-            {Object.values(TimelineStatus)
-              .filter((status) => status !== timelineStatus)
-              .map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
+            {Object.values(TimelineStatus).map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
           </Form.Control>
-        </div>
+        </InputGroup>
       }
       body={
         <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>

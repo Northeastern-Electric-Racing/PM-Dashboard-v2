@@ -4,28 +4,20 @@
  */
 
 import { useMutation, useQuery } from 'react-query';
-import {
-  WorkPackage,
-  WbsNumber,
-  CreateWorkPackagePayload,
-  EditWorkPackagePayload,
-  WbsElementStatus,
-  TimelineStatus
-} from 'utils';
+import { WorkPackage, WbsNumber, CreateWorkPackagePayload, EditWorkPackagePayload } from 'utils';
 import {
   createSingleWorkPackage,
   editWorkPackage,
   getAllWorkPackages,
-  getAllWorkPackagesUpcomingDeadlines,
   getSingleWorkPackage
 } from './work-packages.api';
 
 /**
  * Custom React Hook to supply all work packages.
  */
-export const useAllWorkPackages = (status?: WbsElementStatus, timelineStatus?: TimelineStatus) => {
-  return useQuery<WorkPackage[], Error>(['work packages'], async () => {
-    const { data } = await getAllWorkPackages(status, timelineStatus);
+export const useAllWorkPackages = (queryParams?: { [field: string]: string }) => {
+  return useQuery<WorkPackage[], Error>(['work packages', queryParams], async () => {
+    const { data } = await getAllWorkPackages(queryParams);
     return data;
   });
 };
@@ -75,14 +67,4 @@ export const useEditWorkPackage = () => {
       }
     }
   );
-};
-
-/**
- * Custom React Hook to supply all work packages with an upcoming deadline.
- */
-export const useAllWorkPackagesUpcomingDeadlines = () => {
-  return useQuery<WorkPackage[], Error>(['work packages', 'upcoming deadlines'], async () => {
-    const { data } = await getAllWorkPackagesUpcomingDeadlines();
-    return data;
-  });
 };

@@ -38,7 +38,7 @@ describe('upcoming deadlines component', () => {
   it('renders headers', () => {
     mockHook(false, false, []);
     renderComponent();
-    expect(screen.getByText('Work Packages By Timeline Status')).toBeInTheDocument();
+    expect(screen.getByText('Work Packages By Timeline Status (0)')).toBeInTheDocument();
   });
 
   it('renders loading indicator', () => {
@@ -80,7 +80,7 @@ describe('upcoming deadlines component', () => {
   it('renders timeline status selector', () => {
     mockHook(false, false, exampleAllWorkPackages);
     renderComponent();
-    expect(screen.getByText('Status:')).toBeInTheDocument();
+    expect(screen.getByText('Timeline Status')).toBeInTheDocument();
     expect(screen.getByText('VERY_BEHIND')).toBeInTheDocument();
   });
 });

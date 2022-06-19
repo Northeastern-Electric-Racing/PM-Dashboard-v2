@@ -4,14 +4,7 @@
  */
 
 import axios from 'axios';
-import {
-  CreateWorkPackagePayload,
-  EditWorkPackagePayload,
-  TimelineStatus,
-  WbsElementStatus,
-  WbsNumber,
-  WorkPackage
-} from 'utils';
+import { CreateWorkPackagePayload, EditWorkPackagePayload, WbsNumber, WorkPackage } from 'utils';
 import { wbsPipe } from '../shared/pipes';
 import { apiUrls } from '../shared/urls';
 import { workPackageTransformer } from './transformers/work-packages.transformers';
@@ -19,8 +12,8 @@ import { workPackageTransformer } from './transformers/work-packages.transformer
 /**
  * Fetch all work packages.
  */
-export const getAllWorkPackages = (status?: WbsElementStatus, timelineStatus?: TimelineStatus) => {
-  return axios.get<WorkPackage[]>(apiUrls.workPackages(status, timelineStatus), {
+export const getAllWorkPackages = (queryParams?: { [field: string]: string }) => {
+  return axios.get<WorkPackage[]>(apiUrls.workPackages(queryParams), {
     transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
   });
 };
@@ -56,14 +49,5 @@ export const createSingleWorkPackage = (payload: CreateWorkPackagePayload) => {
 export const editWorkPackage = (payload: EditWorkPackagePayload) => {
   return axios.post<{ message: string }>(apiUrls.workPackagesEdit(), {
     ...payload
-  });
-};
-
-/**
- * Fetch all work packages with upcoming deadlines.
- */
-export const getAllWorkPackagesUpcomingDeadlines = () => {
-  return axios.get<WorkPackage[]>(apiUrls.workPackagesUpcomingDeadlines(), {
-    transformResponse: (data) => JSON.parse(data).map(workPackageTransformer)
   });
 };

@@ -31,6 +31,7 @@ const UpcomingDeadlines: React.FC = () => {
         ? 'No upcoming deadlines'
         : workPackages.data?.map((wp) => (
             <Card
+              key={wbsPipe(wp.wbsNum)}
               className={styles.upcomingDeadlineCard}
               border={theme.cardBorder}
               bg={theme.cardBg}

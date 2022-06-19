@@ -73,19 +73,15 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
           <Form.Control
             as="select"
             aria-describedby="selectTimelineStatus"
+            value={timelineStatus}
             onChange={(e) => setTimelineStatus(e.target.value as TimelineStatus)}
             custom
           >
-            <option key={timelineStatus} value={timelineStatus}>
-              {timelineStatus}
-            </option>
-            {Object.values(TimelineStatus)
-              .filter((status) => status !== timelineStatus)
-              .map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
+            {Object.values(TimelineStatus).map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
           </Form.Control>
         </InputGroup>
       }

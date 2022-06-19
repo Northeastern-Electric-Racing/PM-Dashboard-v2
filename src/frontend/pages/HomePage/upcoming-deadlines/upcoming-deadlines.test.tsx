@@ -76,4 +76,12 @@ describe('upcoming deadlines component', () => {
     renderComponent();
     expect(screen.getByText('No upcoming deadlines')).toBeInTheDocument();
   });
+
+  it('renders time period selector', () => {
+    mockHook(false, false, exampleAllWorkPackages);
+    renderComponent();
+    expect(screen.getByText('Next')).toBeInTheDocument();
+    expect(screen.getByText('14')).toBeInTheDocument();
+    expect(screen.getByText('Days')).toBeInTheDocument();
+  });
 });

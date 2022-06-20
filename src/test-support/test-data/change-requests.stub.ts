@@ -184,46 +184,6 @@ export const exampleStandardImplementedChangeRequest: StandardChangeRequest = {
       },
       detail: 'Add 3 weeks',
       dateImplemented: new Date('02/25/21')
-    },
-    {
-      changeId: 1,
-      changeRequestId: 37,
-      wbsNum: {
-        carNumber: 1,
-        projectNumber: 23,
-        workPackageNumber: 6
-      },
-      implementer: {
-        userId: 22,
-        firstName: 'Joe',
-        lastName: 'Schmoe',
-        googleAuthId: 'testID',
-        email: 'j.schmoe@northeastern.edu',
-        emailId: null,
-        role: 'LEADERSHIP'
-      },
-      detail: 'Add project manager "25"',
-      dateImplemented: new Date('02/25/21')
-    },
-    {
-      changeId: 1,
-      changeRequestId: 37,
-      wbsNum: {
-        carNumber: 1,
-        projectNumber: 23,
-        workPackageNumber: 7
-      },
-      implementer: {
-        userId: 25,
-        firstName: 'James',
-        lastName: 'C-D',
-        googleAuthId: 'testID',
-        email: 'chang-davidson.j@northeastern.edu',
-        emailId: null,
-        role: 'LEADERSHIP'
-      },
-      detail: 'Add project lead "22"',
-      dateImplemented: new Date('02/25/21')
     }
   ]
 };

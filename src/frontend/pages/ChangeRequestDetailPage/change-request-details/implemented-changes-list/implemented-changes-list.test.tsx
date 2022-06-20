@@ -34,6 +34,8 @@ describe('Rendering Implemented Changes List Component', () => {
     expect(screen.getByText(/Increase budget to 200/i)).toBeInTheDocument();
     expect(screen.getByText('1.23.4')).toBeInTheDocument();
     expect(screen.getByText(/Adjust description/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add project manager "Joe Schmoe"/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add project lead "Joe Schmoe"/i)).toBeInTheDocument();
   });
 
   it('renders the overall date implemented', () => {

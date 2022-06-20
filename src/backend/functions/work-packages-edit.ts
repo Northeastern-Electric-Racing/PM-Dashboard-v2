@@ -19,6 +19,7 @@ import {
   workPackageEditInputSchemaBody
 } from 'utils';
 import { FromSchema } from 'json-schema-to-ts';
+import { fullNamePipe } from '../../shared/pipes';
 
 const prisma = new PrismaClient();
 
@@ -186,8 +187,8 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   if (body.hasOwnProperty('projectManager')) {
     const projectManagerChangeJson = createChangeJsonNonList(
       'project manager',
-      originalWorkPackage.wbsElement.projectManagerId,
-      body.projectManager,
+      originalWorkPackage.wbsElement.projectManagerId, 
+      getUserFullName(body.projectManager),
       crId,
       userId,
       wbsElementId!
@@ -201,7 +202,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     const projectLeadChangeJson = createChangeJsonNonList(
       'project lead',
       originalWorkPackage.wbsElement.projectLeadId,
-      body.projectLead,
+      getUserFullName(body.projectLead),
       crId,
       userId,
       wbsElementId!
@@ -471,3 +472,10 @@ const handler = middy(editWorkPackage)
   .use(httpErrorHandler());
 
 export { handler };
+
+// Given a user's id, this method returns the user's full name
+const getUserFullName = async (userId: any) => {
+  const user = await prisma.user.findUnique( { where: { userId }});
+  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  return fullNamePipe(user); 
+}

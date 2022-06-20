@@ -187,6 +187,12 @@ const getSingleProject: ApiRouteFunction = async (params: { wbsNum: string }) =>
   return buildSuccessResponse(projectTransformer(wbsEle));
 };
 
+// Create new risk
+const createRisk: ApiRouteFunction = async (params: { projectId: number; details: String }) => {
+  // TODO: Implement this function
+  return buildSuccessResponse('not implemented :D');
+};
+
 const routes: ApiRoute[] = [
   {
     path: API_URL + apiRoutes.PROJECTS,
@@ -197,6 +203,11 @@ const routes: ApiRoute[] = [
     path: API_URL + apiRoutes.PROJECTS_BY_WBS,
     httpMethod: 'GET',
     func: getSingleProject
+  },
+  {
+    path: API_URL + apiRoutes.RISKS,
+    httpMethod: 'POST',
+    func: createRisk
   }
 ];
 

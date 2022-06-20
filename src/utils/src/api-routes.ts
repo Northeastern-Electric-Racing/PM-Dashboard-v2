@@ -15,6 +15,9 @@ const PROJECTS: string = `/projects`;
 const PROJECTS_BY_WBS: string = `${PROJECTS}/:wbsNum`;
 const PROJECTS_EDIT: string = `${PROJECTS}-edit`;
 
+/**************** Risks Endpoint ****************/
+const RISKS: string = `/risks`;
+
 /**************** Work Packages Endpoint ****************/
 const WORK_PACKAGES: string = `/work-packages`;
 const WORK_PACKAGES_BY_WBS: string = `${WORK_PACKAGES}/:wbsNum`;

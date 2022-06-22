@@ -4,7 +4,7 @@
  */
 
 import { Link } from 'react-router-dom';
-import { Breadcrumb } from 'react-bootstrap';
+import { Breadcrumb, Nav } from 'react-bootstrap';
 import { LinkItem } from '../../../shared/types';
 import { routes } from '../../../shared/routes';
 import './page-breadcrumbs.module.css';
@@ -17,12 +17,12 @@ interface PageTitleProps {
 // Common component for adding breadcrumbs to a page
 const PageBreadcrumbs: React.FC<PageTitleProps> = ({ currentPageTitle, previousPages }) => {
   return (
-    <Breadcrumb>
-      <Breadcrumb.Item linkAs={Link} href={routes.HOME}>
+    <Breadcrumb className="pt-3" as={Nav}>
+      <Breadcrumb.Item linkAs={Link} linkProps={{ to: routes.HOME }}>
         Home
       </Breadcrumb.Item>
       {previousPages.map((page) => (
-        <Breadcrumb.Item linkAs={Link} href={page.route}>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: page.route }}>
           {page.name}
         </Breadcrumb.Item>
       ))}

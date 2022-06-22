@@ -3,29 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
 import { render, routerWrapperBuilder, screen } from '../../../../test-support/test-utils';
-import { routes } from '../../../../shared/routes';
-import { LinkItem } from '../../../../shared/types';
+import { testLinkItems } from '../../../../test-support/test-data/test-utils.stub';
 import NavPageLinks from './nav-page-links';
-
-const testLinkItems: LinkItem[] = [
-  {
-    name: 'Home',
-    icon: faHome,
-    route: routes.HOME
-  },
-  {
-    name: 'Projects',
-    icon: faFolder,
-    route: routes.PROJECTS
-  },
-  {
-    name: 'Change Requests',
-    icon: faExchangeAlt,
-    route: routes.CHANGE_REQUESTS
-  }
-];
 
 /**
  * Sets up the component under test with the desired values and renders it.

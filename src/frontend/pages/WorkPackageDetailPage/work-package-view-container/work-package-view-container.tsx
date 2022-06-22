@@ -82,7 +82,7 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
       <PageBreadcrumbs
         currentPageTitle={pageTitle}
         previousPages={[
-          { name: 'All Projects', route: routes.PROJECTS },
+          { name: 'Projects', route: routes.PROJECTS },
           { name: projectWbsString, route: `${routes.PROJECTS}/${projectWbsString}` }
         ]}
       />

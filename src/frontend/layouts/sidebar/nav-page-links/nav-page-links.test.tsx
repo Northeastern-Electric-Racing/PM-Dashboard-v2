@@ -3,12 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render, routerWrapperBuilder, screen } from '../../../../test-support/test-utils';
-import NavPageLinks, { LinkItem } from './nav-page-links';
 import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
+import { render, routerWrapperBuilder, screen } from '../../../../test-support/test-utils';
 import { routes } from '../../../../shared/routes';
+import { LinkItem } from '../../../../shared/types';
+import NavPageLinks from './nav-page-links';
 
-const linkItems: LinkItem[] = [
+const testLinkItems: LinkItem[] = [
   {
     name: 'Home',
     icon: faHome,
@@ -33,7 +34,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <NavPageLinks linkItems={linkItems} />
+      <NavPageLinks linkItems={testLinkItems} />
     </RouterWrapper>
   );
 };

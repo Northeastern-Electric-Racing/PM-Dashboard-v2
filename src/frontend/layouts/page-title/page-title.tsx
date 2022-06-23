@@ -5,7 +5,7 @@
 
 import { LinkItem } from '../../../shared/types';
 import PageBreadcrumbs from './page-breadcrumbs/page-breadcrumbs';
-import './page-title.module.css';
+import styles from './page-title.module.css';
 
 interface PageTitleProps {
   title: string;
@@ -23,8 +23,8 @@ const PageTitle: React.FC<PageTitleProps> = ({ title, previousPages, actionButto
   return (
     <>
       <PageBreadcrumbs currentPageTitle={title} previousPages={previousPages} />
-      <div className={'pb-1 d-flex justify-content-between'}>
-        <h3>{title}</h3>
+      <div className={'d-flex justify-content-between align-items-center'}>
+        <h3 className={styles.titleText}>{title}</h3>
         <div>{actionButton}</div>
       </div>
     </>

@@ -5,7 +5,14 @@
 
 import { UseQueryResult } from 'react-query';
 import { Project, WbsElementStatus } from 'utils';
-import { fireEvent, render, screen, waitFor, wbsRegex } from '../../../test-support/test-utils';
+import {
+  fireEvent,
+  render,
+  routerWrapperBuilder,
+  screen,
+  waitFor,
+  wbsRegex
+} from '../../../test-support/test-utils';
 import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import { useAllProjects } from '../../../services/projects.hooks';
 import {
@@ -31,7 +38,12 @@ const mockHook = (isLoading: boolean, isError: boolean, data?: Project[], error?
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
-  render(<ProjectsView />);
+  const RouterWrapper = routerWrapperBuilder({});
+  render(
+    <RouterWrapper>
+      <ProjectsView />
+    </RouterWrapper>
+  );
 };
 
 describe('projects table component', () => {
@@ -39,7 +51,7 @@ describe('projects table component', () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('Projects')).toBeInTheDocument();
+    expect(screen.getAllByText('Projects').length).toEqual(2);
   });
 
   it('renders the loading indicator', () => {
@@ -62,7 +74,7 @@ describe('projects table component', () => {
     mockHook(false, false, []);
     renderComponent();
 
-    expect(screen.getByText('Projects')).toBeInTheDocument();
+    expect(screen.getAllByText('Projects').length).toEqual(2);
     expect(screen.getByText('No projects to display', { exact: false })).toBeInTheDocument();
   });
 
@@ -83,11 +95,11 @@ describe('projects table component', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(wbsPipe(exampleAllProjects[4].wbsNum))).toBeInTheDocument();
 
-    expect(screen.getByText('Projects')).toBeInTheDocument();
+    expect(screen.getAllByText('Projects').length).toEqual(2);
     expect(screen.queryByText('No projects to display', { exact: false })).not.toBeInTheDocument();
   });
 
-  it.skip('handles sorting and reverse sorting the table by wbs num', async () => {
+  it('handles sorting and reverse sorting the table by wbs num', async () => {
     mockHook(false, false, exampleAllProjects);
     renderComponent();
     await waitFor(() => screen.getByText(wbsPipe(exampleAllProjects[0].wbsNum)));
@@ -138,6 +150,7 @@ describe('projects table component', () => {
     expect(filterProjects(exampleAllProjects, -1, '', 4, -1)).toStrictEqual(answer1);
     expect(filterProjects(exampleAllProjects, -1, '', 3, -1)).toStrictEqual(answer2);
   });
+
   it('checking if project filtering with project manager works as expected', async () => {
     const answer1 = [exampleProject1];
     const answer2 = [exampleProject2, exampleProject3, exampleProject5];

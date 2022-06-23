@@ -22,7 +22,7 @@ const renderComponent = () => {
 describe('settings page component', () => {
   it('renders title', () => {
     renderComponent();
-    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getAllByText('Settings').length).toEqual(2);
   });
 
   it('renders organization settings', () => {

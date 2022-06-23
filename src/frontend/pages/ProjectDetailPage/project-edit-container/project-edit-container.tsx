@@ -7,6 +7,7 @@ import { SyntheticEvent, useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
+import { routes } from '../../../../shared/routes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
@@ -217,6 +218,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
       <Form onSubmit={handleSubmit}>
         <PageTitle
           title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
+          previousPages={[{ name: 'Projects', route: routes.PROJECTS }]}
           actionButton={
             <Form.Control
               type="number"

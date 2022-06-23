@@ -14,7 +14,7 @@ const Settings: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   return (
     <Container fluid>
-      <PageTitle title="Settings" />
+      <PageTitle title={'Settings'} previousPages={[]} />
       <Alert variant={'success'} show={showAlert}>
         Haha {auth.user?.firstName} bye bye!
       </Alert>

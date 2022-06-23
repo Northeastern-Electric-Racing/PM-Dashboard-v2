@@ -7,8 +7,8 @@ import { UseQueryResult } from 'react-query';
 import { ChangeRequest } from 'utils';
 import { Auth } from '../../../shared/types';
 import {
-  exampleActivationChangeRequest,
-  exampleStandardChangeRequest
+  exampleActivationChangeRequest as exActivationCR,
+  exampleStandardChangeRequest as exStandardCR
 } from '../../../test-support/test-data/change-requests.stub';
 import {
   exampleAdminUser,
@@ -76,15 +76,13 @@ describe('change request details container', () => {
   });
 
   it('renders the loaded change request', () => {
-    mockSingleCRHook(false, false, exampleStandardChangeRequest);
+    mockSingleCRHook(false, false, exStandardCR);
     mockAuthHook();
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(
-      screen.getByText(exampleStandardChangeRequest.crId, { exact: false })
-    ).toBeInTheDocument();
-    expect(screen.getByText(exampleStandardChangeRequest.scopeImpact)).toBeInTheDocument();
+    expect(screen.getAllByText(exStandardCR.crId, { exact: false }).length).toEqual(2);
+    expect(screen.getByText(exStandardCR.scopeImpact)).toBeInTheDocument();
   });
 
   it('handles the error with message', () => {
@@ -113,7 +111,7 @@ describe('change request details container', () => {
   });
 
   it('enables review if the user is an admin', () => {
-    mockSingleCRHook(false, false, exampleActivationChangeRequest);
+    mockSingleCRHook(false, false, exActivationCR);
     mockAuthHook(exampleAdminUser2);
     renderComponent();
 
@@ -121,7 +119,7 @@ describe('change request details container', () => {
   });
 
   it('disables reviewing change requests for guests', () => {
-    mockSingleCRHook(false, false, exampleActivationChangeRequest);
+    mockSingleCRHook(false, false, exActivationCR);
     mockAuthHook(exampleGuestUser);
     renderComponent();
 
@@ -129,7 +127,7 @@ describe('change request details container', () => {
   });
 
   it('disables reviewing change requests for member users', () => {
-    mockSingleCRHook(false, false, exampleActivationChangeRequest);
+    mockSingleCRHook(false, false, exActivationCR);
     mockAuthHook(exampleMemberUser);
     renderComponent();
 
@@ -137,7 +135,7 @@ describe('change request details container', () => {
   });
 
   it('enables implementing if the user is an admin', () => {
-    mockSingleCRHook(false, false, exampleStandardChangeRequest);
+    mockSingleCRHook(false, false, exStandardCR);
     mockAuthHook(exampleAdminUser);
     renderComponent();
 
@@ -149,7 +147,7 @@ describe('change request details container', () => {
   });
 
   it('disables implementing change requests for guests', () => {
-    mockSingleCRHook(false, false, exampleStandardChangeRequest);
+    mockSingleCRHook(false, false, exStandardCR);
     mockAuthHook(exampleGuestUser);
     renderComponent();
 

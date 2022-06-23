@@ -8,7 +8,7 @@ import { User } from 'utils';
 import { render, screen, routerWrapperBuilder } from '../../../../test-support/test-utils';
 import { wbsPipe } from '../../../../shared/pipes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
-import { exampleProject1 } from '../../../../test-support/test-data/projects.stub';
+import { exampleProject1 as exPrj1 } from '../../../../test-support/test-data/projects.stub';
 import { useAllUsers, useLogUserIn } from '../../../../services/users.hooks';
 import {
   mockUseMutationResult,
@@ -55,7 +55,7 @@ const renderComponent = () => {
   const RouterWrapper = routerWrapperBuilder({});
   return render(
     <RouterWrapper>
-      <ProjectEditContainer proj={exampleProject1} exitEditMode={() => null} />
+      <ProjectEditContainer proj={exPrj1} exitEditMode={() => null} />
     </RouterWrapper>
   );
 };
@@ -71,9 +71,7 @@ describe('test suite for ProjectEditContainer', () => {
       mockEditSingleProjectHook(false, false);
       renderComponent();
 
-      expect(
-        screen.getByText(`${wbsPipe(exampleProject1.wbsNum)} - ${exampleProject1.name}`)
-      ).toBeInTheDocument();
+      expect(screen.getAllByText(`${wbsPipe(exPrj1.wbsNum)} - ${exPrj1.name}`).length).toEqual(2);
     });
 
     it('renders change request input', () => {
@@ -107,7 +105,7 @@ describe('test suite for ProjectEditContainer', () => {
 
       expect(screen.getByText('Goals')).toBeInTheDocument();
       const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
-      exampleProject1.goals.forEach((bullet) => {
+      exPrj1.goals.forEach((bullet) => {
         expect(res.map((item) => item.value)).toContain(bullet.detail);
       });
     });
@@ -119,7 +117,7 @@ describe('test suite for ProjectEditContainer', () => {
 
       expect(screen.getByText('Features')).toBeInTheDocument();
       const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
-      exampleProject1.features.forEach((bullet) => {
+      exPrj1.features.forEach((bullet) => {
         expect(res.map((item) => item.value)).toContain(bullet.detail);
       });
     });
@@ -131,7 +129,7 @@ describe('test suite for ProjectEditContainer', () => {
 
       expect(screen.getByText('Other Constraints')).toBeInTheDocument();
       const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
-      exampleProject1.otherConstraints.forEach((bullet) => {
+      exPrj1.otherConstraints.forEach((bullet) => {
         expect(res.map((item) => item.value)).toContain(bullet.detail);
       });
     });
@@ -143,7 +141,7 @@ describe('test suite for ProjectEditContainer', () => {
 
       expect(screen.getByText('Goals')).toBeInTheDocument();
       const res = (await screen.findAllByRole('textbox')) as HTMLInputElement[];
-      expect(res.map((item) => item.value)).toEqual(expect.arrayContaining(exampleProject1.rules));
+      expect(res.map((item) => item.value)).toEqual(expect.arrayContaining(exPrj1.rules));
     });
 
     it('render title of ChangesList', () => {
@@ -178,9 +176,7 @@ describe('test suite for ProjectEditContainer', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(
-      screen.getByText(`${wbsPipe(exampleProject1.wbsNum)} - ${exampleProject1.name}`)
-    ).toBeInTheDocument();
+    expect(screen.getAllByText(`${wbsPipe(exPrj1.wbsNum)} - ${exPrj1.name}`).length).toEqual(2);
     expect(screen.getByText('Project Details (EDIT)')).toBeInTheDocument();
     expect(screen.getByText('Project Name:')).toBeInTheDocument();
   });

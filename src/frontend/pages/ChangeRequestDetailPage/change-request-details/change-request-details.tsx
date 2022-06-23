@@ -87,7 +87,11 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
 
   return (
     <Container fluid>
-      <PageTitle title={`Change Request #${changeRequest.crId}`} actionButton={actionDropdown} />
+      <PageTitle
+        title={`Change Request #${changeRequest.crId}`}
+        previousPages={[{ name: 'Change Requests', route: routes.CHANGE_REQUESTS }]}
+        actionButton={actionDropdown}
+      />
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}

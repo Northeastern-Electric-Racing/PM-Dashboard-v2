@@ -138,7 +138,7 @@ const ProjectsView: React.FC = () => {
 
   return (
     <Container fluid>
-      <PageTitle title={'Projects'} />
+      <PageTitle title={'Projects'} previousPages={[]} />
       <Row>
         <Col sm={4} md={3} lg={3} xl={2}>
           <ProjectsTableFilter

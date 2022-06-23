@@ -54,6 +54,7 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
     <Container fluid className="mb-5">
       <PageTitle
         title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
+        previousPages={[{ name: 'Projects', route: routes.PROJECTS }]}
         actionButton={projectActionsDropdown}
       />
       <ProjectDetails project={proj} />

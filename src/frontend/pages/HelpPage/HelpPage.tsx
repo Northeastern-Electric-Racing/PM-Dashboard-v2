@@ -12,7 +12,7 @@ import PageBlock from '../../layouts/page-block/page-block';
 const HelpPage: React.FC = () => {
   return (
     <Container fluid>
-      <PageTitle title="Help" />
+      <PageTitle title="Help" previousPages={[]} />
       <PageBlock
         title="Resources"
         headerRight={<></>}

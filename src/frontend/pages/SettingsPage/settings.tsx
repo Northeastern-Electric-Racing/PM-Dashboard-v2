@@ -8,13 +8,16 @@ import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useAuth } from '../../../services/auth.hooks';
 import PageTitle from '../../layouts/page-title/page-title';
 import PageBlock from '../../layouts/page-block/page-block';
+import PageBreadcrumbs from '../../layouts/page-breadcrumbs/page-breadcrumbs';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
   const [showAlert, setShowAlert] = useState(false);
+  const pageTitle: string = 'Settings';
   return (
     <Container fluid>
-      <PageTitle title="Settings" />
+      <PageBreadcrumbs currentPageTitle={pageTitle} previousPages={[]} />
+      <PageTitle title={pageTitle} />
       <Alert variant={'success'} show={showAlert}>
         Haha {auth.user?.firstName} bye bye!
       </Alert>

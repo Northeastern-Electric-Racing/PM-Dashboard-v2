@@ -21,7 +21,7 @@ interface PageTitleProps {
  */
 const PageTitle: React.FC<PageTitleProps> = ({ title, previousPages, actionButton }) => {
   return (
-    <div className={'pt-3 d-flex justify-content-between align-items-center'}>
+    <div className={'pt-3 mb-2 d-flex justify-content-between align-items-center'}>
       <div>
         <PageBreadcrumbs currentPageTitle={title} previousPages={previousPages} />
         <h3 className={styles.titleText}>{title}</h3>

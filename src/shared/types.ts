@@ -4,6 +4,7 @@
  */
 
 import { User } from '@prisma/client';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface Auth {
   user: User | undefined;
@@ -19,4 +20,10 @@ export interface Theme {
   bgColor: string;
   cardBg: string;
   cardBorder: string;
+}
+
+export interface LinkItem {
+  name: string;
+  icon?: IconProp;
+  route: string;
 }

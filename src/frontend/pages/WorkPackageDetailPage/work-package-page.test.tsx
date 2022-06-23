@@ -69,7 +69,7 @@ describe('work package container', () => {
     renderComponent();
 
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    expect(screen.getByText('1.1.1 - Bodywork Concept of Design')).toBeInTheDocument();
+    expect(screen.getAllByText('1.1.1 - Bodywork Concept of Design').length).toEqual(2);
     expect(screen.getByText('Dependencies')).toBeInTheDocument();
     expect(screen.getByText('Expected Activities')).toBeInTheDocument();
     expect(screen.getByText('Deliverables')).toBeInTheDocument();

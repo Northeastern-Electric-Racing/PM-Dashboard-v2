@@ -16,6 +16,7 @@ import WorkPackageDetails from './work-package-details/work-package-details';
 import ChangesList from '../../../components/changes-list/changes-list';
 import PageTitle from '../../../layouts/page-title/page-title';
 import StageGateWorkPackageModalContainer from '../stage-gate-work-package-modal-container/stage-gate-work-package-modal-container';
+import PageBreadcrumbs from '../../../layouts/page-breadcrumbs/page-breadcrumbs';
 
 interface WorkPackageViewContainerProps {
   workPackage: WorkPackage;
@@ -74,12 +75,18 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
     </DropdownButton>
   );
 
+  const pageTitle: string = `${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`;
+  const projectWbsString: string = wbsPipe({ ...workPackage.wbsNum, workPackageNumber: 0 });
   return (
     <Container fluid>
-      <PageTitle
-        title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
-        actionButton={projectActionsDropdown}
+      <PageBreadcrumbs
+        currentPageTitle={pageTitle}
+        previousPages={[
+          { name: 'Projects', route: routes.PROJECTS },
+          { name: projectWbsString, route: `${routes.PROJECTS}/${projectWbsString}` }
+        ]}
       />
+      <PageTitle title={pageTitle} actionButton={projectActionsDropdown} />
       <WorkPackageDetails workPackage={workPackage} />
       <HorizontalList
         title={'Dependencies'}

@@ -4,15 +4,16 @@
  */
 
 import { Nav } from 'react-bootstrap';
-import styles from './sidebar.module.css';
-import NavPageLinks, { LinkItem } from './nav-page-links/nav-page-links';
-import { routes } from '../../../shared/routes';
 import {
   faExchangeAlt,
   faFolder,
   faHome,
   faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { routes } from '../../../shared/routes';
+import { LinkItem } from '../../../shared/types';
+import NavPageLinks from './nav-page-links/nav-page-links';
+import styles from './sidebar.module.css';
 
 const Sidebar: React.FC = () => {
   const linkItems: LinkItem[] = [

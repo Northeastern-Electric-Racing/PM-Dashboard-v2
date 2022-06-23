@@ -9,6 +9,7 @@ import { WbsNumber, WorkPackage, WbsElementStatus } from 'utils';
 import { useAuth } from '../../../../services/auth.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { useEditWorkPackage } from '../../../../services/work-packages.hooks';
+import { routes } from '../../../../shared/routes';
 import { wbsPipe } from '../../../../shared/pipes';
 import EditableTextInputList from '../../../components/editable-text-input-list/editable-text-input-list';
 import ErrorPage from '../../../pages/ErrorPage/error-page';
@@ -176,11 +177,16 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
 
   if (isError) return <ErrorPage message={error?.message} />;
 
+  const projectWbsString: string = wbsPipe({ ...workPackage.wbsNum, workPackageNumber: 0 });
   return (
     <Container fluid className="mb-5">
       <Form onSubmit={handleSubmit}>
         <PageTitle
           title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
+          previousPages={[
+            { name: 'Projects', route: routes.PROJECTS },
+            { name: projectWbsString, route: `${routes.PROJECTS}/${projectWbsString}` }
+          ]}
           actionButton={
             <Form.Control
               type="number"

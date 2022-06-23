@@ -13,7 +13,12 @@ interface PageBlockProps {
   body: JSX.Element;
 }
 
-// Custom card component for page blocks
+/**
+ * Custom component for a consistent page-building block.
+ * @param title The title of the block on the page
+ * @param headerRight The element to display on the right side of the header
+ * @param body The body of the page block
+ */
 const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
   const theme = useTheme();
 

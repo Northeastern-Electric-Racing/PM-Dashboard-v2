@@ -8,6 +8,7 @@ import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ChangeRequestReason, ChangeRequestType, validateWBS } from 'utils';
+import { routes } from '../../../../shared/routes';
 import { FormInput } from '../create-change-request';
 import PageTitle from '../../../layouts/page-title/page-title';
 import PageBlock from '../../../layouts/page-block/page-block';
@@ -76,7 +77,10 @@ const CreateChangeRequestsView: React.FC<CreateChangeRequestViewProps> = ({ wbsN
 
   return (
     <>
-      <PageTitle title={'New Change Request'} />
+      <PageTitle
+        title={'New Change Request'}
+        previousPages={[{ name: 'Change Requests', route: routes.CHANGE_REQUESTS }]}
+      />
       <PageBlock
         title={''}
         headerRight={<></>}

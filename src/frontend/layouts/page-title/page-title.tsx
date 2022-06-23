@@ -3,20 +3,31 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { LinkItem } from '../../../shared/types';
+import PageBreadcrumbs from './page-breadcrumbs/page-breadcrumbs';
 import './page-title.module.css';
 
 interface PageTitleProps {
   title: string;
+  previousPages: LinkItem[];
   actionButton?: JSX.Element;
 }
 
-// Common component for all page titles
-const PageTitle: React.FC<PageTitleProps> = ({ title, actionButton }) => {
+/**
+ * Build the page title section for a page.
+ * @param title The title of the page
+ * @param previousPages The pages in the breadcrumb between home and the current page
+ * @param actionButton The button to display on the right side of the page title
+ */
+const PageTitle: React.FC<PageTitleProps> = ({ title, previousPages, actionButton }) => {
   return (
-    <div className={'pb-1 d-flex justify-content-between'}>
-      <h3>{title}</h3>
-      <div>{actionButton}</div>
-    </div>
+    <>
+      <PageBreadcrumbs currentPageTitle={title} previousPages={previousPages} />
+      <div className={'pb-1 d-flex justify-content-between'}>
+        <h3>{title}</h3>
+        <div>{actionButton}</div>
+      </div>
+    </>
   );
 };
 

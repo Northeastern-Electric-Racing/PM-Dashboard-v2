@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from '@prisma/client';
+import { User } from 'utils';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface Auth {

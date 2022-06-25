@@ -4,8 +4,7 @@
  */
 
 import { ReactElement } from 'react';
-import { User } from '@prisma/client';
-import { WbsElementStatus, WbsNumber } from 'utils';
+import { WbsElementStatus, WbsNumber, User } from 'utils';
 import { Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';

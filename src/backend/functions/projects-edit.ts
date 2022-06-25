@@ -18,7 +18,6 @@ import {
   buildNotFoundResponse,
   buildNoAuthResponse
 } from 'utils';
-import { fullNamePipe } from '../../shared/pipes';
 
 const prisma = new PrismaClient();
 
@@ -159,16 +158,16 @@ export const editProject: Handler = async ({ body }, _context) => {
   );
   const projectManagerChangeJson = createChangeJsonNonList(
     'project manager',
-    getUserFullName(originalProject.wbsElement.projectManagerId),
-    getUserFullName(projectManager),
+    await getUserFullName(originalProject.wbsElement.projectManagerId),
+    await getUserFullName(projectManager),
     crId,
     userId,
     wbsElementId
   );
   const projectLeadChangeJson = createChangeJsonNonList(
     'project lead',
-    getUserFullName(originalProject.wbsElement.projectLeadId),
-    getUserFullName(projectLead),
+    await getUserFullName(originalProject.wbsElement.projectLeadId),
+    await getUserFullName(projectLead),
     crId,
     userId,
     wbsElementId
@@ -517,5 +516,6 @@ export { handler };
 const getUserFullName = async (userId: any): Promise<string> => {
   const user = await prisma.user.findUnique( { where: { userId }});
   if (!user) throw new Error('user not found'); 
-  return fullNamePipe(user); 
+  const userName = user ? `${user.firstName} ${user.lastName}` : '—';
+  return userName;  
 }

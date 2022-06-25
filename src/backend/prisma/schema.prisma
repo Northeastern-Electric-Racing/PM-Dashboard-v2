@@ -32,6 +32,11 @@ enum Role {
   GUEST
 }
 
+enum Theme {
+  LIGHT
+  DARK
+}
+
 enum Scope_CR_Why_Type {
   ESTIMATION
   SCHOOL
@@ -53,6 +58,9 @@ model User {
   email                   String           @unique
   emailId                 String?          @unique
   role                    Role             @default(GUEST)
+  userSettingsId          String?          @unique
+  userSettings            UserSettings?    @relation(fields: [userSettingsId], references: [id])
+  // Relation references
   submittedChangeRequests Change_Request[] @relation(name: "submittedChangeRequests")
   reviewedChangeRequests  Change_Request[] @relation(name: "reviewedChangeRequests")
   markedAsProjectLead     Activation_CR[]  @relation(name: "markAsProjectLead")
@@ -69,6 +77,12 @@ model Session {
   user       User     @relation(fields: [userId], references: [userId])
   created    DateTime @default(now())
   deviceInfo String?
+}
+
+model UserSettings {
+  id           String @id @default(uuid())
+  user         User?
+  defaultTheme Theme  @default(DARK)
 }
 
 model Change_Request {

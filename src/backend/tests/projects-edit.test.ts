@@ -25,6 +25,15 @@ describe('createChangeJsonNonList', () => {
 
     expect(res.detail).toBe(`Edited test from "abc" to "def"`);
   });
+  it('returns a good json if old value is null', async () => {
+    const res = createChangeJsonNonList('project manager', null, 'James C-D', 2, 3, 4);
+
+    if (res === undefined) {
+      throw new TypeError('should not be undefined');
+    }
+
+    expect(res.detail).toBe(`Added project manager "James C-D"`);
+  });
 });
 
 describe('createDescriptionBulletChangesJson', () => {

@@ -187,7 +187,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   if (body.hasOwnProperty('projectManager')) {
     const projectManagerChangeJson = createChangeJsonNonList(
       'project manager',
-      originalWorkPackage.wbsElement.projectManagerId, 
+      getUserFullName(originalWorkPackage.wbsElement.projectManagerId), 
       getUserFullName(body.projectManager),
       crId,
       userId,
@@ -201,7 +201,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   if (body.hasOwnProperty('projectLead')) {
     const projectLeadChangeJson = createChangeJsonNonList(
       'project lead',
-      originalWorkPackage.wbsElement.projectLeadId,
+      getUserFullName(originalWorkPackage.wbsElement.projectLeadId),
       getUserFullName(body.projectLead),
       crId,
       userId,
@@ -474,8 +474,8 @@ const handler = middy(editWorkPackage)
 export { handler };
 
 // Given a user's id, this method returns the user's full name
-const getUserFullName = async (userId: any) => {
+const getUserFullName = async (userId: any): Promise<string>=> {
   const user = await prisma.user.findUnique( { where: { userId }});
-  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  if (!user) throw new Error('user not found'); 
   return fullNamePipe(user); 
 }

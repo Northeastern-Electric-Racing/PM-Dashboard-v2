@@ -13,40 +13,45 @@ import { WbsNumber } from 'utils';
  * Pipe is a term / tool from Angular.
  */
 
-export const weeksPipe = (weeks: number): string => {
+/** Display number as "4 weeks" or "1 week" */
+export const weeksPipe = (weeks: number) => {
   return `${weeks} week${weeks === 1 ? '' : 's'}`;
 };
 
-export const dollarsPipe = (dollars: number): string => {
+/** Display number as "$535" */
+export const dollarsPipe = (dollars: number) => {
   return `$${dollars}`;
 };
 
-export const wbsPipe = (wbsNum: WbsNumber): string => {
+/** Display WBS number as string "1.2.0" */
+export const wbsPipe = (wbsNum: WbsNumber) => {
   return `${wbsNum.carNumber}.${wbsNum.projectNumber}.${wbsNum.workPackageNumber}`;
 };
 
-export const fullNamePipe = (user?: User): string => {
+/** Display user by their name "Joe Shmoe" */
+export const fullNamePipe = (user?: User) => {
   return user ? `${user.firstName} ${user.lastName}` : emDashPipe('');
 };
 
-export const booleanPipe = (bool: boolean): string => {
+/** Display boolean as "YES" or "NO" */
+export const booleanPipe = (bool: boolean) => {
   return bool ? 'YES' : 'NO';
 };
 
-// Formats an array of objects into a string that is a list.
-export const listPipe = <T>(array: T[], transform: (ele: T) => string): string => {
+/** Formats an array of objects into a string that is a list. */
+export const listPipe = <T>(array: T[], transform: (ele: T) => string) => {
   return array.map(transform).join(', ');
 };
 
-// Formats the end date as a string.
-export const endDatePipe = (startDate: Date, durWeeks: number): string => {
+/** Formats the end date as a string. */
+export const endDatePipe = (startDate: Date, durWeeks: number) => {
   const endDate = new Date(startDate);
   endDate.setDate(endDate.getDate() + durWeeks * 7);
   return datePipe(endDate);
 };
 
-// Replaces an empty string with an EM dash.
-export const emDashPipe = (str: string): string => {
+/** Replaces an empty string with an EM dash. */
+export const emDashPipe = (str: string) => {
   return str.trim() === '' ? '—' : str;
 };
 
@@ -54,7 +59,7 @@ export const emDashPipe = (str: string): string => {
  * Return a given date as a string in the local en-US format,
  * with single digit numbers starting with a zero.
  */
-export const datePipe = (date: Date): string => {
+export const datePipe = (date: Date) => {
   return date.toLocaleDateString('en-US', {
     day: '2-digit',
     month: '2-digit',
@@ -63,7 +68,7 @@ export const datePipe = (date: Date): string => {
   });
 };
 
-// returns a given number as a string with a percent sign
-export const percentPipe = (percent: number): string => {
+/** returns a given number as a string with a percent sign */
+export const percentPipe = (percent: number) => {
   return `${percent}%`;
 };

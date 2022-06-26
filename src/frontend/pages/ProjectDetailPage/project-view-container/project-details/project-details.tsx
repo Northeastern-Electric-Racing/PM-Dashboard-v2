@@ -83,38 +83,21 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
             <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
               <b>Timeline Status:</b> {emDashPipe('')}
             </Col>
-            <Col className={allColsStyle} sm={12} md={8} lg={6} xl={4}>
-              <div className={styles.horizontal}>
-                <b>Links:</b>
-                <li>
-                  <ExternalLink
-                    icon={faFilePowerpoint}
-                    link={project.slideDeckLink!}
-                    description={'Slide Deck'}
-                  />
-                </li>
-                <li>
-                  <ExternalLink
-                    icon={faList}
-                    link={project.taskListLink!}
-                    description={'Task List'}
-                  />
-                </li>
-                <li>
-                  <ExternalLink icon={faListOl} link={project.bomLink!} description={'BOM'} />
-                </li>
-                <li>
-                  <ExternalLink
-                    icon={faFolderOpen}
-                    link={project.gDriveLink!}
-                    description={'Google Drive'}
-                  />
-                </li>
-              </div>
-            </Col>
           </Row>
-          <Row>
-            <Col></Col>
+          <Row className={`${allColsStyle} pl-3`}>
+            <b>Links:</b>
+            <ExternalLink
+              icon={faFilePowerpoint}
+              link={project.slideDeckLink!}
+              description={'Slide Deck'}
+            />
+            <ExternalLink icon={faList} link={project.taskListLink!} description={'Task List'} />
+            <ExternalLink icon={faListOl} link={project.bomLink!} description={'BOM'} />
+            <ExternalLink
+              icon={faFolderOpen}
+              link={project.gDriveLink!}
+              description={'Google Drive'}
+            />
           </Row>
         </Container>
       }

@@ -16,10 +16,32 @@ import {
   buildNotFoundResponse,
   buildSuccessResponse,
   routeMatcher,
-  User
+  User,
+  AuthenticatedUser
 } from 'utils';
 
 const prisma = new PrismaClient();
+
+const authUserQueryArgs = Prisma.validator<Prisma.UserArgs>()({
+  include: {
+    userSettings: true
+  }
+});
+
+const authenticatedUserTransformer = (
+  user: Prisma.UserGetPayload<typeof authUserQueryArgs>
+): AuthenticatedUser => {
+  return {
+    userId: user.userId,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    googleAuthId: user.googleAuthId,
+    email: user.email,
+    emailId: user.emailId,
+    role: user.role,
+    defaultTheme: user.userSettings?.defaultTheme
+  };
+};
 
 const usersTransformer = (user: Prisma.UserGetPayload<null>): User => {
   if (user === null) throw new TypeError('User not found');
@@ -70,7 +92,10 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   if (!payload) throw new Error('Auth server response payload invalid');
   const { sub: userId } = payload; // google user id
   // check if user is already in the database via Google ID
-  let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
+  let user = await prisma.user.findUnique({
+    where: { googleAuthId: userId },
+    ...authUserQueryArgs
+  });
 
   // if not in database, create user in database
   if (user === null) {
@@ -85,7 +110,8 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
         email: payload['email']!,
         emailId,
         userSettings: { create: {} }
-      }
+      },
+      ...authUserQueryArgs
     });
     user = createdUser;
   }
@@ -98,7 +124,7 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return buildSuccessResponse(usersTransformer(user));
+  return buildSuccessResponse(authenticatedUserTransformer(user));
 };
 
 // Define all valid routes for the endpoint

@@ -10,13 +10,13 @@ import {
   emDashPipe,
   endDatePipe,
   fullNamePipe,
-  linkPipe,
   wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
 import PageBlock from '../../../../layouts/page-block/page-block';
 import styles from './project-details.module.css';
 import { Col, Container, Row } from 'react-bootstrap';
+import ExternalLink from '../../../../components/external-link/external-link';
 
 interface ProjectDetailsProps {
   project: Project;
@@ -80,10 +80,18 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
             <Col className={allColsStyle} sm={12} md={8} lg={6} xl={4}>
               <div className={styles.horizontal}>
                 <b>Links:</b>
-                <li>{linkPipe('Slide Deck', project.slideDeckLink!)}</li>
-                <li>{linkPipe('Task List', project.taskListLink!)}</li>
-                <li>{linkPipe('BOM', project.bomLink!)}</li>
-                <li>{linkPipe('Google Drive', project.gDriveLink!)}</li>
+                <li>
+                  <ExternalLink link={project.slideDeckLink!} description={'Slide Deck'} />
+                </li>
+                <li>
+                  <ExternalLink link={project.taskListLink!} description={'Task List'} />
+                </li>
+                <li>
+                  <ExternalLink link={project.bomLink!} description={'BOM'} />
+                </li>
+                <li>
+                  <ExternalLink link={project.gDriveLink!} description={'Google Drive'} />
+                </li>
               </div>
             </Col>
           </Row>

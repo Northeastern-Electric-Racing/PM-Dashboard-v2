@@ -15,8 +15,7 @@ interface PageBlockProps {
 /**
  * Custom component for a consistent page-building block.
  * @param title The title of the block on the page
- * @param headerRight The element to display on the right side of the header
- * @param body The body of the page block
+ * @param headerRight The optional element to display on the right side of the header
  */
 const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, children }) => {
   const theme = useTheme();

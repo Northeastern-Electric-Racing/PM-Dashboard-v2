@@ -3,19 +3,25 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './external-link.module.css';
 
 interface ExternalLinkProps {
+  icon: IconProp;
   link: string;
   description: string;
 }
 
 // Common component for all external links to open in new tab
-const ExternalLink: React.FC<ExternalLinkProps> = ({ link, description }) => {
+const ExternalLink: React.FC<ExternalLinkProps> = ({ icon, link, description }) => {
   return (
-    <a href={link} target="_blank" rel="noopener noreferrer">
-      {description}
-    </a>
+    <div key={description} className="d-flex flex-row align-items-center px-3">
+      <FontAwesomeIcon icon={icon} size="lg" className="pr-1" data-testid={'icon'} />
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        {description}
+      </a>
+    </div>
   );
 };
 

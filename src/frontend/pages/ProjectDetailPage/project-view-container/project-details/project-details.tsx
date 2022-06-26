@@ -3,6 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Col, Container, Row } from 'react-bootstrap';
+import {
+  faFilePowerpoint,
+  faFolderOpen,
+  faList,
+  faListOl
+} from '@fortawesome/free-solid-svg-icons';
 import { Project } from 'utils';
 import {
   datePipe,
@@ -13,10 +20,9 @@ import {
   wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
+import ExternalLink from '../../../../components/external-link/external-link';
 import PageBlock from '../../../../layouts/page-block/page-block';
 import styles from './project-details.module.css';
-import { Col, Container, Row } from 'react-bootstrap';
-import ExternalLink from '../../../../components/external-link/external-link';
 
 interface ProjectDetailsProps {
   project: Project;
@@ -81,16 +87,28 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
               <div className={styles.horizontal}>
                 <b>Links:</b>
                 <li>
-                  <ExternalLink link={project.slideDeckLink!} description={'Slide Deck'} />
+                  <ExternalLink
+                    icon={faFilePowerpoint}
+                    link={project.slideDeckLink!}
+                    description={'Slide Deck'}
+                  />
                 </li>
                 <li>
-                  <ExternalLink link={project.taskListLink!} description={'Task List'} />
+                  <ExternalLink
+                    icon={faList}
+                    link={project.taskListLink!}
+                    description={'Task List'}
+                  />
                 </li>
                 <li>
-                  <ExternalLink link={project.bomLink!} description={'BOM'} />
+                  <ExternalLink icon={faListOl} link={project.bomLink!} description={'BOM'} />
                 </li>
                 <li>
-                  <ExternalLink link={project.gDriveLink!} description={'Google Drive'} />
+                  <ExternalLink
+                    icon={faFolderOpen}
+                    link={project.gDriveLink!}
+                    description={'Google Drive'}
+                  />
                 </li>
               </div>
             </Col>

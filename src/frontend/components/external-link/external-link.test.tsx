@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { faScroll } from '@fortawesome/free-solid-svg-icons';
 import { render, screen, fireEvent } from '../../../test-support/test-utils';
 import ExternalLink from './external-link';
 
@@ -11,7 +12,7 @@ const TEST_LINK = 'github.com';
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
-  return render(<ExternalLink link={TEST_LINK} description={TEST_DESCRIPTION} />);
+  return render(<ExternalLink icon={faScroll} link={TEST_LINK} description={TEST_DESCRIPTION} />);
 };
 
 describe('external link', () => {
@@ -27,6 +28,11 @@ describe('external link', () => {
   it('is clickable', async () => {
     renderComponent();
     await fireEvent.click(screen.getByText(TEST_DESCRIPTION));
+  });
+
+  it('has icon', () => {
+    renderComponent();
+    expect(screen.getByTestId('icon')).toHaveAttribute('data-icon', 'scroll');
   });
 
   it('has correct href', () => {

@@ -22,7 +22,7 @@ import {
 } from '../../../../../shared/pipes';
 import ExternalLink from '../../../../components/external-link/external-link';
 import PageBlock from '../../../../layouts/page-block/page-block';
-import styles from './project-details.module.css';
+import './project-details.module.css';
 
 interface ProjectDetailsProps {
   project: Project;

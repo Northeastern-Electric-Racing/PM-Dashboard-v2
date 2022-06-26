@@ -34,7 +34,7 @@ export const booleanPipe = (bool: boolean): string => {
 };
 
 // Formats an array of objects into a string that is a list.
-export const listPipe = <T,>(array: T[], transform: (ele: T) => string): string => {
+export const listPipe = <T>(array: T[], transform: (ele: T) => string): string => {
   return array.map(transform).join(', ');
 };
 

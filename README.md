@@ -15,7 +15,7 @@ Start by understanding what the project is [all about](https://github.com/Northe
 Then go through either the [Mac onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Onboarding.md) or [Windows onboarding](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/OnboardingWindows.md) steps.
 And finally read through the [contributor guide](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ContributorGuide.md).
 
-If you're curious, check out the [deployment](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md) and the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ProductManagement.md) details too.
+If you're curious, check out the [deployment & production application documentation](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md) and the [product management](https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/ProductManagement.md) details too.
 
 ## Project Setup Checklist
 

@@ -4,10 +4,11 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Dropdown, Form } from 'react-bootstrap';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
-import { useTheme } from '../../../../services/theme.hooks';
+import PageBlock from '../../../layouts/page-block/page-block';
 import styles from './change-requests-filter.module.scss';
+
 interface FilterFieldStateProps {
   update: (
     type: string,
@@ -21,7 +22,6 @@ interface FilterFieldStateProps {
 const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   update
 }: FilterFieldStateProps) => {
-  const theme = useTheme();
   const [type, setType] = useState('');
   const [impact, setImpact] = useState<number[]>([]);
   const [reason, setReason] = useState('');
@@ -78,9 +78,10 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   };
 
   return (
-    <Card bg={theme.cardBg}>
-      <Card.Body>
-        <Card.Title>Filters</Card.Title>
+    <PageBlock
+      title="Filters"
+      headerRight={<></>}
+      body={
         <Form>
           <Form.Group>
             <Form.Label>Type</Form.Label>
@@ -163,8 +164,8 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
             Apply
           </Button>
         </Form>
-      </Card.Body>
-    </Card>
+      }
+    />
   );
 };
 

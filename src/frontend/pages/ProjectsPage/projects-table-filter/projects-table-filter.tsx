@@ -4,11 +4,11 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Dropdown, Form } from 'react-bootstrap';
-import styles from './projects-table-filter.module.scss';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
-import { useTheme } from '../../../../services/theme.hooks';
+import PageBlock from '../../../layouts/page-block/page-block';
+import styles from './projects-table-filter.module.scss';
 
 /**
  * Variables to filter table with.
@@ -37,7 +37,6 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   const [project_managerName, setProject_managerName] = useState('');
   const [project_managerID, setProject_managerID] = useState(-1);
   const [car_number, setCar_number] = useState(-1);
-  const theme = useTheme();
 
   /**
    * Programmatically generates dropdown menu items for state variables of type number.
@@ -147,9 +146,10 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   };
 
   return (
-    <Card bg={theme.cardBg}>
-      <Card.Body>
-        <Card.Title>Filters</Card.Title>
+    <PageBlock
+      title="Filters"
+      headerRight={<></>}
+      body={
         <Form>
           <Form.Group>
             <Form.Label>Car Number</Form.Label>
@@ -234,8 +234,8 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
             Apply
           </Button>
         </Form>
-      </Card.Body>
-    </Card>
+      }
+    />
   );
 };
 

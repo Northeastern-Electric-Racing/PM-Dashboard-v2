@@ -83,7 +83,8 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
         lastName: payload['family_name']!,
         googleAuthId: userId,
         email: payload['email']!,
-        emailId
+        emailId,
+        userSettings: { create: {} }
       }
     });
     user = createdUser;

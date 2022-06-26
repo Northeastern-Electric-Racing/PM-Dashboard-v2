@@ -30,10 +30,15 @@ The NER PM Dashboard is intended to assist NER’s Project Management Office (PM
 
 The NER PM Dashboard v1 was created in July of 2020 as a Google Apps Script web application attached to the database Google Sheet file.
 Major development took place during July and August prior to the start of the Fall 2020 semester.
-During Fall 2020, two developers make incremental improvements, and then in Spring 2020 a team of developers formed.
+During Fall 2020, two developers make incremental improvements, and then in Spring 2020 a team of developers was formed.
 
 The NER PM Dashboard v2 was hypothesized during the Fall 2020 semester as the v1 developers ran into platform and framework limitations.
-Research, planning, and project initiation for v2 began in Spring 2020.
+Research, planning, and project initiation for v2 began in Spring 2021.
+The end of Summer 2021 was selected as the initial launch deadline for v2, but was not met.
+In Fall 2021, the team of developers was formalized into NER's Software Solutions team and grew to 20+ members.
+January 18, 2022 was selected as the adjusted launch deadline for v2, but was yet again not met.
+In Spring 2022, the Software Solutions team grew to 70+ members.
+The application finally launched in May of 2022.
 
 ## Users
 

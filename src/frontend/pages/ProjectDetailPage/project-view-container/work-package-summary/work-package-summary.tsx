@@ -7,17 +7,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Collapse, Col, Container, Row } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import {
-  weeksPipe,
-  wbsPipe,
-  endDatePipe,
-  listPipe,
-  datePipe,
-  wbsStatusPipe
-} from '../../../../../shared/pipes';
-import { routes } from '../../../../../shared/routes';
-import styles from './work-package-summary.module.scss';
+import { weeksPipe, wbsPipe, endDatePipe, listPipe, datePipe } from '../../../../../shared/pipes';
 import { useTheme } from '../../../../../services/theme.hooks';
+import { routes } from '../../../../../shared/routes';
+import WbsStatus from '../../../../components/wbs-status/wbs-status';
+import styles from './work-package-summary.module.scss';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;
@@ -53,7 +47,7 @@ const WorkPackageSummary: React.FC<WorkPackageSummaryProps> = ({ workPackage }) 
             <Link to={`${routes.PROJECTS}/${wbsPipe(workPackage.wbsNum)}`}>{workPackage.name}</Link>
           </div>
           <div className={'d-flex'}>
-            <div className={'mr-3'}>{wbsStatusPipe(workPackage.status)}</div>
+            <div className={'mr-3'}>{<WbsStatus status={workPackage.status} />}</div>
             <div>{weeksPipe(workPackage.duration)}</div>
           </div>
         </div>

@@ -3,19 +3,20 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ReactNode } from 'react';
 import { Card } from 'react-bootstrap';
 import { useTheme } from '../../../services/theme.hooks';
 import styles from './page-block.module.css';
 
 interface PageBlockProps {
   title: string;
-  headerRight?: JSX.Element;
+  headerRight?: ReactNode;
 }
 
 /**
  * Custom component for a consistent page-building block.
  * @param title The title of the block on the page
- * @param headerRight The optional element to display on the right side of the header
+ * @param headerRight The optional stuff to display on the right side of the header
  */
 const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, children }) => {
   const theme = useTheme();

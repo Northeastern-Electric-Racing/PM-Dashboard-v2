@@ -10,7 +10,6 @@ import styles from './page-block.module.css';
 interface PageBlockProps {
   title: string;
   headerRight?: JSX.Element;
-  body: JSX.Element;
 }
 
 /**
@@ -19,7 +18,7 @@ interface PageBlockProps {
  * @param headerRight The element to display on the right side of the header
  * @param body The body of the page block
  */
-const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
+const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, children }) => {
   const theme = useTheme();
 
   return (
@@ -29,7 +28,7 @@ const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, body }) => {
           <h5 className={'float-left mb-0'}>{title}</h5>
           <div className={'float-right'}>{headerRight}</div>
         </Card.Title>
-        {body}
+        {children}
       </Card.Body>
     </Card>
   );

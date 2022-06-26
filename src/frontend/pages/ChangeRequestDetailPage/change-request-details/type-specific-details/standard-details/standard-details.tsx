@@ -15,60 +15,56 @@ interface StandardDetailsProps {
 const StandardDetails: React.FC<StandardDetailsProps> = ({ cr }: StandardDetailsProps) => {
   const spacer = 'mb-2';
   return (
-    <PageBlock
-      title={'Standard Change Request Details'}
-      headerRight={<></>}
-      body={
-        <Container fluid>
-          <Row className={spacer}>
-            <Col className={spacer} sm={3} md={2} lg={2} xl={1}>
-              <b>What</b>
-            </Col>
-            <Col className={spacer}>{cr.what}</Col>
-          </Row>
-          <Row className={spacer}>
-            <Col className={spacer} xs={4} sm={3} md={2} lg={2} xl={1}>
-              <b>Why</b>
-            </Col>
-            <Col>
-              {cr.why.map((ele: ChangeRequestExplanation, idx: number) => (
-                <Row key={idx}>
-                  <Col className={spacer} md={4} lg={3} xl={2}>
-                    <b>{ele.type}</b>
-                  </Col>
-                  <Col className={spacer}>{ele.explain}</Col>
-                </Row>
-              ))}
-            </Col>
-          </Row>
-          <Row className={spacer}>
-            <Col className={spacer} xs={4} sm={3} md={2} lg={2} xl={1}>
-              <b>Impact</b>
-            </Col>
-            <Col>
-              <Row>
-                <Col className={spacer} xs={7} sm={6} md={4} lg={3} xl={2}>
-                  <b>Budget Impact</b>
-                </Col>
-                <Col className={spacer}>{dollarsPipe(cr.budgetImpact)}</Col>
-              </Row>
-              <Row>
-                <Col className={spacer} xs={7} sm={6} md={4} lg={3} xl={2}>
-                  <b>Timeline Impact</b>
-                </Col>
-                <Col className={spacer}>{weeksPipe(cr.timelineImpact)}</Col>
-              </Row>
-              <Row>
+    <PageBlock title={'Standard Change Request Details'}>
+      <Container fluid>
+        <Row className={spacer}>
+          <Col className={spacer} sm={3} md={2} lg={2} xl={1}>
+            <b>What</b>
+          </Col>
+          <Col className={spacer}>{cr.what}</Col>
+        </Row>
+        <Row className={spacer}>
+          <Col className={spacer} xs={4} sm={3} md={2} lg={2} xl={1}>
+            <b>Why</b>
+          </Col>
+          <Col>
+            {cr.why.map((ele: ChangeRequestExplanation, idx: number) => (
+              <Row key={idx}>
                 <Col className={spacer} md={4} lg={3} xl={2}>
-                  <b>Scope Impact</b>
+                  <b>{ele.type}</b>
                 </Col>
-                <Col className={spacer}>{cr.scopeImpact}</Col>
+                <Col className={spacer}>{ele.explain}</Col>
               </Row>
-            </Col>
-          </Row>
-        </Container>
-      }
-    />
+            ))}
+          </Col>
+        </Row>
+        <Row className={spacer}>
+          <Col className={spacer} xs={4} sm={3} md={2} lg={2} xl={1}>
+            <b>Impact</b>
+          </Col>
+          <Col>
+            <Row>
+              <Col className={spacer} xs={7} sm={6} md={4} lg={3} xl={2}>
+                <b>Budget Impact</b>
+              </Col>
+              <Col className={spacer}>{dollarsPipe(cr.budgetImpact)}</Col>
+            </Row>
+            <Row>
+              <Col className={spacer} xs={7} sm={6} md={4} lg={3} xl={2}>
+                <b>Timeline Impact</b>
+              </Col>
+              <Col className={spacer}>{weeksPipe(cr.timelineImpact)}</Col>
+            </Row>
+            <Row>
+              <Col className={spacer} md={4} lg={3} xl={2}>
+                <b>Scope Impact</b>
+              </Col>
+              <Col className={spacer}>{cr.scopeImpact}</Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

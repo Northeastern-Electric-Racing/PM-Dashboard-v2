@@ -15,19 +15,13 @@ interface HorizontalListProps {
 // Page block component listing items horizontally with padding
 const HorizontalList: React.FC<HorizontalListProps> = ({ title, headerRight, items }) => {
   return (
-    <PageBlock
-      title={title}
-      headerRight={headerRight}
-      body={
-        <>
-          {items.map((ele, idx) => (
-            <div key={idx} className={styles.listItem}>
-              {ele}
-            </div>
-          ))}
-        </>
-      }
-    />
+    <PageBlock title={title} headerRight={headerRight}>
+      {items.map((ele, idx) => (
+        <div key={idx} className={styles.listItem}>
+          {ele}
+        </div>
+      ))}
+    </PageBlock>
   );
 };
 

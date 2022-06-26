@@ -21,7 +21,11 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
   if (ordered) {
     builtList = <ol className={styles.bulletList}>{listPrepared}</ol>;
   }
-  return <PageBlock title={title} headerRight={headerRight} body={builtList} />;
+  return (
+    <PageBlock title={title} headerRight={headerRight}>
+      {builtList}
+    </PageBlock>
+  );
 };
 
 export default BulletList;

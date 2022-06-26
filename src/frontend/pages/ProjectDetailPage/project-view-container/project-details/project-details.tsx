@@ -45,54 +45,50 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
 
   const allColsStyle = 'mb-2';
   return (
-    <PageBlock
-      title={'Project Details'}
-      headerRight={wbsStatusPipe(project.status)}
-      body={
-        <Container fluid>
-          <Row>
-            <Col className={allColsStyle} md={5} lg={4} xl={3}>
-              <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
-            </Col>
-            <Col className={allColsStyle} md={6} lg={4} xl={3}>
-              <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
-              <b>Duration:</b> {weeksPipe(project.duration)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
-              <b>Start Date:</b> {start}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
-              <b>End Date:</b> {end}
-            </Col>
-          </Row>
-          <Row>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
-              <b>Budget:</b> {dollarsPipe(project.budget)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
-              <b>Expected Progress:</b> {emDashPipe('')}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
-              <b>Timeline Status:</b> {emDashPipe('')}
-            </Col>
-            <Col className={allColsStyle} sm={12} md={8} lg={6} xl={4}>
-              <div className={styles.horizontal}>
-                <b>Links:</b>
-                <li>{linkPipe('Slide Deck', project.slideDeckLink!)}</li>
-                <li>{linkPipe('Task List', project.taskListLink!)}</li>
-                <li>{linkPipe('BOM', project.bomLink!)}</li>
-                <li>{linkPipe('Google Drive', project.gDriveLink!)}</li>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col></Col>
-          </Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Project Details'} headerRight={wbsStatusPipe(project.status)}>
+      <Container fluid>
+        <Row>
+          <Col className={allColsStyle} md={5} lg={4} xl={3}>
+            <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
+          </Col>
+          <Col className={allColsStyle} md={6} lg={4} xl={3}>
+            <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
+            <b>Duration:</b> {weeksPipe(project.duration)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
+            <b>Start Date:</b> {start}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
+            <b>End Date:</b> {end}
+          </Col>
+        </Row>
+        <Row>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+            <b>Budget:</b> {dollarsPipe(project.budget)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+            <b>Expected Progress:</b> {emDashPipe('')}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
+            <b>Timeline Status:</b> {emDashPipe('')}
+          </Col>
+          <Col className={allColsStyle} sm={12} md={8} lg={6} xl={4}>
+            <div className={styles.horizontal}>
+              <b>Links:</b>
+              <li>{linkPipe('Slide Deck', project.slideDeckLink!)}</li>
+              <li>{linkPipe('Task List', project.taskListLink!)}</li>
+              <li>{linkPipe('BOM', project.bomLink!)}</li>
+              <li>{linkPipe('Google Drive', project.gDriveLink!)}</li>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col></Col>
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

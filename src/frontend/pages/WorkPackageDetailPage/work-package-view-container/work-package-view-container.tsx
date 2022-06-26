@@ -88,7 +88,6 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
       <WorkPackageDetails workPackage={workPackage} />
       <HorizontalList
         title={'Dependencies'}
-        headerRight={<></>}
         items={workPackage.dependencies.map((dep) => (
           <strong>{wbsPipe(dep)}</strong>
         ))}

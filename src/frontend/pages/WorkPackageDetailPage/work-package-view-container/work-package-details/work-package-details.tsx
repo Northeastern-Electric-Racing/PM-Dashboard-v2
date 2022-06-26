@@ -22,42 +22,38 @@ interface WorkPackageDetailsProps {
 const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) => {
   const allColsStyle = 'mb-2';
   return (
-    <PageBlock
-      title={'Work Package Details'}
-      headerRight={wbsStatusPipe(workPackage.status)}
-      body={
-        <Container fluid>
-          <Row>
-            <Col className={allColsStyle} md={5} lg={4} xl={3}>
-              <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
-            </Col>
-            <Col className={allColsStyle} md={6} lg={4} xl={3}>
-              <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
-              <b>Duration:</b> {weeksPipe(workPackage.duration)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
-              <b>Start Date:</b> {datePipe(workPackage.startDate)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
-              <b>End Date:</b> {datePipe(workPackage.endDate)}
-            </Col>
-          </Row>
-          <Row>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
-              <b>Progress:</b> {percentPipe(workPackage.progress)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
-              <b>Expected Progress:</b> {percentPipe(workPackage.expectedProgress)}
-            </Col>
-            <Col className={allColsStyle} sm={5} md={4} lg={4} xl={3}>
-              <b>Timeline Status:</b> {workPackage.timelineStatus}
-            </Col>
-          </Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Work Package Details'} headerRight={wbsStatusPipe(workPackage.status)}>
+      <Container fluid>
+        <Row>
+          <Col className={allColsStyle} md={5} lg={4} xl={3}>
+            <b>Project Lead:</b> {fullNamePipe(workPackage.projectLead)}
+          </Col>
+          <Col className={allColsStyle} md={6} lg={4} xl={3}>
+            <b>Project Manager:</b> {fullNamePipe(workPackage.projectManager)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
+            <b>Duration:</b> {weeksPipe(workPackage.duration)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
+            <b>Start Date:</b> {datePipe(workPackage.startDate)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
+            <b>End Date:</b> {datePipe(workPackage.endDate)}
+          </Col>
+        </Row>
+        <Row>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+            <b>Progress:</b> {percentPipe(workPackage.progress)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+            <b>Expected Progress:</b> {percentPipe(workPackage.expectedProgress)}
+          </Col>
+          <Col className={allColsStyle} sm={5} md={4} lg={4} xl={3}>
+            <b>Timeline Status:</b> {workPackage.timelineStatus}
+          </Col>
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

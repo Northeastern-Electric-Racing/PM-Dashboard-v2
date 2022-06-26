@@ -18,54 +18,48 @@ const Settings: React.FC = () => {
       <Alert variant={'success'} show={showAlert}>
         Haha {auth.user?.firstName} bye bye!
       </Alert>
-      <PageBlock
-        title={'Organization Settings'}
-        body={
-          <Container fluid>
-            <Row>
-              <Col md={6} lg={4}>
-                <b>Name:</b> Northeastern Electric Racing
-              </Col>
-              <Col md={4} lg={2}>
-                <Form.Switch
-                  id="trick-switch"
-                  label="Trickster Mode"
-                  onClick={() => {
-                    setShowAlert(true);
-                    setTimeout(() => {
-                      auth.signout();
-                    }, 2000);
-                  }}
-                />
-              </Col>
-            </Row>
-          </Container>
-        }
-      />
-      <PageBlock
-        title="User Settings"
-        body={
-          <Container fluid>
-            <Row>
-              <Col md={4} lg={2}>
-                <b>First Name:</b> {auth.user?.firstName}
-              </Col>
-              <Col md={4} lg={2}>
-                <b>Last Name:</b> {auth.user?.lastName}
-              </Col>
-              <Col md={4} lg={3}>
-                <b>Email: </b> {auth.user?.email}
-              </Col>
-              <Col md={4} lg={2}>
-                <b>Email ID:</b> {auth.user?.emailId}
-              </Col>
-              <Col md={4} lg={2}>
-                <b>Role: </b> {auth.user?.role}
-              </Col>
-            </Row>
-          </Container>
-        }
-      />
+      <PageBlock title={'Organization Settings'}>
+        <Container fluid>
+          <Row>
+            <Col md={6} lg={4}>
+              <b>Name:</b> Northeastern Electric Racing
+            </Col>
+            <Col md={4} lg={2}>
+              <Form.Switch
+                id="trick-switch"
+                label="Trickster Mode"
+                onClick={() => {
+                  setShowAlert(true);
+                  setTimeout(() => {
+                    auth.signout();
+                  }, 2000);
+                }}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </PageBlock>
+      <PageBlock title="User Settings">
+        <Container fluid>
+          <Row>
+            <Col md={4} lg={2}>
+              <b>First Name:</b> {auth.user?.firstName}
+            </Col>
+            <Col md={4} lg={2}>
+              <b>Last Name:</b> {auth.user?.lastName}
+            </Col>
+            <Col md={4} lg={3}>
+              <b>Email: </b> {auth.user?.email}
+            </Col>
+            <Col md={4} lg={2}>
+              <b>Email ID:</b> {auth.user?.emailId}
+            </Col>
+            <Col md={4} lg={2}>
+              <b>Role: </b> {auth.user?.role}
+            </Col>
+          </Row>
+        </Container>
+      </PageBlock>
     </Container>
   );
 };

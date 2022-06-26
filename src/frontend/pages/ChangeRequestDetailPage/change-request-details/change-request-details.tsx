@@ -95,36 +95,35 @@ const ChangeRequestDetails: React.FC<ChangeRequestDetailsProps> = ({
       <PageBlock
         title={'Change Request Details'}
         headerRight={<b>{convertStatus(changeRequest)}</b>}
-        body={
-          <Container fluid>
-            <Row>
-              <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
-                <b>Type</b>
-              </Col>
-              <Col className={spacer}>{changeRequest.type}</Col>
-            </Row>
-            <Row>
-              <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
-                <b>WBS #</b>
-              </Col>
-              <Col className={spacer}>
-                <Link to={`${routes.PROJECTS}/${wbsPipe(changeRequest.wbsNum)}`}>
-                  {wbsPipe(changeRequest.wbsNum)}
-                </Link>
-              </Col>
-            </Row>
-            <Row>
-              <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
-                <b>Submitted By</b>
-              </Col>
-              <Col className={spacer} xs={5} sm={5} md={4} lg={3} xl={2}>
-                {fullNamePipe(changeRequest.submitter)}
-              </Col>
-              <Col className={spacer}>{datePipe(changeRequest.dateSubmitted)}</Col>
-            </Row>
-          </Container>
-        }
-      />
+      >
+        <Container fluid>
+          <Row>
+            <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
+              <b>Type</b>
+            </Col>
+            <Col className={spacer}>{changeRequest.type}</Col>
+          </Row>
+          <Row>
+            <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
+              <b>WBS #</b>
+            </Col>
+            <Col className={spacer}>
+              <Link to={`${routes.PROJECTS}/${wbsPipe(changeRequest.wbsNum)}`}>
+                {wbsPipe(changeRequest.wbsNum)}
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col className={spacer} xs={4} sm={4} md={3} lg={2} xl={2}>
+              <b>Submitted By</b>
+            </Col>
+            <Col className={spacer} xs={5} sm={5} md={4} lg={3} xl={2}>
+              {fullNamePipe(changeRequest.submitter)}
+            </Col>
+            <Col className={spacer}>{datePipe(changeRequest.dateSubmitted)}</Col>
+          </Row>
+        </Container>
+      </PageBlock>
       {buildDetails(changeRequest)}
       <ReviewNotes
         reviewer={changeRequest.reviewer}

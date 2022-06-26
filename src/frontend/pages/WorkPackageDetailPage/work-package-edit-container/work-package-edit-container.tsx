@@ -203,28 +203,22 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
           setters={setters}
         />
         <DependenciesList dependencies={workPackage.dependencies} setter={setDeps} />
-        <PageBlock
-          title="Expected Activities"
-          body={
-            <EditableTextInputList
-              items={ea.map((ea) => ea.detail)}
-              add={expectedActivitiesUtil.add}
-              remove={expectedActivitiesUtil.remove}
-              update={expectedActivitiesUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Deliverables'}
-          body={
-            <EditableTextInputList
-              items={dels.map((d) => d.detail)}
-              add={deliverablesUtil.add}
-              remove={deliverablesUtil.remove}
-              update={deliverablesUtil.update}
-            />
-          }
-        />
+        <PageBlock title="Expected Activities">
+          <EditableTextInputList
+            items={ea.map((ea) => ea.detail)}
+            add={expectedActivitiesUtil.add}
+            remove={expectedActivitiesUtil.remove}
+            update={expectedActivitiesUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Deliverables'}>
+          <EditableTextInputList
+            items={dels.map((d) => d.detail)}
+            add={deliverablesUtil.add}
+            remove={deliverablesUtil.remove}
+            update={deliverablesUtil.update}
+          />
+        </PageBlock>
         <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
     </Container>

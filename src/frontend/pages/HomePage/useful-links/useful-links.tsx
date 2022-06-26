@@ -54,14 +54,11 @@ const UsefulLinks: React.FC = () => {
   ];
 
   return (
-    <PageBlock
-      title={'Useful Links'}
-      body={
-        <Container fluid>
-          <Row>{links}</Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Useful Links'}>
+      <Container fluid>
+        <Row>{links}</Row>
+      </Container>
+    </PageBlock>
   );
 };
 

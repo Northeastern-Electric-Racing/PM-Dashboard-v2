@@ -18,7 +18,9 @@ const mockHook = () => {
 
 const renderComponent = (headerRight = false) => {
   return render(
-    <PageBlock title={'test'} headerRight={headerRight ? <p>hi</p> : undefined} body={<>hello</>} />
+    <PageBlock title={'test'} headerRight={headerRight ? <p>hi</p> : undefined}>
+      hello
+    </PageBlock>
   );
 };
 
@@ -41,7 +43,7 @@ describe('card component', () => {
     expect(screen.getByText('hi')).toBeInTheDocument();
   });
 
-  it('renders body', () => {
+  it('renders children', () => {
     renderComponent();
 
     expect(screen.getByText('hello')).toBeInTheDocument();

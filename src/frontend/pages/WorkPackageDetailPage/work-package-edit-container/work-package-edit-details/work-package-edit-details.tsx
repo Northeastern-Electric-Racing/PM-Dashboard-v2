@@ -126,76 +126,72 @@ const WorkPackageEditDetails: React.FC<Props> = ({ workPackage, users, setters }
   };
 
   return (
-    <PageBlock
-      title={'Work Package Details'}
-      headerRight={<b>{statusSelect}</b>}
-      body={
-        <Container fluid>
-          <Row>
-            <Col>
-              {editDetailsInputBuilder(
-                'Work Package Name:',
-                'text',
-                workPackage.name,
-                setters.setName
-              )}
-            </Col>
-            <Col md={3} lg={2} xl={2}>
-              {editDetailsInputBuilder(
-                'Start Date:',
-                'date',
-                transformDate(workPackage.startDate),
-                (val) => setters.setStartDate(new Date(val.replace(/-/g, '/'))) // must use / for date format to prevent day being behind by 1
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <Col md={4}>
-              {buildUsersSelect('Project Lead:', workPackage.projectLead, setters.setProjectLead)}
-            </Col>
-            <Col md={4}>
-              {buildUsersSelect(
-                'Project Manager:',
-                workPackage.projectManager,
-                setters.setProjectManager
-              )}
-            </Col>
-            <Col md={4} lg={2} xl={2}>
-              {editDetailsInputBuilder(
-                'Duration:',
-                'number',
-                workPackage.duration,
-                (val) => setters.setDuration(parseInt(val.trim())),
-                '',
-                'weeks'
-              )}
-            </Col>
-            <Col sm={3} md={2} lg={2} xl={2}>
-              <Form.Group>
-                <Form.Label>Progress:</Form.Label>
-                <Form.Control
-                  as="select"
-                  onChange={(e) => setters.setProgress(parseInt(e.target.value.trim()))}
-                  custom
-                >
-                  <option key={workPackage.progress} value={workPackage.progress}>
-                    {percentPipe(workPackage.progress)}
-                  </option>
-                  {[0, 25, 50, 75, 100]
-                    .filter((p) => p !== workPackage.progress)
-                    .map((progress, index) => (
-                      <option key={progress} value={progress}>
-                        {percentPipe(progress)}
-                      </option>
-                    ))}
-                </Form.Control>
-                <Form.Text>Expected: {percentPipe(workPackage.expectedProgress)}</Form.Text>
-              </Form.Group>
-            </Col>
-          </Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Work Package Details'} headerRight={<b>{statusSelect}</b>}>
+      <Container fluid>
+        <Row>
+          <Col>
+            {editDetailsInputBuilder(
+              'Work Package Name:',
+              'text',
+              workPackage.name,
+              setters.setName
+            )}
+          </Col>
+          <Col md={3} lg={2} xl={2}>
+            {editDetailsInputBuilder(
+              'Start Date:',
+              'date',
+              transformDate(workPackage.startDate),
+              (val) => setters.setStartDate(new Date(val.replace(/-/g, '/'))) // must use / for date format to prevent day being behind by 1
+            )}
+          </Col>
+        </Row>
+        <Row>
+          <Col md={4}>
+            {buildUsersSelect('Project Lead:', workPackage.projectLead, setters.setProjectLead)}
+          </Col>
+          <Col md={4}>
+            {buildUsersSelect(
+              'Project Manager:',
+              workPackage.projectManager,
+              setters.setProjectManager
+            )}
+          </Col>
+          <Col md={4} lg={2} xl={2}>
+            {editDetailsInputBuilder(
+              'Duration:',
+              'number',
+              workPackage.duration,
+              (val) => setters.setDuration(parseInt(val.trim())),
+              '',
+              'weeks'
+            )}
+          </Col>
+          <Col sm={3} md={2} lg={2} xl={2}>
+            <Form.Group>
+              <Form.Label>Progress:</Form.Label>
+              <Form.Control
+                as="select"
+                onChange={(e) => setters.setProgress(parseInt(e.target.value.trim()))}
+                custom
+              >
+                <option key={workPackage.progress} value={workPackage.progress}>
+                  {percentPipe(workPackage.progress)}
+                </option>
+                {[0, 25, 50, 75, 100]
+                  .filter((p) => p !== workPackage.progress)
+                  .map((progress, index) => (
+                    <option key={progress} value={progress}>
+                      {percentPipe(progress)}
+                    </option>
+                  ))}
+              </Form.Control>
+              <Form.Text>Expected: {percentPipe(workPackage.expectedProgress)}</Form.Text>
+            </Form.Group>
+          </Col>
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

@@ -10,6 +10,7 @@ import { WbsNumber } from 'utils';
  * Pipes:
  *
  * Data transformation functions designed to abstract view-based adjustments.
+ * Only string-based stuff basically.
  * Pipe is a term / tool from Angular.
  */
 

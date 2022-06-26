@@ -5,13 +5,8 @@
 
 import { Col, Container, Row } from 'react-bootstrap';
 import { WorkPackage } from 'utils';
-import {
-  percentPipe,
-  fullNamePipe,
-  datePipe,
-  wbsStatusPipe,
-  weeksPipe
-} from '../../../../../shared/pipes';
+import { percentPipe, fullNamePipe, datePipe, weeksPipe } from '../../../../../shared/pipes';
+import WbsStatus from '../../../../components/wbs-status/wbs-status';
 import PageBlock from '../../../../layouts/page-block/page-block';
 import './work-package-details.module.css';
 
@@ -24,7 +19,7 @@ const WorkPackageDetails: React.FC<WorkPackageDetailsProps> = ({ workPackage }) 
   return (
     <PageBlock
       title={'Work Package Details'}
-      headerRight={wbsStatusPipe(workPackage.status)}
+      headerRight={<WbsStatus status={workPackage.status} />}
       body={
         <Container fluid>
           <Row>

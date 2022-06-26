@@ -3,6 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { Col, Container, Row } from 'react-bootstrap';
+import {
+  faFilePowerpoint,
+  faFolderOpen,
+  faList,
+  faListOl
+} from '@fortawesome/free-solid-svg-icons';
 import { Project } from 'utils';
 import {
   datePipe,
@@ -10,13 +17,12 @@ import {
   emDashPipe,
   endDatePipe,
   fullNamePipe,
-  linkPipe,
-  wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
+import ExternalLink from '../../../../components/external-link/external-link';
+import WbsStatus from '../../../../components/wbs-status/wbs-status';
 import PageBlock from '../../../../layouts/page-block/page-block';
-import styles from './project-details.module.css';
-import { Col, Container, Row } from 'react-bootstrap';
+import './project-details.module.css';
 
 interface ProjectDetailsProps {
   project: Project;
@@ -47,7 +53,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
   return (
     <PageBlock
       title={'Project Details'}
-      headerRight={wbsStatusPipe(project.status)}
+      headerRight={<WbsStatus status={project.status} />}
       body={
         <Container fluid>
           <Row>
@@ -77,18 +83,21 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
             <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
               <b>Timeline Status:</b> {emDashPipe('')}
             </Col>
-            <Col className={allColsStyle} sm={12} md={8} lg={6} xl={4}>
-              <div className={styles.horizontal}>
-                <b>Links:</b>
-                <li>{linkPipe('Slide Deck', project.slideDeckLink!)}</li>
-                <li>{linkPipe('Task List', project.taskListLink!)}</li>
-                <li>{linkPipe('BOM', project.bomLink!)}</li>
-                <li>{linkPipe('Google Drive', project.gDriveLink!)}</li>
-              </div>
-            </Col>
           </Row>
-          <Row>
-            <Col></Col>
+          <Row className={`${allColsStyle} pl-3`}>
+            <b>Links:</b>
+            <ExternalLink
+              icon={faFilePowerpoint}
+              link={project.slideDeckLink!}
+              description={'Slide Deck'}
+            />
+            <ExternalLink icon={faList} link={project.taskListLink!} description={'Task List'} />
+            <ExternalLink icon={faListOl} link={project.bomLink!} description={'BOM'} />
+            <ExternalLink
+              icon={faFolderOpen}
+              link={project.gDriveLink!}
+              description={'Google Drive'}
+            />
           </Row>
         </Container>
       }

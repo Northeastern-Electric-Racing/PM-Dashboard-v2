@@ -17,10 +17,10 @@ import {
   emDashPipe,
   endDatePipe,
   fullNamePipe,
-  wbsStatusPipe,
   weeksPipe
 } from '../../../../../shared/pipes';
 import ExternalLink from '../../../../components/external-link/external-link';
+import WbsStatus from '../../../../components/wbs-status/wbs-status';
 import PageBlock from '../../../../layouts/page-block/page-block';
 import './project-details.module.css';
 
@@ -53,7 +53,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
   return (
     <PageBlock
       title={'Project Details'}
-      headerRight={wbsStatusPipe(project.status)}
+      headerRight={<WbsStatus status={project.status} />}
       body={
         <Container fluid>
           <Row>

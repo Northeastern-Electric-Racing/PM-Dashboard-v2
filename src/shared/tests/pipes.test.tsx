@@ -12,8 +12,7 @@ import {
   endDatePipe,
   listPipe,
   wbsPipe,
-  fullNamePipe,
-  wbsStatusPipe
+  fullNamePipe
 } from '../pipes';
 import {
   exampleWorkPackage1,
@@ -46,8 +45,7 @@ import {
   exampleWbsWorkPackage1,
   exampleWbsWorkPackage2
 } from '../../test-support/test-data/wbs-numbers.stub';
-import { WbsElementStatus, WbsNumber } from 'utils';
-import { Badge } from 'react-bootstrap';
+import { WbsNumber } from 'utils';
 
 describe('Formatting lists tests', () => {
   test('Formatting Wbs Numbers', () => {
@@ -227,34 +225,5 @@ describe('Formatting Full Names', () => {
     expect(fullNamePipe(exampleLeadershipUser)).toBe('Joe Blow');
     expect(fullNamePipe(exampleProjectManagerUser)).toBe('Rachel Barmatha');
     expect(fullNamePipe(exampleProjectLeadUser)).toBe('Amy Smith');
-  });
-});
-
-describe('Formatting WBS Status', () => {
-  test('with dummy data', () => {
-    const active = (
-      <b>
-        <Badge pill variant="primary">
-          Active
-        </Badge>
-      </b>
-    );
-    const inactive = (
-      <b>
-        <Badge pill variant="secondary">
-          Inactive
-        </Badge>
-      </b>
-    );
-    const complete = (
-      <b>
-        <Badge pill variant="success">
-          Complete
-        </Badge>
-      </b>
-    );
-    expect(wbsStatusPipe(WbsElementStatus.Active)).toStrictEqual(active);
-    expect(wbsStatusPipe(WbsElementStatus.Inactive)).toStrictEqual(inactive);
-    expect(wbsStatusPipe(WbsElementStatus.Complete)).toStrictEqual(complete);
   });
 });

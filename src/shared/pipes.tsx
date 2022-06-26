@@ -4,8 +4,7 @@
  */
 
 import { User } from '@prisma/client';
-import { WbsElementStatus, WbsNumber } from 'utils';
-import { Badge } from 'react-bootstrap';
+import { WbsNumber } from 'utils';
 
 /**
  * Pipes:
@@ -67,38 +66,4 @@ export const datePipe = (date: Date): string => {
 // returns a given number as a string with a percent sign
 export const percentPipe = (percent: number): string => {
   return `${percent}%`;
-};
-
-/**
- * Returns a colored chip in the form of a bootstrap pill badge.
- * @param {WbsElementStatus} status
- * @returns {JSX.Element}
- */
-export const wbsStatusPipe = (status: WbsElementStatus): JSX.Element => {
-  let color: string;
-  let text: string;
-  switch (status) {
-    case WbsElementStatus.Active: {
-      color = 'primary';
-      text = 'Active';
-      break;
-    }
-    case WbsElementStatus.Inactive: {
-      color = 'secondary';
-      text = 'Inactive';
-      break;
-    }
-    default: {
-      color = 'success';
-      text = 'Complete';
-      break;
-    }
-  }
-  return (
-    <b>
-      <Badge pill variant={color}>
-        {text}
-      </Badge>
-    </b>
-  );
 };

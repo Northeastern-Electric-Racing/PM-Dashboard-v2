@@ -7,6 +7,11 @@ import { PrismaClient, Role } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+/**
+ * This file is purely used for DevOps and database management.
+ * @see {@link https://github.com/Northeastern-Electric-Racing/PM-Dashboard-v2/blob/main/docs/Deployment.md docs/Deployment.md} for details
+ */
+
 /** Execute all given prisma database interaction scripts written in this function */
 const executeScripts = async () => {
   await setUserRole(8, Role.MEMBER);

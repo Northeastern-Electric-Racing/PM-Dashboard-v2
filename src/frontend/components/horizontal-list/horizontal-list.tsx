@@ -8,7 +8,7 @@ import styles from './horizontal-list.module.css';
 
 interface HorizontalListProps {
   title: string;
-  headerRight: JSX.Element;
+  headerRight?: JSX.Element;
   items: JSX.Element[];
 }
 

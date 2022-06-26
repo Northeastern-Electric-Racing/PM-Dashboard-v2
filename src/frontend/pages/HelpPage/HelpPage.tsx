@@ -15,7 +15,6 @@ const HelpPage: React.FC = () => {
       <PageTitle title="Help" previousPages={[]} />
       <PageBlock
         title="Resources"
-        headerRight={<></>}
         body={
           <Container fluid>
             <Row className="pb-2">Check out these helpful resources:</Row>
@@ -34,7 +33,6 @@ const HelpPage: React.FC = () => {
       />
       <PageBlock
         title="Support"
-        headerRight={<></>}
         body={
           <Container fluid>
             <Row className="pb-2">

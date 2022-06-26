@@ -9,7 +9,7 @@ import styles from './page-block.module.css';
 
 interface PageBlockProps {
   title: string;
-  headerRight: JSX.Element;
+  headerRight?: JSX.Element;
   body: JSX.Element;
 }
 

@@ -148,7 +148,6 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   return (
     <PageBlock
       title="Filters"
-      headerRight={<></>}
       body={
         <Form>
           <Form.Group>

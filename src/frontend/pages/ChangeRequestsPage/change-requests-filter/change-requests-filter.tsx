@@ -80,7 +80,6 @@ const ChangeRequestsFilter: React.FC<FilterFieldStateProps> = ({
   return (
     <PageBlock
       title="Filters"
-      headerRight={<></>}
       body={
         <Form>
           <Form.Group>

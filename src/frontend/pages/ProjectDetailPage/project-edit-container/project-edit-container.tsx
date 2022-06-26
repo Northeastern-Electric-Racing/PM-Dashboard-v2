@@ -245,7 +245,6 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         <ProjectEditSummary project={proj} updateSummary={setSummary} />
         <PageBlock
           title={'Goals'}
-          headerRight={<></>}
           body={
             <EditableTextInputList
               items={goals.map((goal) => goal.detail)}
@@ -257,7 +256,6 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         />
         <PageBlock
           title={'Features'}
-          headerRight={<></>}
           body={
             <EditableTextInputList
               items={features.map((feature) => feature.detail)}
@@ -269,7 +267,6 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         />
         <PageBlock
           title={'Other Constraints'}
-          headerRight={<></>}
           body={
             <EditableTextInputList
               items={otherConstraints.map((other) => other.detail)}
@@ -281,7 +278,6 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         />
         <PageBlock
           title={'Rules'}
-          headerRight={<></>}
           body={
             <EditableTextInputList
               items={rules}
@@ -294,7 +290,6 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
         <ChangesList changes={proj.changes} />
         <PageBlock
           title={'Work Packages'}
-          headerRight={<></>}
           body={
             <>
               {proj.workPackages.map((ele: WorkPackage) => (

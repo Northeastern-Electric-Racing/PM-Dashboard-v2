@@ -83,7 +83,6 @@ const CreateChangeRequestsView: React.FC<CreateChangeRequestViewProps> = ({ wbsN
       />
       <PageBlock
         title={''}
-        headerRight={<></>}
         body={
           <Form id={'create-standard-change-request-form'} onSubmit={handleSubmit(onSubmit)}>
             <Row className="mx-2 justify-content-start">

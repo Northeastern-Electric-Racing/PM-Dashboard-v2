@@ -205,7 +205,6 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
         <DependenciesList dependencies={workPackage.dependencies} setter={setDeps} />
         <PageBlock
           title="Expected Activities"
-          headerRight={<></>}
           body={
             <EditableTextInputList
               items={ea.map((ea) => ea.detail)}
@@ -217,7 +216,6 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
         />
         <PageBlock
           title={'Deliverables'}
-          headerRight={<></>}
           body={
             <EditableTextInputList
               items={dels.map((d) => d.detail)}

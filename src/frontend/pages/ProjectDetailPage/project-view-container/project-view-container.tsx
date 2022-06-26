@@ -58,7 +58,7 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
         actionButton={projectActionsDropdown}
       />
       <ProjectDetails project={proj} />
-      <PageBlock title={'Summary'} headerRight={<></>} body={<>{proj.summary}</>} />
+      <PageBlock title={'Summary'} body={<>{proj.summary}</>} />
       <ProjectGantt workPackages={proj.workPackages} />
       <DescriptionList title={'Goals'} items={proj.goals.filter((goal) => !goal.dateDeleted)} />
       <DescriptionList
@@ -73,7 +73,6 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
       <ChangesList changes={proj.changes} />
       <PageBlock
         title={'Work Packages'}
-        headerRight={<></>}
         body={
           <>
             {proj.workPackages.map((ele: WorkPackage) => (

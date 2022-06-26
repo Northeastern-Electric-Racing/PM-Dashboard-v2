@@ -17,7 +17,6 @@ const ActivationDetails: React.FC<ActivationDetailsProps> = ({ cr }) => {
   return (
     <PageBlock
       title={'Activation Change Request Details'}
-      headerRight={<></>}
       body={
         <Container fluid>
           <Row>

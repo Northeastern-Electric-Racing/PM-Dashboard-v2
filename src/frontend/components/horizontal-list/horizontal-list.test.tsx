@@ -20,15 +20,23 @@ describe('Horizontal List Component', () => {
   beforeEach(() => mockHook());
 
   it('renders the title', () => {
-    render(<HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />);
+    render(<HorizontalList title={'test'} items={[<>one</>, <>two</>]} />);
 
     expect(screen.getByText('test')).toBeInTheDocument();
   });
 
   it('renders all the listed items', () => {
-    render(<HorizontalList title={'test'} headerRight={<></>} items={[<>one</>, <>two</>]} />);
+    render(<HorizontalList title={'test'} items={[<>one</>, <>two</>]} />);
 
     expect(screen.getByText('one')).toBeInTheDocument();
+    expect(screen.getByText('two')).toBeInTheDocument();
+  });
+
+  it('renders all the listed items with header right', () => {
+    render(<HorizontalList title={'test'} headerRight={<p>hi</p>} items={[<>oh</>, <>two</>]} />);
+
+    expect(screen.getByText('hi')).toBeInTheDocument();
+    expect(screen.getByText('oh')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();
   });
 });

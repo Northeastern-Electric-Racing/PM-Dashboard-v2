@@ -17,7 +17,6 @@ const StageGateDetails: React.FC<StageGateDetailsProps> = ({ cr }) => {
   return (
     <PageBlock
       title={'Stage Gate Change Request Details'}
-      headerRight={<></>}
       body={
         <Container fluid>
           <Row>

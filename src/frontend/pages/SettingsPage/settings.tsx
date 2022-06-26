@@ -20,7 +20,6 @@ const Settings: React.FC = () => {
       </Alert>
       <PageBlock
         title={'Organization Settings'}
-        headerRight={<></>}
         body={
           <Container fluid>
             <Row>
@@ -45,7 +44,6 @@ const Settings: React.FC = () => {
       />
       <PageBlock
         title="User Settings"
-        headerRight={<></>}
         body={
           <Container fluid>
             <Row>

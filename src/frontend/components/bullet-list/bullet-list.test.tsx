@@ -20,22 +20,31 @@ describe('Bullet List Component', () => {
   beforeEach(() => mockHook());
 
   it('renders the component title', () => {
-    render(<BulletList title={'test'} headerRight={<></>} list={[<></>]} />);
+    render(<BulletList title={'test'} list={[<></>]} />);
 
     expect(screen.getByText('test')).toBeInTheDocument();
   });
 
   it('renders all bullets', () => {
-    render(<BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} />);
+    render(<BulletList title={'test'} list={[<>one</>, <>two</>]} />);
 
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();
   });
 
   it('renders ordered list', () => {
-    render(<BulletList title={'test'} headerRight={<></>} list={[<>one</>, <>two</>]} ordered />);
+    render(<BulletList title={'test'} list={[<>one</>, <>two</>]} ordered />);
 
     expect(screen.getByText('one')).toBeInTheDocument();
     expect(screen.getByText('two')).toBeInTheDocument();
+  });
+
+  it('renders ordered list with header right', () => {
+    render(<BulletList title={'te'} headerRight={<p>hi</p>} list={[<>one</>, <>oh</>]} ordered />);
+
+    expect(screen.getByText('te')).toBeInTheDocument();
+    expect(screen.getByText('one')).toBeInTheDocument();
+    expect(screen.getByText('oh')).toBeInTheDocument();
+    expect(screen.getByText('hi')).toBeInTheDocument();
   });
 });

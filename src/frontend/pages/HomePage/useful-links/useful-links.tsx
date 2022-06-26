@@ -56,7 +56,6 @@ const UsefulLinks: React.FC = () => {
   return (
     <PageBlock
       title={'Useful Links'}
-      headerRight={<></>}
       body={
         <Container fluid>
           <Row>{links}</Row>

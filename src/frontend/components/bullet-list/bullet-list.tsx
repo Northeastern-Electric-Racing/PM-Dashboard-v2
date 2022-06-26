@@ -8,7 +8,7 @@ import styles from './bullet-list.module.css';
 
 interface BulletListProps {
   title: string;
-  headerRight: JSX.Element;
+  headerRight?: JSX.Element;
   list: JSX.Element[];
   ordered?: boolean;
   readOnly?: boolean;

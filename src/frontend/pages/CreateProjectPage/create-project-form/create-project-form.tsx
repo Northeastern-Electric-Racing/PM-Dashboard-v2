@@ -26,7 +26,6 @@ const CreateProjectFormView: React.FC<CreateProjectFormViewProps> = ({
     <>
       <PageBlock
         title={'Create New Project'}
-        headerRight={<></>}
         body={
           <div>
             <Form onSubmit={onSubmit}>

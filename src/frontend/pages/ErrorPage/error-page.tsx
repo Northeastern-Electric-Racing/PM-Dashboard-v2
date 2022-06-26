@@ -22,7 +22,6 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ message, error }) => {
       {error ? (
         <PageBlock
           title={'Debugging Info: '}
-          headerRight={<></>}
           body={<Container>{JSON.stringify(error, Object.getOwnPropertyNames(error))}</Container>}
         />
       ) : null}

@@ -3,10 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render } from '@testing-library/react';
+import { render } from '../../../test-support/test-utils';
 import { useTheme } from '../../../services/theme.hooks';
-import themes from '../../../shared/themes';
 import { Theme } from '../../../shared/types';
+import themes from '../../../shared/themes';
 import PageBlock from './page-block';
 
 jest.mock('../../../services/theme.hooks');
@@ -17,7 +17,7 @@ const mockHook = () => {
 };
 
 const renderComponent = () => {
-  return render(<PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />);
+  return render(<PageBlock title={'test'} headerRight={<p>hi</p>} body={<>hello</>} />);
 };
 
 describe('card component', () => {

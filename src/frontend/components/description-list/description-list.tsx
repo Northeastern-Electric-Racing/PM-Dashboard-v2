@@ -16,7 +16,6 @@ const DescriptionList: React.FC<DescriptionListProps> = ({ title, items }) => {
   return (
     <BulletList
       title={title}
-      headerRight={<></>}
       list={items.map((b) => (
         <>{b.detail}</>
       ))}

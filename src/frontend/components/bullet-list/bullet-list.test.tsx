@@ -40,7 +40,7 @@ describe('Bullet List Component', () => {
   });
 
   it('renders ordered list with header right', () => {
-    render(<BulletList title={'te'} headerRight={<p>hi</p>} list={[<>one</>, <>oh</>]} ordered />);
+    render(<BulletList title={'te'} headerRight={'hi'} list={['one', 'oh']} ordered />);
 
     expect(screen.getByText('te')).toBeInTheDocument();
     expect(screen.getByText('one')).toBeInTheDocument();

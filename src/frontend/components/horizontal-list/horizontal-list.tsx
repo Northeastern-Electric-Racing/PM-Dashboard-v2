@@ -3,13 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ReactNode } from 'react';
 import PageBlock from '../../layouts/page-block/page-block';
 import styles from './horizontal-list.module.css';
 
 interface HorizontalListProps {
   title: string;
-  headerRight?: JSX.Element;
-  items: JSX.Element[];
+  headerRight?: ReactNode;
+  items: ReactNode[];
 }
 
 // Page block component listing items horizontally with padding

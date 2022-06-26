@@ -4,10 +4,10 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import HorizontalList from './horizontal-list';
 import { useTheme } from '../../../services/theme.hooks';
 import { Theme } from '../../../shared/types';
 import themes from '../../../shared/themes';
+import HorizontalList from './horizontal-list';
 
 jest.mock('../../../services/theme.hooks');
 const mockTheme = useTheme as jest.Mock<Theme>;
@@ -33,7 +33,7 @@ describe('Horizontal List Component', () => {
   });
 
   it('renders all the listed items with header right', () => {
-    render(<HorizontalList title={'test'} headerRight={<p>hi</p>} items={[<>oh</>, <>two</>]} />);
+    render(<HorizontalList title={'test'} headerRight={'hi'} items={['oh', 'two']} />);
 
     expect(screen.getByText('hi')).toBeInTheDocument();
     expect(screen.getByText('oh')).toBeInTheDocument();

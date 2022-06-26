@@ -3,12 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactElement } from 'react';
 import { User } from '@prisma/client';
 import { WbsElementStatus, WbsNumber } from 'utils';
 import { Badge } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 /**
  * Pipes:
@@ -16,23 +13,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
  * Data transformation functions designed to abstract view-based adjustments.
  * Pipe is a term / tool from Angular.
  */
-
-export const linkPipe = (description: string, link: string): ReactElement => {
-  return (
-    <a href={link} target="_blank" rel="noopener noreferrer">
-      {description}
-    </a>
-  );
-};
-
-export const iconLinkPipe = (icon: IconProp, description: string, link: string) => {
-  return (
-    <div key={description} className="d-flex flex-row align-items-center px-3">
-      <FontAwesomeIcon icon={icon} size="lg" className="pr-1" />
-      {linkPipe(description, link)}
-    </div>
-  );
-};
 
 export const weeksPipe = (weeks: number): string => {
   return `${weeks} week${weeks === 1 ? '' : 's'}`;

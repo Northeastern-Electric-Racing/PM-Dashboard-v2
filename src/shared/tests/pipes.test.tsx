@@ -7,7 +7,6 @@ import {
   booleanPipe,
   dollarsPipe,
   emDashPipe,
-  linkPipe,
   weeksPipe,
   datePipe,
   endDatePipe,
@@ -101,31 +100,6 @@ describe('Formatting End Date Tests', () => {
     expect(endDatePipe(new Date('12/25/20'), 3)).toBe('01/15/2021');
     expect(endDatePipe(new Date('1/3/21'), 3)).toBe('01/24/2021');
     expect(endDatePipe(new Date('3/1/21'), 10)).toBe('05/10/2021');
-  });
-});
-
-describe('Formatting Links Tests', () => {
-  test('with common websites', () => {
-    expect(linkPipe('Google', 'https://www.google.com')).toStrictEqual(
-      <a href={'https://www.google.com'} target="_blank" rel="noopener noreferrer">
-        {'Google'}
-      </a>
-    );
-    expect(linkPipe('Instagram', 'https://www.instagram.com')).toStrictEqual(
-      <a href={'https://www.instagram.com'} target="_blank" rel="noopener noreferrer">
-        {'Instagram'}
-      </a>
-    );
-    expect(linkPipe('Github', 'https://github.com')).toStrictEqual(
-      <a href={'https://github.com'} target="_blank" rel="noopener noreferrer">
-        {'Github'}
-      </a>
-    );
-    expect(linkPipe('Northeastern', 'https://www.northeastern.edu')).toStrictEqual(
-      <a href={'https://www.northeastern.edu'} target="_blank" rel="noopener noreferrer">
-        {'Northeastern'}
-      </a>
-    );
   });
 });
 

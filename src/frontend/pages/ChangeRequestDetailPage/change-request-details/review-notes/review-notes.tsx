@@ -34,10 +34,9 @@ const ReviewNotes: React.FC<ReviewNotesProps> = ({
           <span>{fullNamePipe(reviewer)}</span>
         </OverlayTrigger>
       }
-      body={
-        <p>{reviewNotes ? reviewNotes : 'There are no review notes for this change request.'}</p>
-      }
-    />
+    >
+      {reviewNotes ? reviewNotes : 'There are no review notes for this change request.'}
+    </PageBlock>
   );
 };
 

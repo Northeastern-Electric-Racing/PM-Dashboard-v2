@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ReactNode } from 'react';
 import { LinkItem } from '../../../shared/types';
 import PageBreadcrumbs from './page-breadcrumbs/page-breadcrumbs';
 import styles from './page-title.module.css';
@@ -10,7 +11,7 @@ import styles from './page-title.module.css';
 interface PageTitleProps {
   title: string;
   previousPages: LinkItem[];
-  actionButton?: JSX.Element;
+  actionButton?: ReactNode;
 }
 
 /**

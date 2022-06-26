@@ -19,7 +19,6 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
   return (
     <BulletList
       title={'Changes'}
-      headerRight={<></>}
       list={changes.map((ic) => (
         <>
           [<Link to={`${routes.CHANGE_REQUESTS}/${ic.changeRequestId}`}>#{ic.changeRequestId}</Link>

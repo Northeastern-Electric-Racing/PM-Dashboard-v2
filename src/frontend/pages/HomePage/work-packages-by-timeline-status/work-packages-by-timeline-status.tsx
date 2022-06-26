@@ -90,10 +90,9 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
           </Form.Control>
         </InputGroup>
       }
-      body={
-        <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
-      }
-    />
+    >
+      <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
+    </PageBlock>
   );
 };
 

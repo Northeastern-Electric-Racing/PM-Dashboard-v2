@@ -243,68 +243,46 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
           updateProjectManager={setProjectManager}
         />
         <ProjectEditSummary project={proj} updateSummary={setSummary} />
-        <PageBlock
-          title={'Goals'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={goals.map((goal) => goal.detail)}
-              add={goalsUtil.add}
-              remove={goalsUtil.remove}
-              update={goalsUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Features'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={features.map((feature) => feature.detail)}
-              add={featUtil.add}
-              remove={featUtil.remove}
-              update={featUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Other Constraints'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={otherConstraints.map((other) => other.detail)}
-              add={ocUtil.add}
-              remove={ocUtil.remove}
-              update={ocUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Rules'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={rules}
-              add={rulesUtil.add}
-              remove={rulesUtil.remove}
-              update={rulesUtil.update}
-            />
-          }
-        />
+        <PageBlock title={'Goals'}>
+          <EditableTextInputList
+            items={goals.map((goal) => goal.detail)}
+            add={goalsUtil.add}
+            remove={goalsUtil.remove}
+            update={goalsUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Features'}>
+          <EditableTextInputList
+            items={features.map((feature) => feature.detail)}
+            add={featUtil.add}
+            remove={featUtil.remove}
+            update={featUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Other Constraints'}>
+          <EditableTextInputList
+            items={otherConstraints.map((other) => other.detail)}
+            add={ocUtil.add}
+            remove={ocUtil.remove}
+            update={ocUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Rules'}>
+          <EditableTextInputList
+            items={rules}
+            add={rulesUtil.add}
+            remove={rulesUtil.remove}
+            update={rulesUtil.update}
+          />
+        </PageBlock>
         <ChangesList changes={proj.changes} />
-        <PageBlock
-          title={'Work Packages'}
-          headerRight={<></>}
-          body={
-            <>
-              {proj.workPackages.map((ele: WorkPackage) => (
-                <div key={wbsPipe(ele.wbsNum)} className="mt-3">
-                  <WorkPackageSummary workPackage={ele} />
-                </div>
-              ))}
-            </>
-          }
-        />
+        <PageBlock title={'Work Packages'}>
+          {proj.workPackages.map((ele: WorkPackage) => (
+            <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+              <WorkPackageSummary workPackage={ele} />
+            </div>
+          ))}
+        </PageBlock>
         <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
     </Container>

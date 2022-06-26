@@ -51,57 +51,53 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
 
   const allColsStyle = 'mb-2';
   return (
-    <PageBlock
-      title={'Project Details'}
-      headerRight={<WbsStatus status={project.status} />}
-      body={
-        <Container fluid>
-          <Row>
-            <Col className={allColsStyle} md={5} lg={4} xl={3}>
-              <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
-            </Col>
-            <Col className={allColsStyle} md={6} lg={4} xl={3}>
-              <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
-              <b>Duration:</b> {weeksPipe(project.duration)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
-              <b>Start Date:</b> {start}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
-              <b>End Date:</b> {end}
-            </Col>
-          </Row>
-          <Row>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
-              <b>Budget:</b> {dollarsPipe(project.budget)}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
-              <b>Expected Progress:</b> {emDashPipe('')}
-            </Col>
-            <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
-              <b>Timeline Status:</b> {emDashPipe('')}
-            </Col>
-          </Row>
-          <Row className={`${allColsStyle} pl-3`}>
-            <b>Links:</b>
-            <ExternalLink
-              icon={faFilePowerpoint}
-              link={project.slideDeckLink!}
-              description={'Slide Deck'}
-            />
-            <ExternalLink icon={faList} link={project.taskListLink!} description={'Task List'} />
-            <ExternalLink icon={faListOl} link={project.bomLink!} description={'BOM'} />
-            <ExternalLink
-              icon={faFolderOpen}
-              link={project.gDriveLink!}
-              description={'Google Drive'}
-            />
-          </Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Project Details'} headerRight={<WbsStatus status={project.status} />}>
+      <Container fluid>
+        <Row>
+          <Col className={allColsStyle} md={5} lg={4} xl={3}>
+            <b>Project Lead:</b> {fullNamePipe(project.projectLead)}
+          </Col>
+          <Col className={allColsStyle} md={6} lg={4} xl={3}>
+            <b>Project Manager:</b> {fullNamePipe(project.projectManager)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={2} xl={2}>
+            <b>Duration:</b> {weeksPipe(project.duration)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
+            <b>Start Date:</b> {start}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={3} xl={2}>
+            <b>End Date:</b> {end}
+          </Col>
+        </Row>
+        <Row>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+            <b>Budget:</b> {dollarsPipe(project.budget)}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={3}>
+            <b>Expected Progress:</b> {emDashPipe('')}
+          </Col>
+          <Col className={allColsStyle} sm={4} md={4} lg={4} xl={2}>
+            <b>Timeline Status:</b> {emDashPipe('')}
+          </Col>
+        </Row>
+        <Row className={`${allColsStyle} pl-3`}>
+          <b>Links:</b>
+          <ExternalLink
+            icon={faFilePowerpoint}
+            link={project.slideDeckLink!}
+            description={'Slide Deck'}
+          />
+          <ExternalLink icon={faList} link={project.taskListLink!} description={'Task List'} />
+          <ExternalLink icon={faListOl} link={project.bomLink!} description={'BOM'} />
+          <ExternalLink
+            icon={faFolderOpen}
+            link={project.gDriveLink!}
+            description={'Google Drive'}
+          />
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

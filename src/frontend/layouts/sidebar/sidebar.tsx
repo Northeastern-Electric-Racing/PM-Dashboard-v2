@@ -12,7 +12,7 @@ import {
   faFolder,
   faHome,
   faQuestionCircle,
-  faPeopleArrows
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar: React.FC = () => {
@@ -34,7 +34,7 @@ const Sidebar: React.FC = () => {
     },
     {
       name: 'Teams',
-      icon: faPeopleArrows,
+      icon: faUsers,
       route: routes.TEAMS
     },
     {

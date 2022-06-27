@@ -215,7 +215,7 @@ model Description_Bullet {
 }
 
 model Risk {
-  id               Int       @id @default(autoincrement())
+  id               String    @id @default(uuid())
   projectId        Int
   project          Project   @relation(fields: [projectId], references: [projectId])
   detail           String

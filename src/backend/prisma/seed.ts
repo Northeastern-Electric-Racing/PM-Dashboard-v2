@@ -9,12 +9,17 @@ import { dbSeedAllProjects } from './seed-data/projects';
 import { dbSeedAllWorkPackages } from './seed-data/work-packages';
 import { dbSeedAllChangeRequests } from './seed-data/change-requests';
 import { dbSeedAllSessions } from './seed-data/session';
+import { dbSeedAllRisks } from './seed-data/risks';
 
 const prisma = new PrismaClient();
 
 const performSeed: () => Promise<void> = async () => {
   for (const seedUser of dbSeedAllUsers) {
     await prisma.user.create({ data: { ...seedUser } });
+  }
+
+  for (const seedRisk of dbSeedAllRisks) {
+    await prisma.risk.create({ data: { ...seedRisk } });
   }
 
   for (const seedSession of dbSeedAllSessions) {

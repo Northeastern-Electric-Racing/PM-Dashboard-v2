@@ -42,7 +42,10 @@
     "ts-node": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"}",
     "postinstall": "npm run prisma:generate",
     "preinstall": "npm run repack-utils-pkg",
-    "light-install": "npm run preinstall && npm install utils && npm run postinstall"
+    "light-install": "npm run preinstall && npm install utils && npm run postinstall",
+    "li": "npm run light-install",
+    "istart": "npm run install && npm run start",
+    "listart": "npm run light-install && npm run start"
   },
   "prisma": {
     "schema": "src/backend/prisma/schema.prisma"

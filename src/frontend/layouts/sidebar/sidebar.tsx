@@ -11,7 +11,8 @@ import {
   faExchangeAlt,
   faFolder,
   faHome,
-  faQuestionCircle
+  faQuestionCircle,
+  faPeopleArrows
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar: React.FC = () => {
@@ -30,6 +31,11 @@ const Sidebar: React.FC = () => {
       name: 'Change Requests',
       icon: faExchangeAlt,
       route: routes.CHANGE_REQUESTS
+    },
+    {
+      name: 'Teams',
+      icon: faPeopleArrows,
+      route: routes.TEAMS
     },
     {
       name: 'Help',

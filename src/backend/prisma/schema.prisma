@@ -61,6 +61,17 @@ model User {
   projectLead             WBS_Element[]    @relation(name: "projectLead")
   projectManager          WBS_Element[]    @relation(name: "projectManager")
   Session                 Session[]
+  teams                   Team[]           @relation(name: "teamsAsMember")     
+  teamAsLead              Team?            @relation(name: "teamAsLead")
+}
+
+model Team {
+  teamId         Int            @id @default(autoincrement())
+  teamName       String
+  leaderId       Int
+  leader         User           @relation(name: "teamAsLead", fields:[leaderId], references: [userId]) 
+  projects       Project[]      
+  members        User[]         @relation(name: "teamsAsMember")
 }
 
 model Session {
@@ -177,6 +188,8 @@ model Project {
   features              Description_Bullet[] @relation(name: "projectFeatures")
   otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
+  teamId                Int?                   
+  team                  Team?                  @relation(fields: [teamId], references: [teamId])
 }
 
 model Work_Package {

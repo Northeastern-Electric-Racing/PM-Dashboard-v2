@@ -87,10 +87,9 @@ const UpcomingDeadlines: React.FC = () => {
           </InputGroup.Append>
         </InputGroup>
       }
-      body={
-        <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
-      }
-    />
+    >
+      <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
+    </PageBlock>
   );
 };
 

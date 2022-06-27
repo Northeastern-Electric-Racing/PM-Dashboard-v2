@@ -4,11 +4,11 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Dropdown, Form } from 'react-bootstrap';
-import styles from './projects-table-filter.module.scss';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 import { User, WbsElementStatus } from 'utils';
 import { fullNamePipe } from '../../../../shared/pipes';
-import { useTheme } from '../../../../services/theme.hooks';
+import PageBlock from '../../../layouts/page-block/page-block';
+import styles from './projects-table-filter.module.scss';
 
 /**
  * Variables to filter table with.
@@ -37,7 +37,6 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   const [project_managerName, setProject_managerName] = useState('');
   const [project_managerID, setProject_managerID] = useState(-1);
   const [car_number, setCar_number] = useState(-1);
-  const theme = useTheme();
 
   /**
    * Programmatically generates dropdown menu items for state variables of type number.
@@ -147,97 +146,92 @@ const ProjectsTableFilter: React.FC<FilterProps> = ({ onClick, leads, managers }
   };
 
   return (
-    <>
-      <Card bg={theme.cardBg}>
-        <Card.Body>
-          <Card.Title>Filters</Card.Title>
-          <Form>
-            <Form.Group>
-              <Form.Label>Car Number</Form.Label>
-              <Dropdown className={styles.dropdown}>
-                <Dropdown.Toggle
-                  data-testid="car-num-toggle"
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                  className={'text-left ' + styles.dropdownButton}
-                >
-                  {car_number === -1 ? '' : car_number}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsNum([0, 1, 2], setCar_number)}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Status</Form.Label>
-              <Dropdown className={styles.dropdown}>
-                <Dropdown.Toggle
-                  data-testid="status-toggle"
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                  className={'text-left ' + styles.dropdownButton}
-                >
-                  {status}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsString(Object.values(WbsElementStatus), setStatus)}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Project Lead</Form.Label>
-              <Dropdown className={styles.dropdown}>
-                <Dropdown.Toggle
-                  data-testid="lead-toggle"
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                  className={'text-left ' + styles.dropdownButton}
-                >
-                  {project_leadName}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsUser(leads, setProject_leadID, setProject_leadName)}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Project Manager</Form.Label>
-              <Dropdown className={styles.dropdown}>
-                <Dropdown.Toggle
-                  data-testid="manager-toggle"
-                  variant="light"
-                  id="dropdown-split-basic"
-                  block={true}
-                  className={'text-left ' + styles.dropdownButton}
-                >
-                  {project_managerName}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="btn-block" align="right">
-                  {genDropdownItemsUser(managers, setProject_managerID, setProject_managerName)}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Group>
-            <Button
-              className={'float-left'}
-              variant={'outline-secondary'}
-              onClick={resetFiltersToDefault}
+    <PageBlock title="Filters">
+      <Form>
+        <Form.Group>
+          <Form.Label>Car Number</Form.Label>
+          <Dropdown className={styles.dropdown}>
+            <Dropdown.Toggle
+              data-testid="car-num-toggle"
+              variant="light"
+              id="dropdown-split-basic"
+              block={true}
+              className={'text-left ' + styles.dropdownButton}
             >
-              Clear
-            </Button>
-            <Button
-              className={'float-right'}
-              variant={'outline-primary'}
-              onClick={() => onClick(status, project_leadID, project_managerID, car_number)}
+              {car_number === -1 ? '' : car_number}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="btn-block" align="right">
+              {genDropdownItemsNum([0, 1, 2], setCar_number)}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Status</Form.Label>
+          <Dropdown className={styles.dropdown}>
+            <Dropdown.Toggle
+              data-testid="status-toggle"
+              variant="light"
+              id="dropdown-split-basic"
+              block={true}
+              className={'text-left ' + styles.dropdownButton}
             >
-              Apply
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </>
+              {status}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="btn-block" align="right">
+              {genDropdownItemsString(Object.values(WbsElementStatus), setStatus)}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Project Lead</Form.Label>
+          <Dropdown className={styles.dropdown}>
+            <Dropdown.Toggle
+              data-testid="lead-toggle"
+              variant="light"
+              id="dropdown-split-basic"
+              block={true}
+              className={'text-left ' + styles.dropdownButton}
+            >
+              {project_leadName}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="btn-block" align="right">
+              {genDropdownItemsUser(leads, setProject_leadID, setProject_leadName)}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Project Manager</Form.Label>
+          <Dropdown className={styles.dropdown}>
+            <Dropdown.Toggle
+              data-testid="manager-toggle"
+              variant="light"
+              id="dropdown-split-basic"
+              block={true}
+              className={'text-left ' + styles.dropdownButton}
+            >
+              {project_managerName}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="btn-block" align="right">
+              {genDropdownItemsUser(managers, setProject_managerID, setProject_managerName)}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Form.Group>
+        <Button
+          className={'float-left'}
+          variant={'outline-secondary'}
+          onClick={resetFiltersToDefault}
+        >
+          Clear
+        </Button>
+        <Button
+          className={'float-right'}
+          variant={'outline-primary'}
+          onClick={() => onClick(status, project_leadID, project_managerID, car_number)}
+        >
+          Apply
+        </Button>
+      </Form>
+    </PageBlock>
   );
 };
 

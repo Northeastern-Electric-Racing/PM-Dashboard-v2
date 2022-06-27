@@ -81,169 +81,165 @@ const CreateChangeRequestsView: React.FC<CreateChangeRequestViewProps> = ({ wbsN
         title={'New Change Request'}
         previousPages={[{ name: 'Change Requests', route: routes.CHANGE_REQUESTS }]}
       />
-      <PageBlock
-        title={''}
-        headerRight={<></>}
-        body={
-          <Form id={'create-standard-change-request-form'} onSubmit={handleSubmit(onSubmit)}>
-            <Row className="mx-2 justify-content-start">
-              <Col md={5} lg={4} xl={4}>
-                <Form.Group controlId="formWBSNumber" className="mx-2">
-                  <Form.Label>WBS Number</Form.Label>
-                  <Form.Control
-                    {...register('wbsNum')}
-                    placeholder="Project or Work Package WBS #"
-                    isInvalid={formState.errors.wbsNum?.message !== undefined}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formState.errors.wbsNum?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
+      <PageBlock title={''}>
+        <Form id={'create-standard-change-request-form'} onSubmit={handleSubmit(onSubmit)}>
+          <Row className="mx-2 justify-content-start">
+            <Col md={5} lg={4} xl={4}>
+              <Form.Group controlId="formWBSNumber" className="mx-2">
+                <Form.Label>WBS Number</Form.Label>
+                <Form.Control
+                  {...register('wbsNum')}
+                  placeholder="Project or Work Package WBS #"
+                  isInvalid={formState.errors.wbsNum?.message !== undefined}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formState.errors.wbsNum?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
 
-              <Col md={4} lg={4} xl={4}>
-                <Form.Group controlId="formType" className="mx-2">
-                  <Form.Label>Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    {...register('type')}
-                    isInvalid={formState.errors.type?.message !== undefined}
-                    custom
-                  >
-                    {permittedTypes.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
-                      </option>
-                    ))}
-                  </Form.Control>
-                  <Form.Control.Feedback type="invalid">
-                    {formState.errors.type?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="mx-2 justify-content-start">
-              <Col>
-                <Form.Group controlId="formWhat" className="mx-2">
-                  <Form.Label>What</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    cols={50}
-                    {...register('what')}
-                    placeholder="What is the situation?"
-                    isInvalid={formState.errors.what?.message !== undefined}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formState.errors.what?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col sm={6} md={6} lg={6} xl={6}>
-                <Form.Group controlId="formWhy" className="mx-2">
-                  <Form.Label>Why</Form.Label>
-                  {fields.map((field, index) => (
-                    <InputGroup key={index} className="d-flex m-1">
-                      <Form.Control
-                        as="select"
-                        {...register(`why.${index}.type` as const)}
-                        isInvalid={formState.errors.why?.[index]?.type?.message !== undefined}
-                        custom
-                      >
-                        {Object.values(ChangeRequestReason).map((t) => (
-                          <option key={t} value={t}>
-                            {t}
-                          </option>
-                        ))}
-                      </Form.Control>
-                      <Form.Control
-                        {...register(`why.${index}.explain` as const)}
-                        placeholder="Explain why"
-                        isInvalid={formState.errors.why?.[index]?.explain?.message !== undefined}
-                      />
-                      <Button variant="danger" onClick={() => remove(index)}>
-                        X
-                      </Button>
-                      <Form.Control.Feedback type="invalid" className="d-block">
-                        {formState.errors.why?.[index]?.type?.message}
-                        {formState.errors.why?.[index]?.explain?.message}
-                      </Form.Control.Feedback>
-                    </InputGroup>
+            <Col md={4} lg={4} xl={4}>
+              <Form.Group controlId="formType" className="mx-2">
+                <Form.Label>Type</Form.Label>
+                <Form.Control
+                  as="select"
+                  {...register('type')}
+                  isInvalid={formState.errors.type?.message !== undefined}
+                  custom
+                >
+                  {permittedTypes.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
                   ))}
-                  <Row className="px-2 justify-content-end">
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() => append({ type: ChangeRequestReason.Design, explain: '' })}
-                    >
-                      Add Reason
-                    </Button>
-                  </Row>
-                </Form.Group>
-              </Col>
-            </Row>
+                </Form.Control>
+                <Form.Control.Feedback type="invalid">
+                  {formState.errors.type?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
 
-            <Row className="mx-2 justify-content-start">
-              <Col>
-                <Form.Group controlId="formScopeImpact" className="mx-2">
-                  <Form.Label>Scope Impact</Form.Label>
+          <Row className="mx-2 justify-content-start">
+            <Col>
+              <Form.Group controlId="formWhat" className="mx-2">
+                <Form.Label>What</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  cols={50}
+                  {...register('what')}
+                  placeholder="What is the situation?"
+                  isInvalid={formState.errors.what?.message !== undefined}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formState.errors.what?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col sm={6} md={6} lg={6} xl={6}>
+              <Form.Group controlId="formWhy" className="mx-2">
+                <Form.Label>Why</Form.Label>
+                {fields.map((field, index) => (
+                  <InputGroup key={index} className="d-flex m-1">
+                    <Form.Control
+                      as="select"
+                      {...register(`why.${index}.type` as const)}
+                      isInvalid={formState.errors.why?.[index]?.type?.message !== undefined}
+                      custom
+                    >
+                      {Object.values(ChangeRequestReason).map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
+                    </Form.Control>
+                    <Form.Control
+                      {...register(`why.${index}.explain` as const)}
+                      placeholder="Explain why"
+                      isInvalid={formState.errors.why?.[index]?.explain?.message !== undefined}
+                    />
+                    <Button variant="danger" onClick={() => remove(index)}>
+                      X
+                    </Button>
+                    <Form.Control.Feedback type="invalid" className="d-block">
+                      {formState.errors.why?.[index]?.type?.message}
+                      {formState.errors.why?.[index]?.explain?.message}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                ))}
+                <Row className="px-2 justify-content-end">
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => append({ type: ChangeRequestReason.Design, explain: '' })}
+                  >
+                    Add Reason
+                  </Button>
+                </Row>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row className="mx-2 justify-content-start">
+            <Col>
+              <Form.Group controlId="formScopeImpact" className="mx-2">
+                <Form.Label>Scope Impact</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  cols={50}
+                  {...register('scopeImpact')}
+                  placeholder="What do you think the impact to scope is?"
+                  isInvalid={formState.errors.scopeImpact?.message !== undefined}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formState.errors.scopeImpact?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col sm={4} md={4} lg={4} xl={4}>
+              <Form.Group controlId="formTimelineImpact" className="mx-2">
+                <Form.Label>Timeline Impact</Form.Label>
+                <InputGroup>
                   <Form.Control
-                    as="textarea"
-                    rows={3}
-                    cols={50}
-                    {...register('scopeImpact')}
-                    placeholder="What do you think the impact to scope is?"
-                    isInvalid={formState.errors.scopeImpact?.message !== undefined}
+                    {...register('timelineImpact')}
+                    placeholder="# needed"
+                    isInvalid={formState.errors.timelineImpact?.message !== undefined}
+                  />
+                  <InputGroup.Append>
+                    <InputGroup.Text>weeks</InputGroup.Text>
+                  </InputGroup.Append>
+                  <Form.Control.Feedback type="invalid">
+                    {formState.errors.timelineImpact?.message}
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+
+              <Form.Group controlId="formBudgetImpact" className="mx-2">
+                <Form.Label>Budget Impact</Form.Label>
+                <InputGroup>
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>$</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <Form.Control
+                    {...register('budgetImpact')}
+                    placeholder="$ needed"
+                    isInvalid={formState.errors.budgetImpact?.message !== undefined}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {formState.errors.scopeImpact?.message}
+                    {formState.errors.budgetImpact?.message}
                   </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col sm={4} md={4} lg={4} xl={4}>
-                <Form.Group controlId="formTimelineImpact" className="mx-2">
-                  <Form.Label>Timeline Impact</Form.Label>
-                  <InputGroup>
-                    <Form.Control
-                      {...register('timelineImpact')}
-                      placeholder="# needed"
-                      isInvalid={formState.errors.timelineImpact?.message !== undefined}
-                    />
-                    <InputGroup.Append>
-                      <InputGroup.Text>weeks</InputGroup.Text>
-                    </InputGroup.Append>
-                    <Form.Control.Feedback type="invalid">
-                      {formState.errors.timelineImpact?.message}
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Form.Group>
-
-                <Form.Group controlId="formBudgetImpact" className="mx-2">
-                  <Form.Label>Budget Impact</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>$</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control
-                      {...register('budgetImpact')}
-                      placeholder="$ needed"
-                      isInvalid={formState.errors.budgetImpact?.message !== undefined}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formState.errors.budgetImpact?.message}
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="mx-2 justify-content-end">
-              <Button variant="success" type="submit">
-                Submit
-              </Button>
-            </Row>
-          </Form>
-        }
-      />
+                </InputGroup>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="mx-2 justify-content-end">
+            <Button variant="success" type="submit">
+              Submit
+            </Button>
+          </Row>
+        </Form>
+      </PageBlock>
     </>
   );
 };

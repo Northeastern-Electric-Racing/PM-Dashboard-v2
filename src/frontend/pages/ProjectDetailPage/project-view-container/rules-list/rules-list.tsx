@@ -14,7 +14,6 @@ const RulesList: React.FC<RulesListProps> = ({ rules }) => {
   return (
     <HorizontalList
       title={'Rules'}
-      headerRight={<></>}
       items={rules.map((r) => (
         <>{r}</>
       ))}

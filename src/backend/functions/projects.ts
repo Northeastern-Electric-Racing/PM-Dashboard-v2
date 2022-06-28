@@ -43,17 +43,7 @@ const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
         changes: { include: { implementer: true } }
       }
     },
-    team: {
-      include: {
-        members: true,
-        leader: true,
-        projects: {
-          include: {
-            wbsElement: true
-          }
-        }
-      }
-    },
+    team: true,
     goals: true,
     features: true,
     otherConstraints: true,
@@ -72,17 +62,7 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
   include: {
     project: {
       include: {
-        team: {
-          include: {
-            members: true,
-            leader: true,
-            projects: {
-              include: {
-                wbsElement: true
-              }
-            }
-          }
-        },
+        team: true,
         goals: true,
         features: true,
         otherConstraints: true,
@@ -134,14 +114,7 @@ const projectTransformer = (
   if (project.team) {
     team = {
       teamId: project.team.teamId,
-      teamName: project.team.teamName,
-      members: project.team.members,
-      leader: project.team.leader,
-      projects: project.team.projects.map((project) => ({
-        id: project.projectId,
-        name: project.wbsElement.name,
-        wbsNum: wbsNumOf(project.wbsElement)
-      }))
+      teamName: project.team.teamName
     };
   }
 

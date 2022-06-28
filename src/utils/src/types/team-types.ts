@@ -13,3 +13,8 @@ export interface Team {
   members: User[];
   projects: ProjectPreview[];
 }
+
+export interface TeamPreview {
+  teamId: number;
+  teamName: string;
+}

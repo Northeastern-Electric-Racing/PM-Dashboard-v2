@@ -1,9 +1,9 @@
 -- AlterTable
-ALTER TABLE "Project" ADD COLUMN     "teamId" INTEGER;
+ALTER TABLE "Project" ADD COLUMN     "teamId" TEXT;
 
 -- CreateTable
 CREATE TABLE "Team" (
-    "teamId" SERIAL NOT NULL,
+    "teamId" TEXT NOT NULL,
     "teamName" TEXT NOT NULL,
     "leaderId" INTEGER NOT NULL,
 
@@ -12,12 +12,12 @@ CREATE TABLE "Team" (
 
 -- CreateTable
 CREATE TABLE "_teamsAsMember" (
-    "A" INTEGER NOT NULL,
+    "A" TEXT NOT NULL,
     "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Team_leaderId_unique" ON "Team"("leaderId");
+CREATE UNIQUE INDEX "Team.leaderId_unique" ON "Team"("leaderId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_teamsAsMember_AB_unique" ON "_teamsAsMember"("A", "B");

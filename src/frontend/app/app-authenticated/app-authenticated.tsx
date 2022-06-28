@@ -27,9 +27,9 @@ const AppAuthenticated: React.FC = () => {
             <Route path={routes.PROJECTS} component={Projects} />
             <Redirect from={routes.CR_BY_ID} to={routes.CHANGE_REQUESTS_BY_ID} />
             <Route path={routes.CHANGE_REQUESTS} component={ChangeRequests} />
+            <Route path={routes.TEAMS} component={TeamsPage} />
             <Route path={routes.SETTINGS} component={Settings} />
             <Route path={routes.HELP} component={HelpPage} />
-            <Route path={routes.TEAMS} component={TeamsPage} />
             <Route exact path={routes.HOME} component={Home} />
             <Route path="*" component={PageNotFound} />
           </Switch>

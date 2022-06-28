@@ -66,9 +66,9 @@ model User {
 }
 
 model Team {
-  teamId         Int            @id @default(autoincrement())
+  teamId         String         @id @default(uuid())
   teamName       String
-  leaderId       Int
+  leaderId       Int            @unique
   leader         User           @relation(name: "teamAsLead", fields:[leaderId], references: [userId]) 
   projects       Project[]      
   members        User[]         @relation(name: "teamsAsMember")
@@ -188,7 +188,7 @@ model Project {
   features              Description_Bullet[] @relation(name: "projectFeatures")
   otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
-  teamId                Int?                   
+  teamId                String?                   
   team                  Team?                  @relation(fields: [teamId], references: [teamId])
 }
 

@@ -18,10 +18,6 @@ const performSeed: () => Promise<void> = async () => {
     await prisma.user.create({ data: { ...seedUser } });
   }
 
-  for (const seedRisk of dbSeedAllRisks) {
-    await prisma.risk.create({ data: { ...seedRisk } });
-  }
-
   for (const seedSession of dbSeedAllSessions) {
     await prisma.session.create({
       data: {
@@ -39,6 +35,16 @@ const performSeed: () => Promise<void> = async () => {
         goals: { create: seedProject.goals },
         features: { create: seedProject.features },
         otherConstraints: { create: seedProject.otherConstraints }
+      }
+    });
+  }
+
+  for (const seedRisk of dbSeedAllRisks) {
+    await prisma.risk.create({
+      data: {
+        createdBy: { connect: { userId: seedRisk.createdByUserId } },
+        project: { connect: { projectId: seedRisk.projectId } },
+        ...seedRisk
       }
     });
   }

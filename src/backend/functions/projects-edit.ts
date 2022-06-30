@@ -513,9 +513,11 @@ const handler = middy(editProject)
 export { handler };
 
 // Given a user's id, this method returns the user's full name
-const getUserFullName = async (userId: any): Promise<string> => {
+const getUserFullName = async (userId: number | null): Promise<string | null> => {
+  if (userId === null) {
+    return null; 
+  }
   const user = await prisma.user.findUnique( { where: { userId }});
   if (!user) throw new Error('user not found'); 
-  const userName = user ? `${user.firstName} ${user.lastName}` : '—';
-  return userName;  
+  return user ? `${user.firstName} ${user.lastName}` : '—';
 }

@@ -25,6 +25,7 @@ describe('createChangeJsonNonList', () => {
 
     expect(res.detail).toBe(`Edited test from "abc" to "def"`);
   });
+  
   it('returns a good json if old value is null', async () => {
     const res = createChangeJsonNonList('project manager', null, 'James C-D', 2, 3, 4);
 

@@ -44,7 +44,7 @@ const performSeed: () => Promise<void> = async () => {
       data: {
         createdBy: { connect: { userId: seedRisk.createdByUserId } },
         project: { connect: { projectId: seedRisk.projectId } },
-        ...seedRisk
+        ...seedRisk.fields
       }
     });
   }

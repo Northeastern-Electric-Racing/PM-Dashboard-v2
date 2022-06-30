@@ -69,6 +69,9 @@ model User {
   projectLead             WBS_Element[]    @relation(name: "projectLead")
   projectManager          WBS_Element[]    @relation(name: "projectManager")
   Session                 Session[]
+  createdRisks            Risk[]           @relation(name: "createdBy")
+  resolvedRisks           Risk[]           @relation(name: "resolvedBy")
+  deletedRisks            Risk[]           @relation(name: "deletedBy")
 }
 
 model Session {
@@ -191,6 +194,7 @@ model Project {
   features              Description_Bullet[] @relation(name: "projectFeatures")
   otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
+  risks                 Risk[]
 }
 
 model Work_Package {
@@ -224,4 +228,21 @@ model Description_Bullet {
   workPackageExpectedActivities   Work_Package? @relation(name: "workPackageExpectedActivities", fields: [workPackageIdExpectedActivities], references: [workPackageId])
   workPackageIdDeliverables       Int?
   workPackageDeliverables         Work_Package? @relation(name: "workPackageDeliverables", fields: [workPackageIdDeliverables], references: [workPackageId])
+}
+
+model Risk {
+  id               String    @id @default(uuid())
+  projectId        Int
+  project          Project   @relation(fields: [projectId], references: [projectId])
+  detail           String
+  isResolved       Boolean   @default(false)
+  dateDeleted      DateTime?
+  dateCreated      DateTime  @default(now())
+  createdByUserId  Int
+  createdBy        User      @relation(name: "createdBy", fields: [createdByUserId], references: [userId])
+  resolvedByUserId Int?
+  resolvedBy       User?     @relation(name: "resolvedBy", fields: [resolvedByUserId], references: [userId])
+  resolvedAt       DateTime?
+  deletedByUserId  Int?
+  deletedBy        User?     @relation(name: "deletedBy", fields: [deletedByUserId], references: [userId])
 }

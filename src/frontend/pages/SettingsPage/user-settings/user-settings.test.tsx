@@ -14,6 +14,15 @@ import { exampleUserSettingsLight } from '../../../../test-support/test-data/use
 import { render, screen } from '../../../../test-support/test-utils';
 import UserSettingsComponent from './user-settings';
 
+jest.mock('./user-settings-view/user-settings-view', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>user-settings-view</div>;
+    }
+  };
+});
+
 jest.mock('../../../../services/users.hooks');
 
 const mockedUseSingleUserSettings = useSingleUserSettings as jest.Mock<
@@ -71,10 +80,10 @@ describe('user settings component', () => {
     expect(screen.getByText('User Settings')).toBeInTheDocument();
   });
 
-  it('renders default theme', () => {
+  it('renders user settings view', () => {
     mockUserSettingsHook(false, false, exampleUserSettingsLight);
     renderComponent();
-    expect(screen.getByText(exampleUserSettingsLight.defaultTheme)).toBeInTheDocument();
+    expect(screen.getByText('user-settings-view')).toBeInTheDocument();
   });
 
   it('renders edit button', () => {

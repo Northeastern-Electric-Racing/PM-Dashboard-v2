@@ -9,6 +9,7 @@ import { useSingleUserSettings } from '../../../../services/users.hooks';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import PageBlock from '../../../layouts/page-block/page-block';
 import ErrorPage from '../../ErrorPage/error-page';
+import UserSettingsView from './user-settings-view/user-settings-view';
 
 interface UserSettingsProps {
   userId: number;
@@ -38,24 +39,18 @@ const UserSettings: React.FC<UserSettingsProps> = ({ userId }) => {
       Cancel
     </Button>
   );
+  const buttonContainer = (
+    <div className="d-flex flex-row">
+      {!edit ? editButton : ''}
+      {edit ? cancelButton : ''}
+      {edit ? saveButton : ''}
+    </div>
+  );
 
   return (
-    <PageBlock
-      title="User Settings"
-      headerRight={
-        <div className="d-flex flex-row">
-          {!edit ? editButton : ''}
-          {edit ? cancelButton : ''}
-          {edit ? saveButton : ''}
-        </div>
-      }
-    >
+    <PageBlock title="User Settings" headerRight={buttonContainer}>
       <Container fluid>
-        <Row>
-          <Col md={6} lg={4}>
-            <b>Default Theme:</b> {!edit ? userSettings.data?.defaultTheme : 'editing'}
-          </Col>
-        </Row>
+        <UserSettingsView settings={userSettings.data!} />
       </Container>
     </PageBlock>
   );

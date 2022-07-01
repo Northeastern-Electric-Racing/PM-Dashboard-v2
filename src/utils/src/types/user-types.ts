@@ -15,7 +15,7 @@ export interface User {
 
 export type Role = 'APP_ADMIN' | 'ADMIN' | 'LEADERSHIP' | 'MEMBER' | 'GUEST';
 
-export type Theme = 'DARK' | 'LIGHT';
+export type ThemeName = 'DARK' | 'LIGHT';
 
 /**
  * User object used purely for authentication purposes.
@@ -28,10 +28,10 @@ export interface AuthenticatedUser {
   email: string;
   emailId: string | null;
   role: Role;
-  defaultTheme?: Theme;
+  defaultTheme?: ThemeName;
 }
 
 export interface UserSettings {
   id: string;
-  defaultTheme: Theme;
+  defaultTheme: ThemeName;
 }

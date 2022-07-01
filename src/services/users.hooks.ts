@@ -5,8 +5,8 @@
 
 import { useQuery, useMutation } from 'react-query';
 import { User } from '@prisma/client';
-import { getAllUsers, getSingleUser, logUserIn } from './users.api';
-import { AuthenticatedUser } from 'utils';
+import { getAllUsers, getSingleUser, getSingleUserSettings, logUserIn } from './users.api';
+import { AuthenticatedUser, UserSettings } from 'utils';
 
 /**
  * Custom React Hook to supply all users.
@@ -41,4 +41,16 @@ export const useLogUserIn = () => {
       return data;
     }
   );
+};
+
+/**
+ * Custom React Hook to supply a single user's settings.
+ *
+ * @param id User ID of the requested user's settings.
+ */
+export const useSingleUserSettings = (id: number) => {
+  return useQuery<UserSettings, Error>(['users', id, 'settings'], async () => {
+    const { data } = await getSingleUserSettings(id);
+    return data;
+  });
 };

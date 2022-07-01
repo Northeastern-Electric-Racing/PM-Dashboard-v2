@@ -30,3 +30,8 @@ export interface AuthenticatedUser {
   role: Role;
   defaultTheme?: Theme;
 }
+
+export interface UserSettings {
+  id: string;
+  defaultTheme: Theme;
+}

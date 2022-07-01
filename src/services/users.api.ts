@@ -7,7 +7,7 @@ import axios from 'axios';
 import { User } from '@prisma/client';
 import { apiUrls } from '../shared/urls';
 import { authUserTransformer, userTransformer } from './transformers/users.transformers';
-import { AuthenticatedUser } from 'utils';
+import { AuthenticatedUser, UserSettings } from 'utils';
 
 /**
  * Fetches all users.
@@ -40,4 +40,13 @@ export const logUserIn = (id_token: string) => {
     { id_token },
     { transformResponse: (data) => authUserTransformer(JSON.parse(data)) }
   );
+};
+
+/**
+ * Fetch the user settings for a single user.
+ *
+ * @param id User ID of the requested user's settings.
+ */
+export const getSingleUserSettings = (id: number) => {
+  return axios.get<UserSettings>(apiUrls.userSettingsByUserId(`${id}`));
 };

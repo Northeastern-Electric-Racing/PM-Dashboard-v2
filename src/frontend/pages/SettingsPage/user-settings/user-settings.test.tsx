@@ -1,0 +1,85 @@
+/*
+ * This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+ * See the LICENSE file in the repository root folder for details.
+ */
+
+import { UseMutationResult, UseQueryResult } from 'react-query';
+import { UserSettings } from 'utils';
+import { useLogUserIn, useSingleUserSettings } from '../../../../services/users.hooks';
+import {
+  mockUseMutationResult,
+  mockUseQueryResult
+} from '../../../../test-support/test-data/test-utils.stub';
+import { exampleUserSettingsLight } from '../../../../test-support/test-data/user-settings.stub';
+import { render, screen } from '../../../../test-support/test-utils';
+import UserSettingsComponent from './user-settings';
+
+jest.mock('../../../../services/users.hooks');
+
+const mockedUseSingleUserSettings = useSingleUserSettings as jest.Mock<
+  UseQueryResult<UserSettings>
+>;
+
+const mockUserSettingsHook = (
+  isLoading: boolean,
+  isError: boolean,
+  data?: UserSettings,
+  error?: Error
+) => {
+  mockedUseSingleUserSettings.mockReturnValue(
+    mockUseQueryResult<UserSettings>(isLoading, isError, data, error)
+  );
+};
+
+const mockedUseLogUserIn = useLogUserIn as jest.Mock<UseMutationResult>;
+
+const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Error) => {
+  mockedUseLogUserIn.mockReturnValue(
+    mockUseMutationResult<{ in: string }>(isLoading, isError, { in: 'hi' }, error)
+  );
+};
+
+/**
+ * Sets up the component under test with the desired values and renders it.
+ */
+const renderComponent = () => {
+  mockUseLogUserInHook(false, false);
+  return render(<UserSettingsComponent userId={1} />);
+};
+
+describe('user settings component', () => {
+  it('renders without error', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+  });
+
+  it('renders loading', () => {
+    mockUserSettingsHook(true, false);
+    renderComponent();
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+  });
+
+  it('renders error', () => {
+    mockUserSettingsHook(false, true, undefined, new Error('test error'));
+    renderComponent();
+    expect(screen.getByText('test error')).toBeInTheDocument();
+  });
+
+  it('renders title', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+    expect(screen.getByText('User Settings')).toBeInTheDocument();
+  });
+
+  it('renders default theme', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+    expect(screen.getByText(exampleUserSettingsLight.defaultTheme)).toBeInTheDocument();
+  });
+
+  it('renders edit button', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+    expect(screen.getByText('Edit')).toBeInTheDocument();
+  });
+});

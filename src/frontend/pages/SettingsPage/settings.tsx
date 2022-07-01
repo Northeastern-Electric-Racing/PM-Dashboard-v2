@@ -8,6 +8,7 @@ import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useAuth } from '../../../services/auth.hooks';
 import PageTitle from '../../layouts/page-title/page-title';
 import PageBlock from '../../layouts/page-block/page-block';
+import UserSettings from './user-settings/user-settings';
 
 const Settings: React.FC = () => {
   const auth = useAuth();
@@ -39,7 +40,7 @@ const Settings: React.FC = () => {
           </Row>
         </Container>
       </PageBlock>
-      <PageBlock title="User Settings">
+      <PageBlock title="User Details">
         <Container fluid>
           <Row>
             <Col md={4} lg={2}>
@@ -60,6 +61,7 @@ const Settings: React.FC = () => {
           </Row>
         </Container>
       </PageBlock>
+      <UserSettings userId={auth.user?.userId!} />
     </Container>
   );
 };

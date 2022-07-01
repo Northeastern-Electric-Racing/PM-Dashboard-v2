@@ -127,6 +127,18 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   return buildSuccessResponse(authenticatedUserTransformer(user));
 };
 
+/** Get settings for the specified user */
+const getUserSettings: ApiRouteFunction = async (params: { id: string }) => {
+  const userId: number = parseInt(params.id);
+  const user = await prisma.user.findUnique({
+    where: { userId },
+    include: { userSettings: true }
+  });
+  if (!user) return buildNotFoundResponse('user', `#${params.id}`);
+  if (!user.userSettings) return buildNotFoundResponse('user settings', `#${params.id}`);
+  return buildSuccessResponse(user.userSettings);
+};
+
 // Define all valid routes for the endpoint
 const routes: ApiRoute[] = [
   {
@@ -143,6 +155,11 @@ const routes: ApiRoute[] = [
     path: `${API_URL}${apiRoutes.USERS_LOGIN}`,
     httpMethod: 'POST',
     func: logUserIn
+  },
+  {
+    path: `${API_URL}${apiRoutes.USER_SETTINGS_BY_USER_ID}`,
+    httpMethod: 'GET',
+    func: getUserSettings
   }
 ];
 

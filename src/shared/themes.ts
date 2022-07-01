@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ThemeUtility } from './types';
+import { Theme } from './types';
 
-const themes: ThemeUtility[] = [
+const themes: Theme[] = [
   {
     name: 'DARK',
     bgColor: '#353434',

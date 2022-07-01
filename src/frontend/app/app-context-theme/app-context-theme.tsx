@@ -5,10 +5,10 @@
 
 import { createContext } from 'react';
 import { useProvideTheme } from '../../../services/theme.hooks';
-import { ThemeUtility } from '../../../shared/types';
+import { Theme } from '../../../shared/types';
 import './app-context-theme.module.css';
 
-export const ThemeContext = createContext<ThemeUtility | undefined>(undefined);
+export const ThemeContext = createContext<Theme | undefined>(undefined);
 
 const AppContextSettings: React.FC = (props) => {
   const theme = useProvideTheme();

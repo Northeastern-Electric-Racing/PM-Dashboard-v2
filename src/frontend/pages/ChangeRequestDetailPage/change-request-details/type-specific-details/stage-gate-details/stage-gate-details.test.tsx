@@ -7,12 +7,12 @@ import { render, screen } from '@testing-library/react';
 import { StageGateChangeRequest } from 'utils';
 import { useTheme } from '../../../../../../services/theme.hooks';
 import themes from '../../../../../../shared/themes';
-import { ThemeUtility } from '../../../../../../shared/types';
+import { Theme } from '../../../../../../shared/types';
 import { exampleStageGateChangeRequest } from '../../../../../../test-support/test-data/change-requests.stub';
 import StageGateDetails from './stage-gate-details';
 
 jest.mock('../../../../../../services/theme.hooks');
-const mockTheme = useTheme as jest.Mock<ThemeUtility>;
+const mockTheme = useTheme as jest.Mock<Theme>;
 
 const mockHook = () => {
   mockTheme.mockReturnValue(themes[0]);

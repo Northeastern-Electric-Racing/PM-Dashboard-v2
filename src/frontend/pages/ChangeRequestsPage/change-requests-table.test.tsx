@@ -18,7 +18,7 @@ import { routerWrapperBuilder } from '../../../test-support/test-utils';
 import { fullNamePipe, wbsPipe } from '../../../shared/pipes';
 import ChangeRequestsTable, { filterCRs } from './change-requests-table';
 import { useTheme } from '../../../services/theme.hooks';
-import { ThemeUtility } from '../../../shared/types';
+import { Theme } from '../../../shared/types';
 import themes from '../../../shared/themes';
 
 jest.mock('../../../services/change-requests.hooks');
@@ -28,7 +28,7 @@ const mockedUseAllChangeRequests = useAllChangeRequests as jest.Mock<
 >;
 
 jest.mock('../../../services/theme.hooks');
-const mockTheme = useTheme as jest.Mock<ThemeUtility>;
+const mockTheme = useTheme as jest.Mock<Theme>;
 
 const mockHook = (isLoading: boolean, isError: boolean, data?: ChangeRequest[], error?: Error) => {
   mockedUseAllChangeRequests.mockReturnValue(

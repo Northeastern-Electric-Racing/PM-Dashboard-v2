@@ -14,7 +14,7 @@ export interface Auth {
   isLoading: boolean;
 }
 
-export interface ThemeUtility {
+export interface Theme {
   toggleTheme?: (name: string) => void;
   name: ThemeName;
   bgColor: string;

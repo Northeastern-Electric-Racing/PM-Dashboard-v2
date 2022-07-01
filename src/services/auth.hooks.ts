@@ -4,7 +4,7 @@
  */
 
 import { useState, useContext } from 'react';
-import { User } from 'utils';
+import { AuthenticatedUser, User } from 'utils';
 import { AuthContext } from '../frontend/app/app-context-auth/app-context-auth';
 import { useLogUserIn } from './users.hooks';
 import { Auth } from '../shared/types';
@@ -12,7 +12,7 @@ import { Auth } from '../shared/types';
 // Provider hook that creates auth object and handles state
 export const useProvideAuth = () => {
   const { isLoading, mutateAsync } = useLogUserIn();
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<AuthenticatedUser | undefined>(undefined);
 
   const devSignin = (user: User) => {
     setUser(user);

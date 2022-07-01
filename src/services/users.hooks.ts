@@ -6,6 +6,7 @@
 import { useQuery, useMutation } from 'react-query';
 import { User } from '@prisma/client';
 import { getAllUsers, getSingleUser, logUserIn } from './users.api';
+import { AuthenticatedUser } from 'utils';
 
 /**
  * Custom React Hook to supply all users.
@@ -33,8 +34,11 @@ export const useSingleUser = (id: number) => {
  * Custom React Hook to log a user in.
  */
 export const useLogUserIn = () => {
-  return useMutation<User, Error, string>(['users', 'login'], async (id_token: string) => {
-    const { data } = await logUserIn(id_token);
-    return data;
-  });
+  return useMutation<AuthenticatedUser, Error, string>(
+    ['users', 'login'],
+    async (id_token: string) => {
+      const { data } = await logUserIn(id_token);
+      return data;
+    }
+  );
 };

@@ -3,13 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from 'utils';
+import { AuthenticatedUser, User } from 'utils';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface Auth {
-  user: User | undefined;
+  user: AuthenticatedUser | undefined;
   devSignin: (user: User) => User;
-  signin: (token: string) => Promise<User>;
+  signin: (token: string) => Promise<AuthenticatedUser>;
   signout: () => void;
   isLoading: boolean;
 }

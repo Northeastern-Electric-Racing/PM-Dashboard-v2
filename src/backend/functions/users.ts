@@ -147,13 +147,7 @@ const updateUserSettings: ApiRouteFunction = async (params: { id: string }, even
   if (!body.defaultTheme) return buildClientFailureResponse('No defaultTheme found for settings.');
   await prisma.user.update({
     where: { userId },
-    data: {
-      userSettings: {
-        update: {
-          defaultTheme: body.defaultTheme
-        }
-      }
-    }
+    data: { userSettings: { update: { defaultTheme: body.defaultTheme } } }
   });
   return buildSuccessResponse({ message: `Successfully updated settings for user ${userId}.` });
 };

@@ -139,6 +139,25 @@ const getUserSettings: ApiRouteFunction = async (params: { id: string }) => {
   return buildSuccessResponse(user.userSettings);
 };
 
+/** Update settings for the specified user */
+const updateUserSettings: ApiRouteFunction = async (params: { id: string }, event) => {
+  const userId: number = parseInt(params.id);
+  if (!event.body) return buildClientFailureResponse('No settings found to update.');
+  const body = JSON.parse(event.body!);
+  if (!body.defaultTheme) return buildClientFailureResponse('No defaultTheme found for settings.');
+  await prisma.user.update({
+    where: { userId },
+    data: {
+      userSettings: {
+        update: {
+          defaultTheme: body.defaultTheme
+        }
+      }
+    }
+  });
+  return buildSuccessResponse({ message: `Successfully updated settings for user ${userId}.` });
+};
+
 // Define all valid routes for the endpoint
 const routes: ApiRoute[] = [
   {
@@ -160,6 +179,11 @@ const routes: ApiRoute[] = [
     path: `${API_URL}${apiRoutes.USER_SETTINGS_BY_USER_ID}`,
     httpMethod: 'GET',
     func: getUserSettings
+  },
+  {
+    path: `${API_URL}${apiRoutes.USER_SETTINGS_BY_USER_ID}`,
+    httpMethod: 'POST',
+    func: updateUserSettings
   }
 ];
 

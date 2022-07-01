@@ -48,7 +48,13 @@ const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
     otherConstraints: true,
     workPackages: {
       include: {
-        wbsElement: { include: { changes: { include: { implementer: true } } } },
+        wbsElement: {
+          include: {
+            projectLead: true,
+            projectManager: true,
+            changes: { include: { implementer: true } }
+          }
+        },
         dependencies: true,
         expectedActivities: true,
         deliverables: true
@@ -66,7 +72,13 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
         otherConstraints: true,
         workPackages: {
           include: {
-            wbsElement: { include: { changes: { include: { implementer: true } } } },
+            wbsElement: {
+              include: {
+                projectLead: true,
+                projectManager: true,
+                changes: { include: { implementer: true } }
+              }
+            },
             dependencies: true,
             expectedActivities: true,
             deliverables: true
@@ -129,13 +141,14 @@ const projectTransformer = (
     summary: project.summary,
     budget: project.budget,
     gDriveLink: project.googleDriveFolderLink ?? undefined,
-    slideDeckLink: project.slideDeckLink ?? undefined,
     taskListLink: project.taskListLink ?? undefined,
+    slideDeckLink: project.slideDeckLink ?? undefined,
     bomLink: project.bomLink ?? undefined,
-    otherConstraints: project.otherConstraints.map(descBulletConverter),
-    features: project.features.map(descBulletConverter),
-    goals: project.goals.map(descBulletConverter),
+    rules: project.rules,
     duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
+    goals: project.goals.map(descBulletConverter),
+    features: project.features.map(descBulletConverter),
+    otherConstraints: project.otherConstraints.map(descBulletConverter),
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
       const expectedProgress = calculatePercentExpectedProgress(
@@ -145,15 +158,13 @@ const projectTransformer = (
       );
 
       return {
-        //...workPackage,
-        //...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
         dateCreated: workPackage.wbsElement.dateCreated,
         name: workPackage.wbsElement.name,
         status: convertStatus(workPackage.wbsElement.status),
-        projectLead: workPackage.wbsElement.projectLead,
-        projectManager: null,
+        projectLead: workPackage.wbsElement.projectLead ?? undefined,
+        projectManager: workPackage.wbsElement.projectManager ?? undefined,
         changes: workPackage.wbsElement.changes.map((change) => ({
           changeId: change.changeId,
           changeRequestId: change.changeRequestId,

@@ -5,12 +5,12 @@
 
 import { render, screen } from '@testing-library/react';
 import { useTheme } from '../../../services/theme.hooks';
-import { Theme } from '../../../shared/types';
+import { ThemeUtility } from '../../../shared/types';
 import themes from '../../../shared/themes';
 import HorizontalList from './horizontal-list';
 
 jest.mock('../../../services/theme.hooks');
-const mockTheme = useTheme as jest.Mock<Theme>;
+const mockTheme = useTheme as jest.Mock<ThemeUtility>;
 
 const mockHook = () => {
   mockTheme.mockReturnValue(themes[0]);

@@ -3,17 +3,17 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Theme } from './types';
+import { ThemeUtility } from './types';
 
-const themes: Theme[] = [
+const themes: ThemeUtility[] = [
   {
-    name: 'dark',
+    name: 'DARK',
     bgColor: '#353434',
     cardBg: 'dark',
     cardBorder: 'light'
   },
   {
-    name: 'light',
+    name: 'LIGHT',
     bgColor: '#ffffff',
     cardBg: 'light',
     cardBorder: 'dark'

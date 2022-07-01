@@ -8,12 +8,12 @@ import { ActivationChangeRequest } from 'utils';
 import { useTheme } from '../../../../../../services/theme.hooks';
 import { datePipe } from '../../../../../../shared/pipes';
 import themes from '../../../../../../shared/themes';
-import { Theme } from '../../../../../../shared/types';
+import { ThemeUtility } from '../../../../../../shared/types';
 import { exampleActivationChangeRequest } from '../../../../../../test-support/test-data/change-requests.stub';
 import ActivationDetails from './activation-details';
 
 jest.mock('../../../../../../services/theme.hooks');
-const mockTheme = useTheme as jest.Mock<Theme>;
+const mockTheme = useTheme as jest.Mock<ThemeUtility>;
 
 const mockHook = () => {
   mockTheme.mockReturnValue(themes[0]);

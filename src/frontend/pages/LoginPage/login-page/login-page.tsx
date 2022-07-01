@@ -7,13 +7,14 @@ import GoogleLogin from 'react-google-login';
 import { Card } from 'react-bootstrap';
 import styles from './login-page.module.css';
 import LoginDev from '../login-dev/login-dev';
-import { useTheme } from '../../../../services/theme.hooks';
+import { Theme } from '../../../../shared/types';
 
 interface LoginPageProps {
   devSetRole: (role: string) => void;
   devFormSubmit: (e: any) => any;
   prodSuccess: (res: any) => any;
   prodFailure: (res: any) => any;
+  theme: Theme;
 }
 
 /**
@@ -23,10 +24,9 @@ const LoginPage: React.FC<LoginPageProps> = ({
   devSetRole,
   devFormSubmit,
   prodSuccess,
-  prodFailure
+  prodFailure,
+  theme
 }) => {
-  const theme = useTheme();
-
   return (
     <Card bg={theme.cardBg} className={'mx-auto mt-sm-5 ' + styles.card}>
       <Card.Body>

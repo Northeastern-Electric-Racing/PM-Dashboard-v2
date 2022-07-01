@@ -19,7 +19,7 @@ const renderComponent = () => {
     history.listen((loc) => {
       pushed.push(loc.pathname);
     });
-    return <Login postLoginRedirect={routes.HOME} />;
+    return <Login postLoginRedirect={{ url: routes.HOME, search: '' }} />;
   };
   const RouterWrapper = routerWrapperBuilder({ path: routes.LOGIN, route: routes.LOGIN });
   return render(

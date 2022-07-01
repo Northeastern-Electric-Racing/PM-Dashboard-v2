@@ -15,11 +15,11 @@ export interface Auth {
 }
 
 export interface Theme {
-  toggleTheme?: (name: string) => void;
   name: ThemeName;
   bgColor: string;
   cardBg: string;
   cardBorder: string;
+  toggleTheme?: (name: ThemeName) => void;
 }
 
 export interface LinkItem {

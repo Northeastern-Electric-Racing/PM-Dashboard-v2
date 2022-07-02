@@ -46,22 +46,24 @@ const UserSettings: React.FC<UserSettingsProps> = ({ userId }) => {
     }
   };
 
-  const editButton = (
-    <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEdit(true)} role="button" />
-  );
-  const formButtons = (
-    <div className="d-flex flex-row">
-      <Button className="mr-1" variant="secondary" onClick={() => setEdit(false)}>
-        Cancel
-      </Button>
-      <Button variant="success" type="submit" form="update-user-settings">
-        Save
-      </Button>
-    </div>
-  );
-
   return (
-    <PageBlock title="User Settings" headerRight={!edit ? editButton : formButtons}>
+    <PageBlock
+      title="User Settings"
+      headerRight={
+        !edit ? (
+          <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEdit(true)} role="button" />
+        ) : (
+          <div className="d-flex flex-row">
+            <Button className="mr-1" variant="secondary" onClick={() => setEdit(false)}>
+              Cancel
+            </Button>
+            <Button variant="success" type="submit" form="update-user-settings">
+              Save
+            </Button>
+          </div>
+        )
+      }
+    >
       {!edit ? (
         <UserSettingsView settings={userSettings.data!} />
       ) : (

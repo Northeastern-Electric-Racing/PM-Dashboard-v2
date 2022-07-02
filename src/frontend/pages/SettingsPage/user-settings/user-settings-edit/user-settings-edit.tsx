@@ -5,7 +5,7 @@
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { ThemeName } from 'utils';
 import { FormInput } from '../user-settings';

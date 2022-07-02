@@ -3,6 +3,8 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { faEdit, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -44,7 +46,9 @@ const UserSettings: React.FC<UserSettingsProps> = ({ userId }) => {
     }
   };
 
-  const editButton = <Button onClick={() => setEdit(true)}>Edit</Button>;
+  const editButton = (
+    <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEdit(true)} role="button" />
+  );
   const formButtons = (
     <div className="d-flex flex-row">
       <Button className="mr-1" variant="secondary" onClick={() => setEdit(false)}>

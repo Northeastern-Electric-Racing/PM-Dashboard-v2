@@ -49,7 +49,9 @@ const UserSettings: React.FC<UserSettingsProps> = ({ userId }) => {
       title="User Settings"
       headerRight={
         !edit ? (
-          <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEdit(true)} role="button" />
+          <div role="button" onClick={() => setEdit(true)}>
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </div>
         ) : (
           <div className="d-flex flex-row">
             <Button className="mr-1" variant="secondary" onClick={() => setEdit(false)}>

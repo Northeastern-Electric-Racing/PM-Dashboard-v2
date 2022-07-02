@@ -65,9 +65,6 @@ const UserSettingsEdit: React.FC<UserSettingsEditProps> = ({ currentSettings, on
             </Form.Group>
           </Col>
         </Row>
-        <Button variant="success" type="submit" form="update-user-settings">
-          Save
-        </Button>
       </Form>
     </Container>
   );

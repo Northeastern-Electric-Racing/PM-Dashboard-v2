@@ -5,8 +5,15 @@
 
 import { useQuery, useMutation } from 'react-query';
 import { User } from '@prisma/client';
-import { getAllUsers, getSingleUser, getSingleUserSettings, logUserIn } from './users.api';
+import {
+  getAllUsers,
+  getSingleUser,
+  getSingleUserSettings,
+  logUserIn,
+  updateUserSettings
+} from './users.api';
 import { AuthenticatedUser, UserSettings } from 'utils';
+import { useAuth } from './auth.hooks';
 
 /**
  * Custom React Hook to supply all users.
@@ -53,4 +60,19 @@ export const useSingleUserSettings = (id: number) => {
     const { data } = await getSingleUserSettings(id);
     return data;
   });
+};
+
+/**
+ * Custom React Hook to update a user's settings.
+ */
+export const useUpdateUserSettings = () => {
+  const auth = useAuth();
+  return useMutation<{ message: string }, Error, UserSettings>(
+    ['users', auth.user?.userId!, 'settings', 'update'],
+    async (settings: UserSettings) => {
+      if (!auth.user) throw new Error('Update settings not allowed when not logged in');
+      const { data } = await updateUserSettings(auth.user.userId, settings);
+      return data;
+    }
+  );
 };

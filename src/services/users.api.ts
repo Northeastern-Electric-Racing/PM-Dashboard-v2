@@ -50,3 +50,10 @@ export const logUserIn = (id_token: string) => {
 export const getSingleUserSettings = (id: number) => {
   return axios.get<UserSettings>(apiUrls.userSettingsByUserId(`${id}`));
 };
+
+/**
+ * Update the given user's settings by UserId
+ */
+export const updateUserSettings = (id: number, settings: UserSettings) => {
+  return axios.post<{ message: string }>(apiUrls.userSettingsByUserId(`${id}`), settings);
+};

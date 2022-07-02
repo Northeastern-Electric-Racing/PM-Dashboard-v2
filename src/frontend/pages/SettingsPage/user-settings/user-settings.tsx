@@ -45,39 +45,14 @@ const UserSettings: React.FC<UserSettingsProps> = ({ userId }) => {
   };
 
   const editButton = <Button onClick={() => setEdit(true)}>Edit</Button>;
-  const saveButton = (
-    <Button
-      variant="success"
-      type="submit"
-      form="update-user-settings"
-      onClick={() => {
-        setEdit(false);
-      }}
-    >
-      Save
-    </Button>
-  );
   const cancelButton = (
-    <Button
-      className="mr-1"
-      variant="secondary"
-      form="update-user-settings"
-      onClick={() => setEdit(false)}
-    >
+    <Button className="mr-1" variant="secondary" onClick={() => setEdit(false)}>
       Cancel
     </Button>
   );
 
   return (
-    <PageBlock
-      title="User Settings"
-      headerRight={
-        <div className="d-flex flex-row">
-          {!edit ? editButton : cancelButton}
-          {edit ? saveButton : ''}
-        </div>
-      }
-    >
+    <PageBlock title="User Settings" headerRight={!edit ? editButton : cancelButton}>
       {!edit ? (
         <UserSettingsView settings={userSettings.data!} />
       ) : (

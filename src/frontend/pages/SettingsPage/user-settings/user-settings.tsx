@@ -3,11 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { faEdit, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Button, Container } from 'react-bootstrap';
 import { ThemeName } from 'utils';
 import { useTheme } from '../../../../services/theme.hooks';
 import { useSingleUserSettings, useUpdateUserSettings } from '../../../../services/users.hooks';
@@ -63,11 +62,13 @@ const UserSettings: React.FC<UserSettingsProps> = ({ userId }) => {
         )
       }
     >
-      {!edit ? (
-        <UserSettingsView settings={userSettings.data!} />
-      ) : (
-        <UserSettingsEdit currentSettings={userSettings.data!} onSubmit={handleConfirm} />
-      )}
+      <Container fluid>
+        {!edit ? (
+          <UserSettingsView settings={userSettings.data!} />
+        ) : (
+          <UserSettingsEdit currentSettings={userSettings.data!} onSubmit={handleConfirm} />
+        )}
+      </Container>
     </PageBlock>
   );
 };

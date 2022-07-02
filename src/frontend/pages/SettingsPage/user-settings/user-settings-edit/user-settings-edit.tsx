@@ -5,7 +5,7 @@
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { ThemeName } from 'utils';
 import { FormInput } from '../user-settings';
@@ -33,35 +33,33 @@ const UserSettingsEdit: React.FC<UserSettingsEditProps> = ({ currentSettings, on
   });
 
   return (
-    <Container fluid>
-      <Form
-        id={'update-user-settings'}
-        onSubmit={handleSubmit(async (data: FormInput) => await onSubmit(data))}
-      >
-        <Row>
-          <Col xs={5} sm={4} md={3} lg={2} xl={2}>
-            <Form.Group controlId="updateUserSettings-defaultTheme">
-              <Form.Label>Default Theme</Form.Label>
-              <Form.Control
-                custom
-                as="select"
-                {...register('defaultTheme')}
-                isInvalid={formState.errors.defaultTheme?.message !== undefined}
-              >
-                {themes.map((t) => (
-                  <option key={t.name} value={t.name}>
-                    {t.name}
-                  </option>
-                ))}
-              </Form.Control>
-              <Form.Control.Feedback type="invalid">
-                {formState.errors.defaultTheme?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+    <Form
+      id={'update-user-settings'}
+      onSubmit={handleSubmit(async (data: FormInput) => await onSubmit(data))}
+    >
+      <Row>
+        <Col xs={5} sm={4} md={3} lg={2} xl={2}>
+          <Form.Group controlId="updateUserSettings-defaultTheme">
+            <Form.Label>Default Theme</Form.Label>
+            <Form.Control
+              custom
+              as="select"
+              {...register('defaultTheme')}
+              isInvalid={formState.errors.defaultTheme?.message !== undefined}
+            >
+              {themes.map((t) => (
+                <option key={t.name} value={t.name}>
+                  {t.name}
+                </option>
+              ))}
+            </Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {formState.errors.defaultTheme?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 

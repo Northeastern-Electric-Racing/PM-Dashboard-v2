@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { UserSettings } from 'utils';
 
 interface UserSettingsViewProps {
@@ -13,13 +13,11 @@ interface UserSettingsViewProps {
 /** Component to display user settings */
 const UserSettingsView: React.FC<UserSettingsViewProps> = ({ settings }) => {
   return (
-    <Container fluid>
-      <Row>
-        <Col md={6} lg={4}>
-          <b>Default Theme:</b> {settings.defaultTheme}
-        </Col>
-      </Row>
-    </Container>
+    <Row>
+      <Col md={6} lg={4}>
+        <b>Default Theme:</b> {settings.defaultTheme}
+      </Col>
+    </Row>
   );
 };
 

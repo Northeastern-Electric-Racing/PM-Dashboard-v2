@@ -5,13 +5,17 @@
 
 import { UseMutationResult, UseQueryResult } from 'react-query';
 import { UserSettings } from 'utils';
-import { useLogUserIn, useSingleUserSettings } from '../../../../services/users.hooks';
+import {
+  useLogUserIn,
+  useSingleUserSettings,
+  useUpdateUserSettings
+} from '../../../../services/users.hooks';
 import {
   mockUseMutationResult,
   mockUseQueryResult
 } from '../../../../test-support/test-data/test-utils.stub';
 import { exampleUserSettingsLight } from '../../../../test-support/test-data/user-settings.stub';
-import { render, screen } from '../../../../test-support/test-utils';
+import { fireEvent, render, screen } from '../../../../test-support/test-utils';
 import UserSettingsComponent from './user-settings';
 
 jest.mock('./user-settings-view/user-settings-view', () => {
@@ -19,6 +23,15 @@ jest.mock('./user-settings-view/user-settings-view', () => {
     __esModule: true,
     default: () => {
       return <div>user-settings-view</div>;
+    }
+  };
+});
+
+jest.mock('./user-settings-edit/user-settings-edit', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>user-settings-edit</div>;
     }
   };
 });
@@ -40,6 +53,14 @@ const mockUserSettingsHook = (
   );
 };
 
+const mockedUseUpdateUserSettings = useUpdateUserSettings as jest.Mock<UseMutationResult>;
+
+const mockUseUpdateUserSettingsHook = (isLoading: boolean, isError: boolean, error?: Error) => {
+  mockedUseUpdateUserSettings.mockReturnValue(
+    mockUseMutationResult<{ in: string }>(isLoading, isError, { in: 'hi' }, error)
+  );
+};
+
 const mockedUseLogUserIn = useLogUserIn as jest.Mock<UseMutationResult>;
 
 const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Error) => {
@@ -53,6 +74,7 @@ const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Erro
  */
 const renderComponent = () => {
   mockUseLogUserInHook(false, false);
+  mockUseUpdateUserSettingsHook(false, false);
   return render(<UserSettingsComponent userId={1} />);
 };
 
@@ -86,9 +108,34 @@ describe('user settings component', () => {
     expect(screen.getByText('user-settings-view')).toBeInTheDocument();
   });
 
-  it('renders edit button', () => {
+  it('renders edit pencil icon button', () => {
     mockUserSettingsHook(false, false, exampleUserSettingsLight);
     renderComponent();
-    expect(screen.getByText('Edit')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
+
+  it('displays edit form when edit pencil icon button is clicked', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('user-settings-edit')).toBeInTheDocument();
+  });
+
+  it('does not render edit pencil icon button after clicked', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.queryAllByRole('button').map((e) => e.innerHTML)).toStrictEqual([
+      'Cancel',
+      'Save'
+    ]);
+  });
+
+  it('renders cancel and save buttons with edit form', () => {
+    mockUserSettingsHook(false, false, exampleUserSettingsLight);
+    renderComponent();
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
+    expect(screen.getByText('Save')).toBeInTheDocument();
   });
 });

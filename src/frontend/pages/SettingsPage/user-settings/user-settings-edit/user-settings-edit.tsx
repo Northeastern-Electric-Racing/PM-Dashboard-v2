@@ -27,22 +27,17 @@ const schema = yup.object().shape({
 });
 
 const UserSettingsEdit: React.FC<UserSettingsEditProps> = ({ currentSettings, onSubmit }) => {
-  const { register, reset, handleSubmit, formState } = useForm<FormInput>({
+  const { register, handleSubmit, formState } = useForm<FormInput>({
     defaultValues: currentSettings,
     resolver: yupResolver(schema)
   });
 
-  /**
-   * Wrapper function for onSubmit so that form data is reset after submit
-   */
-  const onSubmitWrapper = async (data: FormInput) => {
-    await onSubmit(data);
-    reset({ defaultTheme: themes[0].name });
-  };
-
   return (
     <Container fluid>
-      <Form id={'update-user-settings'} onSubmit={handleSubmit(onSubmitWrapper)}>
+      <Form
+        id={'update-user-settings'}
+        onSubmit={handleSubmit(async (data: FormInput) => await onSubmit(data))}
+      >
         <Row>
           <Col xs={5} sm={4} md={3} lg={2} xl={2}>
             <Form.Group controlId="updateUserSettings-defaultTheme">

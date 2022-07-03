@@ -155,6 +155,7 @@ const ChangeRequestsTable: React.FC = () => {
     <Container fluid>
       <PageTitle
         title={'Change Requests'}
+        previousPages={[]}
         actionButton={
           <ActionButton
             link={routes.CHANGE_REQUESTS_NEW}

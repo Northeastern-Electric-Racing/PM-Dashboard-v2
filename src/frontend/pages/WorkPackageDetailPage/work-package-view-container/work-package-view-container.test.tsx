@@ -43,7 +43,7 @@ describe('work package container view', () => {
   it('renders the project', () => {
     renderComponent();
 
-    expect(screen.getByText('1.1.2 - Adhesive Shear Strength Test')).toBeInTheDocument();
+    expect(screen.getAllByText('1.1.2 - Adhesive Shear Strength Test').length).toEqual(2);
     expect(screen.getByText('Dependencies')).toBeInTheDocument();
     expect(screen.getByText('Expected Activities')).toBeInTheDocument();
     expect(screen.getByText('Deliverables')).toBeInTheDocument();

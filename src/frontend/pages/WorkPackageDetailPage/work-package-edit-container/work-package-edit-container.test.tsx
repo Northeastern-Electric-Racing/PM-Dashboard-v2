@@ -5,7 +5,7 @@
 
 import { UseMutationResult, UseQueryResult } from 'react-query';
 import { User } from 'utils';
-import { render, screen } from '../../../../test-support/test-utils';
+import { render, routerWrapperBuilder, screen } from '../../../../test-support/test-utils';
 import { useEditWorkPackage } from '../../../../services/work-packages.hooks';
 import { exampleWorkPackage1 } from '../../../../test-support/test-data/work-packages.stub';
 import { useAllUsers, useLogUserIn } from '../../../../services/users.hooks';
@@ -45,8 +45,11 @@ const mockUseLogUserInHook = (isLoading: boolean, isError: boolean, error?: Erro
 
 // Sets up the component under test with the desired values and renders it.
 const renderComponent = () => {
+  const RouterWrapper = routerWrapperBuilder({});
   return render(
-    <WorkPackageEditContainer workPackage={exampleWorkPackage1} exitEditMode={() => null} />
+    <RouterWrapper>
+      <WorkPackageEditContainer workPackage={exampleWorkPackage1} exitEditMode={() => null} />
+    </RouterWrapper>
   );
 };
 
@@ -64,7 +67,7 @@ describe('test suite for WorkPackageEditContainer', () => {
     mockEditWorkPackageHook(false, false);
     mockUsersHook(false, false, exampleAllUsers);
     renderComponent();
-    expect(screen.getByText(exampleWorkPackage1.name, { exact: false })).toBeInTheDocument();
+    expect(screen.getAllByText(exampleWorkPackage1.name, { exact: false }).length).toEqual(2);
     expect(screen.getByText('Work Package Details')).toBeInTheDocument();
   });
 

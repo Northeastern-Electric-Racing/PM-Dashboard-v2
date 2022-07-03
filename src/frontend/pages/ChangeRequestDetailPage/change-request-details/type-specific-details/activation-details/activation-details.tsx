@@ -15,40 +15,36 @@ interface ActivationDetailsProps {
 const ActivationDetails: React.FC<ActivationDetailsProps> = ({ cr }) => {
   const spacer = 'mb-2';
   return (
-    <PageBlock
-      title={'Activation Change Request Details'}
-      headerRight={<></>}
-      body={
-        <Container fluid>
-          <Row>
-            <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
-              <b>Project Lead</b>
-            </Col>
-            <Col className={spacer} xs={4} sm={6} md={3} lg={3} xl={2}>
-              {fullNamePipe(cr.projectLead)}
-            </Col>
-            <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
-              <b>Project Manager</b>
-            </Col>
-            <Col className={spacer} xs={4} sm={6} md={3} lg={3} xl={2}>
-              {fullNamePipe(cr.projectManager)}
-            </Col>
-            <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
-              <b>Start Date</b>
-            </Col>
-            <Col className={spacer} xs={4} sm={6} md={3} lg={3} xl={2}>
-              {datePipe(cr.startDate)}
-            </Col>
-            <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
-              <b>Confirm WP Details</b>
-            </Col>
-            <Col className={spacer} xs={4} sm={4} md={2} lg={2} xl={1}>
-              {booleanPipe(cr.confirmDetails)}
-            </Col>
-          </Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Activation Change Request Details'}>
+      <Container fluid>
+        <Row>
+          <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
+            <b>Project Lead</b>
+          </Col>
+          <Col className={spacer} xs={4} sm={6} md={3} lg={3} xl={2}>
+            {fullNamePipe(cr.projectLead)}
+          </Col>
+          <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
+            <b>Project Manager</b>
+          </Col>
+          <Col className={spacer} xs={4} sm={6} md={3} lg={3} xl={2}>
+            {fullNamePipe(cr.projectManager)}
+          </Col>
+          <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
+            <b>Start Date</b>
+          </Col>
+          <Col className={spacer} xs={4} sm={6} md={3} lg={3} xl={2}>
+            {datePipe(cr.startDate)}
+          </Col>
+          <Col className={spacer} xs={6} sm={4} md={3} lg={3} xl={2}>
+            <b>Confirm WP Details</b>
+          </Col>
+          <Col className={spacer} xs={4} sm={4} md={2} lg={2} xl={1}>
+            {booleanPipe(cr.confirmDetails)}
+          </Col>
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

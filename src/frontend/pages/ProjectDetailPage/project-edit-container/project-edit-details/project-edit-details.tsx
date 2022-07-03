@@ -127,76 +127,64 @@ const ProjectEditDetails: React.FC<projectDetailsProps> = ({
   };
 
   return (
-    <PageBlock
-      title={'Project Details (EDIT)'}
-      headerRight={statusSelect}
-      body={
-        <Container fluid>
-          <Row>
-            <Col>
-              {editDetailsInputBuilder(
-                'Project Name:',
-                'text',
-                project.name,
-                updateName,
-                '',
-                '',
-                ''
-              )}
-            </Col>
-            <Col lg={3} xl={2}>
-              {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
-            </Col>
-          </Row>
-          <Row>
-            <Col>{buildUsersSelect('Project Lead:', project.projectLead, updateProjectLead)}</Col>
-            <Col>
-              {buildUsersSelect('Project Manager:', project.projectManager, updateProjectManager)}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {editDetailsInputBuilder(
-                'Slide Deck',
-                'text',
-                project.slideDeckLink!,
-                updateSlideDeck,
-                '',
-                '',
-                'Slide deck link'
-              )}
-              {editDetailsInputBuilder(
-                'Task List',
-                'text',
-                project.taskListLink!,
-                updateTaskList,
-                '',
-                '',
-                'Task list link'
-              )}
-              {editDetailsInputBuilder(
-                'BOM',
-                'text',
-                project.bomLink!,
-                updateBom,
-                '',
-                '',
-                'BOM link'
-              )}
-              {editDetailsInputBuilder(
-                'Google Drive',
-                'text',
-                project.gDriveLink!,
-                updateGDrive,
-                '',
-                '',
-                'Google drive link'
-              )}
-            </Col>
-          </Row>
-        </Container>
-      }
-    />
+    <PageBlock title={'Project Details (EDIT)'} headerRight={statusSelect}>
+      <Container fluid>
+        <Row>
+          <Col>
+            {editDetailsInputBuilder('Project Name:', 'text', project.name, updateName, '', '', '')}
+          </Col>
+          <Col lg={3} xl={2}>
+            {editDetailsInputBuilder('Budget:', 'number', project.budget, updateBudget, '$')}
+          </Col>
+        </Row>
+        <Row>
+          <Col>{buildUsersSelect('Project Lead:', project.projectLead, updateProjectLead)}</Col>
+          <Col>
+            {buildUsersSelect('Project Manager:', project.projectManager, updateProjectManager)}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {editDetailsInputBuilder(
+              'Slide Deck',
+              'text',
+              project.slideDeckLink!,
+              updateSlideDeck,
+              '',
+              '',
+              'Slide deck link'
+            )}
+            {editDetailsInputBuilder(
+              'Task List',
+              'text',
+              project.taskListLink!,
+              updateTaskList,
+              '',
+              '',
+              'Task list link'
+            )}
+            {editDetailsInputBuilder(
+              'BOM',
+              'text',
+              project.bomLink!,
+              updateBom,
+              '',
+              '',
+              'BOM link'
+            )}
+            {editDetailsInputBuilder(
+              'Google Drive',
+              'text',
+              project.gDriveLink!,
+              updateGDrive,
+              '',
+              '',
+              'Google drive link'
+            )}
+          </Col>
+        </Row>
+      </Container>
+    </PageBlock>
   );
 };
 

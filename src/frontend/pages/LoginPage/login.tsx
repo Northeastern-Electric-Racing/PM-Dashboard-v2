@@ -28,7 +28,6 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   if (auth.isLoading) return <LoadingIndicator />;
 
   const redirectAfterLogin = () => {
-    console.log(postLoginRedirect);
     if (postLoginRedirect.url === routes.LOGIN) {
       history.push(routes.HOME);
     } else {

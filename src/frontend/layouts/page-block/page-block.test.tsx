@@ -3,10 +3,10 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { render } from '@testing-library/react';
+import { render, screen } from '../../../test-support/test-utils';
 import { useTheme } from '../../../services/theme.hooks';
-import themes from '../../../shared/themes';
 import { Theme } from '../../../shared/types';
+import themes from '../../../shared/themes';
 import PageBlock from './page-block';
 
 jest.mock('../../../services/theme.hooks');
@@ -16,8 +16,12 @@ const mockHook = () => {
   mockTheme.mockReturnValue(themes[0]);
 };
 
-const renderComponent = () => {
-  return render(<PageBlock title={'test'} headerRight={<>hi</>} body={<>hello</>} />);
+const renderComponent = (headerRight = false) => {
+  return render(
+    <PageBlock title={'test'} headerRight={headerRight ? <p>hi</p> : undefined}>
+      hello
+    </PageBlock>
+  );
 };
 
 describe('card component', () => {
@@ -28,20 +32,20 @@ describe('card component', () => {
   });
 
   it('renders title', () => {
-    const { getByText } = renderComponent();
+    renderComponent();
 
-    expect(getByText('test')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
   });
 
   it('renders header right', () => {
-    const { getByText } = renderComponent();
+    renderComponent(true);
 
-    expect(getByText('hi')).toBeInTheDocument();
+    expect(screen.getByText('hi')).toBeInTheDocument();
   });
 
-  it('renders body', () => {
-    const { getByText } = renderComponent();
+  it('renders children', () => {
+    renderComponent();
 
-    expect(getByText('hello')).toBeInTheDocument();
+    expect(screen.getByText('hello')).toBeInTheDocument();
   });
 });

@@ -20,11 +20,9 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ message, error }) => {
       <h5>There was an error loading the page.</h5>
       {message ? <p>{message}</p> : ''}
       {error ? (
-        <PageBlock
-          title={'Debugging Info: '}
-          headerRight={<></>}
-          body={<Container>{JSON.stringify(error, Object.getOwnPropertyNames(error))}</Container>}
-        />
+        <PageBlock title={'Debugging Info: '}>
+          <Container>{JSON.stringify(error, Object.getOwnPropertyNames(error))}</Container>
+        </PageBlock>
       ) : null}
     </div>
   );

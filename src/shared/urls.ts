@@ -21,7 +21,13 @@ const projectsCreate = () => `${projects()}-new`;
 const projectsEdit = () => `${projects()}-edit`;
 
 /**************** Work Packages Endpoint ****************/
-const workPackages = () => `${API_URL}/work-packages`;
+const workPackages = (queryParams?: { [field: string]: string }) => {
+  const url = `${API_URL}/work-packages`;
+  if (!queryParams) return url;
+  return `${url}?${Object.keys(queryParams)
+    .map((param) => `${param}=${queryParams[param]}`)
+    .join('&')}`;
+};
 const workPackagesByWbsNum = (wbsNum: string) => `${workPackages()}/${wbsNum}`;
 const workPackagesCreate = () => `${workPackages()}-create`;
 const workPackagesEdit = () => `${workPackages()}-edit`;

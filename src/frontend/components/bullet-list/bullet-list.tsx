@@ -3,13 +3,14 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import { ReactNode } from 'react';
 import PageBlock from '../../layouts/page-block/page-block';
 import styles from './bullet-list.module.css';
 
 interface BulletListProps {
   title: string;
-  headerRight: JSX.Element;
-  list: JSX.Element[];
+  headerRight?: ReactNode;
+  list: ReactNode[];
   ordered?: boolean;
   readOnly?: boolean;
   fieldName?: string;
@@ -21,7 +22,11 @@ const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, order
   if (ordered) {
     builtList = <ol className={styles.bulletList}>{listPrepared}</ol>;
   }
-  return <PageBlock title={title} headerRight={headerRight} body={builtList} />;
+  return (
+    <PageBlock title={title} headerRight={headerRight}>
+      {builtList}
+    </PageBlock>
+  );
 };
 
 export default BulletList;

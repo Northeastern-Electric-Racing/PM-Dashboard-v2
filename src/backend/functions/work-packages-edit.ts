@@ -130,7 +130,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     wbsElementId!
   );
   const wbsElementStatusChangeJson = createChangeJsonNonList(
-    'WBS element status',
+    'status',
     originalWorkPackage.wbsElement.status,
     wbsElementStatus,
     crId,

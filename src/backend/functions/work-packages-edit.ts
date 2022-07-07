@@ -473,7 +473,6 @@ const handler = middy(editWorkPackage)
 export { handler };
 
 // Given a user's id, this method returns the user's full name
-// -1 represetns a null or undefined
 const getUserFullName = async (userId: number | null | undefined): Promise<string | null> => {
   if (userId === null || userId === undefined) return null; 
   const user = await prisma.user.findUnique( { where: { userId }});

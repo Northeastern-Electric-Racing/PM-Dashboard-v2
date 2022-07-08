@@ -7,14 +7,11 @@ import { ProjectPreview } from './project-types';
 import { User } from './user-types';
 
 export interface Team {
-  teamId: number;
+  teamId: string;
   teamName: string;
   leader: User;
   members: User[];
   projects: ProjectPreview[];
 }
 
-export interface TeamPreview {
-  teamId: number;
-  teamName: string;
-}
+export type TeamPreview = Pick<Team, 'teamId' | 'teamName'>;

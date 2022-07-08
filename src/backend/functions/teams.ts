@@ -48,10 +48,10 @@ const teamsTransformer = (team: Prisma.TeamGetPayload<typeof relationArgs>): Tea
   if (team === null) throw new TypeError('Team not found');
 
   return {
-    teamId: team.teamId ?? undefined,
-    teamName: team.teamName ?? undefined,
-    leader: team.leader ?? undefined,
-    members: team.members ?? undefined,
+    teamId: team.teamId,
+    teamName: team.teamName,
+    leader: team.leader,
+    members: team.members,
     projects: team.projects.map((project) => ({
       id: project.projectId,
       wbsNum: wbsNumOf(project.wbsElement),
@@ -66,41 +66,12 @@ const getAllTeams: ApiRouteFunction = async () => {
   return buildSuccessResponse(teams.map(teamsTransformer));
 };
 
-// make a team with the given leader and name
-const createTeam: ApiRouteFunction = async (params: { leaderId: string; teamName: string }) => {
-  const { teamName } = params;
-  const leaderId: number = parseInt(params.leaderId);
-
-  const team = await prisma.team.create({
-    data: {
-      teamName,
-      leaderId
-    },
-    include: {
-      members: true,
-      projects: {
-        include: {
-          wbsElement: true
-        }
-      },
-      leader: true
-    }
-  });
-
-  return buildSuccessResponse(teamsTransformer(team));
-};
-
 // Define all valid routes for the endpoint
 const routes: ApiRoute[] = [
   {
     path: `${API_URL}${apiRoutes.TEAMS}`,
     httpMethod: 'GET',
     func: getAllTeams
-  },
-  {
-    path: `${API_URL}${apiRoutes.TEAMS}`,
-    httpMethod: 'POST',
-    func: createTeam
   }
 ];
 

@@ -49,11 +49,7 @@ export interface Project extends WbsElement {
   team?: TeamPreview;
 }
 
-export interface ProjectPreview {
-  id: number;
-  name: string;
-  wbsNum: WbsNumber;
-}
+export type ProjectPreview = Pick<Project, 'id' | 'name' | 'wbsNum'>;
 
 export interface WorkPackage extends WbsElement {
   orderInProject: number;

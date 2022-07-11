@@ -130,7 +130,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
     wbsElementId!
   );
   const wbsElementStatusChangeJson = createChangeJsonNonList(
-    'WBS element status',
+    'status',
     originalWorkPackage.wbsElement.status,
     wbsElementStatus,
     crId,
@@ -186,7 +186,7 @@ export const editWorkPackage: Handler<FromSchema<typeof inputSchema>> = async (
   if (body.hasOwnProperty('projectManager')) {
     const projectManagerChangeJson = createChangeJsonNonList(
       'project manager',
-      await getUserFullName(originalWorkPackage.wbsElement.projectManagerId), 
+      await getUserFullName(originalWorkPackage.wbsElement.projectManagerId),
       await getUserFullName(body.projectManager),
       crId,
       userId,
@@ -474,8 +474,8 @@ export { handler };
 
 // Given a user's id, this method returns the user's full name
 const getUserFullName = async (userId: number | null | undefined): Promise<string | null> => {
-  if (userId === null || userId === undefined) return null; 
-  const user = await prisma.user.findUnique( { where: { userId }});
-  if (!user) throw new Error('user not found'); 
+  if (userId === null || userId === undefined) return null;
+  const user = await prisma.user.findUnique({ where: { userId } });
+  if (!user) throw new Error('user not found');
   return `${user.firstName} ${user.lastName}`;
-}
+};

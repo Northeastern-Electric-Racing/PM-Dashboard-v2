@@ -60,7 +60,11 @@ If you edit code in any local package (e.g. utils), you must run `npm install` b
 
 Commit early and often (within reason) to properly save your work and to make your changes more easily separable.
 
-Use `git commit -a -m [message]` to stage all changes and commit them with the message.
+Use `git status` to see which files have been changed. If you see `package-lock.json` in there, run `git restore package-lock.json`. Do the same for `src/utils/package-lock.json` if it is also there. These files should only be committed in very specific circumstances.
+
+Next, do `git add path/to/file` for each file you want to commit. You can also do `git add -A` to add all of them.
+
+Next, use `git commit -m [message]` to commit your staged file with the message.
 Use the following syntax for commit messages: `#[issue number] - [description of changes made]`.
 Examples: `#12 - Expanded the creating commmits section` or `#79 - Increased list padding`.
 

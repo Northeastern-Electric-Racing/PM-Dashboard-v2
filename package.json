@@ -29,7 +29,7 @@
     "build": "npm ci && run-p build:**",
     "build:app": "react-scripts build && echo '/*  /index.html  200' | cat >build/_redirects",
     "build:lambda": "netlify-lambda build src/backend/functions",
-    "test": "react-scripts test",
+    "test": "jest --watch",
     "coverage": "npm run test -- --coverage --watchAll",
     "lint": "npx eslint .",
     "prettier:check": "prettier src/**/*.{ts,tsx,css,json,module.css,api.ts,hooks.ts,transformers.ts,api.test.ts,hooks.test.tsx,test.tsx,test.ts} --check",
@@ -132,7 +132,6 @@
     "@netlify/functions": "^0.7.0",
     "@octokit/core": "^3.2.5",
     "@prisma/client": "~2.20.0",
-    "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
     "@types/jest": "^26.0.20",
@@ -161,18 +160,21 @@
   "devDependencies": {
     "@babel/plugin-transform-object-assign": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react-hooks": "^5.1.2",
     "@types/aws-lambda": "^8.10.89",
     "@types/node": "^12.19.16",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "http-proxy-middleware": "^1.0.6",
+    "identity-obj-proxy": "^3.0.0",
     "json-schema-to-ts": "^1.6.5",
     "msw": "^0.26.2",
     "netlify-lambda": "^2.0.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "prisma": "~2.20.0",
+    "ts-jest": "^26.0.0",
     "ts-node": "^9.1.1"
   }
 }

@@ -4,7 +4,7 @@
  */
 
 import { useAuth } from '../../../services/auth.hooks';
-import PageTitle from '../../layouts/page-title/page-title';
+import PageTitle from '@@layouts/page-title/page-title';
 import PageBlock from '../../layouts/page-block/page-block';
 
 const Settings: React.FC = () => {

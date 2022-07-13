@@ -168,9 +168,6 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
     } catch (_) {
       return;
     }
-
-    // after edit is complete, reload
-    window.location.reload();
   };
 
   if (isLoading) return <LoadingIndicator />;

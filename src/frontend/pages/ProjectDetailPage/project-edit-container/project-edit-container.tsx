@@ -199,7 +199,6 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
 
     try {
       await mutateAsync(payload);
-      window.location.reload();
     } catch (e) {
       if (e instanceof Error) {
         alert(e.message);

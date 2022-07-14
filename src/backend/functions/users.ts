@@ -130,13 +130,19 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
 /** Get settings for the specified user */
 const getUserSettings: ApiRouteFunction = async (params: { id: string }) => {
   const userId: number = parseInt(params.id);
-  const user = await prisma.user.findUnique({
+  let user = await prisma.user.findUnique({
     where: { userId },
     include: { userSettings: true }
   });
   if (!user) return buildNotFoundResponse('user', `#${params.id}`);
-  if (!user.userSettings) return buildNotFoundResponse('user settings', `#${params.id}`);
-  return buildSuccessResponse(user.userSettings);
+  if (!user.userSettings) {
+    user = await prisma.user.update({
+      where: { userId },
+      data: { userSettings: { create: {} } },
+      include: { userSettings: true }
+    });
+  }
+  return buildSuccessResponse(user.userSettings!);
 };
 
 /** Update settings for the specified user */

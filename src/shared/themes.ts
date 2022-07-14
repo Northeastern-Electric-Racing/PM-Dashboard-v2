@@ -8,12 +8,14 @@ import { Theme } from './types';
 const themes: Theme[] = [
   {
     name: 'DARK',
+    className: 'dark',
     bgColor: '#353434',
     cardBg: 'dark',
     cardBorder: 'light'
   },
   {
     name: 'LIGHT',
+    className: 'light',
     bgColor: '#ffffff',
     cardBg: 'light',
     cardBorder: 'dark'

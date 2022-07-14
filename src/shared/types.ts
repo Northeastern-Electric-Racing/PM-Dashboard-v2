@@ -16,6 +16,7 @@ export interface Auth {
 
 export interface Theme {
   name: ThemeName;
+  className: string;
   bgColor: string;
   cardBg: string;
   cardBorder: string;

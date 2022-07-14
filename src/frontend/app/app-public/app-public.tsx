@@ -20,7 +20,7 @@ const AppPublic: React.FC = () => {
   document.body.style.backgroundColor = theme.bgColor;
 
   return (
-    <html className={theme.cardBg}>
+    <html className={theme.className}>
       <Switch>
         <Route path={routes.LOGIN}>
           <Login

@@ -7,3 +7,7 @@
   background-color: transparent;
   border: none;
 }
+
+.UserMenuItem {
+  padding: 0 !important;
+}

@@ -4,13 +4,7 @@
  */
 
 
-.settingsButton {
-  padding-left: 1.5em !important;
-}
-
-.logoutButton {
-  background-color: transparent;
-  border: none;
+.dropdownItems {
   padding-left: 1.5em !important;
 }
 

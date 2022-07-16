@@ -24,6 +24,15 @@ jest.mock('../app-context-auth/app-context-auth', () => {
   };
 });
 
+jest.mock('../app-context-theme/app-context-theme', () => {
+  return {
+    __esModule: true,
+    default: (props: any) => {
+      return <div>app context theme {props.children}</div>;
+    }
+  };
+});
+
 // Sets up the component under test with the desired values and renders it
 const renderComponent = () => {
   render(
@@ -42,6 +51,11 @@ describe('app context', () => {
   it('renders the app context auth component', () => {
     renderComponent();
     expect(screen.getByText('app context auth')).toBeInTheDocument();
+  });
+
+  it('renders the app context theme component', () => {
+    renderComponent();
+    expect(screen.getByText('app context theme')).toBeInTheDocument();
   });
 
   it('renders the app context text', () => {

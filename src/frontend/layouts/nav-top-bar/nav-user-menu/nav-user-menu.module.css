@@ -3,9 +3,15 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+
+.settingsButton {
+  padding-left: 1.5em !important;
+}
+
 .logoutButton {
   background-color: transparent;
   border: none;
+  padding-left: 1.5em !important;
 }
 
 .UserMenuItem {

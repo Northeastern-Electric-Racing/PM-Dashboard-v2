@@ -130,19 +130,13 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
 /** Get settings for the specified user */
 const getUserSettings: ApiRouteFunction = async (params: { id: string }) => {
   const userId: number = parseInt(params.id);
-  let user = await prisma.user.findUnique({
+  const settings = await prisma.user_Settings.upsert({
     where: { userId },
-    include: { userSettings: true }
+    update: {},
+    create: { userId }
   });
-  if (!user) return buildNotFoundResponse('user', `#${params.id}`);
-  if (!user.userSettings) {
-    user = await prisma.user.update({
-      where: { userId },
-      data: { userSettings: { create: {} } },
-      include: { userSettings: true }
-    });
-  }
-  return buildSuccessResponse(user.userSettings!);
+  if (!settings) return buildNotFoundResponse('settings for user', `#${params.id}`);
+  return buildSuccessResponse(settings);
 };
 
 /** Update settings for the specified user */
@@ -151,9 +145,10 @@ const updateUserSettings: ApiRouteFunction = async (params: { id: string }, even
   if (!event.body) return buildClientFailureResponse('No settings found to update.');
   const body = JSON.parse(event.body!);
   if (!body.defaultTheme) return buildClientFailureResponse('No defaultTheme found for settings.');
-  await prisma.user.update({
+  await prisma.user_Settings.upsert({
     where: { userId },
-    data: { userSettings: { update: { defaultTheme: body.defaultTheme } } }
+    update: { defaultTheme: body.defaultTheme },
+    create: { userId, defaultTheme: body.defaultTheme }
   });
   return buildSuccessResponse({ message: `Successfully updated settings for user ${userId}.` });
 };

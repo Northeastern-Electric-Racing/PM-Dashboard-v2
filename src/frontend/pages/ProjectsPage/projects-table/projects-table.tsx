@@ -10,6 +10,7 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import { validateWBS } from 'utils';
+import styles from './projects-table.module.css';
 
 export interface DisplayProject {
   wbsNum: string;

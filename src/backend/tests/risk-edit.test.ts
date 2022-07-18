@@ -4,9 +4,7 @@
  */
 
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
-import {
-  handler
-} from '../functions/risk-edit';
+import { handler } from '../functions/risk-edit';
 
 describe('work package edit', () => {
   describe('handler', () => {
@@ -22,14 +20,14 @@ describe('work package edit', () => {
         resolved: true
       };
 
-      it ('fails when there is no risk id', async () => {
-        const { id, ... rest} = goodBody; 
+      it('fails when there is no risk id', async () => {
+        const { id, ...rest } = goodBody;
         const res = await func({ body: rest });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });
 
-      it ('fails when the invalid user is trying to edit risk', async () => {
+      it('fails when the invalid user is trying to edit risk', async () => {
         const res = await func({ body: { ...goodBody, userId: -5 } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');

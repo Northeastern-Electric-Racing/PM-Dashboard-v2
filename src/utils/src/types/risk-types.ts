@@ -4,13 +4,7 @@
  */
 
 import { FromSchema } from 'json-schema-to-ts';
-import {
-  bodySchema,
-  intType,
-  stringType,
-  booleanType
-} from './api-utils-types';
-
+import { bodySchema, intType, stringType, booleanType } from './api-utils-types';
 
 export const riskEditInputSchemaBody = bodySchema({
   userId: intType,

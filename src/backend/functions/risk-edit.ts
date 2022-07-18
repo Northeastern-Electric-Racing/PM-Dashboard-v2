@@ -18,46 +18,38 @@ import {
 } from 'utils';
 import { FromSchema } from 'json-schema-to-ts';
 
-const prisma = new PrismaClient(); 
+const prisma = new PrismaClient();
 
-export const editRisk: Handler<FromSchema<typeof inputSchema>> = async (
-	{ body },
-	_context
-) => {
-	const {
-		userId,
-		id, 
-		detail, 
-		resolved
-	} = body; 
-	
-	// verify user is allowed to edit work packages
-	const user = await prisma.user.findUnique({ where: { userId } });
-	if (!user) return buildNotFoundResponse('user', `#${userId}`);
-	if (user.role === Role.GUEST) return buildNoAuthResponse();
+export const editRisk: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
+  const { userId, id, detail, resolved } = body;
 
-	// get the original risk and check if it exists
-	const originalRisk = await prisma.risk.findUnique({
-		where: { id },
-	});
-	if (originalRisk === null) {
-		return buildNotFoundResponse('Risk', `#${id}`);
-	}
+  // verify user is allowed to edit work packages
+  const user = await prisma.user.findUnique({ where: { userId } });
+  if (!user) return buildNotFoundResponse('user', `#${userId}`);
+  if (user.role === Role.GUEST) return buildNoAuthResponse();
 
-	// update the risk with the input fields
-	const updatedRisk = await prisma.risk.update({
-		where: { 
-			id
-		},
-		data: {
-			detail,
-			isResolved: resolved
-		}
-	});
+  // get the original risk and check if it exists
+  const originalRisk = await prisma.risk.findUnique({
+    where: { id }
+  });
+  if (originalRisk === null) {
+    return buildNotFoundResponse('Risk', `#${id}`);
+  }
 
-	// return the updated risk 
-	return buildSuccessResponse(updatedRisk); 
-}
+  // update the risk with the input fields
+  const updatedRisk = await prisma.risk.update({
+    where: {
+      id
+    },
+    data: {
+      detail,
+      isResolved: resolved
+    }
+  });
+
+  // return the updated risk
+  return buildSuccessResponse(updatedRisk);
+};
 
 /**
  * 	HELPER METHODS:
@@ -72,5 +64,3 @@ const handler = middy(editRisk)
   .use(httpErrorHandler());
 
 export { handler };
-
-

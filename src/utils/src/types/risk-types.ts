@@ -8,7 +8,7 @@ import { bodySchema, intType, stringType, booleanType } from './api-utils-types'
 
 export const riskEditInputSchemaBody = bodySchema({
   userId: intType,
-  id: intType,
+  id: stringType,
   detail: stringType,
   resolved: booleanType
 });

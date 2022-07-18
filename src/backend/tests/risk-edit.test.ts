@@ -6,7 +6,7 @@
 import { mockContext } from '../../test-support/test-data/test-utils.stub';
 import { handler } from '../functions/risk-edit';
 
-describe('work package edit', () => {
+describe('risk edit', () => {
   describe('handler', () => {
     const func = async (event: any) => {
       return handler(event, mockContext, () => {});
@@ -14,7 +14,7 @@ describe('work package edit', () => {
 
     describe('validate inputs', () => {
       const goodBody = {
-        id: 1,
+        id: 'ef14de-32bc7',
         userId: 1,
         detail: 'risk #1',
         resolved: true

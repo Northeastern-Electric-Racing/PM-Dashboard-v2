@@ -23,37 +23,24 @@ const prisma = new PrismaClient();
 export const editRisk: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
   const { userId, id, detail, resolved } = body;
 
-  // verify user is allowed to edit work packages
+  // verify user is allowed to edit risk
   const user = await prisma.user.findUnique({ where: { userId } });
   if (!user) return buildNotFoundResponse('user', `#${userId}`);
   if (user.role === Role.GUEST) return buildNoAuthResponse();
 
   // get the original risk and check if it exists
-  const originalRisk = await prisma.risk.findUnique({
-    where: { id }
-  });
-  if (originalRisk === null) {
-    return buildNotFoundResponse('Risk', `#${id}`);
-  }
+  const originalRisk = await prisma.risk.findUnique({ where: { id } });
+  if (!originalRisk) return buildNotFoundResponse('Risk', `#${id}`);
 
   // update the risk with the input fields
   const updatedRisk = await prisma.risk.update({
-    where: {
-      id
-    },
-    data: {
-      detail,
-      isResolved: resolved
-    }
+    where: { id },
+    data: { detail, isResolved: resolved }
   });
 
   // return the updated risk
-  return buildSuccessResponse(updatedRisk);
+  return buildSuccessResponse({ detail: updatedRisk.detail, isResolved: updatedRisk.isResolved });
 };
-
-/**
- * 	HELPER METHODS:
- */
 
 // expected structure of json body
 const inputSchema = eventSchema(riskEditInputSchemaBody);

@@ -10,7 +10,6 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import { validateWBS } from 'utils';
-import styles from './projects-table.module.css';
 
 export interface DisplayProject {
   wbsNum: string;
@@ -123,7 +122,6 @@ const ProjectsTable: React.FC<DisplayProjectProps> = ({ allProjects }: DisplayPr
         hover
         condensed
         bootstrap4
-        wrapperClasses={styles.table}
         keyField="wbsNum"
         data={allProjects}
         columns={columns}

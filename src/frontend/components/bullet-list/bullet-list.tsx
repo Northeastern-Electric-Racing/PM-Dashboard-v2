@@ -3,9 +3,9 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import classNames from 'classnames';
 import { ReactNode } from 'react';
 import PageBlock from '../../layouts/page-block/page-block';
-import styles from './bullet-list.module.css';
 
 interface BulletListProps {
   title: string;
@@ -16,11 +16,18 @@ interface BulletListProps {
   fieldName?: string;
 }
 
+const styles = {
+  bulletList: {
+    paddingLeft: '2em',
+    marginBottom: '0em'
+  }
+};
+
 const BulletList: React.FC<BulletListProps> = ({ title, headerRight, list, ordered }) => {
   const listPrepared = list.map((bullet, idx) => <li key={idx}>{bullet}</li>);
-  let builtList = <ul className={styles.bulletList}>{listPrepared}</ul>;
+  let builtList = <ul className={classNames(styles.bulletList)}>{listPrepared}</ul>;
   if (ordered) {
-    builtList = <ol className={styles.bulletList}>{listPrepared}</ol>;
+    builtList = <ol className={classNames(styles.bulletList)}>{listPrepared}</ol>;
   }
   return (
     <PageBlock title={title} headerRight={headerRight}>

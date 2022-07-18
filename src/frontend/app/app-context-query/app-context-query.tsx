@@ -4,7 +4,6 @@
  */
 
 import { QueryClient, QueryClientProvider } from 'react-query';
-import './app-context-query.module.css';
 
 const AppContextQuery: React.FC = (props) => {
   const queryClient = new QueryClient();

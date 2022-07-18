@@ -9,7 +9,6 @@ import BootstrapTable, {
   RowEventHandlerProps,
   SortOrder
 } from 'react-bootstrap-table-next';
-import styles from './projects-table.module.css';
 import { validateWBS } from 'utils';
 
 export interface DisplayProject {

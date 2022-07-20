@@ -10,12 +10,10 @@ import {
   ApiRouteFunction,
   apiRoutes,
   API_URL,
-  buildClientFailureResponse,
   buildServerFailureResponse,
   buildNotFoundResponse,
   buildSuccessResponse,
   routeMatcher,
-  User,
   Risk,
   WbsNumber,
   UserPreview

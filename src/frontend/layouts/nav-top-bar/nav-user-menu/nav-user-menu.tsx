@@ -42,7 +42,6 @@ const NavUserMenu: React.FC = () => {
             <button
               className={'nav-link ' + styles.dropdownItems}
               onClick={renderProps.onClick}
-              role="button"
               disabled={renderProps.disabled}
             >
               Logout

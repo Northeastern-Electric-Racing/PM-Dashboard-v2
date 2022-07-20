@@ -8,7 +8,6 @@ import { validateWBS, isProject } from 'utils';
 import WorkPackagePage from '../WorkPackageDetailPage/work-package-page';
 import ErrorPage from '../../pages/ErrorPage/error-page';
 import ProjectPage from '../ProjectDetailPage/project-page';
-import './wbs-details.module.css';
 
 const WBSDetails: React.FC = () => {
   interface ParamTypes {

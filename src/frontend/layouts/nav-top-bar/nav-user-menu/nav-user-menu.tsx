@@ -10,13 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../../../services/auth.hooks';
 import { routes } from '../../../../shared/routes';
-
-const styles = {
-  logoutButton: {
-    backgroundColor: 'transparent',
-    border: 'none'
-  }
-};
+import styles from './nav-user-menu.module.css';
 
 const NavUserMenu: React.FC = () => {
   const history = useHistory();
@@ -31,12 +25,12 @@ const NavUserMenu: React.FC = () => {
     >
       <NavDropdown.ItemText>Logged in as: {auth.user?.emailId}</NavDropdown.ItemText>
       <NavDropdown.Divider />
-      <NavDropdown.Item as="div">
-        <Link className="nav-link p-0" role="button" to="/settings">
+      <NavDropdown.Item className={styles.UserMenuItem}>
+        <Link className={'nav-link ' + styles.dropdownItems} role="button" to={routes.SETTINGS}>
           Settings
         </Link>
       </NavDropdown.Item>
-      <NavDropdown.Item as="div">
+      <NavDropdown.Item className={styles.UserMenuItem}>
         <GoogleLogout
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}
           //jsSrc={'accounts.google.com/gsi/client'}
@@ -46,8 +40,7 @@ const NavUserMenu: React.FC = () => {
           }}
           render={(renderProps) => (
             <button
-              className={'nav-link p-0 m-0 '}
-              style={styles.logoutButton}
+              className={'nav-link ' + styles.dropdownItems}
               onClick={renderProps.onClick}
               disabled={renderProps.disabled}
             >

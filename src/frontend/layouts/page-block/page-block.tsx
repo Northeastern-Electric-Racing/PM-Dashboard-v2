@@ -6,12 +6,17 @@
 import { ReactNode } from 'react';
 import { Card } from 'react-bootstrap';
 import { useTheme } from '../../../services/theme.hooks';
-import styles from './page-block.module.css';
 
 interface PageBlockProps {
   title: string;
   headerRight?: ReactNode;
 }
+
+const styles = {
+  header: {
+    overflow: 'hidden'
+  }
+};
 
 /**
  * Custom component for a consistent page-building block.
@@ -24,7 +29,7 @@ const PageBlock: React.FC<PageBlockProps> = ({ title, headerRight, children }) =
   return (
     <Card className={'mb-3'} border={theme.cardBorder} bg={theme.cardBg}>
       <Card.Body>
-        <Card.Title className={styles.header}>
+        <Card.Title style={styles.header}>
           <h5 className={'float-left mb-0'}>{title}</h5>
           <div className={'float-right'}>{headerRight}</div>
         </Card.Title>

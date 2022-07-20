@@ -10,7 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../../../services/auth.hooks';
 import { routes } from '../../../../shared/routes';
-import styles from './nav-user-menu.module.css';
+
+const styles = {
+  logoutButton: {
+    backgroundColor: 'transparent',
+    border: 'none'
+  }
+};
 
 const NavUserMenu: React.FC = () => {
   const history = useHistory();
@@ -40,7 +46,8 @@ const NavUserMenu: React.FC = () => {
           }}
           render={(renderProps) => (
             <button
-              className={'nav-link p-0 m-0 ' + styles.logoutButton}
+              className={'nav-link p-0 m-0 '}
+              style={styles.logoutButton}
               onClick={renderProps.onClick}
               disabled={renderProps.disabled}
             >

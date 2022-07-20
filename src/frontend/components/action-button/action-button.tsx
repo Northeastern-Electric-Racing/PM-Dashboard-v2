@@ -29,7 +29,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({ link, icon, text }) => {
       <Button>
         <div style={styles.button}>
           <FontAwesomeIcon className="mr-2 my-auto" icon={icon} size="1x" color="white" />
-          <p className={'mb-0 '}>{text}</p>
+          <p className="mb-0" style={styles.buttonText}>
+            {text}
+          </p>
         </div>
       </Button>
     </Link>

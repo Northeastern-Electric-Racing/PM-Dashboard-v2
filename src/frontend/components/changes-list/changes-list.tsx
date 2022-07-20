@@ -9,7 +9,6 @@ import { ImplementedChange } from 'utils';
 import { fullNamePipe, datePipe } from '../../../shared/pipes';
 import { routes } from '../../../shared/routes';
 import BulletList from '../bullet-list/bullet-list';
-import './changes-list.module.css';
 
 interface ChangesListProps {
   changes: ImplementedChange[];

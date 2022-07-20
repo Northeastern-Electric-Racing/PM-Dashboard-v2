@@ -26,7 +26,7 @@ const NavUserMenu: React.FC = () => {
       <NavDropdown.ItemText>Logged in as: {auth.user?.emailId}</NavDropdown.ItemText>
       <NavDropdown.Divider />
       <NavDropdown.Item className={styles.UserMenuItem}>
-        <Link className={'nav-link ' + styles.dropdownItems} role="button" to="/settings">
+        <Link className={'nav-link ' + styles.dropdownItems} role="button" to={routes.SETTINGS}>
           Settings
         </Link>
       </NavDropdown.Item>
@@ -39,9 +39,14 @@ const NavUserMenu: React.FC = () => {
             history.push(routes.HOME);
           }}
           render={(renderProps) => (
-            <div className={'nav-link ' + styles.dropdownItems} onClick={renderProps.onClick}>
+            <button
+              className={'nav-link ' + styles.dropdownItems}
+              onClick={renderProps.onClick}
+              role="button"
+              disabled={renderProps.disabled}
+            >
               Logout
-            </div>
+            </button>
           )}
         ></GoogleLogout>
       </NavDropdown.Item>

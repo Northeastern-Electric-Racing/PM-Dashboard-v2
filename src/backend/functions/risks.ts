@@ -17,7 +17,8 @@ import {
   routeMatcher,
   User,
   Risk,
-  WbsNumber
+  WbsNumber,
+  UserPreview
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -37,6 +38,16 @@ const riskQueryArgs = Prisma.validator<Prisma.RiskArgs>()({
   }
 });
 
+const userTransformer = (user: Prisma.UserGetPayload<null>): UserPreview => {
+  return {
+    userId: user.userId,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    role: user.role
+  };
+};
+
 const riskTransformer = (risk: Prisma.RiskGetPayload<typeof riskQueryArgs>): Risk => {
   return {
     id: risk.id,
@@ -47,14 +58,12 @@ const riskTransformer = (risk: Prisma.RiskGetPayload<typeof riskQueryArgs>): Ris
     },
     detail: risk.detail,
     isResolved: risk.isResolved,
+    dateDeleted: risk.dateDeleted ?? undefined,
     dateCreated: risk.dateCreated,
-    createdBy: {
-      userId: risk.createdBy.userId,
-      firstName: risk.createdBy.firstName,
-      lastName: risk.createdBy.lastName,
-      email: risk.createdBy.email,
-      role: risk.createdBy.role
-    }
+    createdBy: userTransformer(risk.createdBy),
+    resolvedBy: risk.resolvedBy ? userTransformer(risk.resolvedBy) : undefined,
+    resolvedAt: risk.resolvedAt ?? undefined,
+    deletedBy: risk.deletedBy ? userTransformer(risk.deletedBy) : undefined
   };
 };
 

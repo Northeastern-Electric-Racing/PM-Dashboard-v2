@@ -3,7 +3,13 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-.logoutButton {
+
+.dropdownItems {
+  padding-left: 1.5em !important;
   background-color: transparent;
   border: none;
+}
+
+.UserMenuItem {
+  padding: 0 !important;
 }

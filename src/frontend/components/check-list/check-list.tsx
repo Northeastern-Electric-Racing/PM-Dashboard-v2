@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import PageBlock from '../../layouts/page-block/page-block';
 import { Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
 import styles from './check-list.module.css';
@@ -18,7 +18,21 @@ interface CheckListProps {
 }
 
 const CheckList: React.FC<CheckListProps> = ({ title, headerRight, list }) => {
-  const builtList = list.map((check, idx) => (
+  const [checks, setChecks] = useState(list);
+
+  const handleCheck = (idx: number) => {
+    const updatedChecks = checks.map((check, i) => {
+      if (i === idx) {
+        check.resolved = !check.resolved;
+        return check;
+      }
+      return check;
+    });
+
+    setChecks(updatedChecks);
+  };
+
+  const builtList = checks.map((check, idx) => (
     <ListGroupItem key={idx} className={styles.container}>
       <Form.Check
         label={
@@ -30,6 +44,7 @@ const CheckList: React.FC<CheckListProps> = ({ title, headerRight, list }) => {
         }
         defaultChecked={check.resolved}
         data-testId={`testCheckbox${idx}`}
+        onChange={() => handleCheck(idx)}
       />
       {check.resolved ? (
         <Button variant="danger">Delete</Button>

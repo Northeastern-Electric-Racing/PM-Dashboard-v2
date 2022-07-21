@@ -19,7 +19,6 @@ import RiskLog from './risk-log/risk-log';
 import './project-view-container.module.css';
 import { routes } from '../../../../shared/routes';
 import ProjectGantt from './project-gantt/project-gantt';
-import { truncateSync } from 'fs';
 
 interface ProjectViewContainerProps {
   proj: Project;

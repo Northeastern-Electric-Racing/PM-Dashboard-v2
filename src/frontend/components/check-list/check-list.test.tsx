@@ -39,6 +39,14 @@ describe('Check List Component', () => {
     expect(screen.getByText('Check #3')).toBeInTheDocument();
   });
 
+  it('checks checkboxes that should be checked', () => {
+    render(<CheckList title={'test'} list={testList} />);
+
+    expect(screen.getByTestId('testCheckbox0')).not.toBeChecked();
+    expect(screen.getByTestId('testCheckbox1')).toBeChecked();
+    expect(screen.getByTestId('testCheckbox2')).not.toBeChecked();
+  });
+
   it('renders all buttons"', () => {
     render(<CheckList title={'test'} list={testList} />);
 

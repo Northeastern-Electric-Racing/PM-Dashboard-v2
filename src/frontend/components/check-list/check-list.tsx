@@ -29,6 +29,7 @@ const CheckList: React.FC<CheckListProps> = ({ title, headerRight, list }) => {
           </p>
         }
         defaultChecked={check.resolved}
+        data-testId={`testCheckbox${idx}`}
       />
       {check.resolved ? (
         <Button variant="danger">Delete</Button>

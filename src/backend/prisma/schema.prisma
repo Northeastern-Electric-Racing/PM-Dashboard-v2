@@ -68,6 +68,8 @@ model User {
 model Team {
   teamId         String         @id @default(uuid())
   teamName       String
+  slackId        String
+  description    String         @default("")
   leaderId       Int            @unique
   leader         User           @relation(name: "teamAsLead", fields:[leaderId], references: [userId]) 
   projects       Project[]      

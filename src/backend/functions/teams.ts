@@ -4,7 +4,7 @@
  */
 
 import { Handler } from '@netlify/functions';
-import { Description_Bullet, Prisma, PrismaClient, WBS_Element } from '@prisma/client';
+import { Prisma, PrismaClient, WBS_Element } from '@prisma/client';
 import {
   ApiRoute,
   ApiRouteFunction,
@@ -14,8 +14,7 @@ import {
   buildSuccessResponse,
   routeMatcher,
   Team,
-  WbsNumber,
-  DescriptionBullet
+  WbsNumber
 } from 'utils';
 
 const prisma = new PrismaClient();
@@ -38,18 +37,14 @@ const wbsNumOf = (element: WBS_Element): WbsNumber => ({
   workPackageNumber: element.workPackageNumber
 });
 
-export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
-  ...descBullet,
-  id: descBullet.descriptionId,
-  dateDeleted: descBullet.dateDeleted ?? undefined
-});
-
 const teamsTransformer = (team: Prisma.TeamGetPayload<typeof relationArgs>): Team => {
   if (team === null) throw new TypeError('Team not found');
 
   return {
     teamId: team.teamId,
     teamName: team.teamName,
+    slackId: team.slackId,
+    description: team.description,
     leader: team.leader,
     members: team.members,
     projects: team.projects.map((project) => ({

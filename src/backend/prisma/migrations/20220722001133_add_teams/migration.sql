@@ -6,6 +6,8 @@ CREATE TABLE "Team" (
     "teamId" TEXT NOT NULL,
     "teamName" TEXT NOT NULL,
     "leaderId" INTEGER NOT NULL,
+    "slackId" TEXT NOT NULL,
+    "description" TEXT NOT NULL DEFAULT E'',
 
     PRIMARY KEY ("teamId")
 );

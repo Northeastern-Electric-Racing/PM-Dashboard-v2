@@ -10,6 +10,8 @@ export interface Team {
   teamId: string;
   teamName: string;
   leader: User;
+  slackId: string;
+  description: string;
   members: User[];
   projects: ProjectPreview[];
 }

@@ -22,7 +22,6 @@ import {
 import ExternalLink from '../../../../components/external-link/external-link';
 import WbsStatus from '../../../../components/wbs-status/wbs-status';
 import PageBlock from '../../../../layouts/page-block/page-block';
-import './project-details.module.css';
 
 interface ProjectDetailsProps {
   project: Project;

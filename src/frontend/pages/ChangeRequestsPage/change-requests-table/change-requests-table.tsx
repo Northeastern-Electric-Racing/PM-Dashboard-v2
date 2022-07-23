@@ -10,7 +10,6 @@ import BootstrapTable, {
   SortOrder
 } from 'react-bootstrap-table-next';
 import { routes } from '../../../../shared/routes';
-import './change-requests-table.module.css';
 
 export interface DisplayChangeRequest {
   id: number;

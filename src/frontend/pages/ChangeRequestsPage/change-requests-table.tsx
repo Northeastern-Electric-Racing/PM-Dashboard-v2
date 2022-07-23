@@ -17,7 +17,6 @@ import LoadingIndicator from '../../components/loading-indicator/loading-indicat
 import ActionButton from '../../components/action-button/action-button';
 import ErrorPage from '../../pages/ErrorPage/error-page';
 import PageTitle from '../../layouts/page-title/page-title';
-import './change-requests-table.module.css';
 
 /***
  * Returns a list of change requests that has been filtered according to the given params.

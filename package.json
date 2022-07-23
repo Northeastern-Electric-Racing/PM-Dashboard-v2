@@ -163,6 +163,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
+    "classnames": "^2.3.1",
     "bootstrap": "^4.6.0",
     "google-auth-library": "^7.5.0",
     "react": "^17.0.1",

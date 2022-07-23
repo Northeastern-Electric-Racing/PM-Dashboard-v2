@@ -5,7 +5,6 @@
 
 import { DescriptionBullet } from 'utils';
 import BulletList from '../bullet-list/bullet-list';
-import './description-list.module.css';
 
 interface DescriptionListProps {
   title: string;

@@ -9,7 +9,6 @@ import { Role } from '@prisma/client';
 import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
 import { useAuth } from '../../../services/auth.hooks';
 import LoginPage from './login-page/login-page';
-import './login.module.css';
 import { routes } from '../../../shared/routes';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 

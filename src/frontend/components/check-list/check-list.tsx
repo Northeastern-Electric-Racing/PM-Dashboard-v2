@@ -5,7 +5,7 @@
 
 import { ReactNode, useState } from 'react';
 import PageBlock from '../../layouts/page-block/page-block';
-import { Form, Button, ListGroup, ListGroupItem, InputGroup } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 import styles from './check-list.module.css';
 
 interface CheckListProps {
@@ -19,6 +19,10 @@ interface CheckListProps {
 
 const CheckList: React.FC<CheckListProps> = ({ title, headerRight, list }) => {
   const [checks, setChecks] = useState(list);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleCheck = (idx: number) => {
     const updatedChecks = checks.map((check, i) => {
@@ -33,7 +37,7 @@ const CheckList: React.FC<CheckListProps> = ({ title, headerRight, list }) => {
   };
 
   const builtList = checks.map((check, idx) => (
-    <ListGroupItem key={idx} className={styles.container}>
+    <div key={idx} className={styles.container}>
       <Form.Check
         label={
           <p
@@ -51,22 +55,41 @@ const CheckList: React.FC<CheckListProps> = ({ title, headerRight, list }) => {
       ) : (
         <Button variant="success">Convert to CR</Button>
       )}
-    </ListGroupItem>
+    </div>
   ));
 
   builtList.push(
-    <ListGroupItem>
-      <InputGroup>
-        <Form.Control placeholder="Add a new risk" />
-        <Button variant="success">+</Button>
-      </InputGroup>
-    </ListGroupItem>
+    <div>
+      <Button variant="success" onClick={handleShow}>
+        Add New Risk
+      </Button>
+    </div>
+  );
+
+  const InputModal = (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Add New Risk</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form.Control placeholder={'Enter New Risk Here'} />
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="danger" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="success" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 
   return (
     <PageBlock title={title} headerRight={headerRight}>
       <Form>
-        <ListGroup>{builtList}</ListGroup>
+        {builtList}
+        {InputModal}
       </Form>
     </PageBlock>
   );

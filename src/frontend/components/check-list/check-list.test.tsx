@@ -23,6 +23,11 @@ describe('Check List Component', () => {
     { details: 'Check #3', resolved: false }
   ];
 
+  const testList2 = [
+    { details: 'Check #1', resolved: false },
+    { details: 'Check #2', resolved: true }
+  ];
+
   beforeEach(() => mockHook());
 
   it('renders the component title', () => {
@@ -48,7 +53,7 @@ describe('Check List Component', () => {
   });
 
   it('renders all buttons"', () => {
-    render(<CheckList title={'test'} list={testList} />);
+    render(<CheckList title={'test'} list={testList2} />);
 
     expect(screen.getByText('Convert to CR')).toBeInTheDocument();
     expect(screen.getByText('Delete')).toBeInTheDocument();

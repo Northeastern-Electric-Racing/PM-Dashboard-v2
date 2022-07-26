@@ -7,7 +7,6 @@ import { Route, Switch } from 'react-router-dom';
 import { routes } from '../../../shared/routes';
 import ProjectsView from './projects-view';
 import WBSDetails from '../WbsDetailsSwitchPage/wbs-details';
-import './projects.module.css';
 import CreateProjectForm from '../CreateProjectPage/create-project-form';
 import CreateWPForm from '../CreateWorkPackagePage/create-wp-form';
 

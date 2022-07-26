@@ -6,7 +6,6 @@
 import { createContext } from 'react';
 import { useProvideTheme } from '../../../services/theme.hooks';
 import { Theme } from '../../../shared/types';
-import './app-context-theme.module.css';
 
 export const ThemeContext = createContext<Theme | undefined>(undefined);
 

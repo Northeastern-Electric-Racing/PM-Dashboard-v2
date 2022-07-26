@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom';
 import { WbsNumber } from 'utils';
 import { wbsPipe } from '../../../../../../shared/pipes';
 import { routes } from '../../../../../../shared/routes';
-import './dependency.module.css';
 
 interface DependencyProps {
   wbsNumber: WbsNumber;

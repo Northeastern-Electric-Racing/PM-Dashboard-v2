@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { validateWBS, WbsNumber } from 'utils';
 import HorizontalList from '../../../../components/horizontal-list/horizontal-list';
 import Dependency from './dependency/dependency';
-import './dependencies-list.module.css';
 
 interface DependenciesListProps {
   dependencies: WbsNumber[];

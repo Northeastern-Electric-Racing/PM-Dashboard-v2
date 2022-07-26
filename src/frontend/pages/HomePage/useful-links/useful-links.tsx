@@ -16,7 +16,6 @@ import {
 import { Container, Row } from 'react-bootstrap';
 import ExternalLink from '../../../components/external-link/external-link';
 import PageBlock from '../../../layouts/page-block/page-block';
-import './useful-links.module.css';
 
 const UsefulLinks: React.FC = () => {
   const links = [

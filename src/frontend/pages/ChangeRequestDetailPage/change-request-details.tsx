@@ -9,7 +9,6 @@ import { useAuth } from '../../../services/auth.hooks';
 import ChangeRequestDetailsView from './change-request-details/change-request-details';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 import ErrorPage from '../../pages/ErrorPage/error-page';
-import './change-request-details.module.css';
 
 const ChangeRequestDetails: React.FC = () => {
   interface ParamTypes {

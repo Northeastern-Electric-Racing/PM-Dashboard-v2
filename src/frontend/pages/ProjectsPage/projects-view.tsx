@@ -13,7 +13,6 @@ import LoadingIndicator from '../../components/loading-indicator/loading-indicat
 import ProjectsTableFilter from './projects-table-filter/projects-table-filter';
 import PageTitle from '../../layouts/page-title/page-title';
 import ErrorPage from '../../pages/ErrorPage/error-page';
-import './projects-view.module.css';
 
 /***
  * Returns a list of projects that has been filtered according to the given params.

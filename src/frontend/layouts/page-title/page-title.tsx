@@ -6,13 +6,18 @@
 import { ReactNode } from 'react';
 import { LinkItem } from '../../../shared/types';
 import PageBreadcrumbs from './page-breadcrumbs/page-breadcrumbs';
-import styles from './page-title.module.css';
 
 interface PageTitleProps {
   title: string;
   previousPages: LinkItem[];
   actionButton?: ReactNode;
 }
+
+const styles = {
+  titleText: {
+    marginBottom: 0
+  }
+};
 
 /**
  * Build the page title section for a page.
@@ -25,7 +30,7 @@ const PageTitle: React.FC<PageTitleProps> = ({ title, previousPages, actionButto
     <div className={'pt-3 mb-2 d-flex justify-content-between align-items-center'}>
       <div>
         <PageBreadcrumbs currentPageTitle={title} previousPages={previousPages} />
-        <h3 className={styles.titleText}>{title}</h3>
+        <h3 style={styles.titleText}>{title}</h3>
       </div>
       <div>{actionButton}</div>
     </div>

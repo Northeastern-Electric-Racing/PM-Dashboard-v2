@@ -50,10 +50,9 @@ describe('Check List Component', () => {
   it('renders all buttons"', () => {
     render(<CheckList title={'test'} list={testList} />);
 
-    //expect(screen.getByText('Convert to CR')).toBeInTheDocument();
-    //not sure why thats failing
+    expect(screen.getByText('Convert to CR')).toBeInTheDocument();
     expect(screen.getByText('Delete')).toBeInTheDocument();
-    expect(screen.getByText('+')).toBeInTheDocument();
+    expect(screen.getByText('Add New Risk')).toBeInTheDocument();
   });
 
   it('renders the header right', () => {

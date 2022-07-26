@@ -16,7 +16,6 @@ import PageBlock from '../../../layouts/page-block/page-block';
 import ProjectDetails from './project-details/project-details';
 import RulesList from './rules-list/rules-list';
 import RiskLog from './risk-log/risk-log';
-import './project-view-container.module.css';
 import { routes } from '../../../../shared/routes';
 import ProjectGantt from './project-gantt/project-gantt';
 

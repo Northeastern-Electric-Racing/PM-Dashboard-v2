@@ -32,6 +32,9 @@ const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS}-review`;
 const RISKS: string = `/risks`;
 const RISKS_BY_PROJECT: string = `${RISKS}/:projectId`;
 
+/**************** Teams Endpoint ****************/
+const TEAMS: string = `/teams`;
+
 export const apiRoutes = {
   USERS,
   USERS_BY_ID,
@@ -53,5 +56,7 @@ export const apiRoutes = {
   CHANGE_REQUESTS_REVIEW,
 
   RISKS,
-  RISKS_BY_PROJECT
+  RISKS_BY_PROJECT,
+  
+  TEAMS
 };

@@ -43,6 +43,7 @@ const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
         changes: { include: { implementer: true } }
       }
     },
+    team: true,
     goals: true,
     features: true,
     otherConstraints: true,
@@ -67,6 +68,7 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
   include: {
     project: {
       include: {
+        team: true,
         goals: true,
         features: true,
         otherConstraints: true,
@@ -121,6 +123,13 @@ const projectTransformer = (
   const wbsElement = 'wbsElement' in payload ? payload.wbsElement : payload;
   const project = 'project' in payload ? payload.project! : payload;
   const wbsNum = wbsNumOf(wbsElement);
+  let team = undefined;
+  if (project.team) {
+    team = {
+      teamId: project.team.teamId,
+      teamName: project.team.teamName
+    };
+  }
 
   return {
     id: project.projectId,
@@ -138,6 +147,7 @@ const projectTransformer = (
       detail: change.detail,
       dateImplemented: change.dateImplemented
     })),
+    team,
     summary: project.summary,
     budget: project.budget,
     gDriveLink: project.googleDriveFolderLink ?? undefined,

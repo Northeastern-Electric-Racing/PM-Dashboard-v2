@@ -8,6 +8,7 @@ import { ImplementedChange } from './change-request-types';
 import { TimelineStatus } from './work-package-types';
 import { FromSchema } from 'json-schema-to-ts';
 import { arrayType, bodySchema, enumType, intType, stringType } from './api-utils-types';
+import { TeamPreview } from './team-types';
 
 export interface WbsNumber {
   carNumber: number;
@@ -45,6 +46,7 @@ export interface Project extends WbsElement {
   features: DescriptionBullet[];
   otherConstraints: DescriptionBullet[];
   workPackages: WorkPackage[];
+  team?: TeamPreview;
 }
 
 export type ProjectPreview = Pick<Project, 'id' | 'name' | 'wbsNum'>;

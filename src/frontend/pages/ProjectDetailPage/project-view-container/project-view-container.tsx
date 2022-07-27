@@ -15,7 +15,6 @@ import PageTitle from '../../../layouts/page-title/page-title';
 import PageBlock from '../../../layouts/page-block/page-block';
 import ProjectDetails from './project-details/project-details';
 import RulesList from './rules-list/rules-list';
-import './project-view-container.module.css';
 import { routes } from '../../../../shared/routes';
 import ProjectGantt from './project-gantt/project-gantt';
 
@@ -54,10 +53,11 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
     <Container fluid className="mb-5">
       <PageTitle
         title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
+        previousPages={[{ name: 'Projects', route: routes.PROJECTS }]}
         actionButton={projectActionsDropdown}
       />
       <ProjectDetails project={proj} />
-      <PageBlock title={'Summary'} headerRight={<></>} body={<>{proj.summary}</>} />
+      <PageBlock title={'Summary'}>{proj.summary}</PageBlock>
       <ProjectGantt workPackages={proj.workPackages} />
       <DescriptionList title={'Goals'} items={proj.goals.filter((goal) => !goal.dateDeleted)} />
       <DescriptionList
@@ -70,19 +70,13 @@ const ProjectViewContainer: React.FC<ProjectViewContainerProps> = ({ proj, enter
       />
       <RulesList rules={proj.rules} />
       <ChangesList changes={proj.changes} />
-      <PageBlock
-        title={'Work Packages'}
-        headerRight={<></>}
-        body={
-          <>
-            {proj.workPackages.map((ele: WorkPackage) => (
-              <div key={wbsPipe(ele.wbsNum)} className="mt-3">
-                <WorkPackageSummary workPackage={ele} />
-              </div>
-            ))}
-          </>
-        }
-      />
+      <PageBlock title={'Work Packages'}>
+        {proj.workPackages.map((ele: WorkPackage) => (
+          <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+            <WorkPackageSummary workPackage={ele} />
+          </div>
+        ))}
+      </PageBlock>
     </Container>
   );
 };

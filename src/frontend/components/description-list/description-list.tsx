@@ -5,7 +5,6 @@
 
 import { DescriptionBullet } from 'utils';
 import BulletList from '../bullet-list/bullet-list';
-import './description-list.module.css';
 
 interface DescriptionListProps {
   title: string;
@@ -16,7 +15,6 @@ const DescriptionList: React.FC<DescriptionListProps> = ({ title, items }) => {
   return (
     <BulletList
       title={title}
-      headerRight={<></>}
       list={items.map((b) => (
         <>{b.detail}</>
       ))}

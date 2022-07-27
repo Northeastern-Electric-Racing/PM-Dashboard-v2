@@ -4,7 +4,6 @@
  */
 
 import HorizontalList from '../../../../components/horizontal-list/horizontal-list';
-import './rules-list.module.css';
 
 interface RulesListProps {
   rules: string[];
@@ -14,7 +13,6 @@ const RulesList: React.FC<RulesListProps> = ({ rules }) => {
   return (
     <HorizontalList
       title={'Rules'}
-      headerRight={<></>}
       items={rules.map((r) => (
         <>{r}</>
       ))}

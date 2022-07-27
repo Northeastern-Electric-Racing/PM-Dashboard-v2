@@ -7,8 +7,15 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import styles from './action-button.module.css';
 
+const styles = {
+  button: {
+    display: 'flex'
+  },
+  buttonText: {
+    color: 'white'
+  }
+};
 interface ActionButtonProps {
   link: string;
   icon: IconDefinition;
@@ -20,9 +27,11 @@ const ActionButton: React.FC<ActionButtonProps> = ({ link, icon, text }) => {
   return (
     <Link className={'row py-auto px-3 '} to={link} style={{ textDecoration: 'none' }}>
       <Button>
-        <div className={styles.button}>
+        <div style={styles.button}>
           <FontAwesomeIcon className="mr-2 my-auto" icon={icon} size="1x" color="white" />
-          <p className={'mb-0 ' + styles.buttonText}>{text}</p>
+          <p className="mb-0" style={styles.buttonText}>
+            {text}
+          </p>
         </div>
       </Button>
     </Link>

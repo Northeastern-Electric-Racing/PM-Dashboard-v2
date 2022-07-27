@@ -9,12 +9,13 @@ import { dbSeedAllProjects } from './seed-data/projects';
 import { dbSeedAllWorkPackages } from './seed-data/work-packages';
 import { dbSeedAllChangeRequests } from './seed-data/change-requests';
 import { dbSeedAllSessions } from './seed-data/session';
+import { dbSeedAllRisks } from './seed-data/risks';
 
 const prisma = new PrismaClient();
 
 const performSeed: () => Promise<void> = async () => {
   for (const seedUser of dbSeedAllUsers) {
-    await prisma.user.create({ data: { ...seedUser } });
+    await prisma.user.create({ data: { ...seedUser, userSettings: { create: {} } } });
   }
 
   for (const seedSession of dbSeedAllSessions) {
@@ -34,6 +35,16 @@ const performSeed: () => Promise<void> = async () => {
         goals: { create: seedProject.goals },
         features: { create: seedProject.features },
         otherConstraints: { create: seedProject.otherConstraints }
+      }
+    });
+  }
+
+  for (const seedRisk of dbSeedAllRisks) {
+    await prisma.risk.create({
+      data: {
+        createdBy: { connect: { userId: seedRisk.createdByUserId } },
+        project: { connect: { projectId: seedRisk.projectId } },
+        ...seedRisk.fields
       }
     });
   }

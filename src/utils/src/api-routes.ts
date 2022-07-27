@@ -9,6 +9,7 @@ export const API_URL: string = `/.netlify/functions`;
 const USERS: string = `/users`;
 const USERS_BY_ID: string = `${USERS}/:id`;
 const USERS_LOGIN: string = `${USERS}/auth\\:login`;
+const USER_SETTINGS_BY_USER_ID: string = `${USERS_BY_ID}/settings`;
 
 /**************** Projects Endpoint ****************/
 const PROJECTS: string = `/projects`;
@@ -27,6 +28,10 @@ const CHANGE_REQUESTS_NEW: string = `${CHANGE_REQUESTS}-new`;
 const CHANGE_REQUESTS_BY_ID: string = `${CHANGE_REQUESTS}/:id`;
 const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS}-review`;
 
+/**************** Risks Endpoint ****************/
+const RISKS: string = `/risks`;
+const RISKS_BY_PROJECT: string = `${RISKS}/:projectId`;
+
 /**************** Teams Endpoint ****************/
 const TEAMS: string = `/teams`;
 
@@ -34,6 +39,7 @@ export const apiRoutes = {
   USERS,
   USERS_BY_ID,
   USERS_LOGIN,
+  USER_SETTINGS_BY_USER_ID,
 
   PROJECTS,
   PROJECTS_BY_WBS,
@@ -49,5 +55,8 @@ export const apiRoutes = {
   CHANGE_REQUESTS_BY_ID,
   CHANGE_REQUESTS_REVIEW,
 
+  RISKS,
+  RISKS_BY_PROJECT,
+  
   TEAMS
 };

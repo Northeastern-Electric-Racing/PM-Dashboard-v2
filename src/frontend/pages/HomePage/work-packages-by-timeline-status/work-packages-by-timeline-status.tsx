@@ -14,7 +14,13 @@ import { routes } from '../../../../shared/routes';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import PageBlock from '../../../layouts/page-block/page-block';
 import ErrorPage from '../../ErrorPage/error-page';
-import styles from './work-packages-by-timeline-status.module.css';
+
+const styles = {
+  workPackageCard: {
+    minWidth: 'fit-content !important',
+    margin: '0px 10px 10px 0px'
+  }
+};
 
 const WorkPackagesByTimelineStatus: React.FC = () => {
   const [timelineStatus, setTimelineStatus] = useState<TimelineStatus>(TimelineStatus.VeryBehind);
@@ -37,7 +43,7 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
         : workPackages.data?.map((wp) => (
             <Card
               key={wbsPipe(wp.wbsNum)}
-              className={styles.workPackageCard}
+              style={styles.workPackageCard}
               border={theme.cardBorder}
               bg={theme.cardBg}
             >
@@ -90,10 +96,9 @@ const WorkPackagesByTimelineStatus: React.FC = () => {
           </Form.Control>
         </InputGroup>
       }
-      body={
-        <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
-      }
-    />
+    >
+      <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
+    </PageBlock>
   );
 };
 

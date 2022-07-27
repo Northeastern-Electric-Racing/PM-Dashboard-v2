@@ -14,7 +14,13 @@ import { routes } from '../../../../shared/routes';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import PageBlock from '../../../layouts/page-block/page-block';
 import ErrorPage from '../../ErrorPage/error-page';
-import styles from './upcoming-deadlines.module.css';
+
+const styles = {
+  upcomingDeadlineCard: {
+    minWidth: 'fit-content !important',
+    margin: '0px 10px 10px 0px'
+  }
+};
 
 const UpcomingDeadlines: React.FC = () => {
   const [daysUntilDeadline, setDaysUntilDeadline] = useState<string>('14');
@@ -32,7 +38,7 @@ const UpcomingDeadlines: React.FC = () => {
         : workPackages.data?.map((wp) => (
             <Card
               key={wbsPipe(wp.wbsNum)}
-              className={styles.upcomingDeadlineCard}
+              style={styles.upcomingDeadlineCard}
               border={theme.cardBorder}
               bg={theme.cardBg}
             >
@@ -87,10 +93,9 @@ const UpcomingDeadlines: React.FC = () => {
           </InputGroup.Append>
         </InputGroup>
       }
-      body={
-        <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
-      }
-    />
+    >
+      <Container fluid>{workPackages.isLoading ? <LoadingIndicator /> : fullDisplay}</Container>
+    </PageBlock>
   );
 };
 

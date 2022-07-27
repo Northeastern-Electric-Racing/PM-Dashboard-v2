@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from 'utils';
+import { AuthenticatedUser, User } from 'utils';
 
 /**
  * Transforms a user to ensure deep field transformation of date objects.
@@ -14,5 +14,17 @@ import { User } from 'utils';
 export const userTransformer = (user: User) => {
   return {
     ...user
+  };
+};
+
+/**
+ * Transforms a authenticated user to ensure deep field transformation of date objects.
+ *
+ * @param authUser Incoming authenticated user object supplied by the HTTP response.
+ * @returns Properly transformed user object.
+ */
+export const authUserTransformer = (authUser: AuthenticatedUser) => {
+  return {
+    ...authUser
   };
 };

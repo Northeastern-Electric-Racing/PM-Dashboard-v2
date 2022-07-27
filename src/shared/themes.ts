@@ -7,13 +7,15 @@ import { Theme } from './types';
 
 const themes: Theme[] = [
   {
-    name: 'dark',
+    name: 'DARK',
+    className: 'dark',
     bgColor: '#353434',
     cardBg: 'dark',
     cardBorder: 'light'
   },
   {
-    name: 'light',
+    name: 'LIGHT',
+    className: 'light',
     bgColor: '#ffffff',
     cardBg: 'light',
     cardBorder: 'dark'

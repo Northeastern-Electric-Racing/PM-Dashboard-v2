@@ -11,7 +11,6 @@ import {
   exampleMemberUser,
   exampleGuestUser
 } from '../../../../test-support/test-data/users.stub';
-import './login-dev.module.css';
 
 interface LoginDevProps {
   devSetRole: (role: string) => void;

@@ -13,6 +13,7 @@ const API_URL: string = `/.netlify/functions`;
 const users = () => `${API_URL}/users`;
 const usersById = (id: string) => `${users()}/${id}`;
 const usersLogin = () => `${users()}/auth:login`;
+const userSettingsByUserId = (id: string) => `${usersById(id)}/settings`;
 
 /**************** Projects Endpoint ****************/
 const projects = () => `${API_URL}/projects`;
@@ -45,6 +46,7 @@ export const apiUrls = {
   users,
   usersById,
   usersLogin,
+  userSettingsByUserId,
 
   projects,
   projectsByWbsNum,

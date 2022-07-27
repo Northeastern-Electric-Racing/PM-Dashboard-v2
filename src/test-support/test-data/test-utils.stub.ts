@@ -6,10 +6,11 @@
 import { HandlerCallback, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
 import { UseMutationResult, UseQueryResult } from 'react-query';
-import { User } from '@prisma/client';
-import { ApiRoute, API_URL } from 'utils';
+import { ApiRoute, API_URL, User } from 'utils';
 import { exampleAdminUser } from './users.stub';
-import { Auth } from '../../shared/types';
+import { Auth, LinkItem } from '../../shared/types';
+import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';
+import { routes } from '../../shared/routes';
 
 export const exampleApiRoutes: ApiRoute[] = [
   {
@@ -155,3 +156,21 @@ export const mockUtils = {
   remove: () => null,
   update: () => null
 };
+
+export const testLinkItems: LinkItem[] = [
+  {
+    name: 'Home',
+    icon: faHome,
+    route: routes.HOME
+  },
+  {
+    name: 'Projects',
+    icon: faFolder,
+    route: routes.PROJECTS
+  },
+  {
+    name: 'Change Requests',
+    icon: faExchangeAlt,
+    route: routes.CHANGE_REQUESTS
+  }
+];

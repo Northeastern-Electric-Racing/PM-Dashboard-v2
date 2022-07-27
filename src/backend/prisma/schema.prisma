@@ -32,6 +32,11 @@ enum Role {
   GUEST
 }
 
+enum Theme {
+  LIGHT
+  DARK
+}
+
 enum Scope_CR_Why_Type {
   ESTIMATION
   SCHOOL
@@ -46,13 +51,16 @@ enum Scope_CR_Why_Type {
 }
 
 model User {
-  userId                  Int              @id @default(autoincrement())
-  firstName               String
-  lastName                String
-  googleAuthId            String           @unique
-  email                   String           @unique
-  emailId                 String?          @unique
-  role                    Role             @default(GUEST)
+  userId       Int            @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  googleAuthId String         @unique
+  email        String         @unique
+  emailId      String?        @unique
+  role         Role           @default(GUEST)
+  userSettings User_Settings?
+
+  // Relation references
   submittedChangeRequests Change_Request[] @relation(name: "submittedChangeRequests")
   reviewedChangeRequests  Change_Request[] @relation(name: "reviewedChangeRequests")
   markedAsProjectLead     Activation_CR[]  @relation(name: "markAsProjectLead")
@@ -63,6 +71,9 @@ model User {
   Session                 Session[]
   teams                   Team[]           @relation(name: "teamsAsMember")     
   teamAsLead              Team?            @relation(name: "teamAsLead")
+  createdRisks            Risk[]           @relation(name: "createdBy")
+  resolvedRisks           Risk[]           @relation(name: "resolvedBy")
+  deletedRisks            Risk[]           @relation(name: "deletedBy")
 }
 
 model Team {
@@ -82,6 +93,13 @@ model Session {
   user       User     @relation(fields: [userId], references: [userId])
   created    DateTime @default(now())
   deviceInfo String?
+}
+
+model User_Settings {
+  id           String @id @default(uuid())
+  userId       Int    @unique
+  user         User   @relation(fields: [userId], references: [userId])
+  defaultTheme Theme  @default(DARK)
 }
 
 model Change_Request {
@@ -192,6 +210,7 @@ model Project {
   workPackages          Work_Package[]
   teamId                String?                   
   team                  Team?                  @relation(fields: [teamId], references: [teamId])
+  risks                 Risk[]
 }
 
 model Work_Package {
@@ -225,4 +244,21 @@ model Description_Bullet {
   workPackageExpectedActivities   Work_Package? @relation(name: "workPackageExpectedActivities", fields: [workPackageIdExpectedActivities], references: [workPackageId])
   workPackageIdDeliverables       Int?
   workPackageDeliverables         Work_Package? @relation(name: "workPackageDeliverables", fields: [workPackageIdDeliverables], references: [workPackageId])
+}
+
+model Risk {
+  id               String    @id @default(uuid())
+  projectId        Int
+  project          Project   @relation(fields: [projectId], references: [projectId])
+  detail           String
+  isResolved       Boolean   @default(false)
+  dateDeleted      DateTime?
+  dateCreated      DateTime  @default(now())
+  createdByUserId  Int
+  createdBy        User      @relation(name: "createdBy", fields: [createdByUserId], references: [userId])
+  resolvedByUserId Int?
+  resolvedBy       User?     @relation(name: "resolvedBy", fields: [resolvedByUserId], references: [userId])
+  resolvedAt       DateTime?
+  deletedByUserId  Int?
+  deletedBy        User?     @relation(name: "deletedBy", fields: [deletedByUserId], references: [userId])
 }

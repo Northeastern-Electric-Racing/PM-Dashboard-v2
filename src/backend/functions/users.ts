@@ -16,10 +16,32 @@ import {
   buildNotFoundResponse,
   buildSuccessResponse,
   routeMatcher,
-  User
+  User,
+  AuthenticatedUser
 } from 'utils';
 
 const prisma = new PrismaClient();
+
+const authUserQueryArgs = Prisma.validator<Prisma.UserArgs>()({
+  include: {
+    userSettings: true
+  }
+});
+
+const authenticatedUserTransformer = (
+  user: Prisma.UserGetPayload<typeof authUserQueryArgs>
+): AuthenticatedUser => {
+  return {
+    userId: user.userId,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    googleAuthId: user.googleAuthId,
+    email: user.email,
+    emailId: user.emailId,
+    role: user.role,
+    defaultTheme: user.userSettings?.defaultTheme
+  };
+};
 
 const usersTransformer = (user: Prisma.UserGetPayload<null>): User => {
   if (user === null) throw new TypeError('User not found');
@@ -70,7 +92,10 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
   if (!payload) throw new Error('Auth server response payload invalid');
   const { sub: userId } = payload; // google user id
   // check if user is already in the database via Google ID
-  let user = await prisma.user.findUnique({ where: { googleAuthId: userId } });
+  let user = await prisma.user.findUnique({
+    where: { googleAuthId: userId },
+    ...authUserQueryArgs
+  });
 
   // if not in database, create user in database
   if (user === null) {
@@ -83,8 +108,10 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
         lastName: payload['family_name']!,
         googleAuthId: userId,
         email: payload['email']!,
-        emailId
-      }
+        emailId,
+        userSettings: { create: {} }
+      },
+      ...authUserQueryArgs
     });
     user = createdUser;
   }
@@ -97,7 +124,33 @@ const logUserIn: ApiRouteFunction = async (_params, event) => {
     }
   });
 
-  return buildSuccessResponse(usersTransformer(user));
+  return buildSuccessResponse(authenticatedUserTransformer(user));
+};
+
+/** Get settings for the specified user */
+const getUserSettings: ApiRouteFunction = async (params: { id: string }) => {
+  const userId: number = parseInt(params.id);
+  const settings = await prisma.user_Settings.upsert({
+    where: { userId },
+    update: {},
+    create: { userId }
+  });
+  if (!settings) return buildNotFoundResponse('settings for user', `#${params.id}`);
+  return buildSuccessResponse(settings);
+};
+
+/** Update settings for the specified user */
+const updateUserSettings: ApiRouteFunction = async (params: { id: string }, event) => {
+  const userId: number = parseInt(params.id);
+  if (!event.body) return buildClientFailureResponse('No settings found to update.');
+  const body = JSON.parse(event.body!);
+  if (!body.defaultTheme) return buildClientFailureResponse('No defaultTheme found for settings.');
+  await prisma.user_Settings.upsert({
+    where: { userId },
+    update: { defaultTheme: body.defaultTheme },
+    create: { userId, defaultTheme: body.defaultTheme }
+  });
+  return buildSuccessResponse({ message: `Successfully updated settings for user ${userId}.` });
 };
 
 // Define all valid routes for the endpoint
@@ -116,6 +169,16 @@ const routes: ApiRoute[] = [
     path: `${API_URL}${apiRoutes.USERS_LOGIN}`,
     httpMethod: 'POST',
     func: logUserIn
+  },
+  {
+    path: `${API_URL}${apiRoutes.USER_SETTINGS_BY_USER_ID}`,
+    httpMethod: 'GET',
+    func: getUserSettings
+  },
+  {
+    path: `${API_URL}${apiRoutes.USER_SETTINGS_BY_USER_ID}`,
+    httpMethod: 'POST',
+    func: updateUserSettings
   }
 ];
 

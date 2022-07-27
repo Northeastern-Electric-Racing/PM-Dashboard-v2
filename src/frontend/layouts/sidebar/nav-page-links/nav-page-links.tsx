@@ -5,14 +5,9 @@
 
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { LinkItem } from '../../../../shared/types';
+import { routes } from '../../../../shared/routes';
 import styles from './nav-page-links.module.css';
-
-export interface LinkItem {
-  name: string;
-  icon: IconProp;
-  route: string;
-}
 
 interface NavPageLinkProps {
   linkItems: LinkItem[];
@@ -27,13 +22,17 @@ const NavPageLinks: React.FC<NavPageLinkProps> = ({ linkItems }: NavPageLinkProp
           to={item.route}
           className={styles.row}
           activeClassName={styles.activeLink}
-          exact
+          exact={item.route === routes.HOME}
         >
-          <FontAwesomeIcon
-            icon={item.icon}
-            size="2x"
-            className={styles.iconsAndText + ' ' + styles.icon}
-          />
+          {item.icon ? (
+            <FontAwesomeIcon
+              icon={item.icon!}
+              size="2x"
+              className={styles.iconsAndText + ' ' + styles.icon}
+            />
+          ) : (
+            ''
+          )}
           <p className={styles.iconsAndText + ' ' + styles.text}>{item.name}</p>
         </NavLink>
       );

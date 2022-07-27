@@ -7,6 +7,7 @@ import { SyntheticEvent, useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 import { DescriptionBullet, Project, WorkPackage } from 'utils';
 import { wbsPipe } from '../../../../shared/pipes';
+import { routes } from '../../../../shared/routes';
 import { useEditSingleProject } from '../../../../services/projects.hooks';
 import { useAllUsers } from '../../../../services/users.hooks';
 import { useAuth } from '../../../../services/auth.hooks';
@@ -40,7 +41,7 @@ interface ProjectEditContainerProps {
 const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitEditMode }) => {
   const auth = useAuth();
   const allUsers = useAllUsers();
-  const { mutateAsync } = useEditSingleProject();
+  const { mutateAsync } = useEditSingleProject(proj.wbsNum);
 
   const [crId, setCrId] = useState(-1);
   const [name, setName] = useState(proj.name);
@@ -198,7 +199,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
 
     try {
       await mutateAsync(payload);
-      window.location.reload();
+      exitEditMode();
     } catch (e) {
       if (e instanceof Error) {
         alert(e.message);
@@ -217,6 +218,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
       <Form onSubmit={handleSubmit}>
         <PageTitle
           title={`${wbsPipe(proj.wbsNum)} - ${proj.name}`}
+          previousPages={[{ name: 'Projects', route: routes.PROJECTS }]}
           actionButton={
             <Form.Control
               type="number"
@@ -241,68 +243,46 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
           updateProjectManager={setProjectManager}
         />
         <ProjectEditSummary project={proj} updateSummary={setSummary} />
-        <PageBlock
-          title={'Goals'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={goals.map((goal) => goal.detail)}
-              add={goalsUtil.add}
-              remove={goalsUtil.remove}
-              update={goalsUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Features'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={features.map((feature) => feature.detail)}
-              add={featUtil.add}
-              remove={featUtil.remove}
-              update={featUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Other Constraints'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={otherConstraints.map((other) => other.detail)}
-              add={ocUtil.add}
-              remove={ocUtil.remove}
-              update={ocUtil.update}
-            />
-          }
-        />
-        <PageBlock
-          title={'Rules'}
-          headerRight={<></>}
-          body={
-            <EditableTextInputList
-              items={rules}
-              add={rulesUtil.add}
-              remove={rulesUtil.remove}
-              update={rulesUtil.update}
-            />
-          }
-        />
+        <PageBlock title={'Goals'}>
+          <EditableTextInputList
+            items={goals.map((goal) => goal.detail)}
+            add={goalsUtil.add}
+            remove={goalsUtil.remove}
+            update={goalsUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Features'}>
+          <EditableTextInputList
+            items={features.map((feature) => feature.detail)}
+            add={featUtil.add}
+            remove={featUtil.remove}
+            update={featUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Other Constraints'}>
+          <EditableTextInputList
+            items={otherConstraints.map((other) => other.detail)}
+            add={ocUtil.add}
+            remove={ocUtil.remove}
+            update={ocUtil.update}
+          />
+        </PageBlock>
+        <PageBlock title={'Rules'}>
+          <EditableTextInputList
+            items={rules}
+            add={rulesUtil.add}
+            remove={rulesUtil.remove}
+            update={rulesUtil.update}
+          />
+        </PageBlock>
         <ChangesList changes={proj.changes} />
-        <PageBlock
-          title={'Work Packages'}
-          headerRight={<></>}
-          body={
-            <>
-              {proj.workPackages.map((ele: WorkPackage) => (
-                <div key={wbsPipe(ele.wbsNum)} className="mt-3">
-                  <WorkPackageSummary workPackage={ele} />
-                </div>
-              ))}
-            </>
-          }
-        />
+        <PageBlock title={'Work Packages'}>
+          {proj.workPackages.map((ele: WorkPackage) => (
+            <div key={wbsPipe(ele.wbsNum)} className="mt-3">
+              <WorkPackageSummary workPackage={ele} />
+            </div>
+          ))}
+        </PageBlock>
         <EditModeOptions exitEditMode={exitEditMode} />
       </Form>
     </Container>

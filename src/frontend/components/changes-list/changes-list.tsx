@@ -9,7 +9,6 @@ import { ImplementedChange } from 'utils';
 import { fullNamePipe, datePipe } from '../../../shared/pipes';
 import { routes } from '../../../shared/routes';
 import BulletList from '../bullet-list/bullet-list';
-import './changes-list.module.css';
 
 interface ChangesListProps {
   changes: ImplementedChange[];
@@ -19,7 +18,6 @@ const ChangesList: React.FC<ChangesListProps> = ({ changes }) => {
   return (
     <BulletList
       title={'Changes'}
-      headerRight={<></>}
       list={changes.map((ic) => (
         <>
           [<Link to={`${routes.CHANGE_REQUESTS}/${ic.changeRequestId}`}>#{ic.changeRequestId}</Link>

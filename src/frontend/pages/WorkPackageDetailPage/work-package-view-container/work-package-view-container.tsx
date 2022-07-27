@@ -74,16 +74,20 @@ const WorkPackageViewContainer: React.FC<WorkPackageViewContainerProps> = ({
     </DropdownButton>
   );
 
+  const projectWbsString: string = wbsPipe({ ...workPackage.wbsNum, workPackageNumber: 0 });
   return (
     <Container fluid>
       <PageTitle
         title={`${wbsPipe(workPackage.wbsNum)} - ${workPackage.name}`}
+        previousPages={[
+          { name: 'Projects', route: routes.PROJECTS },
+          { name: projectWbsString, route: `${routes.PROJECTS}/${projectWbsString}` }
+        ]}
         actionButton={projectActionsDropdown}
       />
       <WorkPackageDetails workPackage={workPackage} />
       <HorizontalList
         title={'Dependencies'}
-        headerRight={<></>}
         items={workPackage.dependencies.map((dep) => (
           <strong>{wbsPipe(dep)}</strong>
         ))}

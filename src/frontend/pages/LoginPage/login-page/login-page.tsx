@@ -5,15 +5,21 @@
 
 import GoogleLogin from 'react-google-login';
 import { Card } from 'react-bootstrap';
-import styles from './login-page.module.css';
 import LoginDev from '../login-dev/login-dev';
-import { useTheme } from '../../../../services/theme.hooks';
+import { Theme } from '../../../../shared/types';
+
+const styles = {
+  card: {
+    width: '25em'
+  }
+};
 
 interface LoginPageProps {
   devSetRole: (role: string) => void;
   devFormSubmit: (e: any) => any;
   prodSuccess: (res: any) => any;
   prodFailure: (res: any) => any;
+  theme: Theme;
 }
 
 /**
@@ -23,12 +29,11 @@ const LoginPage: React.FC<LoginPageProps> = ({
   devSetRole,
   devFormSubmit,
   prodSuccess,
-  prodFailure
+  prodFailure,
+  theme
 }) => {
-  const theme = useTheme();
-
   return (
-    <Card bg={theme.cardBg} className={'mx-auto mt-sm-5 ' + styles.card}>
+    <Card bg={theme.cardBg} className={'mx-auto mt-sm-5 '} style={styles.card}>
       <Card.Body>
         <Card.Title>NER PM Dashboard</Card.Title>
         <Card.Text>Login Required. Students must use their Husky Google account.</Card.Text>

@@ -7,6 +7,15 @@ import { render, screen, routerWrapperBuilder } from '../../../test-support/test
 import { routes } from '../../../shared/routes';
 import Settings from './settings';
 
+jest.mock('./user-settings/user-settings', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div>user-settings</div>;
+    }
+  };
+});
+
 /**
  * Sets up the component under test with the desired values and renders it.
  */
@@ -22,7 +31,7 @@ const renderComponent = () => {
 describe('settings page component', () => {
   it('renders title', () => {
     renderComponent();
-    expect(screen.getByText('Settings')).toBeInTheDocument();
+    expect(screen.getAllByText('Settings').length).toEqual(2);
   });
 
   it('renders organization settings', () => {
@@ -43,5 +52,10 @@ describe('settings page component', () => {
   it('renders role', () => {
     renderComponent();
     expect(screen.getByText(/Role:/)).toBeInTheDocument();
+  });
+
+  it('renders user settings component', () => {
+    renderComponent();
+    expect(screen.getByText('user-settings')).toBeInTheDocument();
   });
 });

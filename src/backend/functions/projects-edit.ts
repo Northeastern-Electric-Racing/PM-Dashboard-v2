@@ -158,16 +158,16 @@ export const editProject: Handler = async ({ body }, _context) => {
   );
   const projectManagerChangeJson = createChangeJsonNonList(
     'project manager',
-    originalProject.wbsElement.projectManagerId,
-    projectManager,
+    await getUserFullName(originalProject.wbsElement.projectManagerId),
+    await getUserFullName(projectManager),
     crId,
     userId,
     wbsElementId
   );
   const projectLeadChangeJson = createChangeJsonNonList(
     'project lead',
-    originalProject.wbsElement.projectLeadId,
-    projectLead,
+    await getUserFullName(originalProject.wbsElement.projectLeadId),
+    await getUserFullName(projectLead),
     crId,
     userId,
     wbsElementId
@@ -511,3 +511,11 @@ const handler = middy(editProject)
   .use(httpErrorHandler());
 
 export { handler };
+
+// Given a user's id, this method returns the user's full name
+const getUserFullName = async (userId: number | null): Promise<string | null> => {
+  if (userId === null) return null; 
+  const user = await prisma.user.findUnique( { where: { userId }});
+  if (!user) throw new Error('user not found'); 
+  return `${user.firstName} ${user.lastName}`;
+}

@@ -13,8 +13,13 @@ import NavTopBar from '../../layouts/nav-top-bar/nav-top-bar';
 import Settings from '../../pages/SettingsPage/settings';
 import HelpPage from '../../pages/HelpPage/HelpPage';
 import Sidebar from '../../layouts/sidebar/sidebar';
-import styles from './app-authenticated.module.css';
-import TeamsPage from '../../pages/TeamsPage/TeamsPage';
+
+const styles = {
+  content: {
+    marginTop: '4rem',
+    marginLeft: '85px'
+  }
+};
 
 const AppAuthenticated: React.FC = () => {
   return (
@@ -22,7 +27,7 @@ const AppAuthenticated: React.FC = () => {
       <NavTopBar />
       <div>
         <Sidebar />
-        <div className={styles.content}>
+        <div style={styles.content}>
           <Switch>
             <Route path={routes.PROJECTS} component={Projects} />
             <Redirect from={routes.CR_BY_ID} to={routes.CHANGE_REQUESTS_BY_ID} />

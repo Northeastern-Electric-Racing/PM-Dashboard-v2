@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { validateWBS, WbsNumber } from 'utils';
 import HorizontalList from '../../../../components/horizontal-list/horizontal-list';
 import Dependency from './dependency/dependency';
-import './dependencies-list.module.css';
 
 interface DependenciesListProps {
   dependencies: WbsNumber[];
@@ -65,9 +64,7 @@ const DependenciesList: React.FC<DependenciesListProps> = ({ dependencies, sette
     <Dependency wbsNumber={e} handleDelete={handleDelete} />
   ));
 
-  return (
-    <HorizontalList title={'Dependencies'} headerRight={<></>} items={[...items, AddButton]} />
-  );
+  return <HorizontalList title={'Dependencies'} items={[...items, AddButton]} />;
 };
 
 export default DependenciesList;

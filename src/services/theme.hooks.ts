@@ -6,13 +6,10 @@
 import { useState, useContext } from 'react';
 import { ThemeContext } from '../frontend/app/app-context-theme/app-context-theme';
 import themes from '../shared/themes';
-import { useAuth } from './auth.hooks';
 
 // Provider hook that creates theme object and handles state
 export const useProvideTheme = () => {
-  const auth = useAuth();
-  const defaultThemeIndex = themes.findIndex((t) => auth.user?.defaultTheme === t.name);
-  const [theme, setTheme] = useState(themes[defaultThemeIndex > -1 ? defaultThemeIndex : 0]);
+  const [theme, setTheme] = useState(themes[0]);
 
   const toggleTheme = (name: string) => {
     const t = themes.find((element) => element.name === name);

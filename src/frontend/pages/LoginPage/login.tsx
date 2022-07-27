@@ -48,7 +48,10 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const verifyLogin = async (response: any) => {
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
-    await auth.signin(id_token);
+    const authedUser = await auth.signin(id_token);
+    if (authedUser.defaultTheme && authedUser.defaultTheme !== theme.name) {
+      theme.toggleTheme!(authedUser.defaultTheme);
+    }
     redirectAfterLogin();
   };
 

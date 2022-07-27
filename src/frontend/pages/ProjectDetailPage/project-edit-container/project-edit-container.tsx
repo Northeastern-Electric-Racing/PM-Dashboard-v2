@@ -41,7 +41,7 @@ interface ProjectEditContainerProps {
 const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitEditMode }) => {
   const auth = useAuth();
   const allUsers = useAllUsers();
-  const { mutateAsync } = useEditSingleProject();
+  const { mutateAsync } = useEditSingleProject(proj.wbsNum);
 
   const [crId, setCrId] = useState(-1);
   const [name, setName] = useState(proj.name);
@@ -199,7 +199,7 @@ const ProjectEditContainer: React.FC<ProjectEditContainerProps> = ({ proj, exitE
 
     try {
       await mutateAsync(payload);
-      window.location.reload();
+      exitEditMode();
     } catch (e) {
       if (e instanceof Error) {
         alert(e.message);

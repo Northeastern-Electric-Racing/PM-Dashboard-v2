@@ -6,7 +6,6 @@
 import { createContext } from 'react';
 import { useProvideAuth } from '../../../services/auth.hooks';
 import { Auth } from '../../../shared/types';
-import './app-context-auth.module.css';
 
 export const AuthContext = createContext<Auth | undefined>(undefined);
 

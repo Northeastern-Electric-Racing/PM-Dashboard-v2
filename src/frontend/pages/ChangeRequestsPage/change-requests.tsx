@@ -8,7 +8,6 @@ import { routes } from '../../../shared/routes';
 import ChangeRequestDetails from '../ChangeRequestDetailPage/change-request-details';
 import ChangeRequestsTable from './change-requests-table';
 import CreateChangeRequest from '../CreateChangeRequestPage/create-change-request';
-import './change-requests.module.css';
 
 const ChangeRequests: React.FC = () => {
   return (

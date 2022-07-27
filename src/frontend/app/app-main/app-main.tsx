@@ -6,7 +6,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import AppContext from '../app-context/app-context';
 import AppPublic from '../app-public/app-public';
-import './app-main.module.css';
 
 const AppMain: React.FC = () => {
   return (

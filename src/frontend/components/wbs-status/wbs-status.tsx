@@ -5,7 +5,6 @@
 
 import { Badge } from 'react-bootstrap';
 import { WbsElementStatus } from 'utils';
-import './wbs-status.module.css';
 
 interface WbsStatusProps {
   status: WbsElementStatus;

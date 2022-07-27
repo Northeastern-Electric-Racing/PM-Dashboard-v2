@@ -48,7 +48,13 @@ const manyRelationArgs = Prisma.validator<Prisma.ProjectArgs>()({
     otherConstraints: true,
     workPackages: {
       include: {
-        wbsElement: { include: { changes: { include: { implementer: true } } } },
+        wbsElement: {
+          include: {
+            projectLead: true,
+            projectManager: true,
+            changes: { include: { implementer: true } }
+          }
+        },
         dependencies: true,
         expectedActivities: true,
         deliverables: true
@@ -66,7 +72,13 @@ const uniqueRelationArgs = Prisma.validator<Prisma.WBS_ElementArgs>()({
         otherConstraints: true,
         workPackages: {
           include: {
-            wbsElement: { include: { changes: { include: { implementer: true } } } },
+            wbsElement: {
+              include: {
+                projectLead: true,
+                projectManager: true,
+                changes: { include: { implementer: true } }
+              }
+            },
             dependencies: true,
             expectedActivities: true,
             deliverables: true
@@ -94,8 +106,9 @@ const wbsNumOf = (element: WBS_Element): WbsNumber => ({
 });
 
 export const descBulletConverter = (descBullet: Description_Bullet): DescriptionBullet => ({
-  ...descBullet,
   id: descBullet.descriptionId,
+  detail: descBullet.detail,
+  dateAdded: descBullet.dateAdded,
   dateDeleted: descBullet.dateDeleted ?? undefined
 });
 
@@ -110,25 +123,32 @@ const projectTransformer = (
   const wbsNum = wbsNumOf(wbsElement);
 
   return {
-    ...project,
-    ...wbsElement,
     id: project.projectId,
-    projectManager: wbsElement.projectManager ?? undefined,
-    projectLead: wbsElement.projectLead ?? undefined,
-    status: convertStatus(wbsElement.status),
-    changes: wbsElement.changes.map((change) => ({
-      ...change,
-      wbsNum
-    })),
     wbsNum,
+    dateCreated: wbsElement.dateCreated,
+    name: wbsElement.name,
+    status: convertStatus(wbsElement.status),
+    projectLead: wbsElement.projectLead ?? undefined,
+    projectManager: wbsElement.projectManager ?? undefined,
+    changes: wbsElement.changes.map((change) => ({
+      changeId: change.changeId,
+      changeRequestId: change.changeRequestId,
+      wbsNum,
+      implementer: change.implementer,
+      detail: change.detail,
+      dateImplemented: change.dateImplemented
+    })),
+    summary: project.summary,
+    budget: project.budget,
     gDriveLink: project.googleDriveFolderLink ?? undefined,
-    slideDeckLink: project.slideDeckLink ?? undefined,
     taskListLink: project.taskListLink ?? undefined,
+    slideDeckLink: project.slideDeckLink ?? undefined,
     bomLink: project.bomLink ?? undefined,
-    otherConstraints: project.otherConstraints.map(descBulletConverter),
-    features: project.features.map(descBulletConverter),
-    goals: project.goals.map(descBulletConverter),
+    rules: project.rules,
     duration: project.workPackages.reduce((prev, curr) => prev + curr.duration, 0),
+    goals: project.goals.map(descBulletConverter),
+    features: project.features.map(descBulletConverter),
+    otherConstraints: project.otherConstraints.map(descBulletConverter),
     workPackages: project.workPackages.map((workPackage) => {
       const endDate = calculateEndDate(workPackage.startDate, workPackage.duration);
       const expectedProgress = calculatePercentExpectedProgress(
@@ -138,21 +158,31 @@ const projectTransformer = (
       );
 
       return {
-        ...workPackage,
-        ...workPackage.wbsElement,
         id: workPackage.workPackageId,
         wbsNum: wbsNumOf(workPackage.wbsElement),
+        dateCreated: workPackage.wbsElement.dateCreated,
+        name: workPackage.wbsElement.name,
         status: convertStatus(workPackage.wbsElement.status),
+        projectLead: workPackage.wbsElement.projectLead ?? undefined,
+        projectManager: workPackage.wbsElement.projectManager ?? undefined,
+        changes: workPackage.wbsElement.changes.map((change) => ({
+          changeId: change.changeId,
+          changeRequestId: change.changeRequestId,
+          wbsNum: wbsNumOf(workPackage.wbsElement),
+          implementer: change.implementer,
+          detail: change.detail,
+          dateImplemented: change.dateImplemented
+        })),
+        orderInProject: workPackage.orderInProject,
+        progress: workPackage.progress,
+        startDate: workPackage.startDate,
         endDate,
+        duration: workPackage.duration,
         expectedProgress,
         timelineStatus: calculateTimelineStatus(workPackage.progress, expectedProgress),
         dependencies: workPackage.dependencies.map(wbsNumOf),
         expectedActivities: workPackage.expectedActivities.map(descBulletConverter),
-        deliverables: workPackage.deliverables.map(descBulletConverter),
-        changes: workPackage.wbsElement.changes.map((change) => ({
-          ...change,
-          wbsNum: wbsNumOf(workPackage.wbsElement)
-        }))
+        deliverables: workPackage.deliverables.map(descBulletConverter)
       };
     })
   };

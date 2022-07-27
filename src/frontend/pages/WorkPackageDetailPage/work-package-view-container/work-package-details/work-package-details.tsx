@@ -8,7 +8,6 @@ import { WorkPackage } from 'utils';
 import { percentPipe, fullNamePipe, datePipe, weeksPipe } from '../../../../../shared/pipes';
 import WbsStatus from '../../../../components/wbs-status/wbs-status';
 import PageBlock from '../../../../layouts/page-block/page-block';
-import './work-package-details.module.css';
 
 interface WorkPackageDetailsProps {
   workPackage: WorkPackage;

@@ -37,7 +37,7 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
   exitEditMode
 }) => {
   const auth = useAuth();
-  const { mutateAsync } = useEditWorkPackage();
+  const { mutateAsync } = useEditWorkPackage(workPackage.wbsNum);
   const { data: userData, isLoading, isError, error } = useAllUsers();
 
   // states for the form's payload
@@ -165,6 +165,7 @@ const WorkPackageEditContainer: React.FC<WorkPackageEditContainerProps> = ({
 
     try {
       await mutateAsync(payload);
+      exitEditMode();
     } catch (_) {
       return;
     }

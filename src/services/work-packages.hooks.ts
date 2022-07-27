@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { WorkPackage, WbsNumber, CreateWorkPackagePayload, EditWorkPackagePayload } from 'utils';
 import {
   createSingleWorkPackage,
@@ -54,7 +54,8 @@ export const useCreateSingleWorkPackage = () => {
  *
  * @returns React-query tility functions exposed by the useMutation hook
  */
-export const useEditWorkPackage = () => {
+export const useEditWorkPackage = (wbsNum: WbsNumber) => {
+  const queryClient = useQueryClient();
   return useMutation<{ message: string }, Error, EditWorkPackagePayload>(
     ['work packages', 'edit'],
     async (wpPayload: EditWorkPackagePayload) => {
@@ -64,6 +65,9 @@ export const useEditWorkPackage = () => {
     {
       onError: (error) => {
         alert(error.message + " but it's probably invalid cr id"); // very scuffed, find a better way to surface errors on front end
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['work packages', wbsNum]);
       }
     }
   );

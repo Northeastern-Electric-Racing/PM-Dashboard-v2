@@ -13,6 +13,7 @@ import NavTopBar from '../../layouts/nav-top-bar/nav-top-bar';
 import Settings from '../../pages/SettingsPage/settings';
 import HelpPage from '../../pages/HelpPage/HelpPage';
 import Sidebar from '../../layouts/sidebar/sidebar';
+import TeamsPage from '../../pages/TeamsPage/TeamsPage';
 
 const styles = {
   content: {

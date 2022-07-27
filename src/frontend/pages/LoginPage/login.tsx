@@ -12,7 +12,6 @@ import { useAuth } from '../../../services/auth.hooks';
 import { routes } from '../../../shared/routes';
 import LoginPage from './login-page/login-page';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
-import './login.module.css';
 
 interface LoginProps {
   postLoginRedirect: { url: string; search: string };

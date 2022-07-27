@@ -6,8 +6,7 @@
 import { HandlerCallback, HandlerEvent } from '@netlify/functions';
 import { AxiosResponse } from 'axios';
 import { UseMutationResult, UseQueryResult } from 'react-query';
-import { User } from '@prisma/client';
-import { ApiRoute, API_URL } from 'utils';
+import { ApiRoute, API_URL, User } from 'utils';
 import { exampleAdminUser } from './users.stub';
 import { Auth, LinkItem } from '../../shared/types';
 import { faExchangeAlt, faFolder, faHome } from '@fortawesome/free-solid-svg-icons';

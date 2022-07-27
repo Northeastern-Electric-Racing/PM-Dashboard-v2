@@ -3,8 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from '@prisma/client';
-import { WbsNumber } from 'utils';
+import { WbsNumber, User } from 'utils';
 
 /**
  * Pipes:

@@ -6,7 +6,7 @@
 import GoogleLogin from 'react-google-login';
 import { Card } from 'react-bootstrap';
 import LoginDev from '../login-dev/login-dev';
-import { useTheme } from '../../../../services/theme.hooks';
+import { Theme } from '../../../../shared/types';
 
 const styles = {
   card: {
@@ -19,6 +19,7 @@ interface LoginPageProps {
   devFormSubmit: (e: any) => any;
   prodSuccess: (res: any) => any;
   prodFailure: (res: any) => any;
+  theme: Theme;
 }
 
 /**
@@ -28,10 +29,9 @@ const LoginPage: React.FC<LoginPageProps> = ({
   devSetRole,
   devFormSubmit,
   prodSuccess,
-  prodFailure
+  prodFailure,
+  theme
 }) => {
-  const theme = useTheme();
-
   return (
     <Card bg={theme.cardBg} className={'mx-auto mt-sm-5 '} style={styles.card}>
       <Card.Body>

@@ -7,10 +7,12 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Role } from '@prisma/client';
 import { exampleAllUsers } from '../../../test-support/test-data/users.stub';
+import { useTheme } from '../../../services/theme.hooks';
 import { useAuth } from '../../../services/auth.hooks';
-import LoginPage from './login-page/login-page';
 import { routes } from '../../../shared/routes';
+import LoginPage from './login-page/login-page';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
+import './login.module.css';
 
 interface LoginProps {
   postLoginRedirect: { url: string; search: string };
@@ -22,6 +24,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const [devUserRole, setDevUserRole] = useState<string>(Role.APP_ADMIN);
   const history = useHistory();
+  const theme = useTheme();
   const auth = useAuth();
 
   if (auth.isLoading) return <LoadingIndicator />;
@@ -45,7 +48,10 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
   const verifyLogin = async (response: any) => {
     const { id_token } = response.getAuthResponse();
     if (!id_token) throw new Error('Invalid login object');
-    await auth.signin(id_token);
+    const authedUser = await auth.signin(id_token);
+    if (authedUser.defaultTheme && authedUser.defaultTheme !== theme.name) {
+      theme.toggleTheme!(authedUser.defaultTheme);
+    }
     redirectAfterLogin();
   };
 
@@ -59,6 +65,7 @@ const Login: React.FC<LoginProps> = ({ postLoginRedirect }) => {
       devFormSubmit={devFormSubmit}
       prodSuccess={verifyLogin}
       prodFailure={handleFailure}
+      theme={theme}
     />
   );
 };

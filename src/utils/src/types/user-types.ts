@@ -16,3 +16,24 @@ export interface User {
 export type UserPreview = Pick<User, 'userId' | 'firstName' | 'lastName' | 'email' | 'role'>;
 
 export type Role = 'APP_ADMIN' | 'ADMIN' | 'LEADERSHIP' | 'MEMBER' | 'GUEST';
+
+export type ThemeName = 'DARK' | 'LIGHT';
+
+/**
+ * User object used purely for authentication purposes.
+ */
+export interface AuthenticatedUser {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  googleAuthId: string;
+  email: string;
+  emailId: string | null;
+  role: Role;
+  defaultTheme?: ThemeName;
+}
+
+export interface UserSettings {
+  id: string;
+  defaultTheme: ThemeName;
+}

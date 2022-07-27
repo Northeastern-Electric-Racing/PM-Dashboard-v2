@@ -3,23 +3,24 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { User } from '@prisma/client';
+import { AuthenticatedUser, User, ThemeName } from 'utils';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface Auth {
-  user: User | undefined;
+  user: AuthenticatedUser | undefined;
   devSignin: (user: User) => User;
-  signin: (token: string) => Promise<User>;
+  signin: (token: string) => Promise<AuthenticatedUser>;
   signout: () => void;
   isLoading: boolean;
 }
 
 export interface Theme {
-  toggleTheme?: (name: string) => void;
-  name: string;
+  name: ThemeName;
+  className: string;
   bgColor: string;
   cardBg: string;
   cardBorder: string;
+  toggleTheme?: (name: ThemeName) => void;
 }
 
 export interface LinkItem {

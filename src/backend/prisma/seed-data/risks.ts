@@ -5,14 +5,18 @@
 
 const dbSeedRisk1: any = {
   projectId: 1,
-  detail: 'This one might be a bit too expensive',
-  createdByUserId: 1
+  createdByUserId: 1,
+  fields: {
+    detail: 'This one might be a bit too expensive'
+  }
 };
 
 const dbSeedRisk2: any = {
   projectId: 1,
-  detail: 'Risky Risk 123',
-  createdByUserId: 1
+  createdByUserId: 1,
+  fields: {
+    detail: 'Risky Risk 123'
+  }
 };
 
 export const dbSeedAllRisks: any[] = [dbSeedRisk1, dbSeedRisk2];

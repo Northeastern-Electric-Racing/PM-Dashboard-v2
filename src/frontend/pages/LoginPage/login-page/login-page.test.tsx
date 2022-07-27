@@ -3,6 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
+import themes from '../../../../shared/themes';
 import { render, screen } from '../../../../test-support/test-utils';
 import LoginPage from './login-page';
 
@@ -16,6 +17,7 @@ const renderComponent = () => {
       devFormSubmit={(e) => e}
       prodSuccess={(r) => r}
       prodFailure={(r) => r}
+      theme={themes[0]}
     />
   );
 };

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../../../services/auth.hooks';
 import { routes } from '../../../../shared/routes';
-import styles from './nav-user-menu.module.css';
+import styles from '../../../stylesheets/layouts/nav-top-bar/nav-user-menu.module.css';
 
 const NavUserMenu: React.FC = () => {
   const history = useHistory();

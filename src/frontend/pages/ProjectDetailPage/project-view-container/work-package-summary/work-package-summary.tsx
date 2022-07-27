@@ -11,7 +11,7 @@ import { weeksPipe, wbsPipe, endDatePipe, listPipe, datePipe } from '../../../..
 import { useTheme } from '../../../../../services/theme.hooks';
 import { routes } from '../../../../../shared/routes';
 import WbsStatus from '../../../../components/wbs-status/wbs-status';
-import styles from './work-package-summary.module.scss';
+import styles from '../../../../stylesheets/pages/ProjectDetailPage/work-package-summary.module.scss';
 
 interface WorkPackageSummaryProps {
   workPackage: WorkPackage;

@@ -3,7 +3,7 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { EditProjectPayload, CreateProjectPayload, Project, WbsNumber } from 'utils';
 import {
   editSingleProject,
@@ -51,12 +51,18 @@ export const useCreateSingleProject = () => {
 /**
  * Custom React Hook to edit a project
  */
-export const useEditSingleProject = () => {
+export const useEditSingleProject = (wbsNum: WbsNumber) => {
+  const queryClient = useQueryClient();
   return useMutation<{ message: string }, Error, EditProjectPayload>(
     ['projects', 'edit'],
     async (projectPayload: EditProjectPayload) => {
       const { data } = await editSingleProject(projectPayload);
       return data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['projects', wbsNum]);
+      }
     }
   );
 };

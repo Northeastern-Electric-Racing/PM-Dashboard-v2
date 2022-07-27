@@ -27,6 +27,10 @@ const CHANGE_REQUESTS_NEW: string = `${CHANGE_REQUESTS}-new`;
 const CHANGE_REQUESTS_BY_ID: string = `${CHANGE_REQUESTS}/:id`;
 const CHANGE_REQUESTS_REVIEW: string = `${CHANGE_REQUESTS}-review`;
 
+/**************** Risks Endpoint ****************/
+const RISKS: string = `/risks`;
+const RISKS_BY_PROJECT: string = `${RISKS}/:projectId`;
+
 export const apiRoutes = {
   USERS,
   USERS_BY_ID,
@@ -44,5 +48,8 @@ export const apiRoutes = {
   CHANGE_REQUESTS,
   CHANGE_REQUESTS_NEW,
   CHANGE_REQUESTS_BY_ID,
-  CHANGE_REQUESTS_REVIEW
+  CHANGE_REQUESTS_REVIEW,
+
+  RISKS,
+  RISKS_BY_PROJECT
 };

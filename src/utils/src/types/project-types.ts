@@ -47,6 +47,8 @@ export interface Project extends WbsElement {
   workPackages: WorkPackage[];
 }
 
+export type ProjectPreview = Pick<Project, 'id' | 'name' | 'wbsNum'>;
+
 export interface WorkPackage extends WbsElement {
   orderInProject: number;
   progress: number;

@@ -57,6 +57,11 @@ const countWorkPackages = async () => {
   console.log('total work packages:', res);
 };
 
+const activeUserMetrics = async () => {
+  // sad dev doesn't feel like converting SQL to Prisma
+  // select extract(week from "created") as wk, count(distinct "userId") as "# users", count(distinct "sessionId") as "# sessions" from "Session" group by wk order by wk;
+};
+
 executeScripts()
   .catch((e) => {
     console.error(e);

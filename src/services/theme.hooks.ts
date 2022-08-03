@@ -4,7 +4,7 @@
  */
 
 import { useState, useContext } from 'react';
-import { ThemeContext } from '../frontend/app/app-context-theme/app-context-theme';
+import { ThemeContext } from '../frontend/app/app-context-theme';
 import themes from '../shared/themes';
 
 // Provider hook that creates theme object and handles state

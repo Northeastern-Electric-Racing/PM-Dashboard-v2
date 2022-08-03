@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Button, Dropdown, Form } from 'react-bootstrap';
 import { ChangeRequestType, ChangeRequestReason } from 'utils';
 import PageBlock from '../../../layouts/page-block/page-block';
-import styles from '../../../stylesheets/pages/change-requests-filter.module.scss';
+import styles from '../../../stylesheets/common.module.scss';
 
 interface FilterFieldStateProps {
   update: (

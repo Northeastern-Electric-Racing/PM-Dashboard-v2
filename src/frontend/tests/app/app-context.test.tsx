@@ -6,7 +6,7 @@
 import { render, screen } from '@testing-library/react'; // avoid circular dependency
 import AppContext from '../../app/app-context';
 
-jest.mock('../../app/app-context', () => {
+jest.mock('../../app/app-context-query', () => {
   return {
     __esModule: true,
     default: (props: any) => {

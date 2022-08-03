@@ -49,6 +49,14 @@ const checkTimelineImpact = async () => {
   console.log('total accepted delays', calc, 'weeks');
 };
 
+/**
+ * Print count of total work packages
+ */
+const countWorkPackages = async () => {
+  const res = await prisma.work_Package.count();
+  console.log('total work packages:', res);
+};
+
 executeScripts()
   .catch((e) => {
     console.error(e);

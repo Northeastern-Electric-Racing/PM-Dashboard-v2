@@ -8,7 +8,7 @@ import { useAuth } from '../../../services/auth.hooks';
 import UsefulLinks from './useful-links/useful-links';
 import WorkPackagesByTimelineStatus from './work-packages-by-timeline-status/work-packages-by-timeline-status';
 import UpcomingDeadlines from './upcoming-deadlines/upcoming-deadlines';
-import styles from './home.module.css';
+import styles from '../../stylesheets/pages/home.module.css';
 
 const Home: React.FC = () => {
   const auth = useAuth();

@@ -57,6 +57,9 @@ const countWorkPackages = async () => {
   console.log('total work packages:', res);
 };
 
+/**
+ * Calculate active users by week
+ */
 const activeUserMetrics = async () => {
   // sad dev doesn't feel like converting SQL to Prisma
   // select extract(week from "created") as wk, count(distinct "userId") as "# users", count(distinct "sessionId") as "# sessions" from "Session" group by wk order by wk;

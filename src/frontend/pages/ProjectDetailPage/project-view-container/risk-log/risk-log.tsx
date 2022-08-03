@@ -10,7 +10,7 @@ interface RiskLogProps {
 }
 
 const RiskLog: React.FC<RiskLogProps> = ({ risks }) => {
-  return <CheckList title="Risk Log" list={risks} />;
+  return <CheckList title="Risk Log" listItems={risks} />;
 };
 
 export default RiskLog;

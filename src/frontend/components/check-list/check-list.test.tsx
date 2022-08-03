@@ -31,13 +31,13 @@ describe('Check List Component', () => {
   beforeEach(() => mockHook());
 
   it('renders the component title', () => {
-    render(<CheckList title={'test'} list={[]} />);
+    render(<CheckList title={'test'} listItems={[]} />);
 
     expect(screen.getByText('test')).toBeInTheDocument();
   });
 
   it('renders all details', () => {
-    render(<CheckList title={'test'} list={testList} />);
+    render(<CheckList title={'test'} listItems={testList} />);
 
     expect(screen.getByText('Check #1')).toBeInTheDocument();
     expect(screen.getByText('Check #2')).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('Check List Component', () => {
   });
 
   it('checks checkboxes that should be checked', () => {
-    render(<CheckList title={'test'} list={testList} />);
+    render(<CheckList title={'test'} listItems={testList} />);
 
     expect(screen.getByTestId('testCheckbox0')).not.toBeChecked();
     expect(screen.getByTestId('testCheckbox1')).toBeChecked();
@@ -53,15 +53,15 @@ describe('Check List Component', () => {
   });
 
   it('renders all buttons"', () => {
-    render(<CheckList title={'test'} list={testList2} />);
+    render(<CheckList title={'test'} listItems={testList2} />);
 
-    expect(screen.getByText('Convert to CR')).toBeInTheDocument();
-    expect(screen.getByText('Delete')).toBeInTheDocument();
+    expect(screen.getByTestId('convertButton')).toBeInTheDocument();
+    expect(screen.getByTestId('deleteButton')).toBeInTheDocument();
     expect(screen.getByText('Add New Risk')).toBeInTheDocument();
   });
 
   it('renders the header right', () => {
-    render(<CheckList title="test" headerRight="testheaderright" list={[]} />);
+    render(<CheckList title="test" headerRight="testheaderright" listItems={[]} />);
 
     expect(screen.getByText('testheaderright')).toBeInTheDocument();
   });

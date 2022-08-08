@@ -97,7 +97,7 @@ const EditableTextInputList: React.FC<EditableTextInputListProps> = ({
             value={item.toString()}
             placeholder={'Input new bullet here...'}
             onKeyDown={(e: any) => handleKeyDown(e, index)}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setHasTyped(true);
               update(index, e.target.value);
               if (isLastElement(index)) {

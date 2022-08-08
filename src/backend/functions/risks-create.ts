@@ -20,11 +20,7 @@ import {
 const prisma = new PrismaClient();
 
 // Create new risk
-const createRisk: Handler<FromSchema<typeof inputSchema>> = async (
-  { body },
-  _context
-  // params: { projectId: number; detail: string; createdById: number}
-) => {
+const createRisk: Handler<FromSchema<typeof inputSchema>> = async ({ body }, _context) => {
   const { projectId, detail, createdById } = body;
 
   const targetProj = await prisma.project.findUnique({ where: { projectId } });
@@ -48,7 +44,7 @@ const createRisk: Handler<FromSchema<typeof inputSchema>> = async (
   });
 
   return buildSuccessResponse({
-    message: `Successfully created risk #${createdRisk.createdByUserId}.`
+    message: `Successfully created risk #${createdRisk.id}.`
   });
 };
 

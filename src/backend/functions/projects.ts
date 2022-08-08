@@ -11,7 +11,6 @@ import {
   WBS_Element,
   WBS_Element_Status
 } from '@prisma/client';
-import { scheduleMicrotask } from 'react-query/types/core/utils';
 import {
   routeMatcher,
   ApiRoute,
@@ -32,7 +31,6 @@ import {
   calculatePercentExpectedProgress,
   calculateTimelineStatus
 } from 'utils';
-import ProjectEditDetails from '../../frontend/pages/ProjectDetailPage/project-edit-container/project-edit-details/project-edit-details';
 
 const prisma = new PrismaClient();
 

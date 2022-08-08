@@ -15,7 +15,7 @@ import PageTitle from '../../../layouts/page-title/page-title';
 import PageBlock from '../../../layouts/page-block';
 import ProjectDetails from './project-details';
 import RulesList from './rules-list';
-import RiskLog from './risk-log/risk-log';
+import RiskLog from './risk-log';
 import { routes } from '../../../../shared/routes';
 import ProjectGantt from './project-gantt';
 

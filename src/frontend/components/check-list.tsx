@@ -4,11 +4,11 @@
  */
 
 import { ReactNode, useState } from 'react';
-import PageBlock from '../../layouts/page-block/page-block';
+import PageBlock from '../layouts/page-block';
 import { Form, Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import styles from './check-list.module.css';
+import styles from '../stylesheets/components/check-list.module.css';
 
 interface CheckListProps {
   title: string;

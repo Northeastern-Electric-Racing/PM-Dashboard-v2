@@ -5,12 +5,12 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppMain from './frontend/app/app-main/app-main';
+import AppMain from './frontend/app/app-main';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './custom.scss';
-import ErrorBoundary from './frontend/components/error-boundary/error-boundary';
+import ErrorBoundary from './frontend/components/error-boundary';
 
 ReactDOM.render(
   <React.StrictMode>

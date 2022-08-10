@@ -15,14 +15,14 @@ import {
 } from 'utils';
 import { routes } from '../../../../shared/routes';
 import { datePipe, fullNamePipe, wbsPipe } from '../../../../shared/pipes';
-import ActivationDetails from './type-specific-details/activation-details/activation-details';
-import StageGateDetails from './type-specific-details/stage-gate-details/stage-gate-details';
-import ImplementedChangesList from './implemented-changes-list/implemented-changes-list';
-import StandardDetails from './type-specific-details/standard-details/standard-details';
-import ReviewChangeRequest from '../ReviewChangeRequestModal/review-change-request';
+import ActivationDetails from './type-specific-details/activation-details';
+import StageGateDetails from './type-specific-details/stage-gate-details';
+import ImplementedChangesList from './implemented-changes-list';
+import StandardDetails from './type-specific-details/standard-details';
+import ReviewChangeRequest from '../review-change-request';
 import PageTitle from '../../../layouts/page-title/page-title';
-import PageBlock from '../../../layouts/page-block/page-block';
-import ReviewNotes from './review-notes/review-notes';
+import PageBlock from '../../../layouts/page-block';
+import ReviewNotes from './review-notes';
 
 const convertStatus = (cr: ChangeRequest): string => {
   if (cr.dateImplemented) {

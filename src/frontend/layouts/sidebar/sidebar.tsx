@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { routes } from '../../../shared/routes';
 import { LinkItem } from '../../../shared/types';
-import NavPageLinks from './nav-page-links/nav-page-links';
+import NavPageLinks from './nav-page-links';
 import styles from '../../stylesheets/layouts/sidebar/sidebar.module.css';
 
 const Sidebar: React.FC = () => {

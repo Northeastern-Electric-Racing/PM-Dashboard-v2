@@ -35,7 +35,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
   return (
     <Card bg={theme.cardBg} className={'mx-auto mt-sm-5 '} style={styles.card}>
       <Card.Body>
-        <Card.Title>NER PM Dashboard</Card.Title>
+        <Card.Title>FinishLine by NER</Card.Title>
         <Card.Text>Login Required. Students must use their Husky Google account.</Card.Text>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}

@@ -1,4 +1,4 @@
-# NER PM Dashboard v2
+# NER FinishLine by NER
 
 Northeastern Electric Racing Project Management Dashboard - version 2
 

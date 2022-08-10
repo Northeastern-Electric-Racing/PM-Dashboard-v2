@@ -1,4 +1,4 @@
-// This file is part of NER's PM Dashboard and licensed under GNU AGPLv3.
+// This file is part of NER's FinishLine by NERand licensed under GNU AGPLv3.
 // See the LICENSE file in the repository root folder for details.
 
 datasource db {
@@ -69,7 +69,7 @@ model User {
   projectLead             WBS_Element[]    @relation(name: "projectLead")
   projectManager          WBS_Element[]    @relation(name: "projectManager")
   Session                 Session[]
-  teams                   Team[]           @relation(name: "teamsAsMember")     
+  teams                   Team[]           @relation(name: "teamsAsMember")
   teamAsLead              Team?            @relation(name: "teamAsLead")
   createdRisks            Risk[]           @relation(name: "createdBy")
   resolvedRisks           Risk[]           @relation(name: "resolvedBy")
@@ -77,14 +77,14 @@ model User {
 }
 
 model Team {
-  teamId         String         @id @default(uuid())
-  teamName       String
-  slackId        String
-  description    String         @default("")
-  leaderId       Int            @unique
-  leader         User           @relation(name: "teamAsLead", fields:[leaderId], references: [userId]) 
-  projects       Project[]      
-  members        User[]         @relation(name: "teamsAsMember")
+  teamId      String    @id @default(uuid())
+  teamName    String
+  slackId     String
+  description String    @default("")
+  leaderId    Int       @unique
+  leader      User      @relation(name: "teamAsLead", fields: [leaderId], references: [userId])
+  projects    Project[]
+  members     User[]    @relation(name: "teamsAsMember")
 }
 
 model Session {
@@ -208,8 +208,8 @@ model Project {
   features              Description_Bullet[] @relation(name: "projectFeatures")
   otherConstraints      Description_Bullet[] @relation(name: "projectOtherConstraints")
   workPackages          Work_Package[]
-  teamId                String?                   
-  team                  Team?                  @relation(fields: [teamId], references: [teamId])
+  teamId                String?
+  team                  Team?                @relation(fields: [teamId], references: [teamId])
   risks                 Risk[]
 }
 

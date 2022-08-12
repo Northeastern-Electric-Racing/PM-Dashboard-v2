@@ -17,6 +17,7 @@ const PROJECTS_EDIT: string = `${PROJECTS}-edit`;
 
 /**************** Risks Endpoint ****************/
 const RISKS: string = `/risks`;
+const RISKS_CREATE: string = `${RISKS}-create`;
 
 /**************** Work Packages Endpoint ****************/
 const WORK_PACKAGES: string = `/work-packages`;

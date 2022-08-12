@@ -51,7 +51,7 @@ describe('risk create', () => {
       });
 
       it('fails when projectId is a decimal', async () => {
-        const res = await func({ body: { ...goodBody, projectId: -2 } });
+        const res = await func({ body: { ...goodBody, projectId: 3.4 } });
         expect(res.statusCode).toBe(400);
         expect(res.body).toBe('Event object failed validation');
       });

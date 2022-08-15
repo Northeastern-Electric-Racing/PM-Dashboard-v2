@@ -3,10 +3,12 @@
  * See the LICENSE file in the repository root folder for details.
  */
 
-import GoogleLogin from 'react-google-login';
+// import GoogleLogin from 'react-google-login';
 import { Card } from 'react-bootstrap';
 import LoginDev from './login-dev';
 import { Theme } from '../../../shared/types';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+import ExternalLink from '../../components/external-link';
 
 const styles = {
   card: {
@@ -37,7 +39,12 @@ const LoginPage: React.FC<LoginPageProps> = ({
       <Card.Body>
         <Card.Title>NER PM Dashboard</Card.Title>
         <Card.Text>Login Required. Students must use their Husky Google account.</Card.Text>
-        <GoogleLogin
+        <ExternalLink
+          icon={faLink}
+          link={'https://finishlinebyner.com'}
+          description={'Go to FinishLine by NER'}
+        />
+        {/* <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID!}
           //jsSrc={'accounts.google.com/gsi/client.js'}
           buttonText="Login"
@@ -45,7 +52,8 @@ const LoginPage: React.FC<LoginPageProps> = ({
           onFailure={prodFailure}
           cookiePolicy={'single_host_origin'}
           isSignedIn={true}
-        />
+        /> */}
+
         {process.env.NODE_ENV === 'development' ? (
           <LoginDev devSetRole={devSetRole} devFormSubmit={devFormSubmit} />
         ) : (

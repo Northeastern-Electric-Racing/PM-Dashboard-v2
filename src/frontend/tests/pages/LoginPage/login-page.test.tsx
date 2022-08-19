@@ -25,7 +25,7 @@ const renderComponent = () => {
 describe('login page component', () => {
   it('renders title', () => {
     renderComponent();
-    expect(screen.getByText(/NER PM Dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/FinishLine by NER/i)).toBeInTheDocument();
   });
 
   it('renders help text', () => {

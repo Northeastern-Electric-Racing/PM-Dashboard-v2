@@ -36,7 +36,7 @@ describe('login component', () => {
 
   it('renders title', () => {
     renderComponent();
-    expect(screen.getByText(/NER PM Dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/FinishLine by NER/i)).toBeInTheDocument();
     expect(pushed).toEqual([]);
   });
 

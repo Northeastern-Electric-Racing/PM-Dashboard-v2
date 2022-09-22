@@ -1,5 +1,44 @@
 # NER PM Dashboard v2
 
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+## NOTE: THIS PROJECT IS NO LONGER BEING WORKED ON GO TO THE LINK BELOW INSTEAD
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+https://github.com/Northeastern-Electric-Racing/FinishLine
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+
 Northeastern Electric Racing Project Management Dashboard - version 2
 
 A project management web application built in React.
